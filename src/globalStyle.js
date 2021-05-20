@@ -1,0 +1,52 @@
+import { createGlobalStyle } from 'styled-components';
+import { COLOR } from './constants';
+
+const GlobalStyle = createGlobalStyle`
+:root{
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 500;
+  --weight-regular: 400;
+  --weight-small: 300;
+}
+
+/* Universal tags */
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: ${COLOR.GRAY_500};
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+  }
+
+  html, body {
+    height: 100%;
+    cursor: default;
+  }
+
+  #root {
+    height: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+    
+    &:visited {
+      color: inherit;
+    }
+  }
+
+  li {
+    list-style: none;
+  }
+
+  button {
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+  }
+`;
+
+export default GlobalStyle;
