@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ROUTES from './constants/routes';
 import LinePage from './pages/LinePage/LinePage';
@@ -6,7 +7,7 @@ import SectionPage from './pages/SectionPage/SectionPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import StationPage from './pages/StationPage/StationPage';
 
-const Routes = () => {
+const Routes = (): React.ReactElement => {
   return (
     <Router>
       <Switch>

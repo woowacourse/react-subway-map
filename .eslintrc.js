@@ -17,7 +17,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2020,
+    ecmaVersion: 2018,
     sourceType: 'module',
     project: './tsconfig.json',
   },
@@ -26,9 +26,10 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'auto',
+        endOfLine: 'lf',
       },
     ],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
   overrides: [
     {
