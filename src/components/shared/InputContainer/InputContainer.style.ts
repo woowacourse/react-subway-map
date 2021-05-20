@@ -5,6 +5,7 @@ const Container = styled.div`
   padding: 0.5rem;
   border: 1px solid #bbbbbb;
   border-radius: 0.25rem;
+  display: flex;
   position: relative;
 
   &:focus-within {
