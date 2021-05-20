@@ -1,4 +1,5 @@
 import { Story } from '@storybook/react';
+import Input from '../Input/Input';
 
 import InputContainer, { InputContainerProps } from './InputContainer';
 
@@ -13,7 +14,7 @@ export const Default = Template.bind({});
 export const WithLabel = Template.bind({});
 
 Default.args = {
-  children: <input type="text" />,
+  children: <Input type="text" placeholder="placeholder" />,
 };
 
 WithLabel.args = {
