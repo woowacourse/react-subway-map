@@ -5,11 +5,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: none;
   }
 
   button {
     outline: none;
-    border: none;
     cursor: pointer;
     background: none;
   }
@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     color: black;
   }
 
-  input {
+  input, select {
     outline: none;
   }
 
