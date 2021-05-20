@@ -1,5 +1,7 @@
 import { Story } from '@storybook/react';
+
 import Input from '../Input/Input';
+import Select from '../Select/Select';
 
 import InputContainer, { InputContainerProps } from './InputContainer';
 
@@ -20,8 +22,10 @@ Default.args = {
 WithLabel.args = {
   labelText: 'label',
   children: (
-    <select>
-      <option>option</option>
-    </select>
+    <Select>
+      {['option1', 'option2', 'option3'].map((option) => (
+        <option value={option}>{option}</option>
+      ))}
+    </Select>
   ),
 };
