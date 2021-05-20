@@ -11,7 +11,9 @@ const Container = styled.div<ContainerProps>`
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 
-  ${({ hatColor }) => hatColor ? `
+  ${({ hatColor }) =>
+    hatColor
+      ? `
     :before {
       content: '';
       display: block;
@@ -24,7 +26,8 @@ const Container = styled.div<ContainerProps>`
       border-top-left-radius: 0.25rem;
       border-top-right-radius: 0.25rem;
     }
-  ` : ''} 
+  `
+      : ''}
 `;
 
 export { Container };
