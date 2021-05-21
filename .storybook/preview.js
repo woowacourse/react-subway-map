@@ -1,5 +1,6 @@
 import React from 'react';
 import GlobalStyle from '../src/Global.styles';
+import StoryRouter from 'storybook-react-router';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -12,6 +13,7 @@ export const parameters = {
 };
 
 export const decorators = [
+  StoryRouter(),
   (Story) => (
     <>
       <GlobalStyle />
