@@ -1,13 +1,34 @@
 import { createGlobalStyle } from 'styled-components';
 
+export const theme = {
+  color: {
+    bg: {
+      primary: '#FCCB00',
+    },
+    text: {
+      primary: '#404040',
+      link: '#2980b9',
+    },
+    border: {
+      primary: '#7E7E7E',
+      secondary: '#cccccc',
+    },
+  },
+};
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    color: ${theme.color.text.primary};
+  }
+
+  a {
+    color: ${theme.color.text.link};
+    text-decoration: none;
   }
 `;
 
