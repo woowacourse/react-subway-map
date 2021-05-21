@@ -8,6 +8,14 @@ const Container = styled.button`
   cursor: pointer;
   border-radius: 4px;
   background-color: ${(props: { bgColor: string }) => props.bgColor};
+
+  && {
+    margin-right: 4px;
+  }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;
 
 export { Container };
