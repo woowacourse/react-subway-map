@@ -16,3 +16,15 @@ export const FlexCenter = styled(Flex)`
   justify-content: center;
   align-items: center;
 `;
+
+export const FlexColumn = styled(Flex)`
+  flex-direction: column;
+`;
+
+export const FlexColumnJustfiyCenter = styled(FlexJustfiyCenter)`
+  flex-direction: column;
+`;
+
+export const FlexColumnAlignCenter = styled(FlexAlignCenter)`
+  flex-direction: column;
+`;
