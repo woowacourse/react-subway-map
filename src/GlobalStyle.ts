@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a {
+    outline: none;
     text-decoration: none;
     color: black;
   }
