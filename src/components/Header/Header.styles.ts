@@ -6,7 +6,7 @@ export const Header = styled.header`
   align-items: center;
   height: 60px;
   padding: 0 2em;
-  background-color: ${({ theme }) => theme.color.bg.primary};
+  background-color: ${({ theme }) => theme.color.bg.primary.default};
   box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.border.secondary};
 `;
 

@@ -9,7 +9,7 @@ export const Card = styled.div`
     width: 100%;
     height: 7px;
     display: block;
-    background-color: ${({ theme }) => theme.color.bg.primary};
+    background-color: ${({ theme }) => theme.color.bg.primary.default};
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
