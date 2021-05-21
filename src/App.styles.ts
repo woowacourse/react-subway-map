@@ -55,4 +55,8 @@ export const theme: Theme = {
     defaultWhite: '#fff',
     defaultCream: '#faf1e6',
   },
+  color: {
+    subwayYellow: '#ffcb0a',
+    subwayGreen: '#009743',
+  },
 };
