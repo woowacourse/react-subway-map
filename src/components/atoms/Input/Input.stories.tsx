@@ -2,7 +2,7 @@ import { Story } from '@storybook/react';
 import Input, { InputProps } from './Input';
 
 export default {
-  title: 'shared/Input',
+  title: 'atoms/Input',
   component: Input,
   argTypes: { children: { control: 'text' } },
 };

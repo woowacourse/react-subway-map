@@ -2,7 +2,7 @@ import { Story } from '@storybook/react';
 import Select, { SelectProps } from './Select';
 
 export default {
-  title: 'shared/Select',
+  title: 'atoms/Select',
   component: Select,
   argTypes: { children: { control: 'text' } },
 };

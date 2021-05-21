@@ -2,7 +2,7 @@ import { Story } from '@storybook/react';
 import Button, { ButtonProps } from './Button';
 
 export default {
-  title: 'shared/Button',
+  title: 'atoms/Button',
   component: Button,
   argTypes: { children: { control: 'text' } },
 };

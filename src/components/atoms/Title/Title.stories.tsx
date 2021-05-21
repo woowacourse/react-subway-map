@@ -2,7 +2,7 @@ import { Story } from '@storybook/react';
 import Title, { TitleProps } from './Title';
 
 export default {
-  title: 'shared/Title',
+  title: 'atoms/Title',
   component: Title,
   argTypes: { children: { control: 'text' } },
 };
