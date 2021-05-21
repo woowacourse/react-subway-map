@@ -8,6 +8,9 @@ const GlobalStyle = createGlobalStyle`
   --weight-semi-bold: 500;
   --weight-regular: 400;
   --weight-small: 300;
+
+  /* Box Shadow */
+  --shadow-page: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* Universal tags */
@@ -32,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
     outline: none;
-    
+
     &:visited {
       color: inherit;
     }
