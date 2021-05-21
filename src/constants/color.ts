@@ -5,4 +5,5 @@ export enum COLOR {
   GRAY_200 = "#f1f4f9",
   GRAY_500 = "#c1c1c1",
   GRAY_900 = "#333333",
+  RED_500 = "#dd333d",
 }
