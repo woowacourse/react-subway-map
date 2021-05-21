@@ -6,8 +6,10 @@ interface BoxProps extends ContainerProps {
   children: ReactNode;
 }
 
-const Box = ({ hatColor, children }: BoxProps) => (
-  <Container hatColor={hatColor}>{children}</Container>
+const Box = ({ hatColor, backgroundColor, children }: BoxProps) => (
+  <Container hatColor={hatColor} backgroundColor={backgroundColor}>
+    {children}
+  </Container>
 );
 
 export default Box;

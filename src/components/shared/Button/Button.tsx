@@ -30,7 +30,7 @@ const Button = styled.button<ButtonProps>`
   transition: transform 0.2s ease;
 
   :hover {
-    transform: scale(1.05);
+    transform: scaleX(1.01) scaleY(1.05);
     filter: brightness(1.05);
   }
 
@@ -39,7 +39,7 @@ const Button = styled.button<ButtonProps>`
   }
 
   :active {
-    transform: scale(0.95);
+    transform: scaleX(1) scaleY(0.95);
   }
 `;
 

@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
+  margin-bottom: 1rem;
+`;
+
+const BorderBox = styled.div`
+  width: 100%;
   padding: 0.5rem;
   border: 1px solid #bbbbbb;
   border-radius: 0.25rem;
@@ -26,4 +31,10 @@ const Label = styled.label`
   background-color: white;
 `;
 
-export { Container, Label };
+const StatusText = styled.div`
+  font-size: 0.8rem;
+  padding-top: 0.2rem;
+  padding-left: 0.2rem;
+`;
+
+export { Container, BorderBox, Label, StatusText };
