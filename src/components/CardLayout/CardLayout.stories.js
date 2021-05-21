@@ -10,4 +10,4 @@ const Template = ({ ...args }) => <CardLayout {...args} />;
 
 export const Default = Template.bind({});
 
-Default.args = {};
+Default.args = { title: '타이틀입니다.' };
