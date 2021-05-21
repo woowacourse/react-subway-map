@@ -5,6 +5,7 @@ interface ButtonIProps {
   variant: ButtonVariant;
   shape: ButtonShape;
   fullWidth: boolean;
+  active: boolean;
 }
 
 const variantStyles = {
@@ -13,11 +14,11 @@ const variantStyles = {
     box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%),
       0 1px 18px 0 rgb(0 0 0 / 12%);
   `,
-  text: css`
-    background: none;
+  text: css<ButtonIProps>`
+    background: ${({ active, theme }) => (active ? theme.color.bg.buttonActive : 'none')};
   `,
-  link: css`
-    background: none;
+  link: css<ButtonIProps>`
+    background: ${({ active, theme }) => (active ? theme.color.bg.buttonActive : 'none')};
     color: ${({ theme }) => theme.color.text.link};
   `,
 };
@@ -47,8 +48,9 @@ export const Button = styled.button<ButtonIProps>`
   cursor: pointer;
   font-family: inherit;
   color: inherit;
-
+  letter-spacing: inherit;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
+
   ${({ variant }) => variantStyles[variant]};
   ${({ shape }) => shapeStyles[shape]};
 

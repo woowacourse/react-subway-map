@@ -4,6 +4,7 @@ export const theme = {
   color: {
     bg: {
       primary: '#FCCB00',
+      buttonActive: 'rgba(0, 0, 0, 0.07)',
     },
     text: {
       primary: '#404040',
