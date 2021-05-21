@@ -1,7 +1,4 @@
-import React from 'react';
 import SelectInput from './SelectInput';
-
-import { COLOR } from '../../../constants/styleConstant';
 
 export default {
   title: 'SelectInput',
@@ -25,7 +22,7 @@ export const InitialText = () => (
 );
 
 export const BorderColor = () => (
-  <SelectInput borderColor={COLOR.WHITE}>
+  <SelectInput borderColor='WHITE'>
     <option>A</option>
     <option>B</option>
     <option>C</option>

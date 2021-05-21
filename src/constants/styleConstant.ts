@@ -1,7 +1,9 @@
 export const COLOR = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
+  MINT_300: '#a9f1df',
   MINT_500: '#2AC1BC',
+  MINT_700: '#16aaa5',
   GRAY_100: '#F6F6F6',
   GRAY_200: '#dddddd',
   GRAY_300: '#CCCCCC',
