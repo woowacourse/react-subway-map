@@ -5,7 +5,7 @@
 - [x] Header
 - [x] Navigation
 - [x] CardTemplate
-- [ ] Button
+- [x] Button
 - [ ] Input
 - [ ] NotificationInput
 - [ ] List & ListItem
