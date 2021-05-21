@@ -10,8 +10,6 @@ export const inputSize = {
 };
 
 export const Container = styled.div`
-  margin-bottom: 32px;
-
   & > label {
     position: relative;
     top: 10px;

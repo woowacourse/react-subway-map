@@ -1,6 +1,7 @@
 export const ROUTE = {
   HOME: '/',
   SIGN_IN: '/sign-in',
+  SIGN_UP: '/sign-up',
   STATION_MANAGE: '/station-manage',
   LINE_MANAGE: '/line-manage',
   SECTION_MANAGE: '/section-manage',
