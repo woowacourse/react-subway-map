@@ -1,0 +1,8 @@
+{
+  "short_name": "지하철 노선도",
+  "name": "동탄의 지하철 노선도",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
