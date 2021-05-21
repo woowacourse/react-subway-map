@@ -1,8 +1,10 @@
 import React from 'react';
 import Header from './Header';
+import Navigation from '../Navigation/Navigation';
+import { PAGE_INFO } from '../../../constants/appInfo';
 
 export default {
-  title: 'Header',
+  title: 'shared/Header',
   component: Header,
   argTypes: {},
 };
@@ -13,5 +15,5 @@ export const Default = Template.bind({});
 Default.args = {
   logo: <div>😍</div>,
   title: 'RUNNINGMAP',
-  children: <div>하이</div>,
+  children: <Navigation navInfoList={[PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS]} />,
 };

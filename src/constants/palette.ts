@@ -17,6 +17,4 @@ const PALETTE = {
   },
 };
 
-export const THEME_COLOR = PALETTE.YELLOW;
-
 export default PALETTE;
