@@ -10,16 +10,34 @@ interface ButtonIProps {
 
 const variantStyles = {
   primary: css`
-    background-color: ${({ theme }) => theme.color.bg.primary};
+    background-color: ${({ theme }) => theme.color.bg.primary.default};
     box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%),
       0 1px 18px 0 rgb(0 0 0 / 12%);
+
+    &:hover,
+    &:active {
+      background-color: ${({ theme }) => `${theme.color.bg.primary.active}`};
+    }
   `,
+
   text: css<ButtonIProps>`
-    background: ${({ active, theme }) => (active ? theme.color.bg.buttonActive : 'none')};
+    background: ${({ active, theme }) => (active ? theme.color.bg.secondary.active : 'none')};
+
+    &:hover,
+    &:active {
+      background-color: ${({ theme }) => `${theme.color.bg.secondary.active}`};
+    }
   `,
+
   link: css<ButtonIProps>`
-    background: ${({ active, theme }) => (active ? theme.color.bg.buttonActive : 'none')};
+    background: ${({ active, theme }) => (active ? theme.color.bg.secondary.active : 'none')};
     color: ${({ theme }) => theme.color.text.link};
+
+    &:hover,
+    &:active {
+      background-color: ${({ theme }) => `${theme.color.bg.secondary.active}`};
+      text-decoration: underline;
+    }
   `,
 };
 
@@ -28,6 +46,7 @@ const shapeStyles = {
     padding: 0.7em 1.4em;
     border-radius: 5px;
   `,
+
   circle: css`
     border-radius: 50%;
     width: 56px;

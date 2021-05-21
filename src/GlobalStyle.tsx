@@ -3,8 +3,13 @@ import { createGlobalStyle } from 'styled-components';
 export const theme = {
   color: {
     bg: {
-      primary: '#FCCB00',
-      buttonActive: 'rgba(0, 0, 0, 0.07)',
+      primary: {
+        default: '#FCCB00',
+        active: '#f5c600',
+      },
+      secondary: {
+        active: 'rgba(0, 0, 0, 0.07)',
+      },
     },
     text: {
       primary: '#404040',
@@ -30,6 +35,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: ${theme.color.text.link};
     text-decoration: none;
+
+    &:hover, &:active {
+      text-decoration: underline;
+    }
   }
 `;
 
