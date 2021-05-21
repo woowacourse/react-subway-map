@@ -5,7 +5,7 @@ const Button = ({ type, children, disabled }) => (
   <button
     type={type === "submit" ? "submit" : "button"}
     disabled={disabled}
-    className="p-3 disabled:text-gray-400 text-gray-700 font-medium disabled:bg-gray-200 bg-yellow-300 rounded"
+    className="p-3 disabled:text-gray-400 text-gray-700 font-medium disabled:bg-gray-200 bg-yellow-300 hover:bg-yellow-400 rounded focus:outline-none"
   >
     {children}
   </button>
