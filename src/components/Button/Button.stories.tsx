@@ -10,28 +10,6 @@ export default {
 
 const Template: Story<Props> = (args) => <Button {...args}>TEST</Button>;
 
-export const Rect = Template.bind({});
-export const Eclipse = Template.bind({});
-export const Primary = Template.bind({});
-export const Gray = Template.bind({});
-export const White = Template.bind({});
+export const Basic = Template.bind({});
 
-Rect.args = {
-  kind: "rect",
-};
-
-Eclipse.args = {
-  kind: "eclipse",
-};
-
-Primary.args = {
-  buttonTheme: "primary",
-};
-
-Gray.args = {
-  buttonTheme: "gray",
-};
-
-White.args = {
-  buttonTheme: "white",
-};
+Basic.args = {};

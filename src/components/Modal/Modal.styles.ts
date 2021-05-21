@@ -4,7 +4,7 @@ interface ContainerProps {
   opacity: number;
 }
 
-export const Container = styled.div`
+export const ModalBlock = styled.div`
   position: fixed;
   top: 0;
   left: 0;

@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  ul {
+  li, ul {
     list-style: none;
     padding: 0;
   }

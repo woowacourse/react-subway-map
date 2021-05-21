@@ -1,6 +1,6 @@
 import { MouseEventHandler, useState, useEffect, ReactNode } from "react";
 
-import { Container, Dimmed } from "./Modal.styles";
+import { ModalBlock, Dimmed } from "./Modal.styles";
 
 export interface Props {
   closeModal: MouseEventHandler<HTMLDivElement>;
@@ -17,7 +17,7 @@ const Modal = ({ closeModal: dimmedClick, children }: Props) => {
   return (
     <>
       <Dimmed onClick={dimmedClick} opacity={opacity} />
-      <Container>{children}</Container>
+      <ModalBlock>{children}</ModalBlock>
     </>
   );
 };

@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { COLOR } from "../../constants";
 
-export interface ButtonBlockProps {
+interface ButtonBlockProps {
   kind?: "rect" | "eclipse";
   size?: "sm" | "md" | "block";
   buttonTheme?: "primary" | "gray" | "white";
 }
+
+export type ButtonStylesProps = ButtonBlockProps;
 
 const BUTTON_KIND = {
   rect: {
