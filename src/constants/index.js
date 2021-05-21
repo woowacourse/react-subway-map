@@ -8,5 +8,12 @@ export const ROUTE = {
 
 export const COLOR = {
   AMBER: '#fcca00',
+  WHITE: '#ffffff',
+  GRAY_300: '#a8a4a4',
   GRAY_500: '#333333',
+};
+
+export const SIZE = {
+  MD: 'medium',
+  LG: 'large',
 };
