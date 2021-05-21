@@ -1,5 +1,6 @@
 import BaseLayout from '@layout/Layout';
 import PATH from 'constants/PATH';
+import Home from 'pages/Home';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ const App = () => {
     <BaseLayout>
       <Switch>
         <Route exact path={PATH.HOME}>
-          <h1>홈</h1>
+          <Home />
         </Route>
         <Route exact path={PATH.LOGIN}>
           <h1>로그인</h1>

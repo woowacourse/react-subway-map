@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button = ({ text, size, className }: ButtonProps) => {
   return (
-    <button type="button" className={`bg-red-300 hover:bg-red-400 rounded ${className} ${size}`}>
+    <button type="button" className={`bg-red-300 hover:bg-red-400 rounded focus:outline-none ${className} ${size}`}>
       {text}
     </button>
   );
