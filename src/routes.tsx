@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import ROUTES from './constants/routes';
 import LinePage from './pages/LinePage/LinePage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -9,15 +9,13 @@ import StationPage from './pages/StationPage/StationPage';
 
 const Routes = (): React.ReactElement => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path={ROUTES.ROOT} component={LoginPage} />
-        <Route exact path={ROUTES.SIGNUP} component={SignUpPage} />
-        <Route exact path={ROUTES.STATION} component={StationPage} />
-        <Route exact path={ROUTES.LINE} component={LinePage} />
-        <Route exact path={ROUTES.SECTION} component={SectionPage} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path={ROUTES.ROOT} component={LoginPage} />
+      <Route exact path={ROUTES.SIGNUP} component={SignUpPage} />
+      <Route exact path={ROUTES.STATION} component={StationPage} />
+      <Route exact path={ROUTES.LINE} component={LinePage} />
+      <Route exact path={ROUTES.SECTION} component={SectionPage} />
+    </Switch>
   );
 };
 

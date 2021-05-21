@@ -7,6 +7,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   shape?: ButtonShape;
   fullWidth?: boolean;
+  active?: boolean;
 }
 
 const Button = ({
@@ -14,9 +15,10 @@ const Button = ({
   variant = 'primary',
   shape = 'default',
   fullWidth = false,
+  active = false,
   ...props
 }: IProps) => (
-  <Styled.Button variant={variant} shape={shape} fullWidth={fullWidth} {...props}>
+  <Styled.Button variant={variant} shape={shape} fullWidth={fullWidth} active={active} {...props}>
     {children}
   </Styled.Button>
 );

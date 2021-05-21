@@ -23,10 +23,12 @@ export const Circle = Template.bind({});
 
 Default.args = {
   children: '확인',
+  variant: 'primary',
   shape: 'default',
 };
 
 Circle.args = {
   children: <PlusIcon />,
+  variant: 'primary',
   shape: 'circle',
 };
