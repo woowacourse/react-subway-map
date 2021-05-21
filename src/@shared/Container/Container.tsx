@@ -7,7 +7,7 @@ interface ContainerProps {
 
 const Container = ({ children, width }: ContainerProps) => {
   return (
-    <div className={`flex flex-col p-6 justify-center shadow-lg border-t-8 border-red-300 rounded ${width}`}>
+    <div className={`flex flex-col p-8 justify-center shadow-lg border-t-8 border-red-300 rounded ${width}`}>
       {children}
     </div>
   );
