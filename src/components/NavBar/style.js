@@ -23,7 +23,7 @@ export const Logo = styled.h1`
   }
 `;
 
-export const Menu = styled.ul`
+export const List = styled.ul`
   ${Flex({ justify: 'space-around' })}
 
   & > li {

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLOR } from '../../../constants';
 
 export const Container = styled.div`
   & > button {
@@ -7,11 +8,11 @@ export const Container = styled.div`
     border-radius: 4px;
     box-shadow: ${({ hasShadow }) => hasShadow && 'var(--shadow-button)'};
     background-color: ${({ backgroundColor }) => backgroundColor};
-    font-size: 16px;
+    font-size: var(--size-regular);
 
     &:disabled {
-      color: rgb(187, 187, 187);
-      background-color: rgb(238, 238, 238);
+      color: ${COLOR.GRAY_300};
+      background-color: ${COLOR.GRAY_100};
       box-shadow: none;
       cursor: default;
     }

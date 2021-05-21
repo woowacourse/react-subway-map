@@ -3,6 +3,12 @@ import { COLOR } from './constants';
 
 const GlobalStyle = createGlobalStyle`
 :root{
+  /* Font Size */
+  --size-large: 24px;
+  --size-semi-large: 20px;
+  --size-regular: 16px;
+  --size-small: 12px;
+
   /* Font weight */
   --weight-bold: 700;
   --weight-semi-bold: 500;

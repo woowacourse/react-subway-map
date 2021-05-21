@@ -16,8 +16,8 @@ function App() {
       <NavBar />
       <Main>
         <Switch>
-          <Route exact path={ROUTE.HOME}></Route>
-          <Route exact path={ROUTE.SIGN_IN}>
+          <Route exact path={ROUTE.HOME.PATH}></Route>
+          <Route exact path={ROUTE.SIGN_IN.PATH}>
             <SignIn />
           </Route>
         </Switch>

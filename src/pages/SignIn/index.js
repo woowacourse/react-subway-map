@@ -6,7 +6,7 @@ import { COLOR, ROUTE, SIZE } from '../../constants';
 
 const SignIn = (props) => {
   return (
-    <PageTemplate title={'로그인'}>
+    <PageTemplate title={ROUTE.SIGN_IN.NAME}>
       <Content>
         <Form>
           <Input
@@ -21,7 +21,7 @@ const SignIn = (props) => {
           />
           <Button backgroundColor={COLOR.AMBER}>로그인</Button>
         </Form>
-        <Link to={ROUTE.SIGN_UP}>아직 회원이 아니신가요?</Link>
+        <Link to={ROUTE.SIGN_UP.PATH}>아직 회원이 아니신가요?</Link>
       </Content>
     </PageTemplate>
   );

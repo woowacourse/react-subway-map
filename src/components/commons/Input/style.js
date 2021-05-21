@@ -4,7 +4,7 @@ import { COLOR, SIZE } from '../../../constants';
 export const inputSize = {
   [SIZE.MD]: css`
     height: 40px;
-    font-size: 16px;
+    font-size: var(--size-regular);
   `,
   [SIZE.LG]: css``,
 };
@@ -16,7 +16,7 @@ export const Container = styled.div`
     left: 10px;
     background-color: ${COLOR.WHITE};
     color: ${COLOR.GRAY_300};
-    font-size: 12px;
+    font-size: var(--size-small);
   }
 
   & > input {
