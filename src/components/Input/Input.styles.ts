@@ -4,8 +4,20 @@ interface InputIProps {
   hasIcon: boolean;
 }
 
-export const InputWrapper = styled.div`
+export const Label = styled.label`
   position: relative;
+  display: block;
+`;
+
+export const LabelText = styled.span`
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  background-color: white;
+  padding: 0 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: ${({ theme }) => theme.color.text.label};
 `;
 
 export const Input = styled.input<InputIProps>`
@@ -15,7 +27,7 @@ export const Input = styled.input<InputIProps>`
   width: 100%;
   background: none;
   padding: 0.6em;
-  padding-left: ${({ hasIcon }) => (hasIcon ? '45px' : '0.6em')};
+  padding-left: ${({ hasIcon }) => (hasIcon ? '50px' : '0.6em')};
   color: inherit;
   outline: none;
   font-family: inherit;
@@ -28,7 +40,7 @@ export const Input = styled.input<InputIProps>`
 
 export const Icon = styled.div`
   position: absolute;
-  left: 12px;
+  left: 18px;
   width: 25px;
   height: 100%;
   display: flex;

@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 
-export const LoginPage = styled.section`
-  width: 100%;
-  min-width: 768px;
-  max-width: 1280px;
-  margin: 0 auto;
-`;
+export const LoginPage = styled.div``;
 
 export const CardWrapper = styled.div`
   position: absolute;
