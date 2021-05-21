@@ -1,0 +1,19 @@
+export const COLOR = {
+  THEME: '#74B8FF',
+
+  TEXT_DEFAULT: '#333',
+  TEXT_NAVBAR: '#333',
+  TEXT_PARAGRAPH: '#666',
+  TEXT_HEADER: '#333',
+
+  BORDER_DEFAULT: '#EEEEEE',
+  PLACEHOLDER: '#999',
+  ERROR: '#FF7C74',
+  LIST_ITEM_HOVER_BG: '#F6F6F6',
+
+  ICON_BG_DEFAULT: '#999',
+};
+
+export const LAYOUT = {
+  NAVBAR_HEIGHT: '5rem;',
+};
