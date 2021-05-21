@@ -27,7 +27,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
           </Link>
         </>
       </Header>
-      {children}
+      <div className="flex items-center justify-center min-h-screen">{children}</div>
     </div>
   );
 };

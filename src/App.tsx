@@ -1,6 +1,7 @@
 import BaseLayout from '@layout/Layout';
 import PATH from 'constants/PATH';
 import Home from 'pages/Home';
+import Login from 'pages/Login';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ const App = () => {
           <Home />
         </Route>
         <Route exact path={PATH.LOGIN}>
-          <h1>로그인</h1>
+          <Login />
         </Route>
         <Route exact path={PATH.SIGN_UP}>
           <h1>회원가입</h1>
