@@ -48,6 +48,24 @@
       "import",
       "react-hooks"
     ],
+    "overrides": [
+      {
+        "files": "**/*.jsx",
+        "rules": {
+          "jsx-a11y/label-has-associated-control": [
+            "error",
+            {
+              "labelComponents": [],
+              "controlComponents": [
+                "Input"
+              ],
+              "assert": "either",
+              "depth": 3
+            }
+          ]
+        }
+      }
+    ],
     "ignorePatterns": [
       "node_modules",
       "build"
