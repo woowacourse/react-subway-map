@@ -1,6 +1,6 @@
 import { configure, addDecorator } from '@storybook/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import GlobalStyle from '../src/GlobalStyle';
+import GlobalStyle from '../src/styles/GlobalStyle';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
