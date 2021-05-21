@@ -1,13 +1,11 @@
+import Button from './components/@commons/Button/Button';
 import GlobalStyles from './Global.styles';
-import Input from './components/@commons/Input';
 
 const App = () => {
   return (
     <>
       <GlobalStyles />
-      <div className='App'>
-        <Input />
-      </div>
+      <div className='App'></div>
     </>
   );
 };

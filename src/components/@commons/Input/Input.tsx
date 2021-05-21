@@ -1,4 +1,4 @@
-import { COLOR } from '../../../constants/styleConstant';
+import { Color } from '../../../constants/styleType';
 import * as S from './Input.styles';
 
 export interface Props {
@@ -6,7 +6,7 @@ export interface Props {
   emoji?: string;
   label?: string;
   placeholder?: string;
-  borderColor?: COLOR;
+  borderColor?: Color;
 }
 
 const Input = ({ type = 'text', emoji, label, placeholder, borderColor }: Props) => {

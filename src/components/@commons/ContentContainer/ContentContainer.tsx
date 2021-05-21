@@ -1,9 +1,9 @@
-import { COLOR } from '../../../constants/styleConstant';
+import { Color } from '../../../constants/styleType';
 import * as S from './ContentContainer.styles';
 
 export interface Props {
   children: React.ReactNode;
-  hatColor?: COLOR;
+  hatColor?: Color;
 }
 
 const ContentContainer = ({ hatColor, children }: Props) => {

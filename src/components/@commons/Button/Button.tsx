@@ -1,9 +1,9 @@
-import { COLOR } from '../../../constants/styleConstant';
+import { Color } from '../../../constants/styleType';
 import * as S from './Button.styles';
 
 export interface Props {
   text?: string;
-  bgColor?: COLOR;
+  bgColor?: Color;
   isDisabled?: boolean;
   shape?: 'CIRCLE' | 'SQUARE';
   onClick?: (event: React.MouseEvent) => void;

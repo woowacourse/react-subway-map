@@ -1,9 +1,9 @@
-import { COLOR } from '../../../constants/styleConstant';
+import { Color } from '../../../constants/styleType';
 import * as S from './SelectInput.styles';
 
 export interface Props {
   initialText?: string;
-  borderColor?: COLOR;
+  borderColor?: Color;
   children?: React.ReactNode;
 }
 
