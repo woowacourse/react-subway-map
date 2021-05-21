@@ -1,5 +1,15 @@
+import GlobalStyles from './Global.styles';
+import Input from './components/@commons/Input';
+
 const App = () => {
-  return <div className='App'></div>;
+  return (
+    <>
+      <GlobalStyles />
+      <div className='App'>
+        <Input />
+      </div>
+    </>
+  );
 };
 
 export default App;
