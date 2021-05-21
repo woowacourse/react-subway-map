@@ -26,4 +26,11 @@ const SignUpLink = styled(Link)`
   }
 `;
 
-export { Icon, SignUpLink, Heading1 };
+const ErrorText = styled.p`
+  font-size: 0.8rem;
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+export { Icon, SignUpLink, Heading1, ErrorText };
