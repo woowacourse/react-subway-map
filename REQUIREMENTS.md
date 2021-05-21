@@ -2,9 +2,9 @@
 
 ## UI 구성
 
-- [ ] Header
-- [ ] Navigation
-- [ ] CardTemplate
+- [x] Header
+- [x] Navigation
+- [x] CardTemplate
 - [ ] Button
 - [ ] Input
 - [ ] NotificationInput
