@@ -1,5 +1,6 @@
 import { THEME_COLOR } from './../../../constants/palette';
 import styled from 'styled-components';
+import FlexContainer from '../../common/FlexContainer/FlexContainer';
 
 export const StyledHeader = styled.header`
   display: flex;
@@ -9,10 +10,7 @@ export const StyledHeader = styled.header`
   padding: 1.25rem 2rem;
 `;
 
-export const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-
+export const TitleContainer = styled(FlexContainer)`
   & > * {
     margin-right: 1rem;
 
@@ -21,3 +19,7 @@ export const TitleContainer = styled.div`
     }
   }
 `;
+
+TitleContainer.defaultProps = {
+  alignItems: 'center',
+};
