@@ -1,4 +1,5 @@
 export { default as NavBar } from './NavBar';
+export { default as ManagementList } from './ManagementList';
 
 /* Common */
 export { default as PageTemplate } from './commons/PageTemplate';
