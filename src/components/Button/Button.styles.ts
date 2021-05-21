@@ -56,7 +56,7 @@ const shapeStyles = {
     align-items: center;
 
     svg {
-      width: 16px;
+      height: 18px;
     }
   `,
 };

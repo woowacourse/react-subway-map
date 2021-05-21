@@ -13,6 +13,7 @@ export const theme = {
     },
     text: {
       primary: '#404040',
+      label: '#7E7E7E',
       link: '#2980b9',
     },
     border: {
