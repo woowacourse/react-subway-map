@@ -4,7 +4,7 @@ import { Story, Meta } from "@storybook/react";
 import Confirm, { Props } from "./Confirm";
 
 export default {
-  title: "Confirm",
+  title: "components/Confirm",
   component: Confirm,
 } as Meta;
 
