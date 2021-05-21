@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Title } from './style';
+import { Container, Title, Content } from './style';
 
 const PageTemplate = ({ title, children }) => {
   return (
     <Container>
       <Title>{title}</Title>
-      {children}
+      <Content>{children}</Content>
     </Container>
   );
 };

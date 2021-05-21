@@ -20,3 +20,9 @@ export const Title = styled.h2`
   margin: 24px 0;
   color: ${COLOR.GRAY_500};
 `;
+
+export const Content = styled.div`
+  ${Flex({ direction: 'column', items: 'center' })}
+  width: 500px;
+  padding: 12px 48px 36px 48px;
+`;
