@@ -5,7 +5,7 @@ interface ImageButtonProps {
   size?: string;
 }
 
-const Button = ({ imgUrl, size }: ImageButtonProps) => {
+const ImageButton = ({ imgUrl, size }: ImageButtonProps) => {
   return (
     <button type="button" className={`flex justify-center items-center bg-red-300 shadow-md rounded-full ${size}`}>
       <img className="w-5 opacity-70" src={imgUrl} alt="" />
@@ -13,8 +13,8 @@ const Button = ({ imgUrl, size }: ImageButtonProps) => {
   );
 };
 
-Button.defaultProps = {
+ImageButton.defaultProps = {
   size: 'w-10 h-10',
 };
 
-export default Button;
+export default ImageButton;

@@ -3,11 +3,12 @@ import React from 'react';
 interface ButtonProps {
   text: string;
   size?: string;
+  className?: string;
 }
 
-const Button = ({ text, size }: ButtonProps) => {
+const Button = ({ text, size, className }: ButtonProps) => {
   return (
-    <button type="button" className={`bg-red-300 hover:bg-red-400 rounded ${size}`}>
+    <button type="button" className={`bg-red-300 hover:bg-red-400 rounded ${className} ${size}`}>
       {text}
     </button>
   );
@@ -15,6 +16,7 @@ const Button = ({ text, size }: ButtonProps) => {
 
 Button.defaultProps = {
   size: 'w-20 h-10',
+  className: '',
 };
 
 export default Button;
