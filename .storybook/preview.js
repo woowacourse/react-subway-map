@@ -17,9 +17,9 @@ export const decorators = [
   (Story) => (
     <>
       <GlobalStyle />
-      <div style={{ height: '100vh' }}>
-        <Story />
-      </div>
+      {/* <div style={{ height: '100vh' }}> */}
+      <Story />
+      {/* </div> */}
     </>
   ),
 ];

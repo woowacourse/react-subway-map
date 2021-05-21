@@ -1,16 +1,28 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  html, body, div, span, 
-  h1, h2, h3, h4, h5, h6, p, 
-  a, img,b, u, i, ol, ul, li, form, label, 
-  article,canvas ,figure, figcaption, footer, header, nav{
+  html, body, div, span,
+  h1, h2, h3, h4, h5, h6, p,
+  a, img,b, u, i, ol, ul, li, form, label, input,
+  article, canvas, figure, figcaption, footer, header, nav{
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
     margin: 0;
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
+    font-family: 'Noto Sans KR', sans-serif;
     vertical-align: baseline;
+    user-select: none;
+    box-sizing: border-box;
+  }
+
+
+  html, body {
+    height: 100%;
+  }
+
+  #root {
+    height: 100%
   }
 
   footer, header, menu, nav, section {
@@ -29,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
     outline: none;
-    
+
     &:visited {
       color: inherit;
     }
@@ -40,6 +52,11 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
     outline: none;
     cursor: pointer;
+  }
+
+  input {
+    outline: none;
+    border: 0;
   }
 `;
 

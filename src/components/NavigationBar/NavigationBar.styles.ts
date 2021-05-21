@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import PALETTE from '../../constants/palette';
-import Container from '../common/Container/Container.styles';
+import Container from '../@common/Container/Container.styles';
 
 export const NavigationBarContainer = styled(Container)`
   height: 5.125rem;

@@ -1,4 +1,4 @@
-import Container from '../common/Container/Container.styles';
+import Container from '../@common/Container/Container.styles';
 import {
   NavigationBarContainer,
   Logo,
