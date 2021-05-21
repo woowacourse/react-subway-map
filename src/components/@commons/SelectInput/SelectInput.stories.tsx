@@ -1,7 +1,7 @@
 import React from 'react';
 import SelectInput from './SelectInput';
 
-import { COLOR } from '../../constants/styleConstant';
+import { COLOR } from '../../../constants/styleConstant';
 
 export default {
   title: 'SelectInput',

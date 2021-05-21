@@ -1,8 +1,8 @@
 import React from 'react';
 import Input from './Input';
-// import { ReactComponent as LockSvg } from './../../assets/svg/lock.svg';
-import Lock from './../../assets/svg/lock.svg';
-import { COLOR } from '../../constants/styleConstant';
+
+import Lock from '../../../assets/svg/lock.svg';
+import { COLOR } from '../../../constants/styleConstant';
 
 export default {
   title: 'Input',
