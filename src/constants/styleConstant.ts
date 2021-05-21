@@ -1,7 +1,7 @@
 export enum COLOR {
   WHITE = '#FFFFFF',
   BLACK = '#000000',
-
+  MINT_500 = '#2AC1BC',
   GRAY_100 = '#F6F6F6',
   GRAY_200 = '#dddddd',
   GRAY_300 = '#CCCCCC',
