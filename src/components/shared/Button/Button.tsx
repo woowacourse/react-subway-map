@@ -29,17 +29,22 @@ const Button = styled.button<ButtonProps>`
   ${({ width }) => (width ? `width: ${width};` : '')}
   transition: transform 0.2s ease;
 
-  :hover {
+  :hover:enabled {
     transform: scaleX(1.01) scaleY(1.05);
     filter: brightness(1.05);
   }
 
-  :focus {
+  :focus:enabled {
     filter: brightness(1.05);
   }
 
-  :active {
+  :active:enabled {
     transform: scaleX(1) scaleY(0.95);
+  }
+
+  :disabled {
+    cursor: not-allowed;
+    background-color: #e5e5e5;
   }
 `;
 
