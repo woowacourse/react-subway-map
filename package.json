@@ -87,6 +87,7 @@
     "lint-staged": "^11.0.0",
     "postcss": "^7",
     "prettier": "^2.3.0",
+    "prettier-plugin-tailwind": "^2.2.10",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typescript": "^4.2.4"
   },
