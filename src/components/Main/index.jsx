@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 
 const Main = ({ children }) => (
   <main className="min-w-screen-lg flex place-items-center h-screen-80">
-    {children}
+    <div className="m-auto">{children}</div>
   </main>
 );
+
 Main.propTypes = {
   children: PropTypes.node.isRequired,
 };
