@@ -14,10 +14,10 @@ const LoginPage = () => {
           <Styled.Form>
             <Styled.HeaderText>로그인</Styled.HeaderText>
             <Styled.FormItem>
-              <Input icon={<EmailIcon />} placeholder="이메일을 입력해주세요" />
+              <Input icon={<EmailIcon />} placeholder="이메일을 입력해주세요" autoFocus />
             </Styled.FormItem>
             <Styled.FormItem>
-              <Input icon={<KeyIcon />} placeholder="비밀번호를 입력해주세요" />
+              <Input icon={<KeyIcon />} type="password" placeholder="비밀번호를 입력해주세요" />
             </Styled.FormItem>
             <Styled.FormItem>
               <Styled.LoginButton>
