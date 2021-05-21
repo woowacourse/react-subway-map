@@ -18,6 +18,7 @@ const Container = styled.nav`
 const Logo = styled.img`
   width: 160px;
   height: auto;
+  cursor: pointer;
 `;
 
 const NavItemList = styled.ul`

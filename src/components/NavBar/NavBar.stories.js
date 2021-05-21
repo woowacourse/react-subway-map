@@ -2,13 +2,12 @@ import React from 'react';
 import NavBar from './NavBar';
 
 export default {
-  title: 'Components/NavBar',
+  title: 'components/NavBar',
   component: NavBar,
-  argTypes: { children: { control: 'text' } },
 };
 
 const Template = ({ ...args }) => <NavBar {...args} />;
 
-export const Basic = Template.bind({});
+export const Default = Template.bind({});
 
-Basic.args = {};
+Default.args = {};

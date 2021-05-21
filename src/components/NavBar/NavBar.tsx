@@ -7,7 +7,9 @@ import Styled from './NavBar.styles';
 const NavBar = () => {
   return (
     <Styled.Container>
-      <Styled.Logo src={logo} />
+      <Link to={ROUTE.HOME}>
+        <Styled.Logo src={logo} />
+      </Link>
       <Styled.NavItemList>
         <Link to={ROUTE.STATIONS}>
           <Styled.NavItem>역 관리</Styled.NavItem>
