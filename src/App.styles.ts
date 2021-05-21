@@ -1,0 +1,8 @@
+import { COLOR } from "./constants";
+
+export enum theme {
+  PRIMARY = COLOR.SKY_BLUE_500,
+  MAIN_TEXT_COLOR = COLOR.GRAY_900,
+  SUB_TEXT_COLOR = COLOR.GRAY_500,
+  BACKGROUND_COLOR = COLOR.GRAY_200,
+}
