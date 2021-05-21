@@ -11,14 +11,17 @@ const SignIn = (props) => {
         <Form>
           <Input
             type="email"
+            name="email"
             placeholder="✉️ 이메일을 입력해주세요."
             size={SIZE.MD}
           />
           <Input
             type="password"
+            name="password"
             placeholder="🔒 비밀번호를 입력해주세요."
             size={SIZE.MD}
           />
+          {/* <Validator></Validator> 상태에 따라 조건부 렌더링 */}
           <Button backgroundColor={COLOR.AMBER}>로그인</Button>
         </Form>
         <Link to={ROUTE.SIGN_UP.PATH}>아직 회원이 아니신가요?</Link>

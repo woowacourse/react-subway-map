@@ -9,15 +9,11 @@ export const Content = styled.div`
 
 export const Form = styled.form`
   width: 500px;
-
-  & > div {
-    margin-bottom: 32px;
-  }
 `;
 
-export const Validator = styled.span`
-  display: inline-block;
-  width: 100%;
-  text-align: center;
+export const Validator = styled.div`
+  height: 32px;
+  padding: 0 8px;
+
   color: ${COLOR.RED};
 `;

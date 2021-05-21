@@ -8,6 +8,7 @@ export const ROUTE = {
 };
 
 export const COLOR = {
+  RED: '#d70015',
   AMBER: '#fcca00',
   WHITE: '#ffffff',
   GRAY_100: '#eeeeee',

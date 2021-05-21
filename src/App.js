@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { NavBar } from './components/';
 import { ROUTE } from './constants';
-import { SignIn } from './pages';
+import { SignIn, SignUp } from './pages';
 import { Flex } from './styles';
 
 const Main = styled.main`
@@ -19,6 +19,9 @@ function App() {
           <Route exact path={ROUTE.HOME.PATH}></Route>
           <Route exact path={ROUTE.SIGN_IN.PATH}>
             <SignIn />
+          </Route>
+          <Route exact path={ROUTE.SIGN_UP.PATH}>
+            <SignUp />
           </Route>
         </Switch>
       </Main>
