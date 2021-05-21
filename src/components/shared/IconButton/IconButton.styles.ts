@@ -7,6 +7,4 @@ const Container = styled.button`
   }
 `;
 
-export default {
-  Container,
-};
+export default { Container };

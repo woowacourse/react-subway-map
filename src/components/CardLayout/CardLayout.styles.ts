@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import PALETTE from 'constants/palette';
 
 const Container = styled.div`
   width: 640px;
@@ -20,7 +21,7 @@ const Title = styled.h1`
 const Divider = styled.hr`
   height: 2px;
   border-width: 0px;
-  background-color: #808080;
+  background-color: ${PALETTE.DARK_GRAY};
 `;
 
 export default { Container, Title, Divider };

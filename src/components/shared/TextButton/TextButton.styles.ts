@@ -23,8 +23,8 @@ interface ContainerProps {
 }
 
 const Container = styled.button<ContainerProps>`
-  width: 72px;
-  height: 42px;
+  height: 40px;
+  padding: 0 18px;
   border-radius: 8px;
   font-size: 1rem;
   line-height: 1rem;
