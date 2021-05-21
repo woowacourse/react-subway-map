@@ -1,16 +1,9 @@
 import { LiHTMLAttributes, MouseEventHandler } from "react";
 import Button from "../Button/Button";
-import { FlexAlignCenter } from "../shared/FlexContainer/FlexContainer";
-import {
-  ListItemBlock,
-  ListItemStylesProps,
-  ButtonControls,
-  Circle,
-} from "./ListItem.styles";
+import { FlexAlignCenter } from "../@shared/FlexContainer/FlexContainer";
+import { ListItemBlock, ListItemStylesProps, ButtonControls, Circle } from "./ListItem.styles";
 
-export interface Props
-  extends LiHTMLAttributes<HTMLLIElement>,
-    ListItemStylesProps {
+export interface Props extends LiHTMLAttributes<HTMLLIElement>, ListItemStylesProps {
   onUpdate?: MouseEventHandler<HTMLButtonElement>;
   onDelete?: MouseEventHandler<HTMLButtonElement>;
 }

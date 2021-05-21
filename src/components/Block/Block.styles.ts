@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlexCenter } from "../shared/FlexContainer/FlexContainer";
+import { FlexCenter } from "../@shared/FlexContainer/FlexContainer";
 
 export interface BlockStylesProps {}
 

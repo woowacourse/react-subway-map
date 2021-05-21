@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlexColumnAlignCenter, FlexColumn } from "../shared/FlexContainer/FlexContainer";
+import { FlexColumnAlignCenter, FlexColumn } from "../@shared/FlexContainer/FlexContainer";
 
 export interface LabeledNodeStylesProps {}
 
