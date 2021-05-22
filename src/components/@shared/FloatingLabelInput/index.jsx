@@ -9,7 +9,7 @@ const FloatingLabelInput = ({ id, type, label }) => {
   const handleInputFocus = () => setIsFocused(true);
 
   return (
-    <div className="relative w-full isolate">
+    <div className="relative flex items-center w-full isolate">
       <Input id={id} type={type} onFocus={handleInputFocus} />
       <label
         htmlFor={id}
