@@ -1,7 +1,7 @@
 import StationListItem from './StationListItem';
 
 export default {
-  title: 'StationListItem',
+  title: 'StationPage/StationListItem',
   component: StationListItem,
 };
 

@@ -1,7 +1,7 @@
 import AddStationForm from './AddStationForm';
 
 export default {
-  title: 'AddStationForm',
+  title: 'StationPage/AddStationForm',
   component: AddStationForm,
 };
 

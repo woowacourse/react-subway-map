@@ -4,7 +4,7 @@ import Input from './Input';
 import Lock from '../../../assets/svg/lock.svg';
 
 export default {
-  title: 'Input',
+  title: 'Commons/Input',
   component: Input,
 };
 

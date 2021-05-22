@@ -1,7 +1,7 @@
 import SignUpForm from './SignUpForm';
 
 export default {
-  title: 'SignUpForm',
+  title: 'SignUpPage/SignUpForm',
   component: SignUpForm,
 };
 

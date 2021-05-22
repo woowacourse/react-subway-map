@@ -1,7 +1,7 @@
 import ContentContainer, { Props } from './ContentContainer';
 
 export default {
-  title: 'ContentContainer ',
+  title: 'Commons/ContentContainer ',
   component: ContentContainer,
   argTypes: {},
 };

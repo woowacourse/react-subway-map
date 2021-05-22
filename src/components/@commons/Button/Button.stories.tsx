@@ -1,7 +1,7 @@
 import Button, { Props } from './Button';
 
 export default {
-  title: 'Button',
+  title: 'Commons/Button',
   component: Button,
   argTypes: {},
 };

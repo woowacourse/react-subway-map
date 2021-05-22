@@ -1,7 +1,7 @@
 import SignInForm from './SignInForm';
 
 export default {
-  title: 'SignInForm',
+  title: 'SignInPage/SignInForm',
   component: SignInForm,
 };
 
