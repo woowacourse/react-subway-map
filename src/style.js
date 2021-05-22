@@ -11,13 +11,14 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     min-height: 100vh;
     width: 100%;
-    color: ${COLOR.TEXT_DEFAULT};
+    color: ${COLOR.TEXT.DEFAULT};
   }
 
   #root {
     font-family: 'Noto Sans KR', sans-serif;
     height: 100%;
   }
+
 
   ul {
     list-style-type: none;
