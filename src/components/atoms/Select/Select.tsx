@@ -4,7 +4,7 @@ import { Container } from './Select.styles';
 export interface SelectProps {
   options: IStation[];
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
-  value: string;
+  value: number;
   defaultName?: string;
 }
 

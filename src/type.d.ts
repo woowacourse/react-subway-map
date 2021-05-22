@@ -10,3 +10,13 @@ export interface ILine {
   downStationId: number;
   distance: number;
 }
+
+export interface AddFormProps {
+  stationList: IStation[];
+  onChangeUpStation: React.ChangeEventHandler<HTMLSelectElement>;
+  upStation: number;
+  onChangeDownStation: React.ChangeEventHandler<HTMLSelectElement>;
+  downStation: number;
+  onChangeDistance: React.ChangeEventHandler<HTMLInputElement>;
+  distance: number;
+}

@@ -1,32 +1,20 @@
-import { IStation, ILine } from '../../../type';
+import { ILine, AddFormProps } from '../../../type';
 import { Button, Input, Select } from '../../atoms';
 import { Container, Wrapper } from './SectionAddForm.styles';
 
 export interface SectionAddFormProps {
   lineList: ILine[];
   onChangeLine: React.ChangeEventHandler<HTMLSelectElement>;
-  lineName: string;
-  stationList: IStation[];
-  onChangeUpStation: React.ChangeEventHandler<HTMLSelectElement>;
-  upStation: string;
-  onChangeDownStation: React.ChangeEventHandler<HTMLSelectElement>;
-  downStation: string;
-  onChangeDistance: React.ChangeEventHandler<HTMLInputElement>;
-  distance: number;
+  lineId: number;
   onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement>;
+  addFormProps: AddFormProps;
 }
 
 const SectionAddForm = ({
   lineList,
   onChangeLine,
-  lineName,
-  stationList,
-  onChangeUpStation,
-  upStation,
-  onChangeDownStation,
-  downStation,
-  onChangeDistance,
-  distance,
+  lineId,
+  addFormProps,
   onSubmitSectionInfo,
 }: SectionAddFormProps) => {
   return (
@@ -35,26 +23,26 @@ const SectionAddForm = ({
         defaultName="구간을 추가할 노선을 선택해주세요"
         options={lineList}
         onChange={onChangeLine}
-        value={lineName}
+        value={lineId}
       />
       <Wrapper>
         <Select
           defaultName="이전역"
-          options={stationList}
-          onChange={onChangeUpStation}
-          value={upStation}
+          options={addFormProps.stationList}
+          onChange={addFormProps.onChangeUpStation}
+          value={addFormProps.upStation}
         />
         <Select
           defaultName="다음역"
-          options={stationList}
-          onChange={onChangeDownStation}
-          value={downStation}
+          options={addFormProps.stationList}
+          onChange={addFormProps.onChangeDownStation}
+          value={addFormProps.downStation}
         />
       </Wrapper>
       <Input
         type="number"
-        onChange={onChangeDistance}
-        value={distance}
+        onChange={addFormProps.onChangeDistance}
+        value={addFormProps.distance}
         placeholder="거리 (km)"
         min={1}
         max={100}
