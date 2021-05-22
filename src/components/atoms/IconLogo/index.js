@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { COLOR } from '../../../constants';
+import { COLOR, LAYOUT } from '../../../constants';
 
 export const IconLogo = (props) => {
   const { width, color, ...rest } = props;
@@ -16,9 +16,10 @@ export const IconLogo = (props) => {
 
 IconLogo.propTypes = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 IconLogo.defaultProps = {
-  width: 24,
-  color: COLOR.TEXT_NAVBAR,
+  width: LAYOUT.NAVBAR.LOGO_WIDTH,
+  color: COLOR.TEXT.NAVBAR,
 };

@@ -1,10 +1,12 @@
 export const COLOR = {
   THEME: '#74B8FF',
 
-  TEXT_DEFAULT: '#333',
-  TEXT_NAVBAR: '#333',
-  TEXT_PARAGRAPH: '#666',
-  TEXT_HEADER: '#333',
+  TEXT: {
+    DEFAULT: '#333',
+    NAVBAR: '#333',
+    PARAGRAPH: '#666',
+    HEADER: '#333',
+  },
 
   BORDER_DEFAULT: '#EEEEEE',
   PLACEHOLDER: '#999',
@@ -15,5 +17,9 @@ export const COLOR = {
 };
 
 export const LAYOUT = {
-  NAVBAR_HEIGHT: '5rem;',
+  NAVBAR: {
+    HEIGHT: '6rem;',
+    LOGO_WIDTH: '3.6rem',
+    ITEM_WIDTH: '1.25rem',
+  },
 };
