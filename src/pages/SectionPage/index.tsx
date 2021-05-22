@@ -67,11 +67,9 @@ const SectionPage = () => {
           </Styled.LineDetail>
         )}
       </CardLayout>
-      {isModalOpen && (
-        <Modal title="구간 추가" onClose={closeModal}>
-          <SectionModal lineNames={lineNames} stations={line?.stations} />
-        </Modal>
-      )}
+      <Modal isOpen={isModalOpen} title="구간 추가" onClose={closeModal}>
+        <SectionModal lineNames={lineNames} stations={line?.stations} />
+      </Modal>
     </>
   );
 };

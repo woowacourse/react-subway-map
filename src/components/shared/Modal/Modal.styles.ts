@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
-const Dimmer = styled.div`
+const Dimmer = styled.div<{ isOpen: boolean }>`
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   position: fixed;
   top: 0;
   left: 0;
@@ -9,6 +11,7 @@ const Dimmer = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.25s ease;
   z-index: 999;
 `;
 
@@ -20,7 +23,7 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0 auto;
-  width: 480px;
+  width: 560px;
   min-height: 480px;
   padding: 3.2rem 2.8rem;
   box-sizing: border-box;

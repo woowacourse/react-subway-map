@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 const Container = styled.section`
   width: 640px;
   min-height: 720px;
-  margin: 120px auto;
+  margin: 0 auto;
   padding: 24px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor.defaultWhite};

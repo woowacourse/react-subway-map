@@ -2,18 +2,19 @@ import React from 'react';
 import Styled from './Modal.styles';
 
 interface ModalProps {
+  isOpen: boolean;
   title: string;
   children: React.ReactNode;
   onClose: () => void;
 }
 
-const Modal = ({ title, children, onClose }: ModalProps) => {
+const Modal = ({ isOpen, title, children, onClose }: ModalProps) => {
   const clickDimmer = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
   };
 
   return (
-    <Styled.Dimmer onClick={clickDimmer}>
+    <Styled.Dimmer isOpen={isOpen} onClick={clickDimmer}>
       <Styled.Container>
         <Styled.CloseButton onClick={onClose}>
           <svg viewBox="0 0 40 40">
