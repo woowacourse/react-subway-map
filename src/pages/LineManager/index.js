@@ -5,6 +5,7 @@ import {
   ModalTemplate,
   Input,
   Selector,
+  ColorPicker,
 } from '../../components';
 import { COLOR, ROUTE, SIZE } from '../../constants';
 import { useModal } from '../../hooks';
@@ -42,6 +43,7 @@ const LineAddModal = ({ onClickToClose }) => (
         placeholder="거리"
         size={SIZE.LG}
       />
+      <ColorPicker pickedColor={'test'} onClickColor={() => {}} />
     </Form>
   </ModalTemplate>
 );

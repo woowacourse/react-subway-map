@@ -16,6 +16,19 @@ export const COLOR = {
   GRAY_500: '#333333',
 };
 
+export const LINE_COLOR = {
+  MAGENTA: '#DE59B9',
+  PINK: '#E76E9A',
+  RED: '#E24141',
+  ORANGE: '#F37D3B',
+  YELLOW: '#FBCD58',
+  GREEN: '#73BC6D',
+  CYAN: '#94DACD',
+  BLUE: '#547ce4',
+  NAVY: '#000080',
+  PURPLE: '	#8A2BE2',
+};
+
 export const SIZE = {
   MD: 'medium',
   LG: 'large',

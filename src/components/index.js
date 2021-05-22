@@ -1,5 +1,6 @@
 export { default as NavBar } from './NavBar';
 export { default as ManagementList } from './ManagementList';
+export { default as ColorPicker } from './ColorPicker';
 
 /* Common */
 export { default as PageTemplate } from './@commons/PageTemplate';
