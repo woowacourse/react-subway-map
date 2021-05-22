@@ -7,7 +7,7 @@ interface Props {
   color?: string;
 }
 
-const Add: FC<Props> = ({ width, color = PALETTE.GRAY[400] }) => {
+const Add: FC<Props> = ({ width = '24px', color = PALETTE.GRAY[400] }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
