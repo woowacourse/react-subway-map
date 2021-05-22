@@ -1,9 +1,29 @@
 import React from 'react';
-import { Button, PageTemplate } from '../../components';
-import ModalTemplate from '../../components/commons/ModalTemplate';
-import { COLOR, ROUTE } from '../../constants';
+import { Button, PageTemplate, ModalTemplate, Input } from '../../components';
+import { COLOR, ROUTE, SIZE } from '../../constants';
 import { useModal } from '../../hooks';
-import { ButtonWrapper } from './style';
+import { ButtonWrapper, Form } from './style';
+
+const LineAddModal = ({ onClickToClose }) => (
+  <ModalTemplate title={'노선 생성'} onClickToClose={onClickToClose}>
+    <Form>
+      <Input
+        type="text"
+        name="line-name"
+        label="노선 이름"
+        placeholder="노선 이름"
+        size={SIZE.LG}
+      />
+      <Input
+        type="text"
+        name="line-distance"
+        label="거리"
+        placeholder="거리"
+        size={SIZE.LG}
+      />
+    </Form>
+  </ModalTemplate>
+);
 
 const LineManager = (props) => {
   const { isModalOpen, openModal, handleClickToClose } = useModal();
@@ -18,9 +38,7 @@ const LineManager = (props) => {
         </ButtonWrapper>
         {/* {lines && <ManagementList items={lines}/>} */}
       </PageTemplate>
-      {isModalOpen && (
-        <ModalTemplate onClickToClose={handleClickToClose}></ModalTemplate>
-      )}
+      {isModalOpen && <LineAddModal onClickToClose={handleClickToClose} />}
     </>
   );
 };

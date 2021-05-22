@@ -6,7 +6,10 @@ export const inputSize = {
     height: 40px;
     font-size: var(--size-regular);
   `,
-  [SIZE.LG]: css``,
+  [SIZE.LG]: css`
+    height: 50px;
+    font-size: var(--size-medium);
+  `,
 };
 
 export const Container = styled.div`
@@ -23,7 +26,11 @@ export const Container = styled.div`
     ${({ size }) => inputSize[size]}
     width: 100%;
     padding: 0 8px;
-    border: 1px solid ${COLOR.GRAY_300};
+    border: 1px solid ${COLOR.GRAY_500};
     border-radius: 4px;
+
+    &::placeholder {
+      color: ${COLOR.GRAY_300};
+    }
   }
 `;
