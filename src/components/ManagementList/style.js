@@ -9,6 +9,7 @@ export const Container = styled.ul`
   border: 1px solid ${COLOR.GRAY_100};
   border-radius: 4px;
   overflow: auto;
+  margin-top: 32px;
 
   & > li {
     ${Flex({ justify: 'space-between' })}

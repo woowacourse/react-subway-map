@@ -34,6 +34,11 @@ export const List = styled.ul`
     margin: 0 16px;
     border-radius: 4px;
 
+    & > a {
+      width: 100%;
+      display: inline-block;
+    }
+
     &:hover {
       background: rgba(153, 153, 153, 0.3);
     }
