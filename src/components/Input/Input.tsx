@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react";
-import { ErrorMessage, InputBlock, InputStylesProps } from "./Input.styles";
+import { ErrorMessage, InputBlock } from "./Input.styles";
 
-export interface Props extends InputStylesProps, InputHTMLAttributes<HTMLInputElement> {
+export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
 }
 

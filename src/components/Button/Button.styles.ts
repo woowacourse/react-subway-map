@@ -11,7 +11,7 @@ export type ButtonStylesProps = ButtonBlockProps;
 
 const BUTTON_KIND = {
   rect: {
-    boxShadow: "0.0625rem 0.125rem 0.375rem rgba(0,0,0, 0.2)",
+    boxShadow: "1px 2px 3px rgba(0, 0, 0, 0.2)",
     borderRadius: "0.1875rem",
   },
   eclipse: {

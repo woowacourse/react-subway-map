@@ -1,9 +1,7 @@
 import { HTMLAttributes } from "react";
-import { BlockBlock, BlockStylesProps } from "./Block.styles";
+import { BlockBlock } from "./Block.styles";
 
-export interface Props extends BlockStylesProps, HTMLAttributes<HTMLDivElement> {
-  errorMessage?: string;
-}
+export type Props = HTMLAttributes<HTMLDivElement>;
 
 const Block = ({ ...props }: Props) => {
   return <BlockBlock {...props} />;

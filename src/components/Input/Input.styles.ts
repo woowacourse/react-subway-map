@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-export interface InputStylesProps {}
-
 export const InputBlock = styled.input`
   font-size: 1rem;
   font-weight: 400;
