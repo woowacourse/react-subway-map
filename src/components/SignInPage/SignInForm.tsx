@@ -3,6 +3,7 @@ import * as S from './SignInForm.styles';
 import mailSVG from '../../assets/svg/mail.svg';
 import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
+import SelectInput from '../@commons/SelectInput/SelectInput';
 
 const SignInForm = () => {
   return (
@@ -14,6 +15,10 @@ const SignInForm = () => {
       </S.InputWrapper>
       <S.InputWrapper>
         <Input emoji={lockSVG} placeholder='비밀번호를 입력해주세요' />
+        <S.Message></S.Message>
+      </S.InputWrapper>
+      <S.InputWrapper>
+        <SelectInput initialText='서버를 선택해주세요.'></SelectInput>
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
