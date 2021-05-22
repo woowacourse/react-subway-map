@@ -1,12 +1,5 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-  Route,
-  Link,
-  NavLink,
-  useLocation,
-} from 'react-router-dom';
+import { useContext, useRef } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import NavBar from './components/NavBar/NavBar';
@@ -15,8 +8,15 @@ import PATH from './constants/path';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
+import { SnackBarContext } from './components/SnackBarProvider/SnackBarProvider';
+
+interface a {
+  [key: string]: (message: string) => void;
+}
 
 const App = () => {
+  const { addMessage }: a = useContext(SnackBarContext);
+
   return (
     <Router>
       <Header backgroundColor="#0dd273" color="#ffffff">
@@ -43,6 +43,14 @@ const App = () => {
           <Route path={PATH.SECTIONS}>SECTIONS</Route>
         </Switch>
       </Main>
+      <button
+        type="button"
+        onClick={() => {
+          addMessage(`스낵바`);
+        }}
+      >
+        스낵바입니다
+      </button>
     </Router>
   );
 };
