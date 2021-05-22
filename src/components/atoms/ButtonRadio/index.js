@@ -1,16 +1,16 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { RadioButton, Border, CheckMark } from './style';
+import { Container, RadioButton, CheckMark } from './style';
 
 export const ButtonRadio = (props) => {
   const { isChecked, value, name, onChange } = props;
 
   return (
-    <Border>
+    <Container>
       <RadioButton type="radio" name={name} value={value} checked={isChecked} onChange={onChange} />
       <CheckMark />
-    </Border>
+    </Container>
   );
 };
 

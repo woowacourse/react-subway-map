@@ -36,7 +36,7 @@ export const SelectServer = () => {
               />
             ))}
           </ServerList>
-          <ButtonSquare>선택!</ButtonSquare>
+          <ButtonSquare>확인</ButtonSquare>
         </Form>
       </Section>
     </Modal>

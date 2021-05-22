@@ -2,21 +2,21 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { ButtonRadio } from '../..';
-import { RadioButtonLabel, Content, Item, Name, Nickname, Image } from './style';
+import { Label, Content, Item, Name, Nickname, Image } from './style';
 
 export const SelectServerItem = (props) => {
   const { ownerName, ownerNickname, ownerImgSrc, isChecked, value, name, onChange, ...rest } = props;
 
   return (
     <Item {...rest}>
-      <RadioButtonLabel>
+      <Label>
         <ButtonRadio isChecked={isChecked} value={value} name={name} onChange={onChange} />
         <Content>
-          <Name>{ownerName}</Name>
           <Nickname>{ownerNickname}</Nickname>
+          <Name>{ownerName}</Name>
           <Image src={ownerImgSrc} alt={ownerNickname} />
         </Content>
-      </RadioButtonLabel>
+      </Label>
     </Item>
   );
 };

@@ -6,7 +6,7 @@ export const Item = styled.li`
   margin: 1rem 1.75rem;
 `;
 
-export const RadioButtonLabel = styled.label`
+export const Label = styled.label`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,39 +15,28 @@ export const RadioButtonLabel = styled.label`
   cursor: pointer;
 `;
 
-export const RadioButton = styled.input`
-  display: none;
-
-  &:checked + span {
-    display: inline-block;
-    width: calc(100%-0.5rem);
-    height: calc(100%-0.5rem);
-    display: flex;
-    flex-direction: center;
-    align-items: center;
-    background-color: ${COLOR.THEME};
-  }
-`;
-
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: ${COLOR.TEXT.PARAGRAPH};
   width: 100%;
 `;
 
-export const Name = styled.span`
-  margin: 1rem 0 0.25rem;
-  font-size: 1rem;
+export const Nickname = styled.span`
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
 `;
 
-export const Nickname = styled.span`
-  margin: 0.25rem 0 1rem;
-  font-size: 0.85rem;
+export const Name = styled.span`
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 200;
 `;
 
 export const Image = styled.img`
-  width: 6rem;
+  width: 5.5rem;
 `;

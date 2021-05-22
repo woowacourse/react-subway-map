@@ -1,5 +1,7 @@
 export const COLOR = {
   THEME: '#74B8FF',
+  THEME_LIGHT: '#AAD4FF',
+  THEME_STRONG: '#44A0FF',
 
   TEXT: {
     DEFAULT: '#333',
