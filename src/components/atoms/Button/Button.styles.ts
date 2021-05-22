@@ -14,7 +14,6 @@ const buttonThemeTable = {
   `,
 };
 
-
 const Container = styled.button`
   outline: none;
   border: none;
@@ -24,6 +23,10 @@ const Container = styled.button`
   border-radius: 4px;
 
   ${({ buttonTheme }: { buttonTheme: ButtonTheme }) => buttonThemeTable[buttonTheme]}
+  
+  &:hover {
+    filter: brightness(0.9);
+  }
 
   &[disabled] {
     cursor: not-allowed;
