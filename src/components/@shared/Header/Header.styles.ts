@@ -1,6 +1,6 @@
-import { THEME_COLOR } from './../../../constants/appInfo';
+import { THEME_COLOR } from '../../../constants/appInfo';
 import styled from 'styled-components';
-import FlexContainer from '../../common/FlexContainer/FlexContainer';
+import FlexContainer from '../../@common/FlexContainer/FlexContainer';
 
 export const StyledHeader = styled.header`
   display: flex;
