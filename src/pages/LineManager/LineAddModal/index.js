@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   ModalTemplate,
@@ -50,5 +51,9 @@ const LineAddModal = ({ onClickToClose }) => (
     </Form>
   </ModalTemplate>
 );
+
+LineAddModal.propType = {
+  onClickToClose: PropTypes.func.isRequired,
+};
 
 export default LineAddModal;
