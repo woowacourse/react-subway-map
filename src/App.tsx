@@ -3,12 +3,12 @@ import { ThemeProvider } from "styled-components";
 
 import { theme } from "./App.styles";
 import GlobalStyle from "./Global.styles";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import SignupPage from "./pages/SignupPage/SingupPage";
-import LineManagementPage from "./pages/LineManagementPage/LineManagementPage";
-import SectionManagementPage from "./pages/SectionManagementPage/SectionManagementPage";
-import StationManagementPage from "./pages/StationManagementPage/StationManagementPage";
-import SubwayMapPage from "./pages/SubwayMapPage/SubwayMapPage";
+import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Signup/SingupPage";
+import LineManagementPage from "./pages/LineManagement/LineManagementPage";
+import SectionManagementPage from "./pages/SectionManagement/SectionManagementPage";
+import StationManagementPage from "./pages/StationManagement/StationManagementPage";
+import SubwayMapPage from "./pages/SubwayMap/SubwayMapPage";
 
 enum PAGE_PATH {
   HOME = "/",
