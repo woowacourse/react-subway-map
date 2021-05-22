@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLOR, LAYOUT } from '../../../constants';
-import { Button } from '../../';
-import '../../../fonts.css';
+import { Button } from '../..';
+import '../../../assets/fonts.css';
 
 export const Nav = styled.nav`
   display: flex;
