@@ -1,8 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import { normalize } from "styled-normalize";
 
-const GlobalStyle = createGlobalStyle`
-  ${normalize}
+import { COLOR } from "./constants";
+
+const customNormalize = css`
   html,
   body,
   ul {
@@ -10,9 +11,8 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     font-size: 16px;
     padding: 0;
-    font-family: 'Noto Sans KR', sans-serif;
   }
-  
+
   button {
     background: none;
     border: none;
@@ -20,13 +20,36 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  li, ul {
+  li,
+  ul {
     list-style: none;
     padding: 0;
   }
 
   * {
     box-sizing: border-box;
+  }
+
+  a {
+    text-decoration: none;
+  }
+`;
+
+const GlobalStyle = createGlobalStyle`
+  ${normalize}
+  ${customNormalize}
+
+  html,
+  body {
+    font-family: 'BMJUA';
+    background-color: ${COLOR.GRAY_200};
+  }
+
+  @font-face {
+    font-family: 'BMJUA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
   }
 `;
 
