@@ -10,10 +10,18 @@ const App = () => (
   <BrowserRouter>
     <Header />
     <Switch>
-      <Route exact path={["/", "/login"]} component={Login} />
-      <Route exact path="/signup" component={Signup} />
-      <Route exact path="/stations" component={Stations} />
-      <Route exact path="/lines" component={Lines} />
+      <Route exact path={["/", "/login"]}>
+        <Login />
+      </Route>
+      <Route exact path="/signup">
+        <Signup />
+      </Route>
+      <Route exact path="/stations">
+        <Stations />
+      </Route>
+      <Route exact path="/lines">
+        <Lines />
+      </Route>
       <Redirect path="*" to="/" />
     </Switch>
   </BrowserRouter>
