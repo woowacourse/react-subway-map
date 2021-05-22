@@ -21,6 +21,7 @@ import { Icon, Heading1 } from './SignupPage.style';
 
 const DEBOUNCE_DELAY = 500;
 
+// TODO: margin bottom 주기
 const SignupPage = () => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
