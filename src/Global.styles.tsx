@@ -1,5 +1,6 @@
 import { Global, css } from '@emotion/core';
 import emotionNormalize from 'emotion-normalize';
+import { COLOR } from './constants/styleConstant';
 
 const globalStyles = css`
   ${emotionNormalize}
@@ -14,6 +15,7 @@ const globalStyles = css`
     background: white;
     min-height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
+    color: ${COLOR.TEXT_COLOR};
   }
 
   input {

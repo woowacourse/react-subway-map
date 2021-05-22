@@ -10,6 +10,7 @@ export const COLOR = {
   GRAY_400: '#AAAAAA',
   GRAY_700: '#888888',
   GRAY_800: '#555555',
+  TEXT_COLOR: '#444444',
 };
 
 export const SIZE = {
