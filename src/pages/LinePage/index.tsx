@@ -41,20 +41,27 @@ const stations = [
 
 const LinePage = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedLine, setSelectedLine] = useState<{ name: string; color: string }>();
 
   const closeModal = () => {
     setModalOpen(false);
+    setSelectedLine(undefined);
+  };
+
+  const createLine = () => {
+    setModalOpen(true);
+  };
+
+  const editLine = (line: { name: string; color: string }) => {
+    setSelectedLine(line);
+    setModalOpen(true);
   };
 
   return (
     <>
       <CardLayout title={'노선 관리'}>
         <Styled.AddButtonWrapper>
-          <TextButton
-            text="노선 추가"
-            styleType={ButtonType.FILLED}
-            onClick={() => setModalOpen(true)}
-          />
+          <TextButton text="노선 추가" styleType={ButtonType.FILLED} onClick={createLine} />
         </Styled.AddButtonWrapper>
         <Styled.LinesContainer>
           {lines.map(({ name, color }) => (
@@ -62,7 +69,7 @@ const LinePage = () => {
               <Styled.Color color={color}></Styled.Color>
               {name}
               <Styled.ButtonsContainer>
-                <IconButton>
+                <IconButton onClick={() => editLine({ name, color })}>
                   <Styled.Icon src={editIcon} alt="edit" />
                 </IconButton>
                 <IconButton>
@@ -75,7 +82,7 @@ const LinePage = () => {
       </CardLayout>
 
       <Modal isOpen={isModalOpen} title="노선 생성" onClose={closeModal}>
-        <LineModal stations={stations} />
+        <LineModal selectedLine={selectedLine} stations={stations} />
       </Modal>
     </>
   );

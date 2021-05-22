@@ -4,10 +4,15 @@ import Styled from './IconButton.styles';
 interface IconButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
-const IconButton = ({ type, children }: IconButtonProps) => {
-  return <Styled.Container type={type}>{children}</Styled.Container>;
+const IconButton = ({ type, children, onClick }: IconButtonProps) => {
+  return (
+    <Styled.Container type={type} onClick={onClick}>
+      {children}
+    </Styled.Container>
+  );
 };
 
 export default IconButton;

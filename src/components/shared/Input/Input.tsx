@@ -3,14 +3,16 @@ import Styled from './Input.styles';
 
 interface InputProps {
   type: string;
+  value?: string;
   labelText: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ type, labelText }: InputProps) => {
+const Input = ({ type, value, labelText, onChange }: InputProps) => {
   return (
     <Styled.Label>
       {labelText}
-      <Styled.Input type={type}></Styled.Input>
+      <Styled.Input type={type} value={value} onChange={onChange}></Styled.Input>
     </Styled.Label>
   );
 };
