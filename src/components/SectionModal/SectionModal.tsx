@@ -6,11 +6,12 @@ import { ButtonType } from 'types';
 import TextButton from 'components/shared/TextButton/TextButton';
 
 interface SectionModalProps {
+  targetLine?: { name: string; color: string; stations: string[] };
   lineNames: string[];
   stations: string[] | undefined;
 }
 
-const SectionModal = ({ lineNames, stations = [] }: SectionModalProps) => {
+const SectionModal = ({ targetLine, lineNames, stations = [] }: SectionModalProps) => {
   const selectLine = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(event.target.value);
   };
@@ -28,7 +29,7 @@ const SectionModal = ({ lineNames, stations = [] }: SectionModalProps) => {
       <Styled.Container>
         <Dropdown
           labelText="노선 선택"
-          defaultOption="노선 선택"
+          defaultOption={targetLine?.name || '노선 선택'}
           options={lineNames}
           onSelect={selectLine}
         />

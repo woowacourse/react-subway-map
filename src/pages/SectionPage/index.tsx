@@ -28,12 +28,12 @@ const SectionPage = () => {
     setModalOpen(false);
   };
 
-  const lineNames = lines.map((line) => line.name);
-
   const selectLine = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const targetLine = lines.find((line) => line.name === event.target.value);
     setLine(targetLine);
   };
+
+  const lineNames = lines.map((line) => line.name);
 
   return (
     <>
@@ -68,7 +68,7 @@ const SectionPage = () => {
         )}
       </CardLayout>
       <Modal isOpen={isModalOpen} title="구간 추가" onClose={closeModal}>
-        <SectionModal lineNames={lineNames} stations={line?.stations} />
+        <SectionModal targetLine={line} lineNames={lineNames} stations={line?.stations} />
       </Modal>
     </>
   );
