@@ -7,13 +7,13 @@ export const Form = styled.form`
 
 export const SelectorWrapper = styled.div`
   ${Flex({ justify: 'space-between', items: 'center' })}
-  margin-top: 24px;
 
   & > div {
     width: 40%;
   }
 
   & > span {
+    margin-top: 24px;
     font-size: var(--size-semi-large);
   }
 `;

@@ -13,6 +13,8 @@ export const selectorSize = {
 };
 
 export const Container = styled.div`
+  width: 100%;
+
   & > label {
     position: relative;
     top: 10px;

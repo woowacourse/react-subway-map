@@ -22,6 +22,7 @@ const LineAddModal = ({ onClickToClose }) => (
       <SelectorWrapper>
         <Selector
           name="line-upStation"
+          label="상행 종점"
           defaultOption="상행 종점"
           options={[]}
           size={SIZE.LG}
@@ -29,6 +30,7 @@ const LineAddModal = ({ onClickToClose }) => (
         <span>↔️</span>
         <Selector
           name="line-downStation"
+          label="하행 종점"
           defaultOption="하행 종점"
           options={[]}
           size={SIZE.LG}

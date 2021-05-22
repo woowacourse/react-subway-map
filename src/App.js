@@ -2,7 +2,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { NavBar } from './components/';
 import { ROUTE } from './constants';
-import { SignIn, SignUp, StationManager, LineManager } from './pages';
+import {
+  SignIn,
+  SignUp,
+  StationManager,
+  LineManager,
+  SectionManager,
+} from './pages';
 import { Flex } from './styles';
 
 const Main = styled.main`
@@ -28,6 +34,9 @@ function App() {
           </Route>
           <Route exact path={ROUTE.LINE_MANAGE.PATH}>
             <LineManager />
+          </Route>
+          <Route exact path={ROUTE.SECTION_MANAGE.PATH}>
+            <SectionManager />
           </Route>
         </Switch>
       </Main>
