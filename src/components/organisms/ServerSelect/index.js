@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-import { ButtonSquare, Modal, Section, SelectServerItem } from '../..';
+import { ButtonSquare, Modal, Section, ServerSelectItem } from '../..';
 import { ServerList, Form } from './style';
 import { ROUTE, SERVER_LIST } from '../../../constants';
 
-export const SelectServer = () => {
+export const ServerSelect = () => {
   const [server, setServer] = useState(null);
   const history = useHistory();
 
@@ -25,7 +25,7 @@ export const SelectServer = () => {
         <Form onSubmit={handleServerSubmit}>
           <ServerList>
             {SERVER_LIST.map((owner) => (
-              <SelectServerItem
+              <ServerSelectItem
                 key={owner.id}
                 ownerName={owner.name}
                 ownerNickname={owner.nickName}
@@ -43,6 +43,6 @@ export const SelectServer = () => {
   );
 };
 
-SelectServer.propTypes = {
+ServerSelect.propTypes = {
   children: PropTypes.node,
 };

@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { ButtonRadio } from '../..';
 import { Label, Content, Item, Name, Nickname, Image } from './style';
 
-export const SelectServerItem = (props) => {
+export const ServerSelectItem = (props) => {
   const { ownerName, ownerNickname, ownerImgSrc, isChecked, value, name, onChange, ...rest } = props;
 
   return (
@@ -21,7 +21,7 @@ export const SelectServerItem = (props) => {
   );
 };
 
-SelectServerItem.propTypes = {
+ServerSelectItem.propTypes = {
   isChecked: PropTypes.bool,
   value: PropTypes.node,
   name: PropTypes.string,
