@@ -3,7 +3,7 @@ import { Container } from './Input.styles';
 export interface InputProps {
   placeholder: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  value: string;
+  value: string | number;
   type?: string;
   min?: number;
   max?: number;

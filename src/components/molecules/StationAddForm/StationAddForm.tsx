@@ -4,17 +4,23 @@ import { Input, Button } from '../../atoms';
 export interface StationAddFormProps {
   stationName: string;
   onChangeStationName: React.ChangeEventHandler<HTMLInputElement>;
-  onSubmitStationName: React.FormEventHandler<HTMLFormElement>;
+  onSubmitStationInfo: React.FormEventHandler<HTMLFormElement>;
 }
 
 const StationAddForm = ({
   stationName,
   onChangeStationName,
-  onSubmitStationName,
+  onSubmitStationInfo,
 }: StationAddFormProps) => {
   return (
-    <Container onSubmit={onSubmitStationName}>
-      <Input placeholder="역 이름" onChange={onChangeStationName} value={stationName} />
+    <Container onSubmit={onSubmitStationInfo}>
+      <Input
+        placeholder="역 이름"
+        onChange={onChangeStationName}
+        value={stationName}
+        minLength={2}
+        maxLength={20}
+      />
       <Button>추가</Button>
     </Container>
   );
