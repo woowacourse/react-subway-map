@@ -8,10 +8,10 @@ export interface Props extends LiHTMLAttributes<HTMLLIElement>, ListItemStylesPr
   onDelete?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ListItem = ({ circleColor, onUpdate, onDelete, children }: Props) => (
-  <ListItemBlock>
+const ListItem = ({ circleColor, onUpdate, onDelete, children, ...props }: Props) => (
+  <ListItemBlock {...props}>
     <FlexAlignCenter>
-      <Circle circleColor={circleColor} />
+      {circleColor && <Circle circleColor={circleColor} />}
       <div>{children}</div>
     </FlexAlignCenter>
     <ButtonControls>
