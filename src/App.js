@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { NavBar } from './components/';
 import { ROUTE } from './constants';
-import { SignIn, SignUp, StationManager } from './pages';
+import { SignIn, SignUp, StationManager, LineManager } from './pages';
 import { Flex } from './styles';
 
 const Main = styled.main`
   ${Flex({ justify: 'center', items: 'center' })}
-  height: 100%;
+  height: calc(100% - 64px);
 `;
 
 function App() {
@@ -25,6 +25,9 @@ function App() {
           </Route>
           <Route exact path={ROUTE.STATION_MANAGE.PATH}>
             <StationManager />
+          </Route>
+          <Route exact path={ROUTE.LINE_MANAGE.PATH}>
+            <LineManager />
           </Route>
         </Switch>
       </Main>
