@@ -3,7 +3,11 @@ import PALETTE from 'constants/palette';
 
 const TopContaier = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+`;
+
+const DropdownWrapper = styled.div`
+  flex: 1;
 `;
 
 const AddButtonWrapper = styled.div`
@@ -64,6 +68,7 @@ const Icon = styled.img`
 
 export default {
   TopContaier,
+  DropdownWrapper,
   AddButtonWrapper,
   AddButton,
   LineDetail,

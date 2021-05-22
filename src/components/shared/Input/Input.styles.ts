@@ -3,7 +3,7 @@ import PALETTE from 'constants/palette';
 
 const Input = styled.input`
   width: 100%;
-  height: 40px;
+  height: 44px;
   border: 1px solid ${PALETTE.DARK_GRAY};
   border-radius: 4px;
   padding: 0 8px;

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import IconButton from 'components/shared/IconButton/IconButton';
-import Styled from './styles';
+import Modal from 'components/shared/Modal/Modal';
+import SectionModal from 'components/SectionModal/SectionModal';
 import deleteIcon from 'assets/delete.png';
+import Styled from './styles';
 
 const lines = [
   { name: '1호선', color: '#9ca3af', stations: ['노량진', '신도림', '몰라요'] },
@@ -20,6 +22,11 @@ const lines = [
 
 const SectionPage = () => {
   const [line, setLine] = useState<{ name: string; color: string; stations: string[] }>();
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const lineNames = lines.map((line) => line.name);
 
@@ -29,29 +36,43 @@ const SectionPage = () => {
   };
 
   return (
-    <CardLayout title="구간 관리">
-      <Styled.TopContaier>
-        <Dropdown defaultOption="노선 선택" options={lineNames} onSelect={selectLine} />
-        <Styled.AddButtonWrapper>
-          <Styled.AddButton>+</Styled.AddButton>
-        </Styled.AddButtonWrapper>
-      </Styled.TopContaier>
-      {line && (
-        <Styled.LineDetail>
-          <Styled.LineName color={line.color}>{line.name}</Styled.LineName>
-          <Styled.SectionsContainer>
-            {line.stations.map((station) => (
-              <Styled.SectionItem key={station}>
-                {station}
-                <IconButton>
-                  <Styled.Icon src={deleteIcon} alt="delete" />
-                </IconButton>
-              </Styled.SectionItem>
-            ))}
-          </Styled.SectionsContainer>
-        </Styled.LineDetail>
+    <>
+      <CardLayout title="구간 관리">
+        <Styled.TopContaier>
+          <Styled.DropdownWrapper>
+            <Dropdown
+              labelText="노선 선택"
+              defaultOption="노선 선택"
+              options={lineNames}
+              onSelect={selectLine}
+            />
+          </Styled.DropdownWrapper>
+          <Styled.AddButtonWrapper>
+            <Styled.AddButton onClick={() => setModalOpen(true)}>+</Styled.AddButton>
+          </Styled.AddButtonWrapper>
+        </Styled.TopContaier>
+        {line && (
+          <Styled.LineDetail>
+            <Styled.LineName color={line.color}>{line.name}</Styled.LineName>
+            <Styled.SectionsContainer>
+              {line.stations.map((station) => (
+                <Styled.SectionItem key={station}>
+                  {station}
+                  <IconButton>
+                    <Styled.Icon src={deleteIcon} alt="delete" />
+                  </IconButton>
+                </Styled.SectionItem>
+              ))}
+            </Styled.SectionsContainer>
+          </Styled.LineDetail>
+        )}
+      </CardLayout>
+      {isModalOpen && (
+        <Modal title="구간 추가" onClose={closeModal}>
+          <SectionModal lineNames={lineNames} stations={line?.stations} />
+        </Modal>
       )}
-    </CardLayout>
+    </>
   );
 };
 

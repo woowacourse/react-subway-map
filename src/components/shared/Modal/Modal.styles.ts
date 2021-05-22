@@ -28,7 +28,6 @@ const Container = styled.div`
   border: 1px solid #dddddd;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 
@@ -56,4 +55,6 @@ const CloseButton = styled.div`
   }
 `;
 
-export default { Dimmer, Container, CloseButton };
+const Title = styled.h2``;
+
+export default { Dimmer, Container, CloseButton, Title };
