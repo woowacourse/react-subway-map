@@ -13,7 +13,7 @@ export const InputContainer = styled.div`
 export const Label = styled.div`
   position: absolute;
   left: 0.5rem;
-  top: -0.5rem;
+  top: -0.75rem;
   background-color: white;
   padding: 0 0.5rem;
   color: ${COLOR.GRAY_400};
