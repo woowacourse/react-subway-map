@@ -2,11 +2,12 @@ import React from 'react';
 import Styled from './IconButton.styles';
 
 interface IconButtonProps {
+  type?: 'button' | 'submit' | 'reset' | undefined;
   children: React.ReactNode;
 }
 
-const IconButton = ({ children }: IconButtonProps) => {
-  return <Styled.Container>{children}</Styled.Container>;
+const IconButton = ({ type, children }: IconButtonProps) => {
+  return <Styled.Container type={type}>{children}</Styled.Container>;
 };
 
 export default IconButton;

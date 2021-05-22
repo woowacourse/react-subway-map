@@ -15,7 +15,7 @@ const InputWrapper = styled.div`
 const StationsContainer = styled.ul`
   margin-top: 28px;
   height: 440px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const ButtonsContainer = styled.div`
@@ -37,6 +37,21 @@ const StationItem = styled.li`
   line-height: 48px;
 `;
 
+const EditingStationForm = styled.form`
+  display: flex;
+  width: 100%;
+`;
+
+const EditingStationInput = styled.input`
+  width: 100%;
+  margin-right: 4px;
+  padding: 8px;
+  border: 1px solid ${PALETTE.LIGHT_GRAY};
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+`;
+
 export default {
   InputContainer,
   InputWrapper,
@@ -44,4 +59,6 @@ export default {
   StationsContainer,
   Icon,
   StationItem,
+  EditingStationForm,
+  EditingStationInput,
 };
