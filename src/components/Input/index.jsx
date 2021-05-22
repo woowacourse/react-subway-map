@@ -5,7 +5,7 @@ const Input = ({ type, placeholder, onFocus }) => (
   <input
     type={type}
     placeholder={placeholder}
-    className="px-4 py-2 w-full bg-transparent border rounded outline-none focus:ring-yellow-300 focus:ring-2"
+    className="px-4 py-2 w-full bg-transparent rounded outline-none ring-gray-300 focus:ring-yellow-300 ring-1 focus:ring-2"
     onFocus={onFocus}
   />
 );
