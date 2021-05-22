@@ -8,8 +8,10 @@ export const theme = {
         active: '#f5c600',
       },
       secondary: {
+        default: 'rgba(0, 0, 0, 0.3)',
         active: 'rgba(0, 0, 0, 0.07)',
       },
+      white: '#ffffff',
     },
     text: {
       primary: '#404040',
