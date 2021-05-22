@@ -4,7 +4,7 @@ export const Navigation = styled.nav`
   display: flex;
   justify-content: center;
 
-  button {
+  a:not(:last-child) {
     margin-right: 0.5rem;
   }
 `;
