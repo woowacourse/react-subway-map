@@ -7,7 +7,7 @@ interface HeaderProps
   extends Omit<HTMLAttributes<HTMLElement>, 'color' | 'translate'>,
     Properties {}
 
-const Header = ({ children, backgroundColor }: HeaderProps) => {
+const Header = ({ children, backgroundColor, color = 'white' }: HeaderProps) => {
   const [isAppear, setIsAppear] = useState(true);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Header = ({ children, backgroundColor }: HeaderProps) => {
   }, []);
 
   return (
-    <Container backgroundColor={backgroundColor} isAppear={isAppear}>
+    <Container backgroundColor={backgroundColor} color={color} isAppear={isAppear}>
       <Inner>{children}</Inner>
     </Container>
   );

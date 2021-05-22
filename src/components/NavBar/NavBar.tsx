@@ -13,7 +13,7 @@ const NavBar = styled.nav`
       background-color: rgba(0, 0, 0, 0.1);
     }
 
-    &:active {
+    &.active {
       background-color: rgba(0, 0, 0, 0.2);
     }
 

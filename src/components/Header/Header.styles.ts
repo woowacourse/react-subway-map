@@ -32,6 +32,7 @@ const Container = styled.div<ContainerProps>`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
+  color: ${({ color }) => color};
 
   animation: ${({ isAppear }) =>
     isAppear

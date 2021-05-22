@@ -1,4 +1,12 @@
-import { BrowserRouter as Router, Switch, Redirect, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+  Link,
+  NavLink,
+  useLocation,
+} from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import NavBar from './components/NavBar/NavBar';
@@ -6,19 +14,21 @@ import Main from './components/shared/Main/Main';
 import PATH from './constants/path';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
-import TextLogo from './assets/images/ww-subway-logo-text.svg';
+import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
 
 const App = () => {
   return (
     <Router>
-      <Header backgroundColor="#0dd273">
+      <Header backgroundColor="#0dd273" color="#ffffff">
         <Link to={PATH.ROOT}>
-          <img src={TextLogo} />
+          <TextLogo height="2rem" />
         </Link>
         <NavBar>
-          <Link to={PATH.STATIONS}>역관리</Link>
-          <Link to={PATH.LINES}>노선관리</Link>
-          <Link to={PATH.SECTIONS}>구간관리</Link>
+          <NavLink to={PATH.STATIONS}>역관리</NavLink>
+          <NavLink to={PATH.LINES}>노선관리</NavLink>
+          <NavLink to={PATH.SECTIONS}>구간관리</NavLink>
+          <NavLink to={PATH.LOGIN}>전체보기</NavLink>
+          <NavLink to={PATH.LOGIN}>로그인</NavLink>
         </NavBar>
       </Header>
       <Main>
