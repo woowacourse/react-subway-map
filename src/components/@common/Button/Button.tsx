@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { THEME_COLOR } from '../../../constants/appInfo';
+import PALETTE from '../../../constants/palette';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: 'square' | 'round';
@@ -33,7 +34,7 @@ const Button = styled.button<Props>`
   ${({ buttonType }) => buttonType && buttonTypeCSS[buttonType]}
   ${({ isColored }) => isColored && coloredCSS}
 
-  &:hover::after {
+  &:enabled:hover::after {
     content: '';
     display: block;
     position: absolute;
@@ -42,6 +43,12 @@ const Button = styled.button<Props>`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.07);
+  }
+
+  &:disabled {
+    ${({ isColored }) => isColored && `background-color: ${PALETTE.GRAY[200]};`}
+    color: ${PALETTE.GRAY[400]};
+    cursor: default;
   }
 `;
 

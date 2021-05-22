@@ -30,3 +30,14 @@ TransparentRound.args = {
   buttonType: 'round',
   isColored: false,
 };
+
+export const DisabledColored = Template.bind({});
+DisabledColored.args = {
+  disabled: true,
+};
+
+export const DisabledTransparent = Template.bind({});
+DisabledTransparent.args = {
+  disabled: true,
+  isColored: false,
+};
