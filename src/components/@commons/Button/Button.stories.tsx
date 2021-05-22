@@ -1,4 +1,3 @@
-import React from 'react';
 import Button, { Props } from './Button';
 
 export default {

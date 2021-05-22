@@ -2,6 +2,7 @@ import { ContentContainer } from './components/@commons/ContentContainer/Content
 import Navigation from './components/@commons/Navigation/Navigation';
 import GlobalStyles from './Global.styles';
 import * as S from './App.styles';
+import SignInForm from './components/SignInPage/SignInForm';
 
 const App = () => {
   return (
@@ -10,7 +11,9 @@ const App = () => {
       <S.App>
         <Navigation />
         <S.Container>
-          <ContentContainer hatColor='MINT_500'>테스트</ContentContainer>
+          <ContentContainer hatColor='MINT_500'>
+            <SignInForm />
+          </ContentContainer>
         </S.Container>
       </S.App>
     </>

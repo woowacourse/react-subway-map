@@ -11,3 +11,8 @@ export const COLOR = {
   GRAY_700: '#888888',
   GRAY_800: '#555555',
 };
+
+export const SIZE = {
+  PAGE_MAX_WIDTH: '80rem',
+  PAGE_MIN_WIDTH: '40rem',
+};

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { COLOR } from '../../../constants/styleConstant';
+import { COLOR, SIZE } from '../../../constants/styleConstant';
 
 export const Navigation = styled.nav`
   width: 100%;
@@ -17,7 +17,7 @@ export const Navigation = styled.nav`
 
 export const Main = styled.div`
   width: 100%;
-  max-width: 1280px;
+  max-width: ${SIZE.PAGE_MAX_WIDTH};
   height: 100%;
   display: flex;
   align-items: center;
@@ -27,6 +27,9 @@ export const Main = styled.div`
 export const Logo = styled.h1`
   margin: 0;
   font-size: 2.5rem;
+  a {
+    cursor: pointer;
+  }
 `;
 
 export const Menu = styled.ul`
