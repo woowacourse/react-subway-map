@@ -1,7 +1,7 @@
-import { HTMLAttributes } from 'react';
+import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface ColorRadioInputProps extends HTMLAttributes<HTMLInputElement> {
+interface ColorRadioInputProps extends InputHTMLAttributes<HTMLInputElement> {
   radioColor: string;
 }
 

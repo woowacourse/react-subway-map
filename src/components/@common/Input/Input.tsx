@@ -1,8 +1,8 @@
-import React, { FC, HTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
+import React, { FC, InputHTMLAttributes } from 'react';
 import { LabelIcon, LabelText, StyledLabel } from './Input.styles';
 
-interface Props extends HTMLAttributes<HTMLInputElement> {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   labelText?: string;
   labelIcon?: React.ReactNode;
 }
