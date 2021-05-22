@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 
   /* Box Shadow */
   --shadow-page: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-button: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px
+  --shadow-button: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px
 }
 
 /* Universal tags */

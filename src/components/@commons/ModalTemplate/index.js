@@ -11,7 +11,9 @@ const ModalTemplate = ({ title, children, onClickToClose }) => (
   <ModalPortal>
     <Dimmer onClick={(event) => onClickToClose(event)}>
       <Container>
-        <button onClick={(event) => onClickToClose(event)}>✖️</button>
+        <button type="button" onClick={(event) => onClickToClose(event)}>
+          ✖️
+        </button>
         <Title>{title}</Title>
         <Content>{children}</Content>
       </Container>

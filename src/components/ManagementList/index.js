@@ -5,7 +5,9 @@ import { Container } from './style';
 const Item = ({ name, onDeleteItem }) => (
   <li>
     <span>{name}</span>
-    <button onClick={onDeleteItem}>🗑</button>
+    <button type="button" onClick={onDeleteItem}>
+      🗑
+    </button>
   </li>
 );
 
