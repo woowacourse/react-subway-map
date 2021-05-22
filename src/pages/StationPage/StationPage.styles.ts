@@ -24,7 +24,7 @@ export const HeaderText = styled.h2`
   font-size: 2rem;
 `;
 
-export const Form = styled.form`
+export const AddForm = styled.form`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -35,13 +35,13 @@ export const InputWrapper = styled.div`
   flex: 1;
 `;
 
-export const StationList = styled.ul`
+export const List = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
 `;
 
-export const StationItem = styled.li`
+export const Item = styled.li`
   padding: 0.3em 0;
   display: flex;
   justify-content: space-between;
@@ -53,9 +53,28 @@ export const StationItem = styled.li`
   }
 `;
 
-export const StationName = styled.span`
+export const Name = styled.span`
   margin-left: 0.8em;
   font-size: 1.1rem;
 `;
 
-export const StationOptionWrapper = styled.div``;
+export const OptionWrapper = styled.div``;
+
+export const EditForm = styled.form`
+  margin-bottom: 1rem;
+`;
+
+export const ModalTitle = styled.h3`
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 3rem;
+`;
+
+export const ButtonWrapper = styled.div`
+  text-align: right;
+  margin-top: 2rem;
+
+  & button {
+    margin: 0 0.7rem;
+  }
+`;
