@@ -1,8 +1,14 @@
 import React from 'react';
-import { Button, PageTemplate, ModalTemplate, Input } from '../../components';
+import {
+  Button,
+  PageTemplate,
+  ModalTemplate,
+  Input,
+  Selector,
+} from '../../components';
 import { COLOR, ROUTE, SIZE } from '../../constants';
 import { useModal } from '../../hooks';
-import { ButtonWrapper, Form } from './style';
+import { ButtonWrapper, Form, SelectorWrapper } from './style';
 
 const LineAddModal = ({ onClickToClose }) => (
   <ModalTemplate title={'노선 생성'} onClickToClose={onClickToClose}>
@@ -14,6 +20,21 @@ const LineAddModal = ({ onClickToClose }) => (
         placeholder="노선 이름"
         size={SIZE.LG}
       />
+      <SelectorWrapper>
+        <Selector
+          name="line-upStation"
+          defaultOption="상행 종점"
+          options={[]}
+          size={SIZE.LG}
+        />
+        <span>↔️</span>
+        <Selector
+          name="line-downStation"
+          defaultOption="하행 종점"
+          options={[]}
+          size={SIZE.LG}
+        />
+      </SelectorWrapper>
       <Input
         type="text"
         name="line-distance"
