@@ -1,3 +1,8 @@
 import styled from "styled-components";
 
-export const SignupPageBlock = styled.div``;
+import { SIZE } from "../../constants/size";
+import { FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
+
+export const SignupPageBlock = styled(FlexCenter)`
+  max-width: ${SIZE.PAGE_CONTAINER_WIDTH};
+`;
