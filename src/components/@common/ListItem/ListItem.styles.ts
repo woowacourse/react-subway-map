@@ -17,7 +17,4 @@ export const StyledListItem = styled.li`
 export const TrashBinButton = styled(Button)`
   width: 2.25rem;
   height: 2.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;

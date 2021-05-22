@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
 import PropTypes from 'prop-types';
+import React, { FC } from 'react';
+import FlexContainer from '../FlexContainer/FlexContainer';
 import TrashBin from '../Icon/TrashBin';
 import { StyledListItem, TrashBinButton } from './ListItem.styles';
 
@@ -10,7 +11,7 @@ interface Props {
 const ListItem: FC<Props> = ({ children }) => {
   return (
     <StyledListItem>
-      <div>{children}</div>
+      <FlexContainer alignItems="center">{children}</FlexContainer>
       <TrashBinButton buttonType="round" isColored={false}>
         <TrashBin width="70%" />
       </TrashBinButton>

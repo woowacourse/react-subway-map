@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import Input from '../../components/@common/Input/Input';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import { DUMMY_STATIONS } from '../../constants/dummies';
-import { HorizontalLine, StationForm, StationList } from './Stations.styles';
+import { StationForm, StationList } from './Stations.styles';
 
 const Stations: FC = () => {
   return (

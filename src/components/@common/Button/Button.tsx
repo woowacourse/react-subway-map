@@ -31,6 +31,9 @@ const Button = styled.button<Props>`
   background-color: transparent;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   ${({ buttonType }) => buttonType && buttonTypeCSS[buttonType]}
   ${({ isColored }) => isColored && coloredCSS}
 
