@@ -6,5 +6,5 @@ export default {
   argTypes: {},
 };
 
-const Template = (args: Props) => <Button {...args} />;
+const Template = (args: Props) => <Button {...args}>버튼</Button>;
 export const Default = Template.bind({});

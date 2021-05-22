@@ -17,7 +17,7 @@ const SignInForm = () => {
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
-        <Button text='로그인'></Button>
+        <Button>로그인</Button>
       </S.ButtonWrapper>
       <S.SignUpLinkWrapper>
         <a>아직 회원이 아니신가요?</a>
