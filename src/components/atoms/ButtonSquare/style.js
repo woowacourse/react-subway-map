@@ -9,5 +9,6 @@ export const StyledButtonSquare = styled(Button)`
   color: ${COLOR.TEXT_DEFAULT};
   font-weight: 700;
   background-color: ${COLOR.THEME};
+  border-radius: 0.25rem;
   box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
 `;

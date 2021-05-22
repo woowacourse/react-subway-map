@@ -20,5 +20,3 @@ ButtonRadio.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func,
 };
-
-// ButtonRadio.defaultProps = { isChecked: true };
