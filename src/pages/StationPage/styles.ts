@@ -18,11 +18,12 @@ const StationsContainer = styled.ul`
   overflow-y: scroll;
 `;
 
-const Icon = styled.img`
-  width: 20px;
-`;
 const ButtonsContainer = styled.div`
   display: flex;
+`;
+
+const Icon = styled.img`
+  width: 20px;
 `;
 
 const StationItem = styled.li`
@@ -31,7 +32,7 @@ const StationItem = styled.li`
   align-items: center;
   font-size: 1rem;
   padding: 0 8px;
-  border-bottom: 1px solid ${PALETTE.DARK_GRAY};
+  border-bottom: 1px solid ${PALETTE.LIGHT_GRAY};
   height: 48px;
   line-height: 48px;
 `;

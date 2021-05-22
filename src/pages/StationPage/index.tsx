@@ -4,9 +4,9 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import { ButtonType } from 'types';
-import Styled from './styles';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
+import Styled from './styles';
 
 const stations = [
   '사당',
