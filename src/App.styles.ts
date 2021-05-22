@@ -1,9 +1,10 @@
-import { COLOR } from "./constants";
+import styled from "styled-components";
 
-export enum theme {
-  PRIMARY = COLOR.SKY_BLUE_500,
-  MAIN_TEXT_COLOR = COLOR.GRAY_900,
-  SUB_TEXT_COLOR = COLOR.GRAY_500,
-  BACKGROUND_COLOR = COLOR.GRAY_200,
-  DANGER_TEXT_COLOR = COLOR.RED_500,
-}
+export const Navigation = styled.nav`
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin-right: 0.5rem;
+  }
+`;
