@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavBar } from './components/';
 import { ROUTE } from './constants';
 import {
+  Home,
   SignIn,
   SignUp,
   StationManager,
@@ -22,7 +23,9 @@ function App() {
       <NavBar />
       <Main>
         <Switch>
-          <Route exact path={ROUTE.HOME.PATH}></Route>
+          <Route exact path={ROUTE.HOME.PATH}>
+            <Home />
+          </Route>
           <Route exact path={ROUTE.SIGN_IN.PATH}>
             <SignIn />
           </Route>
