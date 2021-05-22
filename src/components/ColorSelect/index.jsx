@@ -21,6 +21,7 @@ const ColorSelect = () => (
   <div className="grid gap-4 grid-cols-5 mb-4">
     {lineColors.map(([name, color]) => (
       <button
+        key={name}
         type="button"
         className={cx(
           "w-10 h-10 rounded-full focus:outline-none hover:ring-2 focus:ring-2",
