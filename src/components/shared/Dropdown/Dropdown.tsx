@@ -4,12 +4,13 @@ import Styled from './Dropdown.styles';
 interface DropdownProps {
   defaultOption: string;
   options: string[];
+  onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown = ({ defaultOption, options }: DropdownProps) => {
+const Dropdown = ({ defaultOption, options, onSelect }: DropdownProps) => {
   return (
-    <Styled.Select>
-      <option value="" selected disabled>
+    <Styled.Select defaultValue={defaultOption} onChange={onSelect}>
+      <option value={defaultOption} disabled>
         {defaultOption}
       </option>
       {options.map((option) => (
