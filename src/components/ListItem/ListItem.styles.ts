@@ -12,7 +12,7 @@ export const ListItemBlock = styled.li`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid ${COLOR.GRAY_200};
+  border-bottom: 1px solid ${COLOR.GRAY_300};
   padding-bottom: 0.625rem;
 `;
 
@@ -29,5 +29,5 @@ export const Circle = styled.div<CircleProps>`
   height: 14px;
   border-radius: 50%;
   margin-right: 1.5rem;
-  background-color: ${({ circleColor = COLOR.SKY_BLUE_500 }) => circleColor};
+  ${({ circleColor }) => `background-color: ${circleColor}`};
 `;
