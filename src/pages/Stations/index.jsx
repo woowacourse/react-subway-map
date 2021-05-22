@@ -20,19 +20,27 @@ const Stations = () => (
         </Button>
       </form>
     </section>
-    <section className="pb-8 w-144 rounded-sm shadow-md">
-      <div>
-        <ul>
-          <li>
-            <span>강남역</span>
-            <span>🗑</span>
-          </li>
-          <li>
-            <span>서초역</span>
-            <span>🗑</span>
-          </li>
-        </ul>
-      </div>
+    <section className="mt-8 pb-8 pl-8 pr-6 py-4 w-144 rounded-sm shadow-md">
+      <ul className="space-y-8">
+        <li className="flex justify-between p-2 text-gray-600 text-xl">
+          <span>강남역</span>
+          <button
+            type="button"
+            className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+          >
+            🗑
+          </button>
+        </li>
+        <li className="flex justify-between p-2 text-gray-600 text-xl">
+          <span>동탄역</span>
+          <button
+            type="button"
+            className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+          >
+            🗑
+          </button>
+        </li>
+      </ul>
     </section>
   </Main>
 );
