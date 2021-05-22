@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NavLink from "../@shared/NavLink";
+import NavLink from "../NavLink";
 
-import runningmapLogo from "../../assets/runningmap-logo.png";
+import runningmapLogo from "../../../assets/runningmap-logo.png";
 
 const Header = () => (
   <header className="px-8 py-4 text-gray-800 text-2xl font-medium bg-yellow-300">

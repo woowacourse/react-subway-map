@@ -1,7 +1,7 @@
 import React from "react";
-import Main from "../../components/Main";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import Main from "../../components/@shared/Main";
+import Button from "../../components/@shared/Button";
+import Input from "../../components/@shared/Input";
 
 const Signup = () => (
   <Main>

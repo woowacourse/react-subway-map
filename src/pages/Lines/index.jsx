@@ -1,10 +1,10 @@
 import React from "react";
-import Main from "../../components/Main";
-import Modal from "../../components/Modal";
-import Button from "../../components/Button";
-import FloatingLabelInput from "../../components/FloatingLabelInput/index";
-import Select from "../../components/Select";
-import ColorSelect from "../../components/ColorSelect/index";
+import Main from "../../components/@shared/Main";
+import Modal from "../../components/@shared/Modal";
+import Button from "../../components/@shared/Button";
+import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
+import Select from "../../components/@shared/Select";
+import ColorSelect from "../../components/ColorSelect";
 
 const Lines = () => (
   <>

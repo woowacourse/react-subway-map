@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ReactComponent as SelectorArrow } from "../../assets/selector-arrow.svg";
+import { ReactComponent as SelectorArrow } from "../../../assets/selector-arrow.svg";
 
 const Select = ({ children }) => (
   <div className="relative w-full">

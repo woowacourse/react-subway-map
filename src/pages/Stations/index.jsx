@@ -1,7 +1,7 @@
 import React from "react";
-import Main from "../../components/Main";
-import Button from "../../components/Button/index";
-import FloatingLabelInput from "../../components/FloatingLabelInput";
+import Main from "../../components/@shared/Main";
+import Button from "../../components/@shared/Button";
+import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
 
 const Stations = () => (
   <Main>

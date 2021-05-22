@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Main from "../../components/Main";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import Main from "../../components/@shared/Main";
+import Input from "../../components/@shared/Input";
+import Button from "../../components/@shared/Button";
 
 const Login = () => (
   <Main>
