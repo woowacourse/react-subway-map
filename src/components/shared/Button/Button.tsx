@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { Properties } from 'csstype';
 
+import PALETTE from '../../../constants/palette';
+
 interface ButtonProps extends Properties {
   size: 's' | 'm' | 'l';
 }
@@ -21,7 +23,7 @@ const buttonSize = {
 };
 
 const Button = styled.button<ButtonProps>`
-  background-color: ${({ backgroundColor }) => backgroundColor ?? '#ffffff'};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? PALETTE.WHITE};
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.3);
   border-radius: 0.4rem;
   ${({ size }) => buttonSize[size] ?? ''}
@@ -44,7 +46,8 @@ const Button = styled.button<ButtonProps>`
 
   :disabled {
     cursor: not-allowed;
-    background-color: #e5e5e5;
+    background-color: ${PALETTE.GRAY_100};
+    box-shadow: none;
   }
 `;
 

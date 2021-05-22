@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
-import SnackBar, { MAX_STACK_NUM } from './SnackBar/SnackBar';
+import SnackBar, { MAX_STACK_NUM } from '../components/shared/SnackBar/SnackBar';
 
 const SNACKBAR_DURATION = 1500;
 

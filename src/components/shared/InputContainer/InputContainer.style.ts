@@ -1,20 +1,21 @@
 import styled from 'styled-components';
 
+import PALETTE from '../../../constants/palette';
+
 const Container = styled.div`
   width: 100%;
-  margin-bottom: 1rem;
 `;
 
 const BorderBox = styled.div`
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #bbbbbb;
+  border: 1px solid ${PALETTE.GRAY_100};
   border-radius: 0.25rem;
   display: flex;
   position: relative;
 
   &:focus-within {
-    border-color: #777777;
+    border-color: ${PALETTE.GRAY_300};
   }
 `;
 
@@ -23,12 +24,12 @@ const Label = styled.label`
   display: block;
   padding: 0 0.2rem;
   font-size: 0.75rem;
-  color: #777777;
+  color: ${PALETTE.GRAY_400};
 
   left: 0.5rem;
   top: 0;
   transform: translateY(-50%);
-  background-color: white;
+  background-color: ${PALETTE.WHITE};
 `;
 
 const StatusText = styled.div`

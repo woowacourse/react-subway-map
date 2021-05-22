@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import PALETTE from '../../../constants/palette';
+
 const Main = styled.main`
   width: 100%;
   min-height: 100vh;
@@ -7,7 +9,7 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fafafa;
+  background-color: ${PALETTE.GRAY_50};
 `;
 
 export default Main;

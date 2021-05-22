@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { Container, BorderBox, Label, StatusText } from './InputContainer.style';
+import PALETTE from '../../../constants/palette';
 
 interface InputContainerProps {
   labelText?: string;
@@ -11,7 +12,7 @@ interface InputContainerProps {
   children: ReactNode;
 }
 
-const getValidationColor = (isValid: boolean) => (isValid ? '#0dd273' : 'red');
+const getValidationColor = (isValid: boolean) => (isValid ? PALETTE.NAVER : PALETTE.RED);
 
 const InputContainer = ({ labelText, validation, children }: InputContainerProps) => (
   <Container>

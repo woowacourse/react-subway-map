@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
 
 import Header from './components/Header/Header';
@@ -7,19 +7,17 @@ import Main from './components/shared/Main/Main';
 import PATH from './constants/path';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+import StationPage from './pages/StationPage/StationPage';
 import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
-import { SnackBarContext } from './components/SnackBarProvider/SnackBarProvider';
-
-interface a {
-  [key: string]: (message: string) => void;
-}
+import PALETTE from './constants/palette';
+import { ThemeContext } from './contexts/ThemeContextProvider';
 
 const App = () => {
-  const { addMessage }: a = useContext(SnackBarContext);
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
 
   return (
     <Router>
-      <Header backgroundColor="#0dd273" color="#ffffff">
+      <Header backgroundColor={themeColor} color={PALETTE.WHITE}>
         <Link to={PATH.ROOT}>
           <TextLogo height="2rem" />
         </Link>
@@ -38,19 +36,11 @@ const App = () => {
           </Route>
           <Route path={PATH.LOGIN} component={LoginPage} />
           <Route path={PATH.SIGNUP} component={SignupPage} />
-          <Route path={PATH.STATIONS}>STATIONS</Route>
+          <Route path={PATH.STATIONS} component={StationPage} />
           <Route path={PATH.LINES}>LINES</Route>
           <Route path={PATH.SECTIONS}>SECTIONS</Route>
         </Switch>
       </Main>
-      <button
-        type="button"
-        onClick={() => {
-          addMessage(`스낵바`);
-        }}
-      >
-        스낵바입니다
-      </button>
     </Router>
   );
 };

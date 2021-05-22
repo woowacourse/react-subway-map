@@ -1,5 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
+
 import { Properties } from 'csstype';
+import PALETTE from '../../../constants/palette';
 
 const appearFromBottom = keyframes`
   from {
@@ -29,7 +31,7 @@ const Container = styled.div<Properties>`
   border-radius: 0.5rem;
   font-size: 0.8rem;
   padding: 1rem 2rem;
-  color: #e7e7e7;
+  color: ${PALETTE.GRAY_100};
 
   animation: ${({ animationDuration }) =>
     css`

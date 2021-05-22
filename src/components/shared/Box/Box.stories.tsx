@@ -1,5 +1,6 @@
 import Box, { BoxProps } from './Box';
 import { Story } from '@storybook/react';
+import PALETTE from '../../../constants/palette';
 
 export default {
   title: 'components/shared/Box',
@@ -16,6 +17,6 @@ Default.args = {
 };
 
 WithHat.args = {
-  hatColor: '#0dd273',
+  hatColor: PALETTE.NAVER,
   children: <div style={{ height: '300px' }}></div>,
 };

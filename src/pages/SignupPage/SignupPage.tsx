@@ -1,4 +1,10 @@
-import { FormEventHandler, ChangeEventHandler, useState, KeyboardEventHandler } from 'react';
+import {
+  FormEventHandler,
+  ChangeEventHandler,
+  useState,
+  useContext,
+  KeyboardEventHandler,
+} from 'react';
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
@@ -7,6 +13,8 @@ import Button from '../../components/shared/Button/Button';
 import Input from '../../components/shared/Input/Input';
 import InputContainer from '../../components/shared/InputContainer/InputContainer';
 import PATH from '../../constants/path';
+import PALETTE from '../../constants/palette';
+import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import useInput from '../../hooks/useInput';
 import useDebounce from '../../hooks/useDebounce';
 import { Icon, Heading1 } from './SignupPage.style';
@@ -15,6 +23,7 @@ const DEBOUNCE_DELAY = 500;
 
 const SignupPage = () => {
   const history = useHistory();
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
 
   const [email, setEmail] = useState<string>('');
   const [isEmailDuplicated, setIsEmailDuplicated] = useState<boolean>(false);
@@ -76,7 +85,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Box hatColor="#0dd273" backgroundColor="#ffffff">
+    <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
       <Heading1>회원가입</Heading1>
       <form onSubmit={onSignup}>
         <InputContainer
@@ -136,8 +145,8 @@ const SignupPage = () => {
         <Button
           size="m"
           width="100%"
-          backgroundColor="#0dd273"
-          color="#ffffff"
+          backgroundColor={PALETTE.NAVER}
+          color={PALETTE.WHITE}
           disabled={!isFormCompleted}
         >
           회원가입
