@@ -4,6 +4,12 @@ import { Props } from './SelectInput';
 
 type SelectProps = Omit<Props, 'initialText'>;
 
+export const Container = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
 export const SelectInput = styled.select<SelectProps>`
   width: 100%;
   height: 100%;
@@ -16,4 +22,13 @@ export const SelectInput = styled.select<SelectProps>`
   &:focus {
     outline-color: ${COLOR.GRAY_800};
   }
+`;
+
+export const Label = styled.div`
+  position: absolute;
+  left: 0.5rem;
+  top: -0.75rem;
+  background-color: white;
+  padding: 0 0.5rem;
+  color: ${COLOR.GRAY_400};
 `;

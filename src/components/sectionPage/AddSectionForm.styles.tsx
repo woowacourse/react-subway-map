@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
-export const AddLineModalForm = styled.form`
+export const AddSectionForm = styled.form`
   width: 100%;
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -14,17 +15,20 @@ export const Title = styled.h2`
 
 export const InputWrapper = styled.div`
   width: 100%;
-
-  margin-bottom: 1rem;
-`;
-
-export const SelectInputWrapper = styled.div`
-  width: 100%;
   height: 3rem;
-  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  position: absolute;
+  right: 2rem;
+  bottom: -7rem;
+  margin-left: 2rem;
+  width: 5rem;
+  height: 5rem;
+  font-size: 2rem;
 `;
 
 export const Message = styled.div`
@@ -33,16 +37,4 @@ export const Message = styled.div`
   padding-left: 1.25rem;
   margin-top: 0.5rem;
   font-size: 0.85rem;
-`;
-
-export const Arrow = styled.div`
-  margin: 0 1rem;
-  font-weight: bold;
-`;
-
-export const ButtonWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

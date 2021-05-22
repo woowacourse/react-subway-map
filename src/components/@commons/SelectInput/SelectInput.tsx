@@ -4,17 +4,21 @@ import * as S from './SelectInput.styles';
 export interface Props {
   initialText?: string;
   borderColor?: Color;
+  label?: string;
   children?: React.ReactNode;
 }
 
-const SelectInput = ({ borderColor, initialText, children }: Props) => {
+const SelectInput = ({ borderColor, initialText, label, children }: Props) => {
   return (
-    <S.SelectInput borderColor={borderColor}>
-      <option value='' selected disabled>
-        {initialText}
-      </option>
-      {children}
-    </S.SelectInput>
+    <S.Container>
+      {label && <S.Label>{label}</S.Label>}
+      <S.SelectInput borderColor={borderColor}>
+        <option value='' selected disabled>
+          {initialText}
+        </option>
+        {children}
+      </S.SelectInput>
+    </S.Container>
   );
 };
 

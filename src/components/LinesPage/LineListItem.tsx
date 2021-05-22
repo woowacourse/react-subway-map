@@ -3,7 +3,7 @@ import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
 
 export interface Props {
-  name: String;
+  name: string;
 }
 
 const LineListItem = ({ name }: Props) => {
