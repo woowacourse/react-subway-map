@@ -54,5 +54,8 @@ export const ButtonBlock = styled.button<ButtonBlockProps>(
     ...BUTTON_KIND[kind],
     ...BUTTON_SIZE[size],
     ...BUTTON_THEME[buttonTheme],
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   })
 );
