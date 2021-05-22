@@ -3,7 +3,7 @@ import { PageTemplate, Input, Button } from '../../components';
 import { COLOR, ROUTE, SIZE } from '../../constants';
 import { Form, Validator } from './style';
 
-const SignUp = (props) => (
+const SignUp = () => (
   <PageTemplate title={ROUTE.SIGN_UP.NAME}>
     <Form>
       <Input

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from './style';
 
-const Home = (props) => (
+const Home = () => (
   <Container>
     <img src="/images/main_logo.png" alt="logo" />
   </Container>

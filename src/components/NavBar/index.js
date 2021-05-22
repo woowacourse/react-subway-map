@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ROUTE } from '../../constants';
 import { Container, Logo, List } from './style';
 
@@ -14,7 +14,15 @@ const Menu = () => (
   <List>
     {routes.map(({ NAME, PATH }, index) => (
       <li key={index}>
-        <Link to={PATH}>{NAME}</Link>
+        <NavLink
+          to={PATH}
+          activeStyle={{
+            background: 'rgba(153, 153, 153, 0.3)',
+            borderRadius: '4px',
+          }}
+        >
+          {NAME}
+        </NavLink>
       </li>
     ))}
   </List>
@@ -22,12 +30,12 @@ const Menu = () => (
 
 const NavBar = () => (
   <Container>
-    <Link to={ROUTE.HOME.PATH}>
+    <NavLink to={ROUTE.HOME.PATH}>
       <Logo>
         <img src="/images/logo_small.png" alt="logo" />
         <span>RUNNING MAP</span>
       </Logo>
-    </Link>
+    </NavLink>
     <Menu />
   </Container>
 );

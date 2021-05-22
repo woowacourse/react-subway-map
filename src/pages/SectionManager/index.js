@@ -29,7 +29,7 @@ const SectionList = ({ line, openModal }) => (
 
 const selectedLine = { id: 1, name: '분당선', color: COLOR.GRAY_300 };
 
-const SectionManager = (props) => {
+const SectionManager = () => {
   const { isModalOpen, openModal, handleClickToClose } = useModal();
 
   return (

@@ -4,7 +4,7 @@ import { PageTemplate, Input, Button } from '../../components';
 import { Form } from './style';
 import { COLOR, ROUTE, SIZE } from '../../constants';
 
-const SignIn = (props) => {
+const SignIn = () => {
   return (
     <PageTemplate title={ROUTE.SIGN_IN.NAME}>
       <Form>

@@ -3,7 +3,7 @@ import { PageTemplate, Input, Button } from '../../components';
 import { ROUTE, SIZE, COLOR } from '../../constants';
 import { Form, InputWrapper, ButtonWrapper } from './style';
 
-const StationManager = (props) => {
+const StationManager = () => {
   return (
     <PageTemplate title={ROUTE.STATION_MANAGE.NAME}>
       <Form>

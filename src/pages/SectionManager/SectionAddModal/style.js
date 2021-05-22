@@ -6,6 +6,7 @@ export const LineName = styled.div`
   ${Flex({ items: 'center' })};
   width: 100%;
   height: 50px;
+  margin-top: 24px;
   padding: 8px;
   border-radius: 4px;
   color: ${COLOR.WHITE};

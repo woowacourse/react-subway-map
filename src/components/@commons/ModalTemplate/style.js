@@ -20,8 +20,8 @@ export const Container = styled.div`
 
   & > button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
     font-size: var(--size-regular);
   }
 `;

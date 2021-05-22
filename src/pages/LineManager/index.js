@@ -5,7 +5,7 @@ import { useModal } from '../../hooks';
 import LineAddModal from './LineAddModal';
 import { ButtonWrapper } from './style';
 
-const LineManager = (props) => {
+const LineManager = () => {
   const { isModalOpen, openModal, handleClickToClose } = useModal();
 
   return (
