@@ -34,6 +34,8 @@ export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
     font-size: ${({ titleSize }) => TITLE_SIZE[titleSize]};
     padding: 1rem 1.5rem;
     ${({ isColoredTitle, templateColor }) =>
-      isColoredTitle ? `background-color: ${templateColor};` : 'text-align: center;'}
+      isColoredTitle
+        ? `background-color: ${templateColor};`
+        : 'text-align: center; padding: 3rem 0;'}
   }
 `;

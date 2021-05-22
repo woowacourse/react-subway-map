@@ -36,5 +36,7 @@ export const StyledLabel = styled.label`
 `;
 
 export const LabelIcon = styled.div`
+  display: flex;
+  align-items: center;
   margin-right: 0.75rem;
 `;
