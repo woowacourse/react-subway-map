@@ -5,7 +5,7 @@ import PALETTE from '../../../constants/palette';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: 'square' | 'round';
-  isColored: boolean;
+  isColored?: boolean;
 }
 
 const buttonTypeCSS = {
