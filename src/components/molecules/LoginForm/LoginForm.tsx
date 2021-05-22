@@ -1,33 +1,25 @@
 import { Container } from './LoginForm.styles';
-import { Button, Header, Input } from '../../atoms';
+import { Button, Input } from '../../atoms';
 
 interface LoginFormProps {
-  onChangeEmailInput: React.ChangeEventHandler<HTMLInputElement>;
-  emailValue: string;
-  onChangePasswordInput: React.ChangeEventHandler<HTMLInputElement>;
-  passwordValue: string;
+  onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
+  email: string;
+  onChangePassword: React.ChangeEventHandler<HTMLInputElement>;
+  password: string;
   onSubmitLogin: React.FormEventHandler<HTMLFormElement>;
 }
 
 const LoginForm = ({
-  onChangeEmailInput,
-  emailValue,
-  onChangePasswordInput,
-  passwordValue,
+  onChangeEmail,
+  email,
+  onChangePassword,
+  password,
   onSubmitLogin,
 }: LoginFormProps) => {
   return (
     <Container onSubmit={onSubmitLogin}>
-      <Header>
-        <h3>로그인</h3>
-      </Header>
-      <Input type="email" placeholder="이메일" onChange={onChangeEmailInput} value={emailValue} />
-      <Input
-        type="password"
-        placeholder="비밀번호"
-        onChange={onChangePasswordInput}
-        value={passwordValue}
-      />
+      <Input type="email" placeholder="이메일" onChange={onChangeEmail} value={email} />
+      <Input type="password" placeholder="비밀번호" onChange={onChangePassword} value={password} />
       <Button>확인</Button>
     </Container>
   );

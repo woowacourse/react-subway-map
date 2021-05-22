@@ -1,15 +1,15 @@
 import { Container } from './SignUpForm.styles';
-import { Button, ErrorMessage, Header, Input } from '../../atoms';
+import { Button, ErrorMessage, Input } from '../../atoms';
 
 export interface SignUpFormProps {
-  onChangeNameInput: React.ChangeEventHandler<HTMLInputElement>;
-  nameValue: string;
-  onChangeEmailInput: React.ChangeEventHandler<HTMLInputElement>;
-  emailValue: string;
-  onChangePasswordInput: React.ChangeEventHandler<HTMLInputElement>;
-  passwordValue: string;
-  onChangePasswordCheckInput: React.ChangeEventHandler<HTMLInputElement>;
-  passwordCheckValue: string;
+  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  name: string;
+  onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
+  email: string;
+  onChangePassword: React.ChangeEventHandler<HTMLInputElement>;
+  password: string;
+  onChangePasswordCheck: React.ChangeEventHandler<HTMLInputElement>;
+  passwordCheck: string;
   isValidName: boolean;
   isValidEmail: boolean;
   isValidPassword: boolean;
@@ -18,14 +18,14 @@ export interface SignUpFormProps {
 }
 
 const SignUpForm = ({
-  onChangeNameInput,
-  nameValue,
-  onChangeEmailInput,
-  emailValue,
-  onChangePasswordInput,
-  passwordValue,
-  onChangePasswordCheckInput,
-  passwordCheckValue,
+  onChangeName,
+  name,
+  onChangeEmail,
+  email,
+  onChangePassword,
+  password,
+  onChangePasswordCheck,
+  passwordCheck,
   onSubmitSignUp,
   isValidName,
   isValidEmail,
@@ -36,28 +36,20 @@ const SignUpForm = ({
 
   return (
     <Container onSubmit={onSubmitSignUp}>
-      <Header>
-        <h3>회원가입</h3>
-      </Header>
-      <Input placeholder="이름" onChange={onChangeNameInput} value={nameValue} />
+      <Input placeholder="이름" onChange={onChangeName} value={name} />
       {isValidName && <ErrorMessage text={'이름을 입력해주세요'} />}
 
-      <Input type="email" placeholder="이메일" onChange={onChangeEmailInput} value={emailValue} />
+      <Input type="email" placeholder="이메일" onChange={onChangeEmail} value={email} />
       {isValidEmail && <ErrorMessage text={'올바른 이메일 형식을 입력해주세요'} />}
 
-      <Input
-        type="password"
-        placeholder="비밀번호"
-        onChange={onChangePasswordInput}
-        value={passwordValue}
-      />
+      <Input type="password" placeholder="비밀번호" onChange={onChangePassword} value={password} />
       {isValidPassword && <ErrorMessage text={'비밀번호는 6자이상이어야 합니다'} />}
 
       <Input
         type="password"
         placeholder="비밀번호 확인"
-        onChange={onChangePasswordCheckInput}
-        value={passwordCheckValue}
+        onChange={onChangePasswordCheck}
+        value={passwordCheck}
       />
       {isValidPasswordCheck && <ErrorMessage text={'비밀번호가 일치하지 않습니다'} />}
 

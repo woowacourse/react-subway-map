@@ -37,9 +37,10 @@ const GlobalStyle = () => (
         text-decoration: none;
         outline: none;
         color: black;
+        &:link,
+        &:visited,
         &:hover,
         &:active,
-        &:visited,
         &:focus {
           text-decoration: none;
         }

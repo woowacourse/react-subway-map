@@ -15,9 +15,10 @@ const Button = ({
   onClick,
   buttonTheme = 'default',
   children,
+  disabled = false,
   ...props
 }: ButtonProps) => (
-  <Container type={type} buttonTheme={buttonTheme} onClick={onClick} {...props}>
+  <Container type={type} buttonTheme={buttonTheme} onClick={onClick} disabled={disabled} {...props}>
     {children}
   </Container>
 );

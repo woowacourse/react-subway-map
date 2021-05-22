@@ -7,5 +7,17 @@ import RootContainer from './RootContainer/RootContainer';
 import Select from './Select/Select';
 import Title from './Title/Title';
 import Header from './Header/Header';
+import ErrorMessage from './ErrorMessage/ErrorMessage';
 
-export { Button, Header, ColorButton, Input, Main, Menu, RootContainer, Select, Title };
+export {
+  Button,
+  Header,
+  ColorButton,
+  Input,
+  Main,
+  Menu,
+  RootContainer,
+  Select,
+  Title,
+  ErrorMessage,
+};
