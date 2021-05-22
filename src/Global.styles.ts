@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
   li {
     list-style: none;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyle;
