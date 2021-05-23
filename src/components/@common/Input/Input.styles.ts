@@ -32,6 +32,10 @@ export const StyledLabel = styled.label`
     &:focus {
       outline: none;
     }
+
+    &:disabled {
+      background-color: transparent;
+    }
   }
 `;
 

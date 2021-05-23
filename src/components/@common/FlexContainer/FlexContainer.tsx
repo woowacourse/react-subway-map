@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 interface Props {
   direction?: 'column';
-  justifyContent?: 'space-between' | 'center';
-  alignItems?: 'center';
+  justifyContent?: 'center' | 'flex-end' | 'space-between' | 'space-around';
+  alignItems?: 'center' | 'flex-end';
 }
 
 const FlexContainer = styled.div<Props>`

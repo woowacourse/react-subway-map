@@ -7,19 +7,19 @@ import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import { DUMMY_LINES } from '../../constants/dummies';
 import PALETTE from '../../constants/palette';
-import { LineInfoContainer, SectionSelectBox } from './Section.styles';
+import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
 const Sections: FC = () => {
   return (
     <CardTemplate titleText={PAGE_INFO.SECTIONS.text} templateColor={THEME_COLOR[400]}>
       <FlexContainer>
-        <SectionSelectBox>
+        <LineSelectBox>
           {DUMMY_LINES.map((line) => (
             <option key={line.id} value={line.id}>
               {line.name}
             </option>
           ))}
-        </SectionSelectBox>
+        </LineSelectBox>
       </FlexContainer>
       <ButtonOnLine>
         <Add width="80%" color={PALETTE.GRAY[600]} />

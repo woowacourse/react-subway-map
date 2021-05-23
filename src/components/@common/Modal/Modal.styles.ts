@@ -1,6 +1,9 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from '../Button/Button';
-import { Props } from './Modal';
+
+interface ModalContentProps {
+  hasTitle: boolean;
+}
 
 export const ModalContainer = styled.div`
   display: flex;
@@ -15,7 +18,7 @@ export const ModalContainer = styled.div`
 export const ModalInner = styled.div`
   position: relative;
   width: 700px;
-  height: 80vh;
+  max-height: 80vh;
   border-radius: 10px;
   margin: auto;
   background: white;
@@ -31,4 +34,15 @@ export const CloseButton = styled(Button)`
   right: 1rem;
   width: 2rem;
   height: 2rem;
+`;
+
+export const ModalTitle = styled.h2`
+  text-align: center;
+  margin-top: 1.5rem;
+`;
+
+export const ModalContent = styled.div<ModalContentProps>`
+  max-height: calc(80vh - ${({ hasTitle }) => (hasTitle ? '10rem' : '6rem')});
+  margin-top: 1.5rem;
+  overflow-y: auto;
 `;

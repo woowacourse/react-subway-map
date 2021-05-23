@@ -14,3 +14,8 @@ const Template = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Title = Template.bind({});
+Title.args = {
+  titleText: '구간 추가',
+};

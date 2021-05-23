@@ -1,34 +1,41 @@
 import PropTypes from 'prop-types';
 import React, { FC, MouseEvent } from 'react';
+import ReactDOM from 'react-dom';
 import Close from '../Icon/Close';
-import { CloseButton, ModalContainer, ModalInner } from './Modal.styles';
+import { CloseButton, ModalContainer, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
+
+const $modalRoot = document.getElementById('modal-root');
 
 export interface Props {
   children: React.ReactNode;
+  titleText?: string;
   onClose: () => void;
 }
 
-const Modal: FC<Props> = ({ children, onClose }) => {
+const Modal: FC<Props> = ({ children, titleText, onClose }) => {
   const onClickDimmed = ({ target, currentTarget }: MouseEvent<HTMLDivElement>) => {
     if (!onClose || target !== currentTarget) return;
 
     onClose();
   };
 
-  return (
+  return ReactDOM.createPortal(
     <ModalContainer onClick={onClickDimmed}>
       <ModalInner>
         <CloseButton buttonType="round" isColored={false}>
           <Close width="90%" />
         </CloseButton>
-        {children}
+        {titleText && <ModalTitle>{titleText}</ModalTitle>}
+        <ModalContent hasTitle={!!titleText}>{children}</ModalContent>
       </ModalInner>
-    </ModalContainer>
+    </ModalContainer>,
+    $modalRoot as HTMLDivElement
   );
 };
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
+  titleText: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
 
