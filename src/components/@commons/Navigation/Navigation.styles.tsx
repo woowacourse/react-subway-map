@@ -12,7 +12,6 @@ export const Navigation = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  color: ${COLOR.WHITE};
 `;
 
 export const Main = styled.div`
@@ -29,6 +28,7 @@ export const Logo = styled.h1`
   font-size: 2.5rem;
   a {
     cursor: pointer;
+    color: ${COLOR.WHITE};
   }
 `;
 
@@ -59,6 +59,7 @@ export const MenuItem = styled.li`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    color: ${COLOR.WHITE};
   }
   &:hover {
     border-bottom: 0.5rem solid ${COLOR.MINT_300};

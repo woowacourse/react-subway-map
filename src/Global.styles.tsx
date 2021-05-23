@@ -24,7 +24,7 @@ const globalStyles = css`
 
   a {
     text-decoration: none;
-    color: #fff;
+    color: ${COLOR.TEXT_COLOR};
     text-decoration: none;
     outline: none;
 

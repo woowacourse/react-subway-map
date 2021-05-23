@@ -3,7 +3,7 @@ import Navigation from './components/@commons/Navigation/Navigation';
 import GlobalStyles from './Global.styles';
 import * as S from './App.styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import AddStationForm from './components/StationPage/AddStationForm';
+
 import { ROUTE } from './constants/constant';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -26,9 +26,6 @@ const App = () => {
               <Route exact path={ROUTE.LINE} component={Line} />
               <Route exact path={ROUTE.SECTION} component={Section} />
             </Switch>
-            <ContentContainer hatColor='MINT_500'>
-              <AddStationForm />
-            </ContentContainer>
           </S.Container>
         </BrowserRouter>
       </S.App>
