@@ -23,8 +23,8 @@ export const InputWrapper = styled.div`
 
 export const ButtonWrapper = styled.div`
   position: absolute;
-  right: 2rem;
-  bottom: -7rem;
+  right: -1.5rem;
+  bottom: -6.5rem;
   margin-left: 2rem;
   width: 5rem;
   height: 5rem;

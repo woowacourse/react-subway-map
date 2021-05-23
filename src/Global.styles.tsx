@@ -33,6 +33,16 @@ const globalStyles = css`
       text-decoration: none;
     }
   }
+
+  select {
+    background: url('assets/arrow.svg') no-repeat;
+    background-position: right;
+    background-size: 1rem;
+    background-origin: content-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 `;
 
 const GlobalStyles = () => {
