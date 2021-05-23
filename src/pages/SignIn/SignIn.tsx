@@ -1,12 +1,14 @@
-import React from 'react';
 import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
 import SignInForm from '../../components/SignInPage/SignInForm';
+import * as S from './SignIn.styles';
 
 const SignIn = () => {
   return (
-    <ContentContainer hatColor='MINT_500'>
-      <SignInForm />
-    </ContentContainer>
+    <S.Container>
+      <ContentContainer hatColor='MINT_500'>
+        <SignInForm />
+      </ContentContainer>
+    </S.Container>
   );
 };
 

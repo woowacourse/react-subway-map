@@ -8,7 +8,8 @@ export const App = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   height: calc(100vh - 5rem);
-  margin: 0;
+  min-height: 40rem;
+  padding: 3rem 0;
+  overflow: auto;
 `;

@@ -1,4 +1,3 @@
-import { ContentContainer } from './components/@commons/ContentContainer/ContentContainer.styles';
 import Navigation from './components/@commons/Navigation/Navigation';
 import GlobalStyles from './Global.styles';
 import * as S from './App.styles';

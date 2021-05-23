@@ -1,12 +1,14 @@
-import React from 'react';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import SignUpForm from '../../components/SingUpPage/SignUpForm';
+import * as S from './SignUp.styles';
 
 const SignUp = () => {
   return (
-    <ContentContainer hatColor='MINT_500'>
-      <SignUpForm />
-    </ContentContainer>
+    <S.Container>
+      <ContentContainer hatColor='MINT_500'>
+        <SignUpForm />
+      </ContentContainer>
+    </S.Container>
   );
 };
 
