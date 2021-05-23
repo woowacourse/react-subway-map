@@ -1,7 +1,7 @@
 import { Page } from './../types';
 import PALETTE from './palette';
 
-export const APP_TITLE = 'RUNNINGMAP';
+export const APP_TITLE = 'SUNKIST SUBWAY';
 
 export const PAGE_INFO: { [key: string]: Page } = {
   LOGIN: {
@@ -27,3 +27,16 @@ export const PAGE_INFO: { [key: string]: Page } = {
 };
 
 export const THEME_COLOR = PALETTE.YELLOW;
+
+export const LINE_COLORS = [
+  PALETTE.RED[400],
+  PALETTE.ORANGE[400],
+  PALETTE.YELLOW[400],
+  PALETTE.GREEN[400],
+  PALETTE.LIME[400],
+  PALETTE.BLUE[400],
+  PALETTE.INDIGO[400],
+  PALETTE.PURPLE[400],
+  PALETTE.PINK[400],
+  PALETTE.CYAN[400],
+];

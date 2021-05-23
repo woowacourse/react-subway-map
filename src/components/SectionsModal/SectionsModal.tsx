@@ -18,7 +18,7 @@ const SectionsModal: FC<Props> = ({ onClose, lineName }) => {
       <SectionForm>
         <Input labelText="노선선택" value={lineName} disabled={true} />
         <SectionSelectBox upStations={DUMMY_STATIONS} downStations={DUMMY_STATIONS} />
-        <Input labelText="거리" />
+        <Input type="number" min={1} labelText="거리" />
         <SectionModalButtonContainer justifyContent="flex-end">
           <Button type="button" isColored={false}>
             취소
