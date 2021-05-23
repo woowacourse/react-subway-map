@@ -1,6 +1,6 @@
-import * as S from './AddSectionForm.styles';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
+import * as S from './AddSectionForm.styles';
 
 const AddSectionForm = () => {
   return (

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { ROUTE } from '../../../constants/constant';
 import * as S from './Navigation.styles';
 
 const Navigation = () => {
@@ -5,23 +7,23 @@ const Navigation = () => {
     <S.Navigation>
       <S.Main>
         <S.Logo>
-          <a>RUNNINGMAP</a>
+          <Link to={ROUTE.HOME}>RUNNINGMAP</Link>
         </S.Logo>
         <S.Menu>
           <S.MenuItem>
-            <a>역 관리</a>
+            <Link to={ROUTE.STATION}>역 관리</Link>
           </S.MenuItem>
           <S.MenuItem>
-            <a>노선 관리</a>
+            <Link to={ROUTE.LINE}>노선 관리</Link>
           </S.MenuItem>
           <S.MenuItem>
-            <a>구간 관리</a>
+            <Link to={ROUTE.SECTION}>구간 관리</Link>
           </S.MenuItem>
           <S.MenuItem>
-            <a>경로 검색</a>
+            <Link to={ROUTE.HOME}>경로 검색</Link>
           </S.MenuItem>
           <S.MenuItem>
-            <a>로그인</a>
+            <Link to={ROUTE.SIGN_IN}>로그인</Link>
           </S.MenuItem>
         </S.Menu>
       </S.Main>

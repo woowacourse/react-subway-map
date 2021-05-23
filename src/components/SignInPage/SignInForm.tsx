@@ -4,6 +4,8 @@ import mailSVG from '../../assets/svg/mail.svg';
 import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
+import { Link } from 'react-router-dom';
+import { ROUTE } from '../../constants/constant';
 
 const SignInForm = () => {
   return (
@@ -25,7 +27,7 @@ const SignInForm = () => {
         <Button>로그인</Button>
       </S.ButtonWrapper>
       <S.SignUpLinkWrapper>
-        <a>아직 회원이 아니신가요?</a>
+        <Link to={ROUTE.SIGN_UP}>아직 회원이 아니신가요?</Link>
       </S.SignUpLinkWrapper>
     </S.SignInForm>
   );

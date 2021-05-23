@@ -21,6 +21,18 @@ const globalStyles = css`
   input {
     border-style: solid;
   }
+
+  a {
+    text-decoration: none;
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+
+    &:hover,
+    &:active {
+      text-decoration: none;
+    }
+  }
 `;
 
 const GlobalStyles = () => {
