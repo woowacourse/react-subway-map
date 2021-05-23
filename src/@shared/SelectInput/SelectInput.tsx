@@ -7,8 +7,10 @@ interface SelectInputProps {
 
 const SelectInput = ({ title, children }: SelectInputProps) => {
   return (
-    <div className="flex items-center p-3 w-1/2 rounded ring-black ring-1">
-      {title && <div className="absolute left-8 top-2 px-1 text-black text-opacity-30 text-sm bg-white">{title}</div>}
+    <div className="relative flex items-center p-3 w-1/2 rounded ring-black ring-1">
+      {title && (
+        <div className="absolute bottom-9 left-3 px-1 text-black text-opacity-30 text-sm bg-white">{title}</div>
+      )}
       <select className="ml-1 w-full focus:outline-none">{children && children}</select>
     </div>
   );

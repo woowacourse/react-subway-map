@@ -4,15 +4,19 @@ import delImg from 'assets/images/trash.png';
 interface ListItemProps {
   title: string;
   editImg?: string | null;
+  itemColor?: string | null;
 }
 
-const ListItem = ({ title, editImg }: ListItemProps) => {
+const ListItem = ({ title, editImg, itemColor }: ListItemProps) => {
   return (
     <li className="flex items-center justify-between p-3 border-b border-gray-200">
-      <span>{title}</span>
-      <div>
+      <div className="flex items-center">
+        {itemColor && <div className={`rounded-full w-3 h-3  mr-2.5 ${itemColor}`} />}
+        <span>{title}</span>
+      </div>
+      <div className="flex items-center">
         {editImg && (
-          <button className="flex items-center mr-4 focus:outline-none hover:opacity-100 opacity-30" type="button">
+          <button className="flex items-center mr-2 focus:outline-none hover:opacity-100 opacity-30" type="button">
             <img src={editImg} alt="editImg" />
           </button>
         )}
@@ -26,6 +30,7 @@ const ListItem = ({ title, editImg }: ListItemProps) => {
 
 ListItem.defaultProps = {
   editImg: null,
+  itemColor: null,
 };
 
 export default ListItem;

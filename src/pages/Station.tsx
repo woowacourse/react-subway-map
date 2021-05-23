@@ -9,7 +9,7 @@ import React from 'react';
 const Station = () => {
   return (
     <Container className="mb-16">
-      <Title className="mb-10" text="지하철 역 관리" />
+      <Title className="mb-8" text="🚉 지하철 역 관리" />
       <div className="flex items-center mb-8">
         <Input
           className="mr-4 w-full"

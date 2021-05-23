@@ -17,7 +17,7 @@ const Container = ({ children, width, className }: ContainerProps) => {
 };
 
 Container.defaultProps = {
-  width: 'w-1/3',
+  width: 'w-1/2',
   className: '',
 };
 

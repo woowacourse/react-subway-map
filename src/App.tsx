@@ -1,6 +1,7 @@
 import BaseLayout from '@layout/Layout';
 import PATH from 'constants/PATH';
 import Home from 'pages/Home';
+import Line from 'pages/Line';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
@@ -24,7 +25,7 @@ const App = () => {
           <Station />
         </Route>
         <Route exact path={PATH.LINE}>
-          <h1>노선 관리</h1>
+          <Line />
         </Route>
         <Route exact path={PATH.SECTION}>
           <h1>구간 관리</h1>
