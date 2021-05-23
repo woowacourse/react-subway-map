@@ -12,7 +12,7 @@ const Line = () => {
   return (
     <>
       <Container>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 px-2">
           <Title text="🛤️ 지하철 노선 관리" />
           <ImageButton imgUrl={addImg} />
         </div>
