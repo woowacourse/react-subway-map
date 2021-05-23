@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useModal } from "../../components/@shared/Modal/hooks";
 import Main from "../../components/@shared/Main";
 import Modal from "../../components/@shared/Modal";
 import Select from "../../components/@shared/Select";
@@ -6,12 +7,7 @@ import Button from "../../components/@shared/Button";
 import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
 
 const Sections = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleModalOpen = () => setIsModalOpen(true);
-  const handleModalClose = () => setIsModalOpen(false);
-  const handleModalClick = (event) =>
-    setIsModalOpen(event.currentTarget !== event.target);
+  const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
 
   return (
     <>
@@ -63,49 +59,48 @@ const Sections = () => {
           </div>
         </section>
       </Main>
-      {isModalOpen && (
-        <Modal onClick={handleModalClick}>
-          <form className="flex flex-col items-center px-4 py-12 w-144 bg-white rounded-lg shadow-2xl">
-            <h2 className="mb-4 pb-6 text-center text-2xl">구간 추가</h2>
 
+      <Modal isOpen={isModalOpen} close={handleModalClose}>
+        <form className="flex flex-col items-center px-4 py-12 w-144 bg-white rounded-lg shadow-2xl">
+          <h2 className="mb-4 pb-6 text-center text-2xl">구간 추가</h2>
+
+          <Select>
+            <option hidden>노선 선택</option>
+            <option>신분당선</option>
+            <option>1호선</option>
+          </Select>
+
+          <div className="flex mx-4 my-10 w-full">
             <Select>
-              <option hidden>노선 선택</option>
-              <option>신분당선</option>
-              <option>1호선</option>
+              <option hidden>상행역</option>
+              <option>강남역</option>
+              <option>잠실역</option>
             </Select>
+            <span className="mx-6 text-gray-400 text-3xl">⬌</span>
+            <Select>
+              <option hidden>하행역</option>
+              <option>신도림역</option>
+              <option>왕십리역</option>
+            </Select>
+          </div>
 
-            <div className="flex mx-4 my-10 w-full">
-              <Select>
-                <option hidden>상행역</option>
-                <option>강남역</option>
-                <option>잠실역</option>
-              </Select>
-              <span className="mx-6 text-gray-400 text-3xl">⬌</span>
-              <Select>
-                <option hidden>하행역</option>
-                <option>신도림역</option>
-                <option>왕십리역</option>
-              </Select>
-            </div>
+          <FloatingLabelInput type="number" id="line-distance" label="거리" />
 
-            <FloatingLabelInput type="number" id="line-distance" label="거리" />
-
-            <div className="flex justify-end mr-4 mt-14 w-full space-x-4">
-              <Button
-                type="button"
-                size="medium"
-                theme="secondary"
-                onClick={handleModalClose}
-              >
-                취소
-              </Button>
-              <Button type="submit" size="medium">
-                확인
-              </Button>
-            </div>
-          </form>
-        </Modal>
-      )}
+          <div className="flex justify-end mr-4 mt-14 w-full space-x-4">
+            <Button
+              type="button"
+              size="medium"
+              theme="secondary"
+              onClick={handleModalClose}
+            >
+              취소
+            </Button>
+            <Button type="submit" size="medium">
+              확인
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </>
   );
 };

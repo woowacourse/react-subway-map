@@ -3,18 +3,31 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Modal = ({ children, onClick }) => (
-  <div
-    className="absolute left-0 top-0 flex items-center justify-center w-screen h-screen bg-black bg-opacity-40"
-    onClick={onClick}
-  >
-    <div>{children}</div>
-  </div>
-);
+const Modal = ({ isOpen, children, close }) => {
+  const handleClick = (event) => {
+    const isDimmedClicked = event.currentTarget === event.target;
+
+    if (isDimmedClicked) {
+      close();
+    }
+  };
+
+  return (
+    isOpen && (
+      <div
+        className="absolute left-0 top-0 flex items-center justify-center w-screen h-screen bg-black bg-opacity-40"
+        onClick={handleClick}
+      >
+        <div>{children}</div>
+      </div>
+    )
+  );
+};
 
 Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default Modal;
