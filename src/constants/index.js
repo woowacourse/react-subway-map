@@ -41,3 +41,10 @@ export const REG_EXP = {
   PASSWORD:
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$~!@#$%^&*()-+?])[A-Za-z\d$~!@#$%^&*()-+?]{6,20}$/,
 };
+
+export const RANGE = {
+  AGE: {
+    MIN: 0,
+    MAX: 100,
+  },
+};

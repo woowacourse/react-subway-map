@@ -1,8 +1,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
-import { COLOR, REG_EXP, ROUTE, SIZE } from '../../constants';
+import { COLOR, RANGE, REG_EXP, ROUTE, SIZE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
+import { signUp } from '../../api';
 
 const initialValues = {
   email: '',
@@ -27,7 +28,7 @@ const validateAge = (age) => {
   if (!REG_EXP.AGE.test(age)) {
     return '숫자만 입력해주세요.';
   }
-  if (age < 0 || age > 100) {
+  if (age < RANGE.AGE.MIN || age > RANGE.AGE.MAX) {
     return '올바른 나이를 입력해주세요.';
   }
 };
@@ -51,49 +52,78 @@ const validatePasswordConfirm = (password, passwordConfirm) => {
 };
 
 const validate = ({ email, age, password, passwordConfirm }) => {
-  // TODO: 항상 모든 값에 대한 검증이 진행
   const errors = {};
 
-  errors.email = validateEmail(email);
-  errors.age = validateAge(age);
-  errors.password = validatePassword(password);
-  errors.passwordConfirm = validatePasswordConfirm(password, passwordConfirm);
+  const emailError = validateEmail(email);
+  const ageError = validateAge(age);
+  const passwordError = validatePassword(password);
+  const passwordConfirmError = validatePasswordConfirm(
+    password,
+    passwordConfirm
+  );
+
+  if (emailError) {
+    errors.email = emailError;
+  }
+  if (ageError) {
+    errors.age = ageError;
+  }
+  if (passwordError) {
+    errors.password = passwordError;
+  }
+  if (passwordConfirmError) {
+    errors.passwordConfirm = passwordConfirmError;
+  }
 
   return errors;
 };
 
-const handleSubmit = () => {};
+const handleSubmitForm = ({ email, age, password }) => {
+  signUp({ email, age, password });
+};
 
 const SignUp = () => {
-  const formik = useFormik({
+  const {
+    //
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useFormik({
     initialValues,
     validate,
-    onSubmit: handleSubmit,
+    onSubmit: handleSubmitForm,
   });
+
+  const isValidForm =
+    Object.values(values).every((value) => value) &&
+    Object.values(errors).every((error) => !error);
 
   return (
     <PageTemplate title={ROUTE.SIGN_UP.NAME}>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Input
           type="email"
           name="email"
           placeholder="✉️ 이메일을 입력해주세요."
           size={SIZE.MD}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
         />
-        <Validator>{formik.touched.email && formik.errors.email}</Validator>
+        <Validator>{touched.email && errors.email}</Validator>
         <Input
           type="text"
           name="age"
           placeholder="👤 나이를 입력해주세요."
           size={SIZE.MD}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.age}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.age}
         />
-        <Validator>{formik.touched.age && formik.errors.age}</Validator>
+        <Validator>{touched.age && errors.age}</Validator>
         <PasswordSuggestion>
           비밀번호: 6자 이상 20자 이하의 영문, 숫자, 특수문자[!, @, #, $]의 조합
         </PasswordSuggestion>
@@ -102,26 +132,28 @@ const SignUp = () => {
           name="password"
           placeholder="🔒 비밀번호를 입력해주세요."
           size={SIZE.MD}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
         />
-        <Validator>
-          {formik.touched.password && formik.errors.password}
-        </Validator>
+        <Validator>{touched.password && errors.password}</Validator>
         <Input
           type="password"
           name="passwordConfirm"
           placeholder="🔒 비밀번호를 한번 더 입력해주세요."
           size={SIZE.MD}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.passwordConfirm}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.passwordConfirm}
         />
         <Validator>
-          {formik.touched.passwordConfirm && formik.errors.passwordConfirm}
+          {touched.passwordConfirm && errors.passwordConfirm}
         </Validator>
-        <Button type="submit" backgroundColor={COLOR.AMBER}>
+        <Button
+          type="submit"
+          backgroundColor={COLOR.AMBER}
+          disabled={!isValidForm}
+        >
           회원가입
         </Button>
       </Form>
