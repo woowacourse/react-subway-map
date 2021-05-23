@@ -20,7 +20,9 @@ const Stations: FC = () => {
       {DUMMY_STATIONS && (
         <StationList>
           {DUMMY_STATIONS.map((station) => (
-            <ListItem key={station.id}>{station.name}</ListItem>
+            <ListItem key={station.id} onDelete={() => console.log(station.name)}>
+              {station.name}
+            </ListItem>
           ))}
         </StationList>
       )}

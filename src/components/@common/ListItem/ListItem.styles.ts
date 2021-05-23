@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
 import Button from '../Button/Button';
+import FlexContainer from '../FlexContainer/FlexContainer';
 
 export const StyledListItem = styled.li`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border-bottom: 1px solid ${PALETTE.GRAY[300]};
   padding: 0.75rem 1rem;
 
@@ -14,7 +14,12 @@ export const StyledListItem = styled.li`
   }
 `;
 
-export const TrashBinButton = styled(Button)`
+export const ListContent = styled(FlexContainer)`
+  flex-grow: 1;
+`;
+
+export const ListItemButton = styled(Button)`
   width: 2.25rem;
   height: 2.25rem;
+  margin-left: 1rem;
 `;

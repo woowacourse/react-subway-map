@@ -12,6 +12,8 @@ const DefaultTemplate = (args) => <ListItem {...args} />;
 export const Default = DefaultTemplate.bind({});
 Default.args = {
   children: '강남역',
+  onDelete: () => console.log('delete!'),
+  onModify: () => console.log('modify!'),
 };
 
 const ListTemplate = (args) => (

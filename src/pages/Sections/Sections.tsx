@@ -33,7 +33,9 @@ const Sections: FC = () => {
         >
           <ul>
             {DUMMY_LINES[0].stations.map((station) => (
-              <ListItem key={station.id}>{station.name}</ListItem>
+              <ListItem key={station.id} onDelete={() => console.log(station.name)}>
+                {station.name}
+              </ListItem>
             ))}
           </ul>
         </CardTemplate>

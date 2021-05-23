@@ -17,7 +17,11 @@ const Lines: FC = () => {
       {DUMMY_LINES && (
         <LineList>
           {DUMMY_LINES.map((line) => (
-            <ListItem key={line.id}>
+            <ListItem
+              key={line.id}
+              onDelete={() => console.log(line.name)}
+              onModify={() => console.log(line.name)}
+            >
               <LineColorDot dotColor={line.color} />
               {line.name}
             </ListItem>
