@@ -1,4 +1,4 @@
-import Template from '../../components/@common/Template/Template.styles';
+import Template from '../../components/@common/Template/Template';
 import SignUpForm from '../../components/SignUp/SignUpForm/SignUpForm';
 
 const SignUpPage = () => {

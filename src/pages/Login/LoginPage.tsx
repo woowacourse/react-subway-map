@@ -1,4 +1,4 @@
-import Template from '../../components/@common/Template/Template.styles';
+import Template from '../../components/@common/Template/Template';
 import LoginForm from '../../components/Login/LoginForm/LoginForm';
 
 const LoginPage = () => {
