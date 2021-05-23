@@ -57,13 +57,13 @@ const Lines = () => (
 
         <div className="flex mx-4 my-10 w-full">
           <Select>
-            <option>상행종점</option>
+            <option hidden>상행종점</option>
             <option>강남역</option>
             <option>잠실역</option>
           </Select>
           <span className="mx-6 text-gray-400 text-3xl">⬌</span>
           <Select>
-            <option>하행종점</option>
+            <option hidden>하행종점</option>
             <option>신도림역</option>
             <option>왕십리역</option>
           </Select>
