@@ -18,3 +18,11 @@ BigButton.args = {
   text: 'Button Test',
   size: 'w-1/2 h-1/12',
 };
+
+export const colorButton = Template.bind({});
+colorButton.args = {
+  size: 'w-10 h-10',
+  bgColor: 'bg-gray-300',
+  hoverBgColor: 'bg-gray-400',
+  className: 'rounded-full',
+};

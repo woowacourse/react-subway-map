@@ -1,16 +1,18 @@
 import React from 'react';
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   size?: string;
+  bgColor?: string;
+  hoverBgColor?: string;
   className?: string;
 }
 
-const Button = ({ text, size, className }: ButtonProps) => {
+const Button = ({ text, size, className, bgColor, hoverBgColor }: ButtonProps) => {
   return (
     <button
       type="button"
-      className={`bg-red-300 hover:bg-red-400 rounded focus:outline-none ring-1 ring-red-300 ${className} ${size}`}
+      className={`rounded focus:outline-none ${bgColor} hover:${hoverBgColor} ${className} ${size}`}
     >
       {text}
     </button>
@@ -18,7 +20,10 @@ const Button = ({ text, size, className }: ButtonProps) => {
 };
 
 Button.defaultProps = {
+  text: '',
   size: 'w-20 h-10',
+  bgColor: 'bg-red-300',
+  hoverBgColor: 'bg-red-400',
   className: '',
 };
 
