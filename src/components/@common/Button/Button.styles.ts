@@ -3,12 +3,13 @@ import PALETTE from '../../../constants/palette';
 
 const Button = styled.button`
   position: relative;
+  white-space: nowrap;
   background-color: ${PALETTE.MAIN};
   background-color: ${(props) => props?.disabled && `rgba(0, 0, 0, 0.2)`};
   border-radius: 0.25rem;
   overflow: hidden;
   width: 100%;
-  padding: 1rem 2rem;
+  height: 3rem;
   box-shadow: 0 0.125rem 0.25rem grey;
   font-size: 1rem;
   font-weight: 600;

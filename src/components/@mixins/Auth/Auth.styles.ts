@@ -17,9 +17,3 @@ export const ChildrenContainer = styled(Container)`
     margin-bottom: 1.75rem;
   }
 `;
-
-export const Title = styled.h1`
-  text-align: center;
-  margin-bottom: 2.5rem;
-  font-size: 1.5rem;
-`;

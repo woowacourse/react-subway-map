@@ -1,5 +1,6 @@
 import { FC, FormHTMLAttributes } from 'react';
-import { ChildrenContainer, StyledAuthForm, Title } from './Auth.styles';
+import Title from '../../@common/Title/Title.styles';
+import { ChildrenContainer, StyledAuthForm } from './Auth.styles';
 
 export interface AuthFormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;

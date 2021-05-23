@@ -1,10 +1,18 @@
 import styled from 'styled-components';
+import { TemplateProps } from './Template';
 
-const Template = styled.main`
+export const StyledTemplate = styled.main`
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export default Template;
+export const InnerTemplate = styled.div<TemplateProps>`
+  width: 100%;
+  max-width: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${({ type }) => type === 'vertical' && 'flex-direction: column'}
+`;
