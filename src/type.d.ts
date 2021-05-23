@@ -1,13 +1,38 @@
-export interface IStation {
+export interface IStationReq {
+  name: string;
+}
+
+export interface IStationRes {
   id: number;
   name: string;
 }
 
-export interface ILine {
-  id: number;
+export interface ILineReq {
   name: string;
+  color: string;
   upStationId: number;
   downStationId: number;
+  distance: number;
+}
+
+export interface ILineRes {
+  id: number;
+  name: string;
+  color: string;
+  extraFare: number;
+  stations: IStationRes[];
+  sections: ISectionRes[];
+}
+
+export interface ISectionReq {
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+}
+
+export interface ISectionRes {
+  upStation: IStation;
+  downStation: IStation;
   distance: number;
 }
 

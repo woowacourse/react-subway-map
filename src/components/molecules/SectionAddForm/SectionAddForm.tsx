@@ -1,9 +1,9 @@
-import { ILine, AddFormProps } from '../../../type';
+import { ILineRes, AddFormProps } from '../../../type';
 import { Button, Input, Select } from '../../atoms';
 import { Container, Wrapper } from './SectionAddForm.styles';
 
 export interface SectionAddFormProps {
-  lineList: ILine[];
+  lineList: ILineRes[];
   onChangeLine: React.ChangeEventHandler<HTMLSelectElement>;
   lineId: number;
   onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement>;

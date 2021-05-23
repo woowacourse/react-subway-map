@@ -1,8 +1,8 @@
-import { IStation } from '../../../type';
+import { IStationRes } from '../../../type';
 import { Container } from './Select.styles';
 
 export interface SelectProps {
-  options: IStation[];
+  options: IStationRes[];
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   value: number;
   defaultName?: string;

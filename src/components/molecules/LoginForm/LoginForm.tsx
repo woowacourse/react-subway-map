@@ -1,7 +1,7 @@
 import { Container } from './LoginForm.styles';
 import { Button, Input } from '../../atoms';
 
-interface LoginFormProps {
+export interface LoginFormProps {
   onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
   email: string;
   onChangePassword: React.ChangeEventHandler<HTMLInputElement>;

@@ -11,10 +11,4 @@ const Template: Story<SectionAddFormProps> = args => <SectionAddForm {...args} /
 
 export const Basic = Template.bind({});
 
-Basic.args = {
-  lineList: [
-    { id: 1, name: '도비1', upStationId: 1, downStationId: 2, distance: 10 },
-    { id: 1, name: '도비1', upStationId: 1, downStationId: 2, distance: 10 },
-    { id: 1, name: '도비1', upStationId: 1, downStationId: 2, distance: 10 },
-  ],
-};
+Basic.args = {};

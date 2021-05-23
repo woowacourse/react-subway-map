@@ -1,4 +1,5 @@
 import { Story } from '@storybook/react';
+import stationList from '../../../fixtures/stationList';
 import Select, { SelectProps } from './Select';
 
 export default {
@@ -12,7 +13,7 @@ const Template: Story<SelectProps> = args => <Select {...args} />;
 export const Basic = Template.bind({});
 
 Basic.args = {
-  options: ['도비', '하루', '심바'],
+  options: stationList,
   onChange: () => {
     window.alert('select');
   },
