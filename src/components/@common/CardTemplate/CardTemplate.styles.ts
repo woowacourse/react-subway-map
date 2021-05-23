@@ -35,7 +35,7 @@ export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
     padding: 1rem 1.5rem;
     ${({ isColoredTitle, templateColor }) =>
       isColoredTitle
-        ? `background-color: ${templateColor};`
+        ? `background-color: ${templateColor}; text-align: left;`
         : 'text-align: center; padding: 3rem 0;'}
   }
 `;
