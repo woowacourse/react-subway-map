@@ -25,7 +25,7 @@ const Login = () => {
         <ImageButton className="mx-4" imgSize="w-10" imgUrl={wedgeImg} bgColor="" />
         <ImageButton className="mx-4" imgSize="w-10" imgUrl={rokiImg} bgColor="" />
       </div>
-      <Button className="mb-4 p-2" text="로그인" size="w-full" />
+      <Button className="mb-4 p-2 shadow-md" text="로그인" size="w-full" />
       <Link to={PATH.SIGN_UP}>
         <div className="text-l text-center text-black text-opacity-50">아직 회원이 아니신가요?</div>
       </Link>

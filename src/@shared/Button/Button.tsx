@@ -21,7 +21,7 @@ const Button = ({ text, size, className, bgColor, hoverBgColor }: ButtonProps) =
 
 Button.defaultProps = {
   text: '',
-  size: 'w-20 h-10',
+  size: 'w-24 h-12',
   bgColor: 'bg-red-300',
   hoverBgColor: 'bg-red-400',
   className: '',

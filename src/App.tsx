@@ -3,6 +3,7 @@ import PATH from 'constants/PATH';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
+import Station from 'pages/Station';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ const App = () => {
           <Signup />
         </Route>
         <Route exact path={PATH.STATION}>
-          <h1>역 관리</h1>
+          <Station />
         </Route>
         <Route exact path={PATH.LINE}>
           <h1>노선 관리</h1>
