@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { COLOR, RANGE, REG_EXP, ROUTE, SIZE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
 import { signUp } from '../../api';
+import { useHistory } from 'react-router';
 
 const initialValues = {
   email: '',
@@ -78,11 +79,23 @@ const validate = ({ email, age, password, passwordConfirm }) => {
   return errors;
 };
 
-const handleSubmitForm = ({ email, age, password }) => {
-  signUp({ email, age, password });
-};
-
 const SignUp = () => {
+  const [duplicateEmailError, setDuplicateEmailError] = useState(null);
+  const history = useHistory();
+
+  const handleSubmitForm = async ({ email, age, password }) => {
+    const response = await signUp({ email, age, password });
+
+    // TODO: 중복 처리 반영되면 status code 변경
+    if (response.status === 400) {
+      setDuplicateEmailError(response.message);
+
+      return;
+    }
+
+    history.push(ROUTE.SIGN_IN.PATH);
+  };
+
   const {
     //
     values,
@@ -113,7 +126,10 @@ const SignUp = () => {
           onBlur={handleBlur}
           value={values.email}
         />
-        <Validator>{touched.email && errors.email}</Validator>
+        <Validator>
+          {touched.email && errors.email}
+          {duplicateEmailError}
+        </Validator>
         <Input
           type="text"
           name="age"
