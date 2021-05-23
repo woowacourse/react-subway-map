@@ -33,3 +33,11 @@ export const SIZE = {
   MD: 'medium',
   LG: 'large',
 };
+
+export const REG_EXP = {
+  EMAIL:
+    /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/,
+  AGE: /^[0-9]*$/,
+  PASSWORD:
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$~!@#$%^&*()-+?])[A-Za-z\d$~!@#$%^&*()-+?]{6,20}$/,
+};
