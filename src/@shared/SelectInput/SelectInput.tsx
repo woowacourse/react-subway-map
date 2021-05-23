@@ -8,7 +8,7 @@ interface SelectInputProps {
 
 const SelectInput = ({ title, children, className }: SelectInputProps) => {
   return (
-    <div className={`relative flex items-center p-3 w-1/2 rounded ring-black ring-1 ${className}`}>
+    <div className={`relative flex items-center p-3 w-1/2 rounded ring-gray-500 ring-1 ${className}`}>
       {title && (
         <div className="absolute bottom-9 left-3 px-1 text-black text-opacity-30 text-sm bg-white">{title}</div>
       )}

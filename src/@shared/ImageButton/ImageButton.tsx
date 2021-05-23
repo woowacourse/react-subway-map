@@ -12,9 +12,9 @@ const ImageButton = ({ imgUrl, size, imgSize, bgColor, className }: ImageButtonP
   return (
     <button
       type="button"
-      className={`flex justify-center items-center shadow-md rounded-full focus:outline-none ${size} ${bgColor} ${className}`}
+      className={`flex justify-center hover:bg-red-400 items-center shadow-md rounded-full focus:outline-none ${size} ${bgColor} ${className}`}
     >
-      <img className={`opacity-70  rounded-full ${imgSize}`} src={imgUrl} alt="" />
+      <img className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} alt="" />
     </button>
   );
 };
