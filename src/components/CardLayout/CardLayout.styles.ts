@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
 
-const Container = styled.div`
+const Container = styled.section`
   width: 640px;
   min-height: 720px;
-  margin: auto;
-  margin-top: 120px;
+  margin: 0 auto;
   padding: 24px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor.defaultWhite};
@@ -17,10 +16,8 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const Divider = styled.hr`
-  height: 2px;
-  border-width: 0px;
-  background-color: #808080;
+const Content = styled.div`
+  padding: 20px;
 `;
 
-export default { Container, Title, Divider };
+export default { Container, Title, Content };
