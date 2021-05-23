@@ -14,6 +14,19 @@ export const COLOR = {
   TEXT_COLOR: '#444444',
 };
 
+export const PALETTE = {
+  RED: '#EA2027',
+  ORANGE: '#f39c12',
+  YELLOW: '#f1c40f',
+  LIME: '#A3CB38',
+  GREEN: '#2ecc71',
+  TEAL: '#1abc9c',
+  CYAN: '#3498db',
+  BLUE: '#273c75',
+  PURPLE: '#9c88ff',
+  MAGENTA: '#ED4C67',
+};
+
 export const SIZE = {
   PAGE_MAX_WIDTH: '80rem',
   PAGE_MIN_WIDTH: '40rem',

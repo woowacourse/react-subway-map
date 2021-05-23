@@ -1,6 +1,8 @@
+import { PALETTE, COLOR } from '../../constants/styleConstant';
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
 import SelectInput from '../@commons/SelectInput/SelectInput';
+
 import * as S from './LineModalForm.styles';
 
 const LineModalForm = () => {
@@ -23,10 +25,15 @@ const LineModalForm = () => {
         <Input label='거리' />
         <S.Message></S.Message>
       </S.InputWrapper>
-      <S.InputWrapper>
-        <SelectInput initialText='노선 색상'></SelectInput>
-        <S.Message></S.Message>
-      </S.InputWrapper>
+      <S.PaletteContainer>
+        <S.PaletteTitle>노선 색상 선택</S.PaletteTitle>
+        <S.PaletteWrapper>
+          {Object.values(PALETTE).map(color => (
+            <S.Palette color={color} />
+          ))}
+          <S.SelectedPalette color={COLOR.MINT_500} />
+        </S.PaletteWrapper>
+      </S.PaletteContainer>
       <S.ButtonContainer>
         <S.ButtonWrapper>
           <Button bgColor='TRANSPARENT' fontColor='BLACK'>
