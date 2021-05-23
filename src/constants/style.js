@@ -15,7 +15,7 @@ export const COLOR = {
   ERROR: '#FF7C74',
   LIST_ITEM_HOVER_BG: '#F6F6F6',
 
-  ICON_BG_DEFAULT: '#999',
+  ICON_DEFAULT: '#999',
 };
 
 export const LAYOUT = {
