@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { NavBar } from './components/';
+import { NavBar, ServerSelector } from './components/';
 import { ROUTE } from './constants';
 import {
   Home,
@@ -19,31 +19,34 @@ const Main = styled.main`
 
 function App() {
   return (
-    <Router>
-      <NavBar />
-      <Main>
-        <Switch>
-          <Route exact path={ROUTE.HOME.PATH}>
-            <Home />
-          </Route>
-          <Route exact path={ROUTE.SIGN_IN.PATH}>
-            <SignIn />
-          </Route>
-          <Route exact path={ROUTE.SIGN_UP.PATH}>
-            <SignUp />
-          </Route>
-          <Route exact path={ROUTE.STATION_MANAGE.PATH}>
-            <StationManager />
-          </Route>
-          <Route exact path={ROUTE.LINE_MANAGE.PATH}>
-            <LineManager />
-          </Route>
-          <Route exact path={ROUTE.SECTION_MANAGE.PATH}>
-            <SectionManager />
-          </Route>
-        </Switch>
-      </Main>
-    </Router>
+    <>
+      <Router>
+        <NavBar />
+        <Main>
+          <Switch>
+            <Route exact path={ROUTE.HOME.PATH}>
+              <Home />
+            </Route>
+            <Route exact path={ROUTE.SIGN_IN.PATH}>
+              <SignIn />
+            </Route>
+            <Route exact path={ROUTE.SIGN_UP.PATH}>
+              <SignUp />
+            </Route>
+            <Route exact path={ROUTE.STATION_MANAGE.PATH}>
+              <StationManager />
+            </Route>
+            <Route exact path={ROUTE.LINE_MANAGE.PATH}>
+              <LineManager />
+            </Route>
+            <Route exact path={ROUTE.SECTION_MANAGE.PATH}>
+              <SectionManager />
+            </Route>
+          </Switch>
+        </Main>
+      </Router>
+      <ServerSelector />
+    </>
   );
 }
 
