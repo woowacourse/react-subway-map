@@ -4,6 +4,7 @@ import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import editImg from 'assets/images/edit.png';
+import ModalPortal from 'ModalPortal';
 import React from 'react';
 import AddLineModal from './AddLineModal';
 
@@ -19,7 +20,9 @@ const Line = () => {
         <ListItem title="신분당선" editImg={editImg} itemColor="bg-blue-400" />
         <ListItem title="리액트선" editImg={editImg} itemColor="bg-gray-400" />
       </Container>
-      <AddLineModal />
+      <ModalPortal>
+        <AddLineModal />
+      </ModalPortal>
     </>
   );
 };
