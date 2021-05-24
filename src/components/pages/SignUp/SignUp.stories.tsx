@@ -1,13 +1,13 @@
 import { Story } from '@storybook/react';
-import Home from './Home';
+import SignUp from './SignUp';
 
 export default {
-  title: 'page/Home',
-  component: Home,
+  title: 'page/SignUp',
+  component: SignUp,
   argTypes: { children: { control: 'text' } },
 };
 
-const Template: Story = args => <Home {...args} />;
+const Template: Story = args => <SignUp {...args} />;
 
 export const Basic = Template.bind({});
 

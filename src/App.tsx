@@ -1,7 +1,7 @@
 import { Button, Menu, Main, RootContainer, Title } from './components/atoms';
 
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import { Home } from './components/pages';
+import { Home, SignUp } from './components/pages';
 
 import { ROUTE } from './constants';
 
@@ -13,6 +13,7 @@ const App = () => {
         <Main>
           <Switch>
             <Route exact path={ROUTE.HOME} component={Home} />
+            <Route exact path={ROUTE.SIGNUP} component={SignUp} />
             <Route component={() => <Redirect to={ROUTE.HOME} />} />
           </Switch>
         </Main>

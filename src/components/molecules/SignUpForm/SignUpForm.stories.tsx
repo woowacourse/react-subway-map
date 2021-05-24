@@ -12,7 +12,7 @@ const Template: Story<SignUpFormProps> = args => <SignUpForm {...args} />;
 export const Basic = Template.bind({});
 
 Basic.args = {
-  isValidName: true,
+  isValidAge: true,
   isValidEmail: true,
   isValidPassword: true,
   isValidPasswordCheck: true,
