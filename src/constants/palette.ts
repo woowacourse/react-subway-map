@@ -1,4 +1,4 @@
-const PALETTE = {
+const PALETTE: { [key: string]: string } = {
   PINK: '#ff516c',
   RED: '#ff4545',
   ORANGE: '#ff9b00',

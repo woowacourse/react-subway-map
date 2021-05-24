@@ -25,6 +25,20 @@ interface APIReturnTypeStation {
   name: string;
 }
 
+interface APIReturnTypeSection {
+  id: number;
+  upStation: APIReturnTypeStation;
+  downStation: APIReturnTypeStation;
+  distance: number;
+}
+
+interface APIReturnTypeLine {
+  id: number;
+  name: string;
+  color: string;
+  sections: APIReturnTypeSection[];
+}
+
 const API_HOST = 'NABOM';
 
 const request = async (url: string, requestConfig: RequestInit) => {
@@ -126,7 +140,15 @@ const apiRequest = {
       },
     });
   },
+
+  getLines: async (): Promise<APIReturnTypeLine[]> => {
+    const response = await request(`${BASE_URL[API_HOST]}/lines`, {
+      method: 'GET',
+    });
+
+    return await response.json();
+  },
 };
 
 export default apiRequest;
-export type { SignData, LoginData, APIReturnTypeStation };
+export type { SignData, LoginData, APIReturnTypeStation, APIReturnTypeLine };
