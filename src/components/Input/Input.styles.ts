@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 interface InputIProps {
   hasIcon: boolean;
+  isError: boolean;
 }
 
 export const Label = styled.label`
   position: relative;
   display: block;
+  margin-bottom: 20px;
 `;
 
 export const LabelText = styled.span`
@@ -21,7 +23,8 @@ export const LabelText = styled.span`
 `;
 
 export const Input = styled.input<InputIProps>`
-  border: 1px solid ${({ theme }) => theme.color.border.primary};
+  border: 1px solid
+    ${({ theme, isError }) => (isError ? theme.color.border.error : theme.color.border.primary)};
   border-radius: 5px;
   font-size: 18px;
   width: 100%;
@@ -34,7 +37,8 @@ export const Input = styled.input<InputIProps>`
   box-sizing: border-box;
 
   &:focus {
-    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.color.border.primary};
+    box-shadow: inset 0 0 0 1px
+      ${({ theme, isError }) => (isError ? theme.color.border.error : theme.color.border.primary)};
   }
 `;
 
@@ -45,4 +49,14 @@ export const Icon = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+`;
+
+export const Message = styled.p`
+  position: absolute;
+
+  color: ${({ theme }) => theme.color.text.error};
+  font-size: 14px;
+  letter-spacing: -1px;
+  margin: 0;
+  margin-left: 12px;
 `;
