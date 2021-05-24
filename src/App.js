@@ -5,6 +5,7 @@ import { ROUTE } from './constants';
 import {
   Home,
   SignIn,
+  SignOut,
   SignUp,
   StationManager,
   LineManager,
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route exact path={ROUTE.SIGN_IN.PATH}>
               <SignIn />
+            </Route>
+            <Route exact path={ROUTE.SIGN_OUT.PATH}>
+              <SignOut />
             </Route>
             <Route exact path={ROUTE.SIGN_UP.PATH}>
               <SignUp />
