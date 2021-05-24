@@ -16,6 +16,15 @@ interface LoginData {
   password: string;
 }
 
+interface StationData {
+  name: string;
+}
+
+interface APIReturnTypeStation {
+  id: number;
+  name: string;
+}
+
 const API_HOST = 'NABOM';
 
 const request = async (url: string, requestConfig: RequestInit) => {
@@ -75,7 +84,34 @@ const apiRequest = {
 
     return await response.json();
   },
+
+  getStations: async (): Promise<APIReturnTypeStation[]> => {
+    const response = await request(`${BASE_URL[API_HOST]}/stations`, {
+      method: 'GET',
+    });
+
+    return await response.json();
+  },
+
+  addStation: async (data: StationData): Promise<APIReturnTypeStation | undefined> => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    const response = await request(`${BASE_URL[API_HOST]}/stations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    return await response.json();
+  },
 };
 
 export default apiRequest;
-export type { SignData, LoginData };
+export type { SignData, LoginData, APIReturnTypeStation };
