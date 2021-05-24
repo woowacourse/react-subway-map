@@ -2,8 +2,21 @@ import { SelectHTMLAttributes } from "react";
 
 import { SelectBlock, SelectStylesProps } from "./Select.styles";
 
-export type Props = SelectHTMLAttributes<HTMLSelectElement> & SelectStylesProps;
+interface Option {
+  value: number;
+  text: string;
+}
 
-const Select = (props: Props) => <SelectBlock {...props} />;
+export interface Props extends SelectHTMLAttributes<HTMLSelectElement>, SelectStylesProps {
+  options: Option[];
+}
+
+const Select = ({ options, ...props }: Props) => (
+  <SelectBlock {...props}>
+    {options.map(({ value, text }) => (
+      <option value={value}>{text}</option>
+    ))}
+  </SelectBlock>
+);
 
 export default Select;
