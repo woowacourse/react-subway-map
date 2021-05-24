@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import Main from "../../components/@shared/Main";
 import Button from "../../components/@shared/Button";
 import Input from "../../components/@shared/Input";
-
-const isValidEmail = (value) => {
-  const rEmail =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-  return rEmail.test(value);
-};
+import {
+  useSignupAge,
+  useSignupEmail,
+  useSignupPassword,
+  useSignupInput,
+} from "./hooks";
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [email, isEmailValid, handleEmailChange] = useSignupEmail();
+  const [age, isAgeValid, handleAgeChange] = useSignupAge();
+  const [password, isPasswordValid, handlePasswordChange] = useSignupPassword();
+  const [passwordConfirm, isPasswordConfirmValid, handlePasswordConfirmChange] =
+    useSignupInput((value) => value === password);
 
-  const handleEmailInput = (event) => {
-    const { value } = event.target;
-    const isValid = isValidEmail(value);
-
-    setIsEmailValid(isValid);
-    setEmail(value);
-  };
+  const isSubmitEnabled = [
+    isEmailValid,
+    isAgeValid,
+    isPasswordValid,
+    isPasswordConfirmValid,
+  ].every(Boolean);
 
   return (
     <Main>
@@ -38,12 +39,19 @@ const Signup = () => {
             placeholder="✉️ 이메일을 입력해주세요"
             value={email}
             isValid={isEmailValid}
-            onChange={handleEmailInput}
+            onChange={handleEmailChange}
           />
           <label className="sr-only" htmlFor="age">
             나이 입력란
           </label>
-          <Input id="age" type="number" placeholder="👤 나이를 입력해주세요" />
+          <Input
+            id="age"
+            type="text"
+            placeholder="👤 나이를 입력해주세요"
+            value={age}
+            isValid={isAgeValid}
+            onChange={handleAgeChange}
+          />
           <label className="sr-only" htmlFor="password">
             비밀번호 입력란
           </label>
@@ -51,6 +59,9 @@ const Signup = () => {
             id="password"
             type="password"
             placeholder="🔒 비밀번호를 입력해주세요"
+            value={password}
+            isValid={isPasswordValid}
+            onChange={handlePasswordChange}
           />
           <label className="sr-only" htmlFor="password-confirm">
             비밀번호 확인 입력란
@@ -59,8 +70,11 @@ const Signup = () => {
             id="password-confirm"
             type="password"
             placeholder="🔒 비밀번호를 한번 더 입력해주세요"
+            value={passwordConfirm}
+            isValid={isPasswordConfirmValid}
+            onChange={handlePasswordConfirmChange}
           />
-          <Button type="submit" disabled={false}>
+          <Button type="submit" disabled={!isSubmitEnabled}>
             회원가입
           </Button>
         </form>
