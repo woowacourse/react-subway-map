@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
+import PALETTE from '../../../constants/palette';
 import { CardTemplateTitle, StyledCardTemplate } from './CardTemplate.styles';
 
 interface Props {
   children: React.ReactNode;
-  templateColor: string;
+  templateColor?: string;
   isColoredTitle?: boolean;
   titleText?: string;
   titleSize?: 'sm' | 'md' | 'lg';
@@ -12,7 +13,7 @@ interface Props {
 
 const CardTemplate: FC<Props> = ({
   children,
-  templateColor,
+  templateColor = PALETTE.YELLOW[400],
   isColoredTitle = false,
   titleText,
   titleSize = 'md',
@@ -31,7 +32,7 @@ const CardTemplate: FC<Props> = ({
 
 CardTemplate.propTypes = {
   children: PropTypes.node.isRequired,
-  templateColor: PropTypes.string.isRequired,
+  templateColor: PropTypes.string,
   isColoredTitle: PropTypes.bool,
   titleText: PropTypes.string,
   titleSize: PropTypes.oneOf(['sm', 'md', 'lg']),

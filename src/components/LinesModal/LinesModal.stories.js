@@ -1,5 +1,5 @@
 import React from 'react';
-import LinesModal from './LInesModal';
+import LinesModal from './LinesModal';
 
 export default {
   title: 'modal/LinesModal',

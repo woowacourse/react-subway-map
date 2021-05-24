@@ -1,5 +1,5 @@
 import { Page, Station } from './../types';
-import PALETTE from './palette';
+import PALETTE, { Color } from './palette';
 
 export const APP_TITLE = 'SUNKIST SUBWAY';
 
@@ -28,7 +28,7 @@ export const PAGE_INFO: { [key: string]: Page } = {
 
 export const COMMON_NAV_LIST = [PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS];
 
-export const THEME_COLOR = PALETTE.YELLOW;
+export const THEME_COLOR: Color = PALETTE.YELLOW;
 
 export const LINE_COLORS = [
   PALETTE.RED[400],

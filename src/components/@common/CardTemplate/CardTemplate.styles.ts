@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
 
 interface StyledCardTemplateProps {
-  templateColor: string;
+  templateColor?: string;
   isColoredTitle: boolean;
   titleSize: 'sm' | 'md' | 'lg';
 }
