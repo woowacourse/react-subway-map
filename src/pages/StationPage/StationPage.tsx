@@ -11,7 +11,7 @@ import { Container, Icon, Heading1, Form, List } from './StationPage.style';
 import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeStation } from '../../request';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
-import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
 
 interface Station extends APIReturnTypeStation {
   editable: boolean;
@@ -25,22 +25,21 @@ const StationPage = () => {
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
 
+  const fetchStations = async () => {
+    try {
+      const stations: APIReturnTypeStation[] = await apiRequest.getStations();
+
+      setList(stations.map((station) => ({ ...station, editable: false })));
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+  };
+
   useEffect(() => {
-    const getStations = async () => {
-      try {
-        const stations: APIReturnTypeStation[] = await apiRequest.getStations();
-
-        setList(stations.map((station) => ({ ...station, editable: false })));
-      } catch (error) {
-        console.error(error);
-        addMessage?.(ERROR_MESSAGE.DEFAULT);
-      }
-    };
-
-    getStations();
+    fetchStations();
   }, []);
 
-  // TODO: 여러 사용자가 동시에 데이터를 추가할 때 일관성 유지
   // TODO: 역 리스트 sorting
   const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -67,7 +66,7 @@ const StationPage = () => {
       });
 
       if (newStation) {
-        setList([{ ...newStation, editable: false }, ...list]);
+        await fetchStations();
         addMessage?.(SUCCESS_MESSAGE.ADD_STATION);
       } else {
         addMessage?.(ERROR_MESSAGE.UNAUTHORIZED);
@@ -77,10 +76,23 @@ const StationPage = () => {
     } catch (error) {
       console.error(error);
       // TODO: bad request처리
-      if (error.status === '400') {
+      if (error.message === '400') {
         setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
+        await fetchStations();
         return;
       }
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+  };
+
+  const onStationDelete = async (id: number, name: string) => {
+    if (!confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
+    try {
+      await apiRequest.deleteStation(id);
+      await fetchStations();
+      addMessage?.(SUCCESS_MESSAGE.DELETE_STATION);
+    } catch (error) {
+      console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
@@ -119,7 +131,7 @@ const StationPage = () => {
     );
   };
 
-  const onEditStation = async () => {};
+  const onStationEdit = async () => {};
 
   return (
     <Container>
@@ -155,7 +167,7 @@ const StationPage = () => {
                   size="s"
                   backgroundColor={themeColor}
                   color={PALETTE.WHITE}
-                  onClick={onEditStation}
+                  onClick={onStationEdit}
                 >
                   <MdCheck size="15px" />
                 </Button>
@@ -179,7 +191,13 @@ const StationPage = () => {
                   <MdCancel size="15px" />
                 </Button>
               ) : (
-                <Button type="button" size="s" backgroundColor={PALETTE.PINK} color={PALETTE.WHITE}>
+                <Button
+                  type="button"
+                  size="s"
+                  backgroundColor={PALETTE.PINK}
+                  color={PALETTE.WHITE}
+                  onClick={() => onStationDelete(id, name)}
+                >
                   <MdDelete size="15px" />
                 </Button>
               )}

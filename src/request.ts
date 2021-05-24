@@ -111,6 +111,21 @@ const apiRequest = {
 
     return await response.json();
   },
+
+  deleteStation: async (stationId: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    const response = await request(`${BASE_URL[API_HOST]}/stations/${stationId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
 };
 
 export default apiRequest;
