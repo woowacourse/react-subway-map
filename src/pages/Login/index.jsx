@@ -1,19 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useInput } from "../../components/@shared/Input/hooks";
+import membersAPI from "../../api/members";
 import PATH from "../../constants/path";
 import Main from "../../components/@shared/Main";
 import Input from "../../components/@shared/Input";
 import Button from "../../components/@shared/Button";
-import { useInput } from "../../components/@shared/Input/hooks";
 
 const Login = () => {
+  const history = useHistory();
   const [email, handleEmailChange] = useInput(null);
   const [password, handlePasswordChange] = useInput(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // TODO:로그인 API  요청
+    // TODO: accessToken 저장
+    const accessToken = await membersAPI.login({ email, password });
+
+    if (accessToken) {
+      history.push(PATH.STATIONS);
+    }
   };
 
   return (
