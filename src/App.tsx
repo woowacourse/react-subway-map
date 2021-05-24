@@ -24,22 +24,22 @@ const App = () => (
       ))}
     </Navigation>
     <Switch>
-      <Route path={PAGE_PATH.LOGIN}>
+      <Route exact path={PAGE_PATH.LOGIN}>
         <LoginPage />
       </Route>
-      <Route path={PAGE_PATH.SIGN_UP}>
+      <Route exact path={PAGE_PATH.SIGN_UP}>
         <SignupPage />
       </Route>
-      <Route path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
+      <Route exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
         <StationManagementPage />
       </Route>
-      <Route path={PAGE_PATH.LINE_MANAGEMENT}>
+      <Route exact path={PAGE_PATH.LINE_MANAGEMENT}>
         <LineManagementPage />
       </Route>
-      <Route path={PAGE_PATH.SECTION_MANAGEMENT}>
+      <Route exact path={PAGE_PATH.SECTION_MANAGEMENT}>
         <SectionManagementPage />
       </Route>
-      <Route path={PAGE_PATH.SUBWAY_MANAGEMENT}>
+      <Route exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
         <SubwayMapPage />
       </Route>
     </Switch>
