@@ -17,6 +17,7 @@ const Input = styled.input`
 `;
 
 const Label = styled.label`
+  width: 100%;
   display: flex;
   flex-direction: column;
   font-size: 12px;

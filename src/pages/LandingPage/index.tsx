@@ -1,10 +1,11 @@
 import React from 'react';
+import Styled from './styles';
 
 const LandingPage = () => {
   return (
-    <div>
-      <h1>로그인해주세요</h1>
-    </div>
+    <Styled.Container>
+      <h1>로그인 해주세요</h1>
+    </Styled.Container>
   );
 };
 

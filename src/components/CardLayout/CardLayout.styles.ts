@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-const Container = styled.section`
+export const Container = styled.section`
   width: 640px;
-  min-height: 720px;
+  min-height: 400px;
   margin: 0 auto;
   padding: 24px;
   border-radius: 10px;
