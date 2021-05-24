@@ -10,11 +10,16 @@ interface Message {
 
 interface Props extends InputProps {
   message?: Message;
+  className?: string;
 }
 
-const NotificationInput: FC<Props> = ({ message, ...options }) => {
+const NotificationInput: FC<Props> = ({ message, className, ...options }) => {
   return (
-    <NotificationInputContainer direction="column" justifyContent="space-between">
+    <NotificationInputContainer
+      className={className}
+      direction="column"
+      justifyContent="space-between"
+    >
       <Input {...options} />
       {message && <NotificationText isError={message.isError}>{message.text}</NotificationText>}
     </NotificationInputContainer>
@@ -26,6 +31,7 @@ NotificationInput.propTypes = {
     text: PropTypes.string.isRequired,
     isError: PropTypes.bool.isRequired,
   }),
+  className: PropTypes.string,
 };
 
 export default NotificationInput;
