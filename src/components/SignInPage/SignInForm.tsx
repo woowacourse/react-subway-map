@@ -5,7 +5,7 @@ import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
 import { Link } from 'react-router-dom';
-import { BASE_URL, ROUTE } from '../../constants/constant';
+import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
 import { useDispatch } from 'react-redux';
 import { selectServer } from '../../modules/user/userReducer';
 
@@ -13,6 +13,7 @@ const SignInForm = () => {
   const dispatch = useDispatch();
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    SERVER.URL = e.target.value;
     dispatch(selectServer({ serverName: e.target[e.target.selectedIndex].innerText, baseURL: e.target.value }));
   };
 

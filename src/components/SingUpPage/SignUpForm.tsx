@@ -4,9 +4,13 @@ import mailSVG from '../../assets/svg/mail.svg';
 import userSVG from '../../assets/svg/user.svg';
 import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { BASE_URL, ROUTE } from '../../constants/constant';
+import { signUp } from '../../api/api';
+import { RESPONSE } from '../../constants/api';
+import { useHistory } from 'react-router';
 
-const isValidEmail = (email: string) => {
+const getEmailErrorMessage = (email: string) => {
   var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 
   if (!reg_email.test(email)) {
@@ -16,7 +20,7 @@ const isValidEmail = (email: string) => {
   return '';
 };
 
-const isValidAge = (age: string) => {
+const getAgeErrorMessage = (age: string) => {
   if (isNaN(Number(age))) {
     return '나이는 숫자여야 합니다.';
   }
@@ -28,7 +32,7 @@ const isValidAge = (age: string) => {
   return '';
 };
 
-const isValidPassword = (password: string) => {
+const getPasswordErrorMessage = (password: string) => {
   if (!(4 <= password.length && password.length <= 20)) {
     return '비밀번호는 최소 4글자에서 최대 20 글자여야 합니다.';
   }
@@ -36,7 +40,7 @@ const isValidPassword = (password: string) => {
   return '';
 };
 
-const isValidPasswordConfirm = (password: string, confirmPassword: string) => {
+const getConfirmPasswordErrorMessage = (password: string, confirmPassword: string) => {
   if (!(4 <= confirmPassword.length && confirmPassword.length <= 20)) {
     return '비밀번호는 최소 4글자에서 최대 20 글자여야 합니다.';
   }
@@ -49,6 +53,7 @@ const isValidPasswordConfirm = (password: string, confirmPassword: string) => {
 };
 
 const SignUpForm = () => {
+  const history = useHistory();
   const [userInfo, setUserInfo] = useState({
     email: '',
     age: '',
@@ -56,11 +61,35 @@ const SignUpForm = () => {
     confirmPassword: '',
   });
 
+  const emailErrorMessage = getEmailErrorMessage(userInfo.email);
+  const ageErrorMessage = getAgeErrorMessage(userInfo.age);
+  const passwordErrorMessage = getPasswordErrorMessage(userInfo.password);
+  const confirmPasswordErrorMessage = getConfirmPasswordErrorMessage(userInfo.password, userInfo.confirmPassword);
+  const isValidForm = !(emailErrorMessage || ageErrorMessage || passwordErrorMessage || confirmPasswordErrorMessage);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { email, age, password } = userInfo;
+    const results = await Promise.all(
+      Object.values(BASE_URL).map(({ URL }) => signUp({ url: URL, email, password, age }))
+    );
+
+    if (results.some(result => result !== RESPONSE.SUCCESS)) {
+      alert('회원가입에 실패했습니다...!\n 잠시 후 다시 시도해주세요!');
+      return;
+    }
+
+    alert('회원가입에 성공하였습니다!');
+    history.push(ROUTE.SIGN_IN);
+  };
+
   return (
-    <S.SignUpForm>
+    <S.SignUpForm onSubmit={handleSignUp}>
       <S.Title>회원가입</S.Title>
       <S.InputWrapper>
         <Input
@@ -71,11 +100,11 @@ const SignUpForm = () => {
           onChange={handleChange}
           required={true}
         />
-        <S.Message>{isValidEmail(userInfo.email)}</S.Message>
+        <S.Message>{emailErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input type='number' emoji={userSVG} placeholder='나이를 입력해주세요' name='age' onChange={handleChange} />
-        <S.Message>{isValidAge(userInfo.age)}</S.Message>
+        <S.Message>{ageErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
@@ -86,7 +115,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           required={true}
         />
-        <S.Message></S.Message>
+        <S.Message>{passwordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
@@ -97,10 +126,10 @@ const SignUpForm = () => {
           onChange={handleChange}
           required={true}
         />
-        <S.Message></S.Message>
+        <S.Message>{confirmPasswordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
-        <Button isDisabled={true}>회원가입</Button>
+        <Button isDisabled={isValidForm ? false : true}>회원가입</Button>
       </S.ButtonWrapper>
     </S.SignUpForm>
   );

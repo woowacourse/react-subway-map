@@ -13,3 +13,7 @@ export const BASE_URL = {
   SAKJEONG: { name: '삭정', URL: 'https://sakjung-subway.kro.kr' },
   SONNEOJAL: { name: '손너잘', URL: 'https://bperhaps.p-e.kr' },
 };
+
+export const SERVER = {
+  URL: '',
+};
