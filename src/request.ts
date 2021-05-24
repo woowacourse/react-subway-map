@@ -20,6 +20,14 @@ interface StationData {
   name: string;
 }
 
+interface LineData {
+  name: string;
+  color: string;
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+}
+
 interface APIReturnTypeStation {
   id: number;
   name: string;
@@ -147,6 +155,40 @@ const apiRequest = {
     });
 
     return await response.json();
+  },
+
+  addLine: async (data: LineData): Promise<APIReturnTypeLine | undefined> => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    const response = await request(`${BASE_URL[API_HOST]}/lines`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    return await response.json();
+  },
+
+  deleteLine: async (lineId: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    const response = await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   },
 };
 

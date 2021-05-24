@@ -1,3 +1,4 @@
+import PALETTE from '../../constants/palette';
 import { Container, ColorOption } from './Palette.style';
 
 interface PaletteProps {
@@ -12,8 +13,8 @@ const Palette = ({ inputName, colors }: PaletteProps) => (
   <Container>
     {colors.map(({ disabled, name }) => (
       <label key={name}>
-        <input name={inputName} type="radio" disabled={disabled} hidden />
-        <ColorOption backgroundColor={name}></ColorOption>
+        <input name={inputName} type="radio" disabled={disabled} value={name} hidden />
+        <ColorOption backgroundColor={PALETTE[name]}></ColorOption>
       </label>
     ))}
   </Container>

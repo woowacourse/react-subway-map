@@ -12,12 +12,15 @@ const SUCCESS_MESSAGE = {
   SIGNUP: '😄 회원가입에 성공했습니다.',
   LOGIN: '😄 로그인에 성공했습니다.',
   LOGOUT: '🙋‍♀️ 로그아웃 되었습니다.',
-  ADD_STATION: '🚇 지하철 역이 추가 되었습니다.',
-  DELETE_STATION: '🚇 지하철 역이 제거 되었습니다.',
+  ADD_STATION: '🚇 지하철 역이 추가되었습니다.',
+  DELETE_STATION: '🚇 지하철 역이 제거되었습니다.',
+  ADD_LINE: '🚇 지하철 노선이 추가되었습니다.',
+  DELETE_LINE: '🚇 지하철 노선이 제거되었습니다.',
 };
 
 const CONFIRM_MESSAGE = {
   DELETE_STATION: (station: string) => `"${station}"을(를) 삭제하시겠습니까?`,
+  DELETE_LINE: (line: string) => `"${line}"을(를) 삭제하시겠습니까?`,
 };
 
 export { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE };
