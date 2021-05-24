@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import SnackBarProvider from './contexts/SnackBarProvider';
 import ThemeProvider from './contexts/ThemeContextProvider';
+import UserProvider from './contexts/UserContextProvider';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -11,7 +12,9 @@ ReactDOM.render(
     <GlobalStyle />
     <ThemeProvider>
       <SnackBarProvider>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </SnackBarProvider>
     </ThemeProvider>
   </React.StrictMode>,

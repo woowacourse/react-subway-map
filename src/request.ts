@@ -52,6 +52,23 @@ const apiRequest = {
 
     return accessToken;
   },
+
+  getUserInfo: async () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    const response = await request(`${BASE_URL[API_HOST]}/members/me`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return await response.json();
+  },
 };
 
 export default apiRequest;
