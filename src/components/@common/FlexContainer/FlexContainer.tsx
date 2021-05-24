@@ -8,7 +8,7 @@ interface Props {
 
 const FlexContainer = styled.div<Props>`
   display: flex;
-  ${({ direction }) => direction && `direction: ${direction};`}
+  ${({ direction }) => direction && `flex-direction: ${direction};`}
   ${({ justifyContent }) => justifyContent && `justify-content: ${justifyContent};`}
   ${({ alignItems }) => alignItems && `align-items: ${alignItems};`};
 `;
