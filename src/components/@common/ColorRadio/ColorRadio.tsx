@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { ChangeEventHandler, FC } from 'react';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
 interface LabelText {
@@ -9,14 +9,16 @@ interface LabelText {
 
 interface Props {
   groupName: string;
+  value: string;
   radioColor: string;
   isChecked: boolean;
-  onChange: () => void;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   labelText?: LabelText;
 }
 
 const ColorRadio: FC<Props> = ({
   groupName,
+  value,
   radioColor,
   isChecked = false,
   labelText,
@@ -27,7 +29,7 @@ const ColorRadio: FC<Props> = ({
       <ColorRadioInput
         type="radio"
         name={groupName}
-        value={radioColor}
+        value={value}
         checked={isChecked}
         onChange={onChange}
         radioColor={radioColor}
@@ -39,6 +41,7 @@ const ColorRadio: FC<Props> = ({
 
 ColorRadio.propTypes = {
   groupName: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   radioColor: PropTypes.string.isRequired,
   isChecked: PropTypes.bool.isRequired,
   labelText: PropTypes.shape({

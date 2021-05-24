@@ -26,6 +26,7 @@ const LinesModal: FC<Props> = ({ onClose, lineName }) => {
           {LINE_COLORS.map((color) => (
             <ColorRadio
               key={color}
+              value={color as string}
               radioColor={color as string}
               groupName="lineColor"
               isChecked={false}
