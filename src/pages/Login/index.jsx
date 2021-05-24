@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PATH from "../../constants/path";
 import Main from "../../components/@shared/Main";
 import Input from "../../components/@shared/Input";
 import Button from "../../components/@shared/Button";
@@ -47,7 +48,7 @@ const Login = () => {
           <Button type="submit" disabled={false}>
             로그인
           </Button>
-          <Link to="/signup" className="mt-8 text-center text-gray-700">
+          <Link to={PATH.SIGNUP} className="mt-8 text-center text-gray-700">
             <span>아직 회원이 아니신가요?</span>
           </Link>
         </form>
