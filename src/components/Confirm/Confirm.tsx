@@ -16,10 +16,10 @@ const Confirm = ({ title, onConfirm, onReject }: Props) => (
         <p>{title}</p>
       </Title>
       <ButtonControls>
-        <button onClick={onReject}>
+        <button type="button" onClick={onReject}>
           <p>취소</p>
         </button>
-        <button onClick={onConfirm}>
+        <button type="button" onClick={onConfirm}>
           <p>확인</p>
         </button>
       </ButtonControls>

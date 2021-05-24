@@ -16,12 +16,12 @@ const ListItem = ({ circleColor, onUpdate, onDelete, children, ...props }: Props
     </FlexAlignCenter>
     <ButtonControls>
       {onUpdate && (
-        <Button size="sm" buttonTheme="gray" onClick={onUpdate}>
+        <Button type="button" size="sm" buttonTheme="gray" onClick={onUpdate}>
           수정
         </Button>
       )}
       {onDelete && (
-        <Button size="sm" buttonTheme="gray" onClick={onDelete}>
+        <Button type="button" size="sm" buttonTheme="gray" onClick={onDelete}>
           삭제
         </Button>
       )}

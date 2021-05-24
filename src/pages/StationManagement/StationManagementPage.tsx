@@ -13,7 +13,7 @@ const StationManagementPage = () => {
         <h2 style={{ marginBottom: "1rem" }}>🚉역 관리</h2>
         <Flex style={{ width: "100%", marginBottom: "1rem" }}>
           <Input placeholder="역 이름" style={{ marginRight: "10px" }}></Input>
-          <Button>확인</Button>
+          <Button type="button">확인</Button>
         </Flex>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
           {stations.map(({ id, name }) => (

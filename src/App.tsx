@@ -17,7 +17,7 @@ const App = () => (
     <Navigation>
       {navigationLinks.map((navigationLink) => (
         <Link to={navigationLink.link}>
-          <Button buttonTheme="white" kind="rect">
+          <Button type="button" buttonTheme="white" kind="rect">
             {navigationLink.title}
           </Button>
         </Link>
