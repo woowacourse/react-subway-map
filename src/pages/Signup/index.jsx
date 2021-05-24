@@ -11,7 +11,7 @@ const isValidEmail = (value) => {
 };
 
 const Signup = () => {
-  const [Email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
 
   const handleEmailInput = (event) => {
@@ -36,7 +36,7 @@ const Signup = () => {
             id="email"
             type="email"
             placeholder="✉️ 이메일을 입력해주세요"
-            value={Email}
+            value={email}
             isValid={isEmailValid}
             onChange={handleEmailInput}
           />
