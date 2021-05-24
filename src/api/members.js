@@ -27,10 +27,11 @@ const signup = async ({ email, password, age }) => {
       throw new Error(body.message);
     }
 
-    return;
+    return res.status === 201;
   } catch (error) {
     console.error(error);
     alert(UNKNOWN_ERROR_MESSAGE);
+    return false;
   }
 };
 

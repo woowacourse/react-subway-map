@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Main from "../../components/@shared/Main";
 import Button from "../../components/@shared/Button";
 import Input from "../../components/@shared/Input";
@@ -7,6 +8,7 @@ import { useSignupAge, useSignupEmail, useSignupPassword } from "./hooks";
 import membersAPI from "../../api/members";
 
 const Signup = () => {
+  const history = useHistory();
   const [email, handleEmailChange, isEmailValid] = useSignupEmail();
   const [age, handleAgeChange, isAgeValid] = useSignupAge();
   const [password, handlePasswordChange, isPasswordValid] = useSignupPassword();
@@ -20,10 +22,14 @@ const Signup = () => {
     isPasswordConfirmValid,
   ].every(Boolean);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    membersAPI.signup({ email, password, age });
+    const isSucceed = await membersAPI.signup({ email, password, age });
+
+    if (isSucceed) {
+      history.push("/login");
+    }
   };
 
   return (
