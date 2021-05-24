@@ -5,6 +5,11 @@ interface ColorRadioInputProps extends InputHTMLAttributes<HTMLInputElement> {
   radioColor: string;
 }
 
+export const ColorRadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+`;
+
 export const ColorRadioInput = styled.input<ColorRadioInputProps>`
   appearance: none;
   position: relative;
@@ -29,5 +34,5 @@ export const ColorRadioInput = styled.input<ColorRadioInputProps>`
 `;
 
 export const ColorRadioLabelText = styled.span`
-  display: none;
+  margin-left: 0.5rem;
 `;

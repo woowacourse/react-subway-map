@@ -1,24 +1,29 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
-import { ColorRadioInput, ColorRadioLabelText } from './ColorRadio.styles';
+import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
+
+interface LabelText {
+  text: string;
+  isVisible: boolean;
+}
 
 interface Props {
   groupName: string;
   radioColor: string;
   isChecked: boolean;
-  labelText?: string;
   onChange: () => void;
+  labelText: LabelText;
 }
 
 const ColorRadio: FC<Props> = ({
   groupName,
   radioColor,
   isChecked = false,
-  labelText = '',
+  labelText,
   onChange,
 }) => {
   return (
-    <label>
+    <ColorRadioLabel>
       <ColorRadioInput
         type="radio"
         name={groupName}
@@ -27,8 +32,8 @@ const ColorRadio: FC<Props> = ({
         onChange={onChange}
         radioColor={radioColor}
       />
-      <ColorRadioLabelText>{labelText}</ColorRadioLabelText>
-    </label>
+      {labelText.isVisible && <ColorRadioLabelText>{labelText.text}</ColorRadioLabelText>}
+    </ColorRadioLabel>
   );
 };
 
@@ -36,7 +41,10 @@ ColorRadio.propTypes = {
   groupName: PropTypes.string.isRequired,
   radioColor: PropTypes.string.isRequired,
   isChecked: PropTypes.bool.isRequired,
-  labelText: PropTypes.string,
+  labelText: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+  }).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
