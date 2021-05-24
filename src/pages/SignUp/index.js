@@ -154,6 +154,7 @@ const SignUp = () => {
           type="submit"
           backgroundColor={COLOR.AMBER}
           disabled={!isValidForm}
+          data-testid="signup-button"
         >
           회원가입
         </Button>
