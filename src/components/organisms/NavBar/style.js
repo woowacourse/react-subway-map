@@ -51,22 +51,25 @@ export const MenuList = styled.ul`
 
 export const MenuItem = styled.li`
   position: relative;
+  display: flex;
+  justify-content: center;
   margin: 0 1rem;
+
+  min-width: 5.5rem;
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: -0.02rem;
 
-  & > a {
+  & > a,
+  > button {
     display: flex;
     align-items: center;
+    padding: 1rem 0;
+    font: inherit;
 
     & > svg {
       margin-right: 0.25rem;
     }
-  }
-
-  & a {
-    padding: 1rem 0;
   }
 
   &:hover ::after {

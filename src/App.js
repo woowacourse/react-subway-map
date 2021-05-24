@@ -6,7 +6,7 @@ import { LoginPage, SignUpPage } from './pages';
 import { ROUTE } from './constants';
 
 function App() {
-  const [server, setServer] = useState({ id: null, endPoint: null });
+  const [server, setServer] = useState({ id: null, endpoint: null });
 
   return (
     <Router>

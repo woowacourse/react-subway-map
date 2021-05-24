@@ -5,12 +5,12 @@ import { ButtonRadio } from '../..';
 import { Label, Content, Item, Name, Nickname, Image } from './style';
 
 export const ServerSelectItem = (props) => {
-  const { ownerName, ownerNickname, ownerImgSrc, isChecked, value, name, onChange, ...rest } = props;
+  const { ownerNickname, ownerName, ownerImgSrc, value, ...rest } = props;
 
   return (
-    <Item {...rest}>
+    <Item>
       <Label>
-        <ButtonRadio isChecked={isChecked} value={value} name={name} onChange={onChange} />
+        <ButtonRadio name="serverSelect" value={value} {...rest} />
         <Content>
           <Nickname>{ownerNickname}</Nickname>
           <Name>{ownerName}</Name>
@@ -22,8 +22,8 @@ export const ServerSelectItem = (props) => {
 };
 
 ServerSelectItem.propTypes = {
-  isChecked: PropTypes.bool,
-  value: PropTypes.node,
-  name: PropTypes.string,
-  onChange: PropTypes.func,
+  ownerNickname: PropTypes.string.isRequired,
+  ownerName: PropTypes.string.isRequired,
+  ownerImgSrc: PropTypes.string.isRequired,
+  value: PropTypes.node.isRequired,
 };

@@ -1,16 +1,27 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { logout } from '../../../redux/userSlice';
 
-import { IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
+import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
 import { Nav, TitleButton, Title, SubTitle, MainTitle, Menu, MenuList, MenuItem } from './style';
 import { ROUTE } from '../../../constants';
 
 const FE_CONTRIBUTORS = '티케 하루의';
 
 export const NavBar = (props) => {
-  const { serverOwner, isLoggedIn } = props;
+  const { serverOwner } = props;
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { isLoginSuccess } = useSelector((store) => store.user);
   const subTitle = serverOwner ? `${serverOwner} & ${FE_CONTRIBUTORS}` : `${FE_CONTRIBUTORS}`;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push(ROUTE.LOGIN);
+  };
 
   return (
     <Nav>
@@ -38,33 +49,37 @@ export const NavBar = (props) => {
             </NavLink>
           </MenuItem>
         </MenuList>
+
+        {isLoginSuccess && (
+          <MenuList>
+            <MenuItem>
+              <NavLink to={ROUTE.STATION}>
+                <IconSetting />
+                역관리
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={ROUTE.LINE}>
+                <IconSetting />
+                노선관리
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={ROUTE.SECTION}>
+                <IconSetting />
+                구간관리
+              </NavLink>
+            </MenuItem>
+          </MenuList>
+        )}
+
         <MenuList>
           <MenuItem>
-            <NavLink to={ROUTE.STATION}>
-              <IconSetting />
-              역관리
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={ROUTE.LINE}>
-              <IconSetting />
-              노선관리
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={ROUTE.SECTION}>
-              <IconSetting />
-              구간관리
-            </NavLink>
-          </MenuItem>
-        </MenuList>
-        <MenuList>
-          <MenuItem>
-            {isLoggedIn ? (
-              <NavLink to={ROUTE.LOGIN}>
+            {isLoginSuccess ? (
+              <Button onClick={handleLogout}>
                 <IconPerson />
                 로그아웃
-              </NavLink>
+              </Button>
             ) : (
               <NavLink to={ROUTE.LOGIN}>
                 <IconPerson />
@@ -80,5 +95,4 @@ export const NavBar = (props) => {
 
 NavBar.propTypes = {
   serverOwner: PropTypes.string,
-  isLoggedIn: PropTypes.bool.isRequired,
 };

@@ -6,7 +6,7 @@ import { ServerList, Form } from './style';
 import { SERVER_LIST } from '../../../constants';
 
 export const ServerSelect = (props) => {
-  const { serverId, onChange, onSubmit, ...rest } = props;
+  const { serverId, onSubmit, ...rest } = props;
 
   return (
     <Modal>
@@ -17,10 +17,8 @@ export const ServerSelect = (props) => {
               <ServerSelectItem
                 key={owner.id}
                 ownerName={owner.name}
-                ownerNickname={owner.nickName}
+                ownerNickname={owner.nickname}
                 ownerImgSrc={owner.imgSrc}
-                onChange={onChange}
-                isChecked={owner.id === serverId}
                 value={owner.id}
               />
             ))}
@@ -34,6 +32,5 @@ export const ServerSelect = (props) => {
 
 ServerSelect.propTypes = {
   serverId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };

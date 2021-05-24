@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { logout } from '../../../redux/userSlice';
 
 import { NavBar, ServerSelect } from '../..';
 import { Header, ServerSelectButton, Main } from './style';
@@ -9,25 +11,31 @@ import { ROUTE, SERVER_LIST } from '../../../constants';
 export const Page = (props) => {
   const { server, setServer, children, ...rest } = props;
 
-  const [isServerSelectOpen, setIsServerSelectOpen] = useState(false);
+  const [isServerSelectOpen, setIsServerSelectOpen] = useState(true);
   const history = useHistory();
-
-  const handleServerChange = (e) => {
-    const id = e.target.value;
-    const server = SERVER_LIST[id];
-
-    setServer(() => ({ id: server.id, endPoint: server.endpoint }));
-  };
+  const dispatch = useDispatch();
 
   const handleServerSubmit = (e) => {
     e.preventDefault();
 
-    if (!server.id) {
+    const currentId = e.target.serverSelect.value;
+
+    if (!currentId) return;
+    if (currentId === server.id) {
+      setIsServerSelectOpen(false);
       return;
     }
 
+    const currentServer = SERVER_LIST[currentId];
+
+    setServer(() => ({
+      id: currentServer.id,
+      nickname: currentServer.nickname,
+      endpoint: currentServer.endpoint,
+    }));
     setIsServerSelectOpen(false);
-    history.push(ROUTE.STATION);
+    dispatch(logout());
+    history.push(ROUTE.LOGIN);
   };
 
   const handleServerSelectButtonClick = () => {
@@ -37,15 +45,13 @@ export const Page = (props) => {
   return (
     <>
       <Header>
-        <NavBar />
+        <NavBar serverOwner={server.nickname} />
       </Header>
 
       <Main {...rest}>{children}</Main>
 
       <ServerSelectButton onClick={() => handleServerSelectButtonClick(server)}>서버 선택</ServerSelectButton>
-      {isServerSelectOpen && (
-        <ServerSelect serverId={server.id} onChange={handleServerChange} onSubmit={handleServerSubmit} />
-      )}
+      {isServerSelectOpen && <ServerSelect serverId={server.id} onSubmit={handleServerSubmit} />}
     </>
   );
 };
@@ -53,7 +59,8 @@ export const Page = (props) => {
 Page.propTypes = {
   server: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
-    endPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    nickname: PropTypes.string,
+    endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   }).isRequired,
   setServer: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
