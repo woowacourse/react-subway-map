@@ -52,11 +52,11 @@ export const RANGE = {
 export const DEFAULT_SERVER = '제리';
 
 export const SERVERS = {
-  제리: 'https://jerry-subway.o-r.kr/',
-  조이: 'https://jerry-subway.o-r.kr/',
-  중간곰: 'https://jerry-subway.o-r.kr/',
-  와이비: 'https://jerry-subway.o-r.kr/',
-  영이: 'https://jerry-subway.o-r.kr/',
+  제리: 'https://jerry-subway.o-r.kr',
+  조이: 'https://jerry-subway.o-r.kr',
+  중간곰: 'https://jerry-subway.o-r.kr',
+  와이비: 'https://jerry-subway.o-r.kr',
+  영이: 'https://jerry-subway.o-r.kr',
 };
 
 export const LS_KEY = {
