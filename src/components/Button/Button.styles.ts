@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLOR } from "../../constants";
+import { COLOR } from "../../constants/color";
 
 interface ButtonBlockProps {
   kind?: "rect" | "eclipse";
@@ -36,7 +36,7 @@ const BUTTON_SIZE = {
 
 const BUTTON_THEME = {
   primary: {
-    backgroundColor: COLOR.SKY_BLUE_500,
+    backgroundColor: COLOR.CYAN_300,
     color: COLOR.GRAY_900,
   },
   gray: {
