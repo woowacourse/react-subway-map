@@ -3,14 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import { NavBar, ServerSelect } from '../..';
-import { ServerSelectButton } from './style';
+import { Header, ServerSelectButton, Main } from './style';
 import { ROUTE, SERVER_LIST } from '../../../constants';
 
 export const Page = (props) => {
-  const { children, ...rest } = props;
+  const { server, setServer, children, ...rest } = props;
 
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(false);
-  const [server, setServer] = useState({ id: null, endPoint: null });
   const history = useHistory();
 
   const handleServerChange = (e) => {
@@ -31,17 +30,17 @@ export const Page = (props) => {
     history.push(ROUTE.STATION);
   };
 
-  const handleServerSelectButtonClick = (server) => {
+  const handleServerSelectButtonClick = () => {
     setIsServerSelectOpen(true);
   };
 
   return (
     <>
-      <header>
+      <Header>
         <NavBar />
-      </header>
+      </Header>
 
-      <section {...rest}>{children}</section>
+      <Main {...rest}>{children}</Main>
 
       <ServerSelectButton onClick={() => handleServerSelectButtonClick(server)}>서버 선택</ServerSelectButton>
       {isServerSelectOpen && (
@@ -52,5 +51,10 @@ export const Page = (props) => {
 };
 
 Page.propTypes = {
+  server: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
+    endPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  }).isRequired,
+  setServer: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
