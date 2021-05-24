@@ -13,6 +13,7 @@ const App = () => {
   return (
     <BaseLayout>
       <Switch>
+        {/* TODO: HOME 화면 변경 */}
         <Route exact path={PATH.HOME}>
           <Home />
         </Route>
