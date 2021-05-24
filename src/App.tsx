@@ -7,30 +7,39 @@ import Section from 'pages/Section';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
+interface State {
+  auth: {
+    accessToken: string | null;
+  };
+}
+
 const App = () => {
+  const accessToken = useSelector<State>((state) => state.auth.accessToken);
+
   return (
-    <BaseLayout>
+    <BaseLayout isLogin={!!accessToken}>
       <Switch>
         {/* TODO: HOME 화면 변경 */}
         <Route exact path={PATH.HOME}>
-          <Home />
+          {accessToken ? <Home /> : <Login />}
         </Route>
         <Route exact path={PATH.LOGIN}>
           <Login />
         </Route>
         <Route exact path={PATH.SIGN_UP}>
-          <Signup />
+          {accessToken ? <Signup /> : <Login />}
         </Route>
         <Route exact path={PATH.STATION}>
-          <Station />
+          {accessToken ? <Station /> : <Login />}
         </Route>
         <Route exact path={PATH.LINE}>
-          <Line />
+          {accessToken ? <Line /> : <Login />}
         </Route>
         <Route exact path={PATH.SECTION}>
-          <Section />
+          {accessToken ? <Section /> : <Login />}
         </Route>
       </Switch>
     </BaseLayout>

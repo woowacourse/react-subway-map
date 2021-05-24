@@ -38,14 +38,18 @@ export const loginAsync = createAsyncThunk('auth/loginAsync', async ({ email, pa
   }
 });
 
-const initialState: { accessToken: string } = {
-  accessToken: '',
+const initialState: { accessToken: string | null } = {
+  accessToken: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.accessToken = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(signupAsync.rejected, () => {
       throw Error('회원가입에 실패하였습니다.');
@@ -59,5 +63,7 @@ const authSlice = createSlice({
     });
   },
 });
+
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

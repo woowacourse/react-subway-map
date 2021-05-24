@@ -8,15 +8,17 @@ interface ButtonProps {
   hoverBgColor?: string;
   className?: string;
   disabled?: boolean;
+  onClick?: () => void | null;
 }
 
-const Button = ({ type, disabled, text, size, className, bgColor, hoverBgColor }: ButtonProps) => {
+const Button = ({ type, disabled, text, size, className, bgColor, hoverBgColor, onClick }: ButtonProps) => {
   return (
     <button
       // TODO Type Error 찾아보기
       // eslint-disable-next-line react/button-has-type
       type={type}
       disabled={disabled}
+      onClick={onClick}
       className={`rounded focus:outline-none ${bgColor} hover:${hoverBgColor} ${className} ${size}`}
     >
       {text}
@@ -32,6 +34,7 @@ Button.defaultProps = {
   bgColor: 'bg-red-300',
   hoverBgColor: 'bg-red-400',
   className: '',
+  onClick: null,
 };
 
 export default Button;
