@@ -39,6 +39,12 @@ const apiRequest = {
     });
   },
 
+  checkEmailDuplicated: async (email: string) => {
+    const response = await fetch(`${BASE_URL[API_HOST]}/members?email=${email}`);
+
+    return await response.json();
+  },
+
   login: async (data: LoginData) => {
     const response = await request(`${BASE_URL[API_HOST]}/login/token`, {
       method: 'POST',

@@ -40,16 +40,18 @@ const SignupPage = () => {
   const isPasswordValid = !password || /^[0-9A-Za-z@$!%*?&]{8,14}$/.test(password);
   const isPasswordMatched = !passwordConfirm || password === passwordConfirm;
 
-  const emailErrorMessage = isEmailFormatValid
-    ? isEmailDuplicated
-      ? '이미 존재하는 이메일입니다'
-      : ''
-    : '이메일 형식에 맞게 작성하세요';
-  const ageErrorMessage = isAgeValid ? '' : '1살 이상 200살 이하의 나이를 입력해주세요';
+  const emailMessage = email
+    ? isEmailFormatValid
+      ? isEmailDuplicated
+        ? '이미 존재하는 이메일입니다.'
+        : '사용할 수 있는 이메일입니다.'
+      : '이메일 형식에 맞게 작성하세요.'
+    : '';
+  const ageErrorMessage = isAgeValid ? '' : '1살 이상 200살 이하의 나이를 입력해주세요.';
   const passwordErrorMessage = isPasswordValid
     ? ''
-    : '비밀번호는 영문, 숫자, 특수문자만을 포함한 8자 이상 14자 이하여야 합니다';
-  const passwordMatchedErrorMessage = isPasswordMatched ? '' : '비밀번호가 일치하지 않습니다';
+    : '비밀번호는 영문, 숫자, 특수문자만을 포함한 8자 이상 14자 이하여야 합니다.';
+  const passwordMatchedErrorMessage = isPasswordMatched ? '' : '비밀번호가 일치하지 않습니다.';
 
   const isFormCompleted =
     email &&
@@ -62,20 +64,28 @@ const SignupPage = () => {
     isPasswordValid &&
     isPasswordMatched;
 
-  const checkEmailDuplicated = useDebounce((value: string) => {
-    // server에 중복 검사
+  const checkEmailDuplicated = useDebounce(async (value: string) => {
+    try {
+      const response = await apiRequest.checkEmailDuplicated(value);
+
+      setIsEmailDuplicated(response);
+    } catch (error) {
+      console.error(error);
+
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
   }, DEBOUNCE_DELAY);
 
   const onEmailChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setEmail(event.target.value);
-    checkEmailDuplicated(event);
+    checkEmailDuplicated(event.target.value);
   };
 
   const onPasswordKeydown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     const el = event.target as HTMLInputElement;
 
     if (event.getModifierState('CapsLock')) {
-      el.setCustomValidity('CapsLock이 켜져 있습니다');
+      el.setCustomValidity('CapsLock이 켜져 있습니다.');
       el.reportValidity();
     } else {
       el.setCustomValidity('');
@@ -105,7 +115,7 @@ const SignupPage = () => {
       <Form onSubmit={onSignup}>
         <InputContainer
           validation={{
-            text: emailErrorMessage,
+            text: emailMessage,
             isValid: isEmailFormatValid && !isEmailDuplicated,
           }}
         >
@@ -117,6 +127,7 @@ const SignupPage = () => {
             placeholder="이메일을 입력하세요"
             value={email}
             onChange={onEmailChange}
+            autoComplete="off"
           />
         </InputContainer>
         <InputContainer validation={{ text: ageErrorMessage, isValid: isAgeValid }}>
@@ -129,6 +140,7 @@ const SignupPage = () => {
             maxLength={3}
             value={age}
             onChange={onAgeChange}
+            autoComplete="off"
           />
         </InputContainer>
         <InputContainer validation={{ text: passwordErrorMessage, isValid: isPasswordValid }}>
@@ -141,6 +153,7 @@ const SignupPage = () => {
             value={password}
             onChange={onPasswordChange}
             onKeyDown={onPasswordKeydown}
+            autoComplete="off"
           />
         </InputContainer>
         <InputContainer
@@ -155,6 +168,7 @@ const SignupPage = () => {
             value={passwordConfirm}
             onChange={onPasswordConfirmChange}
             onKeyDown={onPasswordKeydown}
+            autoComplete="off"
           />
         </InputContainer>
         <Button
