@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import PALETTE from '../../constants/palette';
 import { Container as Box } from '../../components/shared/Box/Box.style';
 
@@ -66,6 +67,7 @@ const Form = styled.form`
 
   & > *:not(:last-child) {
     margin-bottom: 1rem;
+  }
 `;
 
 const List = styled.ul`
@@ -78,6 +80,7 @@ const List = styled.ul`
     height: 3rem;
     padding: 0 0.25rem;
     border-bottom: 1px solid ${PALETTE.GRAY_100};
+    position: relative;
 
     p {
       display: flex;
@@ -92,6 +95,17 @@ const List = styled.ul`
   }
 `;
 
+const Distance = styled.span`
+  position: absolute;
+  left: 0.5rem;
+  bottom: -0.6rem;
+  font-size: 0.7rem;
+  color: ${PALETTE.GRAY_400};
+  height: 1rem;
+  background-color: ${PALETTE.WHITE};
+  padding: 0 0.25rem;
+`;
+
 const StationSelects = styled.div`
   display: flex;
 
@@ -101,4 +115,4 @@ const StationSelects = styled.div`
   }
 `;
 
-export { Container, Heading1, Icon, Form, List, StationSelects, TitleBox, FormBox };
+export { Container, Heading1, Icon, Form, List, StationSelects, TitleBox, FormBox, Distance };

@@ -1,4 +1,4 @@
-import { ChangeEventHandler, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
 const useInput = (
   defaultValue: string

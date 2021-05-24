@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { MdAdd, MdArrowForward } from 'react-icons/md';
+import { ChangeEventHandler, useContext, useState } from 'react';
+import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
 import Box from '../../components/shared/Box/Box';
 import Button from '../../components/shared/Button/Button';
@@ -17,23 +17,65 @@ import {
   FormBox,
   List,
   StationSelects,
+  Distance,
 } from './SectionPage.style';
 import RoundButton from '../../components/shared/Button/RoundButton';
+
+const initialList = [
+  {
+    id: 1,
+    name: '신분당선',
+    color: 'red',
+    stations: [
+      { id: 1, name: '강남역', distance: 10 },
+      { id: 2, name: '판교역', distance: 6 },
+      { id: 3, name: '정자역' },
+    ],
+  },
+  {
+    id: 2,
+    name: '2호선',
+    color: 'green',
+    stations: [
+      { id: 1, name: '강남역', distance: 6 },
+      { id: 4, name: '역삼역', distance: 10 },
+      { id: 5, name: '잠실역' },
+    ],
+  },
+];
 
 const SectionPage = () => {
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(initialList);
+  const [selectedLineId, setSelectedLineId] = useState<number>(-1);
+
+  const currentLine = list.find((item) => item.id === selectedLineId);
+
+  const onLineSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setSelectedLineId(Number(event.target.value));
+  };
+
+  const deleteStation = (stationId: number) => {
+    // delete 요청 보내기
+    // section 조회 한 번 더 가져와서 업데이트.(setList)
+    return stationId;
+  };
 
   return (
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 구간 관리</Heading1>
         <InputContainer labelText="노선 선택">
-          <Select>
+          <Select onChange={onLineSelect}>
             <option value="/" hidden>
               노선 선택
             </option>
+            {list.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
           </Select>
         </InputContainer>
         <RoundButton
@@ -78,7 +120,25 @@ const SectionPage = () => {
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
-        <List></List>
+        <List>
+          {currentLine?.stations.map((station) => {
+            return (
+              <li key={station.id}>
+                <p>{station.name}</p>
+                {station.distance && <Distance>{`거리 : ${station.distance}`}</Distance>}
+                <Button
+                  type="button"
+                  size="s"
+                  backgroundColor={PALETTE.PINK}
+                  color={PALETTE.WHITE}
+                  onClick={() => deleteStation(station.id)}
+                >
+                  <MdDelete size="15px" />
+                </Button>
+              </li>
+            );
+          })}
+        </List>
       </Box>
     </Container>
   );
