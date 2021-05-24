@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-// import { store } from "./modules/store";
-import { Provider } from "react-redux";
-import { COLOR } from "./constants/color";
 import { ThemeProvider } from "styled-components";
+import { Provider } from "react-redux";
+
+import { COLOR } from "./constants/color";
 import GlobalStyle from "./Global.styles";
+import store from "./modules";
 
 export const theme = {
   PRIMARY: COLOR.CYAN_300,
@@ -17,12 +18,12 @@ export const theme = {
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-    {/* </Provider> */}
+    <Provider store={store}>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
