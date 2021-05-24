@@ -7,9 +7,15 @@ import SelectInput from '../@commons/SelectInput/SelectInput';
 import { Link } from 'react-router-dom';
 import { BASE_URL, ROUTE } from '../../constants/constant';
 import { useDispatch } from 'react-redux';
+import { selectServer } from '../../modules/user/userReducer';
 
 const SignInForm = () => {
   const dispatch = useDispatch();
+
+  const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(selectServer({ serverName: e.target[e.target.selectedIndex].innerText, baseURL: e.target.value }));
+  };
+
   return (
     <S.SignInForm>
       <S.Title>로그인</S.Title>
@@ -22,9 +28,11 @@ const SignInForm = () => {
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <SelectInput initialText='서버를 선택해주세요.'>
+        <SelectInput initialText='서버를 선택해주세요.' onChange={handleSelectServer}>
           {Object.values(BASE_URL).map(({ name, URL }) => (
-            <option value={URL}>{name}</option>
+            <option key={name} value={URL}>
+              {name}
+            </option>
           ))}
         </SelectInput>
         <S.Message></S.Message>

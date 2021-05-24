@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface LoginState {
-  baseURL: string;
-  email: string;
+  serverName?: string;
+  baseURL?: string;
+  email?: string;
 }
 
 const initialState = {
+  serverName: '',
   baseURL: '',
   email: '',
 } as LoginState;
@@ -14,13 +16,16 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<LoginState>) => {
+    selectServer: (state, action: PayloadAction<LoginState>) => {
+      state.serverName = action.payload.serverName;
       state.baseURL = action.payload.baseURL;
+    },
+    login: (state, action: PayloadAction<LoginState>) => {
       state.email = action.payload.email;
     },
     logout: () => initialState,
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { selectServer, login, logout } = userSlice.actions;
 export default userSlice.reducer;

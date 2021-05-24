@@ -6,14 +6,15 @@ export interface Props {
   borderColor?: Color;
   label?: string;
   children?: React.ReactNode;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const SelectInput = ({ borderColor, initialText, label, children }: Props) => {
+const SelectInput = ({ borderColor, initialText, label, children, onChange }: Props) => {
   return (
     <S.Container>
       {label && <S.Label>{label}</S.Label>}
-      <S.SelectInput borderColor={borderColor}>
-        <option value='' selected disabled>
+      <S.SelectInput defaultValue='' borderColor={borderColor} onChange={onChange}>
+        <option value='' disabled>
           {initialText}
         </option>
         {children}

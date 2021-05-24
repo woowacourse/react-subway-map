@@ -1,3 +1,5 @@
+import { BASE_URL } from './constant';
+
 export const COLOR = {
   TRANSPARENT: 'transparent',
   WHITE: '#FFFFFF',
@@ -30,4 +32,16 @@ export const PALETTE = {
 export const SIZE = {
   PAGE_MAX_WIDTH: '80rem',
   PAGE_MIN_WIDTH: '40rem',
+};
+
+export const SERVER_COLOR = {
+  [BASE_URL.ROOT.name]: { PRIMARY: '#54a0ff', SECONDARY: '#2e86de' },
+  [BASE_URL.CHUNSIK.name]: { PRIMARY: '#feca57', SECONDARY: '#ff9f43' },
+  [BASE_URL.SAKJEONG.name]: { PRIMARY: '#9c88ff', SECONDARY: '#8c7ae6' },
+  [BASE_URL.SONNEOJAL.name]: { PRIMARY: '#353b48', SECONDARY: '#2f3640' },
+};
+
+export const MAIN_COLOR = {
+  PRIMARY: (name: string) => SERVER_COLOR[name].PRIMARY,
+  SECONDARY: (name: string) => SERVER_COLOR[name].SECONDARY,
 };
