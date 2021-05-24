@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { request } from '../utils';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { LS_KEY, ROUTE } from '../constants';
+import { setToken } from '../redux';
+import { request, setLocalStorage } from '../utils';
 
 const useSignInAPI = () => {
   const [failMessage, setFailMessage] = useState(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const signIn = async ({ email, password }) => {
     try {
@@ -14,7 +20,11 @@ const useSignInAPI = () => {
         return;
       }
 
-      // const { accessToken } = response.data;
+      const { accessToken } = response.data;
+
+      setLocalStorage(LS_KEY.TOKEN, accessToken);
+      dispatch(setToken({ token: accessToken }));
+      history.push(ROUTE.HOME.PATH);
     } catch (error) {
       console.error(error);
 
