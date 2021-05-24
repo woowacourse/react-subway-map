@@ -1,3 +1,26 @@
+export type Nullable<T> = { [K in keyof T]: T[K] | null };
+
+export interface ILoginReq {
+  email: string;
+  password: string;
+} 
+
+export interface ILoginRes {
+  accessToken: string;
+}
+
+export interface ISignUpReq {
+  email: string;
+  password: string;
+  age: number;
+}
+
+export interface IMyInfoRes {
+  id: number;
+  email: string;
+  age: number;
+}
+
 export interface IStationReq {
   name: string;
 }

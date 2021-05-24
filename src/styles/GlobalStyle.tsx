@@ -45,6 +45,10 @@ const GlobalStyle = () => (
           text-decoration: none;
         }
       }
+
+      img {
+        object-fit: cover;
+      }
     `}
   />
 );
