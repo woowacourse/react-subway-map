@@ -1,19 +1,26 @@
+export const CREWS = {
+  DANYEE: 'DANYEE',
+  MARK: 'MARK',
+  CHARLIE: 'CHARLIE',
+  YORN: 'YORN',
+};
+
 const BACKEND = {
-  DANYEE: {
+  [CREWS.DANYEE]: {
     name: '다니',
-    baseUrl: 'https://da-nyee-subway-fare.kro.kr',
+    baseUrl: 'https://da-nyee-subway-fare.kro.kr/api',
   },
-  MARK: {
+  [CREWS.MARK]: {
     name: '마크',
-    baseUrl: 'https://binghe819-subway.p-e.kr',
+    baseUrl: 'https://binghe819-subway.p-e.kr/api',
   },
-  CHARLIE: {
+  [CREWS.CHARLIE]: {
     name: '찰리',
-    baseUrl: 'https://woowasubway.kro.kr',
+    baseUrl: 'https://woowasubway.kro.kr/api',
   },
-  YORN: {
+  [CREWS.YORN]: {
     name: '욘',
-    baseUrl: 'https://meto.r-e.kr',
+    baseUrl: 'https://meto.r-e.kr/api',
   },
 };
 

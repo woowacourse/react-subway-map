@@ -17,10 +17,12 @@ export const theme = {
       primary: '#404040',
       label: '#7E7E7E',
       link: '#2980b9',
+      error: '#c0392b',
     },
     border: {
       primary: '#7E7E7E',
       secondary: '#cccccc',
+      error: '#c0392b',
     },
   },
 };

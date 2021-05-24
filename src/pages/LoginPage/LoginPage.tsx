@@ -17,7 +17,9 @@ const LoginPage = () => {
             <Styled.FormItem>
               <Select labelText="서버 선택">
                 {Object.entries(BACKEND).map(([crew, { name }]) => (
-                  <option value={crew}>{name}</option>
+                  <option key={crew} value={crew}>
+                    {name}
+                  </option>
                 ))}
               </Select>
             </Styled.FormItem>
