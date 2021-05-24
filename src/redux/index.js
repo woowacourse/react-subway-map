@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './signInSlice';
+import userReducer from './userSlice';
 
 const store = configureStore({
   reducer: {
@@ -9,4 +9,4 @@ const store = configureStore({
 
 export default store;
 
-export { setToken, clearToken } from './signInSlice';
+export { setToken, clearToken } from './userSlice';
