@@ -102,4 +102,6 @@ describe('<SignUp />', () => {
 
     await waitFor(() => expect(button).not.toHaveAttribute('disabled'));
   });
+
+  // TODO: API가 모두 구현되면, 서버에 따른 회원가입 가능 여부 테스트
 });
