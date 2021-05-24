@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { COLOR, RANGE, REG_EXP, ROUTE, SIZE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
-import { signUp } from '../../api';
-import { useHistory } from 'react-router';
+import { useSignUpAPI } from '../../hooks';
 
 const initialValues = {
   email: '',
@@ -80,21 +79,7 @@ const validate = ({ email, age, password, passwordConfirm }) => {
 };
 
 const SignUp = () => {
-  const [duplicateEmailError, setDuplicateEmailError] = useState(null);
-  const history = useHistory();
-
-  const handleSubmitForm = async ({ email, age, password }) => {
-    const response = await signUp({ email, age, password });
-
-    // TODO: 중복 처리 반영되면 status code 변경
-    if (response.status === 400) {
-      setDuplicateEmailError(response.message);
-
-      return;
-    }
-
-    history.push(ROUTE.SIGN_IN.PATH);
-  };
+  const { duplicateEmailError, signUp } = useSignUpAPI();
 
   const {
     //
@@ -107,7 +92,7 @@ const SignUp = () => {
   } = useFormik({
     initialValues,
     validate,
-    onSubmit: handleSubmitForm,
+    onSubmit: signUp,
   });
 
   const isValidForm =

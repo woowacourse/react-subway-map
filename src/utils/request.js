@@ -6,23 +6,13 @@ const request = {
   get: async (path) => {
     const serverName = getLocalStorage(LS_KEY.SERVER);
 
-    return await axios({
-      method: 'get',
-      url: path,
-      baseURL: SERVERS[serverName],
-    });
+    return await axios.get(SERVERS[serverName] + path);
   },
 
   post: async (path, data) => {
     const serverName = getLocalStorage(LS_KEY.SERVER);
 
-    return await axios({
-      method: 'post',
-      url: path,
-      baseURL: SERVERS[serverName],
-      headers: { 'content-type': 'application/json' },
-      data,
-    });
+    return await axios.post(SERVERS[serverName] + path, data);
   },
 };
 
