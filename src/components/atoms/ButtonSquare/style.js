@@ -3,9 +3,10 @@ import { Button } from '../../';
 import { COLOR } from '../../../constants';
 
 export const StyledButtonSquare = styled(Button)`
-  width: 4.5rem;
+  min-width: 4.5rem;
   height: 2.5rem;
-  border-radius: 0.375;
+  padding: 0.5rem 1.25rem;
+
   color: ${COLOR.TEXT_DEFAULT};
   font-weight: 700;
   background-color: ${COLOR.THEME};

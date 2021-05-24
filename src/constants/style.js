@@ -25,3 +25,9 @@ export const LAYOUT = {
     ITEM_WIDTH: '1.25rem',
   },
 };
+
+export const Z_INDEX = {
+  FIXED_BUTTON: 5,
+  NAVBAR: 5,
+  MODAL: 10,
+};

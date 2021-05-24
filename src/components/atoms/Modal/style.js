@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Z_INDEX } from '../../../constants';
 
 export const ModalContainer = styled.section`
   display: flex;
@@ -10,7 +11,7 @@ export const ModalContainer = styled.section`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: ${Z_INDEX.MODAL};
   background-color: rgba(0, 0, 0, 0.5);
   transition: opacity 0.25s ease;
 `;

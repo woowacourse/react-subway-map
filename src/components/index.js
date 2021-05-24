@@ -19,5 +19,6 @@ export { Modal } from './atoms/Modal';
 export { Section } from './atoms/Section';
 
 export { NavBar } from './organisms/NavBar';
+export { Page } from './organisms/Page';
 export { ServerSelect } from './organisms/ServerSelect';
 export { ServerSelectItem } from './organisms/ServerSelectItem';

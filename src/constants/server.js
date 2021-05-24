@@ -1,28 +1,32 @@
 import { imageHyungumak, imageMagya, imagePaz, imageSally } from '../assets';
 
-export const SERVER_LIST = [
-  {
-    id: '0',
+export const SERVER_LIST = {
+  Magya: {
+    id: 'Magya',
     name: '정찬영',
-    nickName: '마갸',
+    nickname: '마갸',
     imgSrc: imageMagya,
+    endpoint: 'https://subway-myagya.kro.kr/',
   },
-  {
-    id: '1',
+  Sally: {
+    id: 'Sally',
     name: '조연우',
-    nickName: '샐리',
+    nickname: '샐리',
     imgSrc: imageSally,
+    endpoint: 'https://yeonwoocho.p-e.kr/',
   },
-  {
-    id: '2',
+  Paz: {
+    id: 'Paz',
     name: '강승윤',
-    nickName: '파즈',
+    nickname: '파즈',
     imgSrc: imagePaz,
+    endpoint: 'https://bepoz-subway.kro.kr/',
   },
-  {
-    id: '3',
+  Hyungumak: {
+    id: 'Hyungumak',
     name: '최현구',
-    nickName: '현구막',
+    nickname: '현구막',
     imgSrc: imageHyungumak,
+    endpoint: 'https://hyeon9mak-subway.o-r.kr/',
   },
-];
+};

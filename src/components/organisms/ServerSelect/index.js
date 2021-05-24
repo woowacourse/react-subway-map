@@ -1,37 +1,26 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { ButtonSquare, Modal, Section, ServerSelectItem } from '../..';
 import { ServerList, Form } from './style';
-import { ROUTE, SERVER_LIST } from '../../../constants';
+import { SERVER_LIST } from '../../../constants';
 
-export const ServerSelect = () => {
-  const [server, setServer] = useState(null);
-  const history = useHistory();
-
-  const handleServerChange = (e) => {
-    setServer(e.target.value);
-  };
-
-  const handleServerSubmit = (e) => {
-    e.preventDefault();
-    history.push(ROUTE.STATION);
-  };
+export const ServerSelect = (props) => {
+  const { serverId, onChange, onSubmit, ...rest } = props;
 
   return (
     <Modal>
-      <Section heading="서버 선택">
-        <Form onSubmit={handleServerSubmit}>
+      <Section heading="서버 선택" {...rest}>
+        <Form onSubmit={onSubmit}>
           <ServerList>
-            {SERVER_LIST.map((owner) => (
+            {Object.values(SERVER_LIST).map((owner) => (
               <ServerSelectItem
                 key={owner.id}
                 ownerName={owner.name}
                 ownerNickname={owner.nickName}
                 ownerImgSrc={owner.imgSrc}
-                onChange={handleServerChange}
-                isChecked={owner.id === server}
+                onChange={onChange}
+                isChecked={owner.id === serverId}
                 value={owner.id}
               />
             ))}
@@ -44,5 +33,7 @@ export const ServerSelect = () => {
 };
 
 ServerSelect.propTypes = {
-  children: PropTypes.node,
+  serverId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
