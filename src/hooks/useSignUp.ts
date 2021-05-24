@@ -1,11 +1,7 @@
+import { REGEX } from './../constants/validate';
+import { requestSignUp } from './../service/auth';
 import { ChangeEvent, FormEvent, useState } from 'react';
-
-interface SignUpForm {
-  email: string;
-  age: number;
-  password: string;
-  passwordForValidation: string;
-}
+import { SignUpForm } from '../types';
 
 const useSignUp = () => {
   const [form, setForm] = useState<SignUpForm>({
@@ -31,8 +27,28 @@ const useSignUp = () => {
     setForm({ ...form, passwordForValidation: event.target.value });
   };
 
-  const handleSignUp = (event: FormEvent<HTMLFormElement>) => {
+  const isValidForm = () => {
+    const { email, age, password, passwordForValidation } = form;
+
+    return (
+      REGEX.EMAIL.test(email) && age > 0 && password === passwordForValidation
+    );
+  };
+  const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!isValidForm()) {
+      return;
+    }
+
+    try {
+      await requestSignUp(form);
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert('회원가입에 성공하셨습니다!');
   };
 
   return {

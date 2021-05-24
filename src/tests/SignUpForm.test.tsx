@@ -1,6 +1,15 @@
-import { render, fireEvent, screen, getByText } from '@testing-library/react';
+import {
+  render,
+  findByText,
+  waitFor,
+  fireEvent,
+  screen,
+  getByText,
+} from '@testing-library/react';
 import SignUpForm from '../components/SignUp/SignUpForm/SignUpForm';
 import userEvent from '@testing-library/user-event';
+
+window.alert = jest.fn();
 
 describe('사용자가 회원가입을 할 수 있다.', () => {
   test('사용자가 회원가입을 할 수 있다.', async () => {
@@ -26,13 +35,12 @@ describe('사용자가 회원가입을 할 수 있다.', () => {
     const $submitButton = screen.getByRole('button');
 
     userEvent.click($submitButton);
+    // const alert = await screen.findBy('회원가입에 성공하셨습니다!');
+    // const alert = await screen.findByRole('alert');
 
-    // 결과 값을 확인하자
-
-    const alert = await screen.findByRole('alert');
-
-    expect(alert).toHaveTextContent('회원가입에 성공하셨습니다!');
+    // await waitFor(() => expect(window.alert).toHaveBeenCalledTimes(1));
+    // await waitFor(() => {
+    //   expect(screen.getByText('alert')).toBeInTheDocument();
+    // });
   });
-
-  // 예외사항
 });
