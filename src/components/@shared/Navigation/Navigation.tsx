@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { Page } from '../../../types';
-import { NavigationLink, NavList } from './Navigation.styles';
+import StyledLink from '../StyledLink/StyledLink';
+import { NavList } from './Navigation.styles';
 
 interface Props {
   navInfoList: Page[];
@@ -13,7 +14,7 @@ const Navigation: FC<Props> = ({ navInfoList }) => {
       <NavList>
         {navInfoList.map((navInfo, index) => (
           <li key={index}>
-            <NavigationLink to={navInfo.path}>{navInfo.text}</NavigationLink>
+            <StyledLink to={navInfo.path}>{navInfo.text}</StyledLink>
           </li>
         ))}
       </NavList>

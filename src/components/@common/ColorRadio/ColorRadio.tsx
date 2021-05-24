@@ -12,7 +12,7 @@ interface Props {
   radioColor: string;
   isChecked: boolean;
   onChange: () => void;
-  labelText: LabelText;
+  labelText?: LabelText;
 }
 
 const ColorRadio: FC<Props> = ({
@@ -32,7 +32,7 @@ const ColorRadio: FC<Props> = ({
         onChange={onChange}
         radioColor={radioColor}
       />
-      {labelText.isVisible && <ColorRadioLabelText>{labelText.text}</ColorRadioLabelText>}
+      {labelText && <ColorRadioLabelText>{labelText.text}</ColorRadioLabelText>}
     </ColorRadioLabel>
   );
 };
@@ -44,7 +44,7 @@ ColorRadio.propTypes = {
   labelText: PropTypes.shape({
     text: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
-  }).isRequired,
+  }),
   onChange: PropTypes.func.isRequired,
 };
 

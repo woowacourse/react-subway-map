@@ -1,9 +1,13 @@
-import { Page, Station } from './../types';
+import { Page } from './../types';
 import PALETTE, { Color } from './palette';
 
-export const APP_TITLE = 'SUNKIST SUBWAY';
+export const APP_TITLE = 'SUNKIST';
 
 export const PAGE_INFO: { [key: string]: Page } = {
+  HOME: {
+    text: 'API 선택',
+    path: '/',
+  },
   LOGIN: {
     text: '로그인',
     path: '/login',

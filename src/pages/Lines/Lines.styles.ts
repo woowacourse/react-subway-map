@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import PALETTE from '../../constants/palette';
 
 interface LineColorDotProps {
   dotColor: string;

@@ -6,7 +6,7 @@ interface APIInfo {
   themeColor: Color;
 }
 
-export const API_INFO = {
+export const API_INFO: { [key: string]: APIInfo } = {
   FAFI: {
     name: '파피',
     endPoint: 'https://fafi-subway.o-r.kr',
@@ -15,16 +15,16 @@ export const API_INFO = {
   JOEl: {
     name: '조엘',
     endPoint: 'https://joel-subway.kro.kr',
-    themeColor: PALETTE.PINK,
+    themeColor: PALETTE.ORANGE,
   },
   JOAN: {
     name: '조앤',
     endPoint: 'https://anne-subway.r-e.kr ',
-    themeColor: PALETTE.LIME,
+    themeColor: PALETTE.GREEN,
   },
   JAYON: {
     name: '제이온',
     endPoint: 'https://jayon-subway.r-e.kr',
-    themeColor: PALETTE.PURPLE,
+    themeColor: PALETTE.PINK,
   },
 };

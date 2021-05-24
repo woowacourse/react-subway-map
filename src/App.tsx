@@ -6,6 +6,7 @@ import Main from './components/@shared/Main/Main';
 import Navigation from './components/@shared/Navigation/Navigation';
 import { APP_TITLE, COMMON_NAV_LIST, PAGE_INFO } from './constants/appInfo';
 import PALETTE from './constants/palette';
+import Home from './pages/Home/Home';
 import Lines from './pages/Lines/Lines';
 import Login from './pages/Login/Login';
 import Sections from './pages/Sections/Sections';
@@ -20,6 +21,9 @@ const App: FC = () => {
       </Header>
       <Main>
         <Switch>
+          <Route exact path={PAGE_INFO.HOME.path}>
+            <Home />
+          </Route>
           <Route path={PAGE_INFO.SIGN_UP.path}>
             <Signup />
           </Route>
