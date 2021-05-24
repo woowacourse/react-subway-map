@@ -19,6 +19,7 @@ module.exports = {
     'import/no-unresolved': 0,
     'no-param-reassign': 0,
     'no-alert': 0,
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
   env: {
     browser: true,

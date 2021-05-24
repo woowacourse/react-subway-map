@@ -1,6 +1,6 @@
 {
   "version": "0.1",
   "language": "en",
-  "words": ["craco", "tailwindcss"],
+  "words": ["craco", "tailwindcss", "reduxjs", "signup"],
   "ignorePaths": ["package.json", "main.js"]
 }
