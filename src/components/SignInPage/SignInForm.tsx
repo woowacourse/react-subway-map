@@ -5,9 +5,11 @@ import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
 import { Link } from 'react-router-dom';
-import { ROUTE } from '../../constants/constant';
+import { BASE_URL, ROUTE } from '../../constants/constant';
+import { useDispatch } from 'react-redux';
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   return (
     <S.SignInForm>
       <S.Title>로그인</S.Title>
@@ -20,7 +22,11 @@ const SignInForm = () => {
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <SelectInput initialText='서버를 선택해주세요.'></SelectInput>
+        <SelectInput initialText='서버를 선택해주세요.'>
+          {Object.values(BASE_URL).map(({ name, URL }) => (
+            <option value={URL}>{name}</option>
+          ))}
+        </SelectInput>
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
