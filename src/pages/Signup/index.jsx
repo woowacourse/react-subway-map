@@ -2,20 +2,16 @@ import React from "react";
 import Main from "../../components/@shared/Main";
 import Button from "../../components/@shared/Button";
 import Input from "../../components/@shared/Input";
-import {
-  useSignupAge,
-  useSignupEmail,
-  useSignupPassword,
-  useSignupInput,
-} from "./hooks";
+import { useInput } from "../../components/@shared/Input/hooks";
+import { useSignupAge, useSignupEmail, useSignupPassword } from "./hooks";
 import membersAPI from "../../api/members";
 
 const Signup = () => {
-  const [email, isEmailValid, handleEmailChange] = useSignupEmail();
-  const [age, isAgeValid, handleAgeChange] = useSignupAge();
-  const [password, isPasswordValid, handlePasswordChange] = useSignupPassword();
-  const [passwordConfirm, isPasswordConfirmValid, handlePasswordConfirmChange] =
-    useSignupInput((value) => value === password);
+  const [email, handleEmailChange, isEmailValid] = useSignupEmail();
+  const [age, handleAgeChange, isAgeValid] = useSignupAge();
+  const [password, handlePasswordChange, isPasswordValid] = useSignupPassword();
+  const [passwordConfirm, handlePasswordConfirmChange, isPasswordConfirmValid] =
+    useInput((value) => value === password);
 
   const isSubmitEnabled = [
     isEmailValid,

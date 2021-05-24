@@ -1,22 +1,8 @@
-import { useState } from "react";
+import { useInput } from "../../components/@shared/Input/hooks";
 import { isValidAge, isValidEmail, isValidPassword } from "./validator";
 
-export const useSignupInput = (validator, replacement = "") => {
-  const [value, setValue] = useState("");
-  const [isValid, setIsValid] = useState(false);
+export const useSignupEmail = () => useInput(isValidEmail);
 
-  const handleChange = (event) => {
-    const newValue = event.target.value.replace(replacement, "");
+export const useSignupAge = () => useInput(isValidAge, /[^0-9]/g);
 
-    setValue(newValue);
-    setIsValid(validator(newValue));
-  };
-
-  return [value, isValid, handleChange];
-};
-
-export const useSignupEmail = () => useSignupInput(isValidEmail);
-
-export const useSignupAge = () => useSignupInput(isValidAge, /[^0-9]/g);
-
-export const useSignupPassword = () => useSignupInput(isValidPassword);
+export const useSignupPassword = () => useInput(isValidPassword);
