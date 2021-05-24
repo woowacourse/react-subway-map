@@ -22,7 +22,7 @@ const Login: FC = () => (
           로그인
         </LoginButton>
       </LoginForm>
-      <SignupLink href={PAGE_INFO.SIGN_UP.path}>아직 회원이 아니신가요?</SignupLink>
+      <SignupLink to={PAGE_INFO.SIGN_UP.path}>아직 회원이 아니신가요?</SignupLink>
     </LoginContainer>
   </CardTemplate>
 );

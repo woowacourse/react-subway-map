@@ -1,30 +1,34 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const NavList = styled.ul`
   display: flex;
 
   li {
-    position: relative;
-    background-color: transparent;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    margin-left: 0.5rem;
-    font-weight: 600;
-    overflow: hidden;
+    margin-left: 0.25rem;
 
     &:first-child {
       margin-left: 0;
     }
+  }
+`;
 
-    &:hover::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.07);
-    }
+export const NavigationLink = styled(Link)`
+  position: relative;
+  background-color: transparent;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+
+  &:hover::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.07);
+    border-radius: 8px;
+    z-index: -1;
   }
 `;

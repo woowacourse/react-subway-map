@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button from '../../components/@common/Button/Button';
 import PALETTE from '../../constants/palette';
+import { Link } from 'react-router-dom';
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -22,6 +23,6 @@ export const LoginButton = styled(Button)`
   margin-bottom: 1.5rem;
 `;
 
-export const SignupLink = styled.a`
+export const SignupLink = styled(Link)`
   color: ${PALETTE.GRAY[400]};
 `;

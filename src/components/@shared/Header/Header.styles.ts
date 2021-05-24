@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import FlexContainer from '../../@common/FlexContainer/FlexContainer';
 
 export const StyledHeader = styled.header`
+  position: sticky;
+  top: 0;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
