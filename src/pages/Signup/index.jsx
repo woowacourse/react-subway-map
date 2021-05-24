@@ -8,6 +8,7 @@ import {
   useSignupPassword,
   useSignupInput,
 } from "./hooks";
+import membersAPI from "../../api/members";
 
 const Signup = () => {
   const [email, isEmailValid, handleEmailChange] = useSignupEmail();
@@ -23,13 +24,19 @@ const Signup = () => {
     isPasswordConfirmValid,
   ].every(Boolean);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    membersAPI.signup({ email, password, age });
+  };
+
   return (
     <Main>
       <section className="m-auto pb-8 w-120 border-t-8 border-yellow-300 rounded-sm shadow-md">
         <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
           회원가입
         </h2>
-        <form className="flex flex-col px-8 space-y-8">
+        <form className="flex flex-col px-8 space-y-8" onSubmit={handleSubmit}>
           <label className="sr-only" htmlFor="email">
             이메일 입력란
           </label>
