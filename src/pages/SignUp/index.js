@@ -28,7 +28,7 @@ const validateAge = (age) => {
   if (!REG_EXP.AGE.test(age)) {
     return '숫자만 입력해주세요.';
   }
-  if (age < RANGE.AGE.MIN || age > RANGE.AGE.MAX) {
+  if (age <= RANGE.AGE.MIN || age >= RANGE.AGE.MAX) {
     return '올바른 나이를 입력해주세요.';
   }
 };
