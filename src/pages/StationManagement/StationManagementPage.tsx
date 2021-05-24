@@ -1,7 +1,6 @@
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
-import { StationManagementPageBlock } from "./StationManagementPage.styles";
 import { Flex, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import ListItem from "../../components/ListItem/ListItem";
 import { stations } from "../../mocks/mocks";
