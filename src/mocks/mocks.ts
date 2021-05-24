@@ -1,4 +1,5 @@
 import { CIRCLE_COLOR } from "../constants/color";
+import { Line, Station, Section } from "../@types/types";
 
 export const stations = [
   {
@@ -30,31 +31,6 @@ export const stations = [
     name: "지하철역 7",
   },
 ];
-
-interface Section {
-  upStation: {
-    id: number;
-    name: string;
-  };
-  downStation: {
-    id: number;
-    name: string;
-  };
-  distance: number;
-}
-
-interface Station {
-  id: number;
-  name: string;
-}
-
-interface Line {
-  id: number;
-  name: string;
-  color: keyof typeof CIRCLE_COLOR;
-  stations: Station[];
-  sections: Section[];
-}
 
 export const lines: Line[] = [
   {
