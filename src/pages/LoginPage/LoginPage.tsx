@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './LoginPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -12,6 +12,10 @@ import MESSAGE from '../../constants/message';
 import API from '../../api';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
+interface ILocationState {
+  from: { pathname: string };
+}
+
 const LoginPage = () => {
   const { value: selectedServer, onChange: onChangeSelectedServer } = useInput(CREWS.DANYEE);
   const { value: email, onChange: onChangeEmail } = useInput('');
@@ -20,6 +24,7 @@ const LoginPage = () => {
   const [, setServer] = useLocalStorage('server');
 
   const history = useHistory();
+  const location = useLocation<ILocationState>();
 
   const requestLogin = () => API[selectedServer].post('/login', { email, password });
 
@@ -28,10 +33,11 @@ const LoginPage = () => {
 
     try {
       const response = await requestLogin();
+      const from = location.state?.from;
       setAccessToken(response.data.accessToken);
       setServer(selectedServer);
 
-      history.replace(ROUTES.STATION);
+      history.replace(from ? from.pathname : ROUTES.STATION);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
