@@ -6,6 +6,7 @@ import { Flex, FlexCenter, FlexBetween } from "../../components/@shared/FlexCont
 import ListItem from "../../components/ListItem/ListItem";
 import { lines } from "../../mocks/mocks";
 import { CIRCLE_COLOR } from "../../constants/color";
+import LineAddModal from "./Modal/LineAddModal";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
@@ -13,8 +14,8 @@ const LineManagementPage = () => {
   return (
     <FlexCenter>
       <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
-        <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
-          <h2 style={{ marginBottom: "1rem" }}>🛤️ 노선 관리</h2>
+        <FlexBetween style={{ width: "100%", marginBottom: "1rem", alignItems: "center" }}>
+          <h2>🛤️ 노선 관리</h2>
           <Button
             type="button"
             onClick={() => {
@@ -38,6 +39,13 @@ const LineManagementPage = () => {
           ))}
         </Flex>
       </Block>
+      {isAddModalOpened && (
+        <LineAddModal
+          onClose={() => {
+            setIsAddModalOpened(false);
+          }}
+        />
+      )}
     </FlexCenter>
   );
 };
