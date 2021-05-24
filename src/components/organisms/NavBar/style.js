@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLOR, LAYOUT } from '../../../constants';
+import { COLOR, LAYOUT, Z_INDEX } from '../../../constants';
 import { Button } from '../..';
 import '../../../assets/fonts.css';
 
@@ -10,6 +10,8 @@ export const Nav = styled.nav`
   padding: 0 5rem;
   height: ${LAYOUT.NAVBAR.HEIGHT};
   background-color: ${COLOR.THEME};
+
+  z-index: ${Z_INDEX.MODAL};
 `;
 
 export const TitleButton = styled(Button)`
@@ -48,8 +50,11 @@ export const MenuList = styled.ul`
 `;
 
 export const MenuItem = styled.li`
+  position: relative;
   margin: 0 1rem;
   font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02rem;
 
   & > a {
     display: flex;
@@ -58,5 +63,30 @@ export const MenuItem = styled.li`
     & > svg {
       margin-right: 0.25rem;
     }
+  }
+
+  & a {
+    padding: 1rem 0;
+  }
+
+  &:hover ::after {
+    @keyframes lining {
+      0% {
+        width: 0%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    content: '';
+    position: absolute;
+    left: 0.1rem;
+    bottom: 0;
+    width: 100%;
+    height: 0.3rem;
+
+    background-color: ${COLOR.TEXT.NAVBAR};
+    animation: lining 0.1s ease-out;
   }
 `;

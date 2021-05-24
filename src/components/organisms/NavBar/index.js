@@ -23,7 +23,8 @@ export const NavBar = (props) => {
       </TitleButton>
 
       <Menu>
-        <MenuList>
+        {/* TODO: 전체보기 기능, 경로탐색 기능 2단계에서 추가 */}
+        <MenuList style={{ visibility: 'hidden' }}>
           <MenuItem>
             <NavLink to={ROUTE.MAP}>
               <IconWindow />
@@ -37,7 +38,6 @@ export const NavBar = (props) => {
             </NavLink>
           </MenuItem>
         </MenuList>
-
         <MenuList>
           <MenuItem>
             <NavLink to={ROUTE.STATION}>
@@ -58,7 +58,6 @@ export const NavBar = (props) => {
             </NavLink>
           </MenuItem>
         </MenuList>
-
         <MenuList>
           <MenuItem>
             {isLoggedIn ? (
