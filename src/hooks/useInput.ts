@@ -1,22 +1,15 @@
 import { useState } from 'react';
 
-const useInput = (defaultValue: string, validator: (value: string) => boolean) => {
+const useInput = (defaultValue: string) => {
   const [value, setValue] = useState(defaultValue);
-  const [isValid, setIsValid] = useState(false);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     const { value } = event.target;
 
     setValue(value);
-
-    if (validator(value)) {
-      setIsValid(true);
-    } else {
-      setIsValid(false);
-    }
   };
 
-  return { value, onChange, isValid };
+  return { value, onChange };
 };
 
 export default useInput;

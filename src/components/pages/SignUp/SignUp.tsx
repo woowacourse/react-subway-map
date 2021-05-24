@@ -1,26 +1,10 @@
 import { useHistory } from 'react-router';
 import { ROUTE } from '../../../constants';
 import { useInput, useServerAPI } from '../../../hooks';
+import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
 import { Header } from '../../atoms';
 import SignUpForm from '../../molecules/SignUpForm/SignUpForm';
 import { Container } from './SignUp.styles';
-
-const ageValidator = (value: string) => {
-  const age = Number(value);
-
-  return 0 < age && age < 200;
-};
-
-const emailValidator = (value: string) => {
-  const regEmail =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
-  return regEmail.test(value);
-};
-
-const passwordValidator = (value: string) => {
-  return 5 < value.length && value.length < 13;
-};
 
 //TODO: alert 2번뜨는 문제 해결
 // TODO: warning 해결
@@ -35,22 +19,10 @@ const SignUp = () => {
     setSuccessState,
   } = useServerAPI('/members');
 
-  const { value: age, onChange: onChangeAge, isValid: isValidAge } = useInput('', ageValidator);
-  const {
-    value: email,
-    onChange: onChangeEmail,
-    isValid: isValidEmail,
-  } = useInput('', emailValidator);
-  const {
-    value: password,
-    onChange: onChangePassword,
-    isValid: isValidPassword,
-  } = useInput('', passwordValidator);
-  const {
-    value: passwordCheck,
-    onChange: onChangePasswordCheck,
-    isValid: isValidPasswordCheck,
-  } = useInput('', value => value === password);
+  const { value: age, onChange: onChangeAge } = useInput('');
+  const { value: email, onChange: onChangeEmail } = useInput('');
+  const { value: password, onChange: onChangePassword } = useInput('');
+  const { value: passwordCheck, onChange: onChangePasswordCheck } = useInput('');
 
   const onSubmitSignUp: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
@@ -97,10 +69,10 @@ const SignUp = () => {
         onChangePassword={onChangePassword}
         passwordCheck={passwordCheck}
         onChangePasswordCheck={onChangePasswordCheck}
-        isValidAge={isValidAge}
-        isValidEmail={isValidEmail}
-        isValidPassword={isValidPassword}
-        isValidPasswordCheck={isValidPasswordCheck}
+        isValidAge={isValidAge(age)}
+        isValidEmail={isValidEmail(email)}
+        isValidPassword={isValidPassword(password)}
+        isValidPasswordCheck={passwordCheck === password}
         onSubmitSignUp={onSubmitSignUp}
       />
     </Container>

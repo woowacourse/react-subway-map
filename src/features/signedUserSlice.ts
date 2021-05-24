@@ -60,13 +60,17 @@ export const signedUserSlice = createSlice({
       state.id = null;
       state.email = null;
       state.age = null;
+      state.accessToken = null;
     });
 
     builder.addCase(loginRequestAsync.fulfilled, (state, { payload }) => {
       state.accessToken = payload.accessToken;
     });
-    
+
     builder.addCase(loginRequestAsync.rejected, state => {
+      state.id = null;
+      state.email = null;
+      state.age = null;
       state.accessToken = null;
     });
   },

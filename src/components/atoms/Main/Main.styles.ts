@@ -8,6 +8,7 @@ const Container = styled.main`
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0px 6px 21px 0px #ccc;
+  padding: 2rem 4rem;
 `;
 
 export { Container };

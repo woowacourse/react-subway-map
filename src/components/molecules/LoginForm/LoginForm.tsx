@@ -18,8 +18,8 @@ const LoginForm = ({
 }: LoginFormProps) => {
   return (
     <Container onSubmit={onSubmitLogin}>
-      <Input type="email" placeholder="이메일" onChange={onChangeEmail} value={email} />
-      <Input type="password" placeholder="비밀번호" onChange={onChangePassword} value={password} />
+      <Input type="email" placeholder="이메일" onChange={onChangeEmail} value={email} ariaLabel="이메일"/>
+      <Input type="password" placeholder="비밀번호" onChange={onChangePassword} value={password} ariaLabel="비밀번호"/>
       <Button>확인</Button>
     </Container>
   );

@@ -39,6 +39,7 @@ const SignUpForm = ({
   return (
     <Container onSubmit={onSubmitSignUp}>
       <Input
+        type="number"
         placeholder="나이"
         onChange={onChangeAge}
         value={age === 0 ? '' : age}

@@ -17,6 +17,7 @@ const useServerAPI = <T>(query: string) => {
     text: '',
   });
   const [isSuccess, setSuccessState] = useState<boolean | null>(false);
+
   const getData = async (headers = defaultHeader) => {
     try {
       const data = await request.get(query, headers);
