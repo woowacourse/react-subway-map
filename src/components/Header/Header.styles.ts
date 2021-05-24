@@ -33,6 +33,7 @@ const Container = styled.div<ContainerProps>`
   position: fixed;
   top: 0;
   color: ${({ color }) => color};
+  z-index: 50;
 
   animation: ${({ isAppear }) =>
     isAppear

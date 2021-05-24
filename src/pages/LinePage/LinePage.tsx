@@ -19,6 +19,50 @@ import {
   List,
   StationSelects,
 } from './LinePage.style';
+import Palette from '../../components/Palette/Palette';
+
+const initialColors = [
+  {
+    name: PALETTE.PINK,
+    disabled: false,
+  },
+  {
+    name: PALETTE.RED,
+    disabled: false,
+  },
+  {
+    name: PALETTE.ORANGE,
+    disabled: false,
+  },
+  {
+    name: PALETTE.YELLOW,
+    disabled: false,
+  },
+  {
+    name: PALETTE.MALCHA,
+    disabled: false,
+  },
+  {
+    name: PALETTE.GREEN,
+    disabled: false,
+  },
+  {
+    name: PALETTE.SKYBLUE,
+    disabled: false,
+  },
+  {
+    name: PALETTE.BLUE,
+    disabled: false,
+  },
+  {
+    name: PALETTE.VIOLET,
+    disabled: false,
+  },
+  {
+    name: PALETTE.PURPLE,
+    disabled: false,
+  },
+];
 
 interface Line {
   id: number;
@@ -61,6 +105,7 @@ const LinePage = () => {
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 노선 관리</Heading1>
+        <p>노선을 추가하시려면 '+' 버튼을 눌러주세요</p>
         <RoundButton
           type="button"
           size="m"
@@ -99,10 +144,12 @@ const LinePage = () => {
           <InputContainer labelText="거리 (단위:km)">
             <Input />
           </InputContainer>
+          <InputContainer labelText="색상을 선택하세요 (이미 등록된 색상은 선택할 수 없습니다.)">
+            <Palette inputName={'color'} colors={initialColors} />
+          </InputContainer>
           <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>
             추가
           </Button>
-          {/* TODO: 색상 팔레트 추가 */}
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>

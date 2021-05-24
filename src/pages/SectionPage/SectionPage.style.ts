@@ -9,7 +9,7 @@ const Container = styled.div`
   & > *:not(:last-child) {
     margin-bottom: 0.05rem;
   }
-  height: 70vh;
+  min-height: 70vh;
 `;
 
 const Icon = styled.span`
@@ -26,7 +26,7 @@ const Heading1 = styled.h1`
   font-size: 1.5rem;
   font-weight: 600;
   color: ${PALETTE.GRAY_600};
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const TitleBox = styled<any>(Box)`
@@ -44,6 +44,13 @@ const TitleBox = styled<any>(Box)`
       transform-origin: center;
       transform: rotate(${({ isOpen }) => (isOpen ? '135deg' : '0')});
     }
+  }
+
+  p {
+    text-align: center;
+    font-size: 0.75rem;
+    color: ${PALETTE.GRAY_500};
+    margin-bottom: 1.5rem;
   }
 `;
 

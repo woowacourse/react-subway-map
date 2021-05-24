@@ -7,7 +7,7 @@ const Container = styled.div`
   & > *:not(:last-child) {
     margin-bottom: 0.75rem;
   }
-  height: 70vh;
+  min-height: 70vh;
 `;
 
 const Icon = styled.span`

@@ -66,6 +66,7 @@ const SectionPage = () => {
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 구간 관리</Heading1>
+        <p>구간을 추가하시려면 '+' 버튼을 눌러주세요</p>
         <InputContainer labelText="노선 선택">
           <Select onChange={onLineSelect}>
             <option value="/" hidden>
@@ -116,7 +117,6 @@ const SectionPage = () => {
           <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>
             추가
           </Button>
-          {/* TODO: 색상 팔레트 추가 */}
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
