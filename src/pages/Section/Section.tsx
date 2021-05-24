@@ -6,7 +6,7 @@ import * as S from './Section.styles';
 const Section = () => {
   return (
     <S.Container>
-      <ContentContainer hatColor='MINT_500'>
+      <ContentContainer hasHat={true}>
         <AddSectionForm />
       </ContentContainer>
       <ContentContainer>

@@ -81,7 +81,7 @@ export const Palette = styled.button`
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   border: none;
-  background-color: ${({ color }) => (color ? color : COLOR.MINT_500)};
+  background-color: ${({ color, theme }) => (color ? color : theme.primaryColor)};
 `;
 
 export const SelectedPalette = styled.div`
@@ -89,7 +89,7 @@ export const SelectedPalette = styled.div`
   height: 9rem;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  background-color: ${({ color }) => (color ? color : COLOR.MINT_500)};
+  background-color: ${({ color, theme }) => (color ? color : theme.primaryColor)};
   grid-row-start: 1;
   grid-row-end: 3;
   grid-column-start: 6;

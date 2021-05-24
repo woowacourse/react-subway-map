@@ -1,4 +1,4 @@
-import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
+import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddLineForm from '../../components/LinePage/AddLineForm';
 import LineListItem from '../../components/LinePage/LineListItem';
 import * as S from './Line.styles';
@@ -6,7 +6,7 @@ import * as S from './Line.styles';
 const Line = () => {
   return (
     <S.Container>
-      <ContentContainer hatColor='MINT_500'>
+      <ContentContainer hasHat={true}>
         <AddLineForm />
       </ContentContainer>
       <ContentContainer>

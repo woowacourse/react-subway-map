@@ -20,7 +20,7 @@ export const Button = styled.button<Props>`
   border-style: none;
   padding: 1rem;
   cursor: pointer;
-  background-color: ${({ bgColor }) => (bgColor ? bgColor : COLOR.MINT_500)};
+  background-color: ${({ bgColor, theme }) => (bgColor ? bgColor : theme.primaryColor)};
   color: ${({ fontColor }) => (fontColor ? fontColor : COLOR.WHITE)};
   font-weight: bold;
   letter-spacing: 0.125rem;

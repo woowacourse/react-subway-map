@@ -8,7 +8,7 @@ export const Navigation = styled.nav`
   justify-content: center;
   align-items: center;
   padding: 0 2rem;
-  background-color: ${COLOR.MINT_500};
+  background-color: ${({ theme }) => theme.primaryColor};
   position: fixed;
   top: 0;
   left: 0;
@@ -62,6 +62,6 @@ export const MenuItem = styled.li`
     color: ${COLOR.WHITE};
   }
   &:hover {
-    border-bottom: 0.5rem solid ${COLOR.MINT_300};
+    border-bottom: 0.5rem solid ${({ theme }) => theme.secondaryColor};
   }
 `;

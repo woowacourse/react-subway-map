@@ -6,7 +6,7 @@ import * as S from './Station.styles';
 const Station = () => {
   return (
     <S.Container>
-      <ContentContainer hatColor='MINT_500'>
+      <ContentContainer hasHat={true}>
         <AddStationForm />
       </ContentContainer>
       <ContentContainer>

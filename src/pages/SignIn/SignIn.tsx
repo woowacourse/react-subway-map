@@ -5,7 +5,7 @@ import * as S from './SignIn.styles';
 const SignIn = () => {
   return (
     <S.Container>
-      <ContentContainer hatColor='MINT_500'>
+      <ContentContainer hasHat={true}>
         <SignInForm />
       </ContentContainer>
     </S.Container>

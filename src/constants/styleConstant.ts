@@ -35,10 +35,11 @@ export const SIZE = {
 };
 
 export const SERVER_COLOR = {
-  [BASE_URL.ROOT.name]: { PRIMARY: '#54a0ff', SECONDARY: '#2e86de' },
+  default: { PRIMARY: COLOR.MINT_500, SECONDARY: COLOR.MINT_700 },
+  [BASE_URL.ROOT.name]: { PRIMARY: '#1DA1F2', SECONDARY: '#1087cc' },
   [BASE_URL.CHUNSIK.name]: { PRIMARY: '#feca57', SECONDARY: '#ff9f43' },
   [BASE_URL.SAKJEONG.name]: { PRIMARY: '#9c88ff', SECONDARY: '#8c7ae6' },
-  [BASE_URL.SONNEOJAL.name]: { PRIMARY: '#353b48', SECONDARY: '#2f3640' },
+  [BASE_URL.SONNEOJAL.name]: { PRIMARY: '#fd79a8', SECONDARY: '#e84393' },
 };
 
 export const MAIN_COLOR = {
