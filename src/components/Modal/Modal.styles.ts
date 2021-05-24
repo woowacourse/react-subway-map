@@ -25,3 +25,7 @@ export const Dimmed = styled.div<ContainerProps>`
   opacity: ${({ opacity }) => opacity};
   transition: opacity 0.5s;
 `;
+
+export const Contents = styled.div`
+  z-index: 1004;
+`;

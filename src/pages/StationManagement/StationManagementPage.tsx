@@ -12,12 +12,12 @@ const StationManagementPage = () => {
       <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
         <h2 style={{ marginBottom: "1rem" }}>🚉역 관리</h2>
         <Flex style={{ width: "100%", marginBottom: "1rem" }}>
-          <Input placeholder="역 이름" style={{ marginRight: "10px" }}></Input>
+          <Input placeholder="역 이름" style={{ marginRight: "0.625rem" }}></Input>
           <Button type="button">확인</Button>
         </Flex>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
           {stations.map(({ id, name }) => (
-            <ListItem key={id} style={{ padding: "9px" }}>
+            <ListItem key={id} style={{ padding: "0.5625rem" }}>
               {name}
             </ListItem>
           ))}

@@ -13,6 +13,6 @@ const Template: Story<Props> = (args) => <Modal {...args} />;
 export const Basic = Template.bind({});
 
 Basic.args = {
-  closeModal: () => {},
+  onClose: () => {},
   children: "children",
 };

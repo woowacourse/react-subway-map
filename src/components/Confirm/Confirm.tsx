@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const Confirm = ({ title, onConfirm, onReject }: Props) => (
-  <Modal closeModal={onReject}>
+  <Modal onClose={onReject}>
     <Inner>
       <Title>
         <p>{title}</p>

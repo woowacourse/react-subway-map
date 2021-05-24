@@ -1,10 +1,10 @@
-import { MouseEventHandler, useState, useEffect, ReactNode } from "react";
+import React, { MouseEventHandler, useState, useEffect, ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-import { ModalBlock, Dimmed } from "./Modal.styles";
+import { ModalBlock, Dimmed, Contents } from "./Modal.styles";
 
 export interface Props {
-  closeModal: MouseEventHandler<HTMLDivElement>;
+  onClose: MouseEventHandler<HTMLDivElement>;
   children: ReactNode;
 }
 
@@ -15,19 +15,19 @@ const ModalPortal = (child: React.ReactNode) => {
   return createPortal(child, $modal);
 };
 
-const Modal = ({ closeModal: dimmedClick, children }: Props) => {
+const Modal = ({ onClose: dimmedClick, children }: Props) => {
   const [opacity, setOpacity] = useState<number>(0);
 
   useEffect(() => {
     setOpacity(1);
   }, []);
 
-  return (
-    <>
+  return ModalPortal(
+    <ModalBlock>
       <Dimmed onClick={dimmedClick} opacity={opacity} />
-      <ModalBlock>{children}</ModalBlock>
-    </>
+      <Contents>{children}</Contents>
+    </ModalBlock>
   );
 };
 
-export default ModalPortal(Modal);
+export default Modal;
