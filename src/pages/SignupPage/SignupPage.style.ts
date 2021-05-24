@@ -14,4 +14,10 @@ const Heading1 = styled.h1`
   margin-bottom: 2rem;
 `;
 
-export { Icon, Heading1 };
+const Form = styled.form`
+  > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+`;
+
+export { Icon, Heading1, Form };

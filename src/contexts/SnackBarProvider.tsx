@@ -2,13 +2,17 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 
 import SnackBar, { MAX_STACK_NUM } from '../components/shared/SnackBar/SnackBar';
 
-const SNACKBAR_DURATION = 1500;
+const SNACKBAR_DURATION = 4000;
 
 interface SnackBarProviderProps {
   children: ReactNode;
 }
 
-const SnackBarContext = createContext({});
+interface SnackBar {
+  addMessage: (message: string) => void;
+}
+
+const SnackBarContext = createContext<SnackBar | null>(null);
 
 const keyGenerator = (() => {
   let id = 0;

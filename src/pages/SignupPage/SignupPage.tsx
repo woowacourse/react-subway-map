@@ -15,16 +15,19 @@ import InputContainer from '../../components/shared/InputContainer/InputContaine
 import PATH from '../../constants/path';
 import PALETTE from '../../constants/palette';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
+import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import useInput from '../../hooks/useInput';
 import useDebounce from '../../hooks/useDebounce';
-import { Icon, Heading1 } from './SignupPage.style';
+import { Icon, Heading1, Form } from './SignupPage.style';
+import apiRequest from '../../request';
+import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
 const DEBOUNCE_DELAY = 500;
 
-// TODO: margin bottom 주기
 const SignupPage = () => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const addMessage = useContext(SnackBarContext)?.addMessage;
 
   const [email, setEmail] = useState<string>('');
   const [isEmailDuplicated, setIsEmailDuplicated] = useState<boolean>(false);
@@ -79,16 +82,27 @@ const SignupPage = () => {
     }
   };
 
-  const onSignup: FormEventHandler<HTMLFormElement> = (event) => {
+  const onSignup: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    history.push(PATH.LOGIN);
+    if (!isFormCompleted) {
+      return;
+    }
+
+    try {
+      await apiRequest.signup({ email, password, age: Number(age) });
+      addMessage?.(SUCCESS_MESSAGE.SIGNUP);
+      history.push(PATH.LOGIN);
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
   };
 
   return (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
       <Heading1>회원가입</Heading1>
-      <form onSubmit={onSignup}>
+      <Form onSubmit={onSignup}>
         <InputContainer
           validation={{
             text: emailErrorMessage,
@@ -146,13 +160,13 @@ const SignupPage = () => {
         <Button
           size="m"
           width="100%"
-          backgroundColor={PALETTE.NAVER}
+          backgroundColor={themeColor}
           color={PALETTE.WHITE}
           disabled={!isFormCompleted}
         >
           회원가입
         </Button>
-      </form>
+      </Form>
     </Box>
   );
 };

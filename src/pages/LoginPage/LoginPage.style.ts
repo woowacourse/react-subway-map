@@ -27,6 +27,12 @@ const SignUpLink = styled(Link)`
   }
 `;
 
+const Form = styled.form`
+  > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+`;
+
 const ErrorText = styled.p`
   font-size: 0.8rem;
   color: red;
@@ -34,4 +40,4 @@ const ErrorText = styled.p`
   margin-bottom: 1rem;
 `;
 
-export { Icon, SignUpLink, Heading1, ErrorText };
+export { Icon, SignUpLink, Heading1, ErrorText, Form };

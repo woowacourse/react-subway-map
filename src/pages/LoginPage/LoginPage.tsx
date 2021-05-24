@@ -9,7 +9,7 @@ import Input from '../../components/shared/Input/Input';
 import InputContainer from '../../components/shared/InputContainer/InputContainer';
 import PATH from '../../constants/path';
 import PALETTE from '../../constants/palette';
-import { Icon, SignUpLink, Heading1, ErrorText } from './LoginPage.style';
+import { Icon, SignUpLink, Heading1, ErrorText, Form } from './LoginPage.style';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 
 const LoginPage = () => {
@@ -38,7 +38,7 @@ const LoginPage = () => {
   return (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
       <Heading1>로그인</Heading1>
-      <form onSubmit={onLogin}>
+      <Form onSubmit={onLogin}>
         <InputContainer>
           <Icon>
             <MdEmail />
@@ -66,7 +66,7 @@ const LoginPage = () => {
           로그인
         </Button>
         <SignUpLink to={PATH.SIGNUP}>아직 회원이 아니신가요?</SignUpLink>
-      </form>
+      </Form>
     </Box>
   );
 };
