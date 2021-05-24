@@ -6,27 +6,77 @@ import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
 import { Link } from 'react-router-dom';
 import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
-import { useDispatch } from 'react-redux';
-import { selectServer } from '../../modules/user/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAsync, selectServer } from '../../modules/user/userReducer';
+import React, { useState } from 'react';
+import { RootState } from '../../modules';
+
+const getEmailErrorMessage = (email: string) => {
+  var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+  if (!reg_email.test(email)) {
+    return '이메일 형식이 아닙니다.';
+  }
+
+  return '';
+};
+
+const getPasswordErrorMessage = (password: string) => {
+  if (!(4 <= password.length && password.length <= 20)) {
+    return '비밀번호는 최소 4글자에서 최대 20 글자여야 합니다.';
+  }
+
+  return '';
+};
 
 const SignInForm = () => {
+  const isServerSelected = useSelector((state: RootState) => Boolean(state.user.serverName));
   const dispatch = useDispatch();
+
+  const [loginInfo, setLoginInfo] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     SERVER.URL = e.target.value;
     dispatch(selectServer({ serverName: e.target[e.target.selectedIndex].innerText, baseURL: e.target.value }));
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleLogIn = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { email, password } = loginInfo;
+    try {
+      dispatch(loginAsync({ email, password }));
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const emailErrorMessage = getEmailErrorMessage(loginInfo.email);
+  const passwordErrorMessage = getPasswordErrorMessage(loginInfo.password);
+  const isValidForm = !(emailErrorMessage || passwordErrorMessage) && isServerSelected;
+
   return (
-    <S.SignInForm>
+    <S.SignInForm onSubmit={handleLogIn}>
       <S.Title>로그인</S.Title>
       <S.InputWrapper>
-        <Input emoji={mailSVG} placeholder='이메일을 입력해주세요' />
-        <S.Message></S.Message>
+        <Input type='email' emoji={mailSVG} placeholder='이메일을 입력해주세요' name='email' onChange={handleChange} />
+        <S.Message>{emailErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <Input emoji={lockSVG} placeholder='비밀번호를 입력해주세요' />
-        <S.Message></S.Message>
+        <Input
+          type='password'
+          emoji={lockSVG}
+          placeholder='비밀번호를 입력해주세요'
+          name='password'
+          onChange={handleChange}
+        />
+        <S.Message>{passwordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <SelectInput initialText='서버를 선택해주세요.' onChange={handleSelectServer}>
@@ -39,7 +89,7 @@ const SignInForm = () => {
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
-        <Button>로그인</Button>
+        <Button isDisabled={isValidForm ? false : true}>로그인</Button>
       </S.ButtonWrapper>
       <S.SignUpLinkWrapper>
         <Link to={ROUTE.SIGN_UP}>아직 회원이 아니신가요?</Link>

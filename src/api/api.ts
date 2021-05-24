@@ -10,15 +10,34 @@ interface SignUp {
 
 export const signUp = async ({ url, email, password, age }: SignUp) => {
   try {
-    await axios.post(`${url}/members`, {
+    const data = {
       email: email,
       password: password,
       age: age,
-    });
+    };
+    await axios.post(`${url}/members`, data);
 
     return RESPONSE.SUCCESS;
   } catch (error) {
     console.error(error.message);
+    return RESPONSE.FAILURE;
+  }
+};
+
+interface SignIn {
+  email: string;
+  password: string;
+}
+
+export const signIn = async ({ email, password }: SignIn) => {
+  const data = {
+    email: email,
+    password: password,
+  };
+  try {
+    const response: { accessToken: string } = await axios.post(API.SIGN_IN(), data);
+    return response.accessToken;
+  } catch (error) {
     return RESPONSE.FAILURE;
   }
 };

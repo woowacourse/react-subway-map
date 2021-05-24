@@ -1,7 +1,7 @@
 import { SERVER } from './constant';
 
 export const API = {
-  //   SIGN_UP: `${SERVER.URL}/members`,
+  SIGN_IN: () => `${SERVER.URL}/login/token`,
 };
 
 export const RESPONSE = {

@@ -93,7 +93,7 @@ const SignUpForm = () => {
       <S.Title>회원가입</S.Title>
       <S.InputWrapper>
         <Input
-          type='text'
+          type='email'
           emoji={mailSVG}
           placeholder='이메일을 입력해주세요'
           name='email'

@@ -9,7 +9,7 @@ export const ROUTE = {
 
 export const BASE_URL = {
   ROOT: { name: '루트', URL: 'https://junroot.kro.kr' },
-  CHUNSIK: { name: '춘식', URL: 'http://choonsik.n-e.kr' },
+  CHUNSIK: { name: '춘식', URL: 'https://choonsik.n-e.kr' },
   SAKJEONG: { name: '삭정', URL: 'https://sakjung-subway.kro.kr' },
   SONNEOJAL: { name: '손너잘', URL: 'https://bperhaps.p-e.kr' },
 };
