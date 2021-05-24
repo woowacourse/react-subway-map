@@ -14,11 +14,10 @@ const ANIMATION_DURATION_MS = 1000;
 
 interface SnackBarProps {
   children: string;
-  duration: number;
   order: SnackBarOrder;
 }
 
-const SnackBar = ({ children, duration, order }: SnackBarProps) => {
+const SnackBar = ({ children, order }: SnackBarProps) => {
   return (
     <Container bottom={getSnackBarBottom(order)} animationDuration={`${ANIMATION_DURATION_MS}ms`}>
       {children}

@@ -7,6 +7,7 @@ const ERROR_MESSAGE = {
 const SUCCESS_MESSAGE = {
   SIGNUP: '😄 회원가입에 성공했습니다.',
   LOGIN: '😄 로그인에 성공했습니다.',
+  LOGOUT: '🙋‍♀️ 로그아웃 되었습니다.',
 };
 
 export { ERROR_MESSAGE, SUCCESS_MESSAGE };

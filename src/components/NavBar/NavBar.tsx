@@ -7,6 +7,8 @@ const NavBar = styled.nav`
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid transparent;
+    color: inherit;
+    font-size: inherit;
     user-select: none;
 
     &:hover {

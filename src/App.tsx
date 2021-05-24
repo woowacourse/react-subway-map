@@ -13,9 +13,20 @@ import SectionPage from './pages/SectionPage/SectionPage';
 import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
 import PALETTE from './constants/palette';
 import { ThemeContext } from './contexts/ThemeContextProvider';
+import { UserContext } from './contexts/UserContextProvider';
+import { SnackBarContext } from './contexts/SnackBarProvider';
+import { SUCCESS_MESSAGE } from './constants/messages';
 
 const App = () => {
+  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const userContext = useContext(UserContext);
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+
+  const onLogout = () => {
+    localStorage.setItem('accessToken', '');
+    userContext?.setIsLoggedIn(false);
+    addMessage?.(SUCCESS_MESSAGE.LOGOUT);
+  };
 
   return (
     <Router>
@@ -27,7 +38,11 @@ const App = () => {
           <NavLink to={PATH.STATIONS}>역관리</NavLink>
           <NavLink to={PATH.LINES}>노선관리</NavLink>
           <NavLink to={PATH.SECTIONS}>구간관리</NavLink>
-          <NavLink to={PATH.LOGIN}>로그인</NavLink>
+          {userContext?.isLoggedIn ? (
+            <button onClick={onLogout}>로그아웃</button>
+          ) : (
+            <NavLink to={PATH.LOGIN}>로그인</NavLink>
+          )}
         </NavBar>
       </Header>
       <Main>

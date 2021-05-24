@@ -50,7 +50,7 @@ const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
     <SnackBarContext.Provider value={{ addMessage }}>
       {children}
       {messages.map((message, index, arr) => (
-        <SnackBar key={message.id} duration={SNACKBAR_DURATION} order={arr.length - index}>
+        <SnackBar key={message.id} order={arr.length - index}>
           {message.text}
         </SnackBar>
       ))}
