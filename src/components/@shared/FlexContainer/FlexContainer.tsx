@@ -8,6 +8,10 @@ export const FlexJustfiyCenter = styled(Flex)`
   justify-content: center;
 `;
 
+export const FlexBetween = styled(Flex)`
+  justify-content: space-between;
+`;
+
 export const FlexAlignCenter = styled(Flex)`
   align-items: center;
 `;
@@ -15,16 +19,4 @@ export const FlexAlignCenter = styled(Flex)`
 export const FlexCenter = styled(Flex)`
   justify-content: center;
   align-items: center;
-`;
-
-export const FlexColumn = styled(Flex)`
-  flex-direction: column;
-`;
-
-export const FlexColumnJustfiyCenter = styled(FlexJustfiyCenter)`
-  flex-direction: column;
-`;
-
-export const FlexColumnAlignCenter = styled(FlexAlignCenter)`
-  flex-direction: column;
 `;

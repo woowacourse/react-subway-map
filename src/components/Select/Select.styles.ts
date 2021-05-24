@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLOR } from "../../constants";
+import { COLOR } from "../../constants/color";
 
 interface SelectBlockProps {
   selectSize?: "md" | "block";
@@ -33,10 +33,8 @@ export const SelectBlock = styled.select<SelectBlockProps>`
   border-radius: 2rem;
   -webkit-appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    radial-gradient(#fff 0%, transparent 0%);
-  background-position: calc(100% - 30px) calc(1em + 4px),
-    calc(100% - 25px) calc(1em + 4px), calc(100% - 0.5em) 0.5em;
+    linear-gradient(135deg, gray 50%, transparent 50%), radial-gradient(#fff 0%, transparent 0%);
+  background-position: calc(100% - 30px) calc(1em + 4px), calc(100% - 25px) calc(1em + 4px), calc(100% - 0.5em) 0.5em;
   background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
   background-repeat: no-repeat;
 `;

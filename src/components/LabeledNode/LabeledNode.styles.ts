@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlexColumnAlignCenter, FlexColumn } from "../@shared/FlexContainer/FlexContainer";
+import { FlexAlignCenter, Flex } from "../@shared/FlexContainer/FlexContainer";
 
 export interface LabeledNodeStylesProps {}
 
@@ -7,7 +7,8 @@ export const LabeledNodeBlock = styled.div`
   display: flex;
 `;
 
-export const NodeWrapper = styled(FlexColumnAlignCenter)`
+export const NodeWrapper = styled(FlexAlignCenter)`
+  flex-direction: column;
   margin-right: 10px;
 `;
 
@@ -25,7 +26,8 @@ export const Vertex = styled.div`
   border-radius: 0.3125rem;
 `;
 
-export const ContentWrapper = styled(FlexColumn)`
+export const ContentWrapper = styled(Flex)`
+  flex-direction: column;
   justify-content: flex-start;
 `;
 

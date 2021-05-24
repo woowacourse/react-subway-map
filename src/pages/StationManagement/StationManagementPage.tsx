@@ -2,7 +2,7 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
 import { StationManagementPageBlock } from "./StationManagementPage.styles";
-import { Flex, FlexCenter, FlexColumn } from "../../components/@shared/FlexContainer/FlexContainer";
+import { Flex, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import ListItem from "../../components/ListItem/ListItem";
 import { stations } from "../../mocks/mocks";
 
@@ -15,13 +15,13 @@ const StationManagementPage = () => {
           <Input placeholder="역 이름" style={{ marginRight: "10px" }}></Input>
           <Button>확인</Button>
         </Flex>
-        <FlexColumn style={{ width: "100%" }}>
-          {stations.map((station) => (
-            <ListItem key={station.id} style={{ padding: "9px" }}>
-              {station.name}
+        <Flex style={{ width: "100%", flexDirection: "column" }}>
+          {stations.map(({ id, name }) => (
+            <ListItem key={id} style={{ padding: "9px" }}>
+              {name}
             </ListItem>
           ))}
-        </FlexColumn>
+        </Flex>
       </Block>
     </FlexCenter>
   );
