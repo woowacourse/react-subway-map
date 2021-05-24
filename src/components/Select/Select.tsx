@@ -8,11 +8,17 @@ interface Option {
 }
 
 export interface Props extends SelectHTMLAttributes<HTMLSelectElement>, SelectStylesProps {
+  defaultOption?: string;
   options: Option[];
 }
 
-const Select = ({ options, ...props }: Props) => (
+const Select = ({ defaultOption, options, ...props }: Props) => (
   <SelectBlock {...props}>
+    {defaultOption && (
+      <option value="" selected disabled hidden>
+        {defaultOption}
+      </option>
+    )}
     {options.map(({ value, text }) => (
       <option value={value}>{text}</option>
     ))}
