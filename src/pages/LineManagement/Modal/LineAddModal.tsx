@@ -22,14 +22,21 @@ const LineAddModal = ({ onClose }: Props) => {
       <form>
         <Block style={{ flexDirection: "column", maxWidth: "40.625rem" }}>
           <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>🛤️ 노선 추가</h3>
-          <Input placeholder="노선 이름" style={{ marginBottom: "0.9375rem" }} />
+          <Input placeholder="노선 이름" style={{ marginBottom: "0.9375rem" }} required />
           <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-            <Select options={stationOptions} style={{ marginRight: "0.625rem" }} />
-            <Select options={stationOptions} />
+            <Select options={stationOptions} style={{ marginRight: "0.625rem" }} required />
+            <Select options={stationOptions} required />
           </Flex>
           <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-            <Input placeholder="상행 하행역 거리(km)" style={{ marginRight: "0.625rem" }} />
-            <Input placeholder="상행 하행역 시간(분)" />
+            <Input
+              type="number"
+              defaultValue="1"
+              min="0.1"
+              max="1000"
+              step="0.1"
+              placeholder="상행 하행역 거리(km)"
+              required
+            />
           </Flex>
           <ColorPicker style={{ marginBottom: "0.9375rem" }} />
           <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
