@@ -21,3 +21,9 @@ export interface Line {
   stations: Station[];
   sections: Section[];
 }
+
+export interface Member {
+  email: string;
+  age?: number;
+  password: string;
+}
