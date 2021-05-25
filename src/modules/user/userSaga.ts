@@ -1,7 +1,6 @@
 import { signIn } from './../../api/api';
 import { loginAsync, login, error, pending } from './userReducer';
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { RESPONSE } from '../../constants/api';
 
 type LoginAction = {
   type: typeof loginAsync.type;

@@ -1,8 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants/constant';
+import { RootState } from '../../../modules';
+import { logout } from '../../../modules/user/userReducer';
 import * as S from './Navigation.styles';
 
 const Navigation = () => {
+  const { accessToken } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   return (
     <S.Navigation>
       <S.Main>
@@ -23,7 +28,13 @@ const Navigation = () => {
             <Link to={ROUTE.HOME}>경로 검색</Link>
           </S.MenuItem>
           <S.MenuItem>
-            <Link to={ROUTE.SIGN_IN}>로그인</Link>
+            {accessToken ? (
+              <Link to={ROUTE.SIGN_IN} onClick={() => dispatch(logout())}>
+                로그아웃
+              </Link>
+            ) : (
+              <Link to={ROUTE.SIGN_IN}>로그인</Link>
+            )}
           </S.MenuItem>
         </S.Menu>
       </S.Main>

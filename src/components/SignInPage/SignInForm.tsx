@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { RootState } from '../../modules';
 
 const getEmailErrorMessage = (email: string) => {
-  var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  const reg_email = /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 
   if (!reg_email.test(email)) {
     return '이메일 형식이 아닙니다.';
@@ -48,7 +48,7 @@ const SignInForm = () => {
     if (accessToken) {
       history.push(ROUTE.STATION);
     }
-  }, [error, accessToken]);
+  }, [error, accessToken, history]);
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     SERVER.URL = e.target.value;

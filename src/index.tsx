@@ -7,6 +7,8 @@ import App from './App';
 import { rootReducer, rootSaga } from './modules';
 import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
+import Theme from './Theme';
+import GlobalStyles from './Global.styles';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -26,7 +28,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <Theme>
+          <GlobalStyles />
+          <App />
+        </Theme>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
