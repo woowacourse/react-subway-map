@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ERROR } from '../constants';
 import { request } from '../utils';
 
-export const fetchUserToken = createAsyncThunk(
-  'user/fetchUserToken',
+export const getUserTokenThunk = createAsyncThunk(
+  'user/getUserTokenThunk',
   async (userData, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
@@ -40,11 +40,11 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchUserToken.fulfilled]: (state, { payload: { token } }) => {
+    [getUserTokenThunk.fulfilled]: (state, { payload: { token } }) => {
       state.token = token;
       state.error = null;
     },
-    [fetchUserToken.rejected]: (state, { payload: { error } }) => {
+    [getUserTokenThunk.rejected]: (state, { payload: { error } }) => {
       state.error = error;
     },
   },

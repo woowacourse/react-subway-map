@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ERROR } from '../constants';
 import { request } from '../utils';
 
-export const fetchStations = createAsyncThunk(
-  'subway/fetchStations',
+export const getStationsThunk = createAsyncThunk(
+  'subway/getStationsThunk',
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
@@ -27,10 +27,10 @@ const subwaySlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [fetchStations.fulfilled]: (state, { payload: { stations } }) => {
+    [getStationsThunk.fulfilled]: (state, { payload: { stations } }) => {
       state.stations = stations;
     },
-    [fetchStations.rejected]: (state, { payload: { error } }) => {
+    [getStationsThunk.rejected]: (state, { payload: { error } }) => {
       state.error = error;
     },
   },

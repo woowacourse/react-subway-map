@@ -11,5 +11,5 @@ const store = configureStore({
 
 export default store;
 
-export { setToken, clearToken, fetchUserToken } from './userSlice';
-export { fetchStations } from './subwaySlice';
+export { setToken, clearToken, getUserTokenThunk } from './userSlice';
+export { getStationsThunk } from './subwaySlice';
