@@ -4,9 +4,11 @@ import editSVG from '../../assets/svg/edit.svg';
 
 export interface Props {
   name: string;
+  id: number;
+  color: string;
 }
 
-const LineListItem = ({ name }: Props) => {
+const LineListItem = ({ name, id, color }: Props) => {
   return (
     <S.LineListItem>
       <S.Name>{name}</S.Name>

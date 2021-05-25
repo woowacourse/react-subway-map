@@ -3,6 +3,7 @@ import { SERVER } from './constant';
 export const API = {
   SIGN_IN: () => `${SERVER.URL}/login/token`,
   GET_STATIONS: `${SERVER.URL}/stations`,
+  LINES: `${SERVER.URL}/lines`,
 };
 
 export const RESPONSE = {

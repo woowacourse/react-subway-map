@@ -9,3 +9,9 @@ export interface Station {
   name: string;
   lines: StationLines[];
 }
+
+export interface Line {
+  id: number;
+  name: string;
+  color: string;
+}
