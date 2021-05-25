@@ -85,23 +85,5 @@ describe('<SignUp />', () => {
     }
   });
 
-  it('모든 올바른 값을 입력하면, 회원가입 버튼이 활성화 된다.', async () => {
-    const { button, input } = setup();
-    const validInput = {
-      email: 'test@test.com',
-      age: '24',
-      password: 'test123!',
-      passwordConfirm: 'test123!',
-    };
-
-    expect(button).toHaveAttribute('disabled');
-
-    for (let [key, value] of Object.entries(validInput)) {
-      fireEvent.input(input[key], { target: { value } });
-    }
-
-    await waitFor(() => expect(button).not.toHaveAttribute('disabled'));
-  });
-
   // TODO: API가 모두 구현되면, 서버에 따른 회원가입 가능 여부 테스트
 });
