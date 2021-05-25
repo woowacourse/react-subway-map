@@ -5,5 +5,19 @@ export default {
   component: LineModalForm,
 };
 
-const Template = () => <LineModalForm />;
+const Template = () => (
+  <LineModalForm
+    lineInfo={{
+      name: '',
+      color: '',
+      upStationId: '',
+      downStationId: '',
+      distance: '',
+    }}
+    onChange={() => {}}
+    onSubmit={() => {}}
+    onModalClose={() => {}}
+    stations={[]}
+  />
+);
 export const Default = Template.bind({});
