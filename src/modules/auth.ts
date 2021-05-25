@@ -1,45 +1,26 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { requestAuth } from "../apis/user";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const LOGIN = "auth/login";
+import { requestAuth } from "../apis/user";
 
 interface LoginInfo {
   email: string;
   password: string;
 }
 
-interface AuthState {
-  user: LoginInfo | null;
-  loading: boolean;
-  error: Error | null;
+interface SignupInfo {
+  email: string;
+  password: string;
+  age: number;
 }
 
-const initialState: AuthState = {
-  user: null,
-  loading: false,
-  error: null,
-};
+export const login = createAsyncThunk("auth/login", async ({ email, password }: LoginInfo) => {
+  const { accessToken } = await requestAuth.login(email, password);
 
-export const login = createAsyncThunk<string, LoginInfo>(LOGIN, async ({ email, password }) => {
-  const accessToken = await requestAuth.login(email, password);
-
-  return accessToken;
+  localStorage.setItem("accessToken", accessToken);
 });
 
-export const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    [login.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [login.fulfilled.type]: (state, action: PayloadAction<LoginInfo>) => {
-      state.loading = false;
-      state.user = action.payload;
-    },
-    [login.rejected.type]: (state, action: PayloadAction<Error>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-  },
+export const signup = createAsyncThunk("auth/singup", async ({ email, password, age }: SignupInfo, thunkAPI) => {
+  await requestAuth.signup(email, password, age);
+
+  thunkAPI.dispatch(login({ email, password }));
 });
