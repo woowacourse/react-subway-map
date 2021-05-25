@@ -41,6 +41,7 @@ export const REG_EXP = {
   AGE: /^[0-9]*$/,
   PASSWORD:
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$~!@#$%^&*()-+?])[A-Za-z\d$~!@#$%^&*()-+?]{6,20}$/,
+  STATION_NAME: /^[가-힣|0-9|]{2,20}$/,
 };
 
 export const RANGE = {
