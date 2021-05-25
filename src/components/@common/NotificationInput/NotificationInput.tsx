@@ -21,7 +21,9 @@ const NotificationInput: FC<Props> = ({ message, className, ...options }) => {
       justifyContent="space-between"
     >
       <Input {...options} />
-      {message && <NotificationText isError={message.isError}>{message.text}</NotificationText>}
+      {message?.text && (
+        <NotificationText isError={message.isError}>{message.text}</NotificationText>
+      )}
     </NotificationInputContainer>
   );
 };

@@ -1,25 +1,72 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
-import Input from '../../components/@common/Input/Input';
 import ListItem from '../../components/@common/ListItem/ListItem';
+import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
-import { DUMMY_STATIONS } from '../../constants/dummies';
-import { StationForm, StationList } from './Stations.styles';
+import { ERROR_MESSAGE } from '../../constants/message';
+import { addStation, loadStations } from '../../redux/stationSlice';
+import { RootState, useAppDispatch } from '../../redux/store';
+import { isKoreanAndNumber } from '../../util/validator';
+import { StationForm, StationList, StationNameInput } from './Stations.styles';
 
 const Stations: FC = () => {
+  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const { stations } = useSelector((state: RootState) => state.station);
+  const dispatch = useAppDispatch();
+
+  //TODO: form state로 하나로 묶기
+  const [stationInput, setStationInput] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const isValidStationInput = stationInput !== '' && errorMessage === '';
+
+  useEffect(() => {
+    dispatch(loadStations(API_INFO[apiOwner].endPoint));
+  }, []);
+
+  const onChangeStationInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    if (value.length >= 2 && isKoreanAndNumber(value)) {
+      setErrorMessage('');
+    } else {
+      setErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
+    }
+
+    if (stations.some(({ name }) => name === value)) {
+      setErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
+    }
+
+    setStationInput(value);
+  };
+
+  const onAddStation = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    dispatch(addStation({ baseURL: API_INFO[apiOwner].endPoint, stationName: stationInput }));
+    setStationInput('');
+  };
+
   return (
     <CardTemplate templateColor={THEME_COLOR[400]} titleText={PAGE_INFO.STATIONS.text}>
-      <StationForm>
-        <Input labelIcon={<Subway />} labelText="지하철 역 이름을 입력해주세요" />
-        <Button>추가</Button>
+      <StationForm onSubmit={onAddStation}>
+        <StationNameInput
+          value={stationInput}
+          onChange={onChangeStationInput}
+          labelIcon={<Subway />}
+          labelText="지하철 역 이름을 입력해주세요"
+          message={{ text: errorMessage, isError: true }}
+        />
+        <Button disabled={!isValidStationInput}>추가</Button>
       </StationForm>
       <HorizontalLine />
-      {DUMMY_STATIONS && (
+      {stations && (
         <StationList>
-          {DUMMY_STATIONS.map((station) => (
+          {stations.map((station) => (
             <ListItem key={station.id} onDelete={() => console.log(station.name)}>
               {station.name}
             </ListItem>
