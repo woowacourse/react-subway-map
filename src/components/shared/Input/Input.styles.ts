@@ -14,9 +14,16 @@ const Input = styled.input`
   &:focus {
     border: 2px solid #333333;
   }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const Label = styled.label`
+  width: 100%;
   display: flex;
   flex-direction: column;
   font-size: 12px;
