@@ -6,8 +6,7 @@ import addImg from 'assets/images/add.png';
 import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
-import ModalPortal from 'ModalPortal';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { getLineAsync } from 'redux/lineSlice';
 import { RootState } from 'redux/store';
@@ -23,8 +22,18 @@ const Line = () => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const handleDelete = () => {
     console.log('delete');
+  };
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -33,10 +42,10 @@ const Line = () => {
 
   return (
     <>
-      <Container>
+      <Container className="">
         <div className="flex items-center justify-between mb-4 px-2">
           <Title text="🛤️ 지하철 노선 관리" />
-          <ImageButton imgUrl={addImg} />
+          <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
         </div>
         {lines?.map((line) => (
           <ListItem
@@ -49,9 +58,7 @@ const Line = () => {
           />
         ))}
       </Container>
-      <ModalPortal>
-        <AddLineModal />
-      </ModalPortal>
+      {modalOpen && <AddLineModal onModalClose={handleModalClose} />}
     </>
   );
 };

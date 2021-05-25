@@ -9,12 +9,17 @@ import Palette from '@units/Palette/Palette';
 import Button from '@shared/Button/Button';
 import ImageButton from '@shared/ImageButton/ImageButton';
 
-const AddLineModal = () => {
+interface AddLineModalProps {
+  onModalClose: () => void;
+}
+
+const AddLineModal = ({ onModalClose }: AddLineModalProps) => {
   return (
-    <div className="z-10 w-full h-full">
-      <Container>
+    <div className="fixed left-0 top-0 flex items-center justify-center w-full h-full bg-black bg-opacity-20">
+      <Container className="w-1/2 bg-white">
         <div className="flex justify-end -mb-4">
           <ImageButton
+            onClick={onModalClose}
             imgUrl={closeImg}
             bgColor="bg-gray-100"
             size="w-8 h-8"

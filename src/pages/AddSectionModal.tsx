@@ -10,8 +10,8 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 
 const AddSectionModal = () => {
   return (
-    <div className="z-10 w-full h-full">
-      <Container>
+    <div className="fixed left-0 top-0 flex items-center justify-center w-full h-full bg-black bg-opacity-20">
+      <Container className="w-1/2 bg-white">
         <div className="flex justify-end -mb-4">
           <ImageButton
             imgUrl={closeImg}

@@ -7,11 +7,13 @@ interface ImageButtonProps {
   bgColor?: string;
   hoverBgColor?: string;
   className?: string;
+  onClick?: () => void | null;
 }
 
-const ImageButton = ({ imgUrl, size, imgSize, bgColor, hoverBgColor, className }: ImageButtonProps) => {
+const ImageButton = ({ onClick, imgUrl, size, imgSize, bgColor, hoverBgColor, className }: ImageButtonProps) => {
   return (
     <button
+      onClick={onClick}
       type="button"
       className={`flex justify-center items-center shadow-md rounded-full focus:outline-none ${size} ${bgColor} hover:${hoverBgColor} ${className}`}
     >
@@ -26,6 +28,7 @@ ImageButton.defaultProps = {
   hoverBgColor: 'bg-red-400',
   imgSize: 'w-5',
   className: '',
+  onClick: null,
 };
 
 export default ImageButton;

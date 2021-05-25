@@ -5,7 +5,6 @@ import Title from '@shared/Title/Title';
 import addImg from 'assets/images/add.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
-import ModalPortal from 'ModalPortal';
 import React from 'react';
 import AddSectionModal from './AddSectionModal';
 
@@ -26,9 +25,7 @@ const Section = () => {
           <option>2호선</option>
         </SelectInput>
       </Container>
-      <ModalPortal>
-        <AddSectionModal />
-      </ModalPortal>
+      {/* <AddSectionModal /> */}
     </>
   );
 };
