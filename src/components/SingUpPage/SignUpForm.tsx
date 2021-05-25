@@ -9,11 +9,10 @@ import { BASE_URL, ROUTE } from '../../constants/constant';
 import { authAPI } from '../../api/auth';
 import { RESPONSE } from '../../constants/api';
 import { useHistory } from 'react-router';
+import { REGEXP } from '../../constants/regularExpression';
 
 const getEmailErrorMessage = (email: string) => {
-  const reg_email = /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-
-  if (!reg_email.test(email)) {
+  if (!REGEXP.NUMBER.test(email)) {
     return '이메일 형식이 아닙니다.';
   }
 
@@ -78,9 +77,9 @@ const SignUpForm = () => {
     const results = await Promise.all(
       Object.values(BASE_URL).map(({ URL }) => authAPI.signUp({ url: URL, email, password, age }))
     );
-
+    console.log(results);
     if (results.some(result => result !== RESPONSE.SUCCESS)) {
-      alert('회원가입에 실패했습니다...!\n 잠시 후 다시 시도해주세요!');
+      alert('회원가입에 실패했습니다...!\n잠시 후 다시 시도해주세요!');
       return;
     }
 

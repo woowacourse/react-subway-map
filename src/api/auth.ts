@@ -28,11 +28,13 @@ export const authAPI = {
         password: password,
         age: age,
       };
-      await axios.post(`${url}/members`, data);
+      const response = await axios.post(`${url}/members`, data);
+      if (response.status >= 400) {
+        throw new Error('회원가입에 실패하였습니다.');
+      }
 
       return RESPONSE.SUCCESS;
     } catch (error) {
-      console.error(error.message);
       return RESPONSE.FAILURE;
     }
   },
