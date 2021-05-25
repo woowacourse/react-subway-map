@@ -1,39 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import SectionModal from 'components/SectionModal/SectionModal';
 import deleteIcon from 'assets/delete.png';
+import useFetch from 'hooks/useFetch';
+import { API_STATUS, END_POINT } from 'constants/api';
+import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import { Line, Station } from 'types';
 import Styled from './styles';
 
-const lines = [
-  { name: '1호선', color: '#9ca3af', stations: ['노량진', '신도림', '몰라요'] },
-  { name: '2호선', color: '#f87171', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '3호선', color: '#fbbf24', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '5호선', color: '#f6ad54', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '9호선', color: '#34d399', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '신분당선', color: '#60a5fa', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '4호선', color: '#27c6da', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '6호선', color: '#818cf8', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '7호선', color: '#a78bfa', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '8호선', color: '#f472b6', stations: ['잠실', '잠실새내', '잠실나루'] },
-];
-
 const SectionPage = () => {
-  const [line, setLine] = useState<{ name: string; color: string; stations: string[] }>();
+  const { response: lines = [], fetchData: getLinesAsync } = useFetch<Line[]>();
+  const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
+  const { response: line, fetchData: getLineAsync } = useFetch<Line>();
+  const { fetchData: deleteStationAsync } = useFetch<null>();
+
+  const [targetLine, setTargetLine] = useState<Line>();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const closeModal = () => {
+  const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
+
+  // TODO: lines 상태 관리
+  const closeModal = async () => {
     setModalOpen(false);
+    if (targetLine) {
+      const res = await getLineAsync('GET', `${END_POINT.LINES}/${targetLine.id}`);
+
+      if (res.status === API_STATUS.REJECTED) {
+        alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+      }
+    }
   };
 
-  const selectLine = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const targetLine = lines.find((line) => line.name === event.target.value);
-    setLine(targetLine);
+  const selectTargetLine = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const targetLine = lines.find((line) => line.id === Number(event.target.value));
+
+    setTargetLine(targetLine);
   };
 
-  const lineNames = lines.map((line) => line.name);
+  const openSectionModal = async () => {
+    setModalOpen(true);
+    await getStations();
+  };
+
+  const getStations = async () => {
+    const res = await getStationsAsync('GET', END_POINT.STATIONS);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    }
+  };
+
+  const getLines = async () => {
+    const res = await getLinesAsync('GET', END_POINT.LINES);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+    }
+  };
+
+  const deleteStation = async (stationId: Station['id']) => {
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+
+    const res = await deleteStationAsync(
+      'DELETE',
+      `${END_POINT.LINES}/${targetLine?.id}/sections?stationId=${stationId}`,
+    );
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_DELETE_SECTION);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      await getLineAsync('GET', `${END_POINT.LINES}/${targetLine?.id}`);
+
+      // TODO: 요청 실패 시 에러 핸들링
+    }
+  };
+
+  useEffect(() => {
+    const fetchLines = async () => {
+      getLines();
+    };
+
+    fetchLines();
+  }, []);
+
+  useEffect(() => {
+    // TODO: 변경된 line response의 유효성 검사
+    setTargetLine(line);
+  }, [line]);
 
   return (
     <>
@@ -43,22 +99,22 @@ const SectionPage = () => {
             <Dropdown
               labelText="노선 선택"
               defaultOption="노선 선택"
-              options={lineNames}
-              onSelect={selectLine}
+              options={lineOptions}
+              onSelect={selectTargetLine}
             />
           </Styled.DropdownWrapper>
           <Styled.AddButtonWrapper>
-            <Styled.AddButton onClick={() => setModalOpen(true)}>+</Styled.AddButton>
+            <Styled.AddButton onClick={openSectionModal}>+</Styled.AddButton>
           </Styled.AddButtonWrapper>
         </Styled.TopContaier>
-        {line && (
+        {targetLine && (
           <Styled.LineDetail>
-            <Styled.LineName color={line.color}>{line.name}</Styled.LineName>
+            <Styled.LineName color={targetLine.color}>{targetLine.name}</Styled.LineName>
             <Styled.SectionsContainer>
-              {line.stations.map((station) => (
-                <Styled.SectionItem key={station}>
-                  {station}
-                  <IconButton>
+              {targetLine.stations.map((station) => (
+                <Styled.SectionItem key={station.id}>
+                  {station.name}
+                  <IconButton onClick={() => deleteStation(station.id)}>
                     <Styled.Icon src={deleteIcon} alt="delete" />
                   </IconButton>
                 </Styled.SectionItem>
@@ -68,7 +124,13 @@ const SectionPage = () => {
         )}
       </CardLayout>
       <Modal isOpen={isModalOpen} title="구간 추가" onClose={closeModal}>
-        <SectionModal targetLine={line} lineNames={lineNames} stations={line?.stations} />
+        <SectionModal
+          targetLine={targetLine}
+          selectTargetLine={selectTargetLine}
+          lines={lines}
+          stations={stations}
+          closeModal={closeModal}
+        />
       </Modal>
     </>
   );
