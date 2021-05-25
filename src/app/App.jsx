@@ -2,31 +2,41 @@ import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import PATH from "../constants/path";
 import Header from "../components/Header";
+import PrivateRoute from "../components/@shared/PrivateRoute";
+import PublicRoute from "../components/@shared/PublicRoute";
 import Lines from "../pages/Lines";
 import Login from "../pages/Login";
 import Sections from "../pages/Sections";
 import Signup from "../pages/Signup";
 import Stations from "../pages/Stations";
+import Logout from "../pages/Logout";
 
 const App = () => (
   <BrowserRouter>
     <Header />
     <Switch>
-      <Route exact path={[PATH.MAIN, PATH.LOGIN]}>
+      <Route exact path={PATH.MAIN}>
         <Login />
       </Route>
+      <PublicRoute exact path={PATH.LOGIN} redirectTo={PATH.STATIONS}>
+        <Login />
+      </PublicRoute>
+      <PrivateRoute exact path={PATH.LOGOUT}>
+        <Logout />
+      </PrivateRoute>
       <Route exact path={PATH.SIGNUP}>
         <Signup />
       </Route>
-      <Route exact path={PATH.STATIONS}>
+      <PrivateRoute exact path={PATH.STATIONS}>
         <Stations />
-      </Route>
-      <Route exact path={PATH.LINES}>
+      </PrivateRoute>
+      <PrivateRoute exact path={PATH.LINES}>
         <Lines />
-      </Route>
-      <Route exact path={PATH.SECTIONS}>
+      </PrivateRoute>
+      <PrivateRoute exact path={[PATH.SECTIONS, PATH.OVERVIEW]}>
         <Sections />
-      </Route>
+      </PrivateRoute>
+
       <Redirect path="*" to={PATH.MAIN} />
     </Switch>
   </BrowserRouter>

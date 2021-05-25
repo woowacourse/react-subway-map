@@ -19,3 +19,7 @@ export const saveAccessToken = (accessToken) => {
     JSON.stringify({ accessToken, createdAt: Date.now() })
   );
 };
+
+export const removeAccessToken = () => {
+  localStorage.removeItem(LOCAL_STORAGE_KEY);
+};

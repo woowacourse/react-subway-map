@@ -1,5 +1,6 @@
 const PATH = {
   LOGIN: "/login",
+  LOGOUT: "/logout",
   SIGNUP: "/signup",
   STATIONS: "/stations",
   LINES: "/lines",

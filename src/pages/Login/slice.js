@@ -6,7 +6,13 @@ import {
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
-import { getSavedAccessToken, saveAccessToken } from "./localStorage";
+import {
+  getSavedAccessToken,
+  saveAccessToken,
+  removeAccessToken,
+} from "./localStorage";
+
+export const selectAccessToken = (state) => state.login.accessToken;
 
 export const login = createAsyncThunk(
   "login/login",
@@ -42,7 +48,12 @@ const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state) => ({ ...initialState, accessToken: state.accessToken }),
+    logout: (state) => {
+      state.accessToken = null;
+
+      removeAccessToken();
+    },
   },
   extraReducers: {
     [login.pending]: (state) => {
@@ -63,6 +74,6 @@ const loginSlice = createSlice({
   },
 });
 
-export const { reset } = loginSlice.actions;
+export const { reset, logout } = loginSlice.actions;
 
 export default loginSlice.reducer;
