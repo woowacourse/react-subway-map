@@ -1,8 +1,10 @@
-const BASE_URL = ' https://woowa.seedtech.p-e.kr';
+const BASE_URL = 'https://ecsimsw.n-e.kr';
 
 const END_POINT = {
   STATIONS: '/stations',
   LINES: '/lines',
+  AUTH: '/members',
+  LOGIN: '/login/token',
 };
 
 const API_STATUS = {

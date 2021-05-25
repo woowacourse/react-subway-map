@@ -22,7 +22,7 @@ const useFetch = <T>() => {
     } catch (error) {
       console.error(error);
 
-      return { status: API_STATUS.REJECTED, error: error.message };
+      return { status: API_STATUS.REJECTED, error: error.response.data.message };
     }
   };
 
