@@ -19,6 +19,7 @@ const Button = ({ type, disabled, text, size, className, bgColor, hoverBgColor, 
       type={type}
       disabled={disabled}
       onClick={onClick}
+      color={bgColor}
       className={`rounded focus:outline-none ${bgColor} hover:${hoverBgColor} ${className} ${size}`}
     >
       {text}

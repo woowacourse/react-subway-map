@@ -2,6 +2,14 @@ import { LineInterface } from 'types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API from 'API/API';
 
+export interface AddLinePayload {
+  name: string;
+  color: string;
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+}
+
 export const getLineAsync = createAsyncThunk('line/getLineAsync', async () => {
   try {
     const response = await API.get('/lines');
@@ -11,6 +19,19 @@ export const getLineAsync = createAsyncThunk('line/getLineAsync', async () => {
     throw new Error(error);
   }
 });
+
+export const addLineAsync = createAsyncThunk(
+  'line/addLineAsync',
+  async ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => {
+    try {
+      const response = await API.post('/lines', { name, color, upStationId, downStationId, distance });
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);
 
 const initialState: { lines: LineInterface[] | null } = {
   lines: null,
@@ -26,6 +47,12 @@ const lineSlice = createSlice({
     });
     builder.addCase(getLineAsync.rejected, () => {
       throw Error('노선 목록 조회에 실패하였습니다.');
+    });
+    builder.addCase(addLineAsync.fulfilled, (state, action) => {
+      state.lines = state.lines ? state.lines.concat(action.payload) : [action.payload];
+    });
+    builder.addCase(addLineAsync.rejected, () => {
+      throw Error('노선 생성에 실패하였습니다.');
     });
   },
 });
