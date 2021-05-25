@@ -18,7 +18,7 @@ const LinePage = () => {
   const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [selectedLine, setSelectedLine] = useState<{ name: string; color: string }>();
+  const [selectedLine, setSelectedLine] = useState<Line>();
   const [modalTitle, setModalTitle] = useState<string>('');
 
   // TODO: lines 상태 관리
@@ -35,7 +35,7 @@ const LinePage = () => {
     await getStations();
   };
 
-  const openLineEditModal = async (line: { name: string; color: string }) => {
+  const openLineEditModal = async (line: Line) => {
     setSelectedLine(line);
     setModalOpen(true);
     setModalTitle('노선 수정');
@@ -84,15 +84,15 @@ const LinePage = () => {
           />
         </Styled.AddButtonWrapper>
         <Styled.LinesContainer>
-          {lines?.map(({ id, name, color }) => (
-            <Styled.LineItem key={id}>
-              <Styled.Color color={color}></Styled.Color>
-              {name}
+          {lines?.map((line) => (
+            <Styled.LineItem key={line.id}>
+              <Styled.Color color={line.color}></Styled.Color>
+              {line.name}
               <Styled.ButtonsContainer>
-                <IconButton onClick={() => openLineEditModal({ name, color })}>
+                <IconButton onClick={() => openLineEditModal(line)}>
                   <Styled.Icon src={editIcon} alt="edit" />
                 </IconButton>
-                <IconButton onClick={() => deleteLine(id)}>
+                <IconButton onClick={() => deleteLine(line.id)}>
                   <Styled.Icon src={deleteIcon} alt="delete" />
                 </IconButton>
               </Styled.ButtonsContainer>

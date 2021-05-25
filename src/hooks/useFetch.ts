@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { API_STATUS, BASE_URL } from 'constants/api';
 
-type HTTP_METHOD = 'GET' | 'POST' | 'DELETE';
+type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 // TODO: refactoring, loading 상태 리턴 개선
 const useFetch = <T>() => {

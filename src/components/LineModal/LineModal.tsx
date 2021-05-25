@@ -11,13 +11,14 @@ import { ALERT_MESSAGE } from 'constants/messages';
 
 interface LineModalProps {
   stations: Station[] | undefined;
-  selectedLine?: { name: string; color: string };
+  selectedLine?: Line;
   closeModal: () => void;
 }
 
 const LineModal = ({ stations = [], selectedLine, closeModal }: LineModalProps) => {
   const { fetchData: getLinesAsync } = useFetch<Line[]>();
   const { fetchData: addLineAsync } = useFetch<Line>();
+  const { fetchData: editLineAsync } = useFetch<Line>();
 
   const [color, setColor] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -51,6 +52,22 @@ const LineModal = ({ stations = [], selectedLine, closeModal }: LineModalProps) 
     }
   };
 
+  const editLine = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const updatedLine = { name, color };
+
+    const res = await editLineAsync('PUT', `${END_POINT.LINES}/${selectedLine?.id}`, updatedLine);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_EDIT_LINE);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      getLinesAsync('GET', END_POINT.LINES);
+      // TODO: form reset
+      closeModal();
+    }
+  };
+
   useEffect(() => {
     if (selectedLine) {
       console.log(selectedLine);
@@ -63,7 +80,7 @@ const LineModal = ({ stations = [], selectedLine, closeModal }: LineModalProps) 
   }, [selectedLine]);
 
   return (
-    <Styled.Container onSubmit={addLine}>
+    <Styled.Container onSubmit={selectedLine ? editLine : addLine}>
       <Input
         type="text"
         labelText="노선 이름"
