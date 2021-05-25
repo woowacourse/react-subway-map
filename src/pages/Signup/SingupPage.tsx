@@ -1,9 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import { PAGE_PATH } from "../../constants/route";
+import { useAppDispatch } from "../../hooks";
 import useInput from "../../hooks/@common/useInput";
 import { signup } from "../../modules/auth";
 import { validateAge } from "../../validations/age";
@@ -22,12 +24,14 @@ const SignupPage = () => {
     }
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const history = useHistory();
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    dispatch(signup({ email, age: Number(age), password }));
+    await dispatch(signup({ email, age: Number(age), password }));
+    history.push(PAGE_PATH.HOME);
   };
 
   return (
@@ -47,14 +51,18 @@ const SignupPage = () => {
               onBlur={onEmailBlur}
             />
             <Input
+              type="number"
               value={age}
               errorMessage={ageErrorMessage}
               placeholder="나이"
+              min="1"
+              max="200"
               style={{ marginBottom: "15px" }}
               onChange={onAgeChange}
               onBlur={onAgeBlur}
             />
             <Input
+              type="password"
               value={password}
               errorMessage={passwordErrorMessage}
               placeholder="비밀번호"
@@ -63,6 +71,7 @@ const SignupPage = () => {
               onBlur={onPasswordBlur}
             />
             <Input
+              type="password"
               value={passwordConfirm}
               errorMessage={passwordConfirmErrorMessage}
               placeholder="비밀번호 확인"

@@ -14,7 +14,7 @@ interface SignupInfo {
 }
 
 export const login = createAsyncThunk("auth/login", async ({ email, password }: LoginInfo) => {
-  const { accessToken } = await requestAuth.login(email, password);
+  const accessToken = await requestAuth.login(email, password);
 
   localStorage.setItem("accessToken", accessToken);
 });

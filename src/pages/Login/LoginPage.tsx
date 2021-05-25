@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import Block from "../../components/Block/Block";
@@ -10,17 +9,20 @@ import { login } from "../../modules/auth";
 import { PAGE_PATH } from "../../constants/route";
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
+import { useAppDispatch } from "../../hooks";
 
 const LoginPage = () => {
   const [email, emailErrorMessage, onEmailChange, onEmailBlur] = useInput(validateEmail);
   const [password, passwordErrorMessage, onPasswordChange, onPasswordBlur] = useInput(validatePassword);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const history = useHistory();
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    dispatch(login({ email, password }));
+    await dispatch(login({ email, password }));
+    history.push(PAGE_PATH.HOME);
   };
 
   return (
@@ -32,12 +34,14 @@ const LoginPage = () => {
           </FlexBetween>
           <Flex style={{ width: "100%", flexDirection: "column" }}>
             <Input
+              type="email"
               value={email}
               errorMessage={emailErrorMessage}
               placeholder="이메일"
               style={{ marginBottom: "15px" }}
               onChange={onEmailChange}
               onBlur={onEmailBlur}
+              required
             />
             <Input
               value={password}
@@ -46,6 +50,7 @@ const LoginPage = () => {
               style={{ marginBottom: "15px" }}
               onChange={onPasswordChange}
               onBlur={onPasswordBlur}
+              required
             />
             <Button size="block" style={{ marginBottom: "15px" }}>
               확인
