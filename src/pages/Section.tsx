@@ -3,11 +3,15 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
 import addImg from 'assets/images/add.png';
+import PATH from 'constants/PATH';
+import useRedirect from 'hooks/useRedirect';
 import ModalPortal from 'ModalPortal';
 import React from 'react';
 import AddSectionModal from './AddSectionModal';
 
 const Section = () => {
+  useRedirect(PATH.LOGIN);
+
   return (
     <>
       <Container>

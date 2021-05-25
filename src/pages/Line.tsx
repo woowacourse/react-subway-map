@@ -4,11 +4,15 @@ import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import editImg from 'assets/images/edit.png';
+import PATH from 'constants/PATH';
+import useRedirect from 'hooks/useRedirect';
 import ModalPortal from 'ModalPortal';
 import React from 'react';
 import AddLineModal from './AddLineModal';
 
 const Line = () => {
+  useRedirect(PATH.LOGIN);
+
   return (
     <>
       <Container>

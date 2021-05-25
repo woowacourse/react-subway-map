@@ -4,9 +4,13 @@ import Input from '@shared/Input/Input';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
+import PATH from 'constants/PATH';
+import useRedirect from 'hooks/useRedirect';
 import React from 'react';
 
 const Station = () => {
+  useRedirect(PATH.LOGIN);
+
   return (
     <Container className="mb-16">
       <Title className="mb-8" text="🚉 지하철 역 관리" />

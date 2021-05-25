@@ -7,7 +7,7 @@ import Section from 'pages/Section';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 interface State {
@@ -22,24 +22,23 @@ const App = () => {
   return (
     <BaseLayout isLogin={!!accessToken}>
       <Switch>
-        {/* TODO: HOME 화면 변경 */}
         <Route exact path={PATH.HOME}>
-          {accessToken ? <Home /> : <Login />}
+          <Home />
         </Route>
         <Route exact path={PATH.LOGIN}>
           <Login />
         </Route>
         <Route exact path={PATH.SIGN_UP}>
-          {accessToken ? <Signup /> : <Login />}
+          <Signup />
         </Route>
         <Route exact path={PATH.STATION}>
-          {accessToken ? <Station /> : <Login />}
+          <Station />
         </Route>
         <Route exact path={PATH.LINE}>
-          {accessToken ? <Line /> : <Login />}
+          <Line />
         </Route>
         <Route exact path={PATH.SECTION}>
-          {accessToken ? <Section /> : <Login />}
+          <Section />
         </Route>
       </Switch>
     </BaseLayout>
