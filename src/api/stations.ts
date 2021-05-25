@@ -11,3 +11,6 @@ export const requestAddStation = (
   axios.post(`${baseURL}/stations`, {
     name: stationName,
   });
+
+export const requestDeleteStation = (baseURL: string, stationId: number): Promise<AxiosResponse> =>
+  axios.delete(`${baseURL}/stations/${stationId}`);

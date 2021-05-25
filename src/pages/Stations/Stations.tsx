@@ -2,14 +2,13 @@ import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
-import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import { addStation, loadStations } from '../../redux/stationSlice';
+import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationNameInput } from './Stations.styles';
@@ -19,7 +18,7 @@ const Stations: FC = () => {
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
-  //TODO: form state로 하나로 묶기
+  // TODO: form state로 하나로 묶기
   const [stationInput, setStationInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const isValidStationInput = stationInput !== '' && errorMessage === '';
@@ -51,6 +50,10 @@ const Stations: FC = () => {
     setStationInput('');
   };
 
+  const onDeleteStation = (stationId: number) => () => {
+    dispatch(deleteStation({ baseURL: API_INFO[apiOwner].endPoint, stationId }));
+  };
+
   return (
     <CardTemplate templateColor={THEME_COLOR[400]} titleText={PAGE_INFO.STATIONS.text}>
       <StationForm onSubmit={onAddStation}>
@@ -67,7 +70,7 @@ const Stations: FC = () => {
       {stations && (
         <StationList>
           {stations.map((station) => (
-            <ListItem key={station.id} onDelete={() => console.log(station.name)}>
+            <ListItem key={station.id} onDelete={onDeleteStation(station.id)}>
               {station.name}
             </ListItem>
           ))}

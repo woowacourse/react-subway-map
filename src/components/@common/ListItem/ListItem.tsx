@@ -12,7 +12,6 @@ interface Props {
 
 // TODO: 컴포넌트 이름 변경 고려하기
 const ListItem: FC<Props> = ({ children, onModify, onDelete }) => {
-  console.log(onModify);
   return (
     <StyledListItem>
       <ListContent alignItems="center">{children}</ListContent>

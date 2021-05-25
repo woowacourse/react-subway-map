@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Station } from '../types';
-import { requestAddStation, requestGetStations } from './../api/stations';
+import { requestAddStation, requestDeleteStation, requestGetStations } from './../api/stations';
 
 export const loadStations = createAsyncThunk(
   'station/load',
   async (baseURL: string, { rejectWithValue }) => {
     try {
       const response = await requestGetStations(baseURL);
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -24,12 +25,32 @@ export const addStation = createAsyncThunk(
   async ({ baseURL, stationName }: AddStationData, { rejectWithValue }) => {
     try {
       const response = await requestAddStation(baseURL, stationName);
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
+
+interface DeleteStationData {
+  baseURL: string;
+  stationId: number;
+}
+
+export const deleteStation = createAsyncThunk(
+  'station/delete',
+  async ({ baseURL, stationId }: DeleteStationData, { rejectWithValue }) => {
+    try {
+      await requestDeleteStation(baseURL, stationId);
+
+      return stationId;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const stationSlice = createSlice({
   name: 'station',
   initialState: {
@@ -61,6 +82,19 @@ const stationSlice = createSlice({
       state.stations = [action.payload, ...state.stations];
     });
     builder.addCase(addStation.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.error.message as string;
+    });
+
+    builder.addCase(deleteStation.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = '';
+    });
+    builder.addCase(deleteStation.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.stations = state.stations.filter(({ id }) => id !== action.payload);
+    });
+    builder.addCase(deleteStation.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.error.message as string;
     });
