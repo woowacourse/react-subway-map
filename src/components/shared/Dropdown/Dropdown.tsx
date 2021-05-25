@@ -1,10 +1,15 @@
 import React from 'react';
 import Styled from './Dropdown.styles';
 
+interface Option {
+  id: number;
+  value: string;
+}
+
 interface DropdownProps {
   labelText: string;
   defaultOption: string;
-  options: string[];
+  options: Option[];
   onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -17,8 +22,8 @@ const Dropdown = ({ labelText, defaultOption, options, onSelect }: DropdownProps
           {defaultOption}
         </option>
         {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
+          <option key={option.id} value={option.id}>
+            {option.value}
           </option>
         ))}
       </Styled.Select>

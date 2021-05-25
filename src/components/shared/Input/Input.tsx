@@ -3,7 +3,7 @@ import Styled from './Input.styles';
 
 interface InputProps {
   type: string;
-  value?: string;
+  value?: string | number;
   labelText: string;
   placeholder?: string;
   extraArgs?: {

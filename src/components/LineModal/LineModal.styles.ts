@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import PALETTE from 'constants/palette';
 
-const Container = styled.div`
+const Container = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

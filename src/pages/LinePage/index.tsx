@@ -1,78 +1,98 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardLayout from 'components/CardLayout/CardLayout';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import LineModal from 'components/LineModal/LineModal';
-import { ButtonType } from 'types';
+import useFetch from 'hooks/useFetch';
+import { ButtonType, Line, Station } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
+import { API_STATUS, END_POINT } from 'constants/api';
+import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
 import Styled from './styles';
 
-const lines = [
-  { name: '1호선', color: '#9ca3af' },
-  { name: '2호선', color: '#f87171' },
-  { name: '3호선', color: '#fbbf24' },
-  { name: '5호선', color: '#f6ad54' },
-  { name: '9호선', color: '#34d399' },
-  { name: '신분당선', color: '#60a5fa' },
-  { name: '4호선', color: '#27c6da' },
-  { name: '6호선', color: '#818cf8' },
-  { name: '7호선', color: '#a78bfa' },
-  { name: '8호선', color: '#f472b6' },
-];
-
-const stations = [
-  '사당',
-  '방배',
-  '서초',
-  '교대',
-  '강남',
-  '잠실',
-  '잠실새내',
-  '종합운동장',
-  '고속터미널',
-  '경찰병원',
-  '가락시장',
-  '오금',
-  '흑석',
-  '동작',
-];
-
 const LinePage = () => {
+  const { response: lines, fetchData: getLinesAsync } = useFetch<Line[]>();
+  const { fetchData: deleteLinesAsync } = useFetch<Line[]>();
+  const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
+
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedLine, setSelectedLine] = useState<{ name: string; color: string }>();
+  const [modalTitle, setModalTitle] = useState<string>('');
 
-  const closeModal = () => {
+  // TODO: lines 상태 관리
+  const closeModal = async () => {
     setModalOpen(false);
     setSelectedLine(undefined);
+    await getLinesAsync('GET', END_POINT.LINES);
   };
 
-  const createLine = () => {
+  const openLineCreateModal = async () => {
     setModalOpen(true);
+    setModalTitle('노선 생성');
+
+    await getStations();
   };
 
-  const editLine = (line: { name: string; color: string }) => {
+  const openLineEditModal = async (line: { name: string; color: string }) => {
     setSelectedLine(line);
     setModalOpen(true);
+    setModalTitle('노선 수정');
   };
+
+  const getStations = async () => {
+    const res = await getStationsAsync('GET', END_POINT.STATIONS);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    }
+  };
+
+  const deleteLine = async (id: Line['id']) => {
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+
+    const res = await deleteLinesAsync('DELETE', `${END_POINT.LINES}/${id}`);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_DELETE_LINE);
+    } else {
+      await getLinesAsync('GET', END_POINT.LINES);
+    }
+  };
+
+  useEffect(() => {
+    const fetchLines = async () => {
+      const res = await getLinesAsync('GET', END_POINT.LINES);
+      console.log(lines);
+      if (res.status === API_STATUS.REJECTED) {
+        alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+      }
+    };
+
+    fetchLines();
+  }, []);
 
   return (
     <>
       <CardLayout title={'노선 관리'}>
         <Styled.AddButtonWrapper>
-          <TextButton text="노선 추가" styleType={ButtonType.FILLED} onClick={createLine} />
+          <TextButton
+            text="노선 추가"
+            styleType={ButtonType.FILLED}
+            onClick={openLineCreateModal}
+          />
         </Styled.AddButtonWrapper>
         <Styled.LinesContainer>
-          {lines.map(({ name, color }) => (
-            <Styled.LineItem key={name}>
+          {lines?.map(({ id, name, color }) => (
+            <Styled.LineItem key={id}>
               <Styled.Color color={color}></Styled.Color>
               {name}
               <Styled.ButtonsContainer>
-                <IconButton onClick={() => editLine({ name, color })}>
+                <IconButton onClick={() => openLineEditModal({ name, color })}>
                   <Styled.Icon src={editIcon} alt="edit" />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => deleteLine(id)}>
                   <Styled.Icon src={deleteIcon} alt="delete" />
                 </IconButton>
               </Styled.ButtonsContainer>
@@ -81,8 +101,8 @@ const LinePage = () => {
         </Styled.LinesContainer>
       </CardLayout>
 
-      <Modal isOpen={isModalOpen} title="노선 생성" onClose={closeModal}>
-        <LineModal selectedLine={selectedLine} stations={stations} />
+      <Modal isOpen={isModalOpen} title={modalTitle} onClose={closeModal}>
+        <LineModal selectedLine={selectedLine} stations={stations} closeModal={closeModal} />
       </Modal>
     </>
   );

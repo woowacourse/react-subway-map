@@ -37,7 +37,7 @@ const Container = styled.button<ContainerProps>`
   padding: 0 18px;
   border-radius: 8px;
   font-size: 1rem;
-  line-height: 1rem;
+  line-height: 44px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   ${({ styleType }) => buttonStyle[styleType]};
   ${({ sizeType }) => buttonSize[sizeType]};
