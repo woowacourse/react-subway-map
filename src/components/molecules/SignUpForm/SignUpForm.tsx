@@ -44,6 +44,7 @@ const SignUpForm = ({
         onChange={onChangeAge}
         value={age === 0 ? '' : age}
         ariaLabel="나이"
+        autoFocus
       />
       {!isValidAge && <ErrorMessage text={'나이를 입력해주세요'} />}
 

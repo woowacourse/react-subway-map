@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // 인비
-const BASE_URL = 'https://inbi-subway.kro.kr'; 
-// const BASE_URL = 'https://kimkimsubway.o-r.kr'; // 김김
+// const BASE_URL = 'https://inbi-subway.kro.kr';
+const BASE_URL = 'https://kimkimsubway.o-r.kr';
 // const BASE_URL = 'https://newwisdom-subway.p-e.kr'; // 로그인 실패
-// const BASE_URL = 'https://subway-fare.kro.kr';// 로그인 실패
+// const BASE_URL = 'https://subway-fare.kro.kr';
 
 export interface IHeaders {
   [key: string]: string;

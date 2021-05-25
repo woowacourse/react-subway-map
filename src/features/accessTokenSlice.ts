@@ -40,8 +40,12 @@ const accessTokenSlice = createSlice({
   name: 'accessToken',
   initialState,
   reducers: {
-    setAccessToken: (state = initialState, action) => {
-      state.accessToken = action.payload.accessToken;
+    setAccessToken: (state = initialState, { payload }) => {
+      state.accessToken = payload.accessToken;
+
+      state.status = payload.status;
+      state.text = payload.text;
+      state.isError = payload.isError;
     },
   },
   extraReducers: builder => {

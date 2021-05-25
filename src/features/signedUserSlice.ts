@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { request } from '../utils';
-import { Nullable, IMyInfoRes } from '../type';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IResMeta } from '../hooks/useServerAPI';
+import { IMyInfoRes, Nullable } from '../type';
+import { request } from '../utils';
 
 export type ISignedUser = Nullable<IMyInfoRes & IResMeta>;
 
@@ -45,10 +45,13 @@ const signedUserSlice = createSlice({
   name: 'signedUser',
   initialState,
   reducers: {
-    setSignedUser: (state = initialState, action) => {
-      state.id = action.payload.id;
-      state.email = action.payload.email;
-      state.age = action.payload.age;
+    setSignedUser: (state = initialState, { payload }) => {
+      state.id = payload.id;
+      state.email = payload.email;
+      state.age = payload.age;
+      state.isError = payload.isError;
+      state.text = payload.text;
+      state.status = payload.status;
     },
   },
   extraReducers: builder => {
