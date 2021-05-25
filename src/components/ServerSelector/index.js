@@ -9,7 +9,7 @@ const ServerSelector = () => {
   const [selectedServer, setServer] = useState(getLocalStorage(LS_KEY.SERVER));
 
   const handleClickServer = (serverName) => {
-    setLocalStorage(LS_KEY, serverName);
+    setLocalStorage(LS_KEY.SERVER, serverName);
     setServer(serverName);
   };
 
