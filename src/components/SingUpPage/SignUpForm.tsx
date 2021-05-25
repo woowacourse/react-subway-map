@@ -72,6 +72,7 @@ const SignUpForm = () => {
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!isValidForm) return;
 
     const { email, age, password } = userInfo;
     const results = await Promise.all(

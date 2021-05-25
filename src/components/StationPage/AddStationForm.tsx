@@ -42,6 +42,7 @@ const AddStationForm = () => {
 
   const handleAddStation = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!isValidForm) return;
 
     dispatch(addStationAsync({ name: stationName }));
     setStationName('');

@@ -35,4 +35,22 @@ export const stationAPI = {
       return { error: error.message ?? RESPONSE.FAILURE };
     }
   },
+
+  deleteStation: async (id: Station['id']) => {
+    try {
+      const response = await axios.delete(`${API.GET_STATIONS}/${id}`);
+
+      if (response.status === 400) {
+        throw new Error('노선에 등록된 역은 삭제가 불가능합니다.');
+      }
+
+      if (response.status !== 204) {
+        throw new Error('역 삭제에 실패했습니다...!');
+      }
+
+      return {};
+    } catch (error) {
+      return { error: error.message ?? RESPONSE.FAILURE };
+    }
+  },
 };

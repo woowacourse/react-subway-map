@@ -29,7 +29,7 @@ const Station = () => {
       <ContentContainer>
         <S.StationList>
           {stations.map(({ id, name }) => (
-            <StationListItem key={id} name={name} />
+            <StationListItem key={id} name={name} id={id} />
           ))}
         </S.StationList>
       </ContentContainer>

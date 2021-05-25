@@ -60,6 +60,8 @@ const SignInForm = () => {
 
   const handleLogIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!isValidForm) return;
+
     const { email, password } = loginInfo;
     dispatch(loginAsync({ email, password }));
   };
