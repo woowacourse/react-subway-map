@@ -93,6 +93,7 @@ const SignUpForm = () => {
       <S.InputWrapper>
         <Input
           type='email'
+          value={userInfo.email}
           emoji={mailSVG}
           placeholder='이메일을 입력해주세요'
           name='email'
@@ -102,12 +103,20 @@ const SignUpForm = () => {
         <S.Message>{emailErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <Input type='number' emoji={userSVG} placeholder='나이를 입력해주세요' name='age' onChange={handleChange} />
+        <Input
+          type='number'
+          value={userInfo.age}
+          emoji={userSVG}
+          placeholder='나이를 입력해주세요'
+          name='age'
+          onChange={handleChange}
+        />
         <S.Message>{ageErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
           type='password'
+          value={userInfo.password}
           emoji={lockSVG}
           placeholder='비밀번호를 입력해주세요'
           name='password'
@@ -119,6 +128,7 @@ const SignUpForm = () => {
       <S.InputWrapper>
         <Input
           type='password'
+          value={userInfo.confirmPassword}
           emoji={lockSVG}
           placeholder='비밀번호를 한번 더 입력해주세요'
           name='confirmPassword'

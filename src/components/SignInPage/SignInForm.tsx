@@ -10,11 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectServer } from '../../modules/user/userReducer';
 import React, { useEffect, useState } from 'react';
 import { RootState } from '../../modules';
+import { REGEXP } from '../../constants/regularExpression';
 
 const getEmailErrorMessage = (email: string) => {
-  const reg_email = /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-
-  if (!reg_email.test(email)) {
+  if (!REGEXP.NUMBER.test(email)) {
     return '이메일 형식이 아닙니다.';
   }
 
@@ -23,7 +22,7 @@ const getEmailErrorMessage = (email: string) => {
 
 const getPasswordErrorMessage = (password: string) => {
   if (!(4 <= password.length && password.length <= 20)) {
-    return '비밀번호는 최소 4글자에서 최대 20 글자여야 합니다.';
+    return '비밀번호는 최소 4글자 이상 20글자 이하여야 합니다.';
   }
 
   return '';
@@ -73,12 +72,20 @@ const SignInForm = () => {
     <S.SignInForm onSubmit={handleLogIn}>
       <S.Title>로그인</S.Title>
       <S.InputWrapper>
-        <Input type='email' emoji={mailSVG} placeholder='이메일을 입력해주세요' name='email' onChange={handleChange} />
+        <Input
+          type='email'
+          value={loginInfo.email}
+          emoji={mailSVG}
+          placeholder='이메일을 입력해주세요'
+          name='email'
+          onChange={handleChange}
+        />
         <S.Message>{emailErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
           type='password'
+          value={loginInfo.password}
           emoji={lockSVG}
           placeholder='비밀번호를 입력해주세요'
           name='password'

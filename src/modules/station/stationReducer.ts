@@ -9,7 +9,7 @@ export interface ErrorAction {
   error: string;
 }
 
-interface StationState {
+export interface StationState {
   stations: Station[];
   error: string;
 }
@@ -24,9 +24,10 @@ export const stationSlice = createSlice({
   initialState,
   reducers: {
     setStations: (state, action: PayloadAction<SetStationAction>) => {
-      state.stations = action.payload.stations;
+      state.stations = action.payload.stations.sort((a, b) => b.id - a.id);
     },
     getStationsAsync: () => {},
+    addStationAsync: (state, action: PayloadAction<{ name: string }>) => {},
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
     },
@@ -43,5 +44,5 @@ export type StationActions = ReturnType<
   | typeof stationSlice.actions.pending
 >;
 
-export const { setStations, getStationsAsync, error, pending } = stationSlice.actions;
+export const { setStations, getStationsAsync, addStationAsync, error, pending } = stationSlice.actions;
 export default stationSlice.reducer;
