@@ -1,4 +1,4 @@
-import { createSlice, createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAction, createAsyncThunk, Action, Middleware, Dispatch } from "@reduxjs/toolkit";
 
 import { requestAuth } from "../apis/user";
 
@@ -21,7 +21,15 @@ const initialState: AuthState = {
   isLogin: false,
 };
 
-export const logout = createAction("[AUTH] LOGOUT");
+const LOGOUT = "[AUTH] LOGOUT";
+
+export const logout = () => async (dispatch: Dispatch) => {
+  localStorage.removeItem("accessToken");
+
+  dispatch({
+    type: LOGOUT,
+  });
+};
 
 export const checkAccessToken = createAsyncThunk("[AUTH] CHECK_ACCESS_TOKEN", async () => {
   const accessToken = localStorage.getItem("accessToken") || "";
@@ -55,10 +63,7 @@ export const authSlice = createSlice({
     [login.fulfilled.type]: (state) => {
       state.isLogin = true;
     },
-    [login.rejected.type]: (state) => {
-      state.isLogin = false;
-    },
-    [logout.type]: (state) => {
+    [LOGOUT]: (state) => {
       state.isLogin = false;
     },
   },

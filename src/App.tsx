@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link, Redirect, RouteProps } from "react-router-dom";
 
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SingupPage";
@@ -11,8 +11,10 @@ import Button from "./components/Button/Button";
 import { Navigation } from "./App.styles";
 import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./constants/route";
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { checkAccessToken, logout } from "./modules/auth";
+
+// TODO : 실제로 만료되었을 때 제대로 처리 되는지 테스트
 
 const App = () => {
   const isLogin = useAppSelector((state) => state.auth.isLogin);
@@ -37,6 +39,16 @@ const App = () => {
     dispatch(logout());
   };
 
+  // 역 => 로그인 => 역 => 로그인
+
+  const PublicRoute = ({ children, ...props }: RouteProps) => (
+    <Route {...props}>{isLogin ? <Redirect to={PAGE_PATH.HOME} /> : children};</Route>
+  );
+
+  const PrivateRoute = ({ children, ...props }: RouteProps) => (
+    <Route {...props}>{isLogin ? children : <Redirect to={PAGE_PATH.LOGIN} />};</Route>
+  );
+
   return (
     <BrowserRouter>
       <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
@@ -53,24 +65,24 @@ const App = () => {
         )}
       </Navigation>
       <Switch>
-        <Route exact path={PAGE_PATH.LOGIN}>
+        <PublicRoute exact path={PAGE_PATH.LOGIN}>
           <LoginPage />
-        </Route>
-        <Route exact path={PAGE_PATH.SIGN_UP}>
+        </PublicRoute>
+        <PublicRoute exact path={PAGE_PATH.SIGN_UP}>
           <SignupPage />
-        </Route>
-        <Route exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
+        </PublicRoute>
+        <PrivateRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
           <StationManagementPage />
-        </Route>
-        <Route exact path={PAGE_PATH.LINE_MANAGEMENT}>
+        </PrivateRoute>
+        <PrivateRoute exact path={PAGE_PATH.LINE_MANAGEMENT}>
           <LineManagementPage />
-        </Route>
-        <Route exact path={PAGE_PATH.SECTION_MANAGEMENT}>
+        </PrivateRoute>
+        <PrivateRoute exact path={PAGE_PATH.SECTION_MANAGEMENT}>
           <SectionManagementPage />
-        </Route>
-        <Route exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
+        </PrivateRoute>
+        <PrivateRoute exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
           <SubwayMapPage />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </BrowserRouter>
   );
