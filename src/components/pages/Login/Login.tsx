@@ -15,10 +15,7 @@ import { Container, Footer } from './Login.styles';
 const Login = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const {
-    signedUser,
-    accessToken: { accessToken, isError: accessTokenReqError },
-  } = useSelector((state: RootState) => ({
+  const { signedUser, accessToken } = useSelector((state: RootState) => ({
     signedUser: state.signedUserReducer,
     accessToken: state.accessTokenReducer,
   }));
@@ -43,14 +40,14 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (accessTokenReqError === false) {
+    if (accessToken.isError === false) {
       window.alert('로그인에 성공하셨습니다.');
       history.replace({ pathname: ROUTE.HOME });
-      dispatch(getSignedUserAsync(accessToken));
-    } else if (accessTokenReqError) {
-      window.alert('로그인에 실패하셨습니다.');
+      dispatch(getSignedUserAsync(accessToken.accessToken));
+    } else if (accessToken.isError === true) {
+      window.alert('존재하지 않는 계정입니다.');
     }
-  }, [accessTokenReqError]);
+  }, [accessToken]);
 
   return (
     <Container>

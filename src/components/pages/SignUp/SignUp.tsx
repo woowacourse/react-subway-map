@@ -14,7 +14,7 @@ import { Container } from './SignUp.styles';
 const SignUp = () => {
   const history = useHistory();
   const signedUser = useSelector((state: RootState) => state.signedUserReducer);
-  const { postData: signUpRequest, resMeta: signUpResponse } = useServerAPI('/members');
+  const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI('/members');
 
   const { value: age, onChange: onChangeAge } = useInput('');
   const { value: email, onChange: onChangeEmail } = useInput('');
@@ -29,22 +29,19 @@ const SignUp = () => {
   const onSubmitSignUp: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
 
-    const headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-
     const body: ISignUpReq = {
       age: Number(age),
       email,
       password,
     };
 
-    signUpRequest(headers, body);
+    signUpRequest(body);
   };
 
+  // TODO: 현재 회원가입에러는 무조건 500으로 반환됨. 백엔드와 협의 필요.
   useEffect(() => {
     if (signUpResponse?.isError === true) {
-      window.alert('회원가입에 실패하셨습니다.');
+      window.alert('중복된 이메일입니다.');
     } else if (signUpResponse?.isError === false) {
       window.alert('회원가입에 성공하셨습니다.');
       history.replace({ pathname: ROUTE.LOGIN });

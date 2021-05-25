@@ -3,7 +3,6 @@ import { request } from '../utils';
 
 export interface IResMeta {
   isError: boolean;
-  text: string | null;
   status: number;
 }
 
@@ -15,50 +14,104 @@ const defaultHeader = {
 
 const useServerAPI = <T>(query: string) => {
   const [data, setData] = useState<T | null>();
-  const [resMeta, setResMeta] = useState<IResMeta | null>(null);
+  const [allData, setAllData] = useState<T[] | null>();
 
-  const getData = async (headers = defaultHeader) => {
+  const [getAllDataResponse, setGetAllDataResponse] = useState<IResMeta | null>(null);
+  const [getDataResponse, setGetDataResponse] = useState<IResMeta | null>(null);
+  const [postDataResponse, setPostDataResponse] = useState<IResMeta | null>(null);
+  const [getDeleteResponse, setDeleteDataResponse] = useState<IResMeta | null>(null);
+
+  const getAllData = async (headers = defaultHeader) => {
     try {
       const response = await request.get(query, headers);
 
-      setData(response.data);
-      setResMeta({
+      const data: T[] = response.data;
+
+      setAllData(data);
+      setGetAllDataResponse({
         isError: false,
-        text: null,
         status: response.status,
       });
     } catch (error) {
       console.error(error);
 
-      setResMeta({
+      setGetAllDataResponse({
         isError: true,
-        text: error.message,
         status: error.response.status,
       });
     }
   };
 
-  const postData = async <T>(headers = defaultHeader, body: T) => {
+  const getData = async (param: string, headers = defaultHeader) => {
     try {
-      const response = await request.post(query, headers, body);
+      const response = await request.get(`${query}/${param}`, headers);
 
-      setResMeta({
+      const data: T = response.data;
+
+      setData(data);
+      setGetDataResponse({
         isError: false,
-        text: '',
+        status: response.status,
+      });
+    } catch (error) {
+      console.error(error);
+
+      setGetDataResponse({
+        isError: true,
+        status: error.response.status,
+      });
+    }
+  };
+
+  const postData = async <T>(body: T, param = '', headers = defaultHeader) => {
+    try {
+      const response = await request.post(`${query}/${param}`, headers, body);
+
+      setPostDataResponse({
+        isError: false,
         status: response.status,
       });
     } catch (error) {
       console.error(error.response);
 
-      setResMeta({
+      setPostDataResponse({
         isError: true,
-        text: error.message,
         status: error.response.status,
       });
     }
   };
 
-  return { data, getData, resMeta, postData, setResMeta };
+  // TODO: 지하철역 삭제는 현재 무조건 성공 204 응답이옴.
+  const deleteData = async (param: string, headers = defaultHeader) => {
+    try {
+      const response = await request.delete(`${query}/${param}`, headers);
+
+      setDeleteDataResponse({
+        isError: false,
+        status: response.status,
+      });
+    } catch (error) {
+      console.error(error.response);
+
+      setDeleteDataResponse({
+        isError: true,
+        status: error.response.status,
+      });
+    }
+  };
+
+  return {
+    data,
+    allData,
+    getAllData,
+    getData,
+    postData,
+    deleteData,
+    getAllDataResponse,
+    getDataResponse,
+    postDataResponse,
+    getDeleteResponse,
+  };
 };
 
 export default useServerAPI;

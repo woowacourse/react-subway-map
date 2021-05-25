@@ -9,7 +9,6 @@ const initialState: IAccessToken = {
   accessToken: null,
 
   isError: null,
-  text: null,
   status: null,
 };
 
@@ -21,6 +20,7 @@ export const loginRequestAsync = createAsyncThunk(
     };
 
     try {
+      thunkAPI.dispatch(setAccessToken({ isError: null }));
       const response = await request.post('/login/token', headers, loginReqBody);
 
       return response;
@@ -29,7 +29,6 @@ export const loginRequestAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        text: '로그인에 실패하였습니다.',
         status: error.response.status,
       });
     }
@@ -44,7 +43,6 @@ const accessTokenSlice = createSlice({
       state.accessToken = payload.accessToken;
 
       state.status = payload.status;
-      state.text = payload.text;
       state.isError = payload.isError;
     },
   },
@@ -53,7 +51,6 @@ const accessTokenSlice = createSlice({
       state.accessToken = payload.data.accessToken;
 
       state.status = payload.status;
-      state.text = '';
       state.isError = false;
     });
 
@@ -62,7 +59,6 @@ const accessTokenSlice = createSlice({
 
       state.isError = true;
       state.status = (payload as IResMeta).status;
-      state.text = (payload as IResMeta).text;
     });
   },
 });

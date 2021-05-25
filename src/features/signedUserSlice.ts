@@ -11,7 +11,6 @@ const initialState: ISignedUser = {
   age: null,
 
   isError: null,
-  text: null,
   status: null,
 };
 
@@ -24,8 +23,8 @@ export const getSignedUserAsync = createAsyncThunk(
     };
 
     // TODO: /members/me 상수화, 에러 메시지 요청
-    // TODO: text가 필요한가?
     try {
+      thunkAPI.dispatch(setSignedUser({ isError: null }));
       const response = await request.get('/members/me', headers);
 
       return response;
@@ -34,7 +33,6 @@ export const getSignedUserAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        text: '회원 정보를 불러오는데 실패하였습니다.',
         status: error.response.status,
       });
     }
@@ -50,7 +48,6 @@ const signedUserSlice = createSlice({
       state.email = payload.email;
       state.age = payload.age;
       state.isError = payload.isError;
-      state.text = payload.text;
       state.status = payload.status;
     },
   },
@@ -61,7 +58,6 @@ const signedUserSlice = createSlice({
       state.age = payload.data.age;
 
       state.status = payload.status;
-      state.text = '';
       state.isError = false;
     });
     builder.addCase(getSignedUserAsync.rejected, (state, { payload }) => {
@@ -71,7 +67,6 @@ const signedUserSlice = createSlice({
 
       state.isError = true;
       state.status = (payload as IResMeta).status;
-      state.text = (payload as IResMeta).text;
     });
   },
 });

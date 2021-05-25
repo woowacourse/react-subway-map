@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Main, Button, Menu, RootContainer, Title } from './components/atoms';
-import { Home, Login, SignUp } from './components/pages';
+import { Home, Login, SignUp, Station } from './components/pages';
 import { ROUTE } from './constants';
 import { setAccessToken } from './features/accessTokenSlice';
 import { getSignedUserAsync, setSignedUser } from './features/signedUserSlice';
@@ -86,6 +86,7 @@ const App = () => {
           <Route exact path={ROUTE.HOME} component={Home} />
           <Route exact path={ROUTE.SIGNUP} component={SignUp} />
           <Route exact path={ROUTE.LOGIN} component={Login} />
+          <Route exact path={ROUTE.STATION} component={Station} />
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>
