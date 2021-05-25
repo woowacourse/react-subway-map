@@ -34,7 +34,6 @@ const LoginPage = () => {
           </FlexBetween>
           <Flex style={{ width: "100%", flexDirection: "column" }}>
             <Input
-              type="email"
               value={email}
               errorMessage={emailErrorMessage}
               placeholder="이메일"
@@ -44,6 +43,7 @@ const LoginPage = () => {
               required
             />
             <Input
+              type="password"
               value={password}
               errorMessage={passwordErrorMessage}
               placeholder="비밀번호"

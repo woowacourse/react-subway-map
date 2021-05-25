@@ -32,6 +32,7 @@ const customNormalize = css`
 
   a {
     text-decoration: none;
+    color: ${COLOR.GRAY_900};
   }
 
   h1,

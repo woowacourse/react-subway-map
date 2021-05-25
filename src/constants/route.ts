@@ -8,7 +8,7 @@ export enum PAGE_PATH {
   SUBWAY_MANAGEMENT = "/subway",
 }
 
-export const navigationLinks = [
+export const publicNavigationLinks = [
   {
     title: "🚉 역 관리",
     link: PAGE_PATH.STATION_MANAGEMENT,
@@ -25,6 +25,9 @@ export const navigationLinks = [
     title: "🗺️ 전체 보기",
     link: PAGE_PATH.SUBWAY_MANAGEMENT,
   },
+];
+
+export const privateNavigationLinks = [
   {
     title: "👤 로그인",
     link: PAGE_PATH.LOGIN,
