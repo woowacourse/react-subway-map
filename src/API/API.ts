@@ -8,7 +8,7 @@ const URL = {
 };
 
 const API = axios.create({
-  baseURL: URL.PK,
+  baseURL: URL.WEDGE,
 });
 
 export default API;

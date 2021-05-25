@@ -10,6 +10,10 @@ export interface AddLinePayload {
   distance: number;
 }
 
+interface DeleteLinePayload {
+  id: number;
+}
+
 export const getLineAsync = createAsyncThunk('line/getLineAsync', async () => {
   try {
     const response = await API.get('/lines');
@@ -33,6 +37,16 @@ export const addLineAsync = createAsyncThunk(
   }
 );
 
+export const deleteLineAsync = createAsyncThunk('line/deleteLineAsync', async ({ id }: DeleteLinePayload) => {
+  try {
+    await API.delete(`/lines/${id}`);
+
+    return id;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 const initialState: { lines: LineInterface[] | null } = {
   lines: null,
 };
@@ -53,6 +67,12 @@ const lineSlice = createSlice({
     });
     builder.addCase(addLineAsync.rejected, () => {
       throw Error('노선 생성에 실패하였습니다.');
+    });
+    builder.addCase(deleteLineAsync.fulfilled, (state, action) => {
+      state.lines = state.lines?.filter(({ id }) => id !== action.payload) || null;
+    });
+    builder.addCase(deleteLineAsync.rejected, () => {
+      throw Error('노선 삭제에 실패하였습니다.');
     });
   },
 });

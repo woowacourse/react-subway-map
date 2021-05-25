@@ -8,9 +8,10 @@ import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { getLineAsync } from 'redux/lineSlice';
+import { addLineAsync, AddLinePayload, deleteLineAsync, getLineAsync } from 'redux/lineSlice';
+import { getStationAsync } from 'redux/stationSlice';
 import { RootState } from 'redux/store';
-import { LineInterface } from 'types';
+import { LineInterface, StationInterface } from 'types';
 import AddLineModal from './AddLineModal';
 
 const Line = () => {
@@ -20,13 +21,10 @@ const Line = () => {
 
   // TODO useAppSelector 추상화 하기
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
   const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
 
   const [modalOpen, setModalOpen] = useState(false);
-
-  const handleDelete = () => {
-    console.log('delete');
-  };
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -36,8 +34,30 @@ const Line = () => {
     setModalOpen(false);
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      await dispatch(deleteLineAsync({ id }));
+
+      alert('역 삭제에 성공하였습니다.');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleSubmit = async ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => {
+    try {
+      await dispatch(addLineAsync({ name, color, upStationId, downStationId, distance }));
+
+      alert('노선 추가에 성공하셨습니다.');
+      setModalOpen(false);
+    } catch (error) {
+      throw Error(error);
+    }
+  };
+
   useEffect(() => {
     dispatch(getLineAsync());
+    dispatch(getStationAsync());
   }, [dispatch]);
 
   return (
@@ -54,11 +74,11 @@ const Line = () => {
             id={line.id}
             title={line.name}
             editImg={editImg}
-            itemColor="bg-red-400"
+            itemColor={line.color}
           />
         ))}
       </Container>
-      {modalOpen && <AddLineModal onModalClose={handleModalClose} />}
+      {modalOpen && <AddLineModal stations={stations} onModalClose={handleModalClose} onSubmit={handleSubmit} />}
     </>
   );
 };
