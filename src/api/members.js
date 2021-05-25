@@ -5,31 +5,6 @@ import {
   UNKNOWN_ERROR_MESSAGE,
 } from "./constants";
 
-const signup = async ({ email, password, age }) => {
-  try {
-    const response = await http.post(ENDPOINT.SIGNUP, {
-      body: { email, password, age },
-    });
-
-    alert(SIGNUP_STATUS_INFO[response.status].MESSAGE);
-
-    if (SIGNUP_STATUS_INFO[response.status].ERROR_TYPE) {
-      console.error(SIGNUP_STATUS_INFO[response.status].ERROR_TYPE);
-    }
-
-    if (!(response.status in SIGNUP_STATUS_INFO)) {
-      const body = await response.json();
-      throw new Error(body.message);
-    }
-
-    return response.status === 201;
-  } catch (error) {
-    console.error(error);
-    alert(UNKNOWN_ERROR_MESSAGE);
-    return false;
-  }
-};
-
 const login = async ({ email, password }) => {
   try {
     const response = await http.post(ENDPOINT.LOGIN, {
@@ -65,6 +40,6 @@ const login = async ({ email, password }) => {
   }
 };
 
-const membersAPI = { signup, login };
+const membersAPI = { login };
 
 export default membersAPI;

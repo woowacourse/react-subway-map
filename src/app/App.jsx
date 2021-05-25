@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import PATH from "./constants/path";
-import Header from "./components/Header";
-import Lines from "./pages/Lines";
-import Login from "./pages/Login";
-import Sections from "./pages/Sections";
-import Signup from "./pages/Signup";
-import Stations from "./pages/Stations";
+import PATH from "../constants/path";
+import Header from "../components/Header";
+import Lines from "../pages/Lines";
+import Login from "../pages/Login";
+import Sections from "../pages/Sections";
+import Signup from "../pages/Signup";
+import Stations from "../pages/Stations";
 
 const App = () => (
   <BrowserRouter>

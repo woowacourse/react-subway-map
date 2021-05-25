@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
 import PropTypes from "prop-types";
-import ModalPortal from "../../../ModalPortal";
+import ModalPortal from "../../Portal/ModalPortal";
 
 const Modal = ({ isOpen, children, close }) => {
   const handleClick = (event) => {
