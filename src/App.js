@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Page } from './components';
-import { LoginPage, SignUpPage } from './pages';
+import { LoginPage, SignUpPage, StationPage } from './pages';
 import { ROUTE } from './constants';
 
 function App() {
@@ -17,6 +17,9 @@ function App() {
           </Route>
           <Route exact path={ROUTE.SING_UP}>
             <SignUpPage server={server} />
+          </Route>
+          <Route exact path={ROUTE.STATION}>
+            <StationPage server={server} />
           </Route>
         </Switch>
       </Page>

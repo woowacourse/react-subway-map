@@ -8,7 +8,7 @@ export const Label = styled.label`
 
 export const InputField = styled.input`
   width: 20rem;
-  padding: 0.65rem 1.5rem 0.65rem 3.5rem;
+  padding: 0.65rem 1.5rem 0.6rem 3.5rem;
 
   font-size: 1rem;
   color: ${COLOR.TEXT.DEFAULT};

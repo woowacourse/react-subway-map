@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/userSlice';
@@ -43,4 +44,12 @@ export const LoginPage = (props) => {
       </Form>
     </Section>
   );
+};
+
+LoginPage.propTypes = {
+  server: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
+    nickname: PropTypes.string,
+    endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  }).isRequired,
 };

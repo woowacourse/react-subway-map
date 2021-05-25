@@ -50,7 +50,7 @@ export const Page = (props) => {
 
       <Main {...rest}>{children}</Main>
 
-      <ServerSelectButton onClick={() => handleServerSelectButtonClick(server)}>서버 선택</ServerSelectButton>
+      <ServerSelectButton onClick={() => handleServerSelectButtonClick(server)}>서버선택</ServerSelectButton>
       {isServerSelectOpen && <ServerSelect serverId={server.id} onSubmit={handleServerSubmit} />}
     </>
   );

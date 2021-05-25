@@ -16,6 +16,19 @@ export const COLOR = {
   LIST_ITEM_HOVER_BG: '#F6F6F6',
 
   ICON_DEFAULT: '#999',
+
+  LINE: {
+    1: '#A5BAE2',
+    2: '#B2E4AF',
+    3: '#FFBE9F',
+    4: '#99DAED',
+    5: '#DEBAED',
+    6: '#F2C3A7',
+    7: '#BBC19E',
+    8: '#F9B7CD',
+    9: '#CFC1A4',
+    BUNDANG: '#FFDF94',
+  },
 };
 
 export const LAYOUT = {

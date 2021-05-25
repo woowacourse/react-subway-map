@@ -9,8 +9,9 @@ export const Nav = styled.nav`
   align-items: center;
   padding: 0 5rem;
   height: ${LAYOUT.NAVBAR.HEIGHT};
-  background-color: ${COLOR.THEME};
 
+  background-color: ${COLOR.THEME};
+  box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   z-index: ${Z_INDEX.MODAL};
 `;
 
