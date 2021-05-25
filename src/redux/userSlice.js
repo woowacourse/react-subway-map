@@ -4,11 +4,11 @@ import { request } from '../utils';
 
 export const getUserTokenThunk = createAsyncThunk(
   'user/getUserTokenThunk',
-  async (userData, thunkAPI) => {
+  async (params, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
-      const response = await request.post('/login/token', userData);
+      const response = await request.post('/login/token', params);
 
       if (response.status !== 200) {
         return rejectWithValue({

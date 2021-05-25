@@ -24,19 +24,23 @@ const validate = ({ stationName }, stations) => {
     errors.stationName = '중복된 역 이름은 추가할 수 없습니다.';
   }
 
-  console.log(errors);
   return errors;
 };
 
 const StationManager = () => {
-  const { stations } = useStationManager();
+  const { stations, addStation } = useStationManager();
+
+  const handleSubmit = (values, { resetForm }) => {
+    addStation(values);
+    resetForm();
+  };
 
   return (
     <PageTemplate title={ROUTE.STATION_MANAGE.NAME}>
       <Formik
         initialValues={initialValues}
         validate={(values) => validate(values, stations)}
-        onSubmit={() => {}}
+        onSubmit={handleSubmit}
         validateOnBlur={false}
         validateOnChange={false}
       >

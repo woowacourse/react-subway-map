@@ -19,6 +19,23 @@ export const getStationsThunk = createAsyncThunk(
   }
 );
 
+export const addStationThunk = createAsyncThunk(
+  'subway/addStationThunk',
+  async (params, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+
+    try {
+      const response = await request.post('/stations', params);
+
+      return { station: response.data };
+    } catch (error) {
+      console.error(error);
+
+      return rejectWithValue({ error: ERROR.UNKNOWN });
+    }
+  }
+);
+
 const subwaySlice = createSlice({
   name: 'subway',
   initialState: {
@@ -31,6 +48,12 @@ const subwaySlice = createSlice({
       state.stations = stations;
     },
     [getStationsThunk.rejected]: (state, { payload: { error } }) => {
+      state.error = error;
+    },
+    [addStationThunk.fulfilled]: (state, { payload: { station } }) => {
+      state.stations.push(station);
+    },
+    [addStationThunk.rejected]: (state, { payload: { error } }) => {
       state.error = error;
     },
   },
