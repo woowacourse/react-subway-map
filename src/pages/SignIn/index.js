@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { Form, Validator } from './style';
 import { COLOR, ROUTE, SIZE } from '../../constants';
-import useSignInAPI from '../../hooks/useSignInAPI';
+import { useSignIn } from '../../hooks';
 
 const initialValues = {
   email: '',
@@ -26,7 +26,7 @@ const validate = ({ email, password }) => {
 };
 
 const SignIn = () => {
-  const { signIn, failMessage } = useSignInAPI();
+  const { signIn, error } = useSignIn();
 
   return (
     <PageTemplate title={ROUTE.SIGN_IN.NAME}>
@@ -53,7 +53,7 @@ const SignIn = () => {
             />
             <Validator>
               {errors.email || errors.password}
-              {failMessage}
+              {error}
             </Validator>
             <Button
               type="submit"

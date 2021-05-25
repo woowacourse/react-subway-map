@@ -2,7 +2,7 @@ import { useHistory } from 'react-router';
 import { ROUTE } from '../constants';
 import { request } from '../utils';
 
-const useSignUpAPI = () => {
+const useSignUp = () => {
   const history = useHistory();
 
   const checkDuplicateEmail = async (email) => {
@@ -25,4 +25,4 @@ const useSignUpAPI = () => {
   return { checkDuplicateEmail, signUp };
 };
 
-export default useSignUpAPI;
+export default useSignUp;

@@ -3,7 +3,7 @@ import { Field, Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { COLOR, RANGE, REG_EXP, ROUTE, SIZE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
-import { useSignUpAPI } from '../../hooks';
+import { useSignUp } from '../../hooks';
 
 const initialValues = {
   email: '',
@@ -54,7 +54,7 @@ const validatePasswordConfirm = ({ password, passwordConfirm }) => {
 };
 
 const SignUp = () => {
-  const { checkDuplicateEmail, signUp } = useSignUpAPI();
+  const { checkDuplicateEmail, signUp } = useSignUp();
 
   return (
     <PageTemplate title={ROUTE.SIGN_UP.NAME}>
