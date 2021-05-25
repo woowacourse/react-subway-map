@@ -1,6 +1,13 @@
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-const BASE_URL = 'https://jipark.p-e.kr/';
+const URL = {
+  BETTER: 'https://subway-fare-mission.kro.kr/stations',
+  KEVIN: 'https://jipark.p-e.kr/',
+  MUNGTO: 'https://mungto-subway.o-r.kr',
+  PIKA: 'https://pika-subway-fare.kro.kr',
+};
+
+const BASE_URL = URL.PIKA;
 
 const fetchOption = (
   method: HTTPMethod,
@@ -35,8 +42,3 @@ const APIClient = {
 export default APIClient;
 
 // const fetchOption = ({ body, token }) => {};
-
-// https://pika-subway-fare.kro.kr/
-// https://mungto-subway.o-r.kr/
-// https://subway-fare-mission.kro.kr/stations
-// https://jipark.p-e.kr/
