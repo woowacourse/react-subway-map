@@ -1,46 +1,47 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 import { request } from '../utils';
-import { Nullable, ILoginRes, IMyInfoRes, ILoginReq } from '../type';
+import { Nullable, IMyInfoRes } from '../type';
+import { IResMeta } from '../hooks/useServerAPI';
 
-export type ISignedUser = Nullable<IMyInfoRes & ILoginRes>;
+export type ISignedUser = Nullable<IMyInfoRes & IResMeta>;
 
-const initialState = {
+const initialState: ISignedUser = {
   id: null,
   email: null,
   age: null,
-  accessToken: null,
-} as ISignedUser;
+
+  isError: null,
+  text: null,
+  status: null,
+};
 
 export const getSignedUserAsync = createAsyncThunk(
   `getSignedUser`,
-  async (accessToken: string | null) => {
+  async (accessToken: string | null, thunkAPI) => {
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       Authorization: `Bearer ${accessToken}`,
     };
 
-    // TODO: /members/me 상수화
-    const payload = await request.get('/members/me', headers);
+    // TODO: /members/me 상수화, 에러 메시지 요청
+    // TODO: text가 필요한가?
+    try {
+      const response = await request.get('/members/me', headers);
 
-    return payload;
+      return response;
+    } catch (error) {
+      console.error(error.response);
+
+      return thunkAPI.rejectWithValue({
+        isError: true,
+        text: '회원 정보를 불러오는데 실패하였습니다.',
+        status: error.response.status,
+      });
+    }
   },
 );
 
-export const loginRequestAsync = createAsyncThunk(
-  `loginRequest`,
-  async (loginReqBody: ILoginReq) => {
-    const headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-
-    const payload = await request.post('/login/token', headers, loginReqBody);
-
-    return payload;
-  },
-);
-
-export const signedUserSlice = createSlice({
+const signedUserSlice = createSlice({
   name: 'signedUser',
   initialState,
   reducers: {
@@ -52,32 +53,26 @@ export const signedUserSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getSignedUserAsync.fulfilled, (state, { payload }) => {
-      state.id = payload.id;
-      state.email = payload.email;
-      state.age = payload.age;
+      state.id = payload.data.id;
+      state.email = payload.data.email;
+      state.age = payload.data.age;
+
+      state.status = payload.status;
+      state.text = '';
+      state.isError = false;
     });
-    builder.addCase(getSignedUserAsync.rejected, state => {
+    builder.addCase(getSignedUserAsync.rejected, (state, { payload }) => {
       state.id = null;
       state.email = null;
       state.age = null;
-      state.accessToken = null;
-    });
 
-    builder.addCase(loginRequestAsync.fulfilled, (state, { payload }) => {
-      state.accessToken = payload.accessToken;
-    });
-
-    builder.addCase(loginRequestAsync.rejected, state => {
-      state.id = null;
-      state.email = null;
-      state.age = null;
-      state.accessToken = null;
+      state.isError = true;
+      state.status = (payload as IResMeta).status;
+      state.text = (payload as IResMeta).text;
     });
   },
 });
 
 export const { setSignedUser } = signedUserSlice.actions;
 
-export const selectSignedUser = (state: RootState) => state.signedUser;
-
-export default signedUserSlice.reducer;
+export default signedUserSlice;

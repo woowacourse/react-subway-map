@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { request } from '../utils';
 
-interface IError {
+export interface IResMeta {
   isError: boolean;
-  text: string;
+  text: string | null;
+  status: number;
 }
+
+//TODO: error.response.message 백엔드에서 text로 받기
 
 const defaultHeader = {
   'Content-Type': 'application/json; charset=UTF-8',
@@ -12,42 +15,50 @@ const defaultHeader = {
 
 const useServerAPI = <T>(query: string) => {
   const [data, setData] = useState<T | null>();
-  const [errorInfo, setErrorInfo] = useState<IError | null>({
-    isError: false,
-    text: '',
-  });
-  const [isSuccess, setSuccessState] = useState<boolean | null>(false);
+  const [resMeta, setResMeta] = useState<IResMeta | null>(null);
 
   const getData = async (headers = defaultHeader) => {
     try {
-      const data = await request.get(query, headers);
+      const response = await request.get(query, headers);
 
-      setData(data);
+      setData(response.data);
+      setResMeta({
+        isError: false,
+        text: null,
+        status: response.status,
+      });
     } catch (error) {
       console.error(error);
+
+      setResMeta({
+        isError: true,
+        text: error.message,
+        status: error.response.status,
+      });
     }
   };
 
   const postData = async <T>(headers = defaultHeader, body: T) => {
     try {
-      await request.post(query, headers, body);
+      const response = await request.post(query, headers, body);
 
-      setErrorInfo({
+      setResMeta({
         isError: false,
         text: '',
+        status: response.status,
       });
-      setSuccessState(true);
     } catch (error) {
-      console.error(error.response.status);
-      setErrorInfo({
+      console.error(error.response);
+
+      setResMeta({
         isError: true,
-        text: '회원가입에 실패했습니다.',
+        text: error.message,
+        status: error.response.status,
       });
-      setSuccessState(false);
     }
   };
 
-  return { data, getData, errorInfo, postData, isSuccess, setErrorInfo, setSuccessState };
+  return { data, getData, resMeta, postData, setResMeta };
 };
 
 export default useServerAPI;

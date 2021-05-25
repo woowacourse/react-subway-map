@@ -10,6 +10,7 @@ export interface InputProps {
   maxLength?: number;
   minLength?: number;
   ariaLabel?: string;
+  autoFocus?: boolean;
 }
 const Input = ({
   type = 'text',

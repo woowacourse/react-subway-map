@@ -1,12 +1,13 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
-import { loginRequestAsync, selectSignedUser } from '../../../features/signedUserSlice';
+import { loginRequestAsync } from '../../../features/accessTokenSlice';
+import { getSignedUserAsync } from '../../../features/signedUserSlice';
 import { useInput } from '../../../hooks';
-import { useAppDispatch } from '../../../store';
+import { RootState, useAppDispatch } from '../../../store';
 import { ILoginReq } from '../../../type';
-import { isValidEmail, isValidPassword } from '../../../utils';
 import { Header } from '../../atoms';
 import LoginForm from '../../molecules/LoginForm/LoginForm';
 import { Container, Footer } from './Login.styles';
@@ -14,17 +15,24 @@ import { Container, Footer } from './Login.styles';
 const Login = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const signedUser = useSelector(selectSignedUser);
+  const {
+    signedUser,
+    accessToken: { accessToken, isError: accessTokenReqError },
+  } = useSelector((state: RootState) => ({
+    signedUser: state.signedUserReducer,
+    accessToken: state.accessTokenReducer,
+  }));
 
   const { value: email, onChange: onChangeEmail } = useInput('');
   const { value: password, onChange: onChangePassword } = useInput('');
 
+  if (signedUser?.id) {
+    window.alert('이미 로그인 되어 있습니다.');
+    return <Redirect to={ROUTE.HOME} />;
+  }
+
   const onSubmitLogin: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-
-    if (!(isValidEmail(email) && isValidPassword(password))) {
-      window.alert('유효한 이메일과 비밀번호를 입력해주세요.');
-    }
 
     const body: ILoginReq = {
       email,
@@ -34,12 +42,15 @@ const Login = () => {
     dispatch(loginRequestAsync(body));
   };
 
-  if (signedUser.accessToken) {
-    window.alert('로그인에 성공하였습니다.');
-    history.push({ pathname: ROUTE.HOME });
-  }
-
-  //TODO: login 실패케이스 처리
+  useEffect(() => {
+    if (accessTokenReqError === false) {
+      window.alert('로그인에 성공하셨습니다.');
+      history.replace({ pathname: ROUTE.HOME });
+      dispatch(getSignedUserAsync(accessToken));
+    } else if (accessTokenReqError) {
+      window.alert('로그인에 실패하셨습니다.');
+    }
+  }, [accessTokenReqError]);
 
   return (
     <Container>

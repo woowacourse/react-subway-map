@@ -11,7 +11,7 @@ jest.mock('react-redux');
 describe('Home', () => {
   it('render image', () => {
     (useSelector as jest.Mock).mockImplementation(state => {
-      return { accessToken: state.accessTokenToken, email: state.email };
+      return { email: state.email };
     });
     (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
 
@@ -23,7 +23,7 @@ describe('Home', () => {
 
   it('render before-login guide message', () => {
     (useSelector as jest.Mock).mockImplementation(() => {
-      return { id: null, email: null, age: null, accessToken: null };
+      return { id: null, email: null, age: null };
     });
     (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
     const { container } = render(<Home />);
@@ -35,7 +35,10 @@ describe('Home', () => {
       id: 909090,
       email: 'test@test.com',
       age: 12,
-      accessToken: '123213213',
+
+      isError: false,
+      text: '',
+      status: 201,
     };
 
     (useSelector as jest.Mock).mockImplementation(() => {
