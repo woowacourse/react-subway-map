@@ -18,6 +18,12 @@ export const LoginForm = styled.form`
   }
 `;
 
+export const LoginErrorMessage = styled.p`
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  color: ${PALETTE.RED[400]};
+`;
+
 export const LoginButton = styled(Button)`
   width: 100%;
   margin-bottom: 1.5rem;
