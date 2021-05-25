@@ -56,7 +56,7 @@ export const userSlice = createSlice({
   },
 });
 
-export type userAction = ReturnType<
+export type UserAction = ReturnType<
   | typeof userSlice.actions.selectServer
   | typeof userSlice.actions.login
   | typeof userSlice.actions.logout

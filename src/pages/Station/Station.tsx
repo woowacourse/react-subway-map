@@ -1,9 +1,26 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddStationForm from '../../components/StationPage/AddStationForm';
 import StationListItem from '../../components/StationPage/StationListItem';
+import { RootState } from '../../modules';
+import { getStationsAsync } from '../../modules/station/stationReducer';
 import * as S from './Station.styles';
 
 const Station = () => {
+  const { stations, error } = useSelector((state: RootState) => state.station);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getStationsAsync());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      window.alert(error);
+    }
+  }, [error]);
+
   return (
     <S.Container>
       <ContentContainer hasHat={true}>
@@ -11,11 +28,9 @@ const Station = () => {
       </ContentContainer>
       <ContentContainer>
         <S.StationList>
-          <StationListItem name='아현역' />
-          <StationListItem name='신촌역' />
-          <StationListItem name='이대역' />
-          <StationListItem name='홍대역' />
-          <StationListItem name='합정역' />
+          {stations.map(({ id, name }) => (
+            <StationListItem key={id} name={name} />
+          ))}
         </S.StationList>
       </ContentContainer>
     </S.Container>

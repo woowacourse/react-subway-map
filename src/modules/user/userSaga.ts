@@ -1,4 +1,4 @@
-import { signIn } from './../../api/api';
+import { authAPI } from '../../api/auth';
 import { loginAsync, login, error, pending } from './userReducer';
 import { call, takeLatest, put } from 'redux-saga/effects';
 
@@ -9,14 +9,14 @@ type LoginAction = {
     password: string;
   };
 };
-interface Result {
+interface LoginResult {
   error: string;
   accessToken: string;
 }
 
 function* loginSaga(action: LoginAction) {
   yield put(pending());
-  const result: Result = yield call(signIn, action.payload);
+  const result: LoginResult = yield call(authAPI.signIn, action.payload);
 
   if (result.error) {
     yield put(error({ error: result.error }));

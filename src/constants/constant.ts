@@ -15,5 +15,6 @@ export const BASE_URL = {
 };
 
 export const SERVER = {
-  URL: '',
+  URL: 'https://junroot.kro.kr',
+  // URL: '',
 };

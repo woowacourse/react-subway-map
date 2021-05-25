@@ -6,7 +6,7 @@ import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import React, { useState } from 'react';
 import { BASE_URL, ROUTE } from '../../constants/constant';
-import { signUp } from '../../api/api';
+import { authAPI } from '../../api/auth';
 import { RESPONSE } from '../../constants/api';
 import { useHistory } from 'react-router';
 
@@ -76,7 +76,7 @@ const SignUpForm = () => {
 
     const { email, age, password } = userInfo;
     const results = await Promise.all(
-      Object.values(BASE_URL).map(({ URL }) => signUp({ url: URL, email, password, age }))
+      Object.values(BASE_URL).map(({ URL }) => authAPI.signUp({ url: URL, email, password, age }))
     );
 
     if (results.some(result => result !== RESPONSE.SUCCESS)) {

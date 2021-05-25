@@ -31,6 +31,7 @@ const App = () => {
       <Navigation />
       <S.Container>
         <Switch>
+          <Route exact path={ROUTE.HOME} component={accessToken ? Station : SignIn} />
           <Route exact path={ROUTE.SIGN_IN} component={SignIn} />
           <Route exact path={ROUTE.SIGN_UP} component={SignUp} />
           <Route exact path={ROUTE.STATION} component={Station} />
