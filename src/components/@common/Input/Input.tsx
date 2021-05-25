@@ -5,7 +5,7 @@ const Input: VFC<InputHTMLAttributes<HTMLInputElement>> = (props) => {
   return (
     <InputLabel>
       <StyledInput {...props} />
-      {props.value && <LabelText>{props.placeholder}</LabelText>}
+      {!!props.value && <LabelText>{props.placeholder}</LabelText>}
     </InputLabel>
   );
 };

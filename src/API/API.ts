@@ -1,13 +1,13 @@
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 const URL = {
-  BETTER: 'https://subway-fare-mission.kro.kr/stations',
-  KEVIN: 'https://jipark.p-e.kr/',
+  BETTER: 'https://subway-fare-mission.kro.kr',
+  KEVIN: 'https://jipark.p-e.kr', // 로그인 시 400 error
   MUNGTO: 'https://mungto-subway.o-r.kr',
   PIKA: 'https://pika-subway-fare.kro.kr',
 };
 
-const BASE_URL = URL.PIKA;
+const BASE_URL = URL.MUNGTO;
 
 const fetchOption = (
   method: HTTPMethod,
@@ -40,5 +40,3 @@ const APIClient = {
 };
 
 export default APIClient;
-
-// const fetchOption = ({ body, token }) => {};

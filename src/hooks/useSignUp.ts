@@ -11,6 +11,8 @@ const useSignUp = () => {
     passwordForValidation: '',
   });
 
+  const { email, age, password, passwordForValidation } = form;
+
   const setEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, email: event.target.value });
   };
@@ -52,7 +54,10 @@ const useSignUp = () => {
   };
 
   return {
-    form,
+    email,
+    age,
+    password,
+    passwordForValidation,
     setEmail,
     setAge,
     setPassword,

@@ -6,7 +6,10 @@ import useSignUp from '../../../hooks/useSignUp';
 
 const SignUpForm: VFC = () => {
   const {
-    form: { email, age, password, passwordForValidation },
+    email,
+    age,
+    password,
+    passwordForValidation,
     setEmail,
     setAge,
     setPassword,
