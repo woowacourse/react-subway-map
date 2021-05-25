@@ -7,11 +7,29 @@ import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import ModalPortal from 'ModalPortal';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { getLineAsync } from 'redux/lineSlice';
+import { RootState } from 'redux/store';
+import { LineInterface } from 'types';
 import AddLineModal from './AddLineModal';
 
 const Line = () => {
   useRedirect(PATH.LOGIN);
+
+  const dispatch = useDispatch();
+
+  // TODO useAppSelector 추상화 하기
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
+
+  const handleDelete = () => {
+    console.log('delete');
+  };
+
+  useEffect(() => {
+    dispatch(getLineAsync());
+  }, [dispatch]);
 
   return (
     <>
@@ -20,9 +38,16 @@ const Line = () => {
           <Title text="🛤️ 지하철 노선 관리" />
           <ImageButton imgUrl={addImg} />
         </div>
-        {/* <ListItem title="2호선" editImg={editImg} itemColor="bg-red-400" />
-        <ListItem title="신분당선" editImg={editImg} itemColor="bg-blue-400" />
-        <ListItem title="리액트선" editImg={editImg} itemColor="bg-gray-400" /> */}
+        {lines?.map((line) => (
+          <ListItem
+            onDelete={handleDelete}
+            key={line.id}
+            id={line.id}
+            title={line.name}
+            editImg={editImg}
+            itemColor="bg-red-400"
+          />
+        ))}
       </Container>
       <ModalPortal>
         <AddLineModal />

@@ -7,24 +7,19 @@ import subwayImg from 'assets/images/subway.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
+import { RootState } from 'redux/store';
 import { StationInterface } from 'types';
-
-interface Stations {
-  station: {
-    stations: StationInterface[] | null;
-  };
-}
 
 const Station = () => {
   useRedirect(PATH.LOGIN);
 
   const dispatch = useDispatch();
 
-  // TODO stations의 타입이 unknown으로 추정되지 않도록 수정해야 함.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const stations: any = useSelector<Stations>((state) => state.station.stations);
+  // TODO useAppSelector 추상화 하기
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
 
   const [name, setName] = useState('');
 
@@ -77,7 +72,7 @@ const Station = () => {
       </form>
       <hr />
       {/* TODO [백엔드] 백엔드 크루들에게 역 정렬 순서를 생성 순으로 해달라고 요청하기 */}
-      {stations?.map((station: StationInterface) => (
+      {stations?.map((station) => (
         <ListItem onDelete={handleDelete} key={station.id} id={station.id} title={station.name} />
       ))}
     </Container>
