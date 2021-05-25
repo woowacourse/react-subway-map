@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import STATUS from "../../constants/status";
 import {
   ENDPOINT,
   SIGNUP_STATUS_INFO,
@@ -33,28 +34,34 @@ export const signup = createAsyncThunk(
   }
 );
 
-export const signupSlice = createSlice({
+const initialState = {
+  status: STATUS.IDLE,
+  error: null,
+  message: "",
+};
+
+const signupSlice = createSlice({
   name: "signup",
-  initialState: {
-    status: "idle",
-    error: null,
-    message: "",
+  initialState,
+  reducers: {
+    reset: () => initialState,
   },
-  reducers: {},
   extraReducers: {
     [signup.pending]: (state) => {
-      state.status = "loading";
+      state.status = STATUS.LOADING;
     },
     [signup.fulfilled]: (state, action) => {
-      state.status = "succeed";
+      state.status = STATUS.SUCCEED;
       state.message = action.payload;
     },
     [signup.rejected]: (state, action) => {
-      state.status = "failed";
+      state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;
     },
   },
 });
+
+export const { reset } = signupSlice.actions;
 
 export default signupSlice.reducer;

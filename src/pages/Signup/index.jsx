@@ -1,15 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import PATH from "../../constants/path";
+import STATUS from "../../constants/status";
 import Main from "../../components/@shared/Main";
 import Button from "../../components/@shared/Button";
 import Input from "../../components/@shared/Input";
 import Loading from "../../components/@shared/Loading";
 import { useInput } from "../../components/@shared/Input/hooks";
 import { useSignupAge, useSignupEmail, useSignupPassword } from "./hooks";
-import { signup } from "./slice";
+import { signup, reset } from "./slice";
 
 const Signup = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { status, message } = useSelector((state) => state.signup);
   const [email, handleEmailChange, isEmailValid] = useSignupEmail();
@@ -30,18 +33,20 @@ const Signup = () => {
     dispatch(signup({ email, password, age }));
   };
 
-  if (status === "succeed") {
+  if (status === STATUS.SUCCEED) {
     alert(message);
-    return <Redirect to="/login" />;
+    dispatch(reset());
+    history.push(PATH.LOGIN);
   }
 
-  if (status === "failed") {
+  if (status === STATUS.FAILED) {
     alert(message);
+    dispatch(reset());
   }
 
   return (
     <>
-      <Loading isLoading={status === "loading"} />
+      <Loading isLoading={status === STATUS.LOADING} />
       <Main>
         <section className="m-auto pb-8 w-120 border-t-8 border-yellow-300 rounded-sm shadow-md">
           <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">

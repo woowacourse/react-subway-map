@@ -1,7 +1,7 @@
-export const BASE_URL = "https://gump-subway.p-e.kr"; // 검프
+// export const BASE_URL = "https://gump-subway.p-e.kr"; // 검프
 // export const BASE_URL = "https://fortune-subway.p-e.kr"; // 포츈
 // export const BASE_URL = "https://subway.n-e.kr"; // 에어
-// export const BASE_URL = "https://bada-subway.kro.kr"; // 바다
+export const BASE_URL = "https://bada-subway.kro.kr"; // 바다
 // export const BASE_URL = "https://woogie-subway.kro.kr"; // 우기
 
 export const SIGNUP_STATUS_INFO = {
