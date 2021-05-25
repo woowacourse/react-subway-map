@@ -28,6 +28,12 @@ interface LineData {
   distance: number;
 }
 
+interface SectionData {
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+}
+
 interface APIReturnTypeStation {
   id: number;
   name: string;
@@ -47,7 +53,7 @@ interface APIReturnTypeLine {
   sections: APIReturnTypeSection[];
 }
 
-const API_HOST = 'KROPPLE';
+const API_HOST = 'SOLONG';
 
 const request = async (url: string, requestConfig: RequestInit) => {
   const response = await fetch(url, requestConfig);
@@ -149,6 +155,14 @@ const apiRequest = {
     });
   },
 
+  getLine: async (lineId: number): Promise<APIReturnTypeLine> => {
+    const response = await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+      method: 'GET',
+    });
+
+    return await response.json();
+  },
+
   getLines: async (): Promise<APIReturnTypeLine[]> => {
     const response = await request(`${BASE_URL[API_HOST]}/lines`, {
       method: 'GET',
@@ -183,7 +197,39 @@ const apiRequest = {
       return;
     }
 
-    const response = await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+    await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+
+  addSection: async (lineId: number, data: SectionData) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    await request(`${BASE_URL[API_HOST]}/lines/${lineId}/sections`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+  },
+
+  deleteSection: async (lineId: number, stationId: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    await request(`${BASE_URL[API_HOST]}/lines/${lineId}/sections?stationId=${stationId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${accessToken}`,

@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useContext, useState } from 'react';
+import { ChangeEventHandler, useContext, useEffect, useState, FormEventHandler } from 'react';
 import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
 import Box from '../../components/shared/Box/Box';
@@ -7,7 +7,6 @@ import PALETTE from '../../constants/palette';
 import Input from '../../components/shared/Input/Input';
 import Select from '../../components/shared/Select/Select';
 import InputContainer from '../../components/shared/InputContainer/InputContainer';
-import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import {
   Container,
   Icon,
@@ -20,45 +19,198 @@ import {
   Distance,
 } from './SectionPage.style';
 import RoundButton from '../../components/shared/Button/RoundButton';
+import apiRequest, { APIReturnTypeLine, APIReturnTypeStation } from '../../request';
+import { ThemeContext } from '../../contexts/ThemeContextProvider';
+import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import useInput from '../../hooks/useInput';
+import { StationSelectError } from '../SectionPage/SectionPage.style';
 
-const initialList = [
-  {
-    id: 1,
-    name: '신분당선',
-    color: 'red',
-    stations: [
-      { id: 1, name: '강남역', distance: 10 },
-      { id: 2, name: '판교역', distance: 6 },
-      { id: 3, name: '정자역' },
-    ],
-  },
-  {
-    id: 2,
-    name: '2호선',
-    color: 'green',
-    stations: [
-      { id: 1, name: '강남역', distance: 6 },
-      { id: 4, name: '역삼역', distance: 10 },
-      { id: 5, name: '잠실역' },
-    ],
-  },
-];
+interface StationInLine extends APIReturnTypeStation {
+  distance?: number;
+}
 
 const SectionPage = () => {
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [list, setList] = useState(initialList);
   const [selectedLineId, setSelectedLineId] = useState<number>(-1);
 
-  const currentLine = list.find((item) => item.id === selectedLineId);
+  const [lines, setLines] = useState<APIReturnTypeLine[]>([]);
+  const [stations, setStations] = useState<APIReturnTypeStation[]>([]);
+
+  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [upStationId, setUpStationId] = useState('');
+  const [downStationId, setDownStationId] = useState('');
+  const [distance, onDistanceChange, setDistance] = useInput('');
+
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const addMessage = useContext(SnackBarContext)?.addMessage;
+
+  const currentLine = lines.find((line) => line.id === selectedLineId);
+  const lastStation = currentLine?.sections[currentLine?.sections.length - 1].downStation;
+
+  const stationsInLine: StationInLine[] = (() => {
+    if (currentLine && lastStation) {
+      return [
+        ...currentLine.sections.map((section) => ({
+          id: section.upStation.id,
+          name: section.upStation.name,
+          distance: section.distance,
+        })),
+        {
+          id: lastStation.id,
+          name: lastStation.name,
+        },
+      ];
+    }
+
+    return [];
+  })();
+
+  const isOnlyOneStationInCurrentLine = Boolean(
+    Number(stationsInLine.some(({ id }) => id === Number(upStationId))) ^
+      Number(stationsInLine.some(({ id }) => id === Number(downStationId)))
+  );
+  const isStationSelectDuplicated = upStationId === downStationId;
+
+  const isDistanceValid =
+    /^[0-9]+$/.test(distance) && Number(distance) > 0 && Number(distance) < 301;
+
+  const stationSelectErrorMessage =
+    upStationId && downStationId
+      ? isStationSelectDuplicated
+        ? ERROR_MESSAGE.DUPLICATED_TERMINAL
+        : isOnlyOneStationInCurrentLine
+        ? ''
+        : ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED
+      : '';
+
+  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
+  const isFormCompleted =
+    upStationId &&
+    downStationId &&
+    distance &&
+    !isStationSelectDuplicated &&
+    isDistanceValid &&
+    isOnlyOneStationInCurrentLine;
+
+  const fetchLines = async () => {
+    try {
+      const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
+
+      setLines(newLines);
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+  };
+
+  const fetchLine = async (lineId: number) => {
+    try {
+      const newLine = await apiRequest.getLine(lineId);
+
+      setLines((prevLines) =>
+        prevLines.map((line) => {
+          if (line.id === lineId) {
+            return newLine;
+          }
+          return line;
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+  };
+
+  const fetchStations = async () => {
+    try {
+      const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
+
+      setStations(newStations);
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+  };
+
+  useEffect(() => {
+    fetchStations();
+    fetchLines();
+  }, []);
+
+  const reset = () => {
+    setUpStationId('');
+    setDownStationId('');
+    setDistance('');
+  };
 
   const onLineSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
     setSelectedLineId(Number(event.target.value));
   };
 
-  const deleteStation = (stationId: number) => {
-    // delete 요청 보내기
-    // section 조회 한 번 더 가져와서 업데이트.(setList)
+  const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setUpStationId(event.target.value);
+  };
+
+  const onDownStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setDownStationId(event.target.value);
+  };
+
+  const onSectionSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    if (!currentLine) {
+      addMessage?.(ERROR_MESSAGE.NO_LINE_SELECTED);
+      return;
+    }
+
+    if (!isFormCompleted) {
+      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
+      return;
+    }
+
+    try {
+      const newSection = {
+        upStationId: Number(upStationId),
+        downStationId: Number(downStationId),
+        distance: Number(distance),
+      };
+
+      await apiRequest.addSection(selectedLineId, newSection);
+
+      addMessage?.(SUCCESS_MESSAGE.ADD_SECTION);
+      await fetchLine(selectedLineId);
+
+      reset();
+      setFormOpen(false);
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+  };
+
+  const deleteSection = async (stationId: number, stationName: string) => {
+    if (stationId === -1 || stationName === '') return;
+
+    if (currentLine?.sections.length === 1) {
+      addMessage?.(ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE);
+      return;
+    }
+
+    if (!confirm(CONFIRM_MESSAGE.DELETE_SECTION(currentLine?.name ?? '', stationName))) {
+      return;
+    }
+
+    try {
+      await apiRequest.deleteSection(selectedLineId, stationId);
+
+      addMessage?.(SUCCESS_MESSAGE.DELETE_SECTION);
+    } catch (error) {
+      console.error(error);
+      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    }
+
+    await fetchLine(selectedLineId);
+
     return stationId;
   };
 
@@ -72,9 +224,9 @@ const SectionPage = () => {
             <option value="/" hidden>
               노선 선택
             </option>
-            {list.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
+            {lines?.map((line) => (
+              <option key={line.id} value={line.id}>
+                {line.name}
               </option>
             ))}
           </Select>
@@ -90,29 +242,44 @@ const SectionPage = () => {
         </RoundButton>
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
-        <Form>
+        <Form onSubmit={onSectionSubmit}>
           <StationSelects>
-            <InputContainer labelText="상행 종점">
-              <Select>
-                <option value="/" hidden>
-                  역 선택
-                </option>
-                <option value="Hi">안녕하세요</option>
-              </Select>
-            </InputContainer>
-            <Icon>
-              <MdArrowForward size="1.5rem" />
-            </Icon>
-            <InputContainer labelText="하행 종점">
-              <Select>
-                <option value="/" hidden>
-                  역 선택
-                </option>
-              </Select>
-            </InputContainer>
+            <div>
+              <InputContainer labelText="상행 종점">
+                <Select value={upStationId} onChange={onUpStationIdChange}>
+                  <option value="/" hidden>
+                    역 선택
+                  </option>
+                  {stations?.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </Select>
+              </InputContainer>
+              <Icon>
+                <MdArrowForward size="1.5rem" />
+              </Icon>
+              <InputContainer labelText="하행 종점">
+                <Select value={downStationId} onChange={onDownStationIdChange}>
+                  <option value="/" hidden>
+                    역 선택
+                  </option>
+                  {stations?.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </Select>
+              </InputContainer>
+            </div>
+            <StationSelectError>{stationSelectErrorMessage}</StationSelectError>
           </StationSelects>
-          <InputContainer labelText="거리 (단위:km)">
-            <Input />
+          <InputContainer
+            labelText="거리 (단위:km)"
+            validation={{ text: distanceErrorMessage, isValid: false }}
+          >
+            <Input value={distance} onChange={onDistanceChange} />
           </InputContainer>
           <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>
             추가
@@ -120,25 +287,27 @@ const SectionPage = () => {
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
-        <List>
-          {currentLine?.stations.map((station) => {
-            return (
-              <li key={station.id}>
-                <p>{station.name}</p>
-                {station.distance && <Distance>{`거리 : ${station.distance}`}</Distance>}
-                <Button
-                  type="button"
-                  size="s"
-                  backgroundColor={PALETTE.PINK}
-                  color={PALETTE.WHITE}
-                  onClick={() => deleteStation(station.id)}
-                >
-                  <MdDelete size="15px" />
-                </Button>
-              </li>
-            );
-          })}
-        </List>
+        {currentLine && (
+          <List>
+            {stationsInLine.map(({ id, name, distance }) => {
+              return (
+                <li key={id}>
+                  <p>{name}</p>
+                  {distance && <Distance>{`거리 : ${distance}`}</Distance>}
+                  <Button
+                    type="button"
+                    size="s"
+                    backgroundColor={PALETTE.PINK}
+                    color={PALETTE.WHITE}
+                    onClick={() => deleteSection(id, name)}
+                  >
+                    <MdDelete size="15px" />
+                  </Button>
+                </li>
+              );
+            })}
+          </List>
+        )}
       </Box>
     </Container>
   );

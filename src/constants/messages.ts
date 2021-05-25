@@ -11,6 +11,9 @@ const ERROR_MESSAGE = {
   DUPLICATED_STATION_NAME: '이미 존재하는 지하철 역입니다.',
   DUPLICATED_LINE_NAME: '이미 존재하는 지하철 노선입니다.',
   DUPLICATED_TERMINAL: '상행종점과 하행종점은 같을 수 없습니다.',
+  SECTION_LENGTH_OUT_OF_RANGE: '😥 한 노선에 지하철 역은 2개 이상이어야 합니다.',
+  NO_LINE_SELECTED: '😭 노선을 선택해 주세요',
+  ONLY_ONE_STATION_INCLUDED: '반드시 한 역이 기존 노선에 포함되어야 합니다.',
 };
 
 const SUCCESS_MESSAGE = {
@@ -21,11 +24,15 @@ const SUCCESS_MESSAGE = {
   DELETE_STATION: '🚇 지하철 역이 제거되었습니다.',
   ADD_LINE: '🚇 지하철 노선이 추가되었습니다.',
   DELETE_LINE: '🚇 지하철 노선이 제거되었습니다.',
+  ADD_SECTION: '🚇 지하철 구간이 추가되었습니다.',
+  DELETE_SECTION: '🚇 지하철 구간이 제거되었습니다.',
 };
 
 const CONFIRM_MESSAGE = {
   DELETE_STATION: (station: string) => `"${station}"을(를) 삭제하시겠습니까?`,
   DELETE_LINE: (line: string) => `"${line}"을(를) 삭제하시겠습니까?`,
+  DELETE_SECTION: (line: string, station: string) =>
+    `"${line}"에서 ${station}을(를) 삭제하시겠습니까?`,
 };
 
 export { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE };
