@@ -27,4 +27,9 @@ export const API_INFO: { [key: string]: APIInfo } = {
     endPoint: 'https://jayon-subway.r-e.kr',
     themeColor: PALETTE.PINK,
   },
+  MOCK: {
+    name: 'JSON',
+    endPoint: 'http://localhost:3000',
+    themeColor: PALETTE.RED,
+  },
 };

@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const apiOwnerSlice = createSlice({
   name: 'api',
   initialState: {
-    owner: Object.keys(API_INFO)[1],
+    owner: Object.keys(API_INFO)[4],
   },
   reducers: {
     changeOwner: (state, action) => {
