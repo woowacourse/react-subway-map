@@ -3,7 +3,7 @@ import { ERROR } from '../constants';
 import { request } from '../utils';
 
 export const fetchUserToken = createAsyncThunk(
-  'userInfo/fetchUserToken',
+  'user/fetchUserToken',
   async (userData, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
@@ -26,7 +26,7 @@ export const fetchUserToken = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-  name: 'userInfo',
+  name: 'user',
   initialState: {
     token: null,
     error: null,
