@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from "react";
 import { ErrorMessage, InputBlock } from "./Input.styles";
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  errorMessage?: string;
+  errorMessage?: string | null;
 }
 
 const Input = ({ errorMessage, ...props }: Props) => {
