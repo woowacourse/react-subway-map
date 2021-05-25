@@ -2,6 +2,7 @@ import { REGEX } from './../constants/validate';
 import { requestSignUp } from './../service/auth';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { SignUpForm } from '../types';
+import useLogin from './useLogin';
 
 const useSignUp = () => {
   const [form, setForm] = useState<SignUpForm>({
@@ -12,21 +13,22 @@ const useSignUp = () => {
   });
 
   const { email, age, password, passwordForValidation } = form;
+  const login = useLogin();
 
-  const setEmail = (event: ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, email: event.target.value });
+  const setEmail = (email: string) => {
+    setForm({ ...form, email });
   };
 
-  const setAge = (event: ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, age: event.target.valueAsNumber });
+  const setAge = (age: number) => {
+    setForm({ ...form, age });
   };
 
-  const setPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, password: event.target.value });
+  const setPassword = (password: string) => {
+    setForm({ ...form, password });
   };
 
-  const setPasswordForValidation = (event: ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, passwordForValidation: event.target.value });
+  const setPasswordForValidation = (passwordForValidation: string) => {
+    setForm({ ...form, passwordForValidation });
   };
 
   const isValidForm = () => {
@@ -36,12 +38,9 @@ const useSignUp = () => {
       REGEX.EMAIL.test(email) && age > 0 && password === passwordForValidation
     );
   };
-  const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
 
-    if (!isValidForm()) {
-      return;
-    }
+  const signUp = async () => {
+    if (!isValidForm()) return;
 
     try {
       await requestSignUp(form);
@@ -51,6 +50,7 @@ const useSignUp = () => {
     }
 
     alert('회원가입에 성공하셨습니다!');
+    login.login({ email, password });
   };
 
   return {
@@ -62,7 +62,7 @@ const useSignUp = () => {
     setAge,
     setPassword,
     setPasswordForValidation,
-    handleSignUp,
+    signUp,
   };
 };
 

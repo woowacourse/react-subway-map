@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { LoginForm } from '../types';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { loginAsyncAction } from '../state/slices/login';
@@ -19,17 +19,16 @@ const useLogin = () => {
   });
   const { email, password } = form;
 
-  const setEmail = (event: ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, email: event.target.value });
+  const setEmail = (email: string) => {
+    setForm({ ...form, email });
   };
 
-  const setPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, password: event.target.value });
+  const setPassword = (password: string) => {
+    setForm({ ...form, password });
   };
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const result = await dispatch(loginAsyncAction.login(form));
+  const login = async (externalForm?: LoginForm) => {
+    const result = await dispatch(loginAsyncAction.login(externalForm ?? form));
 
     if (loginAsyncAction.login.fulfilled.match(result)) {
       alert('로그인에 성공했습니다.');
@@ -40,6 +39,6 @@ const useLogin = () => {
     }
   };
 
-  return { accessToken, email, password, setEmail, setPassword, handleLogin };
+  return { accessToken, email, password, setEmail, setPassword, login };
 };
 export default useLogin;

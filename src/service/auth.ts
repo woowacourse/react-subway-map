@@ -11,6 +11,8 @@ export const requestSignUp = async (
 
     throw new Error(responseText);
   }
+
+  return response;
 };
 
 export const requestLogin = async (form: LoginForm) => {

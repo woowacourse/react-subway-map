@@ -1,5 +1,6 @@
-import { VFC } from 'react';
+import { FormEvent, VFC } from 'react';
 import useLogin from '../../../hooks/useLogin';
+import login from '../../../state/slices/login';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
 import Input from '../../@common/Input/Input';
@@ -9,19 +10,24 @@ import { SignUpLink } from './LoginForm.styles';
 export interface LoginFormProps {}
 
 const LoginForm: VFC<LoginFormProps> = () => {
-  const { email, password, setEmail, setPassword, handleLogin } = useLogin();
+  const { email, password, setEmail, setPassword, login } = useLogin();
+
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    login();
+  };
 
   return (
     <AuthForm title="로그인" onSubmit={handleLogin}>
       <Input
         value={email}
-        onChange={setEmail}
+        onChange={({ target: { value } }) => setEmail(value)}
         placeholder="이메일을 입력해주세요."
       />
       <Input
         type="password"
         value={password}
-        onChange={setPassword}
+        onChange={({ target: { value } }) => setPassword(value)}
         placeholder="비밀번호를 입력해주세요."
       />
       <Button>로그인</Button>
