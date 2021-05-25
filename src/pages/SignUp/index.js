@@ -17,6 +17,7 @@ export const SignUpPage = () => {
         icon={<IconMail />}
         onChange={handleEmailInputChange}
         placeholder="이메일을 입력해주세요"
+        hasMessage
         message=""
       />
       <Input
@@ -26,6 +27,7 @@ export const SignUpPage = () => {
         max="200"
         onChange={handleAgeInputChange}
         placeholder="나이를 입력해주세요"
+        hasMessage
         message=""
       />
       <Input
@@ -33,6 +35,7 @@ export const SignUpPage = () => {
         icon={<IconLock />}
         onChange={handlePasswordInputChange}
         placeholder="비밀번호를 입력해주세요"
+        hasMessage
         message=""
       />
       <ButtonSquare>회원가입</ButtonSquare>

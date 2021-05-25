@@ -1,14 +1,21 @@
 import styled from 'styled-components';
+
 import { COLOR } from '../../../constants';
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+`;
+
 export const Label = styled.label`
-  margin: 1rem;
   position: relative;
 `;
 
 export const InputField = styled.input`
+  padding: 0 1.5rem 0 3.5rem;
   width: 20rem;
-  padding: 0.65rem 1.5rem 0.6rem 3.5rem;
+  height: 2.5rem;
 
   font-size: 1rem;
   color: ${COLOR.TEXT.DEFAULT};
@@ -26,8 +33,14 @@ export const InputField = styled.input`
 
 export const Icon = styled.span`
   position: absolute;
-  top: 0.6rem;
+  top: 0.5rem;
   left: 1.25rem;
 `;
 
-export const Message = styled.span``;
+export const Message = styled.span`
+  padding: 0.5rem 0 0 3.5rem;
+  height: 1.75rem;
+
+  color: ${COLOR.ERROR};
+  font-size: 0.85rem;
+`;
