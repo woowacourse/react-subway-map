@@ -5,9 +5,10 @@ import Button from '../@commons/Button/Button';
 import { useState } from 'react';
 import { REGEXP } from '../../constants/regularExpression';
 import { Station } from '../../interfaces';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../modules';
+import { useDispatch } from 'react-redux';
+
 import { addStationAsync } from '../../modules/station/stationReducer';
+import useStation from '../../hook/useStation';
 
 const getStationNameErrorMessage = (name: string, stations: Station[]) => {
   if (!(2 <= name.length && name.length <= 20)) {
@@ -28,7 +29,7 @@ const getStationNameErrorMessage = (name: string, stations: Station[]) => {
 const AddStationForm = () => {
   const dispatch = useDispatch();
   const [stationName, setStationName] = useState('');
-  const { stations } = useSelector((state: RootState) => state.station);
+  const { stations } = useStation();
   const stationNameErrorMessage = getStationNameErrorMessage(stationName, stations);
   const isValidForm = !stationNameErrorMessage;
 

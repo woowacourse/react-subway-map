@@ -2,13 +2,15 @@ import Input from '../@commons/Input/Input';
 import * as S from './AddLineForm.styles';
 import subwaySVG from '../../assets/svg/subway.svg';
 import Button from '../@commons/Button/Button';
-import { useDispatch, useSelector } from 'react-redux';
+
 import React, { useState } from 'react';
-import { RootState } from '../../modules';
+
 import { Line } from '../../interfaces';
 import { REGEXP } from '../../constants/regularExpression';
 import LineModalForm from './LineModalForm';
 import Modal from '../@commons/Modal/Modal';
+import useStation from '../../hook/useStation';
+import useLine from '../../hook/useLine';
 
 const getLineNameErrorMessage = (name: string, lines: Line[]) => {
   if (!(2 <= name.length && name.length <= 20)) {
@@ -35,17 +37,14 @@ const initLineInfo = {
 };
 
 const AddLineForm = () => {
-  const dispatch = useDispatch();
   const [lineInfo, setLineInfo] = useState(initLineInfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {
-    line: { lines },
-    station: { stations },
-  } = useSelector((state: RootState) => state);
+
+  const { lines } = useLine();
+  const { stations } = useStation();
   const lineNameErrorMessage = getLineNameErrorMessage(lineInfo.name, lines);
   const isValidForm = !lineNameErrorMessage;
 
-  console.log(lineInfo);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | React.MouseEvent<HTMLElement>) => {
     const { name, value } = e.target as HTMLInputElement;
     if (value.slice(-1)[0] === ' ') {

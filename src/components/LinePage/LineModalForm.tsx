@@ -1,5 +1,5 @@
 import React from 'react';
-import { PALETTE, COLOR } from '../../constants/styleConstant';
+import { PALETTE } from '../../constants/styleConstant';
 import { Station } from '../../interfaces';
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';

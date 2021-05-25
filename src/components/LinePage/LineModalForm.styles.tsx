@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { COLOR } from '../../constants/styleConstant';
 
 export const LineModalForm = styled.form`
   width: 100%;
