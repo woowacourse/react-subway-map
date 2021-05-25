@@ -40,11 +40,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (accessToken.isError === false) {
+    if (accessToken?.isError === false) {
       window.alert('로그인에 성공하셨습니다.');
       history.replace({ pathname: ROUTE.HOME });
       dispatch(getSignedUserAsync(accessToken.accessToken));
-    } else if (accessToken.isError === true) {
+    } else if (accessToken?.isError === true) {
       window.alert('존재하지 않는 계정입니다.');
     }
   }, [accessToken]);

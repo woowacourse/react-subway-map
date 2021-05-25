@@ -4,7 +4,7 @@ import { Container, Wrapper } from './ListItem.styles';
 export interface ListItemProps {
   content: string;
   onClickModify?: React.MouseEventHandler<HTMLButtonElement>;
-  onClickDelete?: React.MouseEventHandler<HTMLButtonElement>;
+  onClickDelete?: () => void;
 }
 
 const ListItem = ({ content, onClickModify, onClickDelete }: ListItemProps) => {

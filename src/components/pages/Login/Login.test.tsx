@@ -18,7 +18,6 @@ describe('Login', () => {
       accessToken: null,
 
       isError: null,
-      text: null,
       status: null,
     };
 
@@ -53,7 +52,6 @@ describe('Login', () => {
       accessToken: null,
 
       isError: null,
-      text: null,
       status: null,
     };
 
