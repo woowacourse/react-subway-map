@@ -14,6 +14,8 @@ export { IconPerson } from './atoms/IconPerson';
 export { IconPlus } from './atoms/IconPlus';
 export { IconSearch } from './atoms/IconSearch';
 export { IconSetting } from './atoms/IconSetting';
+export { IconSubway } from './atoms/IconSubway';
+export { IconTrashCan } from './atoms/IconTrashCan';
 export { IconWindow } from './atoms/IconWindow';
 export { Input } from './atoms/Input';
 export { Modal } from './atoms/Modal';
