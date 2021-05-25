@@ -1,6 +1,5 @@
 import { FormEvent, VFC } from 'react';
 import useLogin from '../../../hooks/useLogin';
-import login from '../../../state/slices/login';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
 import Input from '../../@common/Input/Input';
