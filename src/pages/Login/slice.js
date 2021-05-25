@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
 import {
   ENDPOINT,
-  SIGNUP_STATUS_INFO,
+  LOGIN_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -17,12 +17,8 @@ export const login = createAsyncThunk(
 
       const { accessToken, message } = await response.json();
 
-      if (response.status === 200) {
+      if (response.status === LOGIN_SUCCEED.CODE) {
         return accessToken;
-      }
-
-      if (response.status in SIGNUP_STATUS_INFO) {
-        return rejectWithValue(SIGNUP_STATUS_INFO[response.status].MESSAGE);
       }
 
       return rejectWithValue(message);
@@ -54,7 +50,7 @@ const loginSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
-      state.message = SIGNUP_STATUS_INFO[200].MESSAGE;
+      state.message = LOGIN_SUCCEED.MESSAGE;
       state.accessToken = action.payload;
 
       // TODO: accessToken localStorage 저장 (시간도 같이)

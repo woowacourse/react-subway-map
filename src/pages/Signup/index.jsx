@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PATH from "../../constants/path";
@@ -33,16 +33,18 @@ const Signup = () => {
     dispatch(signup({ email, password, age }));
   };
 
-  if (status === STATUS.SUCCEED) {
-    alert(message);
-    dispatch(reset());
-    history.push(PATH.LOGIN);
-  }
+  useEffect(() => {
+    if (status === STATUS.SUCCEED) {
+      alert(message);
+      dispatch(reset());
+      history.push(PATH.LOGIN);
+    }
 
-  if (status === STATUS.FAILED) {
-    alert(message);
-    dispatch(reset());
-  }
+    if (status === STATUS.FAILED) {
+      alert(message);
+      dispatch(reset());
+    }
+  }, [status, message, dispatch, history]);
 
   return (
     <>

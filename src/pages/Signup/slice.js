@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
 import {
   ENDPOINT,
-  SIGNUP_STATUS_INFO,
+  SIGNUP_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -15,21 +15,17 @@ export const signup = createAsyncThunk(
         body: { email, password, age },
       });
 
-      if (response.status === 201) {
-        return SIGNUP_STATUS_INFO[response.status].MESSAGE;
+      if (response.status === SIGNUP_SUCCEED.CODE) {
+        return;
       }
 
-      if (response.status in SIGNUP_STATUS_INFO) {
-        return rejectWithValue(SIGNUP_STATUS_INFO[response.status].MESSAGE);
-      }
+      const { message } = await response.json();
 
-      const body = await response.json();
-
-      return rejectWithValue(body.message);
+      rejectWithValue(message);
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      rejectWithValue(UNKNOWN_ERROR_MESSAGE);
     }
   }
 );
@@ -50,9 +46,9 @@ const signupSlice = createSlice({
     [signup.pending]: (state) => {
       state.status = STATUS.LOADING;
     },
-    [signup.fulfilled]: (state, action) => {
+    [signup.fulfilled]: (state) => {
       state.status = STATUS.SUCCEED;
-      state.message = action.payload;
+      state.message = SIGNUP_SUCCEED.MESSAGE;
     },
     [signup.rejected]: (state, action) => {
       state.status = STATUS.FAILED;

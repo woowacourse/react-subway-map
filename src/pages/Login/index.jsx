@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useInput } from "../../components/@shared/Input/hooks";
@@ -22,16 +22,19 @@ const Login = () => {
     dispatch(login({ email, password }));
   };
 
-  if (status === STATUS.SUCCEED) {
-    alert(message);
-    dispatch(reset());
-    history.push(PATH.STATIONS);
-  }
+  useEffect(() => {
+    if (status === STATUS.SUCCEED) {
+      alert(message);
+      dispatch(reset());
 
-  if (status === STATUS.FAILED) {
-    alert(message);
-    dispatch(reset());
-  }
+      history.push(PATH.STATIONS);
+    }
+
+    if (status === STATUS.FAILED) {
+      alert(message);
+      dispatch(reset());
+    }
+  }, [status, message, dispatch, history]);
 
   return (
     <>
