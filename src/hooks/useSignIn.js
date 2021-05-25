@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { fetchUserToken } from '../redux/userSlice';
+import { fetchStations, fetchUserToken } from '../redux';
 import { LS_KEY, ROUTE } from '../constants';
 import { setLocalStorage } from '../utils';
 
@@ -14,8 +14,9 @@ const useSignIn = () => {
     if (token) {
       setLocalStorage(LS_KEY.TOKEN, token);
       history.push(ROUTE.HOME.PATH);
+      dispatch(fetchStations());
     }
-  }, [token, history]);
+  }, [token, history, dispatch]);
 
   const signIn = ({ email, password }) =>
     dispatch(fetchUserToken({ email, password }));

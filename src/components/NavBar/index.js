@@ -14,8 +14,8 @@ const privateRoutes = [
 ];
 
 const Menu = () => {
-  const userToken = useSelector(({ user }) => user.token);
-  const routes = userToken ? privateRoutes : publicRoutes;
+  const { token } = useSelector(({ user }) => user);
+  const routes = token ? privateRoutes : publicRoutes;
 
   return (
     <List>
