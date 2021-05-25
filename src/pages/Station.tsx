@@ -8,7 +8,7 @@ import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addStationAsync, getStationAsync } from 'redux/stationSlice';
+import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
 import { StationInterface } from 'types';
 
 interface Stations {
@@ -47,6 +47,16 @@ const Station = () => {
     }
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      await dispatch(deleteStationAsync({ id }));
+
+      alert('역 삭제에 성공하였습니다.');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   useEffect(() => {
     dispatch(getStationAsync());
   }, [dispatch]);
@@ -68,7 +78,7 @@ const Station = () => {
       <hr />
       {/* TODO [백엔드] 백엔드 크루들에게 역 정렬 순서를 생성 순으로 해달라고 요청하기 */}
       {stations?.map((station: StationInterface) => (
-        <ListItem key={station.id} title={station.name} />
+        <ListItem onDelete={handleDelete} key={station.id} id={station.id} title={station.name} />
       ))}
     </Container>
   );

@@ -20,9 +20,9 @@ const Line = () => {
           <Title text="🛤️ 지하철 노선 관리" />
           <ImageButton imgUrl={addImg} />
         </div>
-        <ListItem title="2호선" editImg={editImg} itemColor="bg-red-400" />
+        {/* <ListItem title="2호선" editImg={editImg} itemColor="bg-red-400" />
         <ListItem title="신분당선" editImg={editImg} itemColor="bg-blue-400" />
-        <ListItem title="리액트선" editImg={editImg} itemColor="bg-gray-400" />
+        <ListItem title="리액트선" editImg={editImg} itemColor="bg-gray-400" /> */}
       </Container>
       <ModalPortal>
         <AddLineModal />

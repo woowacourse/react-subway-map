@@ -8,7 +8,7 @@ const URL = {
 };
 
 const API = axios.create({
-  baseURL: URL.KODA,
+  baseURL: URL.PK,
 });
 
 export default API;

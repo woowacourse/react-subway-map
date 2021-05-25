@@ -2,12 +2,18 @@ import React from 'react';
 import delImg from 'assets/images/trash.png';
 
 interface ListItemProps {
+  id: number;
   title: string;
   editImg?: string | null;
   itemColor?: string | null;
+  onDelete: (id: number) => void;
 }
 
-const ListItem = ({ title, editImg, itemColor }: ListItemProps) => {
+const ListItem = ({ id, onDelete, title, editImg, itemColor }: ListItemProps) => {
+  const handleDelete = () => {
+    onDelete(id);
+  };
+
   return (
     <li className="flex items-center justify-between p-3 border-b border-gray-200">
       <div className="flex items-center">
@@ -20,7 +26,11 @@ const ListItem = ({ title, editImg, itemColor }: ListItemProps) => {
             <img src={editImg} alt="editImg" />
           </button>
         )}
-        <button className="flex items-center focus:outline-none hover:opacity-100 opacity-30" type="button">
+        <button
+          onClick={handleDelete}
+          className="flex items-center focus:outline-none hover:opacity-100 opacity-30"
+          type="button"
+        >
           <img src={delImg} alt="deleteImg" />
         </button>
       </div>
