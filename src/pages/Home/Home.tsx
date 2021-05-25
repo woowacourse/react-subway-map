@@ -2,12 +2,11 @@ import React, { ChangeEvent, FC } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
-import StyledLink from '../../components/@shared/StyledLink/StyledLink';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
-import { changeOwner } from '../../redux/apiSlice';
+import { THEME_COLOR } from '../../constants/appInfo';
+import { changeOwner } from '../../redux/apiOwnerSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
-import { APIList, HomeLinkContainer } from './Home.styles';
+import { APIList } from './Home.styles';
 
 const Home: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
@@ -35,10 +34,6 @@ const Home: FC = () => {
           </li>
         ))}
       </APIList>
-      <HomeLinkContainer justifyContent="center">
-        <StyledLink to={PAGE_INFO.LOGIN.path}>{PAGE_INFO.LOGIN.text}</StyledLink>
-        <StyledLink to={PAGE_INFO.SIGN_UP.path}>{PAGE_INFO.SIGN_UP.text}</StyledLink>
-      </HomeLinkContainer>
     </CardTemplate>
   );
 };

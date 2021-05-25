@@ -1,11 +1,11 @@
-import { API_INFO } from './../constants/api';
+import { API_INFO } from '../constants/api';
 import { createSlice } from '@reduxjs/toolkit';
 
 //TODO: owner를 localStorage에 저장해두고 불러와서 초기값 설정
-export const apiSlice = createSlice({
+export const apiOwnerSlice = createSlice({
   name: 'api',
   initialState: {
-    owner: Object.keys(API_INFO)[0],
+    owner: Object.keys(API_INFO)[1],
   },
   reducers: {
     changeOwner: (state, action) => {
@@ -15,6 +15,6 @@ export const apiSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { changeOwner } = apiSlice.actions;
+export const { changeOwner } = apiOwnerSlice.actions;
 
-export default apiSlice.reducer;
+export default apiOwnerSlice.reducer;

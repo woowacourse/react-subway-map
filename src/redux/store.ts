@@ -1,11 +1,11 @@
-import apiReducer from './apiSlice';
+import apiReducer from './apiOwnerSlice';
+import loginReducer from './loginSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 const rootReducer = combineReducers({
   api: apiReducer,
-  // stations: station.reducer,
-  // lines: line.reducer,
+  login: loginReducer,
 });
 
 const store = configureStore({

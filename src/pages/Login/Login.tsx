@@ -9,9 +9,8 @@ import Input from '../../components/@common/Input/Input';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import { SESSION_STORAGE_KEY } from '../../constants/storage';
-import { RootState } from '../../redux/store';
-import { setSessionStorageItem } from '../../storage/sessionStorage';
+import { login } from '../../redux/loginSlice';
+import { RootState, useAppDispatch } from '../../redux/store';
 import {
   LoginButton,
   LoginContainer,
@@ -27,6 +26,7 @@ interface LoginFormTarget extends EventTarget {
 
 const Login: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -40,8 +40,8 @@ const Login: FC = () => {
 
     try {
       const response = await requestLogin(loginInfo, API_INFO[apiOwner as string].endPoint);
+      dispatch(login(response.data.accessToken));
 
-      setSessionStorageItem(SESSION_STORAGE_KEY.ACCESS_TOKEN, response.data.accessToken);
       history.push(PAGE_INFO.STATIONS.path);
     } catch (error) {
       setErrorMessage(ERROR_MESSAGE.LOGIN_FAILURE);

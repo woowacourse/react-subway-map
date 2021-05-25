@@ -1,14 +1,28 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { PAGE_INFO } from '../../../constants/appInfo';
+import { logout } from '../../../redux/loginSlice';
+import { RootState, useAppDispatch } from '../../../redux/store';
 import { Page } from '../../../types';
 import StyledLink from '../StyledLink/StyledLink';
-import { NavList } from './Navigation.styles';
+import { NavButton, NavList } from './Navigation.styles';
 
 interface Props {
   navInfoList: Page[];
 }
 
 const Navigation: FC<Props> = ({ navInfoList }) => {
+  const isLogin = useSelector((state: RootState) => state.login.isLogin);
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const onLogout = () => {
+    dispatch(logout());
+    history.push(PAGE_INFO.HOME.path);
+  };
+
   return (
     <nav>
       <NavList>
@@ -17,6 +31,15 @@ const Navigation: FC<Props> = ({ navInfoList }) => {
             <StyledLink to={navInfo.path}>{navInfo.text}</StyledLink>
           </li>
         ))}
+        <li>
+          {isLogin ? (
+            <NavButton type="button" onClick={onLogout} isColored={false}>
+              로그아웃
+            </NavButton>
+          ) : (
+            <StyledLink to={PAGE_INFO.LOGIN.path}>{PAGE_INFO.LOGIN.text}</StyledLink>
+          )}
+        </li>
       </NavList>
     </nav>
   );
