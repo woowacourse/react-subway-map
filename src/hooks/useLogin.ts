@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { LoginForm } from '../types';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { loginAsyncAction } from '../state/slices/login';
+import { useHistory } from 'react-router';
 
 const useLogin = () => {
   const { accessToken, error } = useAppSelector(
@@ -11,6 +12,7 @@ const useLogin = () => {
     })
   );
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const [form, setForm] = useState<LoginForm>({
     email: '',
     password: '',
@@ -31,7 +33,8 @@ const useLogin = () => {
 
     if (loginAsyncAction.login.fulfilled.match(result)) {
       alert('로그인에 성공했습니다.');
-      // history.push( 메인화면 아니면 뒤로가 )
+
+      history.push('/station');
     } else {
       alert(error);
     }

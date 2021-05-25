@@ -1,6 +1,6 @@
 import { styled } from '@storybook/theming';
-import PALETTE from '../../../../../constants/palette';
-import Button from '../../../../@common/Button/Button.styles';
+import PALETTE from '../../../../constants/palette';
+import Button from '../../../@common/Button/Button.styles';
 
 export const StyledLineListItem = styled.li`
   display: flex;

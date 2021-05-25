@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import SignUpForm, { SignUpFormProps } from './SignUpForm';
+import SignUpForm from './SignUpForm';
 
 export default {
   title: 'Components/SignUp/SignUpForm',
@@ -9,12 +9,10 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SignUpFormProps> = (args) => {
+const Template: Story = (args) => {
   return <SignUpForm {...args} />;
 };
 
 export const Default = Template.bind({});
 
-Default.args = {
-  title: 'test',
-};
+Default.args = {};
