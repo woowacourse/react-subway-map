@@ -47,7 +47,7 @@ interface APIReturnTypeLine {
   sections: APIReturnTypeSection[];
 }
 
-const API_HOST = 'NABOM';
+const API_HOST = 'KROPPLE';
 
 const request = async (url: string, requestConfig: RequestInit) => {
   const response = await fetch(url, requestConfig);

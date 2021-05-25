@@ -25,6 +25,7 @@ import {
   Form,
   List,
   StationSelects,
+  StationSelectError,
 } from './LinePage.style';
 import Palette from '../../components/Palette/Palette';
 import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
@@ -65,6 +66,36 @@ const LinePage = () => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
+
+  // TODO: 매직넘버 싹 다 ㄱ
+  const isLineNameValid =
+    lineName.length > 1 && lineName.length < 11 && /^[가-힣0-9]+$/.test(lineName);
+  const isLineNameDuplicated = lines.some((item) => item.name === lineName);
+  const isStationSelectDuplicated = upStationId === downStationId;
+  const isDistanceValid =
+    /^[0-9]+$/.test(distance) && Number(distance) > 0 && Number(distance) < 301;
+
+  const lineNameErrorMessage =
+    lineName &&
+    (!isLineNameValid
+      ? ERROR_MESSAGE.INVALID_LINE_INPUT
+      : isLineNameDuplicated
+      ? ERROR_MESSAGE.DUPLICATED_LINE_NAME
+      : '');
+  const stationSelectErrorMessage =
+    upStationId && downStationId && isStationSelectDuplicated
+      ? ERROR_MESSAGE.DUPLICATED_TERMINAL
+      : '';
+  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
+  const isFormCompleted =
+    lineName &&
+    upStationId &&
+    downStationId &&
+    distance &&
+    isLineNameValid &&
+    !isLineNameDuplicated &&
+    !isStationSelectDuplicated &&
+    isDistanceValid;
 
   const reset = () => {
     setLineName('');
@@ -111,10 +142,13 @@ const LinePage = () => {
   const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    // TODO: form Validation Check
+    const formElement = event.currentTarget;
+    const color = formElement['color'].value;
 
-    //TODO: as 제거하기, form target elements.
-    const color = (event.target as HTMLFormElement)['color'].value; // as
+    if (!isFormCompleted || !color) {
+      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
+      return;
+    }
 
     try {
       const newLine = {
@@ -124,11 +158,14 @@ const LinePage = () => {
         downStationId: Number(downStationId),
         distance: Number(distance),
       };
+
       const response = await apiRequest.addLine(newLine);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
-      fetchLines();
+      await fetchLines();
+
       reset();
+      formElement.reset();
       setFormOpen(false);
     } catch (error) {
       console.error(error);
@@ -165,39 +202,48 @@ const LinePage = () => {
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Form onSubmit={onLineSubmit}>
-          <InputContainer labelText="노선 이름">
+          <InputContainer
+            labelText="노선 이름"
+            validation={{ text: lineNameErrorMessage, isValid: false }}
+          >
             <Input value={lineName} onChange={onlineNameChange} />
           </InputContainer>
           <StationSelects>
-            <InputContainer labelText="상행 종점">
-              <Select value={upStationId} onChange={onUpStationIdChange}>
-                <option value="/" hidden>
-                  역 선택
-                </option>
-                {stations.map((station) => (
-                  <option key={station.id} value={station.id}>
-                    {station.name}
+            <div>
+              <InputContainer labelText="상행 종점">
+                <Select value={upStationId} onChange={onUpStationIdChange}>
+                  <option value="/" hidden>
+                    역 선택
                   </option>
-                ))}
-              </Select>
-            </InputContainer>
-            <Icon>
-              <MdArrowForward size="1.5rem" />
-            </Icon>
-            <InputContainer labelText="하행 종점">
-              <Select value={downStationId} onChange={onDownStationIdChange}>
-                <option value="/" hidden>
-                  역 선택
-                </option>
-                {stations.map((station) => (
-                  <option key={station.id} value={station.id}>
-                    {station.name}
+                  {stations.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </Select>
+              </InputContainer>
+              <Icon>
+                <MdArrowForward size="1.5rem" />
+              </Icon>
+              <InputContainer labelText="하행 종점">
+                <Select value={downStationId} onChange={onDownStationIdChange}>
+                  <option value="/" hidden>
+                    역 선택
                   </option>
-                ))}
-              </Select>
-            </InputContainer>
+                  {stations.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </Select>
+              </InputContainer>
+            </div>
+            <StationSelectError>{stationSelectErrorMessage}</StationSelectError>
           </StationSelects>
-          <InputContainer labelText="거리 (단위:km)">
+          <InputContainer
+            labelText="거리 (단위:km)"
+            validation={{ text: distanceErrorMessage, isValid: false }}
+          >
             <Input value={distance} onChange={onDistanceChange} />
           </InputContainer>
           <InputContainer labelText="색상을 선택하세요 (이미 등록된 색상은 선택할 수 없습니다.)">
