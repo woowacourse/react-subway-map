@@ -4,11 +4,11 @@ import mailSVG from '../../assets/svg/mail.svg';
 import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectServer } from '../../modules/user/userReducer';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState } from '../../modules';
 
 const getEmailErrorMessage = (email: string) => {
@@ -30,13 +30,25 @@ const getPasswordErrorMessage = (password: string) => {
 };
 
 const SignInForm = () => {
-  const isServerSelected = useSelector((state: RootState) => Boolean(state.user.serverName));
+  const { serverName, error, accessToken } = useSelector((state: RootState) => state.user);
+  const isServerSelected = Boolean(serverName);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+
+    if (accessToken) {
+      history.push(ROUTE.STATION);
+    }
+  }, [error, accessToken]);
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     SERVER.URL = e.target.value;
@@ -47,14 +59,10 @@ const SignInForm = () => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
 
-  const handleLogIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = loginInfo;
-    try {
-      dispatch(loginAsync({ email, password }));
-    } catch (error) {
-      alert(error.message);
-    }
+    dispatch(loginAsync({ email, password }));
   };
 
   const emailErrorMessage = getEmailErrorMessage(loginInfo.email);

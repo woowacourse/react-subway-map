@@ -29,15 +29,26 @@ interface SignIn {
   password: string;
 }
 
+interface SignInResponse {
+  status: number;
+  data: {
+    message: string;
+    accessToken: string;
+  };
+}
+
 export const signIn = async ({ email, password }: SignIn) => {
   const data = {
     email: email,
     password: password,
   };
   try {
-    const response: { accessToken: string } = await axios.post(API.SIGN_IN(), data);
-    return response.accessToken;
+    const response: SignInResponse = await axios.post(API.SIGN_IN(), data);
+    if (!response.data.accessToken) {
+      throw new Error('로그인에 실패하였습니다.');
+    }
+    return { accessToken: response.data.accessToken };
   } catch (error) {
-    return RESPONSE.FAILURE;
+    return { error: error.message ?? RESPONSE.FAILURE };
   }
 };

@@ -14,11 +14,15 @@ export interface LoginAsyncAction {
   password: string;
 }
 
+export interface ErrorAction {
+  error: string;
+}
 interface UserState {
   serverName: string;
   baseURL: string;
   email: string;
   accessToken: string;
+  error: string;
 }
 
 const initialState = {
@@ -26,6 +30,7 @@ const initialState = {
   baseURL: '',
   email: '',
   accessToken: '',
+  error: '',
 } as UserState;
 
 export const userSlice = createSlice({
@@ -41,17 +46,24 @@ export const userSlice = createSlice({
       state.accessToken = action.payload.accessToken;
     },
     logout: () => initialState,
-    loginAsync: (state, action: PayloadAction<LoginAsyncAction>) => {
-      if (current(state).accessToken === '') {
-        throw new Error('로그인에 실패하였습니다.\n잠시 후 다시 시도해주세요.');
-      }
+    loginAsync: (state, action: PayloadAction<LoginAsyncAction>) => {},
+    error: (state, action: PayloadAction<ErrorAction>) => {
+      state.error = action.payload.error;
+    },
+    pending: state => {
+      state.error = '';
     },
   },
 });
 
 export type userAction = ReturnType<
-  typeof userSlice.actions.selectServer | typeof userSlice.actions.login | typeof userSlice.actions.logout
+  | typeof userSlice.actions.selectServer
+  | typeof userSlice.actions.login
+  | typeof userSlice.actions.logout
+  | typeof userSlice.actions.loginAsync
+  | typeof userSlice.actions.error
+  | typeof userSlice.actions.pending
 >;
 
-export const { selectServer, login, loginAsync, logout } = userSlice.actions;
+export const { selectServer, login, loginAsync, logout, error, pending } = userSlice.actions;
 export default userSlice.reducer;
