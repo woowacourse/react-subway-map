@@ -6,6 +6,7 @@ import {
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
+import { getSavedAccessToken, saveAccessToken } from "./localStorage";
 
 export const login = createAsyncThunk(
   "login/login",
@@ -30,10 +31,9 @@ export const login = createAsyncThunk(
   }
 );
 
-// TODO: accessToken localStorage 최초로드 (1시간 지났으면 null으로 세팅)
 const initialState = {
   status: STATUS.IDLE,
-  accessToken: null,
+  accessToken: getSavedAccessToken(),
   message: "",
   error: null,
 };
@@ -53,7 +53,7 @@ const loginSlice = createSlice({
       state.message = LOGIN_SUCCEED.MESSAGE;
       state.accessToken = action.payload;
 
-      // TODO: accessToken localStorage 저장 (시간도 같이)
+      saveAccessToken(action.payload);
     },
     [login.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
