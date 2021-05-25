@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Button, ButtonSquare, IconSubway, IconTrashCan, Input, Section, Select } from '../../components';
+import { Button, ButtonSquare, IconSubway, IconTrashCan, Input, Section } from '../../components';
 import { Form, List, Item, Name } from './style';
 
 const StationListItem = (props) => {
@@ -30,7 +30,8 @@ export const StationPage = (props) => {
   return (
     <Section heading="지하철 역 관리">
       <Form onSubmit={handleAddStation}>
-        <Input type="text" name="name" icon={<IconSubway />} placeholder="지하철 역 이름을 입력해주세요." />
+        {/* eslint-disable jsx-a11y/no-autofocus */}
+        <Input type="text" name="name" icon={<IconSubway />} placeholder="지하철 역 이름을 입력해주세요." autoFocus />
         <ButtonSquare>추가</ButtonSquare>
       </Form>
       <List>
