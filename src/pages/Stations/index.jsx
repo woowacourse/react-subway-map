@@ -7,17 +7,19 @@ import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
 import Loading from "../../components/@shared/Loading";
 import { useStationName } from "./hooks";
 import {
-  addStation,
   selectStationsStatus,
   selectStationsMessage,
+  selectStationsList,
+  addStation,
   fetchStations,
+  deleteStationById,
 } from "./slice";
 
 const Stations = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectStationsStatus);
   const message = useSelector(selectStationsMessage);
-  const list = useSelector((state) => state.stations.list);
+  const list = useSelector(selectStationsList);
   const [stationName, handleStationNameChange, isStationNameValid] =
     useStationName();
 
@@ -35,6 +37,14 @@ const Stations = () => {
     event.preventDefault();
 
     dispatch(addStation(stationName));
+  };
+
+  const handleDelete = (event) => {
+    const { name: id, value } = event.target;
+
+    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
+      dispatch(deleteStationById(id));
+    }
   };
 
   return (
@@ -71,6 +81,9 @@ const Stations = () => {
                   <button
                     type="button"
                     className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+                    name={id}
+                    value={name}
+                    onClick={handleDelete}
                   >
                     🗑
                   </button>

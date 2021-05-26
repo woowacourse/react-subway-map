@@ -4,6 +4,7 @@ import {
   ENDPOINT,
   STATIONS_ADD_SUCCEED,
   STATIONS_GET_SUCCEED,
+  STATIONS_DELETE_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -11,6 +12,7 @@ import { selectAccessToken } from "../Login/slice";
 
 export const selectStationsStatus = (state) => state.stations.status;
 export const selectStationsMessage = (state) => state.stations.message;
+export const selectStationsList = (state) => state.stations.list;
 
 export const addStation = createAsyncThunk(
   "stations/addStation",
@@ -63,6 +65,31 @@ export const fetchStations = createAsyncThunk(
   }
 );
 
+export const deleteStationById = createAsyncThunk(
+  "stations/deleteStationById",
+  async (_, { rejectWithValue, getState }) => {
+    const accessToken = selectAccessToken(getState());
+
+    try {
+      const response = await http.delete(ENDPOINT.STATIONS, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === STATIONS_DELETE_SUCCEED.CODE) {
+        return;
+      }
+
+      const { message } = await response.json();
+
+      rejectWithValue(message);
+    } catch (error) {
+      console.error(error);
+
+      rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+    }
+  }
+);
+
 const initialState = {
   status: STATUS.IDLE,
   error: null,
@@ -95,6 +122,17 @@ const stationsSlice = createSlice({
       state.list = action.payload;
     },
     [fetchStations.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.error = action.error;
+      state.message = action.payload;
+    },
+    [deleteStationById.pending]: (state) => {
+      state.status = STATUS.LOADING;
+    },
+    [deleteStationById.fulfilled]: (state) => {
+      state.status = STATUS.SUCCEED;
+    },
+    [deleteStationById.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;
