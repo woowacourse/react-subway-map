@@ -9,7 +9,7 @@ import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
-import { loadLines } from '../../redux/lineSlice';
+import { deleteLine, loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
 
@@ -27,6 +27,10 @@ const Lines: FC = () => {
     modal.openModal();
   };
 
+  const onDeleteLine = (lineId: number) => () => {
+    dispatch(deleteLine({ baseURL: API_INFO[apiOwner].endPoint, lineId }));
+  };
+
   return (
     <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={THEME_COLOR[400]}>
       <ButtonOnLine onClick={onOpenCreationModal}>
@@ -37,7 +41,7 @@ const Lines: FC = () => {
           {lines.map((line) => (
             <ListItem
               key={line.id}
-              onDelete={() => console.log(line.name)}
+              onDelete={onDeleteLine(line.id)}
               onModify={() => console.log(line.name)}
             >
               <LineColorDot dotColor={line.color} />

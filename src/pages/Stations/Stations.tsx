@@ -24,7 +24,7 @@ const Stations: FC = () => {
   const isValidStationInput = stationInput !== '' && errorMessage === '';
 
   useEffect(() => {
-    if (stations === null) {
+    if (stations.length === 0) {
       dispatch(loadStations(API_INFO[apiOwner].endPoint));
     }
   }, []);

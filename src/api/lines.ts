@@ -16,3 +16,6 @@ export const requestAddLine = (
   baseURL: string,
   addLineRequestData: AddLineRequestData
 ): Promise<AxiosResponse<Line[]>> => axios.post(`${baseURL}/lines`, addLineRequestData);
+
+export const requestDeleteLine = (baseURL: string, lineId: number): Promise<AxiosResponse> =>
+  axios.delete(`${baseURL}/lines/${lineId}`);
