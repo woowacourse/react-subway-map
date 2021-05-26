@@ -16,15 +16,18 @@ export default () => {
     setModalOpen(false);
   }, []);
 
-  const Modal = ({ children, ...props }: IProps) => {
-    if (!isModalOpen) return null;
+  const Modal = useCallback(
+    ({ children, ...props }: IProps) => {
+      if (!isModalOpen) return null;
 
-    return (
-      <ModalComponent onClose={closeModal} {...props}>
-        {children}
-      </ModalComponent>
-    );
-  };
+      return (
+        <ModalComponent onClose={closeModal} {...props}>
+          {children}
+        </ModalComponent>
+      );
+    },
+    [closeModal, isModalOpen]
+  );
 
   return { Modal, isModalOpen, openModal, closeModal };
 };

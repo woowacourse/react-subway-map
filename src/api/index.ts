@@ -5,14 +5,16 @@ import { CREWS } from '../types';
 const getAccessToken = () => localStorage.getItem('accessToken');
 const createHeaders = () => {
   const token = getAccessToken();
-
   if (token) {
     return {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
   }
 
-  return {};
+  return {
+    'Content-Type': 'application/json',
+  };
 };
 
 const API = {

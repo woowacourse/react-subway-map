@@ -1,12 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API from '../api';
 import LOCAL_STORAGE_KEYS from '../constants/localStorageKeys';
-import { ApiStatus, CREWS } from '../types';
-
-interface LoginError {
-  message: string;
-  status: number;
-}
+import { ApiStatus, CREWS, Error } from '../types';
 
 interface LoginData {
   accessToken: string;
@@ -26,7 +21,7 @@ export interface AuthState {
   accessToken: string;
   server: CREWS;
   isLogin: boolean;
-  error: LoginError | null;
+  error: Error | null;
 }
 
 const persistAccessToken = window.localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
@@ -44,15 +39,20 @@ export const requestLogin = createAsyncThunk<
   LoginData,
   LoginAttributes,
   {
-    rejectValue: LoginError;
+    rejectValue: Error;
   }
 >('auth/requestLogin', async (loginData: LoginAttributes, { rejectWithValue }) => {
   const { server, form } = loginData;
 
   try {
     const response = await API[server].post('/login', form);
+    const { accessToken } = response.data;
 
-    return { accessToken: response.data.accessToken, server };
+    API[server].defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, server);
+
+    return { accessToken, server };
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
@@ -65,6 +65,11 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isLogin = false;
       state.accessToken = '';
+
+      localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, '');
+    },
+    resetError: (state) => {
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -85,11 +90,11 @@ export const authSlice = createSlice({
       state.status = ApiStatus.REJECTED;
       state.accessToken = '';
       state.isLogin = false;
-      state.error = payload as LoginError;
+      state.error = payload as Error;
     });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetError } = authSlice.actions;
 
 export default authSlice.reducer;
