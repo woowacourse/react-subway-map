@@ -1,3 +1,4 @@
+import { StationId } from './../types';
 import APIClient from '../API/API';
 import { Station, StationForm } from '../types';
 
@@ -28,4 +29,20 @@ export const requestAddStation = async (
   }
 
   return response.json();
+};
+
+export const requestDeleteStation = async (
+  stationId: StationId,
+  accessToken: string
+) => {
+  const response = await APIClient.delete(
+    `/stations/${stationId}`,
+    accessToken
+  );
+
+  if (!response.ok) {
+    const responseText = await response.text();
+
+    throw new Error(responseText);
+  }
 };

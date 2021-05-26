@@ -18,7 +18,7 @@ export interface StationForm {
   name: string;
 }
 
-type StationId = number;
+export type StationId = number;
 
 export interface Station extends StationForm {
   id: StationId;

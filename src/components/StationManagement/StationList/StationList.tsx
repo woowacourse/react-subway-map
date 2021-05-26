@@ -4,15 +4,19 @@ import { Station } from '../../../types';
 import useStation from '../../../hooks/useStation';
 
 const StationList = () => {
-  const { stations } = useStation();
+  const { stations, deleteStation } = useStation();
 
   return (
     <StyledStationList>
       {stations.isLoading ? (
         <div>로딩중</div>
       ) : (
-        (stations.data as Station[]).map(({ name }) => (
-          <StationListItem name={name} onDelete={() => {}} />
+        (stations.data as Station[]).map(({ id, name }) => (
+          <StationListItem
+            key={id}
+            name={name}
+            onDelete={() => deleteStation(id)}
+          />
         ))
       )}
     </StyledStationList>

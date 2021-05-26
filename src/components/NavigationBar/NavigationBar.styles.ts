@@ -7,11 +7,6 @@ import Container from '../@common/Container/Container.styles';
 export const NavigationBarContainer = styled(Container)`
   height: 5.125rem;
   position: relative;
-  /* position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0 1rem; */
   background-color: white;
   z-index: ${Z_INDEX.FOREGROUND};
   align-items: center;

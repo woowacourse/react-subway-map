@@ -1,13 +1,33 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { requestStations } from '../service/station';
-import { StationForm } from '../types';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  requestAddStation,
+  requestDeleteStation,
+  requestStations,
+} from '../service/station';
+import { StationForm, StationId } from '../types';
 import useLogin from './useLogin';
 
 const useStation = () => {
-  const { accessToken } = useLogin();
   const [form, setForm] = useState<StationForm>({ name: '' });
   const { name } = form;
+  const { accessToken } = useLogin();
+  const queryClient = useQueryClient();
+
+  const addMutation = useMutation(() => requestAddStation(form, accessToken), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('requestStations');
+    },
+  });
+
+  const deleteMutation = useMutation(
+    (stationId: StationId) => requestDeleteStation(stationId, accessToken),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('requestStations');
+      },
+    }
+  );
 
   const stations = useQuery('requestStations', () =>
     requestStations(accessToken)
@@ -18,10 +38,23 @@ const useStation = () => {
   };
 
   const addStation = () => {
-    //
+    addMutation.mutate();
   };
 
-  return { stations, name, setName };
+  const deleteStation = (stationId: StationId) => {
+    deleteMutation.mutate(stationId);
+  };
+
+  const isAddStationError = addMutation.error;
+
+  return {
+    stations,
+    name,
+    setName,
+    addStation,
+    isAddStationError,
+    deleteStation,
+  };
 };
 
 export default useStation;

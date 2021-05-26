@@ -11,7 +11,10 @@ const StationListItem: VFC<Props> = ({ name, onDelete }) => {
   return (
     <StyledStationListItem>
       <span>{name}</span>
-      <IconButton iconUrl={`${process.env.PUBLIC_URL}/icons/trash-bin.svg`} />
+      <IconButton
+        onClick={onDelete}
+        iconUrl={`${process.env.PUBLIC_URL}/icons/trash-bin.svg`}
+      />
     </StyledStationListItem>
   );
 };
