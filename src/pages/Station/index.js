@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStations } from '../../redux/stationSlice';
+import { getStations, addStation, clearAddSuccess, removeStation } from '../../redux/stationSlice';
 
 import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
 import { Form, List } from './style';
 import { STATION } from '../../constants';
 
 export const StationPage = (props) => {
-  const { server } = props;
+  const { endpoint } = props;
 
   const dispatch = useDispatch();
-  const { stations } = useSelector((store) => store.station);
+  const { stations, isAddSuccess } = useSelector((store) => store.station);
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
+  const ref = useRef();
 
   const handleStationNameInputChange = (e) => {
     const stationName = e.target.value;
@@ -22,24 +23,35 @@ export const StationPage = (props) => {
 
   const handleAddStation = (e) => {
     e.preventDefault();
+
+    const stationName = e.target.name.value;
+
+    dispatch(addStation({ endpoint, name: stationName }));
   };
 
-  console.log(stations);
+  const handleDeleteStation = (e, stationId) => {
+    dispatch(removeStation({ endpoint, id: stationId }));
+  };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(
-      getStations({
-        endpoint: server.endpoint,
-      }),
-    );
-  });
+    dispatch(getStations({ endpoint }));
+  }, []);
+
+  useEffect(() => {
+    if (isAddSuccess) {
+      ref.current.focus();
+      ref.current.value = '';
+      dispatch(clearAddSuccess());
+    }
+  }, [isAddSuccess]);
 
   return (
     <Section heading="지하철 역 관리">
       <Form onSubmit={handleAddStation}>
         {/* eslint-disable jsx-a11y/no-autofocus */}
         <Input
+          ref={ref}
           type="text"
           name="name"
           icon={<IconSubway />}
@@ -49,11 +61,13 @@ export const StationPage = (props) => {
           message={inputStatus.message}
           autoFocus
         />
-        <ButtonSquare disabled={!inputStatus.isValid}>추가</ButtonSquare>
+        <ButtonSquare disabled={!inputStatus.isValid} data-testid="add-button">
+          추가
+        </ButtonSquare>
       </Form>
       <List>
         {stations?.map((station) => (
-          <StationListItem station={station} />
+          <StationListItem key={station.id} station={station} onClick={handleDeleteStation} />
         ))}
       </List>
     </Section>
@@ -61,11 +75,7 @@ export const StationPage = (props) => {
 };
 
 StationPage.propTypes = {
-  server: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
-    nickname: PropTypes.string,
-    endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  }).isRequired,
+  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 function getInputStatus(name) {

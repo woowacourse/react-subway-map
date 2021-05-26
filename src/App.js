@@ -6,20 +6,20 @@ import { LoginPage, SignUpPage, StationPage } from './pages';
 import { ROUTE } from './constants';
 
 function App() {
-  const [server, setServer] = useState({ id: null, endpoint: null });
+  const [server, setServer] = useState({ id: '', endpoint: '' });
 
   return (
     <Router>
       <Page server={server} setServer={setServer}>
         <Switch>
           <Route exact path={ROUTE.LOGIN}>
-            <LoginPage server={server} />
+            <LoginPage endpoint={server.endpoint} />
           </Route>
           <Route exact path={ROUTE.SING_UP}>
-            <SignUpPage server={server} />
+            <SignUpPage endpoint={server.endpoint} />
           </Route>
           <Route exact path={ROUTE.STATION}>
-            <StationPage server={server} />
+            <StationPage endpoint={server.endpoint} />
           </Route>
         </Switch>
       </Page>

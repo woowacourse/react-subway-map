@@ -38,7 +38,7 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, nam
 
     const body = await response.json();
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return body;
     } else {
       throw new Error(body);
@@ -49,22 +49,32 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, nam
   }
 });
 
+const removeStation = createAsyncThunk('station/removeStation', async ({ endpoint, id }, thunkAPI) => {
+  try {
+    const response = await fetch(`${endpoint}/stations/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.status === 204) {
+      return { id };
+    } else {
+      throw new Error('삭제를 실패하였습니다.');
+    }
+  } catch (e) {
+    console.error(e);
+    thunkAPI.rejectWithValue(e);
+  }
+});
+
 const stationSlice = createSlice({
   name: 'station',
-  initialState: { stations: [], isLoading: false },
-  reducers: {},
+  initialState: { stations: [], isLoading: false, isAddSuccess: false },
+  reducers: {
+    clearAddSuccess: (state) => {
+      state.isAddSuccess = false;
+    },
+  },
   extraReducers: {
-    [addStation.fulfilled]: (state, action) => {
-      const { id, name } = action.payload;
-
-      state.push({ id, name });
-    },
-    [addStation.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [addStation.rejected]: (state) => {
-      state.isLoading = false;
-    },
     [getStations.fulfilled]: (state, action) => {
       const { stations } = action.payload;
 
@@ -76,9 +86,33 @@ const stationSlice = createSlice({
     [getStations.rejected]: (state) => {
       state.isLoading = false;
     },
+    [addStation.fulfilled]: (state, action) => {
+      const { id, name } = action.payload;
+
+      state.stations = [{ id, name }, ...state.stations];
+      state.isAddSuccess = true;
+    },
+    [addStation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [addStation.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [removeStation.fulfilled]: (state, action) => {
+      const { id } = action.payload;
+
+      state.stations = state.stations.filter((station) => station.id !== id);
+    },
+    [removeStation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [removeStation.rejected]: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export { getStations, addStation };
+export { getStations, addStation, removeStation };
+export const { clearAddSuccess } = stationSlice.actions;
 
 export default stationSlice.reducer;

@@ -9,7 +9,7 @@ import { Form, Anchor } from './style';
 import { ROUTE } from '../../constants';
 
 export const LoginPage = (props) => {
-  const { server } = props;
+  const { endpoint } = props;
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export const LoginPage = (props) => {
 
     dispatch(
       login({
-        endpoint: server.endpoint,
+        endpoint,
         email: e.target.email.value,
         password: e.target.password.value,
       }),
@@ -47,9 +47,5 @@ export const LoginPage = (props) => {
 };
 
 LoginPage.propTypes = {
-  server: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
-    nickname: PropTypes.string,
-    endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  }).isRequired,
+  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 };

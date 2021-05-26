@@ -10,7 +10,7 @@ export const StationListItem = (props) => {
   return (
     <Item>
       <Name>{station.name}</Name>
-      <Button onClick={() => onClick(station.id)}>
+      <Button onClick={(e) => onClick(e, station.id)}>
         <IconTrashCan />
       </Button>
     </Item>
@@ -18,6 +18,9 @@ export const StationListItem = (props) => {
 };
 
 StationListItem.propTypes = {
-  station: PropTypes.string.isRequired,
+  station: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
   onClick: PropTypes.func.isRequired,
 };

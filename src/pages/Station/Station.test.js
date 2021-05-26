@@ -1,15 +1,18 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import WrapComponent from './TestComponent';
+import store from '../../redux/store';
 
 import { StationPage } from '.';
 import { SERVER_LIST } from '../../constants';
 
 const mockServer = SERVER_LIST['Sally'];
+const Component = WrapComponent(StationPage, store, { server: mockServer });
 
 describe('역 관리 페이지 테스트', () => {
   test('역 관리 페이지에 진입한 경우, 지하철 역 이름 입력창에 autoFocus가 되어야 한다.', () => {
-    const { container } = render(<StationPage server={mockServer} />);
+    const { container } = render(Component);
     const stationInput = container.querySelector('input');
 
     expect(stationInput).toHaveFocus();
@@ -18,7 +21,7 @@ describe('역 관리 페이지 테스트', () => {
 
 describe('역 이름 유효성 테스트', () => {
   test('2글자 한글인 경우, 유효한 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -27,7 +30,7 @@ describe('역 이름 유효성 테스트', () => {
   });
 
   test('20글자 한글인 경우, 유효한 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -36,7 +39,7 @@ describe('역 이름 유효성 테스트', () => {
   });
 
   test('1글자 한글인 경우, 유효하지 않은 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -45,7 +48,7 @@ describe('역 이름 유효성 테스트', () => {
   });
 
   test('21글자 한글인 경우, 유효하지 않은 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -54,7 +57,7 @@ describe('역 이름 유효성 테스트', () => {
   });
 
   test('영어가 포함된 경우, 유효하지 않은 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -63,7 +66,7 @@ describe('역 이름 유효성 테스트', () => {
   });
 
   test('특수문자가 포함된 경우, 유효하지 않은 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -72,7 +75,7 @@ describe('역 이름 유효성 테스트', () => {
   });
 
   test('공백이 포함된 경우, 유효하지 않은 이름으로 판단해야 한다.', () => {
-    const { container, getByTestId } = render(<StationPage server={mockServer} />);
+    const { container, getByTestId } = render(Component);
     const stationInput = container.querySelector('input');
     const message = getByTestId('message');
 
@@ -80,3 +83,38 @@ describe('역 이름 유효성 테스트', () => {
     expect(message).not.toBeEmptyDOMElement();
   });
 });
+
+// describe('역 추가 기능 테스트', () => {
+//   test('Enter Key를 눌렀을 경우, 역을 추가할 수 있어야 한다.', () => {
+//     const { container, getByTestId } = render(Component);
+//     const stationInput = container.querySelector('input');
+//     const stationList = container.querySelector('ul');
+
+//     userEvent.type(stationInput, '하루{enter}');
+//     screen.getByText('하루');
+
+//     expect(addButton).toBeCalled();
+//   });
+
+// test('"추가" 버튼을 클릭한 경우, 역을 추가할 수 있어야 한다.', () => {
+//   const { getByText } = render(Component);
+//   const stationInput = getByText('추가');
+
+// userEvent.click(addButton);
+//   expect(stationInput).toHaveFocus();
+// });
+
+// test('"추가"에 성공한 경우, 해당 역은 역 목록 최상단에 표시되어야 한다.', () => {
+//   const { container, getByTestId } = render(Component);
+//   const stationInput = container.querySelector('input');
+
+//   expect(stationInput).toHaveFocus();
+// });
+
+// test('"추가"에 성공한 경우, 입력 창은 비워져야 한다.', () => {
+//   const { container, getByTestId } = render(Component);
+//   const stationInput = container.querySelector('input');
+
+//   expect(stationInput).toHaveFocus();
+// });
+// });
