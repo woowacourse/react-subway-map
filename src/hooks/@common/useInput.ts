@@ -1,16 +1,8 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 type Validator = (value: string) => void | never;
 
-const useInput = (
-  validator: Validator
-): [
-  string,
-  string | null,
-  React.ChangeEventHandler<HTMLInputElement>,
-  React.FocusEventHandler<HTMLInputElement>,
-  Dispatch<SetStateAction<string>>
-] => {
+const useInput = (validator: Validator) => {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -32,7 +24,7 @@ const useInput = (
     }
   };
 
-  return [inputValue, errorMessage, onChange, onBlur, setInputValue];
+  return { inputValue, errorMessage, onChange, onBlur, setInputValue };
 };
 
 export default useInput;

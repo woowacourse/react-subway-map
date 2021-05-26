@@ -12,8 +12,15 @@ import { validatePassword } from "../../validations/password";
 import { useAppDispatch } from "../../hooks";
 
 const LoginPage = () => {
-  const [email, emailErrorMessage, onEmailChange, onEmailBlur] = useInput(validateEmail);
-  const [password, passwordErrorMessage, onPasswordChange, onPasswordBlur] = useInput(validatePassword);
+  const { inputValue: email, errorMessage: emailErrorMessage, onChange: onEmailChange, onBlur: onEmailBlur } = useInput(
+    validateEmail
+  );
+  const {
+    inputValue: password,
+    errorMessage: passwordErrorMessage,
+    onChange: onPasswordChange,
+    onBlur: onPasswordBlur,
+  } = useInput(validatePassword);
 
   const dispatch = useAppDispatch();
   const history = useHistory();

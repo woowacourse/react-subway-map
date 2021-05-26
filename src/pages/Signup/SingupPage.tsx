@@ -13,16 +13,28 @@ import { validateEmail } from "../../validations/email";
 import { validatePassword, validatePasswordConfirm } from "../../validations/password";
 
 const SignupPage = () => {
-  const [email, emailErrorMessage, onEmailChange, onEmailBlur] = useInput(validateEmail);
-  const [age, ageErrorMessage, onAgeChange, onAgeBlur] = useInput(validateAge);
-  const [password, passwordErrorMessage, onPasswordChange, onPasswordBlur] = useInput(validatePassword);
-  const [passwordConfirm, passwordConfirmErrorMessage, onPasswordConfirmChange, onPasswordConfirmBlur] = useInput(
-    (value: string) => {
-      if (password && !passwordErrorMessage) {
-        validatePasswordConfirm(password, value);
-      }
-    }
+  const { inputValue: email, errorMessage: emailErrorMessage, onChange: onEmailChange, onBlur: onEmailBlur } = useInput(
+    validateEmail
   );
+  const { inputValue: age, errorMessage: ageErrorMessage, onChange: onAgeChange, onBlur: onAgeBlur } = useInput(
+    validateAge
+  );
+  const {
+    inputValue: password,
+    errorMessage: passwordErrorMessage,
+    onChange: onPasswordChange,
+    onBlur: onPasswordBlur,
+  } = useInput(validatePassword);
+  const {
+    inputValue: passwordConfirm,
+    errorMessage: passwordConfirmErrorMessage,
+    onChange: onPasswordConfirmChange,
+    onBlur: onPasswordConfirmBlur,
+  } = useInput((value: string) => {
+    if (password && !passwordErrorMessage) {
+      validatePasswordConfirm(password, value);
+    }
+  });
 
   const dispatch = useAppDispatch();
   const history = useHistory();
