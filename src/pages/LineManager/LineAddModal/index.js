@@ -7,7 +7,15 @@ import {
   Selector,
   ColorPicker,
 } from '../../../components';
-import { COLOR, ERROR, LINE_COLOR, REG_EXP, SIZE } from '../../../constants';
+import {
+  COLOR,
+  ERROR,
+  INPUT_TEXT,
+  LINE_COLOR,
+  REG_EXP,
+  SIZE,
+  TEST,
+} from '../../../constants';
 import { ButtonWrapper, Form, SelectorWrapper, Validator } from './style';
 import { Formik } from 'formik';
 
@@ -108,24 +116,24 @@ const LineAddModal = ({
           <Form onSubmit={handleSubmit}>
             <Input
               type="text"
-              label="노선 이름"
-              placeholder="노선 이름"
+              label={INPUT_TEXT.LINE_NAME.LABEL}
+              placeholder={INPUT_TEXT.LINE_NAME.LABEL}
               size={SIZE.LG}
               {...getFieldProps('lineName')}
             />
             {errors.lineName && <Validator>{errors.lineName}</Validator>}
             <SelectorWrapper>
               <Selector
-                label="상행 종점"
-                defaultOption="상행 종점"
+                label={INPUT_TEXT.UP_STATION.LABEL}
+                defaultOption={INPUT_TEXT.UP_STATION.LABEL}
                 options={stations}
                 size={SIZE.LG}
                 {...getFieldProps('upStationId')}
               />
               <span>↔️</span>
               <Selector
-                label="하행 종점"
-                defaultOption="하행 종점"
+                label={INPUT_TEXT.DOWN_STATION.LABEL}
+                defaultOption={INPUT_TEXT.UP_STATION.LABEL}
                 options={stations}
                 size={SIZE.LG}
                 {...getFieldProps('downStationId')}
@@ -134,15 +142,19 @@ const LineAddModal = ({
             {errors.stationId && <Validator>{errors.stationId}</Validator>}
             <Input
               type="text"
-              label="거리"
-              placeholder="거리"
+              label={INPUT_TEXT.DISTANCE.LABEL}
+              placeholder={INPUT_TEXT.DISTANCE.LABEL}
               size={SIZE.LG}
               {...getFieldProps('distance')}
             />
             {errors.distance && <Validator>{errors.distance}</Validator>}
             <ColorPicker pickedColor={color} onClickColor={setColor} />
             <ButtonWrapper>
-              <Button type="submit" backgroundColor={COLOR.AMBER}>
+              <Button
+                type="submit"
+                backgroundColor={COLOR.AMBER}
+                data-testid={TEST.ID.LINE_ADD_BUTTON}
+              >
                 확인
               </Button>
             </ButtonWrapper>

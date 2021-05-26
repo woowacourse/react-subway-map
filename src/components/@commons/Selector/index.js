@@ -13,7 +13,7 @@ const Selector = ({
 }) => (
   <Container size={size}>
     <label htmlFor={name}>{label}</label>
-    <select name={name} defaultValue={value} {...attrs}>
+    <select id={name} name={name} defaultValue={value} {...attrs}>
       <option value="" disabled>
         {defaultOption}
       </option>

@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 const Input = ({ label, size, name, ...attrs }) => (
   <Container size={size}>
     <label htmlFor={name}>{label}</label>
-    <input name={name} {...attrs} />
+    <input id={name} name={name} {...attrs} />
   </Container>
 );
 

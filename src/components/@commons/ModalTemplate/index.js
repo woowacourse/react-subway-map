@@ -3,8 +3,15 @@ import PropTypes from 'prop-types';
 import { Dimmer, Container, Title, Content } from './style';
 
 const ModalPortal = ({ children }) => {
-  const $modal = document.querySelector('#modal');
-  return $modal ? createPortal(children, $modal) : null;
+  let $modal = document.querySelector('#modal');
+
+  if (!$modal) {
+    $modal = document.createElement('div');
+    $modal.id = 'modal';
+    document.body.append($modal);
+  }
+
+  return createPortal(children, $modal);
 };
 
 const ModalTemplate = ({ title, children, onClickToClose }) => (

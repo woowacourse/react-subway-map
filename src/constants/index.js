@@ -124,6 +124,18 @@ export const INPUT_TEXT = {
     LABEL: '지하철 역 이름을 입력해주세요.',
     PLACE_HOLDER: '🚇 2자 ~ 20자 사이의 한글, 숫자 조합',
   },
+  LINE_NAME: {
+    LABEL: '노선 이름',
+  },
+  UP_STATION: {
+    LABEL: '상행 종점',
+  },
+  DOWN_STATION: {
+    LABEL: '하행 종점',
+  },
+  DISTANCE: {
+    LABEL: '거리',
+  },
 };
 
 export const TEST = {
@@ -135,5 +147,6 @@ export const TEST = {
     SIGN_UP_BUTTON: 'signup-button',
     SIGN_IN_BUTTON: 'signin-button',
     STATION_ADD_BUTTON: 'station-add-button',
+    LINE_ADD_BUTTON: 'line-add-button',
   },
 };
