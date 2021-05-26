@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './useStore';
 import { requestLogin, logout, resetError } from '../slices/authSlice';
 import { CREWS } from '../types';
-import MESSAGE from '../constants/message';
 
 const useAuth = () => {
   const auth = useAppSelector((state) => state.auth);
@@ -17,17 +15,12 @@ const useAuth = () => {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    if (error) {
-      // eslint-disable-next-line no-alert
-      alert(error.message || MESSAGE.ERROR.LOGIN_FAILURE);
-      dispatch(resetError());
-    }
-  }, [error, dispatch]);
+  const onResetError = () => dispatch(resetError());
 
   return {
     onLogin,
     onLogout,
+    onResetError,
     isLogin,
     accessToken,
     server,

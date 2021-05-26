@@ -11,13 +11,14 @@ import ROUTES from '../../constants/routes';
 import BACKEND from '../../constants/backend';
 import { CREWS } from '../../types';
 import useAuth from '../../hooks/useAuth';
+import MESSAGE from '../../constants/message';
 
 interface ILocationState {
   from: { pathname: string };
 }
 
 const LoginPage = () => {
-  const { onLogin, server, isLogin } = useAuth();
+  const { onLogin, onResetError, server, isLogin, error } = useAuth();
 
   const { value: selectedServer, onChange: onChangeSelectedServer } = useSelect(
     server || CREWS.DANYEE
@@ -41,6 +42,14 @@ const LoginPage = () => {
       history.replace(from ? from.pathname : ROUTES.STATION);
     }
   }, [history, isLogin, location.state?.from]);
+
+  useEffect(() => {
+    if (error) {
+      // eslint-disable-next-line no-alert
+      alert(error.message || MESSAGE.ERROR.LOGIN_FAILURE);
+      onResetError();
+    }
+  }, [error, onResetError]);
 
   return (
     <Styled.LoginPage>
