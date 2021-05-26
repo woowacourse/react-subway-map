@@ -4,6 +4,7 @@ import store from '../../redux';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignIn from '.';
+import { ERROR, INPUT_TEXT, TEST } from '../../constants';
 
 describe('<SignIn />', () => {
   const setup = () => {
@@ -15,10 +16,10 @@ describe('<SignIn />', () => {
       </Provider>
     );
     const { getByTestId, getByPlaceholderText } = utils;
-    const button = getByTestId('signin-button');
+    const button = getByTestId(TEST.ID.SIGN_IN_BUTTON);
     const input = {
-      email: getByPlaceholderText('✉️ 이메일을 입력해주세요.'),
-      password: getByPlaceholderText('🔒 비밀번호를 입력해주세요.'),
+      email: getByPlaceholderText(INPUT_TEXT.EMAIL.PLACE_HOLDER),
+      password: getByPlaceholderText(INPUT_TEXT.PASSWORD.PLACE_HOLDER),
     };
 
     return {
@@ -31,9 +32,9 @@ describe('<SignIn />', () => {
   it('로그인 폼을 입력하지 않고, 로그인을 하면 안내 문구가 나온다.', async () => {
     const { getByText, button, input } = setup();
     const invalidInputs = [
-      { email: '', password: '', message: '이메일을 입력해주세요.' },
-      { email: '', password: 'test', message: '이메일을 입력해주세요.' },
-      { email: 'test', password: '', message: '비밀번호를 입력해주세요.' },
+      { email: '', password: '', message: ERROR.EMAIL.REQUIRED },
+      { email: '', password: 'test', message: ERROR.EMAIL.REQUIRED },
+      { email: 'test', password: '', message: ERROR.PASSWORD.REQUIRED },
     ];
 
     for (const { email, password, message } of invalidInputs) {
@@ -43,6 +44,4 @@ describe('<SignIn />', () => {
       await waitFor(() => getByText(message));
     }
   });
-
-  // TODO: API가 모두 구현되면, 서버에 따른 로그인 가능 여부 테스트
 });

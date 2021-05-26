@@ -18,8 +18,11 @@ const useSignIn = () => {
     }
   }, [token, history, dispatch]);
 
-  const signIn = ({ email, password }) =>
-    dispatch(getUserTokenThunk({ email, password }));
+  const signIn = ({ email, password }) => {
+    const params = { email, password };
+
+    dispatch(getUserTokenThunk({ params }));
+  };
 
   return { signIn, error };
 };

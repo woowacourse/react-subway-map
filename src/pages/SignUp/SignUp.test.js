@@ -1,18 +1,19 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignUp from '.';
+import { ERROR, INPUT_TEXT, TEST } from '../../constants';
 
 describe('<SignUp />', () => {
   const setup = () => {
     const utils = render(<SignUp />);
     const { getByTestId, getByPlaceholderText } = utils;
-    const button = getByTestId('signup-button');
+    const button = getByTestId(TEST.ID.SIGN_UP_BUTTON);
     const input = {
-      email: getByPlaceholderText('✉️ 이메일을 입력해주세요.'),
-      age: getByPlaceholderText('👤 나이를 입력해주세요.'),
-      password: getByPlaceholderText('🔒 비밀번호를 입력해주세요.'),
+      email: getByPlaceholderText(INPUT_TEXT.EMAIL.PLACE_HOLDER),
+      age: getByPlaceholderText(INPUT_TEXT.AGE.PLACE_HOLDER),
+      password: getByPlaceholderText(INPUT_TEXT.PASSWORD.PLACE_HOLDER),
       passwordConfirm: getByPlaceholderText(
-        '🔒 비밀번호를 한번 더 입력해주세요.'
+        INPUT_TEXT.PASSWORD_CONFIRM.PLACE_HOLDER
       ),
     };
 
@@ -26,8 +27,8 @@ describe('<SignUp />', () => {
   it('이메일에 유효하지 않은 값을 넣었을 때, 안내 문구가 나온다.', async () => {
     const { getByText, input } = setup();
     const invalidInputs = [
-      { value: '', message: '이메일을 입력해주세요.' },
-      { value: 'test', message: '올바른 이메일 형식을 입력해주세요.' },
+      { value: '', message: ERROR.EMAIL.REQUIRED },
+      { value: 'test', message: ERROR.EMAIL.INVALID },
     ];
 
     for (const { value, message } of invalidInputs) {
@@ -40,10 +41,10 @@ describe('<SignUp />', () => {
   it('나이에 유효하지 않은 값을 넣었을 때, 안내 문구가 나온다.', async () => {
     const { getByText, input } = setup();
     const invalidInputs = [
-      { value: '', message: '나이를 입력해주세요.' },
-      { value: 'test', message: '숫자만 입력해주세요.' },
-      { value: '0', message: '올바른 나이를 입력해주세요.' },
-      { value: '100', message: '올바른 나이를 입력해주세요.' },
+      { value: '', message: ERROR.AGE.REQUIRED },
+      { value: 'test', message: ERROR.AGE.INVALID },
+      { value: '0', message: ERROR.AGE.INVALID },
+      { value: '100', message: ERROR.AGE.INVALID },
     ];
 
     for (const { value, message } of invalidInputs) {
@@ -56,10 +57,10 @@ describe('<SignUp />', () => {
   it('비밀번호에 유효하지 않은 값을 넣었을 때, 안내 문구가 나온다.', async () => {
     const { getByText, input } = setup();
     const invalidInputs = [
-      { value: '', message: '비밀번호를 입력해주세요.' },
-      { value: 'test', message: '올바른 비밀번호를 입력해주세요.' },
-      { value: 'test123', message: '올바른 비밀번호를 입력해주세요.' },
-      { value: 'test'.repeat(6), message: '올바른 비밀번호를 입력해주세요.' },
+      { value: '', message: ERROR.PASSWORD.REQUIRED },
+      { value: 'test', message: ERROR.PASSWORD.INVALID },
+      { value: 'test123', message: ERROR.PASSWORD.INVALID },
+      { value: 'test'.repeat(6), message: ERROR.PASSWORD.INVALID },
     ];
 
     for (const { value, message } of invalidInputs) {
@@ -72,8 +73,8 @@ describe('<SignUp />', () => {
   it('비밀번호 확인에 유효하지 않은 값을 넣었을 때, 안내 문구가 나온다.', async () => {
     const { getByText, input } = setup();
     const invalidInputs = [
-      { value: '', message: '비밀번호를 한번 더 입력해주세요.' },
-      { value: 'test123@', message: '비밀번호가 일치하지 않습니다.' },
+      { value: '', message: ERROR.PASSWORD_CONFIRM.REQUIRED },
+      { value: 'test123@', message: ERROR.PASSWORD_CONFIRM.INVALID },
     ];
 
     fireEvent.input(input.password, { target: { value: 'test123!' } });
@@ -84,6 +85,4 @@ describe('<SignUp />', () => {
       await waitFor(() => getByText(message));
     }
   });
-
-  // TODO: API가 모두 구현되면, 서버에 따른 회원가입 가능 여부 테스트
 });

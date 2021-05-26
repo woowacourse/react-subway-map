@@ -68,6 +68,22 @@ export const LS_KEY = {
 
 export const ERROR = {
   UNKNOWN: '알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+  EMAIL: {
+    REQUIRED: '이메일을 입력해주세요.',
+    INVALID: '올바른 이메일 형식을 입력해주세요.',
+  },
+  AGE: {
+    REQUIRED: '나이를 입력해주세요.',
+    INVALID: '올바른 나이를 입력해주세요.',
+  },
+  PASSWORD: {
+    REQUIRED: '비밀번호를 입력해주세요.',
+    INVALID: '올바른 비밀번호를 입력해주세요.',
+  },
+  PASSWORD_CONFIRM: {
+    REQUIRED: '비밀번호를 한번 더 입력해주세요.',
+    INVALID: '비밀번호가 일치하지 않습니다.',
+  },
   STATION_NAME: {
     REQUIRED: '역 이름을 입력해주세요.',
     INVALID: '올바른 역 이름을 입력해주세요.',
@@ -76,6 +92,18 @@ export const ERROR = {
 };
 
 export const INPUT_TEXT = {
+  EMAIL: {
+    PLACE_HOLDER: '✉️ 이메일을 입력해주세요.',
+  },
+  AGE: {
+    PLACE_HOLDER: '👤 나이를 입력해주세요.',
+  },
+  PASSWORD: {
+    PLACE_HOLDER: '🔒 비밀번호를 입력해주세요.',
+  },
+  PASSWORD_CONFIRM: {
+    PLACE_HOLDER: '🔒 비밀번호를 한번 더 입력해주세요.',
+  },
   STATION_NAME: {
     LABEL: '지하철 역 이름을 입력해주세요.',
     PLACE_HOLDER: '🚇 2자 ~ 20자 사이의 한글, 숫자 조합',
@@ -84,6 +112,8 @@ export const INPUT_TEXT = {
 
 export const TEST = {
   ID: {
+    SIGN_UP_BUTTON: 'signup-button',
+    SIGN_IN_BUTTON: 'signin-button',
     STATION_ADD_BUTTON: 'station-add-button',
   },
 };

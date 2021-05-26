@@ -4,7 +4,7 @@ import { request } from '../utils';
 
 export const getUserTokenThunk = createAsyncThunk(
   'user/getUserTokenThunk',
-  async (params, thunkAPI) => {
+  async ({ params }, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {

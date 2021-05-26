@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { Form, Validator } from './style';
-import { COLOR, ROUTE, SIZE } from '../../constants';
+import { COLOR, ERROR, INPUT_TEXT, ROUTE, SIZE, TEST } from '../../constants';
 import { useSignIn } from '../../hooks';
 
 const initialValues = {
@@ -15,11 +15,11 @@ const validate = ({ email, password }) => {
   const errors = {};
 
   if (!email) {
-    errors.email = '이메일을 입력해주세요.';
+    errors.email = ERROR.EMAIL.REQUIRED;
   }
 
   if (!password) {
-    errors.password = '비밀번호를 입력해주세요.';
+    errors.password = ERROR.PASSWORD.REQUIRED;
   }
 
   return errors;
@@ -41,13 +41,13 @@ const SignIn = () => {
           <Form onSubmit={handleSubmit}>
             <Input
               type="email"
-              placeholder="✉️ 이메일을 입력해주세요."
+              placeholder={INPUT_TEXT.EMAIL.PLACE_HOLDER}
               size={SIZE.MD}
               {...getFieldProps('email')}
             />
             <Input
               type="password"
-              placeholder="🔒 비밀번호를 입력해주세요."
+              placeholder={INPUT_TEXT.PASSWORD.PLACE_HOLDER}
               size={SIZE.MD}
               {...getFieldProps('password')}
             />
@@ -58,7 +58,7 @@ const SignIn = () => {
             <Button
               type="submit"
               backgroundColor={COLOR.AMBER}
-              data-testid="signin-button"
+              data-testid={TEST.ID.SIGN_IN_BUTTON}
             >
               로그인
             </Button>

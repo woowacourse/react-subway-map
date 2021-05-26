@@ -1,7 +1,16 @@
 import React from 'react';
 import { Field, Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
-import { COLOR, RANGE, REG_EXP, ROUTE, SIZE } from '../../constants';
+import {
+  COLOR,
+  ERROR,
+  INPUT_TEXT,
+  RANGE,
+  REG_EXP,
+  ROUTE,
+  SIZE,
+  TEST,
+} from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
 import { useSignUp } from '../../hooks';
 
@@ -12,44 +21,44 @@ const initialValues = {
   passwordConfirm: '',
 };
 
-const validateEmail = (email, checkDuplicateEmail) => {
+const validateEmail = ({ email, checkDuplicateEmail }) => {
   if (!email) {
-    return '이메일을 입력해주세요.';
+    return ERROR.EMAIL.REQUIRED;
   }
   if (!REG_EXP.EMAIL.test(email)) {
-    return '올바른 이메일 형식을 입력해주세요.';
+    return ERROR.EMAIL.INVALID;
   }
 
-  return checkDuplicateEmail(email);
+  return checkDuplicateEmail({ email });
 };
 
-const validateAge = (age) => {
+const validateAge = ({ age }) => {
   if (!age) {
-    return '나이를 입력해주세요.';
+    return ERROR.AGE.REQUIRED;
   }
   if (!REG_EXP.AGE.test(age)) {
-    return '숫자만 입력해주세요.';
+    return ERROR.AGE.INVALID;
   }
   if (age <= RANGE.AGE.MIN || age >= RANGE.AGE.MAX) {
-    return '올바른 나이를 입력해주세요.';
+    return ERROR.AGE.INVALID;
   }
 };
 
-const validatePassword = (password) => {
+const validatePassword = ({ password }) => {
   if (!password) {
-    return '비밀번호를 입력해주세요.';
+    return ERROR.PASSWORD.REQUIRED;
   }
   if (!REG_EXP.PASSWORD.test(password)) {
-    return '올바른 비밀번호를 입력해주세요.';
+    return ERROR.PASSWORD.INVALID;
   }
 };
 
 const validatePasswordConfirm = ({ password, passwordConfirm }) => {
   if (!passwordConfirm) {
-    return '비밀번호를 한번 더 입력해주세요.';
+    return ERROR.PASSWORD_CONFIRM.REQUIRED;
   }
   if (password !== passwordConfirm) {
-    return '비밀번호가 일치하지 않습니다.';
+    return ERROR.PASSWORD_CONFIRM.INVALID;
   }
 };
 
@@ -67,13 +76,15 @@ const SignUp = () => {
           <Form onSubmit={handleSubmit}>
             <Field
               name="email"
-              validate={(value) => validateEmail(value, checkDuplicateEmail)}
+              validate={(email) =>
+                validateEmail({ email, checkDuplicateEmail })
+              }
             >
               {({ field, meta }) => (
                 <>
                   <Input
                     type="email"
-                    placeholder="✉️ 이메일을 입력해주세요."
+                    placeholder={INPUT_TEXT.EMAIL.PLACE_HOLDER}
                     size={SIZE.MD}
                     {...field}
                   />
@@ -81,12 +92,12 @@ const SignUp = () => {
                 </>
               )}
             </Field>
-            <Field name="age" validate={validateAge}>
+            <Field name="age" validate={(age) => validateAge({ age })}>
               {({ field, meta }) => (
                 <>
                   <Input
                     type="text"
-                    placeholder="👤 나이를 입력해주세요."
+                    placeholder={INPUT_TEXT.AGE.PLACE_HOLDER}
                     size={SIZE.MD}
                     {...field}
                   />
@@ -98,12 +109,15 @@ const SignUp = () => {
               비밀번호: 6자 이상 20자 이하의 영문, 숫자, 특수문자[!, @, #, $]의
               조합
             </PasswordSuggestion>
-            <Field name="password" validate={validatePassword}>
+            <Field
+              name="password"
+              validate={(password) => validatePassword({ password })}
+            >
               {({ field, meta }) => (
                 <>
                   <Input
                     type="password"
-                    placeholder="🔒 비밀번호를 입력해주세요."
+                    placeholder={INPUT_TEXT.PASSWORD.PLACE_HOLDER}
                     size={SIZE.MD}
                     {...field}
                   />
@@ -119,7 +133,7 @@ const SignUp = () => {
                 <>
                   <Input
                     type="password"
-                    placeholder="🔒 비밀번호를 한번 더 입력해주세요."
+                    placeholder={INPUT_TEXT.PASSWORD_CONFIRM.PLACE_HOLDER}
                     size={SIZE.MD}
                     {...field}
                   />
@@ -130,7 +144,7 @@ const SignUp = () => {
             <Button
               type="submit"
               backgroundColor={COLOR.AMBER}
-              data-testid="signup-button"
+              data-testid={TEST.ID.SIGN_UP_BUTTON}
             >
               회원가입
             </Button>
