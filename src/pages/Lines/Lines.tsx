@@ -8,6 +8,7 @@ import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
+import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
@@ -41,7 +42,9 @@ const Lines: FC = () => {
   };
 
   const onDeleteLine = (lineId: number) => () => {
-    dispatch(deleteLine({ baseURL: API_INFO[apiOwner].endPoint, lineId }));
+    if (confirm(CONFIRM_MESSAGE.DELETE_LINE)) {
+      dispatch(deleteLine({ baseURL: API_INFO[apiOwner].endPoint, lineId }));
+    }
   };
 
   return (
