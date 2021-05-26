@@ -5,5 +5,12 @@ export default {
   component: AddSectionForm,
 };
 
-const Template = () => <AddSectionForm onChange={() => {}} lines={[]} />;
+const Template = () => (
+  <AddSectionForm
+    onChange={() => {}}
+    lines={[]}
+    stations={[]}
+    lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
+  />
+);
 export const Default = Template.bind({});

@@ -4,6 +4,7 @@ import AddSectionForm from '../../components/SectionPage/AddSectionForm';
 import SectionListItem from '../../components/SectionPage/SectionListItem';
 import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
+import useStation from '../../hook/useStation';
 import { LineSection } from '../../interfaces';
 import * as S from './Section.styles';
 
@@ -25,6 +26,7 @@ const getSectionStations = (lineSection: LineSection) => {
 const Section = () => {
   const { lineSection, getSection, error } = useSection();
   const { lines } = useLine();
+  const { stations } = useStation();
 
   useEffect(() => {
     if (error) {
@@ -39,7 +41,7 @@ const Section = () => {
   return (
     <S.Container>
       <ContentContainer hasHat={true}>
-        <AddSectionForm onChange={handleSelectLine} lines={lines} />
+        <AddSectionForm onChange={handleSelectLine} lineSection={lineSection} lines={lines} stations={stations} />
       </ContentContainer>
       <ContentContainer>
         <S.SectionStationList>

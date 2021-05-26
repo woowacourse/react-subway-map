@@ -30,6 +30,7 @@ const getPasswordErrorMessage = (password: string) => {
 
 const SignInForm = () => {
   const { serverName, error, accessToken } = useSelector((state: RootState) => state.user);
+  const [serverURL, setServerURL] = useState('');
   const isServerSelected = Boolean(serverName);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -51,6 +52,7 @@ const SignInForm = () => {
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     SERVER.URL = e.target.value;
+    setServerURL(e.target.value);
     dispatch(selectServer({ serverName: e.target[e.target.selectedIndex].innerText, baseURL: e.target.value }));
   };
 
@@ -96,7 +98,7 @@ const SignInForm = () => {
         <S.Message>{passwordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <SelectInput initialText='서버를 선택해주세요.' onChange={handleSelectServer}>
+        <SelectInput initialText='서버를 선택해주세요.' value={serverURL} onChange={handleSelectServer}>
           {Object.values(BASE_URL).map(({ name, URL }) => (
             <option key={name} value={URL}>
               {name}

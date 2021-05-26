@@ -9,7 +9,7 @@ import { getLineNameErrorMessage } from './AddLineForm';
 
 import * as S from './LineModalForm.styles';
 
-interface LineInfo {
+export interface LineInfo {
   name: string;
   color: string;
   upStationId: string;
@@ -84,7 +84,7 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
       </S.InputWrapper>
       <S.InputWrapper>
         <S.SelectInputWrapper>
-          <SelectInput initialText='상행 종점' name='upStationId' onChange={onChange}>
+          <SelectInput initialText='상행 종점' name='upStationId' value={lineInfo.upStationId} onChange={onChange}>
             {stations.map(station => (
               <option key={station.id} value={station.id}>
                 {station.name}
@@ -92,7 +92,7 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
             ))}
           </SelectInput>
           <S.Arrow>↔</S.Arrow>
-          <SelectInput initialText='하행 종점' name='downStationId' onChange={onChange}>
+          <SelectInput initialText='하행 종점' name='downStationId' value={lineInfo.downStationId} onChange={onChange}>
             {stations.map(station => (
               <option key={station.id} value={station.id}>
                 {station.name}
