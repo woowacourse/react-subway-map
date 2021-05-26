@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Z_INDEX } from '../../../constants/css';
 import Button from '../Button/Button';
 
 interface ModalContentProps {
@@ -8,6 +9,7 @@ interface ModalContentProps {
 export const ModalContainer = styled.div`
   display: flex;
   position: fixed;
+  z-index: ${Z_INDEX.MODAL};
   top: 0;
   right: 0;
   bottom: 0;
