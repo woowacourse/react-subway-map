@@ -51,6 +51,7 @@ const lineColors = [
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 
+// TODO: Authorization Error 발생 시, 로그인하라고 메시지 띄워주기
 const LinePage = ({ setIsLoading }: PageProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);

@@ -44,15 +44,15 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const emailMessage = email
     ? isEmailFormatValid
       ? isEmailDuplicated
-        ? '이미 존재하는 이메일입니다.'
-        : '사용할 수 있는 이메일입니다.'
-      : '이메일 형식에 맞게 작성하세요.'
+        ? ERROR_MESSAGE.DUPLICATED_EMAIL
+        : SUCCESS_MESSAGE.AVAILABLE_EMAIL
+      : ERROR_MESSAGE.INVALID_EMAIL
     : '';
-  const ageErrorMessage = isAgeValid ? '' : '1살 이상 200살 이하의 나이를 입력해주세요.';
-  const passwordErrorMessage = isPasswordValid
+  const ageErrorMessage = isAgeValid ? '' : ERROR_MESSAGE.INVALID_AGE;
+  const passwordErrorMessage = isPasswordValid ? '' : ERROR_MESSAGE.INVALID_PASSWORD;
+  const passwordMatchedErrorMessage = isPasswordMatched
     ? ''
-    : '비밀번호는 영문, 숫자, 특수문자만을 포함한 8자 이상 14자 이하여야 합니다.';
-  const passwordMatchedErrorMessage = isPasswordMatched ? '' : '비밀번호가 일치하지 않습니다.';
+    : ERROR_MESSAGE.INVALID_PASSWORD_CONFIRM;
 
   const isFormCompleted =
     email &&
@@ -134,6 +134,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
             value={email}
             onChange={onEmailChange}
             autoComplete="off"
+            aria-label="이메일 입력"
           />
         </InputContainer>
         <InputContainer validation={{ text: ageErrorMessage, isValid: isAgeValid }}>
@@ -147,6 +148,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
             value={age}
             onChange={onAgeChange}
             autoComplete="off"
+            aria-label="나이 입력"
           />
         </InputContainer>
         <InputContainer validation={{ text: passwordErrorMessage, isValid: isPasswordValid }}>
@@ -160,6 +162,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
             onChange={onPasswordChange}
             onKeyDown={onPasswordKeydown}
             autoComplete="off"
+            aria-label="비밀번호 입력"
           />
         </InputContainer>
         <InputContainer
@@ -175,6 +178,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
             onChange={onPasswordConfirmChange}
             onKeyDown={onPasswordKeydown}
             autoComplete="off"
+            aria-label="비밀번호 확인 입력"
           />
         </InputContainer>
         <Button

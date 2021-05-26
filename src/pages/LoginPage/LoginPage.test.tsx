@@ -43,8 +43,8 @@ describe('사용자는 로그인을 할 수 있다.', () => {
   afterAll(() => server.close());
 
   it('아이디와 비밀번호를 입력하면 로그인을 하고, 메인페이지로 이동한다.', async () => {
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('이메일');
+    const passwordInput = screen.getByLabelText('비밀번호');
     const loginButton = screen.getByRole('button', {
       name: /로그인/i,
     });
@@ -63,8 +63,8 @@ describe('사용자는 로그인을 할 수 있다.', () => {
       })
     );
 
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('이메일');
+    const passwordInput = screen.getByLabelText('비밀번호');
     const loginButton = screen.getByRole('button', {
       name: /로그인/i,
     });
@@ -77,8 +77,8 @@ describe('사용자는 로그인을 할 수 있다.', () => {
   });
 
   it('이메일 혹은 패스워드가 입력되지 않으면 에러메시지를 보여준다.', async () => {
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('이메일');
+    const passwordInput = screen.getByLabelText('비밀번호');
     const loginButton = screen.getByRole('button', {
       name: /로그인/i,
     });
