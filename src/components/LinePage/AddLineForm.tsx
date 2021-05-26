@@ -5,12 +5,10 @@ import Button from '../@commons/Button/Button';
 
 import React, { useEffect, useState } from 'react';
 
-import { Line } from '../../interfaces';
+import { AddLine, Line, Station } from '../../interfaces';
 import { REGEXP } from '../../constants/regularExpression';
 import LineModalForm from './LineModalForm';
 import Modal from '../@commons/Modal/Modal';
-import useStation from '../../hook/useStation';
-import useLine from '../../hook/useLine';
 
 export const getLineNameErrorMessage = (name: string, lines: Line[]) => {
   if (!(2 <= name.length && name.length <= 20)) {
@@ -28,6 +26,12 @@ export const getLineNameErrorMessage = (name: string, lines: Line[]) => {
   return '';
 };
 
+interface Props {
+  lines: Line[];
+  stations: Station[];
+  addLine: (newLine: AddLine) => void;
+}
+
 const initLineInfo = {
   name: '',
   color: '',
@@ -36,12 +40,10 @@ const initLineInfo = {
   distance: '',
 };
 
-const AddLineForm = () => {
+const AddLineForm = ({ lines, stations, addLine }: Props) => {
   const [lineInfo, setLineInfo] = useState(initLineInfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { lines, addLine } = useLine();
-  const { stations } = useStation();
   const lineNameErrorMessage = getLineNameErrorMessage(lineInfo.name, lines);
   const isValidNameForm = !lineNameErrorMessage;
 

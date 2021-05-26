@@ -5,5 +5,5 @@ export default {
   component: AddLineForm,
 };
 
-const Template = () => <AddLineForm />;
+const Template = () => <AddLineForm lines={[]} stations={[]} addLine={() => {}} />;
 export const Default = Template.bind({});

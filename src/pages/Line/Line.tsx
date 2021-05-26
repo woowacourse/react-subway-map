@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddLineForm from '../../components/LinePage/AddLineForm';
 import LineListItem from '../../components/LinePage/LineListItem';
-import { RootState } from '../../modules';
+import useLine from '../../hook/useLine';
+import useStation from '../../hook/useStation';
 
 import * as S from './Line.styles';
 
 const Line = () => {
-  const { lines, error } = useSelector((state: RootState) => state.line);
+  const { lines, addLine, deleteLine, error } = useLine();
+  const { stations } = useStation();
 
   useEffect(() => {
     if (error) {
@@ -19,12 +20,12 @@ const Line = () => {
   return (
     <S.Container>
       <ContentContainer hasHat={true}>
-        <AddLineForm />
+        <AddLineForm lines={lines} stations={stations} addLine={addLine} />
       </ContentContainer>
       <ContentContainer>
         <S.LineList>
           {lines.map(({ id, name, color }) => (
-            <LineListItem key={id} name={name} id={id} color={color} />
+            <LineListItem key={id} name={name} id={id} color={color} deleteLine={deleteLine} />
           ))}
         </S.LineList>
       </ContentContainer>

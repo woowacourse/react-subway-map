@@ -6,8 +6,17 @@ import { userSaga } from './user/userSaga';
 import { stationSaga } from './station/stationSaga';
 import lineReducer from './line/lineReducer';
 import { lineSaga } from './line/lineSaga';
+import { PayloadAction } from '@reduxjs/toolkit';
 
-export const rootReducer = combineReducers({ user: userReducer, station: stationReducer, line: lineReducer });
+const combinedReducer = combineReducers({ user: userReducer, station: stationReducer, line: lineReducer });
+type CombinedState = ReturnType<typeof combinedReducer> | undefined;
+
+export const rootReducer = (state: CombinedState, action: PayloadAction) => {
+  if (action.type === 'LOG_OUT') {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
 
 export function* rootSaga() {
   yield all([userSaga(), stationSaga(), lineSaga()]);

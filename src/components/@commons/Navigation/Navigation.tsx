@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants/constant';
 import { RootState } from '../../../modules';
-import { logout } from '../../../modules/user/userReducer';
 import * as S from './Navigation.styles';
 
 const Navigation = () => {
@@ -29,7 +28,7 @@ const Navigation = () => {
           </S.MenuItem>
           <S.MenuItem>
             {accessToken ? (
-              <Link to={ROUTE.SIGN_IN} onClick={() => dispatch(logout())}>
+              <Link to={ROUTE.SIGN_IN} onClick={() => dispatch({ type: 'LOG_OUT' })}>
                 로그아웃
               </Link>
             ) : (

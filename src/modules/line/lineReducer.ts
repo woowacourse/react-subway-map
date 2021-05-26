@@ -9,6 +9,10 @@ interface AddLineAction {
   line: AddLine;
 }
 
+interface DeleteLineAction {
+  id: number;
+}
+
 export interface ErrorAction {
   error: string;
 }
@@ -32,6 +36,7 @@ export const lineSlice = createSlice({
     },
     getLinesAsync: () => {},
     addLineAsync: (state, action: PayloadAction<AddLineAction>) => {},
+    deleteLineAsync: (state, action: PayloadAction<DeleteLineAction>) => {},
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
     },
@@ -45,9 +50,10 @@ export type LineActions = ReturnType<
   | typeof lineSlice.actions.setLines
   | typeof lineSlice.actions.getLinesAsync
   | typeof lineSlice.actions.addLineAsync
+  | typeof lineSlice.actions.deleteLineAsync
   | typeof lineSlice.actions.error
   | typeof lineSlice.actions.pending
 >;
 
-export const { setLines, getLinesAsync, addLineAsync, error, pending } = lineSlice.actions;
+export const { setLines, getLinesAsync, addLineAsync, deleteLineAsync, error, pending } = lineSlice.actions;
 export default lineSlice.reducer;
