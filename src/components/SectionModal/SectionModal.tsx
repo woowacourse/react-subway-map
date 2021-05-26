@@ -90,6 +90,7 @@ const SectionModal = ({
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setDistance(Number(event.target.value))
         }
+        extraArgs={{ min: '1' }}
       />
       <Styled.ButtonsContainer>
         <TextButton text="확인" styleType={ButtonType.FILLED}></TextButton>
