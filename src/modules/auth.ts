@@ -1,29 +1,15 @@
-import { createSlice, createAction, createAsyncThunk, Action, Middleware, Dispatch } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
+import { AuthState, LoginInfo, SignupInfo } from "../@types/types";
 
 import { requestAuth } from "../apis/user";
 
-interface LoginInfo {
-  email: string;
-  password: string;
-}
-
-interface SignupInfo {
-  email: string;
-  password: string;
-  age: number;
-}
-
-interface AuthState {
-  isLogin: boolean;
-}
-
 const initialState: AuthState = {
-  isLogin: false,
+  isAuthenticated: false,
 };
 
 const LOGOUT = "[AUTH] LOGOUT";
 
-export const logout = () => async (dispatch: Dispatch) => {
+const logout = () => async (dispatch: Dispatch) => {
   localStorage.removeItem("accessToken");
 
   dispatch({
@@ -31,23 +17,30 @@ export const logout = () => async (dispatch: Dispatch) => {
   });
 };
 
-export const checkAccessToken = createAsyncThunk("[AUTH] CHECK_ACCESS_TOKEN", async () => {
+const checkAccessToken = createAsyncThunk("[AUTH] CHECK_ACCESS_TOKEN", async () => {
   const accessToken = localStorage.getItem("accessToken") || "";
 
   await requestAuth.getUserInfo(accessToken);
 });
 
-export const login = createAsyncThunk("[AUTH] LOGIN", async ({ email, password }: LoginInfo) => {
+const login = createAsyncThunk("[AUTH] LOGIN", async ({ email, password }: LoginInfo) => {
   const accessToken = await requestAuth.login(email, password);
 
   localStorage.setItem("accessToken", accessToken);
 });
 
-export const signup = createAsyncThunk("[AUTH] SIGNUP", async ({ email, password, age }: SignupInfo, thunkAPI) => {
+const signup = createAsyncThunk("[AUTH] SIGNUP", async ({ email, password, age }: SignupInfo, thunkAPI) => {
   await requestAuth.signup(email, password, age);
 
   thunkAPI.dispatch(login({ email, password }));
 });
+
+export const action = {
+  checkAccessToken,
+  login,
+  signup,
+  logout,
+};
 
 export const authSlice = createSlice({
   name: "auth",
@@ -55,16 +48,16 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: {
     [checkAccessToken.fulfilled.type]: (state) => {
-      state.isLogin = true;
+      state.isAuthenticated = true;
     },
     [checkAccessToken.rejected.type]: (state) => {
-      state.isLogin = false;
+      state.isAuthenticated = false;
     },
     [login.fulfilled.type]: (state) => {
-      state.isLogin = true;
+      state.isAuthenticated = true;
     },
     [LOGOUT]: (state) => {
-      state.isLogin = false;
+      state.isAuthenticated = false;
     },
   },
 });
