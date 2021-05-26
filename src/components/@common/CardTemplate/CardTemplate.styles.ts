@@ -3,7 +3,7 @@ import PALETTE from '../../../constants/palette';
 
 interface StyledCardTemplateProps {
   templateColor?: string;
-  isColoredTitle: boolean;
+  isColoredTitle?: boolean;
   titleSize: 'sm' | 'md' | 'lg';
 }
 
@@ -29,13 +29,13 @@ export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
     height: 1rem;
   }
 
-  ${CardTemplateTitle} {
+  & > ${CardTemplateTitle} {
     font-weight: bold;
     font-size: ${({ titleSize }) => TITLE_SIZE[titleSize]};
     padding: 1rem 1.5rem;
     ${({ isColoredTitle, templateColor }) =>
       isColoredTitle
-        ? `background-color: ${templateColor}; text-align: left;`
+        ? `background-color: ${templateColor}; text-align: left; transform: translateY(-1rem);`
         : 'text-align: center; padding: 3rem 0;'}
   }
 `;

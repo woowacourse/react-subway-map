@@ -7,7 +7,7 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
+import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { login } from '../../redux/loginSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -49,7 +49,10 @@ const Login: FC = () => {
   };
 
   return (
-    <CardTemplate templateColor={THEME_COLOR[400]} titleText={PAGE_INFO.LOGIN.text}>
+    <CardTemplate
+      templateColor={API_INFO[apiOwner].themeColor[400]}
+      titleText={PAGE_INFO.LOGIN.text}
+    >
       <LoginContainer>
         <LoginForm onSubmit={onLogin}>
           <Input

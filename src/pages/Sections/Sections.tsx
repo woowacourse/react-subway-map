@@ -1,17 +1,26 @@
+import { findAllByTestId } from '@testing-library/dom';
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
-import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
+import { API_INFO } from '../../constants/api';
+import { PAGE_INFO } from '../../constants/appInfo';
 import { DUMMY_LINES } from '../../constants/dummies';
 import PALETTE from '../../constants/palette';
+import { RootState } from '../../redux/store';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
 const Sections: FC = () => {
+  const apiOwner = useSelector((state: RootState) => state.api.owner);
+
   return (
-    <CardTemplate titleText={PAGE_INFO.SECTIONS.text} templateColor={THEME_COLOR[400]}>
+    <CardTemplate
+      titleText={PAGE_INFO.SECTIONS.text}
+      templateColor={API_INFO[apiOwner].themeColor[400]}
+    >
       <FlexContainer>
         <LineSelectBox>
           {DUMMY_LINES.map((line) => (

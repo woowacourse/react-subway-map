@@ -7,7 +7,7 @@ import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
+import { PAGE_INFO } from '../../constants/appInfo';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
@@ -45,7 +45,10 @@ const Lines: FC = () => {
   };
 
   return (
-    <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={THEME_COLOR[400]}>
+    <CardTemplate
+      titleText={PAGE_INFO.LINES.text}
+      templateColor={API_INFO[apiOwner].themeColor[400]}
+    >
       <ButtonOnLine onClick={onOpenAddModal}>
         <Add width="80%" color={PALETTE.GRAY[600]} />
       </ButtonOnLine>

@@ -6,7 +6,7 @@ import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLi
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, STATION, THEME_COLOR } from '../../constants/appInfo';
+import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -57,7 +57,10 @@ const Stations: FC = () => {
   };
 
   return (
-    <CardTemplate templateColor={THEME_COLOR[400]} titleText={PAGE_INFO.STATIONS.text}>
+    <CardTemplate
+      templateColor={API_INFO[apiOwner].themeColor[400]}
+      titleText={PAGE_INFO.STATIONS.text}
+    >
       <StationForm onSubmit={onAddStation}>
         <StationNameInput
           value={stationInput}

@@ -4,7 +4,6 @@ import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { API_INFO } from '../../constants/api';
-import { THEME_COLOR } from '../../constants/appInfo';
 import { changeOwner } from '../../redux/apiOwnerSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
@@ -28,7 +27,7 @@ const Home: FC = () => {
   };
 
   return (
-    <CardTemplate titleText="API 선택" templateColor={THEME_COLOR[400]}>
+    <CardTemplate titleText="API 선택" templateColor={API_INFO[apiOwner].themeColor[400]}>
       <APIForm onSubmit={onSubmitAPI}>
         <APIList>
           {Object.keys(API_INFO).map((apiInfoKey) => (

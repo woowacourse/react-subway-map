@@ -14,7 +14,7 @@ interface Props {
 const CardTemplate: FC<Props> = ({
   children,
   templateColor = PALETTE.YELLOW[400],
-  isColoredTitle = false,
+  isColoredTitle,
   titleText,
   titleSize = 'md',
 }) => {

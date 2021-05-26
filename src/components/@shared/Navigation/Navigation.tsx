@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { API_INFO } from '../../../constants/api';
 import { PAGE_INFO } from '../../../constants/appInfo';
 import { logout } from '../../../redux/loginSlice';
 import { RootState, useAppDispatch } from '../../../redux/store';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const Navigation: FC<Props> = ({ navInfoList }) => {
+  const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const history = useHistory();
   const dispatch = useAppDispatch();
@@ -28,7 +30,9 @@ const Navigation: FC<Props> = ({ navInfoList }) => {
       <NavList>
         {navInfoList.map((navInfo, index) => (
           <li key={index}>
-            <StyledLink to={navInfo.path}>{navInfo.text}</StyledLink>
+            <StyledLink linkColor={API_INFO[apiOwner].themeColor[400]} to={navInfo.path}>
+              {navInfo.text}
+            </StyledLink>
           </li>
         ))}
         <li>
@@ -37,7 +41,9 @@ const Navigation: FC<Props> = ({ navInfoList }) => {
               로그아웃
             </NavButton>
           ) : (
-            <StyledLink to={PAGE_INFO.LOGIN.path}>{PAGE_INFO.LOGIN.text}</StyledLink>
+            <StyledLink linkColor={API_INFO[apiOwner].themeColor[400]} to={PAGE_INFO.LOGIN.path}>
+              {PAGE_INFO.LOGIN.text}
+            </StyledLink>
           )}
         </li>
       </NavList>

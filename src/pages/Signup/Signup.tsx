@@ -6,7 +6,7 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Person from '../../components/@common/Icon/Person';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
+import { PAGE_INFO } from '../../constants/appInfo';
 import { RootState } from '../../redux/store';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
@@ -38,7 +38,10 @@ const Signup: FC = () => {
   };
 
   return (
-    <CardTemplate templateColor={THEME_COLOR[400]} titleText={PAGE_INFO.SIGN_UP.text}>
+    <CardTemplate
+      templateColor={API_INFO[apiOwner].themeColor[400]}
+      titleText={PAGE_INFO.SIGN_UP.text}
+    >
       <SignupForm onSubmit={onSignup}>
         <SignupNotificationInput
           type="email"

@@ -1,11 +1,19 @@
-import { ButtonHTMLAttributes } from 'react';
+import PropTypes from 'prop-types';
+import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
+import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { THEME_COLOR } from '../../../constants/appInfo';
-import PALETTE from '../../../constants/palette';
+import { API_INFO } from '../../../constants/api';
+import PALETTE, { Color } from '../../../constants/palette';
+import { RootState } from '../../../redux/store';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: 'square' | 'round';
   isColored?: boolean;
+  children: ReactNode;
+}
+
+interface StyledButtonProps extends Props {
+  themeColor: Color;
 }
 
 const buttonTypeCSS = {
@@ -20,12 +28,12 @@ const buttonTypeCSS = {
   `,
 };
 
-const coloredCSS = css`
-  background-color: ${THEME_COLOR[400]};
+const coloredCSS = (themeColor: Color) => css`
+  background-color: ${themeColor[400]};
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
-const Button = styled.button<Props>`
+const StyledButton = styled.button<StyledButtonProps>`
   border: none;
   font-size: 1.125rem;
   background-color: transparent;
@@ -35,7 +43,7 @@ const Button = styled.button<Props>`
   justify-content: center;
   align-items: center;
   ${({ buttonType }) => buttonType && buttonTypeCSS[buttonType]}
-  ${({ isColored }) => isColored && coloredCSS}
+  ${({ isColored, themeColor }) => isColored && coloredCSS(themeColor)}
 
   &:enabled:hover::after {
     content: '';
@@ -49,11 +57,32 @@ const Button = styled.button<Props>`
   }
 
   &:disabled {
-    ${({ isColored }) => isColored && `background-color: ${PALETTE.GRAY[200]};`}
+    ${({ isColored, themeColor }) => isColored && `background-color: ${themeColor[300]};`}
     color: ${PALETTE.GRAY[400]};
     cursor: default;
   }
 `;
+
+export const Button: FC<Props> = ({ children, buttonType, isColored, ...options }) => {
+  const apiOwner = useSelector((state: RootState) => state.api.owner);
+
+  return (
+    <StyledButton
+      buttonType={buttonType}
+      isColored={isColored}
+      themeColor={API_INFO[apiOwner].themeColor as Color}
+      {...options}
+    >
+      {children}
+    </StyledButton>
+  );
+};
+
+Button.propTypes = {
+  children: PropTypes.node,
+  buttonType: PropTypes.oneOf(['square', 'round']),
+  isColored: PropTypes.bool,
+};
 
 Button.defaultProps = {
   buttonType: 'square',
