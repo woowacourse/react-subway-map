@@ -1,4 +1,12 @@
-const BASE_URL = {
+const ApiHostList = ['SOLONG', 'NABOM', 'OZ', 'KROPPLE'];
+
+type ApiHost = typeof ApiHostList[number];
+
+const apiHostName = localStorage.getItem('hostName') as ApiHost;
+
+const API_HOST: ApiHost = apiHostName ?? 'SOLONG';
+
+const BASE_URL: { [key: string]: string } = {
   NABOM: 'https://subwaybot.kro.kr/api',
   OZ: 'https://subwaybot.o-r.kr/api',
   SOLONG: 'https://subwaybot.n-e.kr/api',
@@ -28,6 +36,12 @@ interface LineData {
   distance: number;
 }
 
+interface SectionData {
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+}
+
 interface APIReturnTypeStation {
   id: number;
   name: string;
@@ -46,8 +60,6 @@ interface APIReturnTypeLine {
   color: string;
   sections: APIReturnTypeSection[];
 }
-
-const API_HOST = 'NABOM';
 
 const request = async (url: string, requestConfig: RequestInit) => {
   const response = await fetch(url, requestConfig);
@@ -149,6 +161,14 @@ const apiRequest = {
     });
   },
 
+  getLine: async (lineId: number): Promise<APIReturnTypeLine> => {
+    const response = await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+      method: 'GET',
+    });
+
+    return await response.json();
+  },
+
   getLines: async (): Promise<APIReturnTypeLine[]> => {
     const response = await request(`${BASE_URL[API_HOST]}/lines`, {
       method: 'GET',
@@ -183,7 +203,39 @@ const apiRequest = {
       return;
     }
 
-    const response = await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+    await request(`${BASE_URL[API_HOST]}/lines/${lineId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+
+  addSection: async (lineId: number, data: SectionData) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    await request(`${BASE_URL[API_HOST]}/lines/${lineId}/sections`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+  },
+
+  deleteSection: async (lineId: number, stationId: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return;
+    }
+
+    await request(`${BASE_URL[API_HOST]}/lines/${lineId}/sections?stationId=${stationId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -194,3 +246,4 @@ const apiRequest = {
 
 export default apiRequest;
 export type { SignData, LoginData, APIReturnTypeStation, APIReturnTypeLine };
+export { API_HOST, ApiHostList };

@@ -115,6 +115,11 @@ const Distance = styled.span`
 
 const StationSelects = styled.div`
   display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+  }
 
   span {
     display: flex;
@@ -122,4 +127,22 @@ const StationSelects = styled.div`
   }
 `;
 
-export { Container, Heading1, Icon, Form, List, StationSelects, TitleBox, FormBox, Distance };
+const StationSelectError = styled.div`
+  font-size: 0.8rem;
+  padding-top: 0.2rem;
+  padding-left: 0.2rem;
+  color: ${PALETTE.RED};
+`;
+
+export {
+  Container,
+  Heading1,
+  Icon,
+  Form,
+  List,
+  StationSelects,
+  StationSelectError,
+  TitleBox,
+  FormBox,
+  Distance,
+};

@@ -1,13 +1,13 @@
-import LoginPage from './LoginPage';
+import MapPage from './MapPage';
 import { Story } from '@storybook/react';
 import { PageProps } from '../types';
 
 export default {
-  title: 'pages/LoginPage',
-  component: LoginPage,
+  title: 'pages/MapPage',
+  component: MapPage,
 };
 
-const Template: Story<PageProps> = (args) => <LoginPage {...args} />;
+const Template: Story<PageProps> = (args) => <MapPage {...args} />;
 
 export const Default = Template.bind({});
 

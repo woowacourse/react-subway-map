@@ -13,7 +13,14 @@ const Palette = ({ inputName, colors }: PaletteProps) => (
   <Container>
     {colors.map(({ disabled, name }) => (
       <label key={name}>
-        <input name={inputName} type="radio" disabled={disabled} value={name} hidden />
+        <input
+          name={inputName}
+          type="radio"
+          disabled={disabled}
+          value={name}
+          hidden
+          aria-hidden="true"
+        />
         <ColorOption backgroundColor={PALETTE[name]}></ColorOption>
       </label>
     ))}

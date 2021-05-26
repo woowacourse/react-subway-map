@@ -5,6 +5,7 @@ const PATH = {
   STATIONS: '/stations',
   LINES: '/lines',
   SECTIONS: '/sections',
+  MAP: '/map',
 };
 
 export default PATH;

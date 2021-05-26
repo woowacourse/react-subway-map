@@ -21,10 +21,11 @@ import useDebounce from '../../hooks/useDebounce';
 import { Icon, Heading1, Form } from './SignupPage.style';
 import apiRequest from '../../request';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { PageProps } from '../types';
 
 const DEBOUNCE_DELAY = 500;
 
-const SignupPage = () => {
+const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
@@ -43,15 +44,15 @@ const SignupPage = () => {
   const emailMessage = email
     ? isEmailFormatValid
       ? isEmailDuplicated
-        ? '이미 존재하는 이메일입니다.'
-        : '사용할 수 있는 이메일입니다.'
-      : '이메일 형식에 맞게 작성하세요.'
+        ? ERROR_MESSAGE.DUPLICATED_EMAIL
+        : SUCCESS_MESSAGE.AVAILABLE_EMAIL
+      : ERROR_MESSAGE.INVALID_EMAIL
     : '';
-  const ageErrorMessage = isAgeValid ? '' : '1살 이상 200살 이하의 나이를 입력해주세요.';
-  const passwordErrorMessage = isPasswordValid
+  const ageErrorMessage = isAgeValid ? '' : ERROR_MESSAGE.INVALID_AGE;
+  const passwordErrorMessage = isPasswordValid ? '' : ERROR_MESSAGE.INVALID_PASSWORD;
+  const passwordMatchedErrorMessage = isPasswordMatched
     ? ''
-    : '비밀번호는 영문, 숫자, 특수문자만을 포함한 8자 이상 14자 이하여야 합니다.';
-  const passwordMatchedErrorMessage = isPasswordMatched ? '' : '비밀번호가 일치하지 않습니다.';
+    : ERROR_MESSAGE.INVALID_PASSWORD_CONFIRM;
 
   const isFormCompleted =
     email &&
@@ -99,6 +100,8 @@ const SignupPage = () => {
       return;
     }
 
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
     try {
       await apiRequest.signup({ email, password, age: Number(age) });
       addMessage?.(SUCCESS_MESSAGE.SIGNUP);
@@ -106,6 +109,9 @@ const SignupPage = () => {
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 
@@ -128,6 +134,7 @@ const SignupPage = () => {
             value={email}
             onChange={onEmailChange}
             autoComplete="off"
+            aria-label="이메일 입력"
           />
         </InputContainer>
         <InputContainer validation={{ text: ageErrorMessage, isValid: isAgeValid }}>
@@ -141,6 +148,7 @@ const SignupPage = () => {
             value={age}
             onChange={onAgeChange}
             autoComplete="off"
+            aria-label="나이 입력"
           />
         </InputContainer>
         <InputContainer validation={{ text: passwordErrorMessage, isValid: isPasswordValid }}>
@@ -154,6 +162,7 @@ const SignupPage = () => {
             onChange={onPasswordChange}
             onKeyDown={onPasswordKeydown}
             autoComplete="off"
+            aria-label="비밀번호 입력"
           />
         </InputContainer>
         <InputContainer
@@ -169,6 +178,7 @@ const SignupPage = () => {
             onChange={onPasswordConfirmChange}
             onKeyDown={onPasswordKeydown}
             autoComplete="off"
+            aria-label="비밀번호 확인 입력"
           />
         </InputContainer>
         <Button

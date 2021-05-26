@@ -12,33 +12,51 @@ import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeStation } from '../../request';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
+import noStation from '../../assets/images/no_station.png';
+import { PageProps } from '../types';
 
 interface Station extends APIReturnTypeStation {
   editable: boolean;
 }
 
-const StationPage = () => {
+const BEFORE_FETCH: Station[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+
+const StationPage = ({ setIsLoading }: PageProps) => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
-  const [list, setList] = useState<Station[]>([]);
+  const [list, setList] = useState<Station[]>(BEFORE_FETCH);
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
 
   const fetchStations = async () => {
-    try {
-      const stations: APIReturnTypeStation[] = await apiRequest.getStations();
+    const stations: APIReturnTypeStation[] = await apiRequest.getStations();
 
-      setList(stations.map((station) => ({ ...station, editable: false })));
+    setList(stations.map((station) => ({ ...station, editable: false })));
+  };
+
+  const fetchData = async () => {
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
+    try {
+      await fetchStations();
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+      setList([]);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchStations();
+    fetchData();
   }, []);
+
+  if (list === BEFORE_FETCH) {
+    return <></>;
+  }
 
   // TODO: 역 리스트 sorting
   const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -66,7 +84,7 @@ const StationPage = () => {
       });
 
       if (newStation) {
-        await fetchStations();
+        await fetchData();
         addMessage?.(SUCCESS_MESSAGE.ADD_STATION);
       } else {
         addMessage?.(ERROR_MESSAGE.UNAUTHORIZED);
@@ -78,7 +96,7 @@ const StationPage = () => {
       // TODO: bad request처리
       if (error.message === '400') {
         setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
-        await fetchStations();
+        await fetchData();
         return;
       }
       addMessage?.(ERROR_MESSAGE.DEFAULT);
@@ -89,7 +107,7 @@ const StationPage = () => {
     if (!confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
     try {
       await apiRequest.deleteStation(id);
-      await fetchStations();
+      await fetchData();
       addMessage?.(SUCCESS_MESSAGE.DELETE_STATION);
     } catch (error) {
       console.error(error);
@@ -131,8 +149,6 @@ const StationPage = () => {
     );
   };
 
-  const onStationEdit = async () => {};
-
   return (
     <Container>
       <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
@@ -147,63 +163,73 @@ const StationPage = () => {
             </Icon>
             <Input type="text" value={stationInput} onChange={onStationInputChange} />
           </InputContainer>
-          <Button size="m" width="6rem" backgroundColor={themeColor} color={PALETTE.WHITE}>
+          <Button
+            size="m"
+            width="6rem"
+            height="2.8rem"
+            backgroundColor={themeColor}
+            color={PALETTE.WHITE}
+          >
             추가
           </Button>
         </Form>
       </Box>
       <Box backgroundColor={PALETTE.WHITE}>
-        <List>
-          {list.map(({ id, name, editable }) => (
-            <li key={id}>
-              <Input
-                value={name}
-                onChange={(event) => onNameChange(id, event)}
-                readOnly={!editable}
-              />
-              {editable ? (
-                <Button
-                  type="button"
-                  size="s"
-                  backgroundColor={themeColor}
-                  color={PALETTE.WHITE}
-                  onClick={onStationEdit}
-                >
-                  <MdCheck size="15px" />
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  size="s"
-                  backgroundColor={PALETTE.GRAY_100}
-                  onClick={() => onSetEditable(id, true)}
-                >
-                  <MdEdit size="15px" />
-                </Button>
-              )}
-              {editable ? (
-                <Button
-                  type="button"
-                  size="s"
-                  backgroundColor={PALETTE.GRAY_100}
-                  onClick={() => onSetEditable(id, false)}
-                >
-                  <MdCancel size="15px" />
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  size="s"
-                  backgroundColor={PALETTE.PINK}
-                  color={PALETTE.WHITE}
-                  onClick={() => onStationDelete(id, name)}
-                >
-                  <MdDelete size="15px" />
-                </Button>
-              )}
-            </li>
-          ))}
-        </List>
+        {list.length === 0 ? (
+          <img src={noStation} alt="지하철 역 없음 이미지" />
+        ) : (
+          <List>
+            {list.map(({ id, name, editable }) => (
+              <li key={id}>
+                <Input
+                  value={name}
+                  onChange={(event) => onNameChange(id, event)}
+                  readOnly={!editable}
+                />
+                {editable ? (
+                  <Button
+                    type="button"
+                    size="s"
+                    backgroundColor={themeColor}
+                    color={PALETTE.WHITE}
+                    onClick={() => {}}
+                  >
+                    <MdCheck size="15px" />
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    size="s"
+                    backgroundColor={PALETTE.GRAY_100}
+                    onClick={() => onSetEditable(id, true)}
+                  >
+                    <MdEdit size="15px" />
+                  </Button>
+                )}
+                {editable ? (
+                  <Button
+                    type="button"
+                    size="s"
+                    backgroundColor={PALETTE.GRAY_100}
+                    onClick={() => onSetEditable(id, false)}
+                  >
+                    <MdCancel size="15px" />
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    size="s"
+                    backgroundColor={PALETTE.PINK}
+                    color={PALETTE.WHITE}
+                    onClick={() => onStationDelete(id, name)}
+                  >
+                    <MdDelete size="15px" />
+                  </Button>
+                )}
+              </li>
+            ))}
+          </List>
+        )}
       </Box>
     </Container>
   );

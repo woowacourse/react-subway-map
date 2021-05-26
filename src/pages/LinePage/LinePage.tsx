@@ -25,12 +25,15 @@ import {
   Form,
   List,
   StationSelects,
+  StationSelectError,
 } from './LinePage.style';
 import Palette from '../../components/Palette/Palette';
 import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import useInput from '../../hooks/useInput';
+import { PageProps } from '../types';
+import noLine from '../../assets/images/no_line.png';
 
 const lineColors = [
   'PINK',
@@ -45,10 +48,14 @@ const lineColors = [
   'PURPLE',
 ];
 
-const LinePage = () => {
+const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+
+// TODO: Authorization Error 발생 시, 로그인하라고 메시지 띄워주기
+const LinePage = ({ setIsLoading }: PageProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [stations, setStations] = useState<APIReturnTypeStation[]>([]);
-  const [lines, setLines] = useState<APIReturnTypeLine[]>([]);
+  const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);
+  const [lines, setLines] = useState<APIReturnTypeLine[]>(LINE_BEFORE_FETCH);
   const [lineName, onlineNameChange, setLineName] = useInput('');
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
@@ -66,6 +73,36 @@ const LinePage = () => {
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
 
+  // TODO: 매직넘버 싹 다 ㄱ
+  const isLineNameValid =
+    lineName.length > 1 && lineName.length < 11 && /^[가-힣0-9]+$/.test(lineName);
+  const isLineNameDuplicated = lines.some((item) => item.name === lineName);
+  const isStationSelectDuplicated = upStationId === downStationId;
+  const isDistanceValid =
+    /^[0-9]+$/.test(distance) && Number(distance) > 0 && Number(distance) < 301;
+
+  const lineNameErrorMessage =
+    lineName &&
+    (!isLineNameValid
+      ? ERROR_MESSAGE.INVALID_LINE_INPUT
+      : isLineNameDuplicated
+      ? ERROR_MESSAGE.DUPLICATED_LINE_NAME
+      : '');
+  const stationSelectErrorMessage =
+    upStationId && downStationId && isStationSelectDuplicated
+      ? ERROR_MESSAGE.DUPLICATED_TERMINAL
+      : '';
+  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
+  const isFormCompleted =
+    lineName &&
+    upStationId &&
+    downStationId &&
+    distance &&
+    isLineNameValid &&
+    !isLineNameDuplicated &&
+    !isStationSelectDuplicated &&
+    isDistanceValid;
+
   const reset = () => {
     setLineName('');
     setUpStationId('');
@@ -74,31 +111,40 @@ const LinePage = () => {
   };
 
   const fetchLines = async () => {
-    try {
-      const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
+    const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
 
-      setLines(newLines);
-    } catch (error) {
-      console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    }
+    setLines(newLines);
   };
 
   const fetchStations = async () => {
-    try {
-      const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
+    const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
 
-      setStations(newStations);
+    setStations(newStations);
+  };
+
+  const fetchData = async () => {
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
+    try {
+      await Promise.all([fetchStations(), fetchLines()]);
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+      setLines([]);
+      setStations([]);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchStations();
-    fetchLines();
+    fetchData();
   }, []);
+
+  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
+    return <></>;
+  }
 
   const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     setUpStationId(event.target.value);
@@ -111,10 +157,13 @@ const LinePage = () => {
   const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    // TODO: form Validation Check
+    const formElement = event.currentTarget;
+    const color = formElement['color'].value;
 
-    //TODO: as 제거하기, form target elements.
-    const color = (event.target as HTMLFormElement)['color'].value; // as
+    if (!isFormCompleted || !color) {
+      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
+      return;
+    }
 
     try {
       const newLine = {
@@ -124,11 +173,14 @@ const LinePage = () => {
         downStationId: Number(downStationId),
         distance: Number(distance),
       };
+
       const response = await apiRequest.addLine(newLine);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
-      fetchLines();
+      await fetchData();
+
       reset();
+      formElement.reset();
       setFormOpen(false);
     } catch (error) {
       console.error(error);
@@ -140,7 +192,7 @@ const LinePage = () => {
     if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
     try {
       await apiRequest.deleteLine(id);
-      await fetchLines();
+      await fetchData();
       addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
     } catch (error) {
       console.error(error);
@@ -165,39 +217,48 @@ const LinePage = () => {
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Form onSubmit={onLineSubmit}>
-          <InputContainer labelText="노선 이름">
+          <InputContainer
+            labelText="노선 이름"
+            validation={{ text: lineNameErrorMessage, isValid: false }}
+          >
             <Input value={lineName} onChange={onlineNameChange} />
           </InputContainer>
           <StationSelects>
-            <InputContainer labelText="상행 종점">
-              <Select value={upStationId} onChange={onUpStationIdChange}>
-                <option value="/" hidden>
-                  역 선택
-                </option>
-                {stations.map((station) => (
-                  <option key={station.id} value={station.id}>
-                    {station.name}
+            <div>
+              <InputContainer labelText="상행 종점">
+                <Select value={upStationId} onChange={onUpStationIdChange}>
+                  <option value="/" hidden>
+                    역 선택
                   </option>
-                ))}
-              </Select>
-            </InputContainer>
-            <Icon>
-              <MdArrowForward size="1.5rem" />
-            </Icon>
-            <InputContainer labelText="하행 종점">
-              <Select value={downStationId} onChange={onDownStationIdChange}>
-                <option value="/" hidden>
-                  역 선택
-                </option>
-                {stations.map((station) => (
-                  <option key={station.id} value={station.id}>
-                    {station.name}
+                  {stations.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </Select>
+              </InputContainer>
+              <Icon>
+                <MdArrowForward size="1.5rem" />
+              </Icon>
+              <InputContainer labelText="하행 종점">
+                <Select value={downStationId} onChange={onDownStationIdChange}>
+                  <option value="/" hidden>
+                    역 선택
                   </option>
-                ))}
-              </Select>
-            </InputContainer>
+                  {stations.map((station) => (
+                    <option key={station.id} value={station.id}>
+                      {station.name}
+                    </option>
+                  ))}
+                </Select>
+              </InputContainer>
+            </div>
+            <StationSelectError>{stationSelectErrorMessage}</StationSelectError>
           </StationSelects>
-          <InputContainer labelText="거리 (단위:km)">
+          <InputContainer
+            labelText="거리 (단위:km)"
+            validation={{ text: distanceErrorMessage, isValid: false }}
+          >
             <Input value={distance} onChange={onDistanceChange} />
           </InputContainer>
           <InputContainer labelText="색상을 선택하세요 (이미 등록된 색상은 선택할 수 없습니다.)">
@@ -209,25 +270,29 @@ const LinePage = () => {
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
-        <List>
-          {lines.map(({ id, name }) => (
-            <li key={id}>
-              <p>{name}</p>
-              <Button type="button" size="s" backgroundColor={PALETTE.GRAY_100}>
-                <MdEdit size="15px" />
-              </Button>
-              <Button
-                type="button"
-                size="s"
-                backgroundColor={PALETTE.PINK}
-                color={PALETTE.WHITE}
-                onClick={() => onLineDelete(id, name)}
-              >
-                <MdDelete size="15px" />
-              </Button>
-            </li>
-          ))}
-        </List>
+        {lines.length === 0 ? (
+          <img src={noLine} alt="노선이 없습니다." />
+        ) : (
+          <List>
+            {lines.map(({ id, name }) => (
+              <li key={id}>
+                <p>{name}</p>
+                <Button type="button" size="s" backgroundColor={PALETTE.GRAY_100}>
+                  <MdEdit size="15px" />
+                </Button>
+                <Button
+                  type="button"
+                  size="s"
+                  backgroundColor={PALETTE.PINK}
+                  color={PALETTE.WHITE}
+                  onClick={() => onLineDelete(id, name)}
+                >
+                  <MdDelete size="15px" />
+                </Button>
+              </li>
+            ))}
+          </List>
+        )}
       </Box>
     </Container>
   );
