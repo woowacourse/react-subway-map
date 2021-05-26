@@ -33,6 +33,7 @@ const userSlice = createSlice({
     email: null,
     accessToken: null,
     isLoginSuccess: false,
+    isLoginFailed: false,
     isLoading: false,
   },
   reducers: {
@@ -40,6 +41,9 @@ const userSlice = createSlice({
       state.email = null;
       state.accessToken = null;
       state.isLoginSuccess = false;
+    },
+    clearLoginFailed: (state) => {
+      state.isLoginFailed = false;
     },
   },
   extraReducers: {
@@ -55,12 +59,13 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [login.rejected]: (state, action) => {
+      state.isLoginFailed = true;
       state.isLoading = false;
     },
   },
 });
 
 export { login };
-export const { logout } = userSlice.actions;
+export const { logout, clearLoginFailed } = userSlice.actions;
 
 export default userSlice.reducer;

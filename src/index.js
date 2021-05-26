@@ -1,17 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store from './redux/store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
 
 import App from './App';
+import store from './redux/store';
 import { GlobalStyle } from './style';
+import { COLOR } from './constants';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    <GlobalStyle />
+    <SnackbarProvider
+      maxSnack={3}
+      classes={{
+        variantError: { backgroundColor: COLOR.ERROR },
+      }}
+    >
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </Provider>
+      <GlobalStyle />
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
