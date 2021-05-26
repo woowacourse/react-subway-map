@@ -2,10 +2,18 @@ import React from 'react';
 import { Container } from './style';
 import { PropTypes } from 'prop-types';
 
-const Selector = ({ label, size, name, defaultOption, options, ...attrs }) => (
+const Selector = ({
+  label,
+  size,
+  name,
+  defaultOption,
+  value,
+  options,
+  ...attrs
+}) => (
   <Container size={size}>
     <label htmlFor={name}>{label}</label>
-    <select name={name} defaultValue="" {...attrs}>
+    <select name={name} defaultValue={value} {...attrs}>
       <option value="" disabled>
         {defaultOption}
       </option>

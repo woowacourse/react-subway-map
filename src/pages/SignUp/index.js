@@ -36,7 +36,7 @@ const validateAge = ({ age }) => {
   if (!age) {
     return ERROR.AGE.REQUIRED;
   }
-  if (!REG_EXP.AGE.test(age)) {
+  if (!REG_EXP.NUMBER.test(age)) {
     return ERROR.AGE.INVALID;
   }
   if (age <= RANGE.AGE.MIN || age >= RANGE.AGE.MAX) {

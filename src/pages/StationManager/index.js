@@ -10,14 +10,14 @@ import {
   ERROR,
   TEST,
 } from '../../constants';
-import useStationManager from '../../hooks';
+import { useStationManager } from '../../hooks';
 import { Form, InputWrapper, ButtonWrapper, Validator } from './style';
 
 const initialValues = {
   stationName: '',
 };
 
-const validate = ({ stationName }, stations) => {
+const validate = ({ stationName, stations }) => {
   const errors = {};
 
   if (!stationName) {
@@ -42,7 +42,7 @@ const validate = ({ stationName }, stations) => {
 const StationManager = () => {
   const { stations, addStation, deleteStation } = useStationManager();
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmitForm = (values, { resetForm }) => {
     addStation(values);
     resetForm();
   };
@@ -51,8 +51,8 @@ const StationManager = () => {
     <PageTemplate title={ROUTE.STATION_MANAGE.NAME}>
       <Formik
         initialValues={initialValues}
-        validate={(values) => validate(values, stations)}
-        onSubmit={handleSubmit}
+        validate={(values) => validate({ ...values, stations })}
+        onSubmit={handleSubmitForm}
         validateOnBlur={false}
         validateOnChange={false}
       >
@@ -82,7 +82,7 @@ const StationManager = () => {
           </>
         )}
       </Formik>
-      {stations && (
+      {stations.length > 0 && (
         <ManagementList items={stations} onDeleteItem={deleteStation} />
       )}
     </PageTemplate>

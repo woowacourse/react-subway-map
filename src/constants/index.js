@@ -18,7 +18,7 @@ export const COLOR = {
 };
 
 export const LINE_COLOR = {
-  MAGENTA: '#DE59B9',
+  DEFAULT: '#DE59B9',
   PINK: '#E76E9A',
   RED: '#E24141',
   ORANGE: '#F37D3B',
@@ -36,9 +36,9 @@ export const SIZE = {
 };
 
 export const REG_EXP = {
+  NUMBER: /^[0-9]*$/,
   EMAIL:
     /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/,
-  AGE: /^[0-9]*$/,
   PASSWORD:
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$~!@#$%^&*()-+?])[A-Za-z\d$~!@#$%^&*()-+?]{6,20}$/,
   STATION_NAME: /^[가-힣|0-9|]{2,20}$/,
@@ -91,6 +91,19 @@ export const ERROR = {
     REQUIRED: '역 이름을 입력해주세요.',
     INVALID: '올바른 역 이름을 입력해주세요.',
     DUPLICATE: '중복된 역 이름은 추가할 수 없습니다.',
+  },
+  LINE_NAME: {
+    REQUIRED: '노선 이름을 입력해주세요.',
+    INVALID: '올바른 노선 이름을 입력해주세요.',
+    DUPLICATE: '중복된 노선 이름은 추가할 수 없습니다.',
+  },
+  STATION_ID: {
+    REQUIRED: '역을 선택해주세요.',
+    DUPLICATE: '상행역과 하행역은 같을 수 없습니다.',
+  },
+  DISTANCE: {
+    REQUIRED: '거리를 입력해주세요.',
+    INVALID: '올바른 거리를 입력해주세요.',
   },
 };
 

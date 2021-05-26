@@ -24,12 +24,14 @@ export const Palette = styled.ul`
 
 export const ColorWrapper = styled.li`
   ${Flex({ justify: 'center', items: 'center' })}
+  height: 50px;
 `;
 
 export const Color = styled.div`
   width: 44px;
   height: 44px;
   border-radius: 50%;
+  cursor: pointer;
   ${({ isPicked }) =>
     isPicked &&
     css`
