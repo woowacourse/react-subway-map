@@ -20,5 +20,35 @@
       "name": "밍키역",
       "id": 11
     }
+  ],
+  "lines": [
+    {
+      "id": 1,
+      "name": "신분당선",
+      "color": "#F87171",
+      "stations": [
+        {
+          "id": 9,
+          "name": "성신여대입구역"
+        },
+        {
+          "id": 11,
+          "name": "밍키역"
+        }
+      ],
+      "sections": [
+        {
+          "upStation": {
+            "id": 9,
+            "name": "성신여대입구역"
+          },
+          "downStation": {
+            "id": 11,
+            "name": "밍키역"
+          },
+          "distance": 10
+        }
+      ]
+    }
   ]
 }
