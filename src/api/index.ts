@@ -1,5 +1,6 @@
 import axios from 'axios';
-import BACKEND, { CREWS } from '../constants/backend';
+import BACKEND from '../constants/backend';
+import { CREWS } from '../types';
 
 const getAccessToken = () => localStorage.getItem('accessToken');
 const createHeaders = () => {
@@ -31,6 +32,6 @@ const API = {
     baseURL: BACKEND.CHARLIE.baseUrl,
     headers: createHeaders(),
   }),
-};
+} as const;
 
 export default API;

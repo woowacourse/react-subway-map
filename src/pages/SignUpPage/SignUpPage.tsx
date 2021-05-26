@@ -5,17 +5,19 @@ import * as Styled from './SignUpPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
 import { ReactComponent as KeyIcon } from '../../assets/icons/key-solid.svg';
 import { ReactComponent as UserIcon } from '../../assets/icons/user-solid.svg';
-import BACKEND, { CREWS } from '../../constants/backend';
+import BACKEND from '../../constants/backend';
 import useInput from '../../hooks/useInput';
+import useSelect from '../../hooks/useSelect';
 import ROUTES from '../../constants/routes';
 import API from '../../api';
 import MESSAGE from '../../constants/message';
 import REGEX from '../../constants/regex';
+import { CREWS } from '../../types';
 
 const SignUpPage = () => {
   const history = useHistory();
 
-  const { value: server, onChange: onChangeServer } = useInput(CREWS.DANYEE);
+  const { value: server, onChange: onChangeServer } = useSelect(CREWS.DANYEE);
   const { value: email, onChange: onChangeEmail, ref: emailRef } = useInput('');
   const { value: age, onChange: onChangeAge } = useInput('');
   const { value: password, onChange: onChangePassword, ref: passwordRef } = useInput('');

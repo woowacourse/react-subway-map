@@ -34,6 +34,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
     'react/jsx-props-no-spreading': 'off',
+    'no-param-reassign': ['error', { props: false }],
   },
   overrides: [
     {

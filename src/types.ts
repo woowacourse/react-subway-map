@@ -47,3 +47,22 @@ export enum Color {
   PURPLE_700 = 'rgb(109, 40, 217)',
   PURPLE_800 = 'rgb(91, 33, 182)',
 }
+
+export enum CREWS {
+  DANYEE = 'DANYEE',
+  MARK = 'MARK',
+  CHARLIE = 'CHARLIE',
+  YORN = 'YORN',
+}
+
+export enum ApiStatus {
+  IDLE = 'idle',
+  PENDING = 'pending',
+  FULFILLED = 'fulfilled',
+  REJECTED = 'rejected',
+}
+
+export type Station = {
+  id: number;
+  name: string;
+};
