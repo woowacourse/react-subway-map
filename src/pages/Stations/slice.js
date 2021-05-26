@@ -8,6 +8,9 @@ import {
 import http from "../../api/http";
 import { selectAccessToken } from "../Login/slice";
 
+export const selectStationsStatus = (state) => state.stations.status;
+export const selectStationsMessage = (state) => state.stations.message;
+
 export const addStation = createAsyncThunk(
   "stations/addStation",
   async (stationName, { rejectWithValue, getState }) => {
