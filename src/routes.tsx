@@ -1,8 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
-import LOCAL_STORAGE_KEYS from './constants/localStorageKeys';
 import ROUTES from './constants/routes';
-import useLocalStorage from './hooks/useLocalStorage';
+import useAuth from './hooks/useAuth';
 import LinePage from './pages/LinePage/LinePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SectionPage from './pages/SectionPage/SectionPage';
@@ -14,18 +13,13 @@ interface PrivateRouteIProps extends RouteProps {
 }
 
 const PrivateRoute = ({ children, ...props }: PrivateRouteIProps) => {
-  const [accessToken] = useLocalStorage(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-  const [server] = useLocalStorage(LOCAL_STORAGE_KEYS.SERVER);
+  const { isLogin } = useAuth();
 
   return (
     <Route
       {...props}
       render={({ location }) =>
-        accessToken && server ? (
-          children
-        ) : (
-          <Redirect to={{ pathname: ROUTES.ROOT, state: { from: location } }} />
-        )
+        isLogin ? children : <Redirect to={{ pathname: ROUTES.ROOT, state: { from: location } }} />
       }
     />
   );

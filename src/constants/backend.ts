@@ -1,9 +1,4 @@
-export const CREWS = {
-  DANYEE: 'DANYEE',
-  MARK: 'MARK',
-  CHARLIE: 'CHARLIE',
-  YORN: 'YORN',
-};
+import { CREWS } from '../types';
 
 const BACKEND = {
   [CREWS.DANYEE]: {

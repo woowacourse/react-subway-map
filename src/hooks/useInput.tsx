@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 
-const useInput = (initialValue = '') => {
-  const [value, setValue] = useState<string>(initialValue);
+const useInput = <T extends unknown>(initialValue: T) => {
+  const [value, setValue] = useState<T>(initialValue);
   const ref = useRef<HTMLInputElement & HTMLSelectElement>(null);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
-    setValue(event.target.value);
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setValue(event.target.value as T);
   };
 
   return { value, onChange, setValue, ref };

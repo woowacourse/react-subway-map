@@ -3,9 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import ROUTES from '../../constants/routes';
 import * as Styled from './Navbar.styles';
+import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
   const location = useLocation();
+  const { isLogin, onLogout } = useAuth();
 
   return (
     <Styled.Navbar>
@@ -32,11 +34,17 @@ const Navbar = () => {
           </Link>
         </Styled.NavItem>
         <Styled.NavItem>
-          <Link to={ROUTES.ROOT}>
-            <Button variant="text" active={location.pathname === ROUTES.ROOT}>
-              로그인
+          {isLogin ? (
+            <Button variant="text" active={location.pathname === ROUTES.ROOT} onClick={onLogout}>
+              로그아웃
             </Button>
-          </Link>
+          ) : (
+            <Link to={ROUTES.ROOT}>
+              <Button variant="text" active={location.pathname === ROUTES.ROOT}>
+                로그인
+              </Button>
+            </Link>
+          )}
         </Styled.NavItem>
       </Styled.NavList>
     </Styled.Navbar>
