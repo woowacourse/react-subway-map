@@ -13,7 +13,7 @@ import { RootState } from '../../modules';
 import { REGEXP } from '../../constants/regularExpression';
 
 const getEmailErrorMessage = (email: string) => {
-  if (!REGEXP.NUMBER.test(email)) {
+  if (!REGEXP.EMAIL.test(email)) {
     return '이메일 형식이 아닙니다.';
   }
 

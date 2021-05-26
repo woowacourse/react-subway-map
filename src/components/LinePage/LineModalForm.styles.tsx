@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { COLOR } from '../../constants/styleConstant';
 
 export const LineModalForm = styled.form`
   width: 100%;
@@ -14,25 +15,25 @@ export const Title = styled.h2`
 
 export const InputWrapper = styled.div`
   width: 100%;
-
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 `;
 
 export const SelectInputWrapper = styled.div`
   width: 100%;
   height: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-export const Message = styled.div`
+export const Message = styled.div<{ textAlign?: 'left' | 'center' | 'right' }>`
   width: 100%;
   height: 1rem;
-  padding-left: 1.25rem;
+  padding: 0 1rem;
   margin-top: 0.5rem;
   font-size: 0.85rem;
+  text-align: ${({ textAlign }) => (textAlign ? textAlign : 'left')};
 `;
 
 export const Arrow = styled.div`
@@ -85,11 +86,16 @@ export const Palette = styled.button`
 `;
 
 export const SelectedPalette = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
   width: 9rem;
   height: 9rem;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  background-color: ${({ color, theme }) => (color ? color : theme.primaryColor)};
+  background-color: ${({ color }) => (color ? color : COLOR.WHITE)};
+  border: 4px solid ${COLOR.GRAY_800};
   grid-row-start: 1;
   grid-row-end: 3;
   grid-column-start: 6;

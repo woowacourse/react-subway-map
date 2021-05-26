@@ -3,6 +3,7 @@ import { API, RESPONSE } from '../constants/api';
 import { Station } from '../interfaces';
 
 interface GetStationsReponse {
+  status: number;
   data: Station[];
 }
 
@@ -11,7 +12,7 @@ export const stationAPI = {
     try {
       const response: GetStationsReponse = await axios.get(API.GET_STATIONS);
 
-      if (!response.data) {
+      if (response.status >= 400) {
         throw new Error('역 정보를 불러오는데 실패했습니다...!');
       }
 
@@ -26,7 +27,7 @@ export const stationAPI = {
       const data = { name };
       const response: GetStationsReponse = await axios.post(API.GET_STATIONS, data);
 
-      if (!response.data) {
+      if (response.status >= 400) {
         throw new Error('역 생성에 실패했습니다...!');
       }
 

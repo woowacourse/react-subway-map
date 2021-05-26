@@ -15,3 +15,11 @@ export interface Line {
   name: string;
   color: string;
 }
+
+export interface AddLine {
+  name: string;
+  color: string;
+  upStationId: string;
+  downStationId: string;
+  distance: string;
+}

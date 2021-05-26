@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Line } from '../../interfaces';
+import { AddLine, Line } from '../../interfaces';
 
 interface SetLineAction {
   lines: Line[];
 }
+
+interface AddLineAction {
+  line: AddLine;
+}
+
 export interface ErrorAction {
   error: string;
 }
@@ -26,6 +31,7 @@ export const lineSlice = createSlice({
       state.lines = action.payload.lines.sort((a, b) => b.id - a.id);
     },
     getLinesAsync: () => {},
+    addLineAsync: (state, action: PayloadAction<AddLineAction>) => {},
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
     },
@@ -38,9 +44,10 @@ export const lineSlice = createSlice({
 export type LineActions = ReturnType<
   | typeof lineSlice.actions.setLines
   | typeof lineSlice.actions.getLinesAsync
+  | typeof lineSlice.actions.addLineAsync
   | typeof lineSlice.actions.error
   | typeof lineSlice.actions.pending
 >;
 
-export const { setLines, getLinesAsync, error, pending } = lineSlice.actions;
+export const { setLines, getLinesAsync, addLineAsync, error, pending } = lineSlice.actions;
 export default lineSlice.reducer;

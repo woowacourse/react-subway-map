@@ -2,6 +2,7 @@ import { Color } from '../../../constants/styleType';
 import * as S from './Button.styles';
 
 export interface Props {
+  type?: 'button' | 'submit' | 'reset';
   children?: string;
   bgColor?: Color;
   fontColor?: Color;
@@ -10,9 +11,16 @@ export interface Props {
   onClick?: (event: React.MouseEvent) => void;
 }
 
-const Button = ({ children, bgColor, fontColor, isDisabled, shape, onClick }: Props) => {
+const Button = ({ type, children, bgColor, fontColor, isDisabled, shape, onClick }: Props) => {
   return (
-    <S.Button bgColor={bgColor} fontColor={fontColor} isDisabled={isDisabled} shape={shape} onClick={onClick}>
+    <S.Button
+      type={type}
+      bgColor={bgColor}
+      fontColor={fontColor}
+      isDisabled={isDisabled}
+      shape={shape}
+      onClick={onClick}
+    >
       {children}
     </S.Button>
   );

@@ -7,6 +7,7 @@ export default {
 
 const Template = () => (
   <LineModalForm
+    lines={[]}
     lineInfo={{
       name: '',
       color: '',

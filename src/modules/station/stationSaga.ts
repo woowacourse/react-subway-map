@@ -55,9 +55,8 @@ function* addStationSaga(action: AddStationAction) {
   }
 
   const stations: Station[] = yield select(state => state.station.stations);
-  const newStations = [result.station, ...stations] as Station[];
 
-  yield put(setStations({ stations: newStations }));
+  yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
 }
 
 function* deleteStationSaga(action: DeleteStationAction) {

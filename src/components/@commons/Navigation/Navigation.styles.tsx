@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { COLOR, SIZE } from '../../../constants/styleConstant';
 
 export const Navigation = styled.nav`
+  z-index: 100;
   width: 100%;
   height: 5rem;
   display: flex;

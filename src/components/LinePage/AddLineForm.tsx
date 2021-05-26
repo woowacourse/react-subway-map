@@ -3,7 +3,7 @@ import * as S from './AddLineForm.styles';
 import subwaySVG from '../../assets/svg/subway.svg';
 import Button from '../@commons/Button/Button';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Line } from '../../interfaces';
 import { REGEXP } from '../../constants/regularExpression';
@@ -12,7 +12,7 @@ import Modal from '../@commons/Modal/Modal';
 import useStation from '../../hook/useStation';
 import useLine from '../../hook/useLine';
 
-const getLineNameErrorMessage = (name: string, lines: Line[]) => {
+export const getLineNameErrorMessage = (name: string, lines: Line[]) => {
   if (!(2 <= name.length && name.length <= 20)) {
     return '노선 이름은 최소 2글자 이상 20글자 이하여야 합니다.';
   }
@@ -40,10 +40,15 @@ const AddLineForm = () => {
   const [lineInfo, setLineInfo] = useState(initLineInfo);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { lines } = useLine();
+  const { lines, addLine } = useLine();
   const { stations } = useStation();
   const lineNameErrorMessage = getLineNameErrorMessage(lineInfo.name, lines);
-  const isValidForm = !lineNameErrorMessage;
+  const isValidNameForm = !lineNameErrorMessage;
+
+  useEffect(() => {
+    if (lines.length === 0) return;
+    handleModalClose();
+  }, [lines.length]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | React.MouseEvent<HTMLElement>) => {
     const { name, value } = e.target as HTMLInputElement;
@@ -55,7 +60,7 @@ const AddLineForm = () => {
 
   const handleAddNewLineName = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isValidForm) return;
+    if (!isValidNameForm) return;
 
     setIsModalOpen(true);
   };
@@ -65,7 +70,13 @@ const AddLineForm = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddLine = (e: React.FormEvent<HTMLFormElement>) => {};
+  const handleAddLine = (isValidForm: boolean, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isValidForm) return;
+
+    addLine(lineInfo);
+  };
 
   return (
     <S.AddLineForm onSubmit={handleAddNewLineName}>
@@ -80,13 +91,14 @@ const AddLineForm = () => {
           required
         />
         <S.ButtonWrapper>
-          <Button isDisabled={isValidForm ? false : true}>추가</Button>
+          <Button isDisabled={!isValidNameForm}>추가</Button>
         </S.ButtonWrapper>
       </S.InputWrapper>
       <S.Message>{lineNameErrorMessage}</S.Message>
       {isModalOpen && (
         <Modal onCloseModal={handleModalClose}>
           <LineModalForm
+            lines={lines}
             lineInfo={lineInfo}
             onChange={handleChange}
             onSubmit={handleAddLine}
