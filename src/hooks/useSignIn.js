@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { getStationsThunk, getUserTokenThunk } from '../redux';
+import { getLinesThunk, getStationsThunk, getUserTokenThunk } from '../redux';
 import { LS_KEY, ROUTE } from '../constants';
 import { setLocalStorage } from '../utils';
 
@@ -15,6 +15,7 @@ const useSignIn = () => {
       setLocalStorage(LS_KEY.TOKEN, token);
       history.push(ROUTE.HOME.PATH);
       dispatch(getStationsThunk());
+      dispatch(getLinesThunk());
     }
   }, [token, history, dispatch]);
 

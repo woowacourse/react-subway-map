@@ -53,6 +53,23 @@ export const deleteStationThunk = createAsyncThunk(
   }
 );
 
+export const getLinesThunk = createAsyncThunk(
+  'subway/getLinesThunk',
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+
+    try {
+      const response = await request.get('/lines');
+
+      return { lines: response.data };
+    } catch (error) {
+      console.error(error);
+
+      return rejectWithValue({ error: ERROR.UNKNOWN });
+    }
+  }
+);
+
 export const addLineThunk = createAsyncThunk(
   'subway/addLineThunk',
   async ({ params }, thunkAPI) => {
@@ -114,6 +131,13 @@ const subwaySlice = createSlice({
       state.stations = state.stations.filter(({ id }) => id !== stationId);
     },
     [deleteStationThunk.rejected]: (state, { payload: { error } }) => {
+      state.error = error;
+    },
+
+    [getLinesThunk.fulfilled]: (state, { payload: { lines } }) => {
+      state.lines = lines;
+    },
+    [getLinesThunk.rejected]: (state, { payload: { error } }) => {
       state.error = error;
     },
 
