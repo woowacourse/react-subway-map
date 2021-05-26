@@ -7,8 +7,15 @@ import { stationSaga } from './station/stationSaga';
 import lineReducer from './line/lineReducer';
 import { lineSaga } from './line/lineSaga';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { sectionSaga } from './section/sectionSaga';
+import sectionReducer from './section/sectionReducer';
 
-const combinedReducer = combineReducers({ user: userReducer, station: stationReducer, line: lineReducer });
+const combinedReducer = combineReducers({
+  user: userReducer,
+  station: stationReducer,
+  line: lineReducer,
+  section: sectionReducer,
+});
 type CombinedState = ReturnType<typeof combinedReducer> | undefined;
 
 export const rootReducer = (state: CombinedState, action: PayloadAction) => {
@@ -19,7 +26,7 @@ export const rootReducer = (state: CombinedState, action: PayloadAction) => {
 };
 
 export function* rootSaga() {
-  yield all([userSaga(), stationSaga(), lineSaga()]);
+  yield all([userSaga(), stationSaga(), lineSaga(), sectionSaga()]);
 }
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -23,3 +23,33 @@ export interface AddLine {
   downStationId: string;
   distance: string;
 }
+
+interface LineSectionTransferLine {
+  id: number;
+  name: string;
+  color: string;
+}
+interface LineSectionStation {
+  id: number;
+  name: string;
+  transferLines: LineSectionTransferLine[];
+}
+
+interface Section {
+  upStation: {
+    id: number;
+    name: string;
+  };
+  downStation: {
+    id: number;
+    name: string;
+  };
+  distance: number;
+}
+export interface LineSection {
+  id: number;
+  color: string;
+  name: string;
+  stations: LineSectionStation[];
+  sections: Section[];
+}

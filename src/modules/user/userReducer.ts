@@ -45,7 +45,7 @@ export const userSlice = createSlice({
       state.email = action.payload.email;
       state.accessToken = action.payload.accessToken;
     },
-    logout: () => initialState,
+
     loginAsync: (state, action: PayloadAction<LoginAsyncAction>) => {},
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
@@ -59,11 +59,10 @@ export const userSlice = createSlice({
 export type UserAction = ReturnType<
   | typeof userSlice.actions.selectServer
   | typeof userSlice.actions.login
-  | typeof userSlice.actions.logout
   | typeof userSlice.actions.loginAsync
   | typeof userSlice.actions.error
   | typeof userSlice.actions.pending
 >;
 
-export const { selectServer, login, loginAsync, logout, error, pending } = userSlice.actions;
+export const { selectServer, login, loginAsync, error, pending } = userSlice.actions;
 export default userSlice.reducer;

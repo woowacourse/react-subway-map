@@ -5,5 +5,5 @@ export default {
   component: AddSectionForm,
 };
 
-const Template = () => <AddSectionForm />;
+const Template = () => <AddSectionForm onChange={() => {}} lines={[]} />;
 export const Default = Template.bind({});
