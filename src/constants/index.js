@@ -42,6 +42,7 @@ export const REG_EXP = {
   PASSWORD:
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$~!@#$%^&*()-+?])[A-Za-z\d$~!@#$%^&*()-+?]{6,20}$/,
   STATION_NAME: /^[가-힣|0-9|]{2,20}$/,
+  LINE_NAME: /^[가-힣|0-9|]{2,10}$/,
 };
 
 export const RANGE = {
@@ -113,9 +114,9 @@ export const INPUT_TEXT = {
 };
 
 export const TEST = {
-  MOCK_STATION: {
+  MOCK_DATA: {
     ID: 'test',
-    NAME: '테스트역',
+    NAME: '테스트',
   },
   ID: {
     SIGN_UP_BUTTON: 'signup-button',

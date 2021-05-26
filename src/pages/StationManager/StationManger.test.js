@@ -7,8 +7,8 @@ import { configureStore } from '@reduxjs/toolkit';
 
 describe('<StationManager />', () => {
   const mockStation = {
-    id: TEST.MOCK_STATION.ID,
-    name: TEST.MOCK_STATION.NAME,
+    id: TEST.MOCK_DATA.ID,
+    name: TEST.MOCK_DATA.NAME,
   };
 
   const mockStore = configureStore({
@@ -39,7 +39,7 @@ describe('<StationManager />', () => {
     const invalidInputs = [
       { value: '', message: ERROR.STATION_NAME.REQUIRED },
       { value: 'test', message: ERROR.STATION_NAME.INVALID },
-      { value: TEST.MOCK_STATION.NAME, message: ERROR.STATION_NAME.DUPLICATE },
+      { value: TEST.MOCK_DATA.NAME, message: ERROR.STATION_NAME.DUPLICATE },
     ];
 
     for (const { value, message } of invalidInputs) {
