@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   PageTemplate,
   Selector,
@@ -6,9 +6,16 @@ import {
   Button,
 } from '../../components';
 import { COLOR, ROUTE, SIZE } from '../../constants';
-import { useModal } from '../../hooks';
+import { useLineManager, useModal } from '../../hooks';
 import SectionAddModal from './SectionAddModal';
 import { ListHeader, Title } from './style';
+
+const initailLineState = {
+  id: '',
+  name: '',
+  color: '',
+  stations: [],
+};
 
 const SectionList = ({ line, openModal }) => (
   <>
@@ -23,14 +30,24 @@ const SectionList = ({ line, openModal }) => (
         ➕
       </Button>
     </ListHeader>
-    <ManagementList items={[]}></ManagementList>
+    <ManagementList
+      items={line.stations}
+      onDeleteItem={() => {}}
+    ></ManagementList>
   </>
 );
 
-const selectedLine = { id: 1, name: '분당선', color: COLOR.GRAY_300 };
-
 const SectionManager = () => {
+  const [selectedLine, setSelectedLine] = useState(initailLineState);
+  const { lines } = useLineManager();
   const { isModalOpen, openModal, handleClickToClose } = useModal();
+
+  const handleChangeSelecter = (event) => {
+    const targetId = Number(event.target.value);
+    const targetLine = lines.find(({ id }) => id === targetId);
+
+    setSelectedLine(targetLine);
+  };
 
   return (
     <>
@@ -39,10 +56,12 @@ const SectionManager = () => {
           name="section-select-line"
           label="노선 선택"
           defaultOption="노선 선택"
-          options={[]}
+          options={lines}
           size={SIZE.MD}
+          value={selectedLine.id}
+          onChange={handleChangeSelecter}
         ></Selector>
-        {selectedLine && (
+        {selectedLine.stations.length > 0 && (
           <SectionList line={selectedLine} openModal={openModal} />
         )}
       </PageTemplate>
