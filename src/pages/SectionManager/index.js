@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   PageTemplate,
   Selector,
@@ -6,11 +6,16 @@ import {
   Button,
 } from '../../components';
 import { COLOR, ROUTE, SIZE } from '../../constants';
-import { useLineManager, useModal, useStationManager } from '../../hooks';
+import {
+  useLineManager,
+  useModal,
+  useSectionManager,
+  useStationManager,
+} from '../../hooks';
 import SectionAddModal from './SectionAddModal';
 import { ListHeader, Title } from './style';
 
-const initailLineState = {
+const initialLineState = {
   id: '',
   name: '',
   color: '',
@@ -38,17 +43,19 @@ const SectionList = ({ line, openModal }) => (
 );
 
 const SectionManager = () => {
-  const [selectedLine, setSelectedLine] = useState(initailLineState);
   const { stations } = useStationManager();
   const { lines } = useLineManager();
+  const { selectedLineId, setSelectedLineId, addSection } = useSectionManager();
   const { isModalOpen, openModal, closeModal, handleClickToClose } = useModal();
 
-  const handleChangeSelecter = (event) => {
+  const handleChangeSelector = (event) => {
     const targetId = Number(event.target.value);
-    const targetLine = lines.find(({ id }) => id === targetId);
 
-    setSelectedLine(targetLine);
+    setSelectedLineId(targetId);
   };
+
+  const selectedLine =
+    lines.find(({ id }) => id === selectedLineId) ?? initialLineState;
 
   return (
     <>
@@ -59,8 +66,8 @@ const SectionManager = () => {
           defaultOption="노선 선택"
           options={lines}
           size={SIZE.MD}
-          value={selectedLine.id}
-          onChange={handleChangeSelecter}
+          value={selectedLineId}
+          onChange={handleChangeSelector}
         ></Selector>
         {selectedLine.stations.length > 0 && (
           <SectionList line={selectedLine} openModal={openModal} />
@@ -70,6 +77,7 @@ const SectionManager = () => {
         <SectionAddModal
           stations={stations}
           line={selectedLine}
+          addSection={addSection}
           closeModal={closeModal}
           onClickToClose={handleClickToClose}
         />

@@ -56,9 +56,15 @@ const validate = ({ upStationId, downStationId, distance }) => {
   return {};
 };
 
-const SectionAddModal = ({ stations, line, closeModal, onClickToClose }) => {
+const SectionAddModal = ({
+  stations,
+  line,
+  addSection,
+  closeModal,
+  onClickToClose,
+}) => {
   const handleSubmitForm = (values) => {
-    console.log(values);
+    addSection({ ...values, id: line.id });
     closeModal();
   };
 
@@ -113,6 +119,12 @@ const SectionAddModal = ({ stations, line, closeModal, onClickToClose }) => {
 };
 
 SectionAddModal.propType = {
+  stations: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   line: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -124,6 +136,8 @@ SectionAddModal.propType = {
       })
     ).isRequired,
   }).isRequired,
+  addSection: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   onClickToClose: PropTypes.func.isRequired,
 };
 

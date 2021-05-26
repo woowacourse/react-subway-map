@@ -19,4 +19,5 @@ export {
   getLinesThunk,
   addLineThunk,
   deleteLineThunk,
+  addSectionThunk,
 } from './subwaySlice';
