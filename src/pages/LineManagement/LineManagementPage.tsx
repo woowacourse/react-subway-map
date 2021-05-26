@@ -7,7 +7,7 @@ const LineManagementPage = () => {
   return (
     <Template type="vertical">
       <Title>노선관리</Title>
-      <LineAddButton>노선 추가</LineAddButton>
+      <LineAddButton onClick={() => {}}>노선 추가</LineAddButton>
       <LineList />
     </Template>
   );
