@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import CurrentAPIName from './components/CurrentAPIName/CurrentAPIName';
 import LineManagementPage from './pages/LineManagement/LineManagementPage';
 import LoginPage from './pages/Login/LoginPage';
 import SectionManagementPage from './pages/SectionManagement/SectionManagementPage';
@@ -20,6 +21,7 @@ function App() {
         <PrivateRoute path="/station" component={StationManagementPage} />
         {/* <Route path="/search" component={SignUpPage} /> */}
       </Switch>
+      <CurrentAPIName />
     </div>
   );
 }
