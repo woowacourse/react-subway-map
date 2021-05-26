@@ -9,6 +9,13 @@ export interface AddLineRequestData {
   distance: number;
 }
 
+export interface ModifyLineRequestData {
+  // TODO: lineId -> id
+  lineId: number;
+  name: string;
+  color: string;
+}
+
 export const requestGetLines = (baseURL: string): Promise<AxiosResponse<Line[]>> =>
   axios.get(`${baseURL}/lines`);
 
@@ -19,3 +26,12 @@ export const requestAddLine = (
 
 export const requestDeleteLine = (baseURL: string, lineId: number): Promise<AxiosResponse> =>
   axios.delete(`${baseURL}/lines/${lineId}`);
+
+export const requestModifyLine = (
+  baseURL: string,
+  { lineId, name, color }: ModifyLineRequestData
+): Promise<AxiosResponse> =>
+  axios.put(`${baseURL}/lines/${lineId}`, {
+    name,
+    color,
+  });

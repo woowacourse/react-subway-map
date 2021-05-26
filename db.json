@@ -23,12 +23,22 @@
   ],
   "lines": [
     {
-      "name": "3호선",
-      "upStationId": 10,
-      "downStationId": 0,
-      "distance": 1000,
+      "name": "67호선",
       "color": "#10B981",
       "id": 6
+    },
+    {
+      "name": "58호선",
+      "color": "#FB923C",
+      "id": 7
+    },
+    {
+      "name": "99호선",
+      "upStationId": 10,
+      "downStationId": 0,
+      "distance": 100000,
+      "color": "#A78BFA",
+      "id": 8
     }
   ]
 }

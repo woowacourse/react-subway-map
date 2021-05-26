@@ -4,7 +4,8 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Add from '../../components/@common/Icon/Add';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
-import LinesModal from '../../components/LinesModal/LinesModal';
+import LineAddModal from '../../components/LinesModal/LineAddModal';
+import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import PALETTE from '../../constants/palette';
@@ -17,14 +18,26 @@ const Lines: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-  const modal = useModal();
+  const addLineModal = useModal();
+  const modifyLineModal = useModal(null);
 
   useEffect(() => {
     dispatch(loadLines(API_INFO[apiOwner].endPoint));
   }, []);
 
-  const onOpenCreationModal: MouseEventHandler<HTMLButtonElement> = () => {
-    modal.openModal();
+  const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
+    addLineModal.openModal();
+  };
+
+  const onOpenModifyModal = (lineId: number) => () => {
+    const selectedLine = lines.find((line) => line.id === lineId) as ModifyLine;
+
+    modifyLineModal.passDataToModal({
+      id: selectedLine.id,
+      name: selectedLine.name,
+      color: selectedLine.color,
+    });
+    modifyLineModal.openModal();
   };
 
   const onDeleteLine = (lineId: number) => () => {
@@ -33,7 +46,7 @@ const Lines: FC = () => {
 
   return (
     <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={THEME_COLOR[400]}>
-      <ButtonOnLine onClick={onOpenCreationModal}>
+      <ButtonOnLine onClick={onOpenAddModal}>
         <Add width="80%" color={PALETTE.GRAY[600]} />
       </ButtonOnLine>
       {lines && (
@@ -42,7 +55,7 @@ const Lines: FC = () => {
             <ListItem
               key={line.id}
               onDelete={onDeleteLine(line.id)}
-              onModify={() => console.log(line.name)}
+              onModify={onOpenModifyModal(line.id)}
             >
               <LineColorDot dotColor={line.color} />
               {line.name}
@@ -50,7 +63,13 @@ const Lines: FC = () => {
           ))}
         </LineList>
       )}
-      {modal.isModalOpen && <LinesModal onClose={modal.closeModal} />}
+      {addLineModal.isModalOpen && <LineAddModal onClose={addLineModal.closeModal} />}
+      {modifyLineModal.isModalOpen && (
+        <LineModifyModal
+          line={modifyLineModal.modalData as ModifyLine}
+          onClose={modifyLineModal.closeModal}
+        />
+      )}
     </CardTemplate>
   );
 };

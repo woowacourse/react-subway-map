@@ -2,15 +2,14 @@ import PropTypes from 'prop-types';
 import React, { ChangeEvent, FC, FormEvent, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { API_INFO } from '../../constants/api';
-import { LINE_COLORS, SECTION, LINE } from '../../constants/appInfo';
+import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import { addLine, loadLines } from '../../redux/lineSlice';
+import { addLine } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
-import Input from '../@common/Input/Input';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
 import SectionSelectBox, {
@@ -35,7 +34,7 @@ interface ErrorMessage {
   distance: string;
 }
 
-const LinesModal: FC<Props> = ({ onClose }) => {
+const LineAddModal: FC<Props> = ({ onClose }) => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { stations } = useSelector((state: RootState) => state.station);
   const { lines } = useSelector((state: RootState) => state.line);
@@ -57,10 +56,6 @@ const LinesModal: FC<Props> = ({ onClose }) => {
   useEffect(() => {
     if (stations.length === 0) {
       dispatch(loadStations(API_INFO[apiOwner].endPoint));
-    }
-
-    if (lines.length === 0) {
-      dispatch(loadLines(API_INFO[apiOwner].endPoint));
     }
   }, []);
 
@@ -99,9 +94,7 @@ const LinesModal: FC<Props> = ({ onClose }) => {
     });
   };
 
-  const isUsedLineColor = (color: string): boolean => {
-    return usedLineColors.includes(color);
-  };
+  const isUsedLineColor = (color: string): boolean => usedLineColors.includes(color);
 
   const onChangeLineColor = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setFormValue({ ...formValue, color: value });
@@ -129,6 +122,7 @@ const LinesModal: FC<Props> = ({ onClose }) => {
       <LineForm onSubmit={onAddLine}>
         <NotificationInput
           onChange={onChangeName}
+          value={formValue.name}
           message={{ text: errorMessage.name, isError: true }}
           minLength={2}
           maxLength={10}
@@ -172,8 +166,8 @@ const LinesModal: FC<Props> = ({ onClose }) => {
   );
 };
 
-LinesModal.propTypes = {
+LineAddModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default LinesModal;
+export default LineAddModal;

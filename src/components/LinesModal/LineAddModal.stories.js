@@ -1,13 +1,13 @@
 import React from 'react';
-import LinesModal from './LinesModal';
+import LineAddModal from './LineAddModal';
 
 export default {
   title: 'modal/LinesModal',
-  component: LinesModal,
+  component: LineAddModal,
   argTypes: {},
 };
 
-const Template = (args) => <LinesModal {...args} />;
+const Template = (args) => <LineAddModal {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   lineName: '선택한 노선',

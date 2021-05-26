@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   AddLineRequestData,
+  ModifyLineRequestData,
   requestAddLine,
   requestDeleteLine,
   requestGetLines,
+  requestModifyLine,
 } from '../api/lines';
 import { Line } from '../types';
 
@@ -15,6 +17,11 @@ export interface AddLineData {
 export interface DeleteLineData {
   baseURL: string;
   lineId: number;
+}
+
+export interface ModifyLineData {
+  baseURL: string;
+  modifyLineRequestData: ModifyLineRequestData;
 }
 
 export const loadLines = createAsyncThunk(
@@ -50,6 +57,19 @@ export const deleteLine = createAsyncThunk(
       await requestDeleteLine(baseURL, lineId);
 
       return lineId;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const modifyLine = createAsyncThunk(
+  'line/modify',
+  async ({ baseURL, modifyLineRequestData }: ModifyLineData, { rejectWithValue }) => {
+    try {
+      await requestModifyLine(baseURL, modifyLineRequestData);
+
+      return modifyLineRequestData;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -100,6 +120,23 @@ const lineSlice = createSlice({
       state.lines = state.lines.filter((line) => line.id !== action.payload);
     });
     builder.addCase(deleteLine.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.error.message as string;
+    });
+
+    builder.addCase(modifyLine.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = '';
+    });
+    builder.addCase(modifyLine.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.lines = state.lines.map((line) =>
+        line.id === action.payload.lineId
+          ? { ...line, name: action.payload.name, color: action.payload.color }
+          : line
+      );
+    });
+    builder.addCase(modifyLine.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.error.message as string;
     });

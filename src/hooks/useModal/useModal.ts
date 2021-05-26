@@ -2,12 +2,19 @@ import { useState } from 'react';
 
 interface UseModal {
   isModalOpen: boolean;
+  modalData: unknown;
   openModal: () => void;
   closeModal: () => void;
+  passDataToModal: (data: unknown) => void;
 }
 
-const useModal = (): UseModal => {
+const useModal = (initModalData?: unknown): UseModal => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(initModalData);
+
+  const passDataToModal = (modalData: unknown) => {
+    setModalData(modalData);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -17,7 +24,7 @@ const useModal = (): UseModal => {
     setIsModalOpen(false);
   };
 
-  return { isModalOpen, openModal, closeModal };
+  return { isModalOpen, modalData, openModal, closeModal, passDataToModal };
 };
 
 export default useModal;
