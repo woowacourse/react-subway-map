@@ -68,4 +68,22 @@ export const LS_KEY = {
 
 export const ERROR = {
   UNKNOWN: '알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+  STATION_NAME: {
+    REQUIRED: '역 이름을 입력해주세요.',
+    INVALID: '올바른 역 이름을 입력해주세요.',
+    DUPLICATE: '중복된 역 이름은 추가할 수 없습니다.',
+  },
+};
+
+export const INPUT_TEXT = {
+  STATION_NAME: {
+    LABEL: '지하철 역 이름을 입력해주세요.',
+    PLACE_HOLDER: '🚇 2자 ~ 20자 사이의 한글, 숫자 조합',
+  },
+};
+
+export const TEST = {
+  ID: {
+    STATION_ADD_BUTTON: 'station-add-button',
+  },
 };

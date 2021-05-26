@@ -1,15 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import store from '../../redux';
+import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignIn from '.';
 
 describe('<SignIn />', () => {
   const setup = () => {
     const utils = render(
-      <Router>
-        <SignIn />
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <SignIn />
+        </Router>
+      </Provider>
     );
     const { getByTestId, getByPlaceholderText } = utils;
     const button = getByTestId('signin-button');
