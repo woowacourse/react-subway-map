@@ -4,7 +4,7 @@ import editSVG from '../../assets/svg/edit.svg';
 
 export interface Props {
   name: string;
-  distance?: number;
+  distance: number;
   lineColor?: string;
 }
 
@@ -13,7 +13,7 @@ const SectionListItem = ({ name, distance, lineColor }: Props) => {
     <S.SectionListItem>
       <S.NameWrapper>
         <S.Name lineColor={lineColor}>{name}</S.Name>
-        {distance && (
+        {distance >= 0 && (
           <S.Distance>
             다음역까지
             <br /> {distance}KM

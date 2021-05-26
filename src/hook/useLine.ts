@@ -10,7 +10,7 @@ const useLine = () => {
 
   useEffect(() => {
     if (lines.length !== 0) return;
-    console.log('useLine');
+
     dispatch(getLinesAsync());
   }, [dispatch, lines.length]);
 

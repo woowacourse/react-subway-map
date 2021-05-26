@@ -18,7 +18,7 @@ interface GetLineResult {
 function* getSectionSaga(action: GetSectionAction) {
   yield put(pending());
   const result: GetLineResult = yield call(sectionAPI.getSection, action.payload.id);
-  console.log(result);
+
   if (result.error) {
     yield put(error({ error: result.error }));
     return;

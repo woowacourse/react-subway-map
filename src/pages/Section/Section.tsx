@@ -8,18 +8,16 @@ import { LineSection } from '../../interfaces';
 import * as S from './Section.styles';
 
 const getSectionStations = (lineSection: LineSection) => {
-  if (!lineSection?.sections) return;
+  if (!lineSection?.sections) return [];
 
-  const sectionStations = lineSection.sections.map(({ upStation, downStation, distance }, index) => {
-    return index === lineSection.sections.length - 1 ? (
-      <>
-        <SectionListItem key={upStation.id} name={upStation.name} distance={distance} lineColor={lineSection.color} />
-        <SectionListItem key={downStation.id} name={downStation.name} lineColor={lineSection.color} />
-      </>
-    ) : (
-      <SectionListItem key={upStation.id} name={upStation.name} distance={distance} lineColor={lineSection.color} />
-    );
-  });
+  const { downStation: lastStation } = lineSection.sections[lineSection.sections.length - 1];
+
+  const sectionStations = lineSection.sections.map(({ upStation, distance }) => ({
+    id: upStation.id,
+    name: upStation.name,
+    distance,
+  }));
+  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: -1 });
 
   return sectionStations;
 };
@@ -44,7 +42,16 @@ const Section = () => {
         <AddSectionForm onChange={handleSelectLine} lines={lines} />
       </ContentContainer>
       <ContentContainer>
-        <S.SectionStationList>{getSectionStations(lineSection)}</S.SectionStationList>
+        <S.SectionStationList>
+          {getSectionStations(lineSection).map(station => (
+            <SectionListItem
+              key={station.id}
+              name={station.name}
+              distance={station.distance}
+              lineColor={lineSection.color}
+            />
+          ))}
+        </S.SectionStationList>
       </ContentContainer>
     </S.Container>
   );
