@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { signupAsync } from 'redux/authSlice';
 import { useHistory } from 'react-router';
 import PATH from 'constants/PATH';
+import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const Signup = () => {
           imgUrl={lockImg}
           placeholder="비밀번호를 한번 더 입력해주세요"
         />
+        <ProfileSelector />
         <Button type="submit" className="mb-4 p-2" text="회원가입" size="w-full" />
       </form>
     </Container>

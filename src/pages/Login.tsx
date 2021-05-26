@@ -1,23 +1,24 @@
 import Button from '@shared/Button/Button';
 import Container from '@shared/Container/Container';
 import Input from '@shared/Input/Input';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import mailImg from 'assets/images/mail.png';
 import lockImg from 'assets/images/lock.png';
 import Title from '@shared/Title/Title';
 import PATH from 'constants/PATH';
 import { Link, useHistory } from 'react-router-dom';
-import ImageButton from '@shared/ImageButton/ImageButton';
-import kodaImg from 'assets/images/koda.png';
-import pkImg from 'assets/images/pk.png';
-import rokiImg from 'assets/images/roki.png';
-import wedgeImg from 'assets/images/wedge.png';
-import { useDispatch } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { loginAsync } from 'redux/authSlice';
+import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
+import axios from 'axios';
+import { RootState } from 'redux/store';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const accessToken: string | null = useAppSelector((state) => state.auth.accessToken);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,6 +49,14 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (accessToken) {
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    }
+
+    console.log(axios.defaults.headers.common);
+  }, [accessToken]);
+
   return (
     <Container>
       <Title className="mb-10 mt-6" text="로그인" />
@@ -68,12 +77,7 @@ const Login = () => {
           imgUrl={lockImg}
           placeholder="비밀번호를 입력해주세요"
         />
-        <div className="flex justify-center mb-8">
-          <ImageButton className="mx-4" imgSize="w-10" imgUrl={kodaImg} bgColor="" />
-          <ImageButton className="mx-4" imgSize="w-10" imgUrl={pkImg} bgColor="" />
-          <ImageButton className="mx-4" imgSize="w-10" imgUrl={wedgeImg} bgColor="" />
-          <ImageButton className="mx-4" imgSize="w-10" imgUrl={rokiImg} bgColor="" />
-        </div>
+        <ProfileSelector />
         <Button className="mb-4 p-2 shadow-md" text="로그인" size="w-full" />
       </form>
       <Link to={PATH.SIGN_UP}>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import API from 'API/API';
+import axios from 'axios';
 import { StationInterface } from 'types';
 
 interface AddStationPayload {
@@ -12,7 +12,7 @@ interface DeleteStationPayload {
 
 export const getStationAsync = createAsyncThunk('station/getStationAsync', async () => {
   try {
-    const response = await API.get('/stations');
+    const response = await axios.get('/stations');
 
     return response.data;
   } catch (error) {
@@ -22,7 +22,7 @@ export const getStationAsync = createAsyncThunk('station/getStationAsync', async
 
 export const addStationAsync = createAsyncThunk('station/addStationAsync', async ({ name }: AddStationPayload) => {
   try {
-    const response = await API.post('/stations', { name });
+    const response = await axios.post('/stations', { name });
 
     return response.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export const deleteStationAsync = createAsyncThunk(
   'station/deleteStationAsync',
   async ({ id }: DeleteStationPayload) => {
     try {
-      await API.delete(`/stations/${id}`);
+      await axios.delete(`/stations/${id}`);
 
       return id;
     } catch (error) {

@@ -1,6 +1,6 @@
 import { LineInterface, SelectedLineInterface } from 'types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import API from 'API/API';
+import axios from 'axios';
 
 export interface AddLinePayload {
   name: string;
@@ -19,7 +19,7 @@ interface DeleteLinePayload {
 
 export const getSelectedLineAsync = createAsyncThunk('line/getSelectedLineAsync', async ({ id }: GetLinePayload) => {
   try {
-    const response = await API.get(`/lines/${id}`);
+    const response = await axios.get(`/lines/${id}`);
 
     return response.data;
   } catch (error) {
@@ -29,7 +29,7 @@ export const getSelectedLineAsync = createAsyncThunk('line/getSelectedLineAsync'
 
 export const getLinesAsync = createAsyncThunk('line/getLinesAsync', async () => {
   try {
-    const response = await API.get('/lines');
+    const response = await axios.get('/lines');
 
     return response.data;
   } catch (error) {
@@ -41,7 +41,7 @@ export const addLineAsync = createAsyncThunk(
   'line/addLineAsync',
   async ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => {
     try {
-      const response = await API.post('/lines', { name, color, upStationId, downStationId, distance });
+      const response = await axios.post('/lines', { name, color, upStationId, downStationId, distance });
 
       return response.data;
     } catch (error) {
@@ -52,7 +52,7 @@ export const addLineAsync = createAsyncThunk(
 
 export const deleteLineAsync = createAsyncThunk('line/deleteLineAsync', async ({ id }: DeleteLinePayload) => {
   try {
-    await API.delete(`/lines/${id}`);
+    await axios.delete(`/lines/${id}`);
 
     return id;
   } catch (error) {

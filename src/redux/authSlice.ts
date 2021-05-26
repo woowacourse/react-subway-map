@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import API from 'API/API';
+import axios from 'axios';
 
 interface SignupPayload {
   email: string;
@@ -15,7 +15,7 @@ interface LoginPayload {
 // TODO: 추상화
 export const signupAsync = createAsyncThunk('auth/signupAsync', async ({ email, password, age }: SignupPayload) => {
   try {
-    await API.post('/members', {
+    await axios.post(`/members`, {
       email,
       password,
       age,
@@ -27,7 +27,7 @@ export const signupAsync = createAsyncThunk('auth/signupAsync', async ({ email, 
 
 export const loginAsync = createAsyncThunk('auth/loginAsync', async ({ email, password }: LoginPayload) => {
   try {
-    const response = await API.post('/login/token', {
+    const response = await axios.post(`/login/token`, {
       email,
       password,
     });
