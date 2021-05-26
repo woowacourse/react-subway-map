@@ -1,4 +1,5 @@
 import useServerAPI from './useServerAPI';
-import useInput from './useInput';
+import useChangeEvent from './useChangeEvent';
+import useModal from './useModal';
 
-export { useInput, useServerAPI };
+export { useChangeEvent, useServerAPI, useModal };

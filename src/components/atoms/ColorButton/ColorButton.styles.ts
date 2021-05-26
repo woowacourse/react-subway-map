@@ -16,6 +16,11 @@ const Container = styled.button`
   &:hover {
     filter: brightness(0.8);
   }
+
+  &:focus {
+    border: 5px solid #333;
+    border-radius: 4px;
+  }
 `;
 
 export { Container };

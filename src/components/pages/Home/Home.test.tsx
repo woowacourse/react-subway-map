@@ -4,16 +4,19 @@ import SubwayImage from '../../../assets/img/subway.png';
 import { GUIDE_MESSAGE } from '../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import Home from './Home';
-import { ISignedUser } from '../../../features/signedUserSlice';
+import { unValidSignedUser, validSignedUser } from '../../../fixtures/useSelectorState';
 
 jest.mock('react-redux');
 
 describe('Home', () => {
-  it('render image', () => {
-    (useSelector as jest.Mock).mockImplementation(state => {
-      return { email: state.email };
-    });
+  beforeAll(() => {
     (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
+  });
+
+  it('render image', () => {
+    (useSelector as jest.Mock).mockImplementation(() => {
+      return validSignedUser;
+    });
 
     const home = render(<Home />);
     const image = home.getByRole('img');
@@ -23,28 +26,16 @@ describe('Home', () => {
 
   it('render before-login guide message', () => {
     (useSelector as jest.Mock).mockImplementation(() => {
-      return { id: null, email: null, age: null };
+      return unValidSignedUser;
     });
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
     const { container } = render(<Home />);
     expect(container).toHaveTextContent(GUIDE_MESSAGE.BEFORE_LOGIN);
   });
 
   it('render before-login guide message', () => {
-    const signedUser: ISignedUser = {
-      id: 909090,
-      email: 'test@test.com',
-      age: 12,
-
-      isError: false,
-      text: '',
-      status: 201,
-    };
-
     (useSelector as jest.Mock).mockImplementation(() => {
-      return signedUser;
+      return validSignedUser;
     });
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
 
     const { container } = render(<Home />);
     expect(container).toHaveTextContent(GUIDE_MESSAGE.AFTER_LOGIN);

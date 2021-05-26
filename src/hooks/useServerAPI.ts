@@ -19,7 +19,8 @@ const useServerAPI = <T>(url: string) => {
   const [getAllDataResponse, setGetAllDataResponse] = useState<IResMeta | null>(null);
   const [getDataResponse, setGetDataResponse] = useState<IResMeta | null>(null);
   const [postDataResponse, setPostDataResponse] = useState<IResMeta | null>(null);
-  const [getDeleteResponse, setDeleteDataResponse] = useState<IResMeta | null>(null);
+  const [deleteDataResponse, setDeleteDataResponse] = useState<IResMeta | null>(null);
+  const [putDataResponse, setPutDataResponse] = useState<IResMeta | null>(null);
 
   const getAllData = async (headers = defaultHeader) => {
     try {
@@ -65,6 +66,8 @@ const useServerAPI = <T>(url: string) => {
 
   const postData = async <T>(body: T, param = '', headers = defaultHeader) => {
     try {
+      console.log(`${url}/${param}`, headers, body);
+
       const response = await request.post(`${url}/${param}`, headers, body);
 
       setPostDataResponse({
@@ -75,6 +78,24 @@ const useServerAPI = <T>(url: string) => {
       console.error(error.response);
 
       setPostDataResponse({
+        isError: true,
+        status: error.response.status,
+      });
+    }
+  };
+
+  const putData = async <T>(body: T, param: string, headers = defaultHeader) => {
+    try {
+      const response = await request.put(`${url}/${param}`, headers, body);
+
+      setPutDataResponse({
+        isError: false,
+        status: response.status,
+      });
+    } catch (error) {
+      console.error(error.response);
+
+      setPutDataResponse({
         isError: true,
         status: error.response.status,
       });
@@ -107,10 +128,12 @@ const useServerAPI = <T>(url: string) => {
     getData,
     postData,
     deleteData,
+    putData,
     getAllDataResponse,
     getDataResponse,
     postDataResponse,
-    getDeleteResponse,
+    putDataResponse,
+    deleteDataResponse,
   };
 };
 

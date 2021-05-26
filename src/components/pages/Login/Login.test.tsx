@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
 import { IAccessToken } from '../../../features/accessTokenSlice';
+import {
+  unValidAccessTokenState,
+  unValidSignedUser,
+  validHostState,
+} from '../../../fixtures/useSelectorState';
 import Login from './Login';
 
 jest.mock('react-redux');
@@ -11,6 +16,7 @@ jest.mock('react-redux');
 describe('Login', () => {
   beforeAll(() => {
     jest.spyOn(window, 'alert').mockImplementation(() => true);
+    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
   });
 
   it('로그인 페이지에서 유효한 이메일/비밀번호를 입력 후 로그인 버튼을 눌렀을 때, 홈페이지로 이동한다.', () => {
@@ -22,9 +28,12 @@ describe('Login', () => {
     };
 
     (useSelector as jest.Mock).mockImplementation(() => {
-      return accessToken;
+      return {
+        signedUser: unValidSignedUser,
+        accessTokenState: unValidAccessTokenState,
+        hostState: validHostState,
+      };
     });
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
 
     const login = render(
       <BrowserRouter>
@@ -48,17 +57,13 @@ describe('Login', () => {
   });
 
   it('로그인 페이지에서 회원가입 버튼을 눌렀을때, 회원가입 페이지로 이동한다.', () => {
-    const accessToken: IAccessToken = {
-      accessToken: null,
-
-      isError: null,
-      status: null,
-    };
-
     (useSelector as jest.Mock).mockImplementation(() => {
-      return accessToken;
+      return {
+        signedUser: unValidSignedUser,
+        accessTokenState: unValidAccessTokenState,
+        hostState: validHostState,
+      };
     });
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
 
     const login = render(
       <BrowserRouter>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import { ROUTE } from '../../../constants';
-import { useInput, useServerAPI } from '../../../hooks';
+import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { IStationReq, IStationRes } from '../../../type';
 import { Header } from '../../atoms';
@@ -16,7 +16,7 @@ const Station = () => {
     value: stationName,
     setValue: setStationName,
     onChange: onChangeStationName,
-  } = useInput('');
+  } = useChangeEvent('');
 
   const {
     signedUser: { id: signedUserId },
@@ -32,7 +32,7 @@ const Station = () => {
     postData: addStation,
     getAllDataResponse: getAllStationResponse,
     postDataResponse: postStationResponse,
-    getDeleteResponse: deleteStationResponse,
+    deleteDataResponse: deleteStationResponse,
   } = useServerAPI<IStationRes>(`${host}/stations`);
 
   if (!signedUserId) {

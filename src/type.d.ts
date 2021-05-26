@@ -1,5 +1,6 @@
 export type Nullable<T> = { [K in keyof T]: T[K] | null };
 
+export type ModeType = 'ADD' | 'EDIT';
 export interface ILoginReq {
   email: string;
   password: string;
@@ -33,9 +34,9 @@ export interface IStationRes {
 export interface ILineReq {
   name: string;
   color: string;
-  upStationId: number;
-  downStationId: number;
-  distance: number;
+  upStationId?: number;
+  downStationId?: number;
+  distance?: number;
 }
 
 export interface ILineRes {
@@ -56,15 +57,5 @@ export interface ISectionReq {
 export interface ISectionRes {
   upStation: IStation;
   downStation: IStation;
-  distance: number;
-}
-
-export interface AddFormProps {
-  stationList: IStationRes[];
-  onChangeUpStation: React.ChangeEventHandler<HTMLSelectElement>;
-  upStation: number;
-  onChangeDownStation: React.ChangeEventHandler<HTMLSelectElement>;
-  downStation: number;
-  onChangeDistance: React.ChangeEventHandler<HTMLInputElement>;
   distance: number;
 }

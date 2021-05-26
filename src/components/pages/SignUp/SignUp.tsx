@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router';
 import { ROUTE } from '../../../constants';
-import { useInput, useServerAPI } from '../../../hooks';
+import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
 import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
@@ -23,10 +23,10 @@ const SignUp = () => {
     `${host}/members`,
   );
 
-  const { value: age, onChange: onChangeAge } = useInput('');
-  const { value: email, onChange: onChangeEmail } = useInput('');
-  const { value: password, onChange: onChangePassword } = useInput('');
-  const { value: passwordCheck, onChange: onChangePasswordCheck } = useInput('');
+  const { value: age, onChange: onChangeAge } = useChangeEvent('');
+  const { value: email, onChange: onChangeEmail } = useChangeEvent('');
+  const { value: password, onChange: onChangePassword } = useChangeEvent('');
+  const { value: passwordCheck, onChange: onChangePasswordCheck } = useChangeEvent('');
 
   if (signedUser?.id) {
     window.alert('이미 로그인 되어 있습니다.');

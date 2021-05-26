@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Station } from '..';
 import stationList from '../../../fixtures/stationList';
+import {
+  validAccessTokenState,
+  validHostState,
+  validSignedUser,
+} from '../../../fixtures/useSelectorState';
 import useServerAPI from '../../../hooks/useServerAPI';
 import { IStationRes } from '../../../type.d';
 
@@ -13,6 +18,17 @@ jest.mock('../../../hooks/useServerAPI');
 describe('Station', () => {
   beforeAll(() => {
     jest.spyOn(window, 'alert').mockImplementation(() => true);
+    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
+  });
+
+  beforeEach(() => {
+    (useSelector as jest.Mock).mockImplementation(() => {
+      return {
+        signedUser: validSignedUser,
+        accessTokenState: validAccessTokenState,
+        hostState: validHostState,
+      };
+    });
   });
 
   it('지하철 역 이름을 입력한 후 추가 버튼을 클릭하면, 지하철 역이 추가된다.', () => {
@@ -22,10 +38,6 @@ describe('Station', () => {
       name: '도비역',
     };
 
-    (useSelector as jest.Mock).mockImplementation(() => {
-      return { id: 1 };
-    });
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
     (useServerAPI as jest.Mock).mockImplementation(() => {
       return {
         allData: newStationList,
@@ -55,10 +67,6 @@ describe('Station', () => {
   it('지하철역 목록 중 특정 지하철 역의 삭제 버튼을 누르면, 해당 지하철 역이 삭제 된다.', () => {
     const newStationList: IStationRes[] = [...stationList];
 
-    (useSelector as jest.Mock).mockImplementation(() => {
-      return { id: 1 };
-    });
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
     (useServerAPI as jest.Mock).mockImplementation(() => {
       return {
         allData: newStationList,

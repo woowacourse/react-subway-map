@@ -6,7 +6,7 @@ export interface ColorButtonProps {
 }
 
 const ColorButton = ({ bgColor, onClick }: ColorButtonProps) => (
-  <Container bgColor={bgColor} onClick={onClick} />
+  <Container type="button" bgColor={bgColor} onClick={onClick} />
 );
 
 export default ColorButton;

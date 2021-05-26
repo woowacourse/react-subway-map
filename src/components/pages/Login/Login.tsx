@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
 import { loginRequestAsync } from '../../../features/accessTokenSlice';
 import { getSignedUserAsync } from '../../../features/signedUserSlice';
-import { useInput } from '../../../hooks';
+import { useChangeEvent } from '../../../hooks';
 import { RootState, useAppDispatch } from '../../../store';
 import { ILoginReq } from '../../../type';
 import { Header } from '../../atoms';
@@ -25,8 +25,8 @@ const Login = () => {
     hostState: state.hostReducer,
   }));
 
-  const { value: email, onChange: onChangeEmail } = useInput('');
-  const { value: password, onChange: onChangePassword } = useInput('');
+  const { value: email, onChange: onChangeEmail } = useChangeEvent('');
+  const { value: password, onChange: onChangePassword } = useChangeEvent('');
 
   if (signedUser?.id) {
     window.alert('이미 로그인 되어 있습니다.');

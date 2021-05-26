@@ -1,16 +1,29 @@
 import ColorSelector, { LineColor } from '../ColorSelector/ColorSelector';
 import { Container, Wrapper } from './LineEditForm.styles';
 import { Button, Input, Select } from '../../atoms';
-import { AddFormProps } from '../../../type';
 import { IOption } from '../../atoms/Select/Select';
+import { IStationRes } from '../../../type.d';
+
+export interface LineAddFormProps {
+  stations: IStationRes[];
+  onChangeUpStationId: React.ChangeEventHandler<HTMLSelectElement>;
+  upStationId: string;
+  onChangeDownStationId: React.ChangeEventHandler<HTMLSelectElement>;
+  downStationId: string;
+  onChangeDistance: React.ChangeEventHandler<HTMLInputElement>;
+  distance: string;
+}
 
 export interface LineEditFormProps {
   onChangeLineName: React.ChangeEventHandler<HTMLInputElement>;
   lineName: string;
   setColor: (color: LineColor) => void;
   onSubmitLineInfo: React.FormEventHandler<HTMLFormElement>;
-  addFormProps: AddFormProps;
+  addFormProps: LineAddFormProps | null;
 }
+
+
+// TODO: Select 컨텐츠의 길이에 따라서, Container의 너비가 늘어나는 이슈 수정하기
 const LineEditForm = ({
   onChangeLineName,
   lineName,
@@ -18,10 +31,11 @@ const LineEditForm = ({
   onSubmitLineInfo,
   addFormProps,
 }: LineEditFormProps) => {
-  const stationListOptions: IOption[] = addFormProps.stationList.map(({ id, name }) => ({
-    value: id,
-    name,
-  }));
+  const stationListOptions: IOption[] =
+    addFormProps?.stations.map(({ id, name }) => ({
+      value: id,
+      name,
+    })) || [];
 
   return (
     <Container onSubmit={onSubmitLineInfo}>
@@ -33,30 +47,32 @@ const LineEditForm = ({
         maxLength={10}
       />
 
-      <>
-        <Wrapper>
-          <Select
-            defaultName="상행선"
-            options={stationListOptions}
-            onChange={addFormProps.onChangeUpStation}
-            selectValue={addFormProps.upStation}
+      {addFormProps && (
+        <>
+          <Wrapper>
+            <Select
+              defaultName="상행선"
+              options={stationListOptions}
+              onChange={addFormProps.onChangeUpStationId}
+              selectValue={addFormProps.upStationId}
+            />
+            <Select
+              defaultName="하행선"
+              options={stationListOptions}
+              onChange={addFormProps.onChangeDownStationId}
+              selectValue={addFormProps.downStationId}
+            />
+          </Wrapper>
+          <Input
+            type="number"
+            onChange={addFormProps.onChangeDistance}
+            value={addFormProps.distance}
+            placeholder="거리 (km)"
+            min={1}
+            max={100}
           />
-          <Select
-            defaultName="하행선"
-            options={stationListOptions}
-            onChange={addFormProps.onChangeDownStation}
-            selectValue={addFormProps.downStation}
-          />
-        </Wrapper>
-        <Input
-          type="number"
-          onChange={addFormProps.onChangeDistance}
-          value={addFormProps.distance}
-          placeholder="거리 (km)"
-          min={1}
-          max={100}
-        />
-      </>
+        </>
+      )}
 
       <ColorSelector setColor={setColor} />
       <Button>확인</Button>

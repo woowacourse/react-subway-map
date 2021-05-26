@@ -1,11 +1,25 @@
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent } from '@testing-library/react';
 import SignUp from './SignUp';
+import { render, fireEvent } from '@testing-library/react';
+import { useSelector } from 'react-redux';
+import {
+  unValidAccessTokenState,
+  unValidSignedUser,
+  validHostState,
+} from '../../../fixtures/useSelectorState';
 
 jest.mock('react-redux');
 
 describe('SignUp', () => {
   it('빈 폼에서 정상적인 가입정보를 입력했을 때, 버튼의 비활성화가 풀린다.', () => {
+    (useSelector as jest.Mock).mockImplementation(() => {
+      return {
+        signedUser: unValidSignedUser,
+        accessTokenState: unValidAccessTokenState,
+        hostState: validHostState,
+      };
+    });
+
     const signUp = render(<SignUp />);
 
     const ageInput = signUp.getByLabelText('나이');

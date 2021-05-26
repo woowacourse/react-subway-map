@@ -1,4 +1,4 @@
-import { ILineRes, AddFormProps } from '../../../type';
+import { ILineRes } from '../../../type';
 import { Button, Input, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { Container, Wrapper } from './SectionAddForm.styles';
@@ -8,14 +8,24 @@ export interface SectionAddFormProps {
   onChangeLine: React.ChangeEventHandler<HTMLSelectElement>;
   lineId: number;
   onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement>;
-  addFormProps: AddFormProps;
+  onChangeUpStation: React.ChangeEventHandler<HTMLSelectElement>;
+  upStation: number;
+  onChangeDownStation: React.ChangeEventHandler<HTMLSelectElement>;
+  downStation: number;
+  onChangeDistance: React.ChangeEventHandler<HTMLInputElement>;
+  distance: number;
 }
 
 const SectionAddForm = ({
   lineList,
   onChangeLine,
   lineId,
-  addFormProps,
+  onChangeUpStation,
+  upStation,
+  onChangeDownStation,
+  downStation,
+  onChangeDistance,
+  distance,
   onSubmitSectionInfo,
 }: SectionAddFormProps) => {
   const lineListOptions: IOption[] = lineList.map(({ id, name }) => ({
@@ -35,20 +45,20 @@ const SectionAddForm = ({
         <Select
           defaultName="이전역"
           options={lineListOptions}
-          onChange={addFormProps.onChangeUpStation}
-          selectValue={addFormProps.upStation}
+          onChange={onChangeUpStation}
+          selectValue={upStation}
         />
         <Select
           defaultName="다음역"
           options={lineListOptions}
-          onChange={addFormProps.onChangeDownStation}
-          selectValue={addFormProps.downStation}
+          onChange={onChangeDownStation}
+          selectValue={downStation}
         />
       </Wrapper>
       <Input
         type="number"
-        onChange={addFormProps.onChangeDistance}
-        value={addFormProps.distance}
+        onChange={onChangeDistance}
+        value={distance}
         placeholder="거리 (km)"
         min={1}
         max={100}

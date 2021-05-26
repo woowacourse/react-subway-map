@@ -19,7 +19,7 @@ const Container = styled.div`
   top: 150px;
   left: 0;
   margin: 0 auto;
-  width: 500px;
+  width: fit-content;
   padding: 34px;
   z-index: 1;
   border: 1px solid #dddddd;
