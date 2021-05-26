@@ -3,14 +3,21 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import Input from "../Input";
 
-const FloatingLabelInput = ({ id, type, label }) => {
+const FloatingLabelInput = ({ id, type, label, value, onChange, isValid }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleInputFocus = () => setIsFocused(true);
 
   return (
     <div className="relative flex items-center w-full isolate">
-      <Input id={id} type={type} onFocus={handleInputFocus} />
+      <Input
+        id={id}
+        type={type}
+        onFocus={handleInputFocus}
+        value={value}
+        onChange={onChange}
+        isValid={isValid}
+      />
       <label
         htmlFor={id}
         className={cx(
@@ -28,6 +35,13 @@ FloatingLabelInput.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.node.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  isValid: PropTypes.bool,
+};
+
+FloatingLabelInput.defaultProps = {
+  isValid: true,
 };
 
 export default FloatingLabelInput;
