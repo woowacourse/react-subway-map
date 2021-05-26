@@ -13,6 +13,10 @@ export const STATIONS_ADD_SUCCEED = {
   MESSAGE: "성공적으로 역이 추가되었습니다.",
 };
 
+export const STATIONS_GET_SUCCEED = {
+  CODE: 200,
+};
+
 export const UNKNOWN_ERROR_MESSAGE =
   "잠시 후 다시 시도해주세요. 에러가 지속될 시 관리자에게 문의해주세요.";
 

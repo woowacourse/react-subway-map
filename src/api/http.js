@@ -15,6 +15,20 @@ const post = async (endpoint, options) => {
   });
 };
 
-const http = { post };
+const get = async (endpoint, options) => {
+  const { method, headers, body, ...rest } = options;
+  const baseURL = getBaseURL();
+
+  return fetch(`${baseURL}${endpoint}`, {
+    method: "GET",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    ...rest,
+  });
+};
+
+const http = { post, get };
 
 export default http;

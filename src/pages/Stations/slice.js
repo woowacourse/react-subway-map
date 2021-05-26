@@ -3,6 +3,7 @@ import STATUS from "../../constants/status";
 import {
   ENDPOINT,
   STATIONS_ADD_SUCCEED,
+  STATIONS_GET_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -37,6 +38,31 @@ export const addStation = createAsyncThunk(
   }
 );
 
+export const fetchStations = createAsyncThunk(
+  "stations/fetchStations",
+  async (_, { rejectWithValue, getState }) => {
+    const accessToken = selectAccessToken(getState());
+
+    try {
+      const response = await http.get(ENDPOINT.STATIONS, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === STATIONS_GET_SUCCEED.CODE) {
+        const list = await response.json();
+        return list;
+      }
+
+      const { message } = await response.json();
+      return rejectWithValue(message);
+    } catch (error) {
+      console.error(error);
+
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+    }
+  }
+);
+
 const initialState = {
   status: STATUS.IDLE,
   error: null,
@@ -57,6 +83,18 @@ const stationsSlice = createSlice({
       state.list.push(action.payload);
     },
     [addStation.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.error = action.error;
+      state.message = action.payload;
+    },
+    [fetchStations.pending]: (state) => {
+      state.status = STATUS.LOADING;
+    },
+    [fetchStations.fulfilled]: (state, action) => {
+      state.status = STATUS.SUCCEED;
+      state.list = action.payload;
+    },
+    [fetchStations.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;

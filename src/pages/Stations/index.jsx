@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import STATUS from "../../constants/status";
 import Main from "../../components/@shared/Main";
@@ -10,25 +10,32 @@ import {
   addStation,
   selectStationsStatus,
   selectStationsMessage,
+  fetchStations,
 } from "./slice";
 
 const Stations = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectStationsStatus);
   const message = useSelector(selectStationsMessage);
+  const list = useSelector((state) => state.stations.list);
   const [stationName, handleStationNameChange, isStationNameValid] =
     useStationName();
+
+  useEffect(() => {
+    if (status === STATUS.IDLE) {
+      dispatch(fetchStations());
+    }
+
+    if (status === STATUS.FAILED) {
+      alert(message);
+    }
+  }, [dispatch, status, message]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     dispatch(addStation(stationName));
   };
-
-  if (status === STATUS.FAILED) {
-    // TODO: alert로 유저에게 보여주기
-    console.log(message);
-  }
 
   return (
     <>
@@ -52,28 +59,26 @@ const Stations = () => {
             </Button>
           </form>
         </section>
-        <section className="mt-8 pb-8 pl-8 pr-6 py-4 w-144 rounded-sm shadow-md">
-          <ul className="space-y-8">
-            <li className="flex justify-between p-2 text-gray-600 text-xl">
-              <span>강남역</span>
-              <button
-                type="button"
-                className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
-              >
-                🗑
-              </button>
-            </li>
-            <li className="flex justify-between p-2 text-gray-600 text-xl">
-              <span>동탄역</span>
-              <button
-                type="button"
-                className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
-              >
-                🗑
-              </button>
-            </li>
-          </ul>
-        </section>
+        {list.length > 0 && (
+          <section className="mt-8 pb-8 pl-8 pr-6 py-4 w-144 rounded-sm shadow-md">
+            <ul className="space-y-8">
+              {[...list].reverse().map(({ id, name }) => (
+                <li
+                  key={id}
+                  className="flex justify-between p-2 text-gray-600 text-xl"
+                >
+                  <span>{name}</span>
+                  <button
+                    type="button"
+                    className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+                  >
+                    🗑
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </Main>
     </>
   );
