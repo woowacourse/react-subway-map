@@ -13,6 +13,7 @@ import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./cons
 import { useAppDispatch, useAppSelector } from "./hooks";
 import React, { useEffect } from "react";
 import { checkAccessToken, logout } from "./modules/auth";
+import { getStations } from "./modules/station";
 
 // TODO : 실제로 만료되었을 때 제대로 처리 되는지 테스트
 
@@ -23,6 +24,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkAccessToken());
+    dispatch(getStations());
   }, []);
 
   const navigationLinks = isLogin ? publicNavigationLinks : privateNavigationLinks;
