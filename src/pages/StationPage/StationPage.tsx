@@ -1,13 +1,51 @@
-import React from 'react';
+import React, { FormEventHandler, useState } from 'react';
 import { Button, Card, Input } from '../../components';
 import * as Styled from './StationPage.styles';
 import { ReactComponent as SubwayIcon } from '../../assets/icons/subway-solid.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/trash-solid.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/edit-solid.svg';
 import useModal from '../../hooks/useModal';
+import useInput from '../../hooks/useInput';
+import useStation from '../../hooks/useStation';
+import { ApiStatus, Station } from '../../types';
 
 const StationPage = () => {
   const { Modal, openModal, closeModal } = useModal();
+
+  const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
+  const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
+  const [editStationId, setEditStationId] = useState<Station['id'] | null>(null);
+
+  const { list, onAdd, onEdit, onDelete } = useStation();
+
+  const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    const response = await onAdd(name);
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+
+    setName('');
+  };
+
+  const handleOpenEditModal = (editStation: Station) => {
+    openModal();
+
+    setEditStationId(editStation.id);
+    setEditName(editStation.name);
+  };
+
+  const handleEdit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    if (!editStationId) return;
+
+    const response = await onEdit({ id: editStationId, name: editName });
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+
+    setEditStationId(null);
+    setEditName('');
+    closeModal();
+  };
 
   return (
     <>
@@ -16,11 +54,15 @@ const StationPage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 역 관리</Styled.HeaderText>
-              <Styled.AddForm>
+              <Styled.AddForm onSubmit={handleAdd}>
                 <Styled.InputWrapper>
                   <Input
                     labelText="지하철 역 이름을 입력해주세요"
                     icon={<SubwayIcon />}
+                    minLength={2}
+                    maxLength={20}
+                    value={name}
+                    onChange={onChangeName}
                     autoFocus
                   />
                 </Styled.InputWrapper>
@@ -28,41 +70,47 @@ const StationPage = () => {
               </Styled.AddForm>
             </Card>
           </Styled.FormContainer>
-          <Styled.ListContainer>
-            <Card variant="simple">
-              <Styled.List>
-                <Styled.Item>
-                  <Styled.Name>강남역</Styled.Name>
-                  <Styled.OptionWrapper>
-                    <Button shape="circle" variant="text" onClick={openModal}>
-                      <EditIcon />
-                    </Button>
-                    <Button shape="circle" variant="text">
-                      <TrashIcon />
-                    </Button>
-                  </Styled.OptionWrapper>
-                </Styled.Item>
-                <Styled.Item>
-                  <Styled.Name>언주역</Styled.Name>
-                  <Styled.OptionWrapper>
-                    <Button shape="circle" variant="text" onClick={openModal}>
-                      <EditIcon />
-                    </Button>
-                    <Button shape="circle" variant="text">
-                      <TrashIcon />
-                    </Button>
-                  </Styled.OptionWrapper>
-                </Styled.Item>
-              </Styled.List>
-            </Card>
-          </Styled.ListContainer>
+          {list.length > 0 && (
+            <Styled.ListContainer>
+              <Card variant="simple">
+                <Styled.List>
+                  {list.map((item) => (
+                    <Styled.Item key={item.id}>
+                      <Styled.Name>{item.name}</Styled.Name>
+                      <Styled.OptionWrapper>
+                        <Button
+                          shape="circle"
+                          variant="text"
+                          onClick={() => handleOpenEditModal(item)}
+                        >
+                          <EditIcon />
+                        </Button>
+                        <Button shape="circle" variant="text" onClick={() => onDelete(item.id)}>
+                          <TrashIcon />
+                        </Button>
+                      </Styled.OptionWrapper>
+                    </Styled.Item>
+                  ))}
+                </Styled.List>
+              </Card>
+            </Styled.ListContainer>
+          )}
         </Styled.Container>
       </Styled.StationPage>
 
       <Modal>
         <Styled.ModalTitle>역 이름 수정</Styled.ModalTitle>
-        <Styled.EditForm>
-          <Input labelText="역 이름" icon={<SubwayIcon />} placeholder="역 이름" />
+        <Styled.EditForm onSubmit={handleEdit}>
+          <Input
+            labelText="역 이름"
+            icon={<SubwayIcon />}
+            placeholder="역 이름"
+            minLength={2}
+            maxLength={20}
+            value={editName}
+            onChange={onChangeEditName}
+            autoFocus
+          />
           <Styled.ButtonWrapper>
             <Button type="button" variant="text" onClick={closeModal}>
               취소

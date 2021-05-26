@@ -66,3 +66,8 @@ export type Station = {
   id: number;
   name: string;
 };
+
+export type Error = {
+  message: string;
+  status: number;
+};

@@ -15,7 +15,7 @@ const BACKEND = {
   },
   [CREWS.YORN]: {
     name: '욘',
-    baseUrl: 'https://meto.r-e.kr/api',
+    baseUrl: 'https://metro.r-e.kr/api',
   },
 };
 
