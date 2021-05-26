@@ -1,27 +1,19 @@
 import axios from 'axios';
 
-// 인비
-const BASE_URL = 'https://inbi-subway.kro.kr';
-// const BASE_URL = 'https://kimkimsubway.o-r.kr';
-// const BASE_URL = 'https://newwisdom-subway.p-e.kr'; // 로그인 실패 
-// const BASE_URL = 'https://subway-fare.kro.kr';
-
 export interface IHeaders {
   [key: string]: string;
 }
 
 const request = {
-  get: async (query: string, headers: IHeaders) =>
-    await axios.get(`${BASE_URL}${query}`, { headers }),
+  get: async (url: string, headers: IHeaders) => await axios.get(url, { headers }),
 
-  post: async <T>(query: string, headers: IHeaders, body: T) =>
-    await axios.post(`${BASE_URL}${query}`, body, { headers }),
+  post: async <T>(url: string, headers: IHeaders, body: T) =>
+    await axios.post(url, body, { headers }),
 
-  put: async <T>(query: string, headers: IHeaders, body: T) =>
-    await axios.put(`${BASE_URL}${query}`, body, { headers }),
+  put: async <T>(url: string, headers: IHeaders, body: T) =>
+    await axios.put(url, body, { headers }),
 
-  delete: async (query: string, headers: IHeaders) =>
-    await axios.delete(`${BASE_URL}${query}`, { headers }),
+  delete: async (url: string, headers: IHeaders) => await axios.delete(url, { headers }),
 };
 
 export default request;

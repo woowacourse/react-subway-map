@@ -3,7 +3,7 @@ export type Nullable<T> = { [K in keyof T]: T[K] | null };
 export interface ILoginReq {
   email: string;
   password: string;
-} 
+}
 
 export interface ILoginRes {
   accessToken: string;
@@ -60,7 +60,7 @@ export interface ISectionRes {
 }
 
 export interface AddFormProps {
-  stationList: IStation[];
+  stationList: IStationRes[];
   onChangeUpStation: React.ChangeEventHandler<HTMLSelectElement>;
   upStation: number;
   onChangeDownStation: React.ChangeEventHandler<HTMLSelectElement>;

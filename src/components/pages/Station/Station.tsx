@@ -6,8 +6,7 @@ import { useInput, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { IStationReq, IStationRes } from '../../../type';
 import { Header } from '../../atoms';
-import ListItem from '../../molecules/ListItem/ListItem';
-import StationAddForm from '../../molecules/StationAddForm/StationAddForm';
+import { ListItem, StationAddForm } from '../../molecules';
 import { Container, StationListContainer } from './Station.styles';
 
 // TODO: 역 이름 유효성 검사 코드 추가
@@ -18,6 +17,14 @@ const Station = () => {
     setValue: setStationName,
     onChange: onChangeStationName,
   } = useInput('');
+
+  const {
+    signedUser: { id: signedUserId },
+    hostState: { host },
+  } = useSelector((state: RootState) => {
+    return { signedUser: state.signedUserReducer, hostState: state.hostReducer };
+  });
+
   const {
     allData: stations,
     getAllData: getAllStations,
@@ -26,8 +33,7 @@ const Station = () => {
     getAllDataResponse: getAllStationResponse,
     postDataResponse: postStationResponse,
     getDeleteResponse: deleteStationResponse,
-  } = useServerAPI<IStationRes>('/stations');
-  const { id: signedUserId } = useSelector((state: RootState) => state.signedUserReducer);
+  } = useServerAPI<IStationRes>(`${host}/stations`);
 
   if (!signedUserId) {
     window.alert('로그인이 필요합니다.');

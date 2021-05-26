@@ -7,14 +7,21 @@ import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
 import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
 import { Header } from '../../atoms';
-import SignUpForm from '../../molecules/SignUpForm/SignUpForm';
+import { SignUpForm } from '../../molecules';
 import { Container } from './SignUp.styles';
 
 // TODO: 에러 메시지 처음에 렌더링되는 문제 해결
 const SignUp = () => {
   const history = useHistory();
-  const signedUser = useSelector((state: RootState) => state.signedUserReducer);
-  const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI('/members');
+  const {
+    signedUser,
+    hostState: { host },
+  } = useSelector((state: RootState) => {
+    return { signedUser: state.signedUserReducer, hostState: state.hostReducer };
+  });
+  const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
+    `${host}/members`,
+  );
 
   const { value: age, onChange: onChangeAge } = useInput('');
   const { value: email, onChange: onChangeEmail } = useInput('');

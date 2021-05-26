@@ -12,7 +12,7 @@ const defaultHeader = {
   'Content-Type': 'application/json; charset=UTF-8',
 };
 
-const useServerAPI = <T>(query: string) => {
+const useServerAPI = <T>(url: string) => {
   const [data, setData] = useState<T | null>();
   const [allData, setAllData] = useState<T[] | null>();
 
@@ -23,7 +23,7 @@ const useServerAPI = <T>(query: string) => {
 
   const getAllData = async (headers = defaultHeader) => {
     try {
-      const response = await request.get(query, headers);
+      const response = await request.get(url, headers);
 
       const data: T[] = response.data;
 
@@ -44,7 +44,7 @@ const useServerAPI = <T>(query: string) => {
 
   const getData = async (param: string, headers = defaultHeader) => {
     try {
-      const response = await request.get(`${query}/${param}`, headers);
+      const response = await request.get(`${url}/${param}`, headers);
 
       const data: T = response.data;
 
@@ -65,7 +65,7 @@ const useServerAPI = <T>(query: string) => {
 
   const postData = async <T>(body: T, param = '', headers = defaultHeader) => {
     try {
-      const response = await request.post(`${query}/${param}`, headers, body);
+      const response = await request.post(`${url}/${param}`, headers, body);
 
       setPostDataResponse({
         isError: false,
@@ -84,7 +84,7 @@ const useServerAPI = <T>(query: string) => {
   // TODO: 지하철역 삭제는 현재 무조건 성공 204 응답이옴.
   const deleteData = async (param: string, headers = defaultHeader) => {
     try {
-      const response = await request.delete(`${query}/${param}`, headers);
+      const response = await request.delete(`${url}/${param}`, headers);
 
       setDeleteDataResponse({
         isError: false,

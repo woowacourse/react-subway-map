@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { Main, Button, Menu, RootContainer, Title } from './components/atoms';
+import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
+import { HostSelect } from './components/molecules';
 import { Home, Login, SignUp, Station } from './components/pages';
 import { ROUTE } from './constants';
 import { setAccessToken } from './features/accessTokenSlice';
@@ -11,11 +12,19 @@ import { RootState, useAppDispatch } from './store';
 const App = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { accessToken } = useSelector((state: RootState) => state.accessTokenReducer);
-  const { id } = useSelector((state: RootState) => state.signedUserReducer);
+
+  const {
+    signedUser: { id: signedUserId },
+    accessTokenState: { accessToken },
+    hostState: { host },
+  } = useSelector((state: RootState) => ({
+    signedUser: state.signedUserReducer,
+    accessTokenState: state.accessTokenReducer,
+    hostState: state.hostReducer,
+  }));
 
   useEffect(() => {
-    dispatch(getSignedUserAsync(accessToken));
+    dispatch(getSignedUserAsync({ host, accessToken }));
   }, []);
 
   const LoginedMenu = (
@@ -80,7 +89,7 @@ const App = () => {
       <Title>
         <Link to={ROUTE.HOME}>지하철 노선도</Link>
       </Title>
-      <Menu>{id ? LoginedMenu : UnLoginedMenu}</Menu>
+      <Menu>{signedUserId ? LoginedMenu : UnLoginedMenu}</Menu>
       <Main>
         <Switch>
           <Route exact path={ROUTE.HOME} component={Home} />
@@ -90,6 +99,7 @@ const App = () => {
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>
+      <HostSelect />
     </RootContainer>
   );
 };

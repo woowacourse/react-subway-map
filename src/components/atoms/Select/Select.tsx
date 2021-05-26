@@ -1,23 +1,26 @@
-import { IStationRes } from '../../../type';
 import { Container } from './Select.styles';
 
+export interface IOption {
+  value: number | string;
+  name: string;
+}
 export interface SelectProps {
-  options: IStationRes[];
+  options: IOption[];
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
-  value: number;
+  selectValue: string | number;
   defaultName?: string;
 }
 
-const Select = ({ defaultName, options, onChange, value, ...props }: SelectProps) => (
-  <Container onChange={onChange} value={value} {...props}>
+const Select = ({ defaultName, options, onChange, selectValue, ...props }: SelectProps) => (
+  <Container onChange={onChange} value={selectValue} {...props}>
     {defaultName && (
-      <option selected disabled>
+      <option selected hidden>
         {defaultName}
       </option>
     )}
 
-    {options.map(({ id, name }) => (
-      <option key={id} value={id}>
+    {options.map(({ value, name }) => (
+      <option key={value} value={value}>
         {name}
       </option>
     ))}

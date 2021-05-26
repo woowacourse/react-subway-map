@@ -9,15 +9,20 @@ import { useInput } from '../../../hooks';
 import { RootState, useAppDispatch } from '../../../store';
 import { ILoginReq } from '../../../type';
 import { Header } from '../../atoms';
-import LoginForm from '../../molecules/LoginForm/LoginForm';
+import { LoginForm } from '../../molecules';
 import { Container, Footer } from './Login.styles';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { signedUser, accessToken } = useSelector((state: RootState) => ({
+  const {
+    signedUser,
+    accessTokenState,
+    hostState: { host },
+  } = useSelector((state: RootState) => ({
     signedUser: state.signedUserReducer,
-    accessToken: state.accessTokenReducer,
+    accessTokenState: state.accessTokenReducer,
+    hostState: state.hostReducer,
   }));
 
   const { value: email, onChange: onChangeEmail } = useInput('');
@@ -36,18 +41,18 @@ const Login = () => {
       password,
     };
 
-    dispatch(loginRequestAsync(body));
+    dispatch(loginRequestAsync({ host, body }));
   };
 
   useEffect(() => {
-    if (accessToken?.isError === false) {
+    if (accessTokenState?.isError === false) {
       window.alert('로그인에 성공하셨습니다.');
       history.replace({ pathname: ROUTE.HOME });
-      dispatch(getSignedUserAsync(accessToken.accessToken));
-    } else if (accessToken?.isError === true) {
+      dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken }));
+    } else if (accessTokenState?.isError === true) {
       window.alert('존재하지 않는 계정입니다.');
     }
-  }, [accessToken]);
+  }, [accessTokenState]);
 
   return (
     <Container>

@@ -5,7 +5,7 @@ import { IResMeta } from '../hooks/useServerAPI';
 
 export type IAccessToken = Nullable<ILoginRes & IResMeta>;
 
-const initialState: IAccessToken = {
+export const initialState: IAccessToken = {
   accessToken: null,
 
   isError: null,
@@ -14,14 +14,14 @@ const initialState: IAccessToken = {
 
 export const loginRequestAsync = createAsyncThunk(
   `loginRequest`,
-  async (loginReqBody: ILoginReq, thunkAPI) => {
+  async (loginReq: { host: string; body: ILoginReq }, thunkAPI) => {
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
 
     try {
       thunkAPI.dispatch(setAccessToken({ isError: null }));
-      const response = await request.post('/login/token', headers, loginReqBody);
+      const response = await request.post(`${loginReq.host}/login/token`, headers, loginReq.body);
 
       return response;
     } catch (error) {

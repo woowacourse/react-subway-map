@@ -5,7 +5,7 @@ import { request } from '../utils';
 
 export type ISignedUser = Nullable<IMyInfoRes & IResMeta>;
 
-const initialState: ISignedUser = {
+export const initialState: ISignedUser = {
   id: null,
   email: null,
   age: null,
@@ -16,16 +16,16 @@ const initialState: ISignedUser = {
 
 export const getSignedUserAsync = createAsyncThunk(
   `getSignedUser`,
-  async (accessToken: string | null, thunkAPI) => {
+  async (getSignedUserReq: { host: string; accessToken: string | null }, thunkAPI) => {
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${getSignedUserReq.accessToken}`,
     };
 
     // TODO: /members/me 상수화, 에러 메시지 요청
     try {
       thunkAPI.dispatch(setSignedUser({ isError: null }));
-      const response = await request.get('/members/me', headers);
+      const response = await request.get(`${getSignedUserReq.host}/members/me`, headers);
 
       return response;
     } catch (error) {

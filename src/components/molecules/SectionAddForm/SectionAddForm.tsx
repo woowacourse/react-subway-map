@@ -1,5 +1,6 @@
 import { ILineRes, AddFormProps } from '../../../type';
 import { Button, Input, Select } from '../../atoms';
+import { IOption } from '../../atoms/Select/Select';
 import { Container, Wrapper } from './SectionAddForm.styles';
 
 export interface SectionAddFormProps {
@@ -17,26 +18,31 @@ const SectionAddForm = ({
   addFormProps,
   onSubmitSectionInfo,
 }: SectionAddFormProps) => {
+  const lineListOptions: IOption[] = lineList.map(({ id, name }) => ({
+    value: id,
+    name,
+  }));
+
   return (
     <Container onSubmit={onSubmitSectionInfo}>
       <Select
         defaultName="구간을 추가할 노선을 선택해주세요"
-        options={lineList}
+        options={lineListOptions}
         onChange={onChangeLine}
-        value={lineId}
+        selectValue={lineId}
       />
       <Wrapper>
         <Select
           defaultName="이전역"
-          options={addFormProps.stationList}
+          options={lineListOptions}
           onChange={addFormProps.onChangeUpStation}
-          value={addFormProps.upStation}
+          selectValue={addFormProps.upStation}
         />
         <Select
           defaultName="다음역"
-          options={addFormProps.stationList}
+          options={lineListOptions}
           onChange={addFormProps.onChangeDownStation}
-          value={addFormProps.downStation}
+          selectValue={addFormProps.downStation}
         />
       </Wrapper>
       <Input

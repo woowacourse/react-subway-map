@@ -6,6 +6,7 @@ const Container = styled.select`
   padding: 0.6rem 1rem;
   background-color: #f1f5f9;
   border-radius: 10px;
+  outline: none;
 `;
 
 export { Container };
