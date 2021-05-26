@@ -100,7 +100,6 @@ const LineModal = ({
 
   useEffect(() => {
     if (selectedLine) {
-      console.log(selectedLine);
       setName(selectedLine.name);
       setColor(selectedLine.color);
     } else {
