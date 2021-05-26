@@ -14,7 +14,7 @@ const Item = ({ name, onDeleteItem }) => (
 const ManagementList = ({ items, onDeleteItem }) => (
   <Container>
     {items.map(({ id, name }) => (
-      <Item key={id} name={name} onDeleteItem={() => onDeleteItem(id)} />
+      <Item key={id} name={name} onDeleteItem={() => onDeleteItem({ id })} />
     ))}
   </Container>
 );

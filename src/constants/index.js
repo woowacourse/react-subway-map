@@ -51,7 +51,7 @@ export const RANGE = {
   },
 };
 
-export const DEFAULT_SERVER = '제리';
+export const DEFAULT_SERVER = '중간곰';
 
 export const SERVERS = {
   제리: 'https://jerry-subway.o-r.kr',

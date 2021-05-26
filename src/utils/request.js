@@ -14,6 +14,12 @@ const request = {
 
     return await axios.post(SERVERS[serverName] + path, data);
   },
+
+  delete: async (path) => {
+    const serverName = getLocalStorage(LS_KEY.SERVER);
+
+    return await axios.delete(SERVERS[serverName] + path);
+  },
 };
 
 export default request;

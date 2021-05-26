@@ -28,7 +28,7 @@ const validate = ({ stationName }, stations) => {
 };
 
 const StationManager = () => {
-  const { stations, addStation } = useStationManager();
+  const { stations, addStation, deleteStation } = useStationManager();
 
   const handleSubmit = (values, { resetForm }) => {
     addStation(values);
@@ -66,7 +66,9 @@ const StationManager = () => {
           </>
         )}
       </Formik>
-      {stations && <ManagementList items={stations} />}
+      {stations && (
+        <ManagementList items={stations} onDeleteItem={deleteStation} />
+      )}
     </PageTemplate>
   );
 };
