@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { API_INFO } from '../../../constants/api';
 import { PAGE_INFO } from '../../../constants/appInfo';
 import { logout } from '../../../redux/loginSlice';
-import { RootState, useAppDispatch } from '../../../redux/store';
+import { clearRootReducer, RootState, useAppDispatch } from '../../../redux/store';
 import { Page } from '../../../types';
 import StyledLink from '../StyledLink/StyledLink';
 import { NavButton, NavList } from './Navigation.styles';
@@ -22,6 +22,7 @@ const Navigation: FC<Props> = ({ navInfoList }) => {
 
   const onLogout = () => {
     dispatch(logout());
+    clearRootReducer();
     history.push(PAGE_INFO.HOME.path);
   };
 

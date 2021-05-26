@@ -76,14 +76,18 @@ export const modifyLine = createAsyncThunk(
   }
 );
 
+const initialState = {
+  isLoading: false,
+  errorMessage: '',
+  lines: [] as Line[],
+};
+
 const lineSlice = createSlice({
   name: 'line',
-  initialState: {
-    isLoading: false,
-    errorMessage: '',
-    lines: [] as Line[],
+  initialState,
+  reducers: {
+    clearLines: (state) => initialState,
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loadLines.pending, (state) => {
       state.isLoading = true;
@@ -142,5 +146,7 @@ const lineSlice = createSlice({
     });
   },
 });
+
+export const { clearLines } = lineSlice.actions;
 
 export default lineSlice.reducer;

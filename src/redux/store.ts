@@ -1,9 +1,9 @@
-import apiReducer from './apiOwnerSlice';
-import loginReducer from './loginSlice';
-import stationReducer from './stationSlice';
-import lineReducer from './lineSlice';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, Middleware } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import apiReducer from './apiOwnerSlice';
+import lineReducer, { clearLines } from './lineSlice';
+import loginReducer from './loginSlice';
+import stationReducer, { clearStations } from './stationSlice';
 
 const rootReducer = combineReducers({
   api: apiReducer,
@@ -15,6 +15,11 @@ const rootReducer = combineReducers({
 const store = configureStore({
   reducer: rootReducer,
 });
+
+export const clearRootReducer = (): void => {
+  store.dispatch(clearStations());
+  store.dispatch(clearLines());
+};
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;

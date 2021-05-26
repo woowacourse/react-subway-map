@@ -6,7 +6,6 @@ import {
 import { createSlice } from '@reduxjs/toolkit';
 import { SESSION_STORAGE_KEY } from '../constants/storage';
 
-//TODO: owner를 localStorage에 저장해두고 불러와서 초기값 설정
 export const loginSlice = createSlice({
   name: 'login',
   initialState: {

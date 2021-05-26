@@ -51,14 +51,18 @@ export const deleteStation = createAsyncThunk(
   }
 );
 
+const initialState = {
+  isLoading: false,
+  errorMessage: '',
+  stations: [] as Station[],
+};
+
 const stationSlice = createSlice({
   name: 'station',
-  initialState: {
-    isLoading: false,
-    errorMessage: '',
-    stations: [] as Station[],
+  initialState,
+  reducers: {
+    clearStations: (state) => initialState,
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loadStations.pending, (state) => {
       state.isLoading = true;
@@ -100,5 +104,7 @@ const stationSlice = createSlice({
     });
   },
 });
+
+export const { clearStations } = stationSlice.actions;
 
 export default stationSlice.reducer;
