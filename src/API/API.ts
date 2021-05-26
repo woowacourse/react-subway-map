@@ -1,13 +1,8 @@
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-const URL = {
-  BETTER: 'https://subway-fare-mission.kro.kr',
-  KEVIN: 'https://jipark.p-e.kr', // 로그인 시 400 error
-  MUNGTO: 'https://mungto-subway.o-r.kr',
-  PIKA: 'https://pika-subway-fare.kro.kr',
+export const currentAPI = {
+  baseUrl: '',
 };
-
-const BASE_URL = URL.MUNGTO;
 
 const fetchOption = (
   method: HTTPMethod,
@@ -23,19 +18,28 @@ const fetchOption = (
 
 const APIClient = {
   get(path: string, token?: string) {
-    return fetch(BASE_URL + path, fetchOption('GET', { token }));
+    return fetch(currentAPI.baseUrl + path, fetchOption('GET', { token }));
   },
   post(path: string, payload: unknown, token?: string) {
-    return fetch(BASE_URL + path, fetchOption('POST', { payload, token }));
+    return fetch(
+      currentAPI.baseUrl + path,
+      fetchOption('POST', { payload, token })
+    );
   },
   delete(path: string, token?: string) {
-    return fetch(BASE_URL + path, fetchOption('DELETE', { token }));
+    return fetch(currentAPI.baseUrl + path, fetchOption('DELETE', { token }));
   },
   put(path: string, payload: unknown, token?: string) {
-    return fetch(BASE_URL + path, fetchOption('PUT', { payload, token }));
+    return fetch(
+      currentAPI.baseUrl + path,
+      fetchOption('PUT', { payload, token })
+    );
   },
   patch(path: string, payload: unknown, token?: string) {
-    return fetch(BASE_URL + path, fetchOption('PATCH', { payload, token }));
+    return fetch(
+      currentAPI.baseUrl + path,
+      fetchOption('PATCH', { payload, token })
+    );
   },
 };
 
