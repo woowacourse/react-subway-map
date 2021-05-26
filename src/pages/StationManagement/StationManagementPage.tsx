@@ -6,14 +6,22 @@ import ListItem from "../../components/ListItem/ListItem";
 import useStation from "../../hooks/station";
 import useInput from "../../hooks/@common/useInput";
 import { validateStationName } from "../../validations/station";
+import { deleteStation } from "../../modules/station";
+import { useAppDispatch } from "../../hooks";
 
 // TODO : 에러 메세지 있을 때 예외처리 추가 필요
 
 const StationManagementPage = () => {
   const { stations, createStation } = useStation();
-  const [stationName, errorMessage, onStationNameChange, onStationNameBlur, setStationName] = useInput(
-    validateStationName
-  );
+  const {
+    inputValue: stationName,
+    errorMessage: errorMessage,
+    onChange: onStationNameChange,
+    onBlur: onStationNameBlur,
+    setInputValue: setStationName,
+  } = useInput(validateStationName);
+
+  const dispatch = useAppDispatch();
 
   const onAddStation: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -44,7 +52,13 @@ const StationManagementPage = () => {
         </form>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
           {stations.map(({ id, name }) => (
-            <ListItem key={id} style={{ padding: "0.5625rem" }}>
+            <ListItem
+              key={id}
+              style={{ padding: "0.5625rem" }}
+              onDelete={() => {
+                dispatch(deleteStation(id));
+              }}
+            >
               {name}
             </ListItem>
           ))}

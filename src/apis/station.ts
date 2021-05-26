@@ -16,4 +16,9 @@ export const requestStation = {
 
     return response.data;
   },
+  async deleteStation(id: number) {
+    const response = await axios.delete(`https://subway-pomo.kro.kr/stations/${id}`);
+
+    return response;
+  },
 };

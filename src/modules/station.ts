@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { Station } from "../@types/types";
 import { requestStation } from "../apis/station";
@@ -21,10 +21,16 @@ export const getStations = createAsyncThunk("[STATION] LOAD", async () => {
   return stations;
 });
 
-export const addStation = createAsyncThunk("[STATION] ADD", async (stationName: string) => {
-  const station = await requestStation.addStation(stationName);
+export const addStation = createAsyncThunk("[STATION] ADD", async (name: string) => {
+  const station = await requestStation.addStation(name);
 
   return station;
+});
+
+export const deleteStation = createAsyncThunk("[STATION] DELETE", async (id: number) => {
+  await requestStation.deleteStation(id);
+
+  return id;
 });
 
 export const stationSlice = createSlice({
@@ -51,6 +57,17 @@ export const stationSlice = createSlice({
       state.loading = false;
     },
     [addStation.rejected.type]: (state, { payload }) => {
+      state.error = payload;
+      state.loading = false;
+    },
+    [deleteStation.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [deleteStation.fulfilled.type]: (state, { payload }) => {
+      state.items = state.items.filter(({ id }) => id !== payload);
+      state.loading = false;
+    },
+    [deleteStation.rejected.type]: (state, { payload }) => {
       state.error = payload;
       state.loading = false;
     },
