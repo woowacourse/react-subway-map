@@ -4,7 +4,8 @@ import { FlexCenterBox } from '../../../styles/css';
 const Container = styled.form`
   ${FlexCenterBox};
   background-color: #fff;
-  padding: 2em 4rem;
+
+  padding: 2rem 4rem;
 
   & > input {
     width: 100%;

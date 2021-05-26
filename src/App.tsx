@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
 import { HostSelect } from './components/molecules';
-import { Home, Login, SignUp, Station } from './components/pages';
+import { Home, Login, SignUp, Station, Line } from './components/pages';
 import { ROUTE } from './constants';
 import { setAccessToken } from './features/accessTokenSlice';
 import { getSignedUserAsync, setSignedUser } from './features/signedUserSlice';
@@ -96,6 +96,7 @@ const App = () => {
           <Route exact path={ROUTE.SIGNUP} component={SignUp} />
           <Route exact path={ROUTE.LOGIN} component={Login} />
           <Route exact path={ROUTE.STATION} component={Station} />
+          <Route exact path={ROUTE.LINE} component={Line} />
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>

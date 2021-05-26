@@ -11,6 +11,4 @@ const Container = styled.div`
   }
 `;
 
-const StationListContainer = styled.div``;
-
-export { Container, StationListContainer };
+export { Container };

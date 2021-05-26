@@ -5,6 +5,7 @@ import { ButtonTheme } from './Button';
 const buttonThemeTable = {
   default: css`
     background-color: #4ecfe0;
+    border-radius: 30px;
   `,
   edit: css`
     background-color: #f1f5f9;
@@ -23,7 +24,7 @@ const Container = styled.button`
   border-radius: 4px;
 
   ${({ buttonTheme }: { buttonTheme: ButtonTheme }) => buttonThemeTable[buttonTheme]}
-  
+
   &:hover {
     filter: brightness(0.9);
   }

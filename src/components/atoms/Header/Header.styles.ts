@@ -6,8 +6,14 @@ const Container = styled.header`
   justify-content: ${({ hasExtra }: { hasExtra: boolean }) =>
     hasExtra ? 'space-between' : 'center'};
 
+  padding: 1rem 4rem 0 4rem;
+
   & > h3 {
-    font-size: 1.75rem;
+    font-size: 2rem;
+  }
+
+  & > button {
+    padding: 1rem 1.5rem;
   }
 `;
 

@@ -5,11 +5,12 @@ export interface ListItemProps {
   content: string;
   onClickModify?: React.MouseEventHandler<HTMLButtonElement>;
   onClickDelete?: () => void;
+  option?: { [key: string]: string };
 }
 
-const ListItem = ({ content, onClickModify, onClickDelete }: ListItemProps) => {
+const ListItem = ({ content, onClickModify, onClickDelete, ...props }: ListItemProps) => {
   return (
-    <Container>
+    <Container {...props}>
       <span>{content}</span>
       <Wrapper>
         {onClickModify && (

@@ -7,7 +7,7 @@ import { RootState } from '../../../store';
 import { IStationReq, IStationRes } from '../../../type';
 import { Header } from '../../atoms';
 import { ListItem, StationAddForm } from '../../molecules';
-import { Container, StationListContainer } from './Station.styles';
+import { Container } from './Station.styles';
 
 // TODO: 역 이름 유효성 검사 코드 추가
 // TODO: 역 이름 유효성 검사가 백엔드 API 마다 다른지 검사
@@ -57,7 +57,7 @@ const Station = () => {
 
   useEffect(() => {
     if (getAllStationResponse?.isError === true) {
-      window.alert('지하철역 요청에 실패했습니다.');
+      window.alert('지하철역 조회에 실패했습니다.');
     }
   }, [getAllStationResponse]);
 
@@ -89,11 +89,11 @@ const Station = () => {
         onSubmitStationInfo={onSubmitStationInfo}
       />
 
-      <StationListContainer>
+      <div>
         {stations?.map(({ id, name }) => {
           return <ListItem key={id} content={name} onClickDelete={() => deleteStation(`${id}`)} />;
         })}
-      </StationListContainer>
+      </div>
     </Container>
   );
 };
