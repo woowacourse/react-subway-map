@@ -6,6 +6,9 @@ import Container from '../@common/Container/Container.styles';
 export const NavigationBarContainer = styled(Container)`
   height: 5.125rem;
   padding: 0 1rem;
+  background-color: white;
+  position: relative;
+  z-index: 999;
   align-items: center;
   border-bottom: 1px solid ${PALETTE.GRAY_300};
   justify-content: space-between;
@@ -19,6 +22,10 @@ export const Logo = styled(Container)`
 
 export const LogoImg = styled.img`
   width: 5rem;
+`;
+
+export const NaviLinkContainer = styled(Container)`
+  width: fit-content;
 `;
 
 export const StyledNavLink = styled(NavLink)`

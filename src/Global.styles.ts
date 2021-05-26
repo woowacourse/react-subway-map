@@ -18,12 +18,13 @@ const GlobalStyle = createGlobalStyle`
 
 
   html, body {
-    height: 100%;
+    height: calc(100% - 5.125rem);
     line-height: 1;
   }
 
+
   #root, .App {
-    height: 100%
+    height: 100%;
   }
 
   footer, header, menu, nav, section {

@@ -8,10 +8,12 @@ import SectionManagementPage from './pages/SectionManagement/SectionManagementPa
 import SignUpPage from './pages/SignUp/SignUpPage';
 import APISelectPage from './pages/APISelect/APISelectPage';
 import StationManagementPage from './pages/StationManagement/StationManagementPage';
+import NavigationBar from './components/NavigationBar/NavigationBar';
 
 function App() {
   return (
     <div className="App">
+      <NavigationBar />
       <Switch>
         <Route path="/" exact component={APISelectPage} />
         <Route path="/login" component={LoginPage} />
