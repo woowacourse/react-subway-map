@@ -5,7 +5,7 @@ export const LabelText = styled.div``;
 
 export const StyledLabel = styled.label`
   display: flex;
-  border: 2px solid ${PALETTE.GRAY[500]};
+  border: 1px solid ${PALETTE.GRAY[500]};
   border-radius: 3px;
   padding: 0.5rem 0.75rem;
   position: relative;

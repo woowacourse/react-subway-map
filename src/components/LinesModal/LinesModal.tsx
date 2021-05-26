@@ -11,14 +11,13 @@ import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesM
 
 interface Props {
   onClose: () => void;
-  lineName: string;
 }
 
-const LinesModal: FC<Props> = ({ onClose, lineName }) => {
+const LinesModal: FC<Props> = ({ onClose }) => {
   return (
     <Modal titleText="노선 추가" onClose={onClose}>
       <LineForm>
-        <Input labelText="노선 이름" placeholder="노선 이름" value={lineName} disabled={true} />
+        <Input labelText="노선 이름" placeholder="노선 이름" />
         <SectionSelectBox upStations={DUMMY_STATIONS} downStations={DUMMY_STATIONS} />
         <Input type="number" min={1} labelText="거리" />
         <LineColorContainer justifyContent="space-between" alignItems="center">
@@ -49,7 +48,6 @@ const LinesModal: FC<Props> = ({ onClose, lineName }) => {
 
 LinesModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  lineName: PropTypes.string.isRequired,
 };
 
 export default LinesModal;

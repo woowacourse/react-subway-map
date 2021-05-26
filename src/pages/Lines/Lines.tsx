@@ -1,12 +1,14 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, MouseEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Add from '../../components/@common/Icon/Add';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
+import LinesModal from '../../components/LinesModal/LinesModal';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
 import PALETTE from '../../constants/palette';
+import useModal from '../../hooks/useModal/useModal';
 import { loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
@@ -15,14 +17,19 @@ const Lines: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
+  const modal = useModal();
 
   useEffect(() => {
     dispatch(loadLines(API_INFO[apiOwner].endPoint));
   }, []);
 
+  const onOpenCreationModal: MouseEventHandler<HTMLButtonElement> = () => {
+    modal.openModal();
+  };
+
   return (
     <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={THEME_COLOR[400]}>
-      <ButtonOnLine>
+      <ButtonOnLine onClick={onOpenCreationModal}>
         <Add width="80%" color={PALETTE.GRAY[600]} />
       </ButtonOnLine>
       {lines && (
@@ -39,6 +46,7 @@ const Lines: FC = () => {
           ))}
         </LineList>
       )}
+      {modal.isModalOpen && <LinesModal onClose={modal.closeModal} />}
     </CardTemplate>
   );
 };

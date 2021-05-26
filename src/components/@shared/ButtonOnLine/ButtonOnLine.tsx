@@ -1,22 +1,26 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { ButtonHTMLAttributes, FC, MouseEventHandler } from 'react';
 import Button from '../../@common/Button/Button';
 import { ButtonOnLineContainer } from './ButtonOnLine.styles';
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonOnLine: FC<Props> = ({ children }) => {
+const ButtonOnLine: FC<Props> = ({ children, onClick }) => {
   return (
     <ButtonOnLineContainer>
-      <Button buttonType="round">{children}</Button>
+      <Button onClick={onClick} buttonType="round">
+        {children}
+      </Button>
     </ButtonOnLineContainer>
   );
 };
 
 ButtonOnLine.propTypes = {
   children: PropTypes.node,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ButtonOnLine;

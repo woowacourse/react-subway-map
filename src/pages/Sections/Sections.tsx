@@ -21,7 +21,11 @@ const Sections: FC = () => {
           ))}
         </LineSelectBox>
       </FlexContainer>
-      <ButtonOnLine>
+      <ButtonOnLine
+        onClick={() => {
+          console.log('button');
+        }}
+      >
         <Add width="80%" color={PALETTE.GRAY[600]} />
       </ButtonOnLine>
       <LineInfoContainer>

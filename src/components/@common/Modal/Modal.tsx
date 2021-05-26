@@ -20,9 +20,9 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
   };
 
   return ReactDOM.createPortal(
-    <ModalContainer onClick={onClickDimmed}>
+    <ModalContainer onMouseDown={onClickDimmed}>
       <ModalInner>
-        <CloseButton buttonType="round" isColored={false}>
+        <CloseButton buttonType="round" isColored={false} onClick={onClose}>
           <Close width="90%" />
         </CloseButton>
         {titleText && <ModalTitle>{titleText}</ModalTitle>}
