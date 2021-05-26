@@ -21,10 +21,11 @@ import useDebounce from '../../hooks/useDebounce';
 import { Icon, Heading1, Form } from './SignupPage.style';
 import apiRequest from '../../request';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { PageProps } from '../types';
 
 const DEBOUNCE_DELAY = 500;
 
-const SignupPage = () => {
+const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
@@ -99,6 +100,8 @@ const SignupPage = () => {
       return;
     }
 
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
     try {
       await apiRequest.signup({ email, password, age: Number(age) });
       addMessage?.(SUCCESS_MESSAGE.SIGNUP);
@@ -106,6 +109,9 @@ const SignupPage = () => {
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 

@@ -32,6 +32,8 @@ import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../reque
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import useInput from '../../hooks/useInput';
+import { PageProps } from '../types';
+import noLine from '../../assets/images/no_line.png';
 
 const lineColors = [
   'PINK',
@@ -46,10 +48,13 @@ const lineColors = [
   'PURPLE',
 ];
 
-const LinePage = () => {
+const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+
+const LinePage = ({ setIsLoading }: PageProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [stations, setStations] = useState<APIReturnTypeStation[]>([]);
-  const [lines, setLines] = useState<APIReturnTypeLine[]>([]);
+  const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);
+  const [lines, setLines] = useState<APIReturnTypeLine[]>(LINE_BEFORE_FETCH);
   const [lineName, onlineNameChange, setLineName] = useInput('');
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
@@ -105,31 +110,40 @@ const LinePage = () => {
   };
 
   const fetchLines = async () => {
-    try {
-      const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
+    const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
 
-      setLines(newLines);
-    } catch (error) {
-      console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    }
+    setLines(newLines);
   };
 
   const fetchStations = async () => {
-    try {
-      const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
+    const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
 
-      setStations(newStations);
+    setStations(newStations);
+  };
+
+  const fetchData = async () => {
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
+    try {
+      await Promise.all([fetchStations(), fetchLines()]);
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+      setLines([]);
+      setStations([]);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchStations();
-    fetchLines();
+    fetchData();
   }, []);
+
+  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
+    return <></>;
+  }
 
   const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     setUpStationId(event.target.value);
@@ -162,7 +176,7 @@ const LinePage = () => {
       const response = await apiRequest.addLine(newLine);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
-      await fetchLines();
+      await fetchData();
 
       reset();
       formElement.reset();
@@ -177,7 +191,7 @@ const LinePage = () => {
     if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
     try {
       await apiRequest.deleteLine(id);
-      await fetchLines();
+      await fetchData();
       addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
     } catch (error) {
       console.error(error);
@@ -255,25 +269,29 @@ const LinePage = () => {
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
-        <List>
-          {lines.map(({ id, name }) => (
-            <li key={id}>
-              <p>{name}</p>
-              <Button type="button" size="s" backgroundColor={PALETTE.GRAY_100}>
-                <MdEdit size="15px" />
-              </Button>
-              <Button
-                type="button"
-                size="s"
-                backgroundColor={PALETTE.PINK}
-                color={PALETTE.WHITE}
-                onClick={() => onLineDelete(id, name)}
-              >
-                <MdDelete size="15px" />
-              </Button>
-            </li>
-          ))}
-        </List>
+        {lines.length === 0 ? (
+          <img src={noLine} alt="노선이 없습니다." />
+        ) : (
+          <List>
+            {lines.map(({ id, name }) => (
+              <li key={id}>
+                <p>{name}</p>
+                <Button type="button" size="s" backgroundColor={PALETTE.GRAY_100}>
+                  <MdEdit size="15px" />
+                </Button>
+                <Button
+                  type="button"
+                  size="s"
+                  backgroundColor={PALETTE.PINK}
+                  color={PALETTE.WHITE}
+                  onClick={() => onLineDelete(id, name)}
+                >
+                  <MdDelete size="15px" />
+                </Button>
+              </li>
+            ))}
+          </List>
+        )}
       </Box>
     </Container>
   );

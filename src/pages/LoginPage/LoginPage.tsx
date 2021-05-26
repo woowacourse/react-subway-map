@@ -16,8 +16,9 @@ import apiRequest from '../../request';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import { UserContext } from '../../contexts/UserContextProvider';
 import STATUS_CODE from '../../constants/statusCode';
+import { PageProps } from '../types';
 
-const LoginPage = () => {
+const LoginPage = ({ setIsLoading }: PageProps) => {
   const [email, onEmailChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const [error, setError] = useState('');
@@ -40,6 +41,8 @@ const LoginPage = () => {
       return;
     }
 
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
     try {
       const accessToken = await apiRequest.login({ email, password });
 
@@ -57,6 +60,9 @@ const LoginPage = () => {
       }
 
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 

@@ -29,6 +29,7 @@ const Button = styled.button<ButtonProps>`
   ${({ size }) => buttonSize[size] ?? ''}
   color: ${({ color }) => color ?? 'black'};
   ${({ width }) => (width ? `width: ${width};` : '')}
+  ${({ height }) => (height ? `height: ${height};` : '')}
   transition: transform 0.2s ease;
 
   :hover:enabled {

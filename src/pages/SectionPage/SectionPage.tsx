@@ -25,16 +25,21 @@ import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import useInput from '../../hooks/useInput';
 import { StationSelectError } from '../SectionPage/SectionPage.style';
+import { PageProps } from '../types';
+import noSelectedLine from '../../assets/images/no_selected_line.png';
 
 interface StationInLine extends APIReturnTypeStation {
   distance?: number;
 }
 
-const SectionPage = () => {
+const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+
+const SectionPage = ({ setIsLoading }: PageProps) => {
   const [selectedLineId, setSelectedLineId] = useState<number>(-1);
 
-  const [lines, setLines] = useState<APIReturnTypeLine[]>([]);
-  const [stations, setStations] = useState<APIReturnTypeStation[]>([]);
+  const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);
+  const [lines, setLines] = useState<APIReturnTypeLine[]>(LINE_BEFORE_FETCH);
 
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [upStationId, setUpStationId] = useState('');
@@ -92,18 +97,9 @@ const SectionPage = () => {
     isDistanceValid &&
     isOnlyOneStationInCurrentLine;
 
-  const fetchLines = async () => {
-    try {
-      const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
-
-      setLines(newLines);
-    } catch (error) {
-      console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    }
-  };
-
   const fetchLine = async (lineId: number) => {
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
     try {
       const newLine = await apiRequest.getLine(lineId);
 
@@ -118,23 +114,41 @@ const SectionPage = () => {
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 
-  const fetchStations = async () => {
-    try {
-      const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
+  const fetchLines = async () => {
+    const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
 
-      setStations(newStations);
+    setLines(newLines);
+  };
+
+  const fetchStations = async () => {
+    const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
+
+    setStations(newStations);
+  };
+
+  const fetchData = async () => {
+    const timer = setTimeout(() => setIsLoading(true), 500);
+
+    try {
+      await Promise.all([fetchStations(), fetchLines()]);
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
+      setLines([]);
+      setStations([]);
+    } finally {
+      clearTimeout(timer);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchStations();
-    fetchLines();
+    fetchData();
   }, []);
 
   const reset = () => {
@@ -287,7 +301,9 @@ const SectionPage = () => {
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
-        {currentLine && (
+        {!currentLine ? (
+          <img src={noSelectedLine} alt="노선이 없습니다." />
+        ) : (
           <List>
             {stationsInLine.map(({ id, name, distance }) => {
               return (
