@@ -16,6 +16,8 @@ const CONFIRM_MESSAGE = {
 
 const NOTIFICATION = {
   STATION_NAME: '지하철역 이름은 한글, 숫자 조합만 가능합니다.',
+  DISMATCH_PASSWORD: '비밀번호가 일치하지 않습니다.',
+  MATCH_PASSWORD: '비밀번호가 일치합니다.',
 };
 
 export { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION };
