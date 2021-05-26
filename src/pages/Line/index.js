@@ -1,40 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { getLines, addLine, clearAddSuccess, removeLine } from '../../redux/lineSlice';
 
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl } from './style';
-import { STATION, COLOR } from '../../constants';
+import { COLOR } from '../../constants';
 
 export const LinePage = (props) => {
   const { endpoint } = props;
 
-  const [isLineAddOpen, setIsLineAddOpen] = useState(false);
-  const { stations } = useSelector((store) => store.station);
   const dispatch = useDispatch();
-  const lines = [
-  ];
-  // const { lines, isAddSuccess } = useSelector((store) => store.line);
-  const [inputStatus, setInputStatus] = useState({ message: '' });
+  const { stations } = useSelector((store) => store.station);
+  const { lines, isAddSuccess } = useSelector((store) => store.line);
+  const [isLineAddOpen, setIsLineAddOpen] = useState(false);
 
-  const handleOpenModal = (e) => {
+  const handleOpenModal = () => {
     setIsLineAddOpen(true);
   };
 
-  const handleCloseModal = (e) => setIsLineAddOpen(false);
+  const handleCloseModal = () => setIsLineAddOpen(false);
 
   const handleAddLine = (e) => {
     e.preventDefault();
 
-    const lineName = e.target.name.value;
+    const name = e.target.name.value;
+    const upStation = e.target.upStation.value;
+    const downStation = e.target.downStation.value;
+    const distance = e.target.distance.value;
+    const color = e.target.color.value;
 
+    dispatch(addLine({ endpoint, name, upStation, downStation, distance, color }));
   };
 
   const handleDeleteLine = (e, lineId) => {
+    dispatch(removeLine({ endpoint, id: lineId }));
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    dispatch(getLines({ endpoint }));
+  }, []);
+
+  useEffect(() => {
+    if (isAddSuccess) {
+      dispatch(clearAddSuccess());
+    }
+  }, [isAddSuccess]);
 
   return (
     <Section heading="노선 관리">
@@ -74,4 +87,3 @@ export const LinePage = (props) => {
 LinePage.propTypes = {
   endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
-
