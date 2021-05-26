@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router';
 import useLogin from '../../hooks/useLogin';
 import {
   NavigationBarContainer,
@@ -9,9 +10,11 @@ import {
 
 const NavigationBar = () => {
   const { isLogin, logout } = useLogin();
+  const history = useHistory();
+
   return (
     <NavigationBarContainer>
-      <Logo>
+      <Logo onClick={() => history.push('/')}>
         <LogoImg src={`${process.env.PUBLIC_URL}/images/logo.png`} alt="logo" />
       </Logo>
       <NaviLinkContainer>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Switch } from 'react-router';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import CurrentAPIName from './components/CurrentAPIName/CurrentAPIName';
@@ -9,18 +8,48 @@ import SignUpPage from './pages/SignUp/SignUpPage';
 import APISelectPage from './pages/APISelect/APISelectPage';
 import StationManagementPage from './pages/StationManagement/StationManagementPage';
 import NavigationBar from './components/NavigationBar/NavigationBar';
+import useLogin from './hooks/useLogin';
+import useAPI from './hooks/useAPI';
 
 function App() {
+  const { isLogin } = useLogin();
+  const { hasAPI } = useAPI();
+
   return (
     <div className="App">
       <NavigationBar />
       <Switch>
         <Route path="/" exact component={APISelectPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignUpPage} />
-        <PrivateRoute path="/line" component={LineManagementPage} />
-        <PrivateRoute path="/section" component={SectionManagementPage} />
-        <PrivateRoute path="/station" component={StationManagementPage} />
+        <PrivateRoute
+          path="/login"
+          redirectTo="/"
+          component={LoginPage}
+          isAuthenticated={hasAPI}
+        />
+        <PrivateRoute
+          path="/signup"
+          redirectTo="/"
+          component={SignUpPage}
+          isAuthenticated={hasAPI}
+        />
+        <PrivateRoute
+          path="/line"
+          redirectTo="/login"
+          component={LineManagementPage}
+          isAuthenticated={isLogin && hasAPI}
+        />
+        <PrivateRoute
+          path="/section"
+          redirectTo="/login"
+          component={SectionManagementPage}
+          isAuthenticated={isLogin && hasAPI}
+        />
+        <PrivateRoute
+          path="/station"
+          redirectTo="/login"
+          component={StationManagementPage}
+          isAuthenticated={isLogin && hasAPI}
+        />
         {/* <Route path="/search" component={SignUpPage} /> */}
       </Switch>
       <CurrentAPIName />

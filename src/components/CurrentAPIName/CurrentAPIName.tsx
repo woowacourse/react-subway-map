@@ -1,12 +1,14 @@
-import { useAppSelector } from '../../state/store';
 import { StyledCurrentAPIName } from './CurrentAPIName.styles';
+import useAPI from '../../hooks/useAPI';
+import { useHistory } from 'react-router';
 
 const CurrentAPIName = () => {
-  const { APIName } = useAppSelector(({ API: { APIName } }) => ({ APIName }));
+  const { hasAPI, APIName } = useAPI();
+  const history = useHistory();
 
   return (
-    <StyledCurrentAPIName>
-      {!!APIName && `${APIName}'s API`}
+    <StyledCurrentAPIName onClick={() => history.push('/')}>
+      {hasAPI ? `${APIName}'` : '_____'}s API
     </StyledCurrentAPIName>
   );
 };

@@ -1,11 +1,13 @@
 import { VFC } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router';
-import useLogin from '../../hooks/useLogin';
 
-const PrivateRoute: VFC<RouteProps> = ({ ...args }) => {
-  const { isLogin } = useLogin();
+interface Props extends RouteProps {
+  isAuthenticated: boolean;
+  redirectTo: string;
+}
 
-  return isLogin ? <Route {...args} /> : <Redirect to="/" />;
+const PrivateRoute: VFC<Props> = ({ isAuthenticated, redirectTo, ...args }) => {
+  return isAuthenticated ? <Route {...args} /> : <Redirect to={redirectTo} />;
 };
 
 export default PrivateRoute;
