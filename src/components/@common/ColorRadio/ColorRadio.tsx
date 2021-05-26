@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC } from 'react';
+import React, { FC, InputHTMLAttributes } from 'react';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
 interface LabelText {
@@ -7,32 +7,27 @@ interface LabelText {
   isVisible: boolean;
 }
 
-interface Props {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   groupName: string;
-  value: string;
   radioColor: string;
-  isChecked: boolean;
-  onChange: ChangeEventHandler<HTMLInputElement>;
   labelText?: LabelText;
 }
 
 const ColorRadio: FC<Props> = ({
   groupName,
-  value,
   radioColor,
-  isChecked = false,
   labelText,
-  onChange,
+  checked = false,
+  ...options
 }) => {
   return (
     <ColorRadioLabel>
       <ColorRadioInput
         type="radio"
         name={groupName}
-        value={value}
-        checked={isChecked}
-        onChange={onChange}
         radioColor={radioColor}
+        checked={checked}
+        {...options}
       />
       {labelText && <ColorRadioLabelText>{labelText.text}</ColorRadioLabelText>}
     </ColorRadioLabel>
@@ -41,14 +36,12 @@ const ColorRadio: FC<Props> = ({
 
 ColorRadio.propTypes = {
   groupName: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   radioColor: PropTypes.string.isRequired,
-  isChecked: PropTypes.bool.isRequired,
+  checked: PropTypes.bool.isRequired,
   labelText: PropTypes.shape({
     text: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
   }),
-  onChange: PropTypes.func.isRequired,
 };
 
 export default ColorRadio;

@@ -34,7 +34,7 @@ export const COMMON_NAV_LIST = [PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.S
 
 export const THEME_COLOR: Color = PALETTE.YELLOW;
 
-export const LINE_COLORS = [
+export const LINE_COLORS: string[] = [
   PALETTE.RED[400],
   PALETTE.ORANGE[400],
   PALETTE.YELLOW[400],
@@ -46,3 +46,25 @@ export const LINE_COLORS = [
   PALETTE.PINK[400],
   PALETTE.CYAN[400],
 ];
+
+export const STATION = {
+  NAME_MIN_LENGTH: 2,
+  NAME_MAX_LENGTH: 10,
+  NAME_LABEL_TEXT: '지하철 역 이름을 입력해주세요',
+};
+
+export const LINE = {
+  ADD_MODAL_TITLE: '노선 추가',
+  NAME_MIN_LENGTH: 2,
+  NAME_MAX_LENGTH: 10,
+  NAME_LABEL_TEXT: '노선 이름',
+  NAME_PLACEHOLDER: '노선 이름',
+  DISTANCE_LABEL_TEXT: '거리',
+  COLOR_LABEL_TEXT: '노선색상',
+  COLOR_SELECT_NAME: 'lineColor',
+};
+
+export const SECTION = {
+  MIN_DISTANCE: 1,
+  DISTANCE_LABEL_TEXT: '거리',
+};

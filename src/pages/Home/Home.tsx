@@ -28,7 +28,7 @@ const Home: FC = () => {
               value={apiInfoKey}
               radioColor={API_INFO[apiInfoKey].themeColor[300] as string}
               labelText={{ text: API_INFO[apiInfoKey].name, isVisible: true }}
-              isChecked={apiInfoKey === apiOwner}
+              checked={apiInfoKey === apiOwner}
               onChange={onChangeApi}
             />
           </li>

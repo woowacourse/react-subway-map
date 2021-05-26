@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import PALETTE from '../../../constants/palette';
 
 interface ColorRadioInputProps extends InputHTMLAttributes<HTMLInputElement> {
   radioColor: string;
@@ -25,6 +26,10 @@ export const ColorRadioInput = styled.input<ColorRadioInputProps>`
     cursor: pointer;
   }
 
+  &:checked::before {
+    transform: scale(1.1);
+  }
+
   &:checked::after {
     content: '✔';
     position: absolute;
@@ -32,6 +37,21 @@ export const ColorRadioInput = styled.input<ColorRadioInputProps>`
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     color: white;
+    cursor: pointer;
+  }
+
+  &:disabled::before {
+    cursor: not-allowed;
+  }
+
+  &:disabled::after {
+    content: '✘';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    color: white;
+    cursor: not-allowed;
   }
 `;
 

@@ -2,6 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Station } from '../types';
 import { requestAddStation, requestDeleteStation, requestGetStations } from './../api/stations';
 
+interface AddStationData {
+  baseURL: string;
+  stationName: string;
+}
+
+interface DeleteStationData {
+  baseURL: string;
+  stationId: number;
+}
+
 export const loadStations = createAsyncThunk(
   'station/load',
   async (baseURL: string, { rejectWithValue }) => {
@@ -15,11 +25,6 @@ export const loadStations = createAsyncThunk(
   }
 );
 
-interface AddStationData {
-  baseURL: string;
-  stationName: string;
-}
-
 export const addStation = createAsyncThunk(
   'station/add',
   async ({ baseURL, stationName }: AddStationData, { rejectWithValue }) => {
@@ -32,11 +37,6 @@ export const addStation = createAsyncThunk(
     }
   }
 );
-
-interface DeleteStationData {
-  baseURL: string;
-  stationId: number;
-}
 
 export const deleteStation = createAsyncThunk(
   'station/delete',

@@ -6,7 +6,7 @@ import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLi
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, THEME_COLOR } from '../../constants/appInfo';
+import { PAGE_INFO, STATION, THEME_COLOR } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -24,7 +24,9 @@ const Stations: FC = () => {
   const isValidStationInput = stationInput !== '' && errorMessage === '';
 
   useEffect(() => {
-    dispatch(loadStations(API_INFO[apiOwner].endPoint));
+    if (stations === null) {
+      dispatch(loadStations(API_INFO[apiOwner].endPoint));
+    }
   }, []);
 
   const onChangeStationInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,7 @@ const Stations: FC = () => {
       setErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
     }
 
-    if (stations.some(({ name }) => name === value)) {
+    if (stations?.some(({ name }) => name === value)) {
       setErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
     }
 
@@ -61,7 +63,9 @@ const Stations: FC = () => {
           value={stationInput}
           onChange={onChangeStationInput}
           labelIcon={<Subway />}
-          labelText="지하철 역 이름을 입력해주세요"
+          minLength={STATION.NAME_MIN_LENGTH}
+          maxLength={STATION.NAME_MAX_LENGTH}
+          labelText={STATION.NAME_LABEL_TEXT}
           message={{ text: errorMessage, isError: true }}
         />
         <Button disabled={!isValidStationInput}>추가</Button>

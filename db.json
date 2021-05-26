@@ -49,6 +49,54 @@
           "distance": 10
         }
       ]
+    },
+    {
+      "name": "미키노선",
+      "upStationId": 9,
+      "downStationId": 11,
+      "distance": 5,
+      "color": "#10B981",
+      "id": 2
+    },
+    {
+      "name": "2호선",
+      "upStationId": 10,
+      "downStationId": 11,
+      "distance": 100,
+      "color": "#38BDF8",
+      "id": 3
+    },
+    {
+      "name": "2호선",
+      "upStationId": 10,
+      "downStationId": 11,
+      "distance": 100,
+      "color": "#38BDF8",
+      "id": 4
+    },
+    {
+      "name": "됐따",
+      "upStationId": 9,
+      "downStationId": 11,
+      "distance": 2,
+      "color": "#FCD34D",
+      "id": 5
+    },
+    {
+      "name": "3호선",
+      "upStationId": 10,
+      "downStationId": 0,
+      "distance": 1000,
+      "color": "#10B981",
+      "id": 6
+    },
+    {
+      "name": "동기화가 안되네",
+      "upStationId": 10,
+      "downStationId": 11,
+      "distance": 1,
+      "color": "#818CF8",
+      "id": 7
     }
   ]
 }
