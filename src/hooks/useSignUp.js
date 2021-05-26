@@ -5,8 +5,16 @@ import { request } from '../utils';
 const useSignUp = () => {
   const history = useHistory();
 
-  const checkDuplicateEmail = async (email) => {
-    //TODO: 중복 처리
+  const checkDuplicateEmail = async ({ email }) => {
+    try {
+      await request.post('/members/email-check', { email });
+    } catch (error) {
+      if (error.response.status === 409) {
+        return error.response.data.message;
+      }
+
+      console.error(error);
+    }
   };
 
   const signUp = async ({ email, age, password }) => {
