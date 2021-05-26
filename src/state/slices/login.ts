@@ -32,7 +32,11 @@ export const loginAsyncAction = {
 const loginSlice = createSlice({
   name,
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.accessToken = '';
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginAsyncAction.login.fulfilled, (state, { payload }) => {
       state.accessToken = payload;

@@ -1,3 +1,4 @@
+import useLogin from '../../hooks/useLogin';
 import {
   NavigationBarContainer,
   Logo,
@@ -7,17 +8,24 @@ import {
 } from './NavigationBar.styles';
 
 const NavigationBar = () => {
+  const { isLogin, logout } = useLogin();
   return (
     <NavigationBarContainer>
       <Logo>
         <LogoImg src={`${process.env.PUBLIC_URL}/images/logo.png`} alt="logo" />
       </Logo>
       <NaviLinkContainer>
-        <StyledNavLink to="/">역 관리</StyledNavLink>
-        <StyledNavLink to="/">노선 관리</StyledNavLink>
-        <StyledNavLink to="/">구간 관리</StyledNavLink>
-        <StyledNavLink to="/">경로 검색</StyledNavLink>
-        <StyledNavLink to="/">로그인</StyledNavLink>
+        <StyledNavLink to="/station">역 관리</StyledNavLink>
+        <StyledNavLink to="/line">노선 관리</StyledNavLink>
+        <StyledNavLink to="/section">구간 관리</StyledNavLink>
+        {/* <StyledNavLink to="/search">경로 검색</StyledNavLink> */}
+        {isLogin ? (
+          <StyledNavLink to="/login" onClick={logout}>
+            로그아웃
+          </StyledNavLink>
+        ) : (
+          <StyledNavLink to="/login">로그인</StyledNavLink>
+        )}
       </NaviLinkContainer>
     </NavigationBarContainer>
   );

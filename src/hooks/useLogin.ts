@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { LoginForm } from '../types';
 import { useAppDispatch, useAppSelector } from '../state/store';
-import { loginAsyncAction } from '../state/slices/login';
+import { loginAction, loginAsyncAction } from '../state/slices/login';
 import { useHistory } from 'react-router';
 
 const useLogin = () => {
@@ -40,6 +40,21 @@ const useLogin = () => {
     }
   };
 
-  return { accessToken, email, password, setEmail, setPassword, login };
+  const logout = () => {
+    dispatch(loginAction.logout());
+  };
+
+  const isLogin = !!accessToken;
+
+  return {
+    accessToken,
+    email,
+    password,
+    setEmail,
+    setPassword,
+    login,
+    logout,
+    isLogin,
+  };
 };
 export default useLogin;

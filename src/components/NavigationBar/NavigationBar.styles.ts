@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import PALETTE from '../../constants/palette';
+import { Z_INDEX } from './../../constants/styles';
 import Container from '../@common/Container/Container.styles';
 
 export const NavigationBarContainer = styled(Container)`
@@ -8,7 +9,7 @@ export const NavigationBarContainer = styled(Container)`
   padding: 0 1rem;
   background-color: white;
   position: relative;
-  z-index: 999;
+  z-index: ${Z_INDEX.FOREGROUND};
   align-items: center;
   border-bottom: 1px solid ${PALETTE.GRAY_300};
   justify-content: space-between;
