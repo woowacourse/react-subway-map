@@ -113,6 +113,10 @@ export const INPUT_TEXT = {
 };
 
 export const TEST = {
+  MOCK_STATION: {
+    ID: 'test',
+    NAME: '테스트역',
+  },
   ID: {
     SIGN_UP_BUTTON: 'signup-button',
     SIGN_IN_BUTTON: 'signin-button',
