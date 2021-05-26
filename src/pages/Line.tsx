@@ -8,7 +8,7 @@ import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { addLineAsync, AddLinePayload, deleteLineAsync, getLineAsync } from 'redux/lineSlice';
+import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
 import { getStationAsync } from 'redux/stationSlice';
 import { RootState } from 'redux/store';
 import { LineInterface, StationInterface } from 'types';
@@ -38,7 +38,7 @@ const Line = () => {
     try {
       await dispatch(deleteLineAsync({ id }));
 
-      alert('역 삭제에 성공하였습니다.');
+      alert('선택하신 노선을 삭제했습니다.');
     } catch (error) {
       alert(error.message);
     }
@@ -56,7 +56,7 @@ const Line = () => {
   };
 
   useEffect(() => {
-    dispatch(getLineAsync());
+    dispatch(getLinesAsync());
     dispatch(getStationAsync());
   }, [dispatch]);
 

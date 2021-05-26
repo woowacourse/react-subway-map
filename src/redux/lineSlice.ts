@@ -1,4 +1,4 @@
-import { LineInterface } from 'types';
+import { LineInterface, SelectedLineInterface } from 'types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API from 'API/API';
 
@@ -9,12 +9,25 @@ export interface AddLinePayload {
   downStationId: number;
   distance: number;
 }
+interface GetLinePayload {
+  id: number;
+}
 
 interface DeleteLinePayload {
   id: number;
 }
 
-export const getLineAsync = createAsyncThunk('line/getLineAsync', async () => {
+export const getSelectedLineAsync = createAsyncThunk('line/getSelectedLineAsync', async ({ id }: GetLinePayload) => {
+  try {
+    const response = await API.get(`/lines/${id}`);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+export const getLinesAsync = createAsyncThunk('line/getLinesAsync', async () => {
   try {
     const response = await API.get('/lines');
 
@@ -47,7 +60,11 @@ export const deleteLineAsync = createAsyncThunk('line/deleteLineAsync', async ({
   }
 });
 
-const initialState: { lines: LineInterface[] | null } = {
+const initialState: {
+  selectedLine: SelectedLineInterface | null;
+  lines: LineInterface[] | null;
+} = {
+  selectedLine: null,
   lines: null,
 };
 
@@ -56,10 +73,16 @@ const lineSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getLineAsync.fulfilled, (state, action) => {
+    builder.addCase(getSelectedLineAsync.fulfilled, (state, action) => {
+      state.selectedLine = action.payload;
+    });
+    builder.addCase(getSelectedLineAsync.rejected, () => {
+      throw Error('노선 조회에 실패하였습니다.');
+    });
+    builder.addCase(getLinesAsync.fulfilled, (state, action) => {
       state.lines = action.payload;
     });
-    builder.addCase(getLineAsync.rejected, () => {
+    builder.addCase(getLinesAsync.rejected, () => {
       throw Error('노선 목록 조회에 실패하였습니다.');
     });
     builder.addCase(addLineAsync.fulfilled, (state, action) => {
