@@ -15,23 +15,29 @@ const initialState: StationState = {
   error: null,
 };
 
-export const getStations = createAsyncThunk("[STATION] LOAD", async () => {
+const getStations = createAsyncThunk("[STATION] LOAD", async () => {
   const stations = await requestStation.getAllStation();
 
   return stations;
 });
 
-export const addStation = createAsyncThunk("[STATION] ADD", async (name: string) => {
+const addStation = createAsyncThunk("[STATION] ADD", async (name: string) => {
   const station = await requestStation.addStation(name);
 
   return station;
 });
 
-export const deleteStation = createAsyncThunk("[STATION] DELETE", async (id: number) => {
+const deleteStation = createAsyncThunk("[STATION] DELETE", async (id: number) => {
   await requestStation.deleteStation(id);
 
   return id;
 });
+
+export const action = {
+  getStations,
+  addStation,
+  deleteStation,
+};
 
 export const stationSlice = createSlice({
   name: "station",

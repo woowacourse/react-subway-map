@@ -5,9 +5,8 @@ import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { PAGE_PATH } from "../../constants/route";
-import { useAppDispatch } from "../../hooks";
 import useInput from "../../hooks/@common/useInput";
-import { signup } from "../../modules/auth";
+import useAuth from "../../hooks/useAuth";
 import { validateAge } from "../../validations/age";
 import { validateEmail } from "../../validations/email";
 import { validatePassword, validatePasswordConfirm } from "../../validations/password";
@@ -36,13 +35,14 @@ const SignupPage = () => {
     }
   });
 
-  const dispatch = useAppDispatch();
+  const { signup } = useAuth();
+
   const history = useHistory();
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    await dispatch(signup({ email, age: Number(age), password }));
+    await signup({ email, age: Number(age), password });
     history.push(PAGE_PATH.HOME);
   };
 

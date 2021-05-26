@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+import { LineRequestItem } from "../../../@types/types";
 import { Flex } from "../../../components/@shared/FlexContainer/FlexContainer";
 
 import Block from "../../../components/Block/Block";
@@ -12,14 +13,20 @@ import { stations } from "../../../mocks/mocks";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
+  onAddLine: (lineRequestItem: LineRequestItem) => void;
 }
 
-const LineAddModal = ({ onClose }: Props) => {
+const LineAddModal = ({ onClose, onAddLine }: Props) => {
   const stationOptions = stations.map(({ id, name }) => ({ value: id, text: name }));
+
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    // onAddLine()
+  };
 
   return (
     <Modal onClose={onClose}>
-      <form>
+      <form onSubmit={onSubmit}>
         <Block style={{ flexDirection: "column", maxWidth: "40.625rem" }}>
           <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>🛤️ 노선 추가</h3>
           <Input placeholder="노선 이름" style={{ marginBottom: "0.9375rem" }} required />

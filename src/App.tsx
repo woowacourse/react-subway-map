@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Switch, Route, Link, Redirect, RouteProps } from "react-router-dom";
 
 import LoginPage from "./pages/Login/LoginPage";
@@ -10,24 +11,22 @@ import Header from "./components/Header/Header";
 import Button from "./components/Button/Button";
 import { Navigation } from "./App.styles";
 import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./constants/route";
-import { useAppDispatch, useAppSelector } from "./hooks";
-import React, { useEffect } from "react";
-import { checkAccessToken, logout } from "./modules/auth";
-import { getStations } from "./modules/station";
-
-// TODO : 실제로 만료되었을 때 제대로 처리 되는지 테스트
+import useAuth from "./hooks/useAuth";
+import useStation from "./hooks/useStation";
+import useLine from "./hooks/useLine";
 
 const App = () => {
-  const isLogin = useAppSelector((state) => state.auth.isLogin);
-
-  const dispatch = useAppDispatch();
+  const { isAuthenticated, checkAccessToken, logout } = useAuth();
+  const { getStations } = useStation();
+  const { getLines } = useLine();
 
   useEffect(() => {
-    dispatch(checkAccessToken());
-    dispatch(getStations());
+    checkAccessToken();
+    getStations();
+    getLines();
   }, []);
 
-  const navigationLinks = isLogin ? publicNavigationLinks : privateNavigationLinks;
+  const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
   const navigationLinkList = navigationLinks.map((navigationLink) => (
     <Link to={navigationLink.link}>
@@ -37,18 +36,14 @@ const App = () => {
     </Link>
   ));
 
-  const onLogout = () => {
-    dispatch(logout());
-  };
-
   // 역 => 로그인 => 역 => 로그인
 
   const PublicRoute = ({ children, ...props }: RouteProps) => (
-    <Route {...props}>{isLogin ? <Redirect to={PAGE_PATH.HOME} /> : children};</Route>
+    <Route {...props}>{isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};</Route>
   );
 
   const PrivateRoute = ({ children, ...props }: RouteProps) => (
-    <Route {...props}>{isLogin ? children : <Redirect to={PAGE_PATH.LOGIN} />};</Route>
+    <Route {...props}>{isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />};</Route>
   );
 
   return (
@@ -58,9 +53,9 @@ const App = () => {
       </Header>
       <Navigation>
         {navigationLinkList}
-        {isLogin && (
+        {isAuthenticated && (
           <Link to={PAGE_PATH.LOGIN}>
-            <Button type="button" onClick={onLogout} buttonTheme="white" kind="rect">
+            <Button type="button" onClick={logout} buttonTheme="white" kind="rect">
               ❌ 로그아웃
             </Button>
           </Link>

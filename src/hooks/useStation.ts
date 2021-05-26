@@ -1,15 +1,23 @@
 import { useAppDispatch, useAppSelector } from ".";
-import { addStation } from "../modules/station";
+import { action } from "../modules/station";
 
 const useStation = () => {
   const stations = useAppSelector(({ station: { items } }) => items);
   const dispatch = useAppDispatch();
 
-  const createStation = (stationName: string) => {
-    dispatch(addStation(stationName));
+  const getStations = async () => {
+    await dispatch(action.getStations());
   };
 
-  return { stations, createStation };
+  const addStation = async (stationName: string) => {
+    await dispatch(action.addStation(stationName));
+  };
+
+  const deleteStation = async (id: number) => {
+    await dispatch(action.deleteStation(id));
+  };
+
+  return { stations, getStations, addStation, deleteStation };
 };
 
 export default useStation;

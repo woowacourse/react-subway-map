@@ -3,16 +3,14 @@ import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
 import { Flex, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import ListItem from "../../components/ListItem/ListItem";
-import useStation from "../../hooks/station";
+import useStation from "../../hooks/useStation";
 import useInput from "../../hooks/@common/useInput";
 import { validateStationName } from "../../validations/station";
-import { deleteStation } from "../../modules/station";
-import { useAppDispatch } from "../../hooks";
 
 // TODO : 에러 메세지 있을 때 예외처리 추가 필요
 
 const StationManagementPage = () => {
-  const { stations, createStation } = useStation();
+  const { stations, addStation, deleteStation } = useStation();
   const {
     inputValue: stationName,
     errorMessage: errorMessage,
@@ -21,12 +19,10 @@ const StationManagementPage = () => {
     setInputValue: setStationName,
   } = useInput(validateStationName);
 
-  const dispatch = useAppDispatch();
-
-  const onAddStation: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const onAddStation: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    createStation(stationName);
+    await addStation(stationName);
 
     setStationName("");
   };
@@ -55,8 +51,8 @@ const StationManagementPage = () => {
             <ListItem
               key={id}
               style={{ padding: "0.5625rem" }}
-              onDelete={() => {
-                dispatch(deleteStation(id));
+              onDelete={async () => {
+                await deleteStation(id);
               }}
             >
               {name}

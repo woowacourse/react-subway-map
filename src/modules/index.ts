@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "./auth";
 import stationReducer from "./station";
+import lineReducer from "./line";
 
 const reducer = {
   auth: authReducer,
   station: stationReducer,
+  line: lineReducer,
 };
 
 const store = configureStore({

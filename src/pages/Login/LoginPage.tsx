@@ -5,11 +5,11 @@ import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import useInput from "../../hooks/@common/useInput";
-import { login } from "../../modules/auth";
 import { PAGE_PATH } from "../../constants/route";
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
 import { useAppDispatch } from "../../hooks";
+import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
   const { inputValue: email, errorMessage: emailErrorMessage, onChange: onEmailChange, onBlur: onEmailBlur } = useInput(
@@ -22,13 +22,13 @@ const LoginPage = () => {
     onBlur: onPasswordBlur,
   } = useInput(validatePassword);
 
-  const dispatch = useAppDispatch();
+  const { login } = useAuth();
   const history = useHistory();
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    await dispatch(login({ email, password }));
+    await login({ email, password });
     history.push(PAGE_PATH.HOME);
   };
 

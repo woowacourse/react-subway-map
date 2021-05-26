@@ -4,12 +4,13 @@ import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
 import { Flex, FlexCenter, FlexBetween } from "../../components/@shared/FlexContainer/FlexContainer";
 import ListItem from "../../components/ListItem/ListItem";
-import { lines } from "../../mocks/mocks";
 import { CIRCLE_COLOR } from "../../constants/color";
 import LineAddModal from "./Modal/LineAddModal";
+import useLine from "../../hooks/useLine";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
+  const { lines, addLine, deleteLine } = useLine();
 
   return (
     <FlexCenter>
@@ -30,9 +31,11 @@ const LineManagementPage = () => {
             <ListItem
               key={id}
               circleColor={CIRCLE_COLOR[color]}
-              onUpdate={() => {}}
-              onDelete={() => {}}
               style={{ padding: "9px" }}
+              onUpdate={() => {}}
+              onDelete={async () => {
+                await deleteLine(id);
+              }}
             >
               {name}
             </ListItem>
@@ -44,6 +47,7 @@ const LineManagementPage = () => {
           onClose={() => {
             setIsAddModalOpened(false);
           }}
+          onAddLine={addLine}
         />
       )}
     </FlexCenter>
