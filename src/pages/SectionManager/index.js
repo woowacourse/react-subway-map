@@ -6,7 +6,7 @@ import {
   Button,
 } from '../../components';
 import { COLOR, ROUTE, SIZE } from '../../constants';
-import { useLineManager, useModal } from '../../hooks';
+import { useLineManager, useModal, useStationManager } from '../../hooks';
 import SectionAddModal from './SectionAddModal';
 import { ListHeader, Title } from './style';
 
@@ -39,8 +39,9 @@ const SectionList = ({ line, openModal }) => (
 
 const SectionManager = () => {
   const [selectedLine, setSelectedLine] = useState(initailLineState);
+  const { stations } = useStationManager();
   const { lines } = useLineManager();
-  const { isModalOpen, openModal, handleClickToClose } = useModal();
+  const { isModalOpen, openModal, closeModal, handleClickToClose } = useModal();
 
   const handleChangeSelecter = (event) => {
     const targetId = Number(event.target.value);
@@ -67,7 +68,9 @@ const SectionManager = () => {
       </PageTemplate>
       {isModalOpen && (
         <SectionAddModal
+          stations={stations}
           line={selectedLine}
+          closeModal={closeModal}
           onClickToClose={handleClickToClose}
         />
       )}

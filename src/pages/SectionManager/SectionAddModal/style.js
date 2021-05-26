@@ -33,3 +33,11 @@ export const SelectorWrapper = styled.div`
 export const ButtonWrapper = styled.div`
   margin-top: 24px;
 `;
+
+export const Validator = styled.span`
+  display: inline-block;
+  width: 100%;
+  padding-left: 8px;
+  font-size: var(--size-small);
+  color: ${COLOR.RED};
+`;
