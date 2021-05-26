@@ -1,4 +1,9 @@
-import { addStationThunk, deleteStationThunk } from '.';
+import {
+  addStationThunk,
+  deleteStationThunk,
+  addLineThunk,
+  deleteLineThunk,
+} from '.';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { MOCK_SERVER, TEST } from '../../constants';

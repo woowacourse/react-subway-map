@@ -10,7 +10,7 @@ import {
   ERROR,
   TEST,
 } from '../../constants';
-import useStationManager from '../../hooks/useStationManager';
+import useStationManager from '../../hooks';
 import { Form, InputWrapper, ButtonWrapper, Validator } from './style';
 
 const initialValues = {

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, PageTemplate } from '../../components';
+import { Button, ManagementList, PageTemplate } from '../../components';
 import { COLOR, ROUTE } from '../../constants';
-import { useModal } from '../../hooks';
+import { useLineManager, useModal } from '../../hooks';
 import LineAddModal from './LineAddModal';
 import { ButtonWrapper } from './style';
 
 const LineManager = () => {
+  const { lines, addLine, deleteLine } = useLineManager();
   const { isModalOpen, openModal, handleClickToClose } = useModal();
 
   return (
@@ -20,9 +21,11 @@ const LineManager = () => {
             노선 추가
           </Button>
         </ButtonWrapper>
-        {/* {lines && <ManagementList items={lines}/>} */}
+        {lines && <ManagementList items={lines} onDeleteItem={deleteLine} />}
       </PageTemplate>
-      {isModalOpen && <LineAddModal onClickToClose={handleClickToClose} />}
+      {isModalOpen && (
+        <LineAddModal onClickToClose={handleClickToClose} addLine={addLine} />
+      )}
     </>
   );
 };
