@@ -29,7 +29,7 @@ export const API_INFO: { [key: string]: APIInfo } = {
   },
   MOCK: {
     name: 'JSON',
-    endPoint: 'http://localhost:3000',
+    endPoint: 'http://localhost:3004',
     themeColor: PALETTE.RED,
   },
 };
