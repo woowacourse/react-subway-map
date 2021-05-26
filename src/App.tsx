@@ -16,6 +16,8 @@ import { ThemeContext } from './contexts/ThemeContextProvider';
 import { UserContext } from './contexts/UserContextProvider';
 import { SnackBarContext } from './contexts/SnackBarProvider';
 import { SUCCESS_MESSAGE } from './constants/messages';
+import { API_HOST } from './request';
+import ApiSwitch from './components/ApiSwitch/ApiSwitch';
 
 const App = () => {
   const addMessage = useContext(SnackBarContext)?.addMessage;
@@ -57,6 +59,7 @@ const App = () => {
           <Route path={PATH.SECTIONS} component={SectionPage} />
         </Switch>
       </Main>
+      <ApiSwitch />
     </Router>
   );
 };

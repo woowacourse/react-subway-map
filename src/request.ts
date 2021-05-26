@@ -1,4 +1,12 @@
-const BASE_URL = {
+const ApiHostList = ['SOLONG', 'NABOM', 'OZ', 'KROPPLE'];
+
+type ApiHost = typeof ApiHostList[number];
+
+const apiHostName = localStorage.getItem('hostName') as ApiHost;
+
+const API_HOST: ApiHost = apiHostName ?? 'SOLONG';
+
+const BASE_URL: { [key: string]: string } = {
   NABOM: 'https://subwaybot.kro.kr/api',
   OZ: 'https://subwaybot.o-r.kr/api',
   SOLONG: 'https://subwaybot.n-e.kr/api',
@@ -52,8 +60,6 @@ interface APIReturnTypeLine {
   color: string;
   sections: APIReturnTypeSection[];
 }
-
-const API_HOST = 'SOLONG';
 
 const request = async (url: string, requestConfig: RequestInit) => {
   const response = await fetch(url, requestConfig);
@@ -240,3 +246,4 @@ const apiRequest = {
 
 export default apiRequest;
 export type { SignData, LoginData, APIReturnTypeStation, APIReturnTypeLine };
+export { API_HOST, ApiHostList };
