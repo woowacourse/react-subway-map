@@ -52,7 +52,8 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
 
       history.push(PATH.ROOT);
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      // console.error(error);
 
       if (error.message === STATUS_CODE.UNAUTHORIZED) {
         setError(ERROR_MESSAGE.LOGIN);
@@ -80,6 +81,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
             value={email}
             onChange={onEmailChange}
             autoComplete="on"
+            aria-label="email"
           />
         </InputContainer>
         <InputContainer>
@@ -91,6 +93,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
             placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={onPasswordChange}
+            aria-label="password"
           />
         </InputContainer>
         <ErrorText>{error}</ErrorText>
