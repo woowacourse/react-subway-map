@@ -3,11 +3,13 @@ import Styled from './Input.styles';
 
 interface InputProps {
   type: string;
-  value?: string | number;
   labelText: string;
+  value?: string | number;
   placeholder?: string;
   extraArgs?: {
-    min: string;
+    min?: string;
+    minLength?: number;
+    maxLength?: number;
   };
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -21,6 +23,7 @@ const Input = ({ type, value, labelText, placeholder, onChange, extraArgs }: Inp
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        required
         {...extraArgs}
       />
     </Styled.Label>

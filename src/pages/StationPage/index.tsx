@@ -3,12 +3,14 @@ import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
+import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Station } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import saveIcon from 'assets/enter.png';
 import { END_POINT, API_STATUS } from 'constants/api';
-import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import regex from 'constants/regex';
+import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 
@@ -20,11 +22,24 @@ const StationPage = () => {
   const [newStationName, setNewStationName] = useState('');
   const [editingStationId, setEditingStationId] = useState<number>(0);
   const [editingStationName, setEditingStationName] = useState<string>('');
+  const [isMessageValid, setMessageValid] = useState<boolean>(false);
+  const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const isValidStationName = regex.stationName.test(newStationName);
 
   const addStation = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!isValidStationName) {
+      setMessageValid(false);
+      setMessageVisible(true);
+
+      return;
+    }
+
+    setMessageVisible(false);
     const res = await addStationAsync('POST', END_POINT.STATIONS, { name: newStationName });
 
     if (res.status === API_STATUS.REJECTED) {
@@ -52,7 +67,7 @@ const StationPage = () => {
   const deleteStation = async (id: Station['id']) => {
     const res = await deleteStationAsync('DELETE', `${END_POINT.STATIONS}/${id}`);
 
-    if (!window.confirm(CONFIRM_MESSAGE.DELETE_STATION)) return;
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_STATION);
@@ -88,6 +103,15 @@ const StationPage = () => {
               labelText="지하철 역 이름을 입력해주세요."
               value={newStationName}
               onChange={(event) => setNewStationName(event.target.value)}
+              extraArgs={{
+                minLength: 2,
+                maxLength: 20,
+              }}
+            />
+            <Notification
+              isValid={isMessageValid}
+              isVisible={isMessageVisible}
+              message={NOTIFICATION.STATION_NAME}
             />
           </Styled.InputWrapper>
           <TextButton text="추가" styleType={ButtonType.FILLED} />

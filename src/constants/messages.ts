@@ -14,4 +14,8 @@ const CONFIRM_MESSAGE = {
   DELETE: '정말 삭제하시겠습니까?',
 };
 
-export { ALERT_MESSAGE, CONFIRM_MESSAGE };
+const NOTIFICATION = {
+  STATION_NAME: '지하철역 이름은 한글, 숫자 조합만 가능합니다.',
+};
+
+export { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION };
