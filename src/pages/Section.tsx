@@ -9,8 +9,11 @@ import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
+import { addSectionAsync, AddSectionPayload } from 'redux/sectionSlice';
+import { getStationAsync } from 'redux/stationSlice';
 import { RootState } from 'redux/store';
-import { LineInterface, SelectedLineInterface } from 'types';
+import { LineInterface, SelectedLineInterface, StationInterface } from 'types';
+import AddSectionModal from './AddSectionModal';
 
 const Section = () => {
   useRedirect(PATH.LOGIN);
@@ -18,10 +21,20 @@ const Section = () => {
   const dispatch = useDispatch();
 
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
   const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
   const selectedLine: SelectedLineInterface | null = useAppSelector((state) => state.line.selectedLine);
 
   const [selectedLineId, setSelectedLineId] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
   const handleLineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     // TODO as HTMLElement 를 사용하지 않고 event.target의 value를 얻는 방법
@@ -34,7 +47,19 @@ const Section = () => {
     // console.log('dedlete');
   };
 
+  const handleSubmit = async ({ id, upStationId, downStationId, distance }: AddSectionPayload) => {
+    try {
+      await dispatch(addSectionAsync({ id, upStationId, downStationId, distance }));
+
+      alert('구간 추가에 성공하였습니다.');
+      setModalOpen(false);
+    } catch (error) {
+      throw Error(error);
+    }
+  };
+
   useEffect(() => {
+    dispatch(getStationAsync());
     dispatch(getLinesAsync());
   }, [dispatch]);
 
@@ -49,7 +74,7 @@ const Section = () => {
       <Container>
         <div className="flex items-center justify-between mb-8">
           <Title text="🔁 지하철 구간 관리" />
-          <ImageButton imgUrl={addImg} />
+          <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
         </div>
 
         <SelectInput onChange={handleLineChange} title="조회하실 노선을 선택해주세요." className="w-full">
@@ -76,7 +101,9 @@ const Section = () => {
           </Container>
         )}
       </Container>
-      {/* <AddSectionModal /> */}
+      {modalOpen && (
+        <AddSectionModal stations={stations} lines={lines} onModalClose={handleModalClose} onSubmit={handleSubmit} />
+      )}
     </>
   );
 };

@@ -53,8 +53,6 @@ const Login = () => {
     if (accessToken) {
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     }
-
-    console.log(axios.defaults.headers.common);
   }, [accessToken]);
 
   return (
