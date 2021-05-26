@@ -5,6 +5,7 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { API_INFO } from '../../constants/api';
 import { changeOwner } from '../../redux/apiOwnerSlice';
+import { logout } from '../../redux/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 
@@ -24,6 +25,7 @@ const Home: FC = () => {
     if (apiOwner === selectedAPI) return;
 
     clearRootReducer();
+    dispatch(logout());
     dispatch(changeOwner(selectedAPI));
   };
 
