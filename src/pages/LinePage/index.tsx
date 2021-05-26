@@ -21,24 +21,12 @@ const LinePage = () => {
   const [selectedLine, setSelectedLine] = useState<Line>();
   const [modalTitle, setModalTitle] = useState<string>('');
 
-  // TODO: lines 상태 관리
-  const closeModal = async () => {
-    setModalOpen(false);
-    setSelectedLine(undefined);
-    await getLinesAsync('GET', END_POINT.LINES);
-  };
+  const getLines = async () => {
+    const res = await getLinesAsync('GET', END_POINT.LINES);
 
-  const openLineCreateModal = async () => {
-    setModalOpen(true);
-    setModalTitle('노선 생성');
-
-    await getStations();
-  };
-
-  const openLineEditModal = async (line: Line) => {
-    setSelectedLine(line);
-    setModalOpen(true);
-    setModalTitle('노선 수정');
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+    }
   };
 
   const getStations = async () => {
@@ -56,18 +44,33 @@ const LinePage = () => {
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_LINE);
-    } else {
-      await getLinesAsync('GET', END_POINT.LINES);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      await getLines();
     }
+  };
+
+  const openLineCreateModal = async () => {
+    setModalOpen(true);
+    setModalTitle('노선 생성');
+
+    await getStations();
+  };
+
+  const openLineEditModal = async (line: Line) => {
+    setSelectedLine(line);
+    setModalOpen(true);
+    setModalTitle('노선 수정');
+  };
+
+  // TODO: lines 상태 관리
+  const closeModal = async () => {
+    setModalOpen(false);
+    setSelectedLine(undefined);
   };
 
   useEffect(() => {
     const fetchLines = async () => {
-      const res = await getLinesAsync('GET', END_POINT.LINES);
-      console.log(lines);
-      if (res.status === API_STATUS.REJECTED) {
-        alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
-      }
+      await getLines();
     };
 
     fetchLines();
@@ -102,7 +105,12 @@ const LinePage = () => {
       </CardLayout>
 
       <Modal isOpen={isModalOpen} title={modalTitle} onClose={closeModal}>
-        <LineModal selectedLine={selectedLine} stations={stations} closeModal={closeModal} />
+        <LineModal
+          selectedLine={selectedLine}
+          stations={stations}
+          closeModal={closeModal}
+          getLines={getLines}
+        />
       </Modal>
     </>
   );

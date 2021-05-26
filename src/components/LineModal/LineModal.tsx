@@ -13,10 +13,10 @@ interface LineModalProps {
   stations: Station[] | undefined;
   selectedLine?: Line;
   closeModal: () => void;
+  getLines: () => Promise<void>;
 }
 
-const LineModal = ({ stations = [], selectedLine, closeModal }: LineModalProps) => {
-  const { fetchData: getLinesAsync } = useFetch<Line[]>();
+const LineModal = ({ stations = [], selectedLine, closeModal, getLines }: LineModalProps) => {
   const { fetchData: addLineAsync } = useFetch<Line>();
   const { fetchData: editLineAsync } = useFetch<Line>();
 
@@ -46,9 +46,9 @@ const LineModal = ({ stations = [], selectedLine, closeModal }: LineModalProps) 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_ADD_LINE);
     } else if (res.status === API_STATUS.FULFILLED) {
-      getLinesAsync('GET', END_POINT.LINES);
       // TODO: form reset
       closeModal();
+      await getLines();
     }
   };
 
@@ -62,9 +62,9 @@ const LineModal = ({ stations = [], selectedLine, closeModal }: LineModalProps) 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_EDIT_LINE);
     } else if (res.status === API_STATUS.FULFILLED) {
-      getLinesAsync('GET', END_POINT.LINES);
       // TODO: form reset
       closeModal();
+      await getLines();
     }
   };
 

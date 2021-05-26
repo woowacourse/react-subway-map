@@ -17,33 +17,10 @@ const SectionPage = () => {
   const { response: line, fetchData: getLineAsync } = useFetch<Line>();
   const { fetchData: deleteStationAsync } = useFetch<null>();
 
-  const [targetLine, setTargetLine] = useState<Line>();
+  const [targetLine, setTargetLine] = useState<Line | undefined>(line);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
-
-  // TODO: lines 상태 관리
-  const closeModal = async () => {
-    setModalOpen(false);
-    if (targetLine) {
-      const res = await getLineAsync('GET', `${END_POINT.LINES}/${targetLine.id}`);
-
-      if (res.status === API_STATUS.REJECTED) {
-        alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
-      }
-    }
-  };
-
-  const selectTargetLine = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const targetLine = lines.find((line) => line.id === Number(event.target.value));
-
-    setTargetLine(targetLine);
-  };
-
-  const openSectionModal = async () => {
-    setModalOpen(true);
-    await getStations();
-  };
 
   const getStations = async () => {
     const res = await getStationsAsync('GET', END_POINT.STATIONS);
@@ -61,6 +38,14 @@ const SectionPage = () => {
     }
   };
 
+  const getLine = async (lineId?: Line['id']) => {
+    const res = await getLineAsync('GET', `${END_POINT.LINES}/${lineId || targetLine?.id}`);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    }
+  };
+
   const deleteStation = async (stationId: Station['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
 
@@ -72,10 +57,28 @@ const SectionPage = () => {
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_SECTION);
     } else if (res.status === API_STATUS.FULFILLED) {
-      await getLineAsync('GET', `${END_POINT.LINES}/${targetLine?.id}`);
+      // await getLineAsync('GET', `${END_POINT.LINES}/${targetLine?.id}`);
+      await getLine();
 
       // TODO: 요청 실패 시 에러 핸들링
     }
+  };
+
+  const selectTargetLine = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const targetLineId = Number(event.target.value);
+
+    await getLine(targetLineId);
+    setTargetLine(line);
+  };
+
+  const openSectionModal = async () => {
+    setModalOpen(true);
+    await getStations();
+  };
+
+  // TODO: lines 상태 관리
+  const closeModal = async () => {
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -130,6 +133,7 @@ const SectionPage = () => {
           lines={lines}
           stations={stations}
           closeModal={closeModal}
+          getLine={getLine}
         />
       </Modal>
     </>

@@ -12,8 +12,9 @@ interface SectionModalProps {
   targetLine?: Line;
   lines: Line[];
   stations: Station[] | undefined;
-  closeModal: () => void;
   selectTargetLine: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  closeModal: () => void;
+  getLine: () => Promise<void>;
 }
 
 const SectionModal = ({
@@ -22,6 +23,7 @@ const SectionModal = ({
   stations = [],
   closeModal,
   selectTargetLine,
+  getLine,
 }: SectionModalProps) => {
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
@@ -52,6 +54,7 @@ const SectionModal = ({
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       closeModal();
+      await getLine();
     }
   };
 
