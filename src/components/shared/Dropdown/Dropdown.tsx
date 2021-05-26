@@ -17,8 +17,8 @@ const Dropdown = ({ labelText, defaultOption, options, onSelect }: DropdownProps
   return (
     <Styled.Label>
       {labelText}
-      <Styled.Select defaultValue={defaultOption} onChange={onSelect}>
-        <option value={defaultOption} disabled>
+      <Styled.Select onChange={onSelect} required>
+        <option value="" selected disabled hidden>
           {defaultOption}
         </option>
         {options.map((option) => (

@@ -1,3 +1,3 @@
-const stationName = /^[가-힣0-9]+$/;
+const koreanAndNumber = /^[가-힣0-9]+$/;
 
-export default { stationName };
+export default { koreanAndNumber };

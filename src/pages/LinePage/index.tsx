@@ -13,7 +13,7 @@ import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
 import Styled from './styles';
 
 const LinePage = () => {
-  const { response: lines, fetchData: getLinesAsync } = useFetch<Line[]>();
+  const { response: lines = [], fetchData: getLinesAsync } = useFetch<Line[]>();
   const { fetchData: deleteLinesAsync } = useFetch<Line[]>();
   const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
 
@@ -68,6 +68,8 @@ const LinePage = () => {
     setSelectedLine(undefined);
   };
 
+  const selectedColors = lines.map((line) => line.color);
+
   useEffect(() => {
     const fetchLines = async () => {
       await getLines();
@@ -110,6 +112,7 @@ const LinePage = () => {
           stations={stations}
           closeModal={closeModal}
           getLines={getLines}
+          selectedColors={selectedColors}
         />
       </Modal>
     </>

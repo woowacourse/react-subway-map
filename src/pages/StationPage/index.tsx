@@ -27,7 +27,7 @@ const StationPage = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const isValidStationName = regex.stationName.test(newStationName);
+  const isValidStationName = regex.koreanAndNumber.test(newStationName);
 
   const addStation = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -103,10 +103,7 @@ const StationPage = () => {
               labelText="지하철 역 이름을 입력해주세요."
               value={newStationName}
               onChange={(event) => setNewStationName(event.target.value)}
-              extraArgs={{
-                minLength: 2,
-                maxLength: 20,
-              }}
+              extraArgs={{ minLength: 2, maxLength: 20 }}
             />
             <Notification
               isValid={isMessageValid}
