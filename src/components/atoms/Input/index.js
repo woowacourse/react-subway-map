@@ -10,7 +10,7 @@ export const Input = forwardRef((props, ref) => {
     <Container>
       <Label>
         {icon && <Icon>{icon}</Icon>}
-        <InputField ref={ref} {...rest} />
+        <InputField ref={ref} icon={icon} {...rest} />
       </Label>
       {hasMessage && <Message data-testid="message">{message}</Message>}
     </Container>

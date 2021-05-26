@@ -2,6 +2,7 @@ export { Button } from './atoms/Button';
 export { ButtonRadio } from './atoms/ButtonRadio';
 export { ButtonRound } from './atoms/ButtonRound';
 export { ButtonSquare } from './atoms/ButtonSquare';
+export { ColorPicker } from './atoms/ColorPicker';
 export { IconArrowLTR } from './atoms/IconArrowLTR';
 export { IconCheck } from './atoms/IconCheck';
 export { IconDropDown } from './atoms/IconDropDown';
@@ -23,7 +24,8 @@ export { Section } from './atoms/Section';
 export { Select } from './atoms/Select';
 
 export { NavBar } from './organisms/NavBar';
-export { Page } from './organisms/Page';
 export { ServerSelect } from './organisms/ServerSelect';
 export { ServerSelectItem } from './organisms/ServerSelectItem';
 export { StationListItem } from './organisms/StationListItem';
+
+export { Page } from './templates/Page';

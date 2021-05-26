@@ -3,8 +3,13 @@ import { Button } from '../../';
 import { COLOR } from '../../../constants';
 
 export const StyledButtonRound = styled(Button)`
-  width: 2rem;
-  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 3rem;
+  height: 3rem;
+
   font-weight: 700;
   color: ${COLOR.TEXT_DEFAULT};
   border-radius: 50%;

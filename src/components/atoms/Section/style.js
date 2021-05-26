@@ -28,7 +28,7 @@ export const Container = styled.div`
 `;
 
 export const Heading = styled.h2`
-  margin: 1rem 0;
+  margin: 1rem 0 0;
 `;
 
 export const Content = styled.div`
@@ -36,4 +36,6 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  width: 90%;
 `;

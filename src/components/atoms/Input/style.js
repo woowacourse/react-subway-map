@@ -13,7 +13,8 @@ export const Label = styled.label`
 `;
 
 export const InputField = styled.input`
-  padding: 0 1.5rem 0 3.5rem;
+  padding: 0 1.5rem;
+  padding-left: ${(props) => (props.icon ? '3.5rem' : '1.5rem')};
   width: 20rem;
   height: 2.5rem;
 

@@ -5,7 +5,7 @@ export const Selector = styled.select`
   position: relative;
   height: auto;
   padding: 0.5rem 1.5rem;
-  margin: 1rem 0.25rem;
+  margin: 0.25rem;
   min-width: 5rem;
 
   line-height: inherit;
