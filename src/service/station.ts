@@ -1,7 +1,9 @@
 import APIClient from '../API/API';
-import { StationForm } from '../types';
+import { Station, StationForm } from '../types';
 
-export const requestStations = async (accessToken: string) => {
+export const requestStations = async (
+  accessToken: string
+): Promise<Station[]> => {
   const response = await APIClient.get('/stations', accessToken);
 
   if (!response.ok) {
