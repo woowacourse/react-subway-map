@@ -1,14 +1,16 @@
-import { API_INFO } from '../constants/api';
 import { createSlice } from '@reduxjs/toolkit';
+import { API_INFO } from '../constants/api';
+import { SESSION_STORAGE_KEY } from '../constants/storage';
+import { getSessionStorageItem, setSessionStorageItem } from './../storage/sessionStorage';
 
-//TODO: owner를 localStorage에 저장해두고 불러와서 초기값 설정
 export const apiOwnerSlice = createSlice({
   name: 'api',
   initialState: {
-    owner: Object.keys(API_INFO)[4],
+    owner: getSessionStorageItem(SESSION_STORAGE_KEY.API_OWNER) ?? Object.keys(API_INFO)[0],
   },
   reducers: {
     changeOwner: (state, action) => {
+      setSessionStorageItem(SESSION_STORAGE_KEY.API_OWNER, action.payload);
       state.owner = action.payload;
     },
   },
