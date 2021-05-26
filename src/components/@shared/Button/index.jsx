@@ -15,10 +15,11 @@ const THEME_STYLE = {
   round: "bg-gray-50 hover:bg-gray-100 rounded-3xl",
 };
 
-const Button = ({ type, children, disabled, size, theme, onClick }) => (
+const Button = ({ type, children, disabled, size, theme, onClick, name }) => (
   <button
     type={type === "submit" ? "submit" : "button"}
     disabled={disabled}
+    name={name}
     className={cx(
       "p-3 disabled:text-gray-400 text-gray-700 text-base font-medium disabled:bg-gray-200 rounded focus:outline-none",
       SIZE_STYLE[size],
@@ -37,6 +38,7 @@ Button.propTypes = {
   size: PropTypes.oneOf(Object.keys(SIZE_STYLE)),
   theme: PropTypes.oneOf(Object.keys(THEME_STYLE)),
   onClick: PropTypes.func,
+  name: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -44,6 +46,7 @@ Button.defaultProps = {
   size: "full",
   theme: "primary",
   onClick: null,
+  name: null,
 };
 
 export default Button;

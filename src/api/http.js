@@ -1,9 +1,10 @@
-import { BASE_URL } from "./constants";
+import { getBaseURL } from "../pages/Entry/baseURL";
 
 const post = async (endpoint, options) => {
   const { method, headers, body, ...rest } = options;
+  const baseURL = getBaseURL();
 
-  return fetch(`${BASE_URL}${endpoint}`, {
+  return fetch(`${baseURL}${endpoint}`, {
     method: "POST",
     headers: {
       ...headers,

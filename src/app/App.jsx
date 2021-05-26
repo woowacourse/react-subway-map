@@ -10,13 +10,14 @@ import Sections from "../pages/Sections";
 import Signup from "../pages/Signup";
 import Stations from "../pages/Stations";
 import Logout from "../pages/Logout";
+import Entry from "../pages/Entry";
 
 const App = () => (
   <BrowserRouter>
     <Header />
     <Switch>
-      <Route exact path={PATH.MAIN}>
-        <Login />
+      <Route exact path={[PATH.MAIN, PATH.ENTRY]}>
+        <Entry />
       </Route>
       <PublicRoute exact path={PATH.LOGIN} redirectTo={PATH.STATIONS}>
         <Login />
@@ -37,7 +38,7 @@ const App = () => (
         <Sections />
       </PrivateRoute>
 
-      <Redirect path="*" to={PATH.MAIN} />
+      <Redirect path="*" to={PATH.ENTRY} />
     </Switch>
   </BrowserRouter>
 );
