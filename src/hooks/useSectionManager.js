@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addSectionThunk } from '../redux';
+import { addSectionThunk, deleteSectionThunk } from '../redux';
 
 const useSectionManager = () => {
   const [selectedLineId, setSelectedLineId] = useState('');
@@ -12,7 +12,10 @@ const useSectionManager = () => {
     dispatch(addSectionThunk({ id, params }));
   };
 
-  return { selectedLineId, setSelectedLineId, addSection };
+  const deleteSection = ({ lineId, stationId }) =>
+    dispatch(deleteSectionThunk({ lineId, stationId }));
+
+  return { selectedLineId, setSelectedLineId, addSection, deleteSection };
 };
 
 export default useSectionManager;

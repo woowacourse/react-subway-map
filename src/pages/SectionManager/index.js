@@ -22,7 +22,7 @@ const initialLineState = {
   stations: [],
 };
 
-const SectionList = ({ line, openModal }) => (
+const SectionList = ({ line, openModal, deleteSection }) => (
   <>
     <ListHeader>
       <Title color={line.color}>{line.name}</Title>
@@ -37,7 +37,10 @@ const SectionList = ({ line, openModal }) => (
     </ListHeader>
     <ManagementList
       items={line.stations}
-      onDeleteItem={() => {}}
+      // TODO: 데이터 방향 고민해보기
+      onDeleteItem={({ id }) =>
+        deleteSection({ lineId: line.id, stationId: id })
+      }
     ></ManagementList>
   </>
 );
@@ -45,7 +48,8 @@ const SectionList = ({ line, openModal }) => (
 const SectionManager = () => {
   const { stations } = useStationManager();
   const { lines } = useLineManager();
-  const { selectedLineId, setSelectedLineId, addSection } = useSectionManager();
+  const { selectedLineId, setSelectedLineId, addSection, deleteSection } =
+    useSectionManager();
   const { isModalOpen, openModal, closeModal, handleClickToClose } = useModal();
 
   const handleChangeSelector = (event) => {
@@ -70,7 +74,11 @@ const SectionManager = () => {
           onChange={handleChangeSelector}
         ></Selector>
         {selectedLine.stations.length > 0 && (
-          <SectionList line={selectedLine} openModal={openModal} />
+          <SectionList
+            line={selectedLine}
+            openModal={openModal}
+            deleteSection={deleteSection}
+          />
         )}
       </PageTemplate>
       {isModalOpen && (
