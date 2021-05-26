@@ -5,10 +5,10 @@ import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Line, Station } from 'types';
 import LINE_COLORS from 'constants/lineColors';
-import { API_STATUS, END_POINT } from 'constants/api';
+import { API_STATUS } from 'constants/api';
 import regex from 'constants/regex';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
-import useFetch from 'hooks/useFetch';
+import { requestAddLine, requestEditLine } from 'request/line';
 import Styled from './LineModal.styles';
 
 interface LineModalProps {
@@ -26,9 +26,6 @@ const LineModal = ({
   closeModal,
   getLines,
 }: LineModalProps) => {
-  const { fetchData: addLineAsync } = useFetch<Line>();
-  const { fetchData: editLineAsync } = useFetch<Line>();
-
   const [color, setColor] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [upStationId, setUpStationId] = useState<number>();
@@ -71,7 +68,7 @@ const LineModal = ({
       extraFare,
     };
 
-    const res = await addLineAsync('POST', END_POINT.LINES, newLine);
+    const res = await requestAddLine(newLine);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_ADD_LINE);
@@ -85,9 +82,10 @@ const LineModal = ({
   const editLine = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const updatedLine = { name, color };
+    if (!selectedLine) return;
 
-    const res = await editLineAsync('PUT', `${END_POINT.LINES}/${selectedLine?.id}`, updatedLine);
+    const updatedLine = { name, color };
+    const res = await requestEditLine(selectedLine.id, updatedLine);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_EDIT_LINE);

@@ -4,43 +4,47 @@ import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import LineModal from 'components/LineModal/LineModal';
-import useFetch from 'hooks/useFetch';
 import { ButtonType, Line, Station } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
-import { API_STATUS, END_POINT } from 'constants/api';
+import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import { requestDeleteLine, requestGetLines } from 'request/line';
+import { requestGetStations } from 'request/station';
 import Styled from './styles';
 
 const LinePage = () => {
-  const { response: lines = [], fetchData: getLinesAsync } = useFetch<Line[]>();
-  const { fetchData: deleteLinesAsync } = useFetch<Line[]>();
-  const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
+  const [lines, setLines] = useState<Line[]>([]);
+  const [stations, setStations] = useState<Station[]>([]);
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedLine, setSelectedLine] = useState<Line>();
   const [modalTitle, setModalTitle] = useState<string>('');
 
   const getLines = async () => {
-    const res = await getLinesAsync('GET', END_POINT.LINES);
+    const res = await requestGetLines();
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setLines(res.data);
     }
   };
 
   const getStations = async () => {
-    const res = await getStationsAsync('GET', END_POINT.STATIONS);
+    const res = await requestGetStations();
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setStations(res.data);
     }
   };
 
   const deleteLine = async (id: Line['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
 
-    const res = await deleteLinesAsync('DELETE', `${END_POINT.LINES}/${id}`);
+    const res = await requestDeleteLine(id);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_LINE);
@@ -62,7 +66,6 @@ const LinePage = () => {
     setModalTitle('노선 수정');
   };
 
-  // TODO: lines 상태 관리
   const closeModal = async () => {
     setModalOpen(false);
     setSelectedLine(undefined);

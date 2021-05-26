@@ -4,9 +4,9 @@ import Input from 'components/shared/Input/Input';
 import Styled from './SectionModal.styles';
 import { ButtonType, Line, Station } from 'types';
 import TextButton from 'components/shared/TextButton/TextButton';
-import { API_STATUS, END_POINT } from 'constants/api';
-import useFetch from 'hooks/useFetch';
+import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE } from 'constants/messages';
+import { requestAddSection } from 'request/line';
 
 interface SectionModalProps {
   targetLine?: Line;
@@ -14,7 +14,7 @@ interface SectionModalProps {
   stations: Station[] | undefined;
   selectTargetLine: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   closeModal: () => void;
-  getLine: () => Promise<void>;
+  getLine: (targetLineId: Line['id']) => Promise<void>;
 }
 
 const SectionModal = ({
@@ -28,8 +28,6 @@ const SectionModal = ({
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
-  const { fetchData: addSectionAsync } = useFetch<null>();
-
   const [upStationId, setUpStationId] = useState<number>();
   const [downStationId, setDownStationId] = useState<number>();
   const [distance, setDistance] = useState<number>();
@@ -37,24 +35,22 @@ const SectionModal = ({
   const addSection = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!targetLine) return;
+
     const newSection = {
       upStationId,
       downStationId,
       distance,
     };
 
-    const res = await addSectionAsync(
-      'POST',
-      `${END_POINT.LINES}/${targetLine?.id}/sections`,
-      newSection,
-    );
+    const res = await requestAddSection(targetLine?.id, newSection);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_ADD_SECTION);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       closeModal();
-      await getLine();
+      await getLine(targetLine.id);
     }
   };
 

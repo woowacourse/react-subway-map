@@ -5,62 +5,48 @@ import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import SectionModal from 'components/SectionModal/SectionModal';
 import deleteIcon from 'assets/delete.png';
-import useFetch from 'hooks/useFetch';
-import { API_STATUS, END_POINT } from 'constants/api';
+import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import { requestGetStations } from 'request/station';
+import { requestDeleteSection, requestGetLine, requestGetLines } from 'request/line';
 import { Line, Station } from 'types';
 import Styled from './styles';
 
 const SectionPage = () => {
-  const { response: lines = [], fetchData: getLinesAsync } = useFetch<Line[]>();
-  const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
-  const { response: line, fetchData: getLineAsync } = useFetch<Line>();
-  const { fetchData: deleteStationAsync } = useFetch<null>();
-
-  const [targetLine, setTargetLine] = useState<Line | undefined>(line);
+  const [lines, setLines] = useState<Line[]>([]);
+  const [targetLine, setTargetLine] = useState<Line | undefined>();
+  const [stations, setStations] = useState<Station[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
 
   const getStations = async () => {
-    const res = await getStationsAsync('GET', END_POINT.STATIONS);
+    const res = await requestGetStations();
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setStations(res.data);
     }
   };
 
   const getLines = async () => {
-    const res = await getLinesAsync('GET', END_POINT.LINES);
+    const res = await requestGetLines();
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setLines(res.data);
     }
   };
 
-  const getLine = async (lineId?: Line['id']) => {
-    const res = await getLineAsync('GET', `${END_POINT.LINES}/${lineId || targetLine?.id}`);
+  const getLine = async (targetLineId: Line['id']) => {
+    const res = await requestGetLine(targetLineId);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
-    }
-  };
-
-  const deleteStation = async (stationId: Station['id']) => {
-    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
-
-    const res = await deleteStationAsync(
-      'DELETE',
-      `${END_POINT.LINES}/${targetLine?.id}/sections?stationId=${stationId}`,
-    );
-
-    if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_DELETE_SECTION);
     } else if (res.status === API_STATUS.FULFILLED) {
-      // await getLineAsync('GET', `${END_POINT.LINES}/${targetLine?.id}`);
-      await getLine();
-
-      // TODO: 요청 실패 시 에러 핸들링
+      setTargetLine(res.data);
     }
   };
 
@@ -68,7 +54,19 @@ const SectionPage = () => {
     const targetLineId = Number(event.target.value);
 
     await getLine(targetLineId);
-    setTargetLine(line);
+  };
+
+  const deleteStation = async (stationId: Station['id']) => {
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+    if (!targetLine) return;
+
+    const res = await requestDeleteSection(targetLine?.id, stationId);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_DELETE_SECTION);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      await getLine(targetLine.id);
+    }
   };
 
   const openSectionModal = async () => {
@@ -76,7 +74,6 @@ const SectionPage = () => {
     await getStations();
   };
 
-  // TODO: lines 상태 관리
   const closeModal = async () => {
     setModalOpen(false);
   };
@@ -88,11 +85,6 @@ const SectionPage = () => {
 
     fetchLines();
   }, []);
-
-  useEffect(() => {
-    // TODO: 변경된 line response의 유효성 검사
-    setTargetLine(line);
-  }, [line]);
 
   return (
     <>

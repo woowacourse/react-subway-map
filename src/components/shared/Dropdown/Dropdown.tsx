@@ -22,7 +22,7 @@ const Dropdown = ({ labelText, defaultOption, options, onSelect }: DropdownProps
           {defaultOption}
         </option>
         {options.map((option) => (
-          <option key={option.id} value={option.id}>
+          <option key={option.id} value={option.id} selected={option.value === defaultOption}>
             {option.value}
           </option>
         ))}
