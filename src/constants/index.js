@@ -51,12 +51,14 @@ export const RANGE = {
   },
 };
 
+export const MOCK_SERVER = 'https://mock.api';
+
 export const DEFAULT_SERVER = '중간곰';
 
 export const SERVERS = {
   제리: 'https://jerry-subway.o-r.kr',
   조이: 'https://jerry-subway.o-r.kr',
-  중간곰: 'https://woowa-subway.kro.kr/',
+  중간곰: 'https://woowa-subway.kro.kr',
   와이비: 'https://jerry-subway.o-r.kr',
   영이: 'https://jerry-subway.o-r.kr',
 };

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ERROR } from '../constants';
-import { request } from '../utils';
+import { ERROR } from '../../constants';
+import { request } from '../../utils';
 
 export const getUserTokenThunk = createAsyncThunk(
   'user/getUserTokenThunk',
@@ -32,10 +32,10 @@ const userSlice = createSlice({
     error: null,
   },
   reducers: {
-    setToken: (state, { payload: { token } }) => {
+    setUserToken: (state, { payload: { token } }) => {
       state.token = token;
     },
-    clearToken: (state) => {
+    clearUserToken: (state) => {
       state.token = null;
     },
   },
@@ -54,4 +54,4 @@ const userReducer = userSlice.reducer;
 
 export default userReducer;
 
-export const { setToken, clearToken } = userSlice.actions;
+export const { setUserToken, clearUserToken } = userSlice.actions;

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ERROR } from '../constants';
-import { request } from '../utils';
+import { ERROR } from '../../constants';
+import { request } from '../../utils';
 
 export const getStationsThunk = createAsyncThunk(
   'subway/getStationsThunk',

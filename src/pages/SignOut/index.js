@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { LS_KEY, ROUTE } from '../../constants';
-import { clearToken } from '../../redux';
+import { clearUserToken } from '../../redux';
 import { removeLocalStorage } from '../../utils';
 
 const SignOut = () => {
@@ -9,7 +9,7 @@ const SignOut = () => {
   const history = useHistory();
 
   removeLocalStorage(LS_KEY.TOKEN);
-  dispatch(clearToken());
+  dispatch(clearUserToken());
   history.push(ROUTE.HOME.PATH);
 
   return null;
