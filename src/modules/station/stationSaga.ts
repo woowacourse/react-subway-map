@@ -34,7 +34,7 @@ interface DeleteStationResult {
   error: string;
 }
 
-function* getStationsSaga() {
+export function* getStationsSaga() {
   yield put(pending());
   const result: GetStationResult = yield call(stationAPI.getStations);
 
@@ -45,7 +45,7 @@ function* getStationsSaga() {
   yield put(setStations({ stations: result.stations }));
 }
 
-function* addStationSaga(action: AddStationAction) {
+export function* addStationSaga(action: AddStationAction) {
   yield put(pending());
   const result: AddStationResult = yield call(stationAPI.addStation, action.payload.name);
 
@@ -59,7 +59,7 @@ function* addStationSaga(action: AddStationAction) {
   yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
 }
 
-function* deleteStationSaga(action: DeleteStationAction) {
+export function* deleteStationSaga(action: DeleteStationAction) {
   yield put(pending());
   const result: DeleteStationResult = yield call(stationAPI.deleteStation, action.payload.id);
 
