@@ -43,7 +43,7 @@ const Line = () => {
 
   const [mode, setMode] = useState<ModeType>('ADD');
   const [color, setColor] = useState<LineColor>(LineColor.COLOR_1);
-  
+
   const [lineId, setLineId] = useState<number>();
 
   // TODO: 이름을 lineNameInput이라고 변경하면 어떨까?
@@ -184,7 +184,7 @@ const Line = () => {
   return (
     <Container>
       <Header hasExtra>
-        <h3>🚇 노선 관리</h3>
+        <h3>🚉 노선 관리</h3>
         <Button onClick={openAddModal}>노선 추가</Button>
       </Header>
 

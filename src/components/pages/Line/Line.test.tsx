@@ -88,10 +88,10 @@ describe('Line', () => {
       </BrowserRouter>,
     );
 
-    const addButton = line.getByRole('button', {
+    const openModalButton = line.getByRole('button', {
       name: /노선 추가/i,
     });
-    fireEvent.click(addButton);
+    fireEvent.click(openModalButton);
 
     const addModal = line.container.querySelector('#modal > div > div');
 

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import { useDispatch } from 'react-redux';
+import { persistStore } from 'redux-persist';
+
 import rootReducer from './features';
 
 export const store = configureStore({
@@ -10,6 +11,8 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+export const persistedStore = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 

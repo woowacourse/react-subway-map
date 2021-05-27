@@ -68,7 +68,7 @@ const App = () => {
         buttonTheme="menu"
         onClick={() => history.push({ pathname: ROUTE.LOGIN })}
       >
-        로그인
+        🔑 로그인
       </Button>
     </>
   );
