@@ -34,6 +34,7 @@
     "test": "craco test",
     "lint": "eslint --fix .",
     "format": "prettier --write .",
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d build",
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
@@ -108,6 +109,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.2.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.0",
