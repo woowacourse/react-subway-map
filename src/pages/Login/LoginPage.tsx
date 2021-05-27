@@ -8,8 +8,8 @@ import useInput from "../../hooks/@common/useInput";
 import { PAGE_PATH } from "../../constants/route";
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
-import { useAppDispatch } from "../../hooks";
 import useAuth from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const {
@@ -30,6 +30,11 @@ const LoginPage = () => {
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+
+    if (emailErrorMessage || passwordErrorMessage) {
+      alert("로그인 할 수 없습니다");
+      return;
+    }
 
     await login({ email, password });
     history.push(PAGE_PATH.HOME);

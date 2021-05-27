@@ -53,4 +53,5 @@ export interface SignupInfo {
 
 export interface AuthState {
   isAuthenticated: boolean;
+  error: null | Error;
 }

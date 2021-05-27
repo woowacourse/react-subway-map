@@ -37,6 +37,11 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
   const onAddSection: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
+    if (distanceErrorMessage) {
+      alert("구간을 추가할 수 없습니다");
+      return;
+    }
+
     await addSection({
       lineId: line.id,
       upStationId: Number(upStationId),

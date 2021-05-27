@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
@@ -13,7 +15,7 @@ const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();
   const {
     inputValue: stationName,
-    errorMessage: errorMessage,
+    errorMessage: stationNameErrorMessage,
     setValueOnChange: onStationNameChange,
     validateOnBlur: onStationNameBlur,
     setInputValue: setStationName,
@@ -21,6 +23,11 @@ const StationManagementPage = () => {
 
   const onAddStation: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+
+    if (stationNameErrorMessage) {
+      alert("역을 추가할 수 없습니다");
+      return;
+    }
 
     await addStation(stationName);
 
@@ -36,7 +43,7 @@ const StationManagementPage = () => {
             <Flex style={{ width: "100%", flexDirection: "column", marginRight: "0.625rem" }}>
               <Input
                 value={stationName}
-                errorMessage={errorMessage}
+                errorMessage={stationNameErrorMessage}
                 placeholder="역 이름"
                 onChange={onStationNameChange}
                 onBlur={onStationNameBlur}

@@ -11,6 +11,8 @@ import { validateAge } from "../../validations/age";
 import { validateEmail } from "../../validations/email";
 import { validatePassword, validatePasswordConfirm } from "../../validations/password";
 
+// TODO : 포커스 자체가 걸려 있지 않을 때 넘어가지 못하도록 수정
+
 const SignupPage = () => {
   const {
     inputValue: email,
@@ -41,12 +43,17 @@ const SignupPage = () => {
     }
   });
 
-  const { signup } = useAuth();
+  const { signup, error } = useAuth();
 
   const history = useHistory();
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+
+    if (emailErrorMessage || ageErrorMessage || passwordErrorMessage || passwordConfirmErrorMessage) {
+      alert("회원가입할 수 없습니다");
+      return;
+    }
 
     await signup({ email, age: Number(age), password });
     history.push(PAGE_PATH.HOME);

@@ -3,8 +3,13 @@ import { LineAddRequestItem, SectionAddRequestItem } from "../@types/types";
 import { action } from "../modules/line";
 
 const useLine = () => {
-  const lines = useAppSelector(({ line: { items } }) => items);
+  const { items: lines, error } = useAppSelector(({ line: { items, error } }) => ({ items, error }));
   const dispatch = useAppDispatch();
+
+  const wrap = () => async (func: Function) => {
+    await func();
+    await dispatch(action.getLines());
+  };
 
   const getLines = async () => {
     await dispatch(action.getLines());
@@ -30,7 +35,15 @@ const useLine = () => {
     await dispatch(action.getLines());
   };
 
-  return { lines, getLines, addLine, deleteLine, addSection, deleteSection };
+  return {
+    lines,
+    getLines,
+    addLine: addLine,
+    deleteLine: deleteLine,
+    addSection: addSection,
+    deleteSection: deleteSection,
+    error,
+  };
 };
 
 export default useLine;

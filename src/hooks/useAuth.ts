@@ -3,7 +3,10 @@ import { LoginInfo, SignupInfo } from "../@types/types";
 import { action } from "../modules/auth";
 
 const useAuth = () => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, error } = useAppSelector(({ auth: { isAuthenticated, error } }) => ({
+    isAuthenticated,
+    error,
+  }));
 
   const dispatch = useAppDispatch();
 
@@ -23,7 +26,7 @@ const useAuth = () => {
     dispatch(action.logout());
   };
 
-  return { isAuthenticated, checkAccessToken, login, logout, signup };
+  return { isAuthenticated, checkAccessToken, login, logout, signup, error };
 };
 
 export default useAuth;

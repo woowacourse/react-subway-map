@@ -16,15 +16,27 @@ import useStation from "./hooks/useStation";
 import useLine from "./hooks/useLine";
 
 const App = () => {
-  const { isAuthenticated, checkAccessToken, logout } = useAuth();
-  const { getStations } = useStation();
-  const { getLines } = useLine();
+  const { isAuthenticated, checkAccessToken, logout, error: authError } = useAuth();
+  const { getStations, error: stationError } = useStation();
+  const { getLines, error: lineError } = useLine();
 
   useEffect(() => {
     checkAccessToken();
     getStations();
     getLines();
   }, []);
+
+  useEffect(() => {
+    if (authError) alert(authError.message);
+  }, [authError]);
+
+  useEffect(() => {
+    if (stationError) alert(stationError.message);
+  }, [stationError]);
+
+  useEffect(() => {
+    if (lineError) alert(lineError.message);
+  }, [lineError]);
 
   const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
@@ -35,8 +47,6 @@ const App = () => {
       </Button>
     </Link>
   ));
-
-  // 역 => 로그인 => 역 => 로그인
 
   const PublicRoute = ({ children, ...props }: RouteProps) => (
     <Route {...props}>{isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};</Route>

@@ -44,6 +44,11 @@ const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
+    if (lineNameErrorMessage || disatanceErrorMessage) {
+      alert("노선을 추가할 수 없습니다");
+      return;
+    }
+
     onAddLine({
       color,
       distance: Number(distance),

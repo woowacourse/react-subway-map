@@ -5,6 +5,7 @@ import { requestAuth } from "../apis/user";
 
 const initialState: AuthState = {
   isAuthenticated: false,
+  error: null,
 };
 
 const LOGOUT = "[AUTH] LOGOUT";
@@ -17,23 +18,35 @@ const logout = () => async (dispatch: Dispatch) => {
   });
 };
 
-const checkAccessToken = createAsyncThunk("[AUTH] CHECK_ACCESS_TOKEN", async () => {
+const checkAccessToken = createAsyncThunk("[AUTH] CHECK_ACCESS_TOKEN", async (_, { rejectWithValue }) => {
   const accessToken = localStorage.getItem("accessToken") || "";
-
-  await requestAuth.getUserInfo(accessToken);
+  try {
+    await requestAuth.getUserInfo(accessToken);
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-const login = createAsyncThunk("[AUTH] LOGIN", async ({ email, password }: LoginInfo) => {
-  const accessToken = await requestAuth.login(email, password);
-
-  localStorage.setItem("accessToken", accessToken);
+const login = createAsyncThunk("[AUTH] LOGIN", async ({ email, password }: LoginInfo, { rejectWithValue }) => {
+  try {
+    const accessToken = await requestAuth.login(email, password);
+    localStorage.setItem("accessToken", accessToken);
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-const signup = createAsyncThunk("[AUTH] SIGNUP", async ({ email, password, age }: SignupInfo, thunkAPI) => {
-  await requestAuth.signup(email, password, age);
-
-  thunkAPI.dispatch(login({ email, password }));
-});
+const signup = createAsyncThunk(
+  "[AUTH] SIGNUP",
+  async ({ email, password, age }: SignupInfo, { rejectWithValue, dispatch }) => {
+    try {
+      await requestAuth.signup(email, password, age);
+      dispatch(login({ email, password }));
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const action = {
   checkAccessToken,
@@ -55,6 +68,13 @@ export const authSlice = createSlice({
     },
     [login.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
+    },
+    [login.rejected.type]: (state, { payload }) => {
+      state.isAuthenticated = false;
+      state.error = payload;
+    },
+    [signup.rejected.type]: (state, { payload }) => {
+      state.error = payload;
     },
     [LOGOUT]: (state) => {
       state.isAuthenticated = false;
