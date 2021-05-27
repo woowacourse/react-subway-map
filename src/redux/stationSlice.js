@@ -78,6 +78,11 @@ const stationSlice = createSlice({
     clearAddSuccess: (state) => {
       state.isAddSuccess = false;
     },
+    clearStation: (state) => {
+      state.stations = [];
+      state.isLoading = false;
+      state.isAddSuccess = false;
+    },
   },
   extraReducers: {
     [getStations.fulfilled]: (state, action) => {
@@ -118,6 +123,6 @@ const stationSlice = createSlice({
 });
 
 export { getStations, addStation, removeStation };
-export const { clearAddSuccess } = stationSlice.actions;
+export const { clearAddSuccess, clearStation } = stationSlice.actions;
 
 export default stationSlice.reducer;

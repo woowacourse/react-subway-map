@@ -9,7 +9,7 @@ export const SERVER_LIST = {
     name: '정찬영',
     nickname: '마갸',
     imgSrc: imageMagya,
-    endpoint: 'https://subway-myagya.kro.kr',
+    endpoint: 'https://subway-myagya.kro.kr/api',
   },
   Sally: {
     id: 'Sally',
@@ -23,7 +23,7 @@ export const SERVER_LIST = {
     name: '강승윤',
     nickname: '파즈',
     imgSrc: imagePaz,
-    endpoint: 'https://bepoz-subway.kro.kr',
+    endpoint: 'https://bepoz-subway.kro.kr/api',
   },
   Hyungumak: {
     id: 'Hyungumak',

@@ -83,6 +83,11 @@ const lineSlice = createSlice({
     clearAddSuccess: (state) => {
       state.isAddSuccess = false;
     },
+    clearLine: (state) => {
+      state.lines = [];
+      state.isLoading = false;
+      state.isAddSuccess = false;
+    },
   },
   extraReducers: {
     [getLines.fulfilled]: (state, action) => {
@@ -123,6 +128,6 @@ const lineSlice = createSlice({
 });
 
 export { getLines, addLine, removeLine };
-export const { clearAddSuccess } = lineSlice.actions;
+export const { clearAddSuccess, clearLine } = lineSlice.actions;
 
 export default lineSlice.reducer;

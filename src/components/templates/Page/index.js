@@ -5,9 +5,11 @@ import { PropTypes } from 'prop-types';
 import { useCookies } from 'react-cookie';
 
 import { logout } from '../../../redux/userSlice';
+import { clearStation } from '../../../redux/stationSlice';
+import { clearLine } from '../../../redux/lineSlice';
 import { NavBar, ServerSelect } from '../..';
 import { Header, ServerSelectButton, Main } from './style';
-import { ROUTE, SERVER_LIST, SERVER_ID } from '../../../constants';
+import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from '../../../constants';
 
 export const Page = (props) => {
   const { serverId, setServerId, children, ...rest } = props;
@@ -15,7 +17,7 @@ export const Page = (props) => {
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
   const history = useHistory();
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies([SERVER_ID]);
+  const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID]);
 
   const handleServerSubmit = (e) => {
     e.preventDefault();
@@ -29,8 +31,13 @@ export const Page = (props) => {
     }
     setServerId(selectedId);
     setCookie(SERVER_ID, selectedId);
-    setIsServerSelectOpen(false);
+
     dispatch(logout());
+    removeCookie(ACCESS_TOKEN);
+    dispatch(clearLine());
+    dispatch(clearStation());
+
+    setIsServerSelectOpen(false);
     history.push(ROUTE.LOGIN);
   };
 
