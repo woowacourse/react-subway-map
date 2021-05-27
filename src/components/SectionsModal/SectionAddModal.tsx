@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { requestAddSection } from '../../api/lines';
+import { API_INFO } from '../../constants/api';
 import { SECTION } from '../../constants/appInfo';
+import { ERROR_MESSAGE } from '../../constants/message';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
-import { RootState } from '../../redux/store';
+import { loadLines } from '../../redux/lineSlice';
+import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import Button from '../@common/Button/Button';
 import Input from '../@common/Input/Input';
 import Modal from '../@common/Modal/Modal';
-import { ERROR_MESSAGE } from '../../constants/message';
 import SectionSelectBox, {
   OnChangeSectionSelectBoxHandler,
 } from '../@shared/SectionSelectBox/SectionSelectBox';
@@ -20,13 +23,15 @@ interface Props {
 }
 
 const SectionAddModal: FC<Props> = ({ onClose, line }) => {
+  const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { stations } = useSelector((state: RootState) => state.station);
+  const dispatch = useAppDispatch();
+
   const [formInput, setFormInput] = useState({
     upStationId: '',
     downStationId: '',
-    distance: '',
+    distance: SECTION.MIN_DISTANCE,
   });
-
   const [errorMessage, setErrorMessage] = useState({
     section: '',
   });
@@ -73,9 +78,35 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     });
   };
 
+  const onChangeDistance = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) => {
+    setFormInput({
+      ...formInput,
+      distance: valueAsNumber,
+    });
+  };
+
+  const onAddSection = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      await requestAddSection(API_INFO[apiOwner].endPoint, {
+        lineId: line.id,
+        upStationId: Number(formInput.upStationId),
+        downStationId: Number(formInput.downStationId),
+        distance: Number(formInput.distance),
+      });
+
+      dispatch(loadLines(API_INFO[apiOwner].endPoint));
+
+      onClose();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <Modal titleText={SECTION.ADD_MODAL_TITLE} onClose={onClose}>
-      <SectionForm>
+      <SectionForm onSubmit={onAddSection}>
         <Input labelText="노선선택" value={line.name} disabled={true} />
         <SectionSelectBox
           onChange={onChangeStations}
@@ -83,7 +114,13 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           downStationOptions={stations}
           errorMessage={errorMessage.section}
         />
-        <Input type="number" min={SECTION.MIN_DISTANCE} labelText={SECTION.DISTANCE_LABEL_TEXT} />
+        <Input
+          value={formInput.distance}
+          onChange={onChangeDistance}
+          type="number"
+          min={SECTION.MIN_DISTANCE}
+          labelText={SECTION.DISTANCE_LABEL_TEXT}
+        />
         <SectionModalButtonContainer justifyContent="flex-end">
           <Button type="button" isColored={false}>
             취소

@@ -15,14 +15,21 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
+import { useMemo } from 'react';
 
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { lines } = useSelector((state: RootState) => state.line);
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
-  const [targetLine, setTargetLine] = useState<Line | undefined>(undefined);
+
   const sectionAddModal = useModal();
+
+  const [targetLineId, setTargetLineId] = useState('');
+  const targetLine = useMemo(() => {
+    const id = Number(targetLineId);
+    return lines.find((line) => line.id === id);
+  }, [targetLineId, lines]);
 
   useEffect(() => {
     if (lines.length === 0) {
@@ -35,9 +42,7 @@ const Sections: FC = () => {
   }, []);
 
   const onChangeTargetLine = ({ target: { value } }: ChangeEvent<HTMLSelectElement>): void => {
-    const selectedId = Number(value);
-
-    setTargetLine(lines.find((line) => line.id === selectedId));
+    setTargetLineId(value);
   };
 
   const onOpenSectionAddModal = () => {

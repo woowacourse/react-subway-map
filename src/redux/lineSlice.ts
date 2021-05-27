@@ -3,6 +3,7 @@ import {
   AddLineRequestData,
   ModifyLineRequestData,
   requestAddLine,
+  requestAddSection,
   requestDeleteLine,
   requestGetLines,
   requestModifyLine,
@@ -22,6 +23,16 @@ export interface DeleteLineData {
 export interface ModifyLineData {
   baseURL: string;
   modifyLineRequestData: ModifyLineRequestData;
+}
+
+export interface AddSectionData {
+  baseURL: string;
+  addSectionRequestData: {
+    lineId: number;
+    upStationId: number;
+    downStationId: number;
+    distance: number;
+  };
 }
 
 export const loadLines = createAsyncThunk(

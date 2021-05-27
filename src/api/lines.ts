@@ -16,6 +16,13 @@ export interface ModifyLineRequestData {
   color: string;
 }
 
+interface AddSectionRequestData {
+  lineId: number;
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+}
+
 export const requestGetLines = (baseURL: string): Promise<AxiosResponse<Line[]>> =>
   axios.get(`${baseURL}/lines`);
 
@@ -34,4 +41,14 @@ export const requestModifyLine = (
   axios.put(`${baseURL}/lines/${lineId}`, {
     name,
     color,
+  });
+
+export const requestAddSection = (
+  baseURL: string,
+  { lineId, upStationId, downStationId, distance }: AddSectionRequestData
+): Promise<AxiosResponse> =>
+  axios.post(`${baseURL}/lines/${lineId}/sections`, {
+    upStationId,
+    downStationId,
+    distance,
   });
