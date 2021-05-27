@@ -14,5 +14,7 @@ export const useInput = (validator, replacement = "") => {
     }
   };
 
-  return [value, handleChange, isValid];
+  const reset = () => setValue("");
+
+  return [value, handleChange, isValid, reset];
 };

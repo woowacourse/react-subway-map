@@ -21,11 +21,13 @@ export const signup = createAsyncThunk(
 
       const { message } = await response.json();
 
-      rejectWithValue(message);
+      // eslint-disable-next-line consistent-return
+      return rejectWithValue(message);
     } catch (error) {
       console.error(error);
 
-      rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      // eslint-disable-next-line consistent-return
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
     }
   }
 );

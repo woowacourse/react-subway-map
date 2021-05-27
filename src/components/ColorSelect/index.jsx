@@ -1,5 +1,6 @@
 import React from "react";
 import cx from "classnames";
+import PropTypes from "prop-types";
 
 const lineColors = [
   ["line1", "bg-line1 hover:ring-line1 focus:ring-line1"],
@@ -17,20 +18,41 @@ const lineColors = [
   ],
 ];
 
-const ColorSelect = () => (
-  <div className="grid gap-4 grid-cols-5 mb-4">
-    {lineColors.map(([name, color]) => (
+const ColorSelect = ({ value, onChange }) => (
+  <>
+    <span className="m-6 text-gray-400">노선 색상을 선택해주세요.</span>
+    <div className="grid gap-4 grid-cols-5 mb-4">
+      {lineColors.map(([name, color]) => (
+        <button
+          key={name}
+          type="button"
+          value={color}
+          onClick={onChange}
+          className={cx(
+            "w-10 h-10 rounded-full focus:outline-none hover:ring-2 focus:ring-2",
+            color
+          )}
+          aria-label={`${name}-color-button`}
+        />
+      ))}
+    </div>
+    <div className="flex items-center">
+      <span className="m-6 text-gray-400">선택된 색상: </span>
       <button
-        key={name}
         type="button"
         className={cx(
-          "w-10 h-10 rounded-full focus:outline-none hover:ring-2 focus:ring-2",
-          color
+          "w-6 h-6 bg-gray-300 rounded-full focus:outline-none",
+          value
         )}
-        aria-label={`${name}-color-button`}
+        aria-label="selected-color-button"
       />
-    ))}
-  </div>
+    </div>
+  </>
 );
+
+ColorSelect.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
 
 export default ColorSelect;

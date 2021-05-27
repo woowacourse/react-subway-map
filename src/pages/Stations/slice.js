@@ -67,25 +67,25 @@ export const fetchStations = createAsyncThunk(
 
 export const deleteStationById = createAsyncThunk(
   "stations/deleteStationById",
-  async (_, { rejectWithValue, getState }) => {
+  async (id, { rejectWithValue, getState }) => {
     const accessToken = selectAccessToken(getState());
 
     try {
-      const response = await http.delete(ENDPOINT.STATIONS, {
+      const response = await http.delete(`${ENDPOINT.STATIONS}/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
       if (response.status === STATIONS_DELETE_SUCCEED.CODE) {
-        return;
+        return Number(id);
       }
 
       const { message } = await response.json();
 
-      rejectWithValue(message);
+      return rejectWithValue(message);
     } catch (error) {
       console.error(error);
 
-      rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
     }
   }
 );
@@ -129,8 +129,9 @@ const stationsSlice = createSlice({
     [deleteStationById.pending]: (state) => {
       state.status = STATUS.LOADING;
     },
-    [deleteStationById.fulfilled]: (state) => {
+    [deleteStationById.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
+      state.list = state.list.filter((item) => item.id !== action.payload);
     },
     [deleteStationById.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
