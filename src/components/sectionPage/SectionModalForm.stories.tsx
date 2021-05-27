@@ -12,6 +12,7 @@ const Template = () => (
     stations={[]}
     lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
     onModalClose={() => {}}
+    addSection={() => {}}
   />
 );
 export const Default = Template.bind({});

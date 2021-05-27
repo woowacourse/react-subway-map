@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Line, LineSection, Station } from '../../interfaces';
+import { AddSectionPayload, Line, LineSection, Station } from '../../interfaces';
 import Button from '../@commons/Button/Button';
 import Modal from '../@commons/Modal/Modal';
 import SelectInput from '../@commons/SelectInput/SelectInput';
@@ -11,9 +11,10 @@ interface Props {
   lineSection: LineSection;
   lines: Line[];
   stations: Station[];
+  addSection: (payload: AddSectionPayload) => void;
 }
 
-const AddSectionForm = ({ onChange, lineSection, lines, stations }: Props) => {
+const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalClose = () => {
@@ -49,6 +50,7 @@ const AddSectionForm = ({ onChange, lineSection, lines, stations }: Props) => {
             stations={stations}
             onLineChange={onChange}
             onModalClose={handleModalClose}
+            addSection={addSection}
           />
         </Modal>
       )}

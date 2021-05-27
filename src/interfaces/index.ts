@@ -53,3 +53,10 @@ export interface LineSection {
   stations: LineSectionStation[];
   sections: Section[];
 }
+
+export interface AddSectionPayload {
+  lineId: string;
+  upStationId: string;
+  downStationId: string;
+  distance: string;
+}

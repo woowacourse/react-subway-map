@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Line, LineSection, Station } from '../../interfaces';
+import { AddSectionPayload, Line, LineSection, Station } from '../../interfaces';
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
 import SelectInput from '../@commons/SelectInput/SelectInput';
@@ -11,6 +11,7 @@ interface Props {
   stations: Station[];
   onLineChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onModalClose: () => void;
+  addSection: (payload: AddSectionPayload) => void;
 }
 
 const initSectionInfo = {
@@ -95,7 +96,7 @@ const getDistanceErrorMessage = (
   return '';
 };
 
-const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalClose }: Props) => {
+const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalClose, addSection }: Props) => {
   const [sectionInfo, setSectionInfo] = useState(initSectionInfo);
 
   const handleLineChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -110,7 +111,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
     e.preventDefault();
     if (!isValidForm) return;
 
-    // addSection({...sectionInfo, lineId: lines.id})
+    addSection(sectionInfo);
     onModalClose();
   };
 

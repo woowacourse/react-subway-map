@@ -10,23 +10,24 @@ import * as S from './Section.styles';
 
 const getSectionStations = (lineSection: LineSection) => {
   if (!lineSection?.sections) return [];
-
+  console.log(lineSection.sections);
   const { downStation: lastStation } = lineSection.sections[lineSection.sections.length - 1];
-
+  console.log(lastStation);
   const sectionStations = lineSection.sections.map(({ upStation, distance }) => ({
     id: upStation.id,
     name: upStation.name,
     distance,
   }));
-  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: -1 });
+  sectionStations.concat({ id: lastStation.id, name: lastStation.name, distance: -1 });
 
   return sectionStations;
 };
 
 const Section = () => {
-  const { lineSection, getSection, error } = useSection();
+  const { lineSection, getSection, addSection, error } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
+  console.log(lineSection);
 
   useEffect(() => {
     if (error) {
@@ -41,8 +42,15 @@ const Section = () => {
   return (
     <S.Container>
       <ContentContainer hasHat={true}>
-        <AddSectionForm onChange={handleSelectLine} lineSection={lineSection} lines={lines} stations={stations} />
+        <AddSectionForm
+          onChange={handleSelectLine}
+          lineSection={lineSection}
+          lines={lines}
+          stations={stations}
+          addSection={addSection}
+        />
       </ContentContainer>
+
       <ContentContainer>
         <S.SectionStationList>
           {getSectionStations(lineSection).map(station => (

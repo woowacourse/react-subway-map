@@ -11,6 +11,7 @@ const Template = () => (
     lines={[]}
     stations={[]}
     lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
+    addSection={() => {}}
   />
 );
 export const Default = Template.bind({});
