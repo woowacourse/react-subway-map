@@ -21,8 +21,12 @@ const Stations = () => {
   const status = useSelector(selectStationsStatus);
   const message = useSelector(selectStationsMessage);
   const list = useSelector(selectStationsList);
-  const [stationName, handleStationNameChange, isStationNameValid] =
-    useStationName();
+  const [
+    stationName,
+    handleStationNameChange,
+    isStationNameValid,
+    resetStationName,
+  ] = useStationName();
 
   useEffect(() => {
     if (status === STATUS.IDLE) {
@@ -34,13 +38,14 @@ const Stations = () => {
   useEffect(() => {
     if (status === STATUS.SUCCEED) {
       dispatch(reset());
+      resetStationName();
     }
 
     if (status === STATUS.FAILED) {
       alert(message);
       dispatch(reset());
     }
-  }, [dispatch, status, message]);
+  }, [dispatch, status, message, resetStationName]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
