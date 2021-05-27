@@ -8,6 +8,7 @@ import {
   getStationList,
   resetError,
 } from '../slices/stationSlice';
+import { logout } from '../slices/authSlice';
 import MESSAGE from '../constants/message';
 
 const useStation = () => {
@@ -32,6 +33,11 @@ const useStation = () => {
     if (error) {
       // eslint-disable-next-line no-alert
       alert(error.message || MESSAGE.ERROR.REQUEST_FAILURE);
+
+      if (error.status === 401) {
+        dispatch(logout());
+      }
+
       dispatch(resetError());
     }
   }, [error, dispatch]);
