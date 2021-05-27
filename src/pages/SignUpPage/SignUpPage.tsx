@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './SignUpPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -15,6 +16,8 @@ import REGEX from '../../constants/regex';
 import { CREWS } from '../../types';
 
 const SignUpPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const history = useHistory();
 
   const { value: server, onChange: onChangeServer } = useSelect(CREWS.DANYEE);
@@ -93,10 +96,12 @@ const SignUpPage = () => {
     try {
       await requestCreateMember(newMember);
 
+      enqueueSnackbar(MESSAGE.SUCCESS.SIGNUP);
       history.replace(ROUTES.ROOT);
     } catch (error) {
-      // eslint-disable-next-line no-alert
-      alert(error?.response?.data?.message);
+      enqueueSnackbar(error?.response?.data?.message, {
+        variant: 'error',
+      });
     }
   };
 

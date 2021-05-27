@@ -1,4 +1,17 @@
 const MESSAGE = {
+  SUCCESS: {
+    SIGNUP: '회원가입에 성공했습니다',
+    LOGIN: '로그인에 성공했습니다',
+    LOGOUT: '로그아웃에 성공했습니다',
+    STATION_ADDED: '역이 생성되었습니다',
+    STATION_DELETED: '역이 삭제되었습니다',
+    STATION_EDITED: '역이 수정되었습니다',
+    LINE_ADDED: '노선이 생성되었습니다',
+    LINE_DELETED: '노선이 삭제되었습니다',
+    LINE_EDITED: '노선이 수정되었습니다',
+    SECTION_ADDED: '구간이 생성되었습니다',
+    SECTION_DELETED: '구간이 삭제되었습니다',
+  },
   ERROR: {
     INVALID_EMAIL: '유효한 이메일을 입력해주세요',
     INVALID_PASSWORD: '8자 이상의 비밀번호를 입력해주세요',

@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { useAppDispatch, useAppSelector } from './useStore';
 import { ApiStatus, Line, LineAttribute, SectionAttribute, Station } from '../types';
 import {
@@ -14,6 +15,7 @@ import { logout } from '../slices/authSlice';
 import MESSAGE from '../constants/message';
 
 const useLine = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const line = useAppSelector((state) => state.line);
   const dispatch = useAppDispatch();
 
@@ -46,8 +48,9 @@ const useLine = () => {
 
   useEffect(() => {
     if (error) {
-      // eslint-disable-next-line no-alert
-      alert(error.message || MESSAGE.ERROR.REQUEST_FAILURE);
+      enqueueSnackbar(error.message || MESSAGE.ERROR.REQUEST_FAILURE, {
+        variant: 'error',
+      });
 
       if (error.status === 401) {
         dispatch(logout());
@@ -55,7 +58,7 @@ const useLine = () => {
 
       dispatch(resetError());
     }
-  }, [error, dispatch]);
+  }, [error, dispatch, enqueueSnackbar]);
 
   return {
     onGetLine,

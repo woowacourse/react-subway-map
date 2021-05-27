@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { Button, Card, Input, Select, ColorDot, Modal } from '../../components';
 import * as Styled from './SectionPage.styles';
 import { ReactComponent as AddIcon } from '../../assets/icons/plus-solid.svg';
@@ -13,6 +14,8 @@ import { ApiStatus, Station } from '../../types';
 import MESSAGE from '../../constants/message';
 
 const SectionPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { list: stationList } = useStation();
@@ -69,18 +72,25 @@ const SectionPage = () => {
 
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
+    enqueueSnackbar(MESSAGE.SUCCESS.SECTION_ADDED, {
+      variant: 'success',
+    });
     closeModal();
     setDistance('');
   };
 
-  const handleDelete = (stationId: Station['id']) => {
+  const handleDelete = async (stationId: Station['id']) => {
     if (selectedLine?.stations.length <= 2) {
-      // eslint-disable-next-line no-alert
-      alert(MESSAGE.ERROR.REQUIRE_MINIMUM_STATION);
+      enqueueSnackbar(MESSAGE.ERROR.REQUIRE_MINIMUM_STATION, {
+        variant: 'warning',
+      });
       return;
     }
 
-    onDeleteSection({ lineId: selectedLineId, stationId });
+    const response = await onDeleteSection({ lineId: selectedLineId, stationId });
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+
+    enqueueSnackbar(MESSAGE.SUCCESS.SECTION_DELETED);
   };
 
   useEffect(() => {
