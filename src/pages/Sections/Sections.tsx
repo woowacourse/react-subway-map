@@ -34,11 +34,11 @@ const Sections: FC = () => {
 
   useEffect(() => {
     if (lines.length === 0) {
-      dispatch(loadLines(API_INFO[apiOwner].endPoint));
+      dispatch(loadLines());
     }
 
     if (stations.length === 0) {
-      dispatch(loadStations(API_INFO[apiOwner].endPoint));
+      dispatch(loadStations());
     }
   }, []);
 
@@ -62,13 +62,13 @@ const Sections: FC = () => {
     }
 
     try {
-      await requestDeleteSection(API_INFO[apiOwner].endPoint, {
+      await requestDeleteSection({
         lineId: Number(targetLineId),
         stationId,
       });
 
       // TODO: 일관성있게 삭제 진행하기
-      dispatch(loadLines(API_INFO[apiOwner].endPoint));
+      dispatch(loadLines());
     } catch (error) {
       alert(ERROR_MESSAGE.DELETE_SECTION_FAILURE);
     }

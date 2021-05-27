@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { isReturnStatement } from 'typescript';
 import { requestSignup } from '../../api/member';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
@@ -139,7 +138,7 @@ const Signup: FC = () => {
     };
 
     try {
-      await requestSignup(memberInfo, API_INFO[apiOwner as string].endPoint);
+      await requestSignup(memberInfo);
 
       alert(SUCCESS_MESSAGE.SIGNUP);
 

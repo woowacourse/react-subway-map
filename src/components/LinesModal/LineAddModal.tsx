@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { ChangeEvent, FC, FormEvent, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { API_INFO } from '../../constants/api';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
@@ -14,7 +13,7 @@ import ColorRadio from '../@common/ColorRadio/ColorRadio';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
 import SectionSelectBox, {
-  OnChangeSectionSelectBoxHandler,
+  OnChangeSectionSelectBoxHandler
 } from '../@shared/SectionSelectBox/SectionSelectBox';
 import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesModal.styles';
 
@@ -37,7 +36,6 @@ interface ErrorMessage {
 }
 
 const LineAddModal: FC<Props> = ({ onClose }) => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { stations } = useSelector((state: RootState) => state.station);
   const { lines } = useSelector((state: RootState) => state.line);
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);
@@ -58,7 +56,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
 
   useEffect(() => {
     if (stations.length === 0) {
-      dispatch(loadStations(API_INFO[apiOwner].endPoint));
+      dispatch(loadStations());
     }
   }, []);
 
@@ -139,12 +137,9 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
 
     dispatch(
       addLine({
-        baseURL: API_INFO[apiOwner].endPoint,
-        addLineRequestData: {
-          ...formInput,
-          upStationId: Number(formInput.upStationId),
-          downStationId: Number(formInput.downStationId),
-        },
+        ...formInput,
+        upStationId: Number(formInput.upStationId),
+        downStationId: Number(formInput.downStationId),
       })
     );
 

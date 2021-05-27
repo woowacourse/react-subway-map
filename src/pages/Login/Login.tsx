@@ -7,7 +7,7 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
+import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { login } from '../../redux/loginSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -39,7 +39,7 @@ const Login: FC = () => {
     };
 
     try {
-      const response = await requestLogin(loginInfo, API_INFO[apiOwner as string].endPoint);
+      const response = await requestLogin(loginInfo);
       dispatch(login(response.data.accessToken));
 
       history.push(PAGE_INFO.STATIONS.path);

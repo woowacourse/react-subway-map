@@ -2,34 +2,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Station } from '../types';
 import { requestAddStation, requestDeleteStation, requestGetStations } from './../api/stations';
 
-interface AddStationData {
-  baseURL: string;
-  stationName: string;
-}
+export const loadStations = createAsyncThunk('station/load', async (_, { rejectWithValue }) => {
+  try {
+    const response = await requestGetStations();
 
-interface DeleteStationData {
-  baseURL: string;
-  stationId: number;
-}
-
-export const loadStations = createAsyncThunk(
-  'station/load',
-  async (baseURL: string, { rejectWithValue }) => {
-    try {
-      const response = await requestGetStations(baseURL);
-
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
   }
-);
+});
 
 export const addStation = createAsyncThunk(
   'station/add',
-  async ({ baseURL, stationName }: AddStationData, { rejectWithValue }) => {
+  async (stationName: string, { rejectWithValue }) => {
     try {
-      const response = await requestAddStation(baseURL, stationName);
+      const response = await requestAddStation(stationName);
 
       return response.data;
     } catch (error) {
@@ -40,9 +27,9 @@ export const addStation = createAsyncThunk(
 
 export const deleteStation = createAsyncThunk(
   'station/delete',
-  async ({ baseURL, stationId }: DeleteStationData, { rejectWithValue }) => {
+  async (stationId: number, { rejectWithValue }) => {
     try {
-      await requestDeleteStation(baseURL, stationId);
+      await requestDeleteStation(stationId);
 
       return stationId;
     } catch (error) {

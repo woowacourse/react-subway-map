@@ -3,56 +3,27 @@ import {
   AddLineRequestData,
   ModifyLineRequestData,
   requestAddLine,
-  requestAddSection,
   requestDeleteLine,
   requestGetLines,
-  requestModifyLine,
+  requestModifyLine
 } from '../api/lines';
 import { Line } from '../types';
 
-export interface AddLineData {
-  baseURL: string;
-  addLineRequestData: AddLineRequestData;
-}
+export const loadLines = createAsyncThunk('line/load', async (_, { rejectWithValue }) => {
+  try {
+    const response = await requestGetLines();
 
-export interface DeleteLineData {
-  baseURL: string;
-  lineId: number;
-}
-
-export interface ModifyLineData {
-  baseURL: string;
-  modifyLineRequestData: ModifyLineRequestData;
-}
-
-export interface AddSectionData {
-  baseURL: string;
-  addSectionRequestData: {
-    lineId: number;
-    upStationId: number;
-    downStationId: number;
-    distance: number;
-  };
-}
-
-export const loadLines = createAsyncThunk(
-  'line/load',
-  async (baseURL: string, { rejectWithValue }) => {
-    try {
-      const response = await requestGetLines(baseURL);
-
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error);
   }
-);
+});
 
 export const addLine = createAsyncThunk(
   'line/add',
-  async ({ baseURL, addLineRequestData }: AddLineData, { rejectWithValue }) => {
+  async (addLineRequestData: AddLineRequestData, { rejectWithValue }) => {
     try {
-      const response = await requestAddLine(baseURL, addLineRequestData);
+      const response = await requestAddLine(addLineRequestData);
 
       return response.data;
     } catch (error) {
@@ -63,9 +34,9 @@ export const addLine = createAsyncThunk(
 
 export const deleteLine = createAsyncThunk(
   'line/delete',
-  async ({ baseURL, lineId }: DeleteLineData, { rejectWithValue }) => {
+  async (lineId: number, { rejectWithValue }) => {
     try {
-      await requestDeleteLine(baseURL, lineId);
+      await requestDeleteLine(lineId);
 
       return lineId;
     } catch (error) {
@@ -76,9 +47,9 @@ export const deleteLine = createAsyncThunk(
 
 export const modifyLine = createAsyncThunk(
   'line/modify',
-  async ({ baseURL, modifyLineRequestData }: ModifyLineData, { rejectWithValue }) => {
+  async (modifyLineRequestData: ModifyLineRequestData, { rejectWithValue }) => {
     try {
-      await requestModifyLine(baseURL, modifyLineRequestData);
+      await requestModifyLine(modifyLineRequestData);
 
       return modifyLineRequestData;
     } catch (error) {

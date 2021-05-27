@@ -25,7 +25,7 @@ const Stations: FC = () => {
 
   useEffect(() => {
     if (stations.length === 0) {
-      dispatch(loadStations(API_INFO[apiOwner].endPoint));
+      dispatch(loadStations());
     }
   }, []);
 
@@ -48,12 +48,12 @@ const Stations: FC = () => {
   const onAddStation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(addStation({ baseURL: API_INFO[apiOwner].endPoint, stationName: stationInput }));
+    dispatch(addStation(stationInput));
     setStationInput('');
   };
 
   const onDeleteStation = (stationId: number) => () => {
-    dispatch(deleteStation({ baseURL: API_INFO[apiOwner].endPoint, stationId }));
+    dispatch(deleteStation(stationId));
   };
 
   return (

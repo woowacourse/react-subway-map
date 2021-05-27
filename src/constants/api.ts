@@ -28,3 +28,5 @@ export const API_INFO: { [key: string]: APIInfo } = {
     themeColor: PALETTE.CYAN,
   },
 };
+
+export const DEFAULT_API_OWNER = 'FAFI';

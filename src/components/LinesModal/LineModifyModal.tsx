@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { ChangeEvent, FC, FormEvent, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { API_INFO } from '../../constants/api';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { modifyLine } from '../../redux/lineSlice';
@@ -30,7 +29,6 @@ interface FormValue {
 }
 
 const LineModifyModal: FC<Props> = ({ line, onClose }) => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
 
@@ -77,8 +75,8 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
 
     dispatch(
       modifyLine({
-        baseURL: API_INFO[apiOwner].endPoint,
-        modifyLineRequestData: { lineId: line.id, ...formInput },
+        lineId: line.id,
+        ...formInput,
       })
     );
 

@@ -28,38 +28,39 @@ interface DeleteSectionRequestData {
   stationId: number;
 }
 
-export const requestGetLines = (baseURL: string): Promise<AxiosResponse<Line[]>> =>
-  axios.get(`${baseURL}/lines`);
+export const requestGetLines = (): Promise<AxiosResponse<Line[]>> => axios.get(`/lines`);
 
 export const requestAddLine = (
-  baseURL: string,
   addLineRequestData: AddLineRequestData
-): Promise<AxiosResponse<Line[]>> => axios.post(`${baseURL}/lines`, addLineRequestData);
+): Promise<AxiosResponse<Line[]>> => axios.post(`/lines`, addLineRequestData);
 
-export const requestDeleteLine = (baseURL: string, lineId: number): Promise<AxiosResponse> =>
-  axios.delete(`${baseURL}/lines/${lineId}`);
+export const requestDeleteLine = (lineId: number): Promise<AxiosResponse> =>
+  axios.delete(`/lines/${lineId}`);
 
-export const requestModifyLine = (
-  baseURL: string,
-  { lineId, name, color }: ModifyLineRequestData
-): Promise<AxiosResponse> =>
-  axios.put(`${baseURL}/lines/${lineId}`, {
+export const requestModifyLine = ({
+  lineId,
+  name,
+  color,
+}: ModifyLineRequestData): Promise<AxiosResponse> =>
+  axios.put(`/lines/${lineId}`, {
     name,
     color,
   });
 
-export const requestAddSection = (
-  baseURL: string,
-  { lineId, upStationId, downStationId, distance }: AddSectionRequestData
-): Promise<AxiosResponse> =>
-  axios.post(`${baseURL}/lines/${lineId}/sections`, {
+export const requestAddSection = ({
+  lineId,
+  upStationId,
+  downStationId,
+  distance,
+}: AddSectionRequestData): Promise<AxiosResponse> =>
+  axios.post(`/lines/${lineId}/sections`, {
     upStationId,
     downStationId,
     distance,
   });
 
-export const requestDeleteSection = (
-  baseURL: string,
-  { lineId, stationId }: DeleteSectionRequestData
-): Promise<AxiosResponse> =>
-  axios.delete(`${baseURL}/lines/${lineId}/sections?stationId=${stationId}`);
+export const requestDeleteSection = ({
+  lineId,
+  stationId,
+}: DeleteSectionRequestData): Promise<AxiosResponse> =>
+  axios.delete(`/lines/${lineId}/sections?stationId=${stationId}`);

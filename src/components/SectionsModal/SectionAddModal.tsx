@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
-import { API_INFO } from '../../constants/api';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
@@ -23,7 +22,6 @@ interface Props {
 }
 
 const SectionAddModal: FC<Props> = ({ onClose, line }) => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
@@ -89,14 +87,14 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     event.preventDefault();
 
     try {
-      await requestAddSection(API_INFO[apiOwner].endPoint, {
+      await requestAddSection({
         lineId: line.id,
         upStationId: Number(formInput.upStationId),
         downStationId: Number(formInput.downStationId),
         distance: Number(formInput.distance),
       });
 
-      dispatch(loadLines(API_INFO[apiOwner].endPoint));
+      dispatch(loadLines());
 
       onClose();
     } catch (error) {

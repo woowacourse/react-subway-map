@@ -23,7 +23,7 @@ const Lines: FC = () => {
   const lineModifyModal = useModal(null);
 
   useEffect(() => {
-    dispatch(loadLines(API_INFO[apiOwner].endPoint));
+    dispatch(loadLines());
   }, []);
 
   const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
@@ -43,7 +43,7 @@ const Lines: FC = () => {
 
   const onDeleteLine = (lineId: number) => () => {
     if (confirm(CONFIRM_MESSAGE.DELETE_LINE)) {
-      dispatch(deleteLine({ baseURL: API_INFO[apiOwner].endPoint, lineId }));
+      dispatch(deleteLine(lineId));
     }
   };
 

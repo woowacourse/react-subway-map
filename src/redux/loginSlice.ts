@@ -1,10 +1,10 @@
-import {
-  removeSessionStorageItem,
-  setSessionStorageItem,
-  getSessionStorageItem,
-} from './../storage/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
 import { SESSION_STORAGE_KEY } from '../constants/storage';
+import {
+  getSessionStorageItem,
+  removeSessionStorageItem,
+  setSessionStorageItem,
+} from '../util/sessionStorage';
 
 export const loginSlice = createSlice({
   name: 'login',
