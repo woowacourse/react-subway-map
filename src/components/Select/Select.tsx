@@ -15,7 +15,7 @@ export interface Props extends SelectHTMLAttributes<HTMLSelectElement>, SelectSt
 const Select = ({ defaultOption, options, ...props }: Props) => (
   <SelectBlock {...props}>
     {defaultOption && (
-      <option value="" selected disabled hidden>
+      <option selected disabled hidden>
         {defaultOption}
       </option>
     )}
