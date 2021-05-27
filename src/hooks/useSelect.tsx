@@ -8,7 +8,7 @@ const useSelect = <T extends unknown>(initialValue: T) => {
     setValue(event.target.value as T);
   };
 
-  return { value, onChange, setValue, ref };
+  return { value, valueAsNumber: Number(value), onChange, setValue, ref };
 };
 
 export default useSelect;
