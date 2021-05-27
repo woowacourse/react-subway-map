@@ -3,10 +3,9 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
 import { HostSelect } from './components/molecules';
-import { Home, Login, SignUp, Station, Line, Section } from './components/pages';
+import { Home, Login, SignUp, Station, Line, Section, Logout } from './components/pages';
 import { ROUTE } from './constants';
-import { setAccessToken } from './features/accessTokenSlice';
-import { getSignedUserAsync, setSignedUser } from './features/signedUserSlice';
+import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
 
 const App = () => {
@@ -54,17 +53,7 @@ const App = () => {
         type="button"
         buttonTheme="menu"
         onClick={() => {
-          dispatch(setAccessToken({ accessToken: null, isError: null, text: null, status: null }));
-          dispatch(
-            setSignedUser({
-              id: null,
-              email: null,
-              age: null,
-              isError: null,
-              text: null,
-              status: null,
-            }),
-          );
+          history.replace({ pathname: ROUTE.LOGOUT });
         }}
       >
         🔒 로그아웃
@@ -98,6 +87,7 @@ const App = () => {
           <Route exact path={ROUTE.STATION} component={Station} />
           <Route exact path={ROUTE.LINE} component={Line} />
           <Route exact path={ROUTE.SECTION} component={Section} />
+          <Route exact path={ROUTE.LOGOUT} component={Logout} />
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>

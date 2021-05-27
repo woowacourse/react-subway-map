@@ -1,15 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { HOST, ROUTE } from '../../../constants';
-import {
-  initialState as accessTokenInitialState,
-  setAccessToken,
-} from '../../../features/accessTokenSlice';
 import { setHost } from '../../../features/hostSlice';
-import {
-  initialState as signedUserInitialState,
-  setSignedUser,
-} from '../../../features/signedUserSlice';
 import { RootState, useAppDispatch } from '../../../store';
 import { Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
@@ -32,10 +24,10 @@ const HostSelect = () => {
     const value = event.target.value;
 
     dispatch(setHost({ host: value }));
-    dispatch(setAccessToken(accessTokenInitialState));
-    dispatch(setSignedUser(signedUserInitialState));
 
-    history.push({ pathname: ROUTE.LOGIN });
+    window.alert('서버가 변경되었습니다.');
+
+    history.push({ pathname: ROUTE.LOGOUT });
   };
 
   return (
