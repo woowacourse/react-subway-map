@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.5.1",
     "notistack": "^1.0.9",
     "react": "^17.0.2",
