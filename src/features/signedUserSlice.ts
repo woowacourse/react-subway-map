@@ -11,9 +11,8 @@ export const initialState: ISignedUser = {
   age: null,
 
   isError: null,
-  status: null,
+  message: null,
 };
-
 export const getSignedUserAsync = createAsyncThunk(
   `getSignedUser`,
   async (getSignedUserReq: { host: string; accessToken: string | null }, thunkAPI) => {
@@ -33,7 +32,7 @@ export const getSignedUserAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   },
@@ -48,7 +47,7 @@ const signedUserSlice = createSlice({
       state.email = payload.email;
       state.age = payload.age;
       state.isError = payload.isError;
-      state.status = payload.status;
+      state.message = payload.message;
     },
   },
   extraReducers: builder => {
@@ -57,7 +56,7 @@ const signedUserSlice = createSlice({
       state.email = payload.data.email;
       state.age = payload.data.age;
 
-      state.status = payload.status;
+      state.message = '';
       state.isError = false;
     });
     builder.addCase(getSignedUserAsync.rejected, (state, { payload }) => {
@@ -66,7 +65,7 @@ const signedUserSlice = createSlice({
       state.age = null;
 
       state.isError = true;
-      state.status = (payload as IResMeta).status;
+state.message = (payload as IResMeta).message;
     });
   },
 });

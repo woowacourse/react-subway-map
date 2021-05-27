@@ -9,7 +9,7 @@ export const initialState: IAccessToken = {
   accessToken: null,
 
   isError: null,
-  status: null,
+  message: null,
 };
 
 export const loginRequestAsync = createAsyncThunk(
@@ -29,7 +29,7 @@ export const loginRequestAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   },
@@ -42,7 +42,7 @@ const accessTokenSlice = createSlice({
     setAccessToken: (state = initialState, { payload }) => {
       state.accessToken = payload.accessToken;
 
-      state.status = payload.status;
+      state.message = payload.message;
       state.isError = payload.isError;
     },
   },
@@ -50,7 +50,7 @@ const accessTokenSlice = createSlice({
     builder.addCase(loginRequestAsync.fulfilled, (state, { payload }) => {
       state.accessToken = payload.data.accessToken;
 
-      state.status = payload.status;
+      state.message = '';
       state.isError = false;
     });
 
@@ -58,7 +58,7 @@ const accessTokenSlice = createSlice({
       state.accessToken = null;
 
       state.isError = true;
-      state.status = (payload as IResMeta).status;
+      state.message = (payload as IResMeta).message;
     });
   },
 });

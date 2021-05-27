@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
 import { HostSelect } from './components/molecules';
-import { Home, Login, SignUp, Station, Line } from './components/pages';
+import { Home, Login, SignUp, Station, Line, Section } from './components/pages';
 import { ROUTE } from './constants';
 import { setAccessToken } from './features/accessTokenSlice';
 import { getSignedUserAsync, setSignedUser } from './features/signedUserSlice';
@@ -34,21 +34,21 @@ const App = () => {
         buttonTheme="menu"
         onClick={() => history.push({ pathname: ROUTE.STATION })}
       >
-        역 관리
+        🚇 역 관리
       </Button>
       <Button
         type="button"
         buttonTheme="menu"
         onClick={() => history.push({ pathname: ROUTE.LINE })}
       >
-        노선 관리
+        🚇 노선 관리
       </Button>
       <Button
         type="button"
         buttonTheme="menu"
         onClick={() => history.push({ pathname: ROUTE.SECTION })}
       >
-        구간 관리
+        🚇 구간 관리
       </Button>
       <Button
         type="button"
@@ -67,7 +67,7 @@ const App = () => {
           );
         }}
       >
-        로그아웃
+        🔒 로그아웃
       </Button>
     </>
   );
@@ -97,6 +97,7 @@ const App = () => {
           <Route exact path={ROUTE.LOGIN} component={Login} />
           <Route exact path={ROUTE.STATION} component={Station} />
           <Route exact path={ROUTE.LINE} component={Line} />
+          <Route exact path={ROUTE.SECTION} component={Section} />
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>

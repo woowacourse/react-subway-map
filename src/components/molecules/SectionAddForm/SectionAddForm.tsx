@@ -1,13 +1,15 @@
-import { ILineRes } from '../../../type';
+import { ILineRes, IStationRes } from '../../../type';
 import { Button, Input, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { Container, Wrapper } from './SectionAddForm.styles';
 
 export interface SectionAddFormProps {
+  stationList: IStationRes[];
   lineList: ILineRes[];
+  onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement>;
+
   onChangeLine: React.ChangeEventHandler<HTMLSelectElement>;
   lineId: number;
-  onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement>;
   onChangeUpStation: React.ChangeEventHandler<HTMLSelectElement>;
   upStation: number;
   onChangeDownStation: React.ChangeEventHandler<HTMLSelectElement>;
@@ -17,6 +19,7 @@ export interface SectionAddFormProps {
 }
 
 const SectionAddForm = ({
+  stationList,
   lineList,
   onChangeLine,
   lineId,
@@ -28,29 +31,43 @@ const SectionAddForm = ({
   distance,
   onSubmitSectionInfo,
 }: SectionAddFormProps) => {
-  const lineListOptions: IOption[] = lineList.map(({ id, name }) => ({
+  const lineOptions: IOption[] = lineList.map(({ id, name }) => ({
     value: id,
     name,
   }));
+
+  const stationOptionsWithSelectedLine: IOption[] =
+    lineList
+      .find(line => line.id === lineId)
+      ?.stations.map(station => ({
+        value: station.id,
+        name: station.name,
+      })) || [];
+
+  const stationOptions: IOption[] =
+    stationList.map(({ id, name }) => ({
+      value: id,
+      name,
+    })) || [];
 
   return (
     <Container onSubmit={onSubmitSectionInfo}>
       <Select
         defaultName="구간을 추가할 노선을 선택해주세요"
-        options={lineListOptions}
+        options={lineOptions}
         onChange={onChangeLine}
         selectValue={lineId}
       />
       <Wrapper>
         <Select
-          defaultName="이전역"
-          options={lineListOptions}
+          defaultName="출발역"
+          options={stationOptionsWithSelectedLine}
           onChange={onChangeUpStation}
           selectValue={upStation}
         />
         <Select
           defaultName="다음역"
-          options={lineListOptions}
+          options={stationOptions}
           onChange={onChangeDownStation}
           selectValue={downStation}
         />

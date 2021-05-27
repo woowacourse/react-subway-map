@@ -3,7 +3,7 @@ import { request } from '../utils';
 
 export interface IResMeta {
   isError: boolean;
-  status: number;
+  message: string;
 }
 
 //TODO: error.response.message 백엔드에서 text로 받기
@@ -25,20 +25,19 @@ const useServerAPI = <T>(url: string) => {
   const getAllData = async (headers = defaultHeader) => {
     try {
       const response = await request.get(url, headers);
-
       const data: T[] = response.data;
 
       setAllData(data);
       setGetAllDataResponse({
         isError: false,
-        status: response.status,
+        message: '',
       });
     } catch (error) {
       console.error(error);
 
       setGetAllDataResponse({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   };
@@ -52,52 +51,50 @@ const useServerAPI = <T>(url: string) => {
       setData(data);
       setGetDataResponse({
         isError: false,
-        status: response.status,
+        message: '',
       });
     } catch (error) {
       console.error(error);
 
       setGetDataResponse({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   };
 
   const postData = async <T>(body: T, param = '', headers = defaultHeader) => {
     try {
-      console.log(`${url}/${param}`, headers, body);
-
-      const response = await request.post(`${url}/${param}`, headers, body);
+      await request.post(`${url}/${param}`, headers, body);
 
       setPostDataResponse({
         isError: false,
-        status: response.status,
+        message: '',
       });
     } catch (error) {
       console.error(error.response);
 
       setPostDataResponse({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   };
 
   const putData = async <T>(body: T, param: string, headers = defaultHeader) => {
     try {
-      const response = await request.put(`${url}/${param}`, headers, body);
+      await request.put(`${url}/${param}`, headers, body);
 
       setPutDataResponse({
         isError: false,
-        status: response.status,
+        message: '',
       });
     } catch (error) {
       console.error(error.response);
 
       setPutDataResponse({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   };
@@ -105,18 +102,18 @@ const useServerAPI = <T>(url: string) => {
   // TODO: 지하철역 삭제는 현재 무조건 성공 204 응답이옴.
   const deleteData = async (param: string, headers = defaultHeader) => {
     try {
-      const response = await request.delete(`${url}/${param}`, headers);
+      await request.delete(`${url}/${param}`, headers);
 
       setDeleteDataResponse({
         isError: false,
-        status: response.status,
+        message: '',
       });
     } catch (error) {
       console.error(error.response);
 
       setDeleteDataResponse({
         isError: true,
-        status: error.response.status,
+        message: error.response.message,
       });
     }
   };

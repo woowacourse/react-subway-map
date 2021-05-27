@@ -2,10 +2,10 @@ import { IResMeta } from '../hooks/useServerAPI';
 
 export const validResponse: IResMeta = {
   isError: false,
-  status: 200,
+  message: '',
 };
 
 export const unValidResponse: IResMeta = {
   isError: true,
-  status: 500,
+  message: '잘못된 응답',
 };

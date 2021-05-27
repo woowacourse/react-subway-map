@@ -24,7 +24,7 @@ describe('Login', () => {
       accessToken: null,
 
       isError: null,
-      status: null,
+      message: null,
     };
 
     (useSelector as jest.Mock).mockImplementation(() => {

@@ -43,7 +43,7 @@ export interface ILineRes {
   id: number;
   name: string;
   color: string;
-  extraFare: number;
+  extraFare?: number;
   stations: IStationRes[];
   sections: ISectionRes[];
 }

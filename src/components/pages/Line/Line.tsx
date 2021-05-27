@@ -11,6 +11,8 @@ import { LineColor } from '../../molecules/ColorSelector/ColorSelector';
 import { Container, LineListContainer, LineItemWithCircle } from './Line.styles';
 
 // TODO: type, enum, interface 한곳으로 몰기
+// TODO: 에러 상태관리할때 Success에 대한 플래그를 추가한다. (에러를 true/false/null로 팓단하는 것에 대한 리팩토링)
+
 const Line = () => {
   const {
     signedUser: { id: signedUserId },
@@ -41,8 +43,10 @@ const Line = () => {
 
   const [mode, setMode] = useState<ModeType>('ADD');
   const [color, setColor] = useState<LineColor>(LineColor.COLOR_1);
+  
   const [lineId, setLineId] = useState<number>();
 
+  // TODO: 이름을 lineNameInput이라고 변경하면 어떨까?
   const { value: lineName, onChange: onChangeLineName, setValue: setLineName } = useChangeEvent('');
 
   const {
@@ -180,7 +184,7 @@ const Line = () => {
   return (
     <Container>
       <Header hasExtra>
-        <h3>노선 관리</h3>
+        <h3>🚇 노선 관리</h3>
         <Button onClick={openAddModal}>노선 추가</Button>
       </Header>
 
@@ -205,7 +209,7 @@ const Line = () => {
       {isModalOpen && (
         <Modal onClickClose={onClickClose}>
           <Header>
-            <h3>{mode === 'ADD' ? '노선 추가' : '노선 수정'}</h3>
+            <h3>{mode === 'ADD' ? '🛤️ 노선 추가' : '🛤️ 노선 수정'}</h3>
           </Header>
           <LineEditForm
             lineName={lineName}

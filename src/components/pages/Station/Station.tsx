@@ -80,7 +80,7 @@ const Station = () => {
   return (
     <Container>
       <Header>
-        <h3>역 관리</h3>
+        <h3>🚉 역 관리</h3>
       </Header>
 
       <StationAddForm
