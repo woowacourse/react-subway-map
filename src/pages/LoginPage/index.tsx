@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
@@ -7,6 +8,7 @@ import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import ROUTE from 'constants/routes';
 import { API_STATUS } from 'constants/api';
+import { ALERT_MESSAGE } from 'constants/messages';
 import { ButtonSize, ButtonType } from 'types';
 import Styled from './styles';
 import { requestGetUser } from 'modules/authSlice';
@@ -17,6 +19,7 @@ import { requestLogin } from 'request/auth';
 const LoginPage = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
   const [email, setEmail] = useState<string>('');
@@ -46,6 +49,7 @@ const LoginPage = () => {
     } else if (res.status === API_STATUS.FULFILLED) {
       setInvalidNotification({ message: '', isValid: true, isVisible: false });
       setLoginResponse(res.data);
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_LOGIN);
 
       history.push(ROUTE.STATIONS);
     }

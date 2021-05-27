@@ -32,10 +32,10 @@ const LineModal = ({
 
   const [color, setColor] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [upStationId, setUpStationId] = useState<number>();
-  const [downStationId, setDownStationId] = useState<number>();
-  const [distance, setDistance] = useState<number>();
-  const [extraFare, setExtraFare] = useState<number>();
+  const [upStationId, setUpStationId] = useState<string>('');
+  const [downStationId, setDownStationId] = useState<string>('');
+  const [distance, setDistance] = useState<string>('');
+  const [extraFare, setExtraFare] = useState<string>('');
 
   const [isMessageValid, setMessageValid] = useState<boolean>(false);
   const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
@@ -78,11 +78,13 @@ const LineModal = ({
     const res = await requestAddLine(BASE_URL, newLine);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_LINE);
+      resetForm();
       closeModal();
+
       await getLines();
     }
   };
@@ -90,6 +92,7 @@ const LineModal = ({
   const editLine = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!validateLineName()) return;
     if (!selectedLine) return;
     if (!BASE_URL) return;
 
@@ -97,13 +100,23 @@ const LineModal = ({
     const res = await requestEditLine(BASE_URL, selectedLine.id, updatedLine);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
       closeModal();
+
       await getLines();
     }
+  };
+
+  const resetForm = () => {
+    setColor('');
+    setName('');
+    setUpStationId('');
+    setDownStationId('');
+    setDistance('');
+    setExtraFare('');
   };
 
   useEffect(() => {
@@ -140,16 +153,18 @@ const LineModal = ({
               <Dropdown
                 labelText="상행 종점"
                 defaultOption="상행 종점"
+                value={upStationId}
                 options={stationOptions}
-                onSelect={(event) => setUpStationId(Number(event.target.value))}
+                onSelect={(event) => setUpStationId(event.target.value)}
               />
             </Styled.DropdownWrapper>
             <Styled.DropdownWrapper>
               <Dropdown
                 labelText="하행 종점"
                 defaultOption="하행 종점"
+                value={downStationId}
                 options={stationOptions}
-                onSelect={(event) => setDownStationId(Number(event.target.value))}
+                onSelect={(event) => setDownStationId(event.target.value)}
               />
             </Styled.DropdownWrapper>
           </Styled.StationInputWrapper>
@@ -158,18 +173,18 @@ const LineModal = ({
             labelText="거리"
             value={distance}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setDistance(Number(event.target.value))
+              setDistance(event.target.value)
             }
-            extraArgs={{ min: '1' }}
+            extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
           />
           <Input
             type="number"
             labelText="운임"
             value={extraFare}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setExtraFare(Number(event.target.value))
+              setExtraFare(event.target.value)
             }
-            extraArgs={{ min: '0' }}
+            extraArgs={{ min: '0', max: Number.MAX_SAFE_INTEGER.toString() }}
           />
         </>
       )}

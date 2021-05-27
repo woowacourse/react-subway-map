@@ -37,7 +37,7 @@ const SectionPage = () => {
     const res = await requestGetStations(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+      enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
     } else if (res.status === API_STATUS.FULFILLED) {
       setStations(res.data);
     }
@@ -49,7 +49,7 @@ const SectionPage = () => {
     const res = await requestGetLines(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       setLines(res.data);
     }
@@ -61,7 +61,7 @@ const SectionPage = () => {
     const res = await requestGetLine(BASE_URL, targetLineId);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       setTargetLine(res.data);
     }
@@ -81,7 +81,7 @@ const SectionPage = () => {
     const res = await requestDeleteSection(BASE_URL, targetLine?.id, stationId);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_SECTION);
 
@@ -114,6 +114,7 @@ const SectionPage = () => {
             <Dropdown
               labelText="노선 선택"
               defaultOption="노선 선택"
+              value={targetLine?.id || ''}
               options={lineOptions}
               onSelect={selectTargetLine}
             />

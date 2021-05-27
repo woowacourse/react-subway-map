@@ -8,6 +8,7 @@ interface InputProps {
   placeholder?: string;
   extraArgs?: {
     min?: string;
+    max?: string;
     minLength?: number;
     maxLength?: number;
   };

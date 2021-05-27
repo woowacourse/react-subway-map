@@ -26,6 +26,22 @@ const requestAddStation = async (BASE_URL: string, newStationName: Station['name
   }
 };
 
+const requestEditStation = async (
+  BASE_URL: string,
+  newStationName: Station['name'],
+  stationId: Station['id'],
+) => {
+  try {
+    await axios.put(`${BASE_URL}/${END_POINT.STATIONS}/${stationId}`, { name: newStationName });
+
+    return { status: API_STATUS.FULFILLED };
+  } catch (error) {
+    console.error(error);
+
+    return { status: API_STATUS.REJECTED, message: error.response.data.message };
+  }
+};
+
 const requestDeleteStation = async (BASE_URL: string, stationId: Station['id']) => {
   try {
     await axios.delete(`${BASE_URL}/${END_POINT.STATIONS}/${stationId}`);
@@ -38,4 +54,4 @@ const requestDeleteStation = async (BASE_URL: string, stationId: Station['id']) 
   }
 };
 
-export { requestGetStations, requestAddStation, requestDeleteStation };
+export { requestGetStations, requestAddStation, requestEditStation, requestDeleteStation };

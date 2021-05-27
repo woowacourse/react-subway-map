@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
@@ -10,13 +11,14 @@ import { selectServer } from 'modules/serverSlice';
 import { ButtonSize, ButtonType } from 'types';
 import ROUTE from 'constants/routes';
 import { API_STATUS } from 'constants/api';
-import { NOTIFICATION } from 'constants/messages';
+import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import Styled from './styles';
-import { requestSignup } from 'request/auth';
+import { requestCheckDuplicatedEmail, requestSignup } from 'request/auth';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+  const { enqueueSnackbar } = useSnackbar();
 
   const [email, setEmail] = useState<string>('');
   const [age, setAge] = useState<number>();
@@ -27,26 +29,34 @@ const SignupPage = () => {
     isValid: false,
     isVisible: false,
   });
+  const [emailNotification, setEmailNotification] = useState({
+    message: '',
+    isValid: false,
+    isVisible: false,
+  });
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
   const history = useHistory();
 
-  const signup = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!checkPasswordMatch()) return;
-    if (!BASE_URL) {
-      setServerMessageVisible(true);
-      return;
-    }
-
-    const signupData = { email, password, age: age || 1 };
-
-    const res = await requestSignup(BASE_URL, signupData);
+  const checkDuplicatedEmail = async () => {
+    const res = await requestCheckDuplicatedEmail(BASE_URL, email);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR);
     } else if (res.status === API_STATUS.FULFILLED) {
-      history.push(ROUTE.LOGIN);
+      if (res.data.exist) {
+        setEmailNotification({
+          message: NOTIFICATION.DUPLICATED_EMAIL,
+          isValid: false,
+          isVisible: true,
+        });
+      } else {
+        setEmailNotification({
+          message: NOTIFICATION.AVAILABLE_EMAIL,
+          isValid: true,
+          isVisible: true,
+        });
+      }
     }
   };
 
@@ -68,6 +78,27 @@ const SignupPage = () => {
     }
   };
 
+  const signup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!checkPasswordMatch()) return;
+    if (!BASE_URL) {
+      setServerMessageVisible(true);
+      return;
+    }
+
+    const signupData = { email, password, age: age || 1 };
+
+    const res = await requestSignup(BASE_URL, signupData);
+
+    if (res.status === API_STATUS.REJECTED) {
+      enqueueSnackbar(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_SIGNUP);
+      history.push(ROUTE.LOGIN);
+    }
+  };
+
   const changeServer = (server: string) => {
     dispatch(selectServer({ server }));
     setServerMessageVisible(false);
@@ -84,7 +115,13 @@ const SignupPage = () => {
                 labelText="이메일"
                 placeholder="이메일을 입력해주세요."
                 value={email}
+                onBlur={checkDuplicatedEmail}
                 onChange={(event) => setEmail(event.target.value)}
+              />
+              <Notification
+                message={emailNotification.message}
+                isValid={emailNotification.isValid}
+                isVisible={emailNotification.isVisible}
               />
             </Styled.InputWrapper>
             <Styled.InputWrapper>
@@ -94,7 +131,7 @@ const SignupPage = () => {
                 placeholder="나이를 입력해주세요."
                 value={age}
                 onChange={(event) => setAge(Number(event.target.value))}
-                extraArgs={{ min: '1' }}
+                extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
               />
             </Styled.InputWrapper>
             <Styled.InputWrapper>

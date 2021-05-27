@@ -38,7 +38,7 @@ const LinePage = () => {
     const res = await requestGetLines(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+      enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_LINES);
     } else if (res.status === API_STATUS.FULFILLED) {
       setLines(res.data);
     }
@@ -50,7 +50,7 @@ const LinePage = () => {
     const res = await requestGetStations(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+      enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
     } else if (res.status === API_STATUS.FULFILLED) {
       setStations(res.data);
     }
@@ -63,7 +63,7 @@ const LinePage = () => {
     const res = await requestDeleteLine(BASE_URL, id);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       await getLines();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_LINE);
