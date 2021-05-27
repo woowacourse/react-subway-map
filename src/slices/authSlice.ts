@@ -50,7 +50,9 @@ export const requestLogin = createAsyncThunk<
     const response = await API.post('/login', form);
     const { accessToken } = response.data;
 
-    API.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    API.defaults.headers.post.Authorization = `Bearer ${accessToken}`;
+    API.defaults.headers.put.Authorization = `Bearer ${accessToken}`;
+    API.defaults.headers.delete.Authorization = `Bearer ${accessToken}`;
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
     localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, server);
