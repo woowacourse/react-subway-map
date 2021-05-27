@@ -21,6 +21,7 @@ const StationListItem = ({ name, id }: Props) => {
   return (
     <S.StationListItem>
       <S.Name>{name}</S.Name>
+
       <S.ButtonContainer>
         <S.ButtonWrapper>
           <S.Button src={editSVG} />

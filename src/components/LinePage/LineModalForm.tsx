@@ -54,7 +54,7 @@ const getLineColorErrorMessage = (color: string, lines: Line[]) => {
   }
 
   if (lines.some(line => line.color === color)) {
-    return '이미 노선에 등록된 색상입니다. 다른 색상을 선택해주세요.';
+    return '이미 노선에 등록된 색상입니다.\n다른 색상을 선택해주세요.';
   }
 
   return '';

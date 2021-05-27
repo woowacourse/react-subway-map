@@ -133,11 +133,11 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
 
   return (
     <S.SectionModalForm onSubmit={handleAddSection}>
-      <S.Title>노선 생성</S.Title>
+      <S.Title>구간 생성</S.Title>
       <S.InputWrapper>
         <SelectInput
           name='lineId'
-          value={sectionInfo.lineId}
+          value={lineSection.id}
           initialText='노선을 선택해주세요'
           label='노선 선택'
           onChange={handleLineChange}

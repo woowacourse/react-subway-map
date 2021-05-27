@@ -92,8 +92,9 @@ export const SelectedPalette = styled.div`
   font-size: 0.6rem;
   width: 9rem;
   height: 9rem;
+  color: ${COLOR.BLACK};
+  text-align: center;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   background-color: ${({ color }) => (color ? color : COLOR.WHITE)};
   border: 4px solid ${COLOR.GRAY_800};
   grid-row-start: 1;

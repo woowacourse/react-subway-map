@@ -79,8 +79,9 @@ const SignUpForm = () => {
       Object.values(BASE_URL).map(({ URL }) => authAPI.signUp({ url: URL, email, password, age }))
     );
 
-    if (results.some(result => result !== RESPONSE.SUCCESS)) {
-      alert('회원가입에 실패했습니다...!\n잠시 후 다시 시도해주세요!');
+    const errorMessage = results.find(result => result !== RESPONSE.SUCCESS);
+    if (errorMessage) {
+      alert(errorMessage);
       return;
     }
 

@@ -30,13 +30,17 @@ export const authAPI = {
       };
       const response = await axios.post(`${url}/members`, data);
 
-      if (response.status >= 400) {
+      if (response.status === 400) {
+        throw new Error('이미 가입된 이메일입니다.');
+      }
+
+      if (response.status > 400) {
         throw new Error('회원가입에 실패하였습니다.');
       }
 
       return RESPONSE.SUCCESS;
     } catch (error) {
-      return RESPONSE.FAILURE;
+      return error.message ?? RESPONSE.FAILURE;
     }
   },
 
