@@ -1,4 +1,5 @@
 import React, { FormEventHandler, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { Button, Card, Input, Modal } from '../../components';
 import * as Styled from './StationPage.styles';
 import { ReactComponent as SubwayIcon } from '../../assets/icons/subway-solid.svg';
@@ -8,8 +9,11 @@ import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
 import { ApiStatus, Station } from '../../types';
+import MESSAGE from '../../constants/message';
 
 const StationPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
@@ -24,6 +28,9 @@ const StationPage = () => {
     const response = await onAdd(name);
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
+    enqueueSnackbar(MESSAGE.SUCCESS.STATION_ADDED, {
+      variant: 'success',
+    });
     setName('');
   };
 
@@ -42,9 +49,17 @@ const StationPage = () => {
     const response = await onEdit({ id: editStationId, name: editName });
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
+    enqueueSnackbar(MESSAGE.SUCCESS.STATION_EDITED);
     setEditStationId(null);
     setEditName('');
     closeModal();
+  };
+
+  const handleDelete = async (id: Station['id']) => {
+    const response = await onDelete(id);
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+
+    enqueueSnackbar(MESSAGE.SUCCESS.STATION_DELETED);
   };
 
   return (
@@ -85,7 +100,7 @@ const StationPage = () => {
                         >
                           <EditIcon />
                         </Button>
-                        <Button shape="circle" variant="text" onClick={() => onDelete(item.id)}>
+                        <Button shape="circle" variant="text" onClick={() => handleDelete(item.id)}>
                           <TrashIcon />
                         </Button>
                       </Styled.OptionWrapper>

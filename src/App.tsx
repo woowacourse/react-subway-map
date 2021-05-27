@@ -13,12 +13,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-        >
+        <SnackbarProvider>
           <GlobalStyle />
           <Router>
             <Header>

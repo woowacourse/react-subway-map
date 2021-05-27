@@ -98,5 +98,6 @@ export type SectionAttribute = {
 
 export type Error = {
   message: string;
-  status: number;
+  status?: number;
+  httpStatus?: number;
 };

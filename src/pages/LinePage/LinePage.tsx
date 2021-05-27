@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { Button, Card, ColorDot, Input, Select, ColorPalette, Modal } from '../../components';
 import { ApiStatus, Line } from '../../types';
 import * as Styled from './LinePage.styles';
@@ -15,6 +16,8 @@ import useColorPalette from '../../hooks/useColorPalette';
 import MESSAGE from '../../constants/message';
 
 const LinePage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     isModalOpen: isAddModalOpen,
     openModal: openAddModal,
@@ -75,6 +78,9 @@ const LinePage = () => {
 
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
+    enqueueSnackbar(MESSAGE.SUCCESS.LINE_ADDED, {
+      variant: 'success',
+    });
     closeAddModal();
     setName('');
     setDistance('');
@@ -93,15 +99,24 @@ const LinePage = () => {
 
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
+    enqueueSnackbar(MESSAGE.SUCCESS.LINE_EDITED);
     closeEditModal();
     setEditName('');
     setEditLineId(-1);
   };
 
+  const handleDeleteLine = async (id: Line['id']) => {
+    const response = await onDeleteLine(id);
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+
+    enqueueSnackbar(MESSAGE.SUCCESS.LINE_DELETED);
+  };
+
   const handleOpenAddModal = () => {
     if (stationList.length < 2) {
-      // eslint-disable-next-line no-alert
-      alert(MESSAGE.ERROR.INVALID_STATION_LENGTH);
+      enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_LENGTH, {
+        variant: 'warning',
+      });
       return;
     }
 
@@ -155,7 +170,11 @@ const LinePage = () => {
                         >
                           <EditIcon />
                         </Button>
-                        <Button shape="circle" variant="text" onClick={() => onDeleteLine(item.id)}>
+                        <Button
+                          shape="circle"
+                          variant="text"
+                          onClick={() => handleDeleteLine(item.id)}
+                        >
                           <TrashIcon />
                         </Button>
                       </Styled.OptionWrapper>

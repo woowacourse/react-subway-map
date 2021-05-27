@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './LoginPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -9,7 +10,7 @@ import useSelect from '../../hooks/useSelect';
 import REGEX from '../../constants/regex';
 import ROUTES from '../../constants/routes';
 import BACKEND from '../../constants/backend';
-import { CREWS } from '../../types';
+import { ApiStatus, CREWS } from '../../types';
 import useAuth from '../../hooks/useAuth';
 import MESSAGE from '../../constants/message';
 
@@ -18,6 +19,8 @@ interface ILocationState {
 }
 
 const LoginPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { onLogin, onResetError, server, isLogin, error } = useAuth();
 
   const { value: selectedServer, onChange: onChangeSelectedServer } = useSelect(
@@ -29,10 +32,13 @@ const LoginPage = () => {
   const history = useHistory();
   const location = useLocation<ILocationState>();
 
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onLogin(selectedServer, { email, password });
+    const response = await onLogin(selectedServer, { email, password });
+
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+    enqueueSnackbar(MESSAGE.SUCCESS.LOGIN);
   };
 
   useEffect(() => {
@@ -45,11 +51,12 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (error) {
-      // eslint-disable-next-line no-alert
-      alert(error.message || MESSAGE.ERROR.LOGIN_FAILURE);
+      enqueueSnackbar(error.message || MESSAGE.ERROR.LOGIN_FAILURE, {
+        variant: 'error',
+      });
       onResetError();
     }
-  }, [error, onResetError]);
+  }, [enqueueSnackbar, error, onResetError]);
 
   return (
     <Styled.LoginPage>
