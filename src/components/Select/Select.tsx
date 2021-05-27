@@ -3,7 +3,7 @@ import { SelectHTMLAttributes } from "react";
 import { SelectBlock, SelectStylesProps } from "./Select.styles";
 
 interface Option {
-  value: number;
+  value: string | number;
   text: string;
 }
 
@@ -13,9 +13,9 @@ export interface Props extends SelectHTMLAttributes<HTMLSelectElement>, SelectSt
 }
 
 const Select = ({ defaultOption, options, ...props }: Props) => (
-  <SelectBlock {...props}>
+  <SelectBlock {...props} defaultValue="">
     {defaultOption && (
-      <option selected disabled hidden>
+      <option value="" disabled hidden>
         {defaultOption}
       </option>
     )}
