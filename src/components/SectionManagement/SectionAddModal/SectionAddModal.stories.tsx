@@ -1,15 +1,17 @@
 import { Meta, Story } from '@storybook/react';
-import SectionAddModal from './SectionAddModal';
+import SectionAddModal, { SectionAddModalProps } from './SectionAddModal';
 
 export default {
   title: 'Components/SectionManagement/SectionAddModal',
   component: SectionAddModal,
 } as Meta;
 
-const Template: Story = (args) => {
+const Template: Story<SectionAddModalProps> = (args) => {
   return <SectionAddModal {...args} />;
 };
 
 export const Default = Template.bind({});
 
-Default.args = {};
+Default.args = {
+  closeModal: () => {},
+};

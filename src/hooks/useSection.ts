@@ -1,9 +1,12 @@
-import { requestDeleteSection, requestSection } from './../service/section';
+import {
+  requestDeleteSection,
+  requestAddSection,
+  requestSection,
+} from './../service/section';
 import { useEffect, useState } from 'react';
-import { Line, LineDetail, Section, StationId } from '../types';
-import useLine from './useLine';
+import { LineDetail, SectionForm, StationId } from '../types';
 import useLogin from './useLogin';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 
 const useSection = () => {
   const [currentLineId, setCurrentLineId] = useState(0);
@@ -14,20 +17,34 @@ const useSection = () => {
     stations: [],
     sections: [],
   });
+
+  const [form, setForm] = useState<SectionForm>({
+    distance: 0,
+    downStationId: -1,
+    upStationId: -1,
+  });
+
+  const { distance, downStationId, upStationId } = form;
+
   const { accessToken } = useLogin();
+  const addSectionMutation = useMutation(
+    () => requestAddSection(currentLineId, form, accessToken),
+    { onSuccess: () => updateCurrentSection() }
+  );
+
   const deleteSectionMutation = useMutation(
     (stationId: StationId) =>
       requestDeleteSection(currentLineId, stationId, accessToken),
-    { onSuccess: () => updateCurrenSection() }
+    { onSuccess: () => updateCurrentSection() }
   );
 
   useEffect(() => {
     if (!currentLineDetail) return;
 
-    updateCurrenSection();
+    updateCurrentSection();
   }, [currentLineId]);
 
-  const updateCurrenSection = async () => {
+  const updateCurrentSection = async () => {
     if (!currentLineId) return;
 
     const data = await requestSection(currentLineId, accessToken);
@@ -35,11 +52,39 @@ const useSection = () => {
     setCurrentLineDetail(data);
   };
 
-  const deleteSection = async (stationId: StationId) => {
+  const deleteSection = (stationId: StationId) => {
     deleteSectionMutation.mutate(stationId);
   };
 
-  return { currentLineId, setCurrentLineId, currentLineDetail, deleteSection };
+  const addSection = async () => {
+    addSectionMutation.mutate();
+  };
+
+  const setDistance = (distance: number) => {
+    setForm({ ...form, distance });
+  };
+
+  const setUpStationId = (upStationId: StationId) => {
+    setForm({ ...form, upStationId });
+  };
+
+  const setDownStationId = (downStationId: StationId) => {
+    setForm({ ...form, downStationId });
+  };
+
+  return {
+    distance,
+    upStationId,
+    downStationId,
+    currentLineId,
+    setCurrentLineId,
+    currentLineDetail,
+    addSection,
+    deleteSection,
+    setDistance,
+    setUpStationId,
+    setDownStationId,
+  };
 };
 
 export default useSection;

@@ -1,5 +1,5 @@
 import APIClient from '../API/API';
-import { LineId, StationId } from '../types';
+import { LineId, Section, SectionForm, StationId } from '../types';
 
 export const requestSection = async (lineId: LineId, accessToken: string) => {
   const response = await APIClient.get(`/lines/${lineId}`, accessToken);
@@ -11,6 +11,23 @@ export const requestSection = async (lineId: LineId, accessToken: string) => {
   }
 
   return response.json();
+};
+
+export const requestAddSection = async (
+  lineId: LineId,
+  form: SectionForm,
+  accessToken: string
+) => {
+  const response = await APIClient.post(
+    `/lines/${lineId}/sections`,
+    form,
+    accessToken
+  );
+
+  if (!response.ok) {
+    const responseText = await response.text();
+    throw new Error(responseText);
+  }
 };
 
 export const requestDeleteSection = async (

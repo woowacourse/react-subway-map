@@ -2,7 +2,8 @@ import { StyledStationList } from './StationList.styles';
 import StationListItem from './StationListItem/StationListItem';
 import { Station, StationId } from '../../../types';
 import { VFC } from 'react';
-interface StationProps {
+
+export interface StationProps {
   stations: Station[];
   deleteStation: (id: StationId) => void;
 }
