@@ -18,7 +18,7 @@ export const Main = styled.section`
   margin: 0 auto;
   padding-top: 10vh;
 
-  min-width: 35rem;
+  min-width: 40rem;
   width: 40vw;
-  max-width: 40rem;
+  max-width: 42.5rem;
 `;

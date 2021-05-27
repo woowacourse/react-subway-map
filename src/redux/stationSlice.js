@@ -63,7 +63,7 @@ const removeStation = createAsyncThunk('station/removeStation', async ({ endpoin
     if (response.status === 204) {
       return { id };
     } else {
-      throw new Error('삭제를 실패하였습니다.');
+      throw new Error(response.body.error);
     }
   } catch (e) {
     console.error(e);
@@ -73,15 +73,28 @@ const removeStation = createAsyncThunk('station/removeStation', async ({ endpoin
 
 const stationSlice = createSlice({
   name: 'station',
-  initialState: { stations: [], isLoading: false, isAddSuccess: false },
+  initialState: {
+    stations: [],
+    isLoading: false,
+    isAddSuccess: false,
+    isAddFail: false,
+    isDeleteSuccess: false,
+    isDeleteFail: false,
+  },
   reducers: {
-    clearAddSuccess: (state) => {
+    clearStationProgress: (state) => {
       state.isAddSuccess = false;
+      state.isAddFail = false;
+      state.isDeleteSuccess = false;
+      state.isDeleteFail = false;
     },
     clearStation: (state) => {
       state.stations = [];
       state.isLoading = false;
       state.isAddSuccess = false;
+      state.isAddFail = false;
+      state.isDeleteSuccess = false;
+      state.isDeleteFail = false;
     },
   },
   extraReducers: {
@@ -106,23 +119,26 @@ const stationSlice = createSlice({
       state.isLoading = true;
     },
     [addStation.rejected]: (state) => {
+      state.isAddFail = true;
       state.isLoading = false;
     },
     [removeStation.fulfilled]: (state, action) => {
       const { id } = action.payload;
 
       state.stations = state.stations.filter((station) => station.id !== id);
+      state.isDeleteSuccess = true;
     },
     [removeStation.pending]: (state) => {
       state.isLoading = true;
     },
     [removeStation.rejected]: (state) => {
+      state.isDeleteFail = true;
       state.isLoading = false;
     },
   },
 });
 
 export { getStations, addStation, removeStation };
-export const { clearAddSuccess, clearStation } = stationSlice.actions;
+export const { clearStationProgress, clearStation } = stationSlice.actions;
 
 export default stationSlice.reducer;

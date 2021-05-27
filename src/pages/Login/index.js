@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { useCookies } from 'react-cookie';
 
-import { login, clearLoginFailed } from '../../redux/userSlice';
+import { login, clearLoginFail } from '../../redux/userSlice';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
 import { LOGIN, ROUTE, ACCESS_TOKEN } from '../../constants';
@@ -16,7 +16,7 @@ export const LoginPage = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [cookies, setCookie] = useCookies([ACCESS_TOKEN]);
-  const { isLogin, isLoginFailed, accessToken } = useSelector((store) => store.user);
+  const { isLogin, isLoginFail, accessToken } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
 
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -29,11 +29,11 @@ export const LoginPage = (props) => {
       history.push(ROUTE.LOGIN);
     }
 
-    if (isLoginFailed) {
+    if (isLoginFail) {
       enqueueSnackbar(LOGIN.FAIL, { variant: 'error', autoHideDuration: 1500 });
-      dispatch(clearLoginFailed());
+      dispatch(clearLoginFail());
     }
-  }, [isLogin, isLoginFailed]);
+  }, [isLogin, isLoginFail]);
 
   const handleLogin = (e) => {
     e.preventDefault();

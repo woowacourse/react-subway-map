@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
 import { SectionListItem } from './SectionListItem';
@@ -14,23 +15,22 @@ import {
   LineSelectBox,
   InvalidMessage,
 } from './style';
-import { COLOR } from '../../constants';
+import { COLOR, ACCESS_TOKEN } from '../../constants';
 
 export const SectionPage = (props) => {
   const { endpoint } = props;
 
   const dispatch = useDispatch();
-  const stations = [];
-  const map = [];
-  const selectedLine = map[0];
-  const lines = map.map((section) => ({ id: section.id, name: section.name }));
+  const [cookies] = useCookies([ACCESS_TOKEN]);
+  const accessToken = cookies[ACCESS_TOKEN];
 
+  const stations = useSelector((store) => store.station);
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
+  const map = [];
+  const lineNames = map.map((section) => ({ id: section.id, name: section.name }));
+  const selectedLine = map[0];
 
-  const handleOpenModal = () => {
-    setIsSectionAddOpen(true);
-  };
-
+  const handleOpenModal = () => setIsSectionAddOpen(true);
   const handleCloseModal = () => setIsSectionAddOpen(false);
 
   const handleAddSection = (e) => {
@@ -47,7 +47,7 @@ export const SectionPage = (props) => {
 
   return (
     <Section heading="구간 관리">
-      <LineSelectBox id="line" name="line" optionHead="노선 선택" options={lines}></LineSelectBox>
+      <LineSelectBox id="line" name="line" optionHead="노선 선택" options={lineNames}></LineSelectBox>
       <AddButton onClick={handleOpenModal}>
         <IconPlus width={30} color={COLOR.TEXT.DEFAULT} />
       </AddButton>
@@ -61,7 +61,7 @@ export const SectionPage = (props) => {
         <Modal>
           <Section heading="구간 추가">
             <Form onSubmit={handleAddSection}>
-              <LineSelectBox id="line" name="line" optionHead="노선 선택" options={lines}></LineSelectBox>
+              <LineSelectBox id="line" name="line" optionHead="노선 선택" options={lineNames}></LineSelectBox>
               <StationSelect>
                 <Select id="upStation" name="upStation" optionHead="상행역" options={stations}></Select>
                 <IconArrowLTR />

@@ -5,7 +5,7 @@ import { COLOR } from '../../../constants';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+  margin: 0.9rem 0;
 `;
 
 export const Label = styled.label`
@@ -53,8 +53,8 @@ export const Icon = styled.span`
 
 export const Message = styled.span`
   padding: 0.5rem 0 0 3.5rem;
-  height: 1.75rem;
+  height: 1rem;
 
   color: ${COLOR.ERROR};
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 `;

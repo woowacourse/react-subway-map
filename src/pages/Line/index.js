@@ -4,21 +4,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
 import { getStations } from '../../redux/stationSlice';
-import { getLines, addLine, clearAddSuccess, removeLine } from '../../redux/lineSlice';
+import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
+
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
-import { COLOR, ACCESS_TOKEN } from '../../constants';
+import { useSnackbar } from 'notistack';
+import { COLOR, ACCESS_TOKEN, LINE } from '../../constants';
 
 export const LinePage = (props) => {
   const { endpoint } = props;
 
   const dispatch = useDispatch();
   const { stations } = useSelector((store) => store.station);
-  const { lines, isAddSuccess } = useSelector((store) => store.line);
+  const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
   const [cookies] = useCookies([ACCESS_TOKEN]);
   const accessToken = cookies[ACCESS_TOKEN];
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsLineAddOpen(true);
   const handleCloseModal = () => setIsLineAddOpen(false);
@@ -47,10 +50,24 @@ export const LinePage = (props) => {
 
   useEffect(() => {
     if (isAddSuccess) {
+      enqueueSnackbar(LINE.ADD_SUCCEED);
       handleCloseModal();
-      dispatch(clearAddSuccess());
     }
-  }, [isAddSuccess]);
+
+    if (isAddFail) {
+      enqueueSnackbar(LINE.ADD_FAIL);
+    }
+
+    if (isDeleteSuccess) {
+      enqueueSnackbar(LINE.DELETE_SUCCEED);
+    }
+
+    if (isDeleteFail) {
+      enqueueSnackbar(LINE.DELETE_FAIL);
+    }
+
+    dispatch(clearLineProgress());
+  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
 
   return (
     <Section heading="노선 관리">

@@ -85,15 +85,28 @@ const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, access
 
 const lineSlice = createSlice({
   name: 'line',
-  initialState: { lines: [], isLoading: false, isAddSuccess: false },
+  initialState: {
+    lines: [],
+    isLoading: false,
+    isAddSuccess: false,
+    isAddFail: false,
+    isDeleteSuccess: false,
+    isDeleteFail: false,
+  },
   reducers: {
-    clearAddSuccess: (state) => {
+    clearLineProgress: (state) => {
       state.isAddSuccess = false;
+      state.isAddFail = false;
+      state.isDeleteSuccess = false;
+      state.isDeleteFail = false;
     },
     clearLine: (state) => {
       state.lines = [];
       state.isLoading = false;
       state.isAddSuccess = false;
+      state.isAddFail = false;
+      state.isDeleteSuccess = false;
+      state.isDeleteFail = false;
     },
   },
   extraReducers: {
@@ -118,23 +131,26 @@ const lineSlice = createSlice({
       state.isLoading = true;
     },
     [addLine.rejected]: (state) => {
+      state.isAddFail = true;
       state.isLoading = false;
     },
     [removeLine.fulfilled]: (state, action) => {
       const { id } = action.payload;
 
       state.lines = state.lines.filter((line) => line.id !== id);
+      state.isDeleteSuccess = true;
     },
     [removeLine.pending]: (state) => {
       state.isLoading = true;
     },
     [removeLine.rejected]: (state) => {
+      state.isDeleteFail = true;
       state.isLoading = false;
     },
   },
 });
 
 export { getLines, addLine, removeLine };
-export const { clearAddSuccess, clearLine } = lineSlice.actions;
+export const { clearLineProgress, clearLine } = lineSlice.actions;
 
 export default lineSlice.reducer;

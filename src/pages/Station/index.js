@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import { useCookies } from 'react-cookie';
 
-import { getStations, addStation, clearAddSuccess, removeStation } from '../../redux/stationSlice';
+import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
 import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
 import { Form, List } from './style';
 import { STATION, ACCESS_TOKEN } from '../../constants';
@@ -12,11 +13,12 @@ export const StationPage = (props) => {
   const { endpoint } = props;
 
   const dispatch = useDispatch();
-  const { stations, isAddSuccess } = useSelector((store) => store.station);
+  const { stations, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.station);
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
   const ref = useRef();
   const [cookies] = useCookies([ACCESS_TOKEN]);
   const accessToken = cookies[ACCESS_TOKEN];
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleStationNameInputChange = (e) => {
     const stationName = e.target.value;
@@ -43,11 +45,21 @@ export const StationPage = (props) => {
 
   useEffect(() => {
     if (isAddSuccess) {
+      enqueueSnackbar(STATION.ADD_SUCCEED);
       ref.current.focus();
       ref.current.value = '';
-      dispatch(clearAddSuccess());
     }
-  }, [isAddSuccess]);
+    if (isAddFail) {
+      enqueueSnackbar(STATION.ADD_FAIL);
+    }
+    if (isDeleteSuccess) {
+      enqueueSnackbar(STATION.DELETE_SUCCEED);
+    }
+    if (isDeleteFail) {
+      enqueueSnackbar(STATION.DELETE_FAIL);
+    }
+    dispatch(clearStationProgress());
+  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
 
   return (
     <Section heading="지하철 역 관리">

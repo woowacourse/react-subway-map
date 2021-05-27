@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import WrapComponent from './TestComponent';
 import store from '../../redux/store';
@@ -83,38 +83,3 @@ describe('역 이름 유효성 테스트', () => {
     expect(message).not.toBeEmptyDOMElement();
   });
 });
-
-// describe('역 추가 기능 테스트', () => {
-//   test('Enter Key를 눌렀을 경우, 역을 추가할 수 있어야 한다.', () => {
-//     const { container, getByTestId } = render(Component);
-//     const stationInput = container.querySelector('input');
-//     const stationList = container.querySelector('ul');
-
-//     userEvent.type(stationInput, '하루{enter}');
-//     screen.getByText('하루');
-
-//     expect(addButton).toBeCalled();
-//   });
-
-// test('"추가" 버튼을 클릭한 경우, 역을 추가할 수 있어야 한다.', () => {
-//   const { getByText } = render(Component);
-//   const stationInput = getByText('추가');
-
-// userEvent.click(addButton);
-//   expect(stationInput).toHaveFocus();
-// });
-
-// test('"추가"에 성공한 경우, 해당 역은 역 목록 최상단에 표시되어야 한다.', () => {
-//   const { container, getByTestId } = render(Component);
-//   const stationInput = container.querySelector('input');
-
-//   expect(stationInput).toHaveFocus();
-// });
-
-// test('"추가"에 성공한 경우, 입력 창은 비워져야 한다.', () => {
-//   const { container, getByTestId } = render(Component);
-//   const stationInput = container.querySelector('input');
-
-//   expect(stationInput).toHaveFocus();
-// });
-// });

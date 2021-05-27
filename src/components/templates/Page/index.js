@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
@@ -14,9 +14,10 @@ import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from '../../../constants'
 export const Page = (props) => {
   const { serverId, setServerId, children, ...rest } = props;
 
+  const dispatch = useDispatch();
+
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
   const history = useHistory();
-  const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID]);
 
   const handleServerSubmit = (e) => {
