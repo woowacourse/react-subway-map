@@ -54,7 +54,7 @@ export const RANGE = {
 
 export const MOCK_SERVER = 'https://mock.api';
 
-export const DEFAULT_SERVER = '와이비';
+export const DEFAULT_SERVER = '중간곰';
 
 export const SERVERS = {
   제리: 'https://jerry-subway.o-r.kr',
