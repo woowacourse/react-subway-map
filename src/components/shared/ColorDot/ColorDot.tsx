@@ -21,7 +21,7 @@ const colorDotSize = {
   `,
 };
 
-const ColorDot = styled.div<ColorDotProps>`
+const ColorDot = styled.span<ColorDotProps>`
   ${({ size }) => colorDotSize[size]}
   border-radius: 50%;
   background-color: ${({ backgroundColor }) =>
