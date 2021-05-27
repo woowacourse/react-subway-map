@@ -57,6 +57,7 @@ export type LineColor =
   | 'darksalmon';
 
 export type LineId = number;
+
 export interface Line {
   id: LineId;
   name: string;

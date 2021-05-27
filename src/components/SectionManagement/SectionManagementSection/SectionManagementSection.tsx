@@ -11,15 +11,16 @@ import {
 
 const SectionManagementSection = () => {
   const { lines } = useLine();
-  const { currentLine, setCurrentLine } = useSection();
+  const { currentLineId, setCurrentLineId, currentLineDetail, deleteSection } =
+    useSection();
 
   return (
     <StyledSectionManagementSection type="vertical">
       <Title>구간 관리</Title>
       <SectionAddButton>구간추가</SectionAddButton>
       <LineSelectBox
-        value={currentLine}
-        onChange={({ target }) => setCurrentLine(target.value)}
+        value={currentLineId}
+        onChange={({ target }) => setCurrentLineId(Number(target.value))}
       >
         <option defaultValue="노선 이름" disabled>
           노선 이름
@@ -32,7 +33,10 @@ const SectionManagementSection = () => {
             </option>
           ))}
       </LineSelectBox>
-      {/* <StationList /> */}
+      <StationList
+        stations={currentLineDetail.stations}
+        deleteStation={deleteSection}
+      />
     </StyledSectionManagementSection>
   );
 };
