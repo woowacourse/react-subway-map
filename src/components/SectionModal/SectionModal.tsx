@@ -32,9 +32,9 @@ const SectionModal = ({
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
-  const [upStationId, setUpStationId] = useState<number>();
-  const [downStationId, setDownStationId] = useState<number>();
-  const [distance, setDistance] = useState<number>();
+  const [upStationId, setUpStationId] = useState<string>('');
+  const [downStationId, setDownStationId] = useState<string>('');
+  const [distance, setDistance] = useState<string>('');
 
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
@@ -57,9 +57,17 @@ const SectionModal = ({
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_SECTION);
+      resetForm();
       closeModal();
+
       await getLine(targetLine.id);
     }
+  };
+
+  const resetForm = () => {
+    setUpStationId('');
+    setDownStationId('');
+    setDistance('');
   };
 
   return (
@@ -68,6 +76,7 @@ const SectionModal = ({
         labelText="노선 선택"
         defaultOption={targetLine?.name || '노선 선택'}
         options={lineOptions}
+        value={targetLine?.id || ''}
         onSelect={selectTargetLine}
       />
       <Styled.StationInputWrapper>
@@ -76,7 +85,8 @@ const SectionModal = ({
             labelText="상행역"
             defaultOption="상행역"
             options={stationOptions}
-            onSelect={(event) => setUpStationId(Number(event.target.value))}
+            value={upStationId}
+            onSelect={(event) => setUpStationId(event.target.value)}
           />
         </Styled.DropdownWrapper>
         <Styled.DropdownWrapper>
@@ -84,17 +94,17 @@ const SectionModal = ({
             labelText="하행역"
             defaultOption="하행역"
             options={stationOptions}
-            onSelect={(event) => setDownStationId(Number(event.target.value))}
+            value={downStationId}
+            onSelect={(event) => setDownStationId(event.target.value)}
           />
         </Styled.DropdownWrapper>
       </Styled.StationInputWrapper>
       <Input
         type="number"
         labelText="거리"
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setDistance(Number(event.target.value))
-        }
-        extraArgs={{ min: '1' }}
+        value={distance}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDistance(event.target.value)}
+        extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
       />
       <Styled.ButtonsContainer>
         <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>

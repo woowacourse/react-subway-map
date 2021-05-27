@@ -67,9 +67,10 @@ const StationPage = () => {
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      await getStations();
       setNewStationName('');
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_STAION);
+
+      await getStations();
     }
   };
 

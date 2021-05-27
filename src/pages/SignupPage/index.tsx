@@ -98,7 +98,7 @@ const SignupPage = () => {
                 placeholder="나이를 입력해주세요."
                 value={age}
                 onChange={(event) => setAge(Number(event.target.value))}
-                extraArgs={{ min: '1' }}
+                extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
               />
             </Styled.InputWrapper>
             <Styled.InputWrapper>

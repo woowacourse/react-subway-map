@@ -10,14 +10,15 @@ interface DropdownProps {
   labelText: string;
   defaultOption: string;
   options: Option[];
+  value: string | number;
   onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown = ({ labelText, defaultOption, options, onSelect }: DropdownProps) => {
+const Dropdown = ({ labelText, defaultOption, options, value, onSelect }: DropdownProps) => {
   return (
     <Styled.Label>
       {labelText}
-      <Styled.Select onChange={onSelect} required>
+      <Styled.Select value={value} onChange={onSelect} required>
         <option value="" selected disabled hidden>
           {defaultOption}
         </option>
