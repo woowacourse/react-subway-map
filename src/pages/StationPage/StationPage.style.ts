@@ -10,23 +10,6 @@ const Container = styled.div`
   min-height: 70vh;
 `;
 
-const Icon = styled.span`
-  color: ${PALETTE.GRAY_500};
-  margin-right: 0.5rem;
-
-  * {
-    height: 100%;
-  }
-`;
-
-const Heading1 = styled.h1`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${PALETTE.GRAY_600};
-  margin-bottom: 2rem;
-`;
-
 const Form = styled.form`
   display: flex;
 
@@ -35,28 +18,10 @@ const Form = styled.form`
   }
 `;
 
-const List = styled.ul`
-  max-height: 45vh;
-  overflow: auto;
-
-  li {
-    display: flex;
-    align-items: center;
-    height: 3rem;
-    padding: 0 0.25rem;
-    border-bottom: 1px solid ${PALETTE.GRAY_100};
-
-    p {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
-
-    button {
-      margin-left: 0.5rem;
-    }
-  }
+const Text = styled.p`
+  text-align: center;
+  font-size: 0.75rem;
+  color: ${PALETTE.GRAY_500};
 `;
 
-export { Container, Heading1, Icon, Form, List };
+export { Container, Form, Text };

@@ -6,22 +6,25 @@ import {
   KeyboardEventHandler,
 } from 'react';
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
-import Box from '../../components/shared/Box/Box';
-import Button from '../../components/shared/Button/Button';
-import Input from '../../components/shared/Input/Input';
-import InputContainer from '../../components/shared/InputContainer/InputContainer';
-import PATH from '../../constants/path';
-import PALETTE from '../../constants/palette';
+import { Box, Button, Input, Icon, InputContainer, Heading1 } from '../../components/shared';
+
+import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
-import useInput from '../../hooks/useInput';
-import useDebounce from '../../hooks/useDebounce';
-import { Icon, Heading1, Form } from './SignupPage.style';
-import apiRequest from '../../request';
+
+import REGEX from '../../constants/regex';
+import { SIGNUP_VALUE } from '../../constants/values';
+import PATH from '../../constants/path';
+import PALETTE from '../../constants/palette';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+
+import useDebounce from '../../hooks/useDebounce';
+import useInput from '../../hooks/useInput';
+import apiRequest from '../../request';
 import { PageProps } from '../types';
+import { Form } from './SignupPage.style';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -29,6 +32,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
   const [email, setEmail] = useState<string>('');
   const [isEmailDuplicated, setIsEmailDuplicated] = useState<boolean>(false);
@@ -36,9 +40,11 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const [password, onPasswordChange] = useInput('');
   const [passwordConfirm, onPasswordConfirmChange] = useInput('');
 
-  const isEmailFormatValid = !email || /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
-  const isAgeValid = !age || (Number(age) > 0 && Number(age) <= 200);
-  const isPasswordValid = !password || /^[0-9A-Za-z@$!%*?&]{8,14}$/.test(password);
+  const isEmailFormatValid = !email || REGEX.EMAIL.test(email);
+  const isAgeValid =
+    !age ||
+    (Number(age) >= SIGNUP_VALUE.AGE_MIN_VALUE && Number(age) <= SIGNUP_VALUE.AGE_MAX_VALUE);
+  const isPasswordValid = !password || REGEX.PASSWORD.test(password);
   const isPasswordMatched = !passwordConfirm || password === passwordConfirm;
 
   const emailMessage = email
@@ -76,6 +82,10 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   }, DEBOUNCE_DELAY);
+
+  if (isLoggedIn) {
+    return <Redirect to={PATH.ROOT} />;
+  }
 
   const onEmailChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setEmail(event.target.value);
@@ -117,7 +127,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
-      <Heading1>회원가입</Heading1>
+      <Heading1 marginBottom="2rem">회원가입</Heading1>
       <Form onSubmit={onSignup}>
         <InputContainer
           validation={{
@@ -144,7 +154,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
           <Input
             type="text"
             placeholder="나이를 입력하세요"
-            maxLength={3}
+            maxLength={SIGNUP_VALUE.AGE_MAX_LENGTH}
             value={age}
             onChange={onAgeChange}
             autoComplete="off"

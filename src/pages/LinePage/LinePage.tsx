@@ -6,34 +6,35 @@ import {
   FormEventHandler,
   ChangeEventHandler,
 } from 'react';
-import { MdAdd, MdArrowForward, MdEdit, MdDelete } from 'react-icons/md';
+import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
-import Box from '../../components/shared/Box/Box';
-import RoundButton from '../../components/shared/Button/RoundButton';
-import Button from '../../components/shared/Button/Button';
-import Input from '../../components/shared/Input/Input';
-import Select from '../../components/shared/Select/Select';
-import InputContainer from '../../components/shared/InputContainer/InputContainer';
-import PALETTE from '../../constants/palette';
-import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import {
-  Container,
-  Icon,
-  Heading1,
-  TitleBox,
-  FormBox,
-  Form,
-  List,
-  StationSelects,
-  StationSelectError,
-} from './LinePage.style';
 import Palette from '../../components/Palette/Palette';
-import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import {
+  Box,
+  Select,
+  Button,
+  Input,
+  RoundButton,
+  InputContainer,
+  Heading1,
+  Icon,
+  ErrorText,
+  List,
+} from '../../components/shared';
+
+import REGEX from '../../constants/regex';
+import PALETTE from '../../constants/palette';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { LINE_VALUE } from '../../constants/values';
+
+import { ThemeContext } from '../../contexts/ThemeContextProvider';
+import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { UserContext } from '../../contexts/UserContextProvider';
 import useInput from '../../hooks/useInput';
-import { PageProps } from '../types';
+import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
 import noLine from '../../assets/images/no_line.png';
+import { PageProps } from '../types';
+import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
 
 const lineColors = [
   'PINK',
@@ -51,7 +52,6 @@ const lineColors = [
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 
-// TODO: Authorization Error 발생 시, 로그인하라고 메시지 띄워주기
 const LinePage = ({ setIsLoading }: PageProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);
@@ -72,14 +72,18 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
-  // TODO: 매직넘버 싹 다 ㄱ
   const isLineNameValid =
-    lineName.length > 1 && lineName.length < 11 && /^[가-힣0-9]+$/.test(lineName);
+    lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
+    lineName.length <= LINE_VALUE.NAME_MAX_LENGTH &&
+    REGEX.KOREAN_DIGIT.test(lineName);
   const isLineNameDuplicated = lines.some((item) => item.name === lineName);
   const isStationSelectDuplicated = upStationId === downStationId;
   const isDistanceValid =
-    /^[0-9]+$/.test(distance) && Number(distance) > 0 && Number(distance) < 301;
+    REGEX.ONLY_DIGIT.test(distance) &&
+    Number(distance) >= LINE_VALUE.DISTANCE_MIN_VALUE &&
+    Number(distance) <= LINE_VALUE.DISTANCE_MAX_VALUE;
 
   const lineNameErrorMessage =
     lineName &&
@@ -204,16 +208,22 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 노선 관리</Heading1>
-        <p>노선을 추가하시려면 '+' 버튼을 눌러주세요</p>
-        <RoundButton
-          type="button"
-          size="m"
-          backgroundColor={themeColor}
-          color={PALETTE.WHITE}
-          onClick={() => setFormOpen(!formOpen)}
-        >
-          <MdAdd size="1.5rem" />
-        </RoundButton>
+        {isLoggedIn ? (
+          <>
+            <p>노선을 추가하시려면 '+' 버튼을 눌러주세요</p>
+            <RoundButton
+              type="button"
+              size="m"
+              backgroundColor={themeColor}
+              color={PALETTE.WHITE}
+              onClick={() => setFormOpen(!formOpen)}
+            >
+              <MdAdd size="1.5rem" />
+            </RoundButton>
+          </>
+        ) : (
+          <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
+        )}
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Form onSubmit={onLineSubmit}>
@@ -253,7 +263,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
                 </Select>
               </InputContainer>
             </div>
-            <StationSelectError>{stationSelectErrorMessage}</StationSelectError>
+            <ErrorText>{stationSelectErrorMessage}</ErrorText>
           </StationSelects>
           <InputContainer
             labelText="거리 (단위:km)"
@@ -277,18 +287,17 @@ const LinePage = ({ setIsLoading }: PageProps) => {
             {lines.map(({ id, name }) => (
               <li key={id}>
                 <p>{name}</p>
-                <Button type="button" size="s" backgroundColor={PALETTE.GRAY_100}>
-                  <MdEdit size="15px" />
-                </Button>
-                <Button
-                  type="button"
-                  size="s"
-                  backgroundColor={PALETTE.PINK}
-                  color={PALETTE.WHITE}
-                  onClick={() => onLineDelete(id, name)}
-                >
-                  <MdDelete size="15px" />
-                </Button>
+                {isLoggedIn && (
+                  <Button
+                    type="button"
+                    size="s"
+                    backgroundColor={PALETTE.PINK}
+                    color={PALETTE.WHITE}
+                    onClick={() => onLineDelete(id, name)}
+                  >
+                    <MdDelete size="15px" />
+                  </Button>
+                )}
               </li>
             ))}
           </List>

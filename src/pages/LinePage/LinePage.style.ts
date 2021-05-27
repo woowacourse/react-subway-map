@@ -8,23 +8,6 @@ const Container = styled.div`
   min-height: 70vh;
 `;
 
-const Icon = styled.span`
-  color: ${PALETTE.GRAY_500};
-  margin: 0 0.5rem;
-
-  * {
-    height: 100%;
-  }
-`;
-
-const Heading1 = styled.h1`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${PALETTE.GRAY_600};
-  margin-bottom: 1rem;
-`;
-
 const TitleBox = styled<any>(Box)`
   & button[type='button'] {
     position: absolute;
@@ -72,30 +55,6 @@ const Form = styled.form`
   }
 `;
 
-const List = styled.ul`
-  max-height: 45vh;
-  overflow: auto;
-
-  li {
-    display: flex;
-    align-items: center;
-    height: 3rem;
-    padding: 0 0.25rem;
-    border-bottom: 1px solid ${PALETTE.GRAY_100};
-
-    p {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
-
-    button {
-      margin-left: 0.5rem;
-    }
-  }
-`;
-
 const StationSelects = styled.div`
   display: flex;
   flex-direction: column;
@@ -110,21 +69,4 @@ const StationSelects = styled.div`
   }
 `;
 
-const StationSelectError = styled.div`
-  font-size: 0.8rem;
-  padding-top: 0.2rem;
-  padding-left: 0.2rem;
-  color: ${PALETTE.RED};
-`;
-
-export {
-  Container,
-  Heading1,
-  Icon,
-  TitleBox,
-  FormBox,
-  Form,
-  List,
-  StationSelects,
-  StationSelectError,
-};
+export { Container, TitleBox, FormBox, Form, StationSelects };

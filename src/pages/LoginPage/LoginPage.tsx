@@ -2,21 +2,29 @@ import { FormEventHandler, useState, useContext } from 'react';
 import { MdEmail, MdLock } from 'react-icons/md';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import useInput from '../../hooks/useInput';
-import Box from '../../components/shared/Box/Box';
-import Button from '../../components/shared/Button/Button';
-import Input from '../../components/shared/Input/Input';
-import InputContainer from '../../components/shared/InputContainer/InputContainer';
-import PATH from '../../constants/path';
-import PALETTE from '../../constants/palette';
-import { Icon, SignUpLink, Heading1, ErrorText, Form } from './LoginPage.style';
+import {
+  Box,
+  Button,
+  Input,
+  InputContainer,
+  Heading1,
+  Icon,
+  ErrorText,
+} from '../../components/shared';
+
+import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
-import apiRequest from '../../request';
-import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
-import { UserContext } from '../../contexts/UserContextProvider';
+
+import PATH from '../../constants/path';
 import STATUS_CODE from '../../constants/statusCode';
+import PALETTE from '../../constants/palette';
+import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+
+import useInput from '../../hooks/useInput';
+import apiRequest from '../../request';
 import { PageProps } from '../types';
+import { SignUpLink, Form } from './LoginPage.style';
 
 const LoginPage = ({ setIsLoading }: PageProps) => {
   const [email, onEmailChange] = useInput('');
@@ -68,7 +76,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
-      <Heading1>로그인</Heading1>
+      <Heading1 marginBottom="2rem">로그인</Heading1>
       <Form onSubmit={onLogin}>
         <InputContainer>
           <Icon>
@@ -95,7 +103,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
             aria-label="비밀번호"
           />
         </InputContainer>
-        <ErrorText>{error}</ErrorText>
+        <ErrorText textAlign="center">{error}</ErrorText>
         <Button size="m" width="100%" backgroundColor={themeColor} color={PALETTE.WHITE}>
           로그인
         </Button>
