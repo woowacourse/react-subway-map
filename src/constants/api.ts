@@ -7,11 +7,11 @@ const END_POINT = {
   LOGIN: '/login/token',
 };
 
-const API_STATUS = {
-  IDLE: 'IDLE',
-  PENDING: 'PENDING',
-  FULFILLED: 'FULFILLED',
-  REJECTED: 'REJECTED',
-};
+enum API_STATUS {
+  IDLE = 'IDLE',
+  PENDING = 'PENDING',
+  FULFILLED = 'FULFILLED',
+  REJECTED = 'REJECTED',
+}
 
 export { BASE_URL, END_POINT, API_STATUS };
