@@ -6,6 +6,7 @@ import logo from 'assets/logo.png';
 import Styled from './NavBar.styles';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { logout as logoutAction } from 'modules/authSlice';
+import { resetServer } from 'modules/serverSlice';
 import { User } from 'types';
 
 const NavBar = () => {
@@ -21,6 +22,7 @@ const NavBar = () => {
   const logout = () => {
     sessionStorage.removeItem('accessToken');
     dispatch(logoutAction());
+    dispatch(resetServer());
     history.push(ROUTE.LOGIN);
   };
 

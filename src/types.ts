@@ -1,5 +1,6 @@
 export enum ButtonType {
-  FILLED = 'FILLED',
+  YELLOW = 'YELLOW',
+  GREEN = 'GREEN',
   BLANK = 'BLANK',
 }
 
