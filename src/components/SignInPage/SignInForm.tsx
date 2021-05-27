@@ -46,7 +46,7 @@ const SignInForm = () => {
     }
 
     if (accessToken) {
-      history.push(ROUTE.STATION);
+      history.push(ROUTE.HOME);
     }
   }, [error, accessToken, history]);
 
