@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Title Font */
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+/* Body Font */
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Staatliches&display=swap');

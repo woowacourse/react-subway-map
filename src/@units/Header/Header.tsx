@@ -13,10 +13,10 @@ const Header = ({ children }: HeaderProps) => {
       <Link to={PATH.HOME}>
         <div className="flex items-center">
           <img src={headerImg} alt="headerImg" className="w-16" />
-          <h1 className="-ml-2 text-2xl font-bold">Yum0 Map</h1>
+          <h1 className="font-staatliches -ml-2 text-3xl font-bold">Yum0 Map</h1>
         </div>
       </Link>
-      <nav>{children}</nav>
+      <nav className="font-jua">{children}</nav>
     </header>
   );
 };

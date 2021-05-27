@@ -34,7 +34,7 @@ const Layout = ({ children, isLogin }: BaseLayoutProps) => {
           </Link>
         </>
       </Header>
-      <div className="flex items-center justify-center min-h-full">{children}</div>
+      <div className="flex items-center justify-center min-h-full font-jua">{children}</div>
     </div>
   );
 };
