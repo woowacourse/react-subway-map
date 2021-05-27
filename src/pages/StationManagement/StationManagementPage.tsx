@@ -14,8 +14,8 @@ const StationManagementPage = () => {
   const {
     inputValue: stationName,
     errorMessage: errorMessage,
-    onChange: onStationNameChange,
-    onBlur: onStationNameBlur,
+    setValueOnChange: onStationNameChange,
+    validateOnBlur: onStationNameBlur,
     setInputValue: setStationName,
   } = useInput(validateStationName);
 

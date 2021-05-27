@@ -27,15 +27,7 @@ const SectionAddModal = ({ onClose }: Props) => {
             <Select defaultOption="다음역" options={stationOptions} required />
           </Flex>
           <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-            <Input
-              type="number"
-              defaultValue="1"
-              min="0.1"
-              max="1000"
-              step="0.1"
-              placeholder="상행 하행역 거리(km)"
-              required
-            />
+            <Input type="number" min="0.1" max="1000" step="0.1" placeholder="상행 하행역 거리(km)" required />
           </Flex>
           <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
             <Button>구간 추가</Button>

@@ -12,14 +12,17 @@ import { useAppDispatch } from "../../hooks";
 import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
-  const { inputValue: email, errorMessage: emailErrorMessage, onChange: onEmailChange, onBlur: onEmailBlur } = useInput(
-    validateEmail
-  );
+  const {
+    inputValue: email,
+    errorMessage: emailErrorMessage,
+    setValueOnChange: onEmailChange,
+    validateOnBlur: onEmailBlur,
+  } = useInput(validateEmail);
   const {
     inputValue: password,
     errorMessage: passwordErrorMessage,
-    onChange: onPasswordChange,
-    onBlur: onPasswordBlur,
+    setValueOnChange: onPasswordChange,
+    validateOnBlur: onPasswordBlur,
   } = useInput(validatePassword);
 
   const { login } = useAuth();

@@ -29,7 +29,7 @@ const App = () => {
   const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
   const navigationLinkList = navigationLinks.map((navigationLink) => (
-    <Link to={navigationLink.link}>
+    <Link to={navigationLink.link} key={navigationLink.link}>
       <Button type="button" buttonTheme="white" kind="rect">
         {navigationLink.title}
       </Button>

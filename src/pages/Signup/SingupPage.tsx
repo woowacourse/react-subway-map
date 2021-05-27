@@ -12,23 +12,29 @@ import { validateEmail } from "../../validations/email";
 import { validatePassword, validatePasswordConfirm } from "../../validations/password";
 
 const SignupPage = () => {
-  const { inputValue: email, errorMessage: emailErrorMessage, onChange: onEmailChange, onBlur: onEmailBlur } = useInput(
-    validateEmail
-  );
-  const { inputValue: age, errorMessage: ageErrorMessage, onChange: onAgeChange, onBlur: onAgeBlur } = useInput(
-    validateAge
-  );
+  const {
+    inputValue: email,
+    errorMessage: emailErrorMessage,
+    setValueOnChange: onEmailChange,
+    validateOnBlur: onEmailBlur,
+  } = useInput(validateEmail);
+  const {
+    inputValue: age,
+    errorMessage: ageErrorMessage,
+    setValueOnChange: onAgeChange,
+    validateOnBlur: onAgeBlur,
+  } = useInput(validateAge);
   const {
     inputValue: password,
     errorMessage: passwordErrorMessage,
-    onChange: onPasswordChange,
-    onBlur: onPasswordBlur,
+    setValueOnChange: onPasswordChange,
+    validateOnBlur: onPasswordBlur,
   } = useInput(validatePassword);
   const {
     inputValue: passwordConfirm,
     errorMessage: passwordConfirmErrorMessage,
-    onChange: onPasswordConfirmChange,
-    onBlur: onPasswordConfirmBlur,
+    setValueOnChange: onPasswordConfirmChange,
+    validateOnBlur: onPasswordConfirmBlur,
   } = useInput((value: string) => {
     if (password && !passwordErrorMessage) {
       validatePasswordConfirm(password, value);

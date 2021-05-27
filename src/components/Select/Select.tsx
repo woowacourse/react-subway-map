@@ -20,7 +20,9 @@ const Select = ({ defaultOption, options, ...props }: Props) => (
       </option>
     )}
     {options.map(({ value, text }) => (
-      <option value={value}>{text}</option>
+      <option key={value} value={value}>
+        {text}
+      </option>
     ))}
   </SelectBlock>
 );

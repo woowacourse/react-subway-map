@@ -7,10 +7,12 @@ import ListItem from "../../components/ListItem/ListItem";
 import { CIRCLE_COLOR } from "../../constants/color";
 import LineAddModal from "./Modal/LineAddModal";
 import useLine from "../../hooks/useLine";
+import useStation from "../../hooks/useStation";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
   const { lines, addLine, deleteLine } = useLine();
+  const { stations } = useStation();
 
   return (
     <FlexCenter>
@@ -44,6 +46,7 @@ const LineManagementPage = () => {
       </Block>
       {isAddModalOpened && (
         <LineAddModal
+          stations={stations}
           onClose={() => {
             setIsAddModalOpened(false);
           }}
