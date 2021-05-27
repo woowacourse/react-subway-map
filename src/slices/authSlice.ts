@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API from '../api';
+import BACKEND from '../constants/backend';
 import LOCAL_STORAGE_KEYS from '../constants/localStorageKeys';
 import { ApiStatus, CREWS, Error } from '../types';
 
@@ -43,12 +44,14 @@ export const requestLogin = createAsyncThunk<
   }
 >('auth/requestLogin', async (loginData: LoginAttributes, { rejectWithValue }) => {
   const { server, form } = loginData;
+  API.defaults.baseURL = BACKEND[server].baseUrl;
 
   try {
-    const response = await API[server].post('/login', form);
+    const response = await API.post('/login', form);
     const { accessToken } = response.data;
 
-    API[server].defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    API.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
     localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
     localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, server);
 

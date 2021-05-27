@@ -1,5 +1,5 @@
 import React, { FormEventHandler, useState } from 'react';
-import { Button, Card, Input } from '../../components';
+import { Button, Card, Input, Modal } from '../../components';
 import * as Styled from './StationPage.styles';
 import { ReactComponent as SubwayIcon } from '../../assets/icons/subway-solid.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/trash-solid.svg';
@@ -10,7 +10,7 @@ import useStation from '../../hooks/useStation';
 import { ApiStatus, Station } from '../../types';
 
 const StationPage = () => {
-  const { Modal, openModal, closeModal } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
@@ -98,7 +98,7 @@ const StationPage = () => {
         </Styled.Container>
       </Styled.StationPage>
 
-      <Modal>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Styled.ModalTitle>역 이름 수정</Styled.ModalTitle>
         <Styled.EditForm onSubmit={handleEdit}>
           <Input

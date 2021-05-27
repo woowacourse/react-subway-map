@@ -3,6 +3,11 @@ import BACKEND from '../constants/backend';
 import { CREWS } from '../types';
 
 const getAccessToken = () => localStorage.getItem('accessToken');
+const getServer = () => {
+  const currentServer = localStorage.getItem('server') as CREWS;
+  return currentServer || CREWS.DANYEE;
+};
+
 const createHeaders = () => {
   const token = getAccessToken();
   if (token) {
@@ -17,23 +22,9 @@ const createHeaders = () => {
   };
 };
 
-const API = {
-  [CREWS.DANYEE]: axios.create({
-    baseURL: BACKEND.DANYEE.baseUrl,
-    headers: createHeaders(),
-  }),
-  [CREWS.MARK]: axios.create({
-    baseURL: BACKEND.MARK.baseUrl,
-    headers: createHeaders(),
-  }),
-  [CREWS.YORN]: axios.create({
-    baseURL: BACKEND.YORN.baseUrl,
-    headers: createHeaders(),
-  }),
-  [CREWS.CHARLIE]: axios.create({
-    baseURL: BACKEND.CHARLIE.baseUrl,
-    headers: createHeaders(),
-  }),
-} as const;
+const API = axios.create({
+  baseURL: BACKEND[getServer()].baseUrl,
+  headers: createHeaders(),
+});
 
 export default API;

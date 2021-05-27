@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './SignUpPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -9,7 +10,6 @@ import BACKEND from '../../constants/backend';
 import useInput from '../../hooks/useInput';
 import useSelect from '../../hooks/useSelect';
 import ROUTES from '../../constants/routes';
-import API from '../../api';
 import MESSAGE from '../../constants/message';
 import REGEX from '../../constants/regex';
 import { CREWS } from '../../types';
@@ -33,10 +33,18 @@ const SignUpPage = () => {
   const isValidPasswordConfirm = password === passwordConfirm;
 
   const requestCreateMember = (newMember: { email: string; age: number; password: string }) =>
-    API[server].post('/members', newMember);
+    axios.post(`${BACKEND[server].baseUrl}/members`, newMember, {
+      headers: { 'Content-Type': 'application/json' },
+    });
 
   const requestCheckDuplicateEmail = (currentEmail: string) =>
-    API[server].post('/members/exists', { email: currentEmail });
+    axios.post(
+      `${BACKEND[server].baseUrl}/members/exists`,
+      { email: currentEmail },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
 
   const getInvalidFormRef = () => {
     if (isDuplicatedEmail) return emailRef;

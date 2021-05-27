@@ -1,9 +1,4 @@
-import React, { useCallback, useState } from 'react';
-import { Modal as ModalComponent } from '../components';
-
-interface IProps {
-  children: React.ReactNode;
-}
+import { useCallback, useState } from 'react';
 
 export default () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -16,18 +11,5 @@ export default () => {
     setModalOpen(false);
   }, []);
 
-  const Modal = useCallback(
-    ({ children, ...props }: IProps) => {
-      if (!isModalOpen) return null;
-
-      return (
-        <ModalComponent onClose={closeModal} {...props}>
-          {children}
-        </ModalComponent>
-      );
-    },
-    [closeModal, isModalOpen]
-  );
-
-  return { Modal, isModalOpen, openModal, closeModal };
+  return { isModalOpen, openModal, closeModal };
 };

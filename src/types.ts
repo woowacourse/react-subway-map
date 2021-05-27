@@ -67,6 +67,20 @@ export type Station = {
   name: string;
 };
 
+export type Line = {
+  id: number;
+  name: string;
+  color: Color;
+};
+
+export type LineAttribute = {
+  name: Line['name'];
+  color: Line['color'];
+  upStationId: number;
+  downStationId: number;
+  distance: number;
+};
+
 export type Error = {
   message: string;
   status: number;
