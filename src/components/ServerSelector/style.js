@@ -2,10 +2,14 @@ import styled from 'styled-components';
 import { Flex } from '../../styles';
 
 export const Container = styled.div`
-  ${Flex({ justify: 'space-around', items: 'center' })}
+  ${Flex({
+    direction: 'column',
+    justify: 'space-around',
+    items: 'center',
+  })}
   position: fixed;
-  width: 550px;
-  height: 60px;
+  width: 120px;
+  height: 280px;
   bottom: 0;
   right: 0;
 `;
