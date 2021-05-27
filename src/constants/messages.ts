@@ -18,6 +18,8 @@ const ERROR_MESSAGE = {
   SECTION_LENGTH_OUT_OF_RANGE: '😥 한 노선에 지하철 역은 2개 이상이어야 합니다.',
   NO_LINE_SELECTED: '😭 노선을 선택해 주세요',
   ONLY_ONE_STATION_INCLUDED: '반드시 한 역이 기존 노선에 포함되어야 합니다.',
+  STATION_IN_SECTION: '😭 노선에 포함된 지하철 역은 삭제할 수 없습니다.',
+  TOKEN_EXPIRED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
 };
 
 const SUCCESS_MESSAGE = {

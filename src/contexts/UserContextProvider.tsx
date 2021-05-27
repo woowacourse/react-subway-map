@@ -12,10 +12,20 @@ interface User {
 
 const UserContext = createContext<User | null>(null);
 
+let isMounted: boolean = true;
+
 const UserProvider = ({ children }: UserProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!isMounted && isLoggedIn === false) {
+      localStorage.setItem('accessToken', '');
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    isMounted = false;
+
     const checkLoginStatus = async () => {
       try {
         const userInfo = await apiRequest.getUserInfo();

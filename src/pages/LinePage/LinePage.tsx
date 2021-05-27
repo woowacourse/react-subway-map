@@ -20,18 +20,24 @@ import {
   Icon,
   ErrorText,
   List,
+  ColorDot,
 } from '../../components/shared';
-
-import REGEX from '../../constants/regex';
-import PALETTE from '../../constants/palette';
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
-import { LINE_VALUE } from '../../constants/values';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
+
+import REGEX from '../../constants/regex';
+import PALETTE from '../../constants/palette';
+import STATUS_CODE from '../../constants/statusCode';
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { LINE_VALUE } from '../../constants/values';
+
 import useInput from '../../hooks/useInput';
-import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
+import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
+import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
+
+import apiRequest from '../../request';
 import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
 import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
@@ -54,9 +60,10 @@ const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 
 const LinePage = ({ setIsLoading }: PageProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);
-  const [lines, setLines] = useState<APIReturnTypeLine[]>(LINE_BEFORE_FETCH);
+  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
   const [lineName, onlineNameChange, setLineName] = useInput('');
+
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');
@@ -72,7 +79,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
   const isLineNameValid =
     lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
@@ -114,18 +121,6 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     setDistance('');
   };
 
-  const fetchLines = async () => {
-    const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
-
-    setLines(newLines);
-  };
-
-  const fetchStations = async () => {
-    const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
-
-    setStations(newStations);
-  };
-
   const fetchData = async () => {
     const timer = setTimeout(() => setIsLoading(true), 500);
 
@@ -133,6 +128,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       await Promise.all([fetchStations(), fetchLines()]);
     } catch (error) {
       console.error(error);
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
       setLines([]);
       setStations([]);
@@ -178,7 +174,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
         distance: Number(distance),
       };
 
-      const response = await apiRequest.addLine(newLine);
+      await addLine(newLine);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
       await fetchData();
@@ -188,6 +184,14 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       setFormOpen(false);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
@@ -195,11 +199,19 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   const onLineDelete = async (id: number, name: string) => {
     if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
     try {
-      await apiRequest.deleteLine(id);
+      await deleteLine(id);
       await fetchData();
       addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
@@ -284,8 +296,9 @@ const LinePage = ({ setIsLoading }: PageProps) => {
           <img src={noLine} alt="노선이 없습니다." />
         ) : (
           <List>
-            {lines.map(({ id, name }) => (
+            {lines.map(({ id, name, color }) => (
               <li key={id}>
+                <ColorDot size="s" backgroundColor={color} />
                 <p>{name}</p>
                 {isLoggedIn && (
                   <Button

@@ -1,8 +1,12 @@
-import styled from 'styled-components';
+import { ReactNode, SelectHTMLAttributes } from 'react';
+import { Container, SelectBody } from './Select.style';
 
-const Select = styled.select`
-  width: 100%;
-  line-height: 1.5;
-`;
+const Select = ({ children, value, onChange }: SelectHTMLAttributes<HTMLSelectElement>) => (
+  <Container>
+    <SelectBody value={value} onChange={onChange}>
+      {children}
+    </SelectBody>
+  </Container>
+);
 
 export default Select;

@@ -10,6 +10,7 @@ const List = styled.ul<Properties>`
     display: flex;
     align-items: center;
     height: 3rem;
+    width: 100%;
     padding: 0 0.25rem;
     border-bottom: 1px solid ${PALETTE.GRAY_100};
     position: ${({ position }) => position ?? 'static'};
@@ -17,12 +18,16 @@ const List = styled.ul<Properties>`
     p {
       display: flex;
       align-items: center;
-      width: 100%;
-      height: 100%;
+      flex-grow: 1;
+      line-height: 0.8;
     }
 
     button {
       margin-left: 0.5rem;
+    }
+
+    & > *:not(:last-child) {
+      margin-right: 0.5rem;
     }
   }
 `;

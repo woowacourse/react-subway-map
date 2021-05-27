@@ -1,4 +1,5 @@
 import { Story } from '@storybook/react';
+import { SelectHTMLAttributes } from 'react';
 
 import Select from './Select';
 
@@ -7,12 +8,20 @@ export default {
   component: Select,
 };
 
-const Template: Story = (args) => (
-  <Select {...args}>
-    {['option1', 'option2', 'option3'].map((option) => (
-      <option value={option}>{option}</option>
-    ))}
-  </Select>
-);
+const Template: Story<SelectHTMLAttributes<HTMLSelectElement>> = (args) => <Select {...args} />;
 
 export const Default = Template.bind({});
+
+Default.args = {
+  children: (
+    <>
+      {['option1', 'option2', 'option3'].map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </>
+  ),
+  value: 'MALCHA',
+  onChange: () => {},
+};

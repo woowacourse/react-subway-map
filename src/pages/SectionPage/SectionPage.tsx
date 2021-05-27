@@ -12,6 +12,7 @@ import {
   Icon,
   ErrorText,
   List,
+  ColorDot,
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -24,10 +25,14 @@ import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants
 import { SECTION_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
-import apiRequest, { APIReturnTypeLine, APIReturnTypeStation } from '../../request';
+import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
+import useSections from '../../hooks/useSections';
+import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
+
 import { PageProps } from '../types';
 import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
+import STATUS_CODE from '../../constants/statusCode';
 
 interface StationInLine extends APIReturnTypeStation {
   distance?: number;
@@ -39,8 +44,9 @@ const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 const SectionPage = ({ setIsLoading }: PageProps) => {
   const [selectedLineId, setSelectedLineId] = useState<number>(-1);
 
-  const [stations, setStations] = useState<APIReturnTypeStation[]>(STATION_BEFORE_FETCH);
-  const [lines, setLines] = useState<APIReturnTypeLine[]>(LINE_BEFORE_FETCH);
+  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const [addSection, deleteSection] = useSections();
 
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [upStationId, setUpStationId] = useState('');
@@ -49,7 +55,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
   const currentLine = lines.find((line) => line.id === selectedLineId);
   const lastStation = currentLine?.sections[currentLine?.sections.length - 1].downStation;
@@ -101,39 +107,18 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     isDistanceValid &&
     isOnlyOneStationInCurrentLine;
 
-  const fetchLine = async (lineId: number) => {
+  const getLine = async (lineId: number) => {
     const timer = setTimeout(() => setIsLoading(true), 500);
 
     try {
-      const newLine = await apiRequest.getLine(lineId);
+      await fetchLine(lineId);
       clearTimeout(timer);
-
-      setLines((prevLines) =>
-        prevLines.map((line) => {
-          if (line.id === lineId) {
-            return newLine;
-          }
-          return line;
-        })
-      );
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const fetchLines = async () => {
-    const newLines: APIReturnTypeLine[] = await apiRequest.getLines();
-
-    setLines(newLines);
-  };
-
-  const fetchStations = async () => {
-    const newStations: APIReturnTypeStation[] = await apiRequest.getStations();
-
-    setStations(newStations);
   };
 
   const fetchData = async () => {
@@ -155,6 +140,10 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
+    return <></>;
+  }
 
   const reset = () => {
     setUpStationId('');
@@ -194,20 +183,27 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
         distance: Number(distance),
       };
 
-      await apiRequest.addSection(selectedLineId, newSection);
+      await addSection(selectedLineId, newSection);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_SECTION);
-      await fetchLine(selectedLineId);
+      await getLine(selectedLineId);
 
       reset();
       setFormOpen(false);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
 
-  const deleteSection = async (stationId: number, stationName: string) => {
+  const onSectionDelete = async (stationId: number, stationName: string) => {
     if (stationId === -1 || stationName === '') return;
 
     if (currentLine?.sections.length === 1) {
@@ -220,15 +216,22 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     }
 
     try {
-      await apiRequest.deleteSection(selectedLineId, stationId);
+      await deleteSection(selectedLineId, stationId);
 
       addMessage?.(SUCCESS_MESSAGE.DELETE_SECTION);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
 
-    await fetchLine(selectedLineId);
+    await getLine(selectedLineId);
 
     return stationId;
   };
@@ -255,6 +258,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
         <InputContainer labelText="노선 선택">
+          <ColorDot size="s" backgroundColor={currentLine?.color} />
           <Select onChange={onLineSelect}>
             <option value="/" hidden>
               노선 선택
@@ -320,6 +324,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
             {stationsInLine.map(({ id, name, distance }) => {
               return (
                 <li key={id}>
+                  <ColorDot size="s" backgroundColor={currentLine.color} />
                   <p>{name}</p>
                   {distance && <Distance>{`거리 : ${distance}`}</Distance>}
                   {isLoggedIn && (
@@ -328,7 +333,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
                       size="s"
                       backgroundColor={PALETTE.PINK}
                       color={PALETTE.WHITE}
-                      onClick={() => deleteSection(id, name)}
+                      onClick={() => onSectionDelete(id, name)}
                     >
                       <MdDelete size="15px" />
                     </Button>
