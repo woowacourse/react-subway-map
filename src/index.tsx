@@ -4,6 +4,7 @@ import App from './App';
 import SnackBarProvider from './contexts/SnackBarProvider';
 import ThemeProvider from './contexts/ThemeContextProvider';
 import UserProvider from './contexts/UserContextProvider';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -13,7 +14,9 @@ ReactDOM.render(
     <ThemeProvider>
       <SnackBarProvider>
         <UserProvider>
-          <App />
+          <Router>
+            <App />
+          </Router>
         </UserProvider>
       </SnackBarProvider>
     </ThemeProvider>
