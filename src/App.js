@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { NavBar, ServerSelector } from './components/';
+import { NavBar, ServerSelector, Snackbar } from './components/';
 import { ROUTE } from './constants';
 import {
   Home,
@@ -49,6 +49,7 @@ function App() {
           </Switch>
         </Main>
         <ServerSelector />
+        <Snackbar />
       </Router>
     </>
   );
