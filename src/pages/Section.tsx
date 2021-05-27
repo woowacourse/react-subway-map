@@ -4,6 +4,7 @@ import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
+import { borderColor } from 'constants/color';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
@@ -111,7 +112,7 @@ const Section = () => {
           ))}
         </SelectInput>
         {selectedLine && (
-          <Container className={`mt-6 w-full ${`border-${selectedLine.color.substr(3)}`}`}>
+          <Container className={`mt-6 w-full ${borderColor[selectedLine.color]}`}>
             <div className={`flex justify-center items-center  rounded-2xl py-1 mb-3 ${selectedLine.color}`}>
               <Title text={selectedLine.name} textSize="text-xl" className="text-center" />
             </div>

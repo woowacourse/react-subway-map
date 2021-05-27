@@ -10,6 +10,7 @@ import Button from '@shared/Button/Button';
 import ImageButton from '@shared/ImageButton/ImageButton';
 import { StationInterface } from 'types';
 import { AddLinePayload } from 'redux/lineSlice';
+import { ringColor } from 'constants/color';
 
 interface AddLineModalProps {
   onSubmit: ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => void;
@@ -106,7 +107,7 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
               placeholder="거리를 입력해주세요"
               className="w-10/12"
             />
-            <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${`ring-${color.substr(3)}`}`} />
+            <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${ringColor[color]}}`} />
           </div>
           <Palette setColor={handleColor} />
           <div className="flex justify-end mt-8">
