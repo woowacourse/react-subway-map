@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const getStations = createAsyncThunk('station/getStations', async ({ endpoint }, thunkAPI) => {
+const getStations = createAsyncThunk('station/getStations', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/stations`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -23,13 +24,14 @@ const getStations = createAsyncThunk('station/getStations', async ({ endpoint },
   }
 });
 
-const addStation = createAsyncThunk('station/addStation', async ({ endpoint, name }, thunkAPI) => {
+const addStation = createAsyncThunk('station/addStation', async ({ endpoint, accessToken, name }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/stations`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         name,
@@ -49,10 +51,13 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, nam
   }
 });
 
-const removeStation = createAsyncThunk('station/removeStation', async ({ endpoint, id }, thunkAPI) => {
+const removeStation = createAsyncThunk('station/removeStation', async ({ endpoint, accessToken, id }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/stations/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     if (response.status === 204) {

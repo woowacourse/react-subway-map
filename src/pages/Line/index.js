@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLines, addLine, clearAddSuccess, removeLine } from '../../redux/lineSlice';
+import { useCookies } from 'react-cookie';
 
+import { getLines, addLine, clearAddSuccess, removeLine } from '../../redux/lineSlice';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
-import { COLOR } from '../../constants';
+import { COLOR, ACCESS_TOKEN } from '../../constants';
 
 export const LinePage = (props) => {
   const { endpoint } = props;
@@ -15,11 +16,10 @@ export const LinePage = (props) => {
   const { stations } = useSelector((store) => store.station);
   const { lines, isAddSuccess } = useSelector((store) => store.line);
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
+  const [cookies] = useCookies([ACCESS_TOKEN]);
+  const accessToken = cookies[ACCESS_TOKEN];
 
-  const handleOpenModal = () => {
-    setIsLineAddOpen(true);
-  };
-
+  const handleOpenModal = () => setIsLineAddOpen(true);
   const handleCloseModal = () => setIsLineAddOpen(false);
 
   const handleAddLine = (e) => {
@@ -31,20 +31,21 @@ export const LinePage = (props) => {
     const distance = e.target.distance.value;
     const color = e.target.color.value;
 
-    dispatch(addLine({ endpoint, name, upStation, downStation, distance, color }));
+    dispatch(addLine({ endpoint, accessToken, name, upStation, downStation, distance, color }));
   };
 
   const handleDeleteLine = (e, lineId) => {
-    dispatch(removeLine({ endpoint, id: lineId }));
+    dispatch(removeLine({ endpoint, accessToken, id: lineId }));
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getLines({ endpoint }));
+    dispatch(getLines({ endpoint, accessToken }));
   }, []);
 
   useEffect(() => {
     if (isAddSuccess) {
+      handleCloseModal();
       dispatch(clearAddSuccess());
     }
   }, [isAddSuccess]);

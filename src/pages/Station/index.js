@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStations, addStation, clearAddSuccess, removeStation } from '../../redux/stationSlice';
+import { useCookies } from 'react-cookie';
 
+import { getStations, addStation, clearAddSuccess, removeStation } from '../../redux/stationSlice';
 import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
 import { Form, List } from './style';
-import { STATION } from '../../constants';
+import { STATION, ACCESS_TOKEN } from '../../constants';
 
 export const StationPage = (props) => {
   const { endpoint } = props;
@@ -14,6 +15,8 @@ export const StationPage = (props) => {
   const { stations, isAddSuccess } = useSelector((store) => store.station);
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
   const ref = useRef();
+  const [cookies] = useCookies([ACCESS_TOKEN]);
+  const accessToken = cookies[ACCESS_TOKEN];
 
   const handleStationNameInputChange = (e) => {
     const stationName = e.target.value;
@@ -26,16 +29,16 @@ export const StationPage = (props) => {
 
     const stationName = e.target.name.value;
 
-    dispatch(addStation({ endpoint, name: stationName }));
+    dispatch(addStation({ endpoint, accessToken, name: stationName }));
   };
 
   const handleDeleteStation = (e, stationId) => {
-    dispatch(removeStation({ endpoint, id: stationId }));
+    dispatch(removeStation({ endpoint, accessToken, id: stationId }));
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getStations({ endpoint }));
+    dispatch(getStations({ endpoint, accessToken }));
   }, []);
 
   useEffect(() => {

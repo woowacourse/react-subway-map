@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const getLines = createAsyncThunk('line/getLines', async ({ endpoint }, thunkAPI) => {
+const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/lines`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -25,13 +26,14 @@ const getLines = createAsyncThunk('line/getLines', async ({ endpoint }, thunkAPI
 
 const addLine = createAsyncThunk(
   'line/addLine',
-  async ({ endpoint, name, upStation, downStation, distance, color }, thunkAPI) => {
+  async ({ endpoint, accessToken, name, upStation, downStation, distance, color }, thunkAPI) => {
     try {
       const response = await fetch(`${endpoint}/lines`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           name,
@@ -56,10 +58,11 @@ const addLine = createAsyncThunk(
   },
 );
 
-const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, id }, thunkAPI) => {
+const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, accessToken, id }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/lines/${id}`, {
       method: 'DELETE',
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
 
     if (response.status === 204) {

@@ -15,7 +15,7 @@ export const NavBar = (props) => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoginSuccess } = useSelector((store) => store.user);
+  const { isLogin } = useSelector((store) => store.user);
   const subTitle = serverOwner ? `${serverOwner} & ${FE_CONTRIBUTORS}` : `${FE_CONTRIBUTORS}`;
 
   const handleLogout = () => {
@@ -50,7 +50,7 @@ export const NavBar = (props) => {
           </MenuItem>
         </MenuList>
 
-        {isLoginSuccess && (
+        {isLogin && (
           <MenuList>
             <MenuItem>
               <NavLink to={ROUTE.STATION}>
@@ -75,7 +75,7 @@ export const NavBar = (props) => {
 
         <MenuList>
           <MenuItem>
-            {isLoginSuccess ? (
+            {isLogin ? (
               <Button onClick={handleLogout}>
                 <IconPerson />
                 로그아웃

@@ -1,5 +1,8 @@
 import { imageHyungumak, imageMagya, imagePaz, imageSally } from '../assets';
 
+export const SERVER_ID = 'serverId';
+export const ACCESS_TOKEN = 'accessToken';
+
 export const SERVER_LIST = {
   Magya: {
     id: 'Magya',
@@ -13,7 +16,7 @@ export const SERVER_LIST = {
     name: '조연우',
     nickname: '샐리',
     imgSrc: imageSally,
-    endpoint: 'https://yeonwoocho.p-e.kr',
+    endpoint: 'https://yeonwoocho.p-e.kr/api',
   },
   Paz: {
     id: 'Paz',
@@ -27,6 +30,6 @@ export const SERVER_LIST = {
     name: '최현구',
     nickname: '현구막',
     imgSrc: imageHyungumak,
-    endpoint: 'https://hyeon9mak-subway.o-r.kr',
+    endpoint: 'https://hyeon9mak-subway.o-r.kr/api',
   },
 };

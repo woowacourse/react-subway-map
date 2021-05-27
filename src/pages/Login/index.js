@@ -3,32 +3,37 @@ import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
+import { useCookies } from 'react-cookie';
 
 import { login, clearLoginFailed } from '../../redux/userSlice';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
-import { ROUTE } from '../../constants';
-import { LOGIN } from '../../constants/subway';
+import { LOGIN, ROUTE, ACCESS_TOKEN } from '../../constants';
 
 export const LoginPage = (props) => {
   const { endpoint } = props;
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoginSuccess, isLoginFailed } = useSelector((store) => store.user);
+  const [cookies, setCookie] = useCookies([ACCESS_TOKEN]);
+  const { isLogin, isLoginFailed, accessToken } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (isLoginSuccess) {
-      history.push(ROUTE.STATION);
+    if (isLogin) {
       enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: 1500 });
+      setCookie(ACCESS_TOKEN, accessToken);
+      history.push(ROUTE.STATION);
+    } else {
+      history.push(ROUTE.LOGIN);
     }
+
     if (isLoginFailed) {
       enqueueSnackbar(LOGIN.FAIL, { variant: 'error', autoHideDuration: 1500 });
       dispatch(clearLoginFailed());
     }
-  }, [isLoginSuccess, isLoginFailed]);
+  }, [isLogin, isLoginFailed]);
 
   const handleLogin = (e) => {
     e.preventDefault();

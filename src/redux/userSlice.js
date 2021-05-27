@@ -27,12 +27,36 @@ const login = createAsyncThunk('user/login', async ({ endpoint, email, password 
   }
 });
 
+const loginByToken = createAsyncThunk('user/loginByToken', async ({ endpoint, accessToken }, thunkAPI) => {
+  try {
+    const response = await fetch(`${endpoint}/members/me`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const body = await response.json();
+
+    if (response.status === 200) {
+      return { email: body.email, accessToken };
+    } else {
+      throw new Error(body);
+    }
+  } catch (e) {
+    console.error(e.response.data);
+    thunkAPI.rejectWithValue(e.response.data);
+  }
+});
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
     email: null,
     accessToken: null,
-    isLoginSuccess: false,
+    isLogin: false,
     isLoginFailed: false,
     isLoading: false,
   },
@@ -40,7 +64,7 @@ const userSlice = createSlice({
     logout: (state) => {
       state.email = null;
       state.accessToken = null;
-      state.isLoginSuccess = false;
+      state.isLogin = false;
     },
     clearLoginFailed: (state) => {
       state.isLoginFailed = false;
@@ -52,20 +76,35 @@ const userSlice = createSlice({
 
       state.email = email;
       state.accessToken = accessToken;
-      state.isLoginSuccess = true;
+      state.isLogin = true;
       state.isLoading = false;
     },
     [login.pending]: (state) => {
       state.isLoading = true;
     },
-    [login.rejected]: (state, action) => {
+    [login.rejected]: (state) => {
+      state.isLoginFailed = true;
+      state.isLoading = false;
+    },
+    [loginByToken.fulfilled]: (state, action) => {
+      const { email, accessToken } = action.payload;
+
+      state.email = email;
+      state.accessToken = accessToken;
+      state.isLogin = true;
+      state.isLoading = false;
+    },
+    [loginByToken.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginByToken.rejected]: (state) => {
       state.isLoginFailed = true;
       state.isLoading = false;
     },
   },
 });
 
-export { login };
+export { login, loginByToken };
 export const { logout, clearLoginFailed } = userSlice.actions;
 
 export default userSlice.reducer;
