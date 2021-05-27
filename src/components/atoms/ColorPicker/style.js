@@ -4,19 +4,23 @@ import { IconCheck } from '../IconCheck';
 import { COLOR } from '../../../constants';
 
 export const Container = styled.div`
+  position: relative;
   padding: 1rem;
   width: 100%;
 
   border: 0.125rem solid ${COLOR.BORDER_DEFAULT};
 `;
 
-export const Title = styled.h3`
-  margin-bottom: 0.75rem;
+export const LabelText = styled.span`
+  position: absolute;
+  top: -0.4rem;
+  left: 0.5rem;
+  padding: 0 0.3rem;
+  width: auto;
 
-  text-align: center;
-  color: ${COLOR.TEXT.DEFAULT};
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 0.6rem;
+  color: ${COLOR.PLACEHOLDER};
+  background-color: white;
 `;
 
 export const List = styled.ul`

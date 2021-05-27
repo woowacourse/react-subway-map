@@ -7,6 +7,7 @@ export const Selector = styled.select`
   padding: 0.5rem 1.5rem;
   margin: 0.25rem;
   min-width: 5rem;
+  max-width: 9rem;
 
   line-height: inherit;
   font-size: 1rem;

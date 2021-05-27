@@ -64,13 +64,20 @@ export const LinePage = (props) => {
           <Section heading="노선 추가">
             <Form onSubmit={handleAddLine}>
               {/* eslint-disable jsx-a11y/no-autofocus */}
-              <Input type="text" name="name" placeholder="노선 이름" autoFocus required />
+              <Input
+                type="text"
+                name="name"
+                label="노선 이름"
+                placeholder="노선 이름을 입력해주세요."
+                autoFocus
+                required
+              />
               <StationSelect>
                 <Select id="upStation" name="upStation" optionHead="상행역" options={stations}></Select>
                 <IconArrowLTR />
                 <Select id="downStation" name="downStation" optionHead="하행역" options={stations}></Select>
               </StationSelect>
-              <Input type="number" name="distance" placeholder="거리(km)" required />
+              <Input type="number" name="distance" label="거리(km)" placeholder="거리를 입력해주세요." required />
               <ColorPicker label="노선선택" colors={Object.values(COLOR.LINE)} />
             </Form>
             <ButtonControl>

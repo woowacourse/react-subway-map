@@ -1,14 +1,15 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Label, InputField, Icon, Message } from './style';
+import { Container, Label, LabelText, InputField, Icon, Message } from './style';
 
 export const Input = forwardRef((props, ref) => {
-  const { icon, hasMessage, message, ...rest } = props;
+  const { label, icon, hasMessage, message, ...rest } = props;
 
   return (
     <Container>
       <Label>
+        {label && <LabelText>{label}</LabelText>}
         {icon && <Icon>{icon}</Icon>}
         <InputField ref={ref} icon={icon} {...rest} />
       </Label>
@@ -18,6 +19,7 @@ export const Input = forwardRef((props, ref) => {
 });
 
 Input.prototype = {
+  label: PropTypes.string,
   type: PropTypes.string.isRequired,
   icon: PropTypes.node,
   hasMessage: PropTypes.bool,
