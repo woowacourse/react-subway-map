@@ -5,6 +5,7 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
+import Snackbar from '../../components/@common/Snackbar/Snackbar';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -20,7 +21,6 @@ const Stations: FC = () => {
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
-  // TODO: form state로 하나로 묶기
   const [stationInput, setStationInput] = useState('');
   const [validationErrorMessage, setValidationErrorMessage] = useState('');
   const isValidStationInput = stationInput !== '' && validationErrorMessage === '';
