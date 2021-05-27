@@ -3,10 +3,12 @@ import Template from '../../components/@common/Template/Template';
 import Title from '../../components/@common/Title/Title.styles';
 import { APISelectList } from './APISelectPage.styles';
 import { currentAPI } from '../../API/API';
-import { VFC } from 'react';
+import { useEffect, VFC } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { useAppDispatch } from '../../state/store';
 import { APIAction } from '../../state/slices/API';
+import { lineAction } from '../../state/slices/line';
+import { loginAction } from '../../state/slices/login';
 
 type APIName = 'PIKA' | 'MUNGTO' | 'BETTER' | 'KEVIN';
 
@@ -19,6 +21,12 @@ const URL = {
 
 const APISelectPage: VFC<RouteComponentProps> = ({ history }) => {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(lineAction.initLineId());
+    dispatch(loginAction.logout());
+  }, []);
+
   const selectAPI = (name: APIName) => {
     currentAPI.baseUrl = URL[name];
     dispatch(APIAction.setName(name));

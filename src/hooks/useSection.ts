@@ -4,12 +4,22 @@ import {
   requestSection,
 } from './../service/section';
 import { useEffect, useState } from 'react';
-import { LineDetail, SectionForm, StationId } from '../types';
+import { LineDetail, LineId, SectionForm, StationId } from '../types';
 import useLogin from './useLogin';
 import { useMutation } from 'react-query';
+import { useAppDispatch, useAppSelector } from '../state/store';
+import { lineAction } from '../state/slices/line';
 
 const useSection = () => {
-  const [currentLineId, setCurrentLineId] = useState(0);
+  const { currentLineId, shouldUpdate } = useAppSelector(
+    ({ line: { currentLineId, shouldUpdate } }) => ({
+      currentLineId,
+      shouldUpdate,
+    })
+  );
+
+  const dispatch = useAppDispatch();
+
   const [currentLineDetail, setCurrentLineDetail] = useState<LineDetail>({
     id: 0,
     name: '',
@@ -29,8 +39,16 @@ const useSection = () => {
   const { accessToken } = useLogin();
   const addSectionMutation = useMutation(
     () => requestAddSection(currentLineId, form, accessToken),
-    { onSuccess: () => updateCurrentSection() }
+    {
+      onSuccess: () => {
+        dispatch(lineAction.setShouldUpdate());
+      },
+    }
   );
+
+  const setCurrentLineId = (currentLineId: LineId) => {
+    dispatch(lineAction.setLineId(currentLineId));
+  };
 
   const deleteSectionMutation = useMutation(
     (stationId: StationId) =>
@@ -39,13 +57,15 @@ const useSection = () => {
   );
 
   useEffect(() => {
-    if (!currentLineDetail) return;
+    console.log(currentLineId);
+    if (currentLineId === -1) return;
 
     updateCurrentSection();
-  }, [currentLineId]);
+  }, [currentLineId, shouldUpdate]);
 
   const updateCurrentSection = async () => {
-    if (!currentLineId) return;
+    // TODO: magic number!
+    if (currentLineId === -1) return;
 
     const data = await requestSection(currentLineId, accessToken);
 
@@ -56,8 +76,8 @@ const useSection = () => {
     deleteSectionMutation.mutate(stationId);
   };
 
-  const addSection = async () => {
-    addSectionMutation.mutate();
+  const addSection = () => {
+    return addSectionMutation.mutate();
   };
 
   const setDistance = (distance: number) => {
@@ -84,6 +104,7 @@ const useSection = () => {
     setDistance,
     setUpStationId,
     setDownStationId,
+    updateCurrentSection,
   };
 };
 

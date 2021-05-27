@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useLine from '../../../hooks/useLine';
 import useModal from '../../../hooks/useModal';
 import useSection from '../../../hooks/useSection';
@@ -27,7 +28,7 @@ const SectionManagementSection = () => {
           value={currentLineId}
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
-          <option defaultValue="노선 이름" disabled>
+          <option defaultValue="노선 이름" selected disabled hidden>
             노선 이름
           </option>
 

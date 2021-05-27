@@ -56,7 +56,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             value={upStationId}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option defaultValue="상행역" disabled>
+            <option defaultValue="상행역" disabled selected hidden>
               상행역
             </option>
             {!stations.isLoading &&
@@ -74,7 +74,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             value={downStationId}
             onChange={({ target }) => setDownStationId(Number(target.value))}
           >
-            <option defaultValue="하행역" disabled>
+            <option defaultValue="하행역" disabled selected hidden>
               하행역
             </option>
             {stations &&
