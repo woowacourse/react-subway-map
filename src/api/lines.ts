@@ -23,6 +23,11 @@ interface AddSectionRequestData {
   distance: number;
 }
 
+interface DeleteSectionRequestData {
+  lineId: number;
+  stationId: number;
+}
+
 export const requestGetLines = (baseURL: string): Promise<AxiosResponse<Line[]>> =>
   axios.get(`${baseURL}/lines`);
 
@@ -52,3 +57,9 @@ export const requestAddSection = (
     downStationId,
     distance,
   });
+
+export const requestDeleteSection = (
+  baseURL: string,
+  { lineId, stationId }: DeleteSectionRequestData
+): Promise<AxiosResponse> =>
+  axios.delete(`${baseURL}/lines/${lineId}/sections?stationId=${stationId}`);

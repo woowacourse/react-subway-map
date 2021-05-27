@@ -1,12 +1,15 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
+import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SECTION } from '../../constants/appInfo';
+import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
 import { loadLines } from '../../redux/lineSlice';
@@ -14,8 +17,6 @@ import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
-import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
-import { useMemo } from 'react';
 
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
@@ -47,12 +48,30 @@ const Sections: FC = () => {
 
   const onOpenSectionAddModal = () => {
     if (!targetLine) {
-      alert('노선을 선택해주세요.');
+      alert(ERROR_MESSAGE.NOT_SELECTED_LINE);
 
       return;
     }
 
     sectionAddModal.openModal();
+  };
+
+  const onDeleteSection = (stationId: number) => async () => {
+    if (!confirm(CONFIRM_MESSAGE.DELETE_SECTION)) {
+      return;
+    }
+
+    try {
+      await requestDeleteSection(API_INFO[apiOwner].endPoint, {
+        lineId: Number(targetLineId),
+        stationId,
+      });
+
+      // TODO: 일관성있게 삭제 진행하기
+      dispatch(loadLines(API_INFO[apiOwner].endPoint));
+    } catch (error) {
+      alert(ERROR_MESSAGE.DELETE_SECTION_FAILURE);
+    }
   };
 
   return (
@@ -83,7 +102,7 @@ const Sections: FC = () => {
           >
             <ul>
               {targetLine.stations.map((station) => (
-                <ListItem key={station.id} onDelete={() => console.log(station.name)}>
+                <ListItem key={station.id} onDelete={onDeleteSection(station.id)}>
                   {station.name}
                 </ListItem>
               ))}

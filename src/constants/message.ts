@@ -19,6 +19,8 @@ export const ERROR_MESSAGE = {
   DUPLICATED_SECTION: '상/하행선은 서로 같은 역으로 설정할 수 없습니다.',
   NONE_OF_SELECTED_SECTION: '상행선과 하행선을 모두 선택해주세요.',
   SHOULD_CONTAIN_ONE_STATION_IN_LINE: '구간 중 하나의 역만 노선에 등록되어있어야합니다.',
+  DELETE_SECTION_FAILURE: '해당 구간을 삭제할 수 없습니다.',
+  NOT_SELECTED_LINE: '노선을 선택해주세요.',
 
   INCOMPLETE_FORM: '입력이 완료되지 않았습니다. 모든 값을 입력해주세요!',
 };
@@ -29,4 +31,5 @@ export const SUCCESS_MESSAGE = {
 
 export const CONFIRM_MESSAGE = {
   DELETE_LINE: '해당 노선을 삭제하시겠습니까?',
+  DELETE_SECTION: '해당 구간을 삭제하시겠습니까?',
 };
