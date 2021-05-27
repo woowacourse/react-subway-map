@@ -11,43 +11,81 @@ import Button from "../../components/@shared/Button";
 import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
 import { useDistanceInput } from "../Lines/hooks";
 import {
+  addSection,
   fetchLines,
   fetchLinesDetail,
+  reset,
   selectLinesDetailByLineId,
   selectLinesList,
   selectLinesStatus,
+  selectLinesMessage,
 } from "../Lines/slice";
 import { selectStationsList } from "../Stations/slice";
 
 const Sections = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectLinesStatus);
+  const message = useSelector(selectLinesMessage);
   const linesList = useSelector(selectLinesList);
   const stationList = useSelector(selectStationsList);
-  const [lineId, handleLineIdChange] = useInput();
   const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
-  const [upStationId, handleUpStationIdChange] = useInput();
-  const [downStationId, handleDownStationIdChange] = useInput();
-  const [distance, handleDistanceChange, isValidDistance] = useDistanceInput();
+  const [lineId, handleLineIdChange] = useInput();
+  const [upStationId, handleUpStationIdChange, , resetUpStationId] = useInput();
+  const [downStationId, handleDownStationIdChange, , resetDownStationId] =
+    useInput();
+  const [distance, handleDistanceChange, isValidDistance, resetDistance] =
+    useDistanceInput();
   const lineDetail = useSelector((state) =>
     selectLinesDetailByLineId(state, lineId)
   );
-  // const modalLineDetail = useSelector((state) =>
-  //   selectLinesDetailByLineId(state, modalLineId)
-  // );
 
   useEffect(() => {
     if (status === STATUS.IDLE) {
       dispatch(fetchLines());
       dispatch(fetchLinesDetail());
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    const resetInput = () => {
+      resetUpStationId();
+      resetDownStationId();
+      resetDistance();
+    };
+
+    if (status === STATUS.SUCCEED) {
+      if (message) {
+        alert(message);
+      }
+
+      handleModalClose();
+      dispatch(reset());
+      resetInput();
+    }
+
+    if (status === STATUS.FAILED) {
+      alert(message);
+      dispatch(reset());
+    }
+  }, [
+    message,
+    status,
+    dispatch,
+    handleModalClose,
+    resetDistance,
+    resetDownStationId,
+    resetUpStationId,
+  ]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // TODO: dispatch post Section!!!
+    await dispatch(
+      addSection({ lineId, upStationId, downStationId, distance })
+    );
+    await dispatch(fetchLinesDetail());
   };
 
   const isSubmitEnabled = [

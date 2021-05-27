@@ -6,6 +6,7 @@ import {
   LINES_GET_SUCCEED,
   LINES_DELETE_SUCCEED,
   LINES_DETAIL_GET_SUCCEED,
+  SECTIONS_ADD_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -120,6 +121,37 @@ export const fetchLinesDetail = createAsyncThunk(
   }
 );
 
+export const addSection = createAsyncThunk(
+  "lines/addSection",
+  async (
+    { lineId, upStationId, downStationId, distance },
+    { rejectWithValue, getState }
+  ) => {
+    const accessToken = selectAccessToken(getState());
+
+    try {
+      const response = await http.post(`${ENDPOINT.LINES}/${lineId}/sections`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        body: { upStationId, downStationId, distance },
+      });
+
+      if (response.status === SECTIONS_ADD_SUCCEED.CODE) {
+        return;
+      }
+
+      const { message } = await response.json();
+
+      // eslint-disable-next-line consistent-return
+      return rejectWithValue(message);
+    } catch (error) {
+      console.error(error);
+
+      // eslint-disable-next-line consistent-return
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+    }
+  }
+);
+
 const initialState = {
   status: STATUS.IDLE,
   error: null,
@@ -132,7 +164,12 @@ const linesSlice = createSlice({
   name: "lines",
   initialState,
   reducers: {
-    reset: (state) => ({ ...state, status: STATUS.IDLE }),
+    reset: (state) => ({
+      ...state,
+      status: STATUS.IDLE,
+      message: "",
+      error: null,
+    }),
   },
   extraReducers: {
     [addLine.pending]: (state) => {
@@ -140,7 +177,7 @@ const linesSlice = createSlice({
     },
     [addLine.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
-      state.message = LINES_ADD_SUCCEED;
+      state.message = LINES_ADD_SUCCEED.MESSAGE;
       state.list.push(action.payload);
     },
     [addLine.rejected]: (state, action) => {
@@ -180,6 +217,18 @@ const linesSlice = createSlice({
       state.details = action.payload;
     },
     [fetchLinesDetail.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.error = action.error;
+      state.message = action.payload;
+    },
+    [addSection.pending]: (state) => {
+      state.status = STATUS.LOADING;
+    },
+    [addSection.fulfilled]: (state) => {
+      state.status = STATUS.SUCCEED;
+      state.message = SECTIONS_ADD_SUCCEED.MESSAGE;
+    },
+    [addSection.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;
