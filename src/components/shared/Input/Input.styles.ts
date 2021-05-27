@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import PALETTE from 'constants/palette';
 
-const Input = styled.input`
+const Input = styled.input<{ icon?: string }>`
   width: 100%;
   height: 44px;
   border: 1px solid ${PALETTE.DARK_GRAY};
@@ -10,6 +10,8 @@ const Input = styled.input`
   margin-top: 2px;
   font-size: 1rem;
   outline: none;
+  background: no-repeat 2% center/4% url(${({ icon }) => icon && icon});
+  padding-left: ${({ icon }) => icon && '40px'};
 
   &:focus {
     border: 2px solid #333333;

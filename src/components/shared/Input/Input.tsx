@@ -12,6 +12,7 @@ interface InputProps {
     minLength?: number;
     maxLength?: number;
   };
+  icon?: string;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -21,6 +22,7 @@ const Input = ({
   value,
   labelText,
   placeholder,
+  icon,
   onBlur,
   onChange,
   extraArgs,
@@ -31,6 +33,7 @@ const Input = ({
       <Styled.Input
         type={type}
         value={value}
+        icon={icon}
         onBlur={onBlur}
         onChange={onChange}
         placeholder={placeholder}

@@ -12,6 +12,9 @@ import { ButtonSize, ButtonType } from 'types';
 import ROUTE from 'constants/routes';
 import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
+import emailImg from 'assets/email.png';
+import lockImg from 'assets/lock.png';
+import userImg from 'assets/user.png';
 import Styled from './styles';
 import { requestCheckDuplicatedEmail, requestSignup } from 'request/auth';
 
@@ -39,6 +42,8 @@ const SignupPage = () => {
   const history = useHistory();
 
   const checkDuplicatedEmail = async () => {
+    if (!email) return;
+
     const res = await requestCheckDuplicatedEmail(BASE_URL, email);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -106,6 +111,7 @@ const SignupPage = () => {
 
   return (
     <>
+      <ServerSelector isMessageVisible={isServerMessageVisible} changeServer={changeServer} />
       <CardLayout title="회원가입">
         <form onSubmit={signup}>
           <Styled.InputContainer>
@@ -115,6 +121,7 @@ const SignupPage = () => {
                 labelText="이메일"
                 placeholder="이메일을 입력해주세요."
                 value={email}
+                icon={emailImg}
                 onBlur={checkDuplicatedEmail}
                 onChange={(event) => setEmail(event.target.value)}
               />
@@ -130,6 +137,7 @@ const SignupPage = () => {
                 labelText="나이"
                 placeholder="나이를 입력해주세요."
                 value={age}
+                icon={userImg}
                 onChange={(event) => setAge(Number(event.target.value))}
                 extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
               />
@@ -140,6 +148,7 @@ const SignupPage = () => {
                 labelText="비밀번호"
                 placeholder="비밀번호를 입력해주세요."
                 value={password}
+                icon={lockImg}
                 onChange={(event) => setPassword(event.target.value)}
                 extraArgs={{ minLength: 6 }}
               />
@@ -150,6 +159,7 @@ const SignupPage = () => {
                 labelText="비밀번호 확인"
                 placeholder="비밀번호를 한번 더 입력해주세요."
                 value={confirmPassword}
+                icon={lockImg}
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 onBlur={checkPasswordMatch}
                 extraArgs={{ minLength: 6 }}
@@ -171,7 +181,6 @@ const SignupPage = () => {
           </Styled.ButtonWrapper>
         </form>
       </CardLayout>
-      <ServerSelector isMessageVisible={isServerMessageVisible} changeServer={changeServer} />
     </>
   );
 };

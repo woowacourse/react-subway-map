@@ -15,10 +15,10 @@ const KOREAN_SERVER: { [key: string]: string } = {
 };
 
 const END_POINT = {
-  STATIONS: '/stations',
-  LINES: '/lines',
-  AUTH: '/members',
-  LOGIN: '/login/token',
+  STATIONS: 'stations',
+  LINES: 'lines',
+  AUTH: 'members',
+  LOGIN: 'login/token',
 };
 
 enum API_STATUS {
