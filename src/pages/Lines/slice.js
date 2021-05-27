@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
 import {
@@ -8,6 +9,7 @@ import {
   LINES_DETAIL_GET_SUCCEED,
   SECTIONS_ADD_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
+  SECTIONS_DELETE_SUCCEED,
 } from "../../api/constants";
 import http from "../../api/http";
 import { selectAccessToken } from "../Login/slice";
@@ -141,12 +143,38 @@ export const addSection = createAsyncThunk(
 
       const { message } = await response.json();
 
-      // eslint-disable-next-line consistent-return
       return rejectWithValue(message);
     } catch (error) {
       console.error(error);
 
-      // eslint-disable-next-line consistent-return
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+    }
+  }
+);
+
+export const deleteSection = createAsyncThunk(
+  "lines/deleteSection",
+  async ({ lineId, stationId }, { rejectWithValue, getState }) => {
+    const accessToken = selectAccessToken(getState());
+
+    try {
+      const response = await http.delete(
+        `${ENDPOINT.LINES}/${lineId}/sections?stationId=${stationId}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+
+      if (response.status === SECTIONS_DELETE_SUCCEED.CODE) {
+        return;
+      }
+
+      const { message } = await response.json();
+
+      return rejectWithValue(message);
+    } catch (error) {
+      console.error(error);
+
       return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
     }
   }
@@ -229,6 +257,17 @@ const linesSlice = createSlice({
       state.message = SECTIONS_ADD_SUCCEED.MESSAGE;
     },
     [addSection.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.error = action.error;
+      state.message = action.payload;
+    },
+    [deleteSection.pending]: (state) => {
+      state.status = STATUS.LOADING;
+    },
+    [deleteSection.fulfilled]: (state) => {
+      state.status = STATUS.SUCCEED;
+    },
+    [deleteSection.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;

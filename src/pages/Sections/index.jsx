@@ -15,6 +15,7 @@ import {
   fetchLines,
   fetchLinesDetail,
   reset,
+  deleteSection,
   selectLinesDetailByLineId,
   selectLinesList,
   selectLinesStatus,
@@ -88,6 +89,15 @@ const Sections = () => {
     await dispatch(fetchLinesDetail());
   };
 
+  const handleDeleteClick = async (event) => {
+    const { name: stationId, value } = event.target;
+
+    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
+      await dispatch(deleteSection({ lineId, stationId }));
+      await dispatch(fetchLinesDetail());
+    }
+  };
+
   const isSubmitEnabled = [
     lineId !== "",
     upStationId !== "",
@@ -146,6 +156,9 @@ const Sections = () => {
                     <button
                       type="button"
                       className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+                      onClick={handleDeleteClick}
+                      name={id}
+                      value={name}
                     >
                       🗑
                     </button>
