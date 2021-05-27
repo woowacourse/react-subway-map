@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import SectionModal from 'components/SectionModal/SectionModal';
+import { useAppSelector } from 'modules/hooks';
 import deleteIcon from 'assets/delete.png';
 import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import ROUTE from 'constants/routes';
 import { requestGetStations } from 'request/station';
 import { requestDeleteSection, requestGetLine, requestGetLines } from 'request/line';
-import { Line, Station } from 'types';
+import { Line, Station, User } from 'types';
 import Styled from './styles';
 
 const SectionPage = () => {
+  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+
+  if (!user) return <Redirect to={ROUTE.HOME} />;
+
   const [lines, setLines] = useState<Line[]>([]);
   const [targetLine, setTargetLine] = useState<Line | undefined>();
   const [stations, setStations] = useState<Station[]>([]);

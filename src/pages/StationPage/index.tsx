@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Notification from 'components/shared/Notification/Notification';
-import { ButtonType, Station } from 'types';
+import { useAppSelector } from 'modules/hooks';
+import { ButtonType, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import saveIcon from 'assets/enter.png';
@@ -13,8 +15,13 @@ import regex from 'constants/regex';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
 import { requestAddStation, requestDeleteStation, requestGetStations } from 'request/station';
 import Styled from './styles';
+import ROUTE from 'constants/routes';
 
 const StationPage = () => {
+  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+
+  if (!user) return <Redirect to={ROUTE.HOME} />;
+
   const [stations, setStations] = useState<Station[]>([]);
   const [newStationName, setNewStationName] = useState('');
   const [editingStationId, setEditingStationId] = useState<number>(0);

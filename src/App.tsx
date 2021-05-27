@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { requestGetUser } from 'modules/authSlice';
+import { useAppDispatch } from 'modules/hooks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Global, ThemeProvider } from '@emotion/react';
 import BaseLayout from 'components/BaseLayout/BaseLayout';
@@ -7,6 +9,15 @@ import ROUTE from 'constants/routes';
 import { globalStyle, theme } from 'App.styles';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const accessTokenJSON = sessionStorage.getItem('accessToken');
+    if (accessTokenJSON) {
+      dispatch(requestGetUser(JSON.parse(accessTokenJSON)));
+    }
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={theme}>

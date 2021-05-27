@@ -5,11 +5,11 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import { ButtonSize, ButtonType } from 'types';
-import useFetch from 'hooks/useFetch';
 import ROUTE from 'constants/routes';
-import { API_STATUS, END_POINT } from 'constants/api';
+import { API_STATUS } from 'constants/api';
 import { NOTIFICATION } from 'constants/messages';
 import Styled from './styles';
+import { requestSignup } from 'request/auth';
 
 const SignupPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -24,24 +24,19 @@ const SignupPage = () => {
   });
 
   const history = useHistory();
-  const { fetchData: signupAsync } = useFetch<null>();
-
-  const requestSignup = async () => {
-    const signupData = { email, password, age };
-    const res = await signupAsync('POST', END_POINT.AUTH, signupData);
-
-    if (res.status === API_STATUS.REJECTED) {
-      alert(res.error);
-    } else if (res.status === API_STATUS.FULFILLED) {
-      history.push(ROUTE.LOGIN);
-    }
-  };
 
   const signup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!checkPasswordMatch()) return;
 
-    await requestSignup();
+    const signupData = { email, password, age: 0 };
+    const res = await requestSignup(signupData);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      history.push(ROUTE.LOGIN);
+    }
   };
 
   const checkPasswordMatch = () => {

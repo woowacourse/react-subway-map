@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import CardLayout from 'components/CardLayout/CardLayout';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import LineModal from 'components/LineModal/LineModal';
-import { ButtonType, Line, Station } from 'types';
+import { useAppSelector } from 'modules/hooks';
+import { ButtonType, Line, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import ROUTE from 'constants/routes';
 import { requestDeleteLine, requestGetLines } from 'request/line';
 import { requestGetStations } from 'request/station';
 import Styled from './styles';
 
 const LinePage = () => {
+  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+
+  if (!user) return <Redirect to={ROUTE.HOME} />;
+
   const [lines, setLines] = useState<Line[]>([]);
   const [stations, setStations] = useState<Station[]>([]);
 
