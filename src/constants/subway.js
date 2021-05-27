@@ -6,6 +6,27 @@ export const LOGIN = {
 export const SIGN_UP = {
   SUCCEED: '회원가입에 성공하였습니다.',
   FAIL: '회원가입에 실패하였습니다.',
+
+  EMAIL_SHOULD_INCLUDE_ID: '아이디 포함해서 입력해주세요.',
+  EMAIL_CANNOT_INCLUDE_BLANK: '이메일에 공백이 포함되지 않도록 입력해주세요.',
+  EMAIL_CANNOT_INCLUDE_KOREAN: '이메일에 한글이 포함되지 않도록 입력해주세요.',
+  EMAIL_SHOULD_BE_IN_VALID_FORMAT: '유효한 이메일 형식으로 입력해주세요.',
+
+  MIN_AGE: 1,
+  MAX_AGE: 200,
+
+  AGE_SHOULD_BE_IN_RANGE: '1 ~ 200 사이의 나이를 입력해주세요.',
+  AGE_CANNOT_INCLUDE_BLANK: '나이에 공백이 포함되지 않도록 입력해주세요.',
+  AGE_SHOULD_BE_IN_NUMBER: '숫자로만 입력해주세요.',
+
+  PASSWORD_LENGTH_MIN: 6,
+  PASSWORD_LENGTH_MAX: 15,
+
+  PASSWORD_SHOULD_BE_IN_RANGE: '6 ~ 15자의 영문+숫자 조합으로 입력해주세요.',
+  PASSWORD_CANNOT_INCLUDE_BLANK: '공백이 포함되지 않도록 입력해주세요.',
+  PASSWORD_SHOULD_INCLUDE_ENGLISH: '영문을 포함해서 입력해주세요.',
+  PASSWORD_SHOULD_INCLUDE_NUMBER: '숫자를 포함해서 입력해주세요.',
+  PASSWORD_SHOULD_BE_ONLY_ENGLISH_AND_NUMBER: '영문 또는 숫자로만 입력해주세요.',
 };
 
 export const STATION = {
