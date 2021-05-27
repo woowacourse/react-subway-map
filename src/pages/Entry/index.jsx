@@ -1,28 +1,51 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Button from "../../components/@shared/Button";
 import Main from "../../components/@shared/Main";
 import API from "./constants";
 import { setBaseURL } from "./baseURL";
 import PATH from "../../constants/path";
+import STATUS from "../../constants/status";
 import { logout } from "../Login/slice";
-import { fetchStations } from "../Stations/slice";
-import { fetchLines, fetchLinesDetail } from "../Lines/slice";
+
+import {
+  selectStationsStatus,
+  fetchStations,
+  reset as resetStations,
+} from "../Stations/slice";
+import {
+  selectLinesStatus,
+  fetchLines,
+  fetchLinesDetail,
+  reset as resetLines,
+} from "../Lines/slice";
 
 const Entry = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const stationsStatus = useSelector(selectStationsStatus);
+  const linesStatus = useSelector(selectLinesStatus);
 
-  const handleButtonClick = (event) => {
+  const handleButtonClick = async (event) => {
     setBaseURL(API[event.target.name]);
     alert(`🎉🎉 ${event.target.name} 당첨 🎉🎉`);
     dispatch(logout());
-    dispatch(fetchStations());
-    dispatch(fetchLines());
-    dispatch(fetchLinesDetail());
+    await dispatch(fetchStations());
+    await dispatch(fetchLines());
+    await dispatch(fetchLinesDetail());
     history.push(PATH.LOGIN);
   };
+
+  useEffect(() => {
+    if (stationsStatus === STATUS.SUCCEED) {
+      dispatch(resetStations());
+    }
+
+    if (linesStatus === STATUS.SUCCEED) {
+      dispatch(resetLines());
+    }
+  }, [stationsStatus, linesStatus, dispatch]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 import cx from "classnames";
 import STATUS from "../../constants/status";
 import { useModal } from "../../components/@shared/Modal/hooks";
@@ -42,7 +43,16 @@ const Sections = () => {
 
   useEffect(() => {
     if (status === STATUS.IDLE) {
-      dispatch(fetchLines());
+      dispatch(fetchLines())
+        .then(unwrapResult)
+        .then((list) => {
+          if (!list || list.length === 0) return;
+
+          handleLineIdChange({
+            target: { value: list[list.length - 1].id.toString() },
+          });
+        });
+
       dispatch(fetchLinesDetail());
     }
 
