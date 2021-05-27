@@ -48,7 +48,7 @@ const SignUp = () => {
   // TODO: 현재 회원가입에러는 무조건 500으로 반환됨. 백엔드와 협의 필요.
   useEffect(() => {
     if (signUpResponse?.isError === true) {
-      window.alert('중복된 이메일입니다.');
+      window.alert(signUpResponse.message);
     } else if (signUpResponse?.isError === false) {
       window.alert('회원가입에 성공하셨습니다.');
       history.replace({ pathname: ROUTE.LOGIN });

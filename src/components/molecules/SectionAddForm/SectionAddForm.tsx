@@ -72,14 +72,7 @@ const SectionAddForm = ({
           selectValue={downStation}
         />
       </Wrapper>
-      <Input
-        type="number"
-        onChange={onChangeDistance}
-        value={distance}
-        placeholder="거리 (km)"
-        min={1}
-        max={100}
-      />
+      <Input type="text" onChange={onChangeDistance} value={distance} placeholder="거리 (km)" />
 
       <Button>확인</Button>
     </Container>

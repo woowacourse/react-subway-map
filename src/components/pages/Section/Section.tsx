@@ -105,16 +105,15 @@ const Section = () => {
 
   useEffect(() => {
     if (addSectionResponse?.isError === true) {
-      window.alert('구간 추가 실패');
+      window.alert(addSectionResponse.message);
     } else if (addSectionResponse?.isError === false) {
       window.alert('구간 추가 성공');
     }
-    
   }, [addSectionResponse]);
 
   useEffect(() => {
     if (deleteSectionResponse?.isError === true) {
-      window.alert('구간 제거 실패');
+      window.alert(deleteSectionResponse.message);
     } else if (deleteSectionResponse?.isError === false) {
       window.alert('구간 제거 성공');
     }
@@ -122,13 +121,13 @@ const Section = () => {
 
   useEffect(() => {
     if (getAllStationResponse?.isError === true) {
-      window.alert('역 조회에 실패했습니다.');
+      window.alert(getAllStationResponse.message);
     }
   }, [getAllStationResponse]);
 
   useEffect(() => {
     if (getAllLineResponse?.isError === true) {
-      window.alert('노선 조회에 실패했습니다.');
+      window.alert(getAllLineResponse.message);
     }
   }, [getAllLineResponse]);
 

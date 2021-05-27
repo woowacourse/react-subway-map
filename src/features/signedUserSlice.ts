@@ -32,7 +32,7 @@ export const getSignedUserAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        message: error.response.message,
+        message: error.response.data.message,
       });
     }
   },
@@ -65,7 +65,7 @@ const signedUserSlice = createSlice({
       state.age = null;
 
       state.isError = true;
-state.message = (payload as IResMeta).message;
+      state.message = (payload as IResMeta).message;
     });
   },
 });

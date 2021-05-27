@@ -37,7 +37,7 @@ const useServerAPI = <T>(url: string) => {
 
       setGetAllDataResponse({
         isError: true,
-        message: error.response.message,
+        message: error.response.data.message,
       });
     }
   };
@@ -58,7 +58,7 @@ const useServerAPI = <T>(url: string) => {
 
       setGetDataResponse({
         isError: true,
-        message: error.response.message,
+        message: error.response.data.message,
       });
     }
   };
@@ -76,7 +76,7 @@ const useServerAPI = <T>(url: string) => {
 
       setPostDataResponse({
         isError: true,
-        message: error.response.message,
+        message: error.response.data.message,
       });
     }
   };
@@ -94,7 +94,7 @@ const useServerAPI = <T>(url: string) => {
 
       setPutDataResponse({
         isError: true,
-        message: error.response.message,
+        message: error.response.data.message,
       });
     }
   };
@@ -113,7 +113,7 @@ const useServerAPI = <T>(url: string) => {
 
       setDeleteDataResponse({
         isError: true,
-        message: error.response.message,
+        message: error.response.data.message,
       });
     }
   };

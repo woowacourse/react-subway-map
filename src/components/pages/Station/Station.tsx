@@ -51,19 +51,23 @@ const Station = () => {
     setStationName('');
   };
 
+  const onDeleteStation = (stationId: number) => {
+    if(!window.confirm('해당 역을 정말로 삭제하시겠습니까?')) return;
+    deleteStation(`${stationId}`)}
+
   useEffect(() => {
     getAllStations();
   }, [postStationResponse, deleteStationResponse]);
 
   useEffect(() => {
     if (getAllStationResponse?.isError === true) {
-      window.alert('지하철역 조회에 실패했습니다.');
+      window.alert(getAllStationResponse.message);
     }
   }, [getAllStationResponse]);
 
   useEffect(() => {
     if (postStationResponse?.isError === true) {
-      window.alert('지하철역 이름이 중복되었습니다.');
+      window.alert(postStationResponse.message);
     } else if (postStationResponse?.isError === false) {
       window.alert('지하철역이 성공적으로 추가되었습니다.');
     }
@@ -71,8 +75,8 @@ const Station = () => {
 
   useEffect(() => {
     if (deleteStationResponse?.isError === true) {
-      window.alert('노선에 등록된 지하철역입니다.');
-    } else if (postStationResponse?.isError === false) {
+      window.alert(deleteStationResponse.message);
+    } else if (deleteStationResponse?.isError === false) {
       window.alert('지하철역이 성공적으로 삭제되었습니다.');
     }
   }, [deleteStationResponse]);
@@ -91,7 +95,7 @@ const Station = () => {
 
       <div>
         {stations?.map(({ id, name }) => {
-          return <ListItem key={id} content={name} onClickDelete={() => deleteStation(`${id}`)} />;
+          return <ListItem key={id} content={name} onClickDelete={() => {onDeleteStation(id)}} />;
         })}
       </div>
     </Container>

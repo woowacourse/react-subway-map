@@ -44,13 +44,14 @@ const Login = () => {
     dispatch(loginRequestAsync({ host, body }));
   };
 
+  // TODO: 빈 값 로그인 시도 GUARD
   useEffect(() => {
     if (accessTokenState?.isError === false) {
       window.alert('로그인에 성공하셨습니다.');
       history.replace({ pathname: ROUTE.HOME });
       dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken }));
     } else if (accessTokenState?.isError === true) {
-      window.alert('존재하지 않는 계정입니다.');
+      window.alert(accessTokenState.message);
     }
   }, [accessTokenState]);
 

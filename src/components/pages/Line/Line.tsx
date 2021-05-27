@@ -144,7 +144,7 @@ const Line = () => {
 
   useEffect(() => {
     if (addLineResponse?.isError === true) {
-      window.alert('노선 추가 실패');
+      window.alert(addLineResponse.message);
     } else if (addLineResponse?.isError === false) {
       window.alert('노선 추가 성공');
     }
@@ -152,7 +152,7 @@ const Line = () => {
 
   useEffect(() => {
     if (editLineResponse?.isError === true) {
-      window.alert('노선 수정 실패');
+      window.alert(editLineResponse.message);
     } else if (editLineResponse?.isError === false) {
       window.alert('노선 수정 성공');
     }
@@ -160,7 +160,7 @@ const Line = () => {
 
   useEffect(() => {
     if (deleteLineResponse?.isError === true) {
-      window.alert('노선 제거 실패');
+      window.alert(deleteLineResponse.message);
     } else if (deleteLineResponse?.isError === false) {
       window.alert('노선 제거 성공');
     }
@@ -168,7 +168,7 @@ const Line = () => {
 
   useEffect(() => {
     if (getAllLineResponse?.isError === true) {
-      window.alert('노선 조회에 실패했습니다.');
+      window.alert(getAllLineResponse.message);
     }
   }, [getAllLineResponse]);
 
