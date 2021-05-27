@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API from '../api';
 import { ApiStatus, Error, Station } from '../types';
-import { AuthState } from './authSlice';
 
 interface StationState {
   status: ApiStatus;
@@ -17,10 +16,9 @@ const initialState: StationState = {
 
 export const getStationList = createAsyncThunk(
   'station/getStationList',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as { auth: AuthState };
-      const response = await API[auth.server].get('/stations');
+      const response = await API.get('/stations');
 
       const stationList: Station[] = response.data;
 
@@ -33,10 +31,9 @@ export const getStationList = createAsyncThunk(
 
 export const addStation = createAsyncThunk(
   'station/addStation',
-  async (name: Station['name'], { getState, rejectWithValue }) => {
+  async (name: Station['name'], { rejectWithValue }) => {
     try {
-      const { auth } = getState() as { auth: AuthState };
-      const response = await API[auth.server].post('/stations', { name });
+      const response = await API.post('/stations', { name });
 
       return response.data;
     } catch (error) {
@@ -47,10 +44,9 @@ export const addStation = createAsyncThunk(
 
 export const editStation = createAsyncThunk(
   'station/editStation',
-  async ({ id, name }: Station, { getState, rejectWithValue }) => {
+  async ({ id, name }: Station, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as { auth: AuthState };
-      const response = await API[auth.server].put(`/stations/${id}`, { name });
+      const response = await API.put(`/stations/${id}`, { name });
 
       return response.data;
     } catch (error) {
@@ -61,10 +57,9 @@ export const editStation = createAsyncThunk(
 
 export const deleteStation = createAsyncThunk(
   'station/deleteStation',
-  async (id: Station['id'], { getState, rejectWithValue }) => {
+  async (id: Station['id'], { rejectWithValue }) => {
     try {
-      const { auth } = getState() as { auth: AuthState };
-      await API[auth.server].delete(`/stations/${id}`);
+      await API.delete(`/stations/${id}`);
 
       return id;
     } catch (error) {

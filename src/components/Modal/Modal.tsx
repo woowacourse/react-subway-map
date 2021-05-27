@@ -2,14 +2,17 @@ import React from 'react';
 import * as Styled from './Modal.styles';
 
 interface IProps {
+  isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-const Modal = ({ onClose, children }: IProps) => {
+const Modal = ({ isOpen, onClose, children }: IProps) => {
   const handleClose = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
   };
+
+  if (!isOpen) return null;
 
   return (
     <Styled.Modal onClick={handleClose}>

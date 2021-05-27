@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Input, Select, ColorDot } from '../../components';
+import { Button, Card, Input, Select, ColorDot, Modal } from '../../components';
 import { Color } from '../../types';
 import * as Styled from './SectionPage.styles';
 import { ReactComponent as AddIcon } from '../../assets/icons/plus-solid.svg';
@@ -8,7 +8,7 @@ import { ReactComponent as HorizontalArrowIcon } from '../../assets/icons/arrows
 import useModal from '../../hooks/useModal';
 
 const SectionPage = () => {
-  const { Modal, openModal, closeModal } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
@@ -56,7 +56,7 @@ const SectionPage = () => {
         </Styled.Container>
       </Styled.SectionPage>
 
-      <Modal>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Styled.ModalTitle>구간 생성</Styled.ModalTitle>
         <Styled.Form>
           <Styled.SelectWrapper>
