@@ -16,6 +16,47 @@ const Template = ({ ...args }) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  lineNames: ['1호선', '2호선', '3호선'],
-  stations: ['사당', '방배', '서초'],
+  lines: [
+    {
+      id: 1,
+      name: '신분당선',
+      color: '#f87171',
+      stations: [
+        {
+          id: 1,
+          name: '강남역',
+        },
+        {
+          id: 2,
+          name: '광교역',
+        },
+      ],
+      sections: [
+        {
+          upStation: {
+            id: 1,
+            name: '강남역',
+          },
+          downStation: {
+            id: 2,
+            name: '광교역',
+          },
+          distance: 10,
+        },
+      ],
+    },
+  ],
+  stations: [
+    {
+      id: 1,
+      name: '잠실',
+    },
+    {
+      id: 2,
+      name: '경찰병원',
+    },
+  ],
+  selectTargetLine: () => console.log('select Line'),
+  closeModal: () => console.log('close Modal'),
+  getLine: () => console.log('get Line'),
 };
