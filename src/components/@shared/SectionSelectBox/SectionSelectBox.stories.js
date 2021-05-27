@@ -14,3 +14,11 @@ Default.args = {
   upStations: DUMMY_STATIONS,
   downStations: DUMMY_STATIONS,
 };
+
+export const WithErrorMessage = Template.bind({});
+
+WithErrorMessage.args = {
+  upStations: DUMMY_STATIONS,
+  downStations: DUMMY_STATIONS,
+  errorMessage: '오류 메시지!!!',
+};

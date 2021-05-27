@@ -11,9 +11,13 @@ export const ERROR_MESSAGE = {
   SIGNUP: '회원가입에 실패했습니다ㅠㅜ 이미 존재하는 이메일인지 확인해주세요.',
 
   LOGIN_FAILURE: '가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.',
+
   INVALID_STATION_NAME: '역 이름은 공백 없는 2자 이상의 한글이나 숫자로 이루어져야합니다.',
-  INVALID_LINE_NAME: '노선 이름은 공백 없는 2자 이상의 한글이나 숫자로 이루어져야합니다.',
   DUPLICATED_STATION_NAME: '이미 존재하는 역이름 입니다.',
+
+  INVALID_LINE_NAME: '노선 이름은 공백 없는 2자 이상의 한글이나 숫자로 이루어져야합니다.',
+  DUPLICATED_SECTION: '상,하행선은 서로 같은 역으로 설정할 수 없습니다.',
+  NONE_OF_SELECTED_SECTION: '상행선과 하행선을 모두 선택해주세요.',
 };
 
 export const SUCCESS_MESSAGE = {
