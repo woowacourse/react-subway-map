@@ -58,6 +58,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (loginResponse) {
       sessionStorage.setItem('accessToken', JSON.stringify(loginResponse.accessToken));
+      sessionStorage.setItem('server', JSON.stringify(BASE_URL));
 
       dispatch(requestGetUser(loginResponse.accessToken));
     }

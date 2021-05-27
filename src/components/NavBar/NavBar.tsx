@@ -21,8 +21,11 @@ const NavBar = () => {
 
   const logout = () => {
     sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('server');
+
     dispatch(logoutAction());
     dispatch(resetServer());
+
     history.push(ROUTE.LOGIN);
   };
 
