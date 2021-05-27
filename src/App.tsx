@@ -84,7 +84,6 @@ const App = () => {
           <Route exact path={ROUTE.HOME} component={Home} />
           {signedUserId ? (
             <>
-              {console.log('1')}
               <Route exact path={ROUTE.STATION} component={Station} />
               <Route exact path={ROUTE.LINE} component={Line} />
               <Route exact path={ROUTE.SECTION} component={Section} />
@@ -92,7 +91,6 @@ const App = () => {
             </>
           ) : (
             <>
-              {console.log('2')}
               <Route exact path={ROUTE.SIGNUP} component={SignUp} />
               <Route exact path={ROUTE.LOGIN} component={Login} />
             </>

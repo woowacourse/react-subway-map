@@ -11,7 +11,10 @@ import { LineColor } from '../../molecules/ColorSelector/ColorSelector';
 import { Container, LineListContainer, LineItemWithCircle } from './Line.styles';
 
 // TODO: type, enum, interface 한곳으로 몰기
-// TODO: 에러 상태관리할때 Success에 대한 플래그를 추가한다. (에러를 true/false/null로 팓단하는 것에 대한 리팩토링)
+
+const isValidLineName = (lineName: string) => {
+  return /^[가-힣0-9]{2,10}$/.test(lineName);
+};
 
 const Line = () => {
   const {
@@ -115,7 +118,16 @@ const Line = () => {
 
   const onSubmitLineInfo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: 유효성 검사해주기 (분리)
+    // TODO: 유효성 검사 함수로 분리
+
+    if (!isValidLineName(lineName)) {
+      window.alert(
+        '노선 이름은 공백이 포함되지 않은 2자 이상 10자 이하의 한글/숫자로 이루어진 문자열이어야 합니다.',
+      );
+      setLineName('');
+
+      return;
+    }
 
     if (mode === 'ADD') {
       if (upStationId === '' || downStationId === '') {

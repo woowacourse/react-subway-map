@@ -39,7 +39,7 @@ const Station = () => {
 
     if (!isValidStationName(stationName)) {
       window.alert(
-        '역 이름은 공백이 포함되지 않은 2자 이상 2자 이하의 한글/숫자로 이루어진 문자열이어야 합니다.',
+        '역 이름은 공백이 포함되지 않은 2자 이상 20자 이하의 한글/숫자로 이루어진 문자열이어야 합니다.',
       );
       setStationName('');
 
