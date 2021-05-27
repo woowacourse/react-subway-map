@@ -1,30 +1,34 @@
 import axios from 'axios';
 import BACKEND from '../constants/backend';
+import LOCAL_STORAGE_KEYS from '../constants/localStorageKeys';
 import { CREWS } from '../types';
 
-const getAccessToken = () => localStorage.getItem('accessToken');
-const getServer = () => {
-  const currentServer = localStorage.getItem('server') as CREWS;
-  return currentServer || CREWS.DANYEE;
-};
+const isCrews = (server: string): server is CREWS => server in CREWS;
 
-const createHeaders = () => {
-  const token = getAccessToken();
-  if (token) {
-    return {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
+const getServer = () => {
+  const server = localStorage.getItem(LOCAL_STORAGE_KEYS.SERVER);
+
+  if (server && isCrews(server)) {
+    return server;
   }
 
-  return {
-    'Content-Type': 'application/json',
-  };
+  return CREWS.DANYEE;
 };
 
+const accessToken = `Bearer ${localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN)}`;
+const server = getServer();
+
 const API = axios.create({
-  baseURL: BACKEND[getServer()].baseUrl,
-  headers: createHeaders(),
+  baseURL: BACKEND[server].baseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
+
+if (accessToken) {
+  API.defaults.headers.post.Authorization = accessToken;
+  API.defaults.headers.put.Authorization = accessToken;
+  API.defaults.headers.delete.Authorization = accessToken;
+}
 
 export default API;
