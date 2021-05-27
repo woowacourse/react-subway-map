@@ -11,10 +11,11 @@ import { ERROR_MESSAGE } from '../../constants/message';
 import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
-import { StationForm, StationList, StationNameInput } from './Stations.styles';
+import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
 
 const Stations: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
@@ -61,24 +62,30 @@ const Stations: FC = () => {
       templateColor={API_INFO[apiOwner].themeColor[400]}
       titleText={PAGE_INFO.STATIONS.text}
     >
-      <StationForm onSubmit={onAddStation}>
-        <StationNameInput
-          value={stationInput}
-          onChange={onChangeStationInput}
-          labelIcon={<Subway />}
-          minLength={STATION.NAME_MIN_LENGTH}
-          maxLength={STATION.NAME_MAX_LENGTH}
-          labelText={STATION.NAME_LABEL_TEXT}
-          message={{ text: errorMessage, isError: true }}
-        />
-        <Button disabled={!isValidStationInput}>추가</Button>
-      </StationForm>
-      <HorizontalLine />
+      {isLogin && (
+        <>
+          <StationForm onSubmit={onAddStation}>
+            <StationNameInput
+              value={stationInput}
+              onChange={onChangeStationInput}
+              labelIcon={<Subway />}
+              minLength={STATION.NAME_MIN_LENGTH}
+              maxLength={STATION.NAME_MAX_LENGTH}
+              labelText={STATION.NAME_LABEL_TEXT}
+              message={{ text: errorMessage, isError: true }}
+            />
+            <Button disabled={!isValidStationInput}>추가</Button>
+          </StationForm>
+          <HorizontalLine />
+        </>
+      )}
+
       {stations && (
         <StationList>
           {stations.map((station) => (
             <ListItem key={station.id} onDelete={onDeleteStation(station.id)}>
-              {station.name}
+              <Subway />
+              <StationName>{station.name}</StationName>
             </ListItem>
           ))}
         </StationList>

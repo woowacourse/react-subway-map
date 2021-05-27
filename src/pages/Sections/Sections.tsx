@@ -4,6 +4,7 @@ import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
+import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
@@ -16,10 +17,12 @@ import { loadLines } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
+import { StationName } from '../Stations/Stations.styles';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines } = useSelector((state: RootState) => state.line);
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
@@ -89,9 +92,11 @@ const Sections: FC = () => {
           ))}
         </LineSelectBox>
       </FlexContainer>
-      <ButtonOnLine onClick={onOpenSectionAddModal}>
-        <Add width="80%" color={PALETTE.GRAY[600]} />
-      </ButtonOnLine>
+      {isLogin && (
+        <ButtonOnLine onClick={onOpenSectionAddModal}>
+          <Add width="80%" color={PALETTE.GRAY[600]} />
+        </ButtonOnLine>
+      )}
       <LineInfoContainer>
         {targetLine && (
           <CardTemplate
@@ -103,7 +108,8 @@ const Sections: FC = () => {
             <ul>
               {targetLine.stations.map((station) => (
                 <ListItem key={station.id} onDelete={onDeleteSection(station.id)}>
-                  {station.name}
+                  <Subway />
+                  <StationName>{station.name}</StationName>
                 </ListItem>
               ))}
             </ul>

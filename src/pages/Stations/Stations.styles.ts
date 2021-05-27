@@ -18,6 +18,10 @@ export const StationForm = styled.form`
   }
 `;
 
+export const StationName = styled.p`
+  margin-left: 1rem;
+`;
+
 export const StationList = styled.ul`
   margin: 2rem 3.5rem;
 `;

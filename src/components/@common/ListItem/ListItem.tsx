@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import Pencil from '../Icon/Pencil';
 import TrashBin from '../Icon/TrashBin';
 import { ListContent, ListItemButton, StyledListItem } from './ListItem.styles';
@@ -12,15 +14,17 @@ interface Props {
 
 // TODO: 컴포넌트 이름 변경 고려하기
 const ListItem: FC<Props> = ({ children, onModify, onDelete }) => {
+  const isLogin = useSelector((state: RootState) => state.login.isLogin);
+
   return (
     <StyledListItem>
       <ListContent alignItems="center">{children}</ListContent>
-      {onModify && (
+      {isLogin && onModify && (
         <ListItemButton type="button" buttonType="round" isColored={false} onClick={onModify}>
           <Pencil width="70%" />
         </ListItemButton>
       )}
-      {onDelete && (
+      {isLogin && onDelete && (
         <ListItemButton type="button" buttonType="round" isColored={false} onClick={onDelete}>
           <TrashBin width="70%" />
         </ListItemButton>

@@ -17,6 +17,7 @@ import { LineColorDot, LineList } from './Lines.styles';
 
 const Lines: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
@@ -52,9 +53,11 @@ const Lines: FC = () => {
       titleText={PAGE_INFO.LINES.text}
       templateColor={API_INFO[apiOwner].themeColor[400]}
     >
-      <ButtonOnLine onClick={onOpenAddModal}>
-        <Add width="80%" color={PALETTE.GRAY[600]} />
-      </ButtonOnLine>
+      {isLogin && (
+        <ButtonOnLine onClick={onOpenAddModal}>
+          <Add width="80%" color={PALETTE.GRAY[600]} />
+        </ButtonOnLine>
+      )}
       {lines && (
         <LineList>
           {lines.map((line) => (
