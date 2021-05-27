@@ -9,6 +9,8 @@ const ALERT_MESSAGE = {
   FAIL_TO_ADD_SECTION: '구간 생성에 실패했습니다.',
   FAIL_TO_DELETE_SECTION: '구간 삭제에 실패했습니다.',
 
+  SUCCESS_TO_SIGNUP: '회원가입에 성공했습니다.',
+  SUCCESS_TO_LOGIN: '로그인되었습니다.',
   SUCCESS_TO_ADD_STAION: '지하철역을 추가했습니다.',
   SUCCESS_TO_DELETE_STAION: '지하철역을 삭제했습니다.',
   SUCCESS_TO_ADD_LINE: '노선을 추가했습니다.',

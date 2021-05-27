@@ -10,13 +10,15 @@ import { selectServer } from 'modules/serverSlice';
 import { ButtonSize, ButtonType } from 'types';
 import ROUTE from 'constants/routes';
 import { API_STATUS } from 'constants/api';
-import { NOTIFICATION } from 'constants/messages';
+import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import Styled from './styles';
 import { requestSignup } from 'request/auth';
+import { useSnackbar } from 'notistack';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+  const { enqueueSnackbar } = useSnackbar();
 
   const [email, setEmail] = useState<string>('');
   const [age, setAge] = useState<number>();
@@ -33,6 +35,7 @@ const SignupPage = () => {
 
   const signup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (!checkPasswordMatch()) return;
     if (!BASE_URL) {
       setServerMessageVisible(true);
@@ -44,8 +47,9 @@ const SignupPage = () => {
     const res = await requestSignup(BASE_URL, signupData);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_SIGNUP);
       history.push(ROUTE.LOGIN);
     }
   };

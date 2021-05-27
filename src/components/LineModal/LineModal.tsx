@@ -78,7 +78,7 @@ const LineModal = ({
     const res = await requestAddLine(BASE_URL, newLine);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_LINE);
@@ -97,7 +97,7 @@ const LineModal = ({
     const res = await requestEditLine(BASE_URL, selectedLine.id, updatedLine);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(res.message);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
