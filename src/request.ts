@@ -129,7 +129,6 @@ const apiRequest = {
 
   addStation: async (data: StationData): Promise<APIReturnTypeStation | undefined> => {
     const accessToken = localStorage.getItem('accessToken');
-
     if (!accessToken) {
       return;
     }

@@ -161,7 +161,12 @@ const StationPage = ({ setIsLoading }: PageProps) => {
             <Icon>
               <MdSubway size="1.5rem" />
             </Icon>
-            <Input type="text" value={stationInput} onChange={onStationInputChange} />
+            <Input
+              type="text"
+              value={stationInput}
+              onChange={onStationInputChange}
+              aria-label="지하철 역 이름 입력"
+            />
           </InputContainer>
           <Button
             size="m"
@@ -178,7 +183,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
         {list.length === 0 ? (
           <img src={noStation} alt="지하철 역 없음 이미지" />
         ) : (
-          <List>
+          <List aria-label="역 목록">
             {list.map(({ id, name, editable }) => (
               <li key={id}>
                 <Input
@@ -221,6 +226,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
                     size="s"
                     backgroundColor={PALETTE.PINK}
                     color={PALETTE.WHITE}
+                    aria-label={`${name} 삭제`}
                     onClick={() => onStationDelete(id, name)}
                   >
                     <MdDelete size="15px" />
