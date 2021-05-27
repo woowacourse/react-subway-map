@@ -4,16 +4,18 @@ import LineListItem from './LineListItem/LineListItem';
 import { Line } from '../../../types';
 
 const LineList = () => {
-  const { lines } = useLine();
+  const { lines, deleteLine } = useLine();
+
   return (
     <StyledLineList>
-      {lines.isLoading ? (
-        <div>로딩중</div>
-      ) : (
-        (lines.data as Line[]).map((line) => {
-          <LineListItem key={line.id} line={line} />;
-        })
-      )}
+      {!lines.isLoading &&
+        (lines.data as Line[]).map((line) => (
+          <LineListItem
+            key={line.id}
+            line={line}
+            deleteLine={() => deleteLine(line.id)}
+          />
+        ))}
     </StyledLineList>
   );
 };

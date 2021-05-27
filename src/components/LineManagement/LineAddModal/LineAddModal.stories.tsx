@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import LineAddModal from './LineAddModal';
+import LineAddModal, { LineAddModalProps } from './LineAddModal';
 
 export default {
   title: 'Components/LineManagement/LineAddModal',
@@ -9,7 +9,10 @@ export default {
   },
 } as Meta;
 
-const Template: Story = (args) => <LineAddModal {...args} />;
+const Template: Story<LineAddModalProps> = (args) => <LineAddModal {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {};
+
+Default.args = {
+  closeModal: () => {},
+};

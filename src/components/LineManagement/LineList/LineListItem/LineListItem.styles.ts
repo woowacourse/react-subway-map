@@ -1,3 +1,4 @@
+import { LineColor } from './../../../../types';
 import { styled } from '@storybook/theming';
 import PALETTE from '../../../../constants/palette';
 import Button from '../../../@common/Button/Button.styles';
@@ -17,7 +18,15 @@ export const ControlButton = styled(Button)`
   margin-left: 0.5rem;
 `;
 
-export const LineName = styled.span`
+interface LineNameProps {
+  lineColor: LineColor;
+}
+
+// const isColorType = (colorString: string): colorString is ColorType => {
+//   return colorTypes.some((colorType) => colorType === colorString);
+// };
+
+export const LineName = styled.span<LineNameProps>`
   position: relative;
   font-size: 1.125rem;
   margin-left: 1.25rem;
@@ -28,7 +37,7 @@ export const LineName = styled.span`
     width: 0.75rem;
     height: 0.75rem;
     border-radius: 50%;
-    background-color: red;
+    background-color: ${({ lineColor }) => lineColor ?? 'white'};
     position: absolute;
     top: 2.8px;
     left: -20px;

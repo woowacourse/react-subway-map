@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import Container from '../../@common/Container/Container.styles';
 import Input from '../../@common/Input/Input';
 
+export const LineAddForm = styled.form`
+  width: 100%;
+`;
+
 export const StyledInput = styled(Input)`
   margin-bottom: 1.5rem;
 `;

@@ -1,24 +1,22 @@
 import { StyledStationList } from './StationList.styles';
 import StationListItem from './StationListItem/StationListItem';
-import { Station } from '../../../types';
-import useStation from '../../../hooks/useStation';
+import { Station, StationId } from '../../../types';
+import { VFC } from 'react';
+interface StationProps {
+  stations: Station[];
+  deleteStation: (id: StationId) => void;
+}
 
-const StationList = () => {
-  const { stations, deleteStation } = useStation();
-
+const StationList: VFC<StationProps> = ({ stations, deleteStation }) => {
   return (
     <StyledStationList>
-      {stations.isLoading ? (
-        <div>로딩중</div>
-      ) : (
-        (stations.data as Station[]).map(({ id, name }) => (
-          <StationListItem
-            key={id}
-            name={name}
-            onDelete={() => deleteStation(id)}
-          />
-        ))
-      )}
+      {stations.map(({ id, name }) => (
+        <StationListItem
+          key={id}
+          name={name}
+          onDelete={() => deleteStation(id)}
+        />
+      ))}
     </StyledStationList>
   );
 };

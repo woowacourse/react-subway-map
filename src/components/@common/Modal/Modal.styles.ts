@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { ModalSize } from '../../../types';
 import Container from '../Container/Container.styles';
+import { Z_INDEX } from './../../../constants/styles';
 
 export const ModalOuterContainer = styled(Container)`
   position: fixed;
@@ -9,6 +10,7 @@ export const ModalOuterContainer = styled(Container)`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: ${Z_INDEX.MODAL};
 `;
 
 interface ModalInnerContainerProps {

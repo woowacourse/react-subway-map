@@ -11,9 +11,9 @@ const fetchOption = (
   method,
   headers: {
     'Content-Type': 'application/json',
+    Authorization: token ? `Bearer ${token}` : '',
   },
   body: payload ? JSON.stringify(payload) : null,
-  Authorization: token ? `Bearer ${token}` : null,
 });
 
 const APIClient = {

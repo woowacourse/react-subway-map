@@ -43,10 +43,27 @@ export interface Section {
   downStation: Station;
   distance: number;
 }
+
+export type LineColor =
+  | 'red'
+  | 'purple'
+  | 'black'
+  | 'green'
+  | 'orange'
+  | 'blue'
+  | 'beige'
+  | 'deepskyblue'
+  | 'aqua'
+  | 'darksalmon';
+
+export type LineId = number;
 export interface Line {
-  id: string;
+  id: LineId;
   name: string;
-  color: string;
+  color: LineColor;
+}
+
+export interface LineDetail extends Line {
   stations: Station[];
   sections: Section[];
 }

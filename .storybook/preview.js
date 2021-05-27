@@ -3,6 +3,7 @@ import GlobalStyle from '../src/Global.styles';
 import StoryRouter from 'storybook-react-router';
 import { Provider } from 'react-redux';
 import { store } from '../src/state/store';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -13,6 +14,7 @@ export const parameters = {
     },
   },
 };
+const queryClient = new QueryClient();
 
 export const decorators = [
   StoryRouter(),
@@ -20,9 +22,11 @@ export const decorators = [
     <>
       <GlobalStyle />
       <div style={{ height: '100vh' }}>
-        <Provider store={store}>
-          <Story />
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <Story />
+          </Provider>
+        </QueryClientProvider>
       </div>
     </>
   ),

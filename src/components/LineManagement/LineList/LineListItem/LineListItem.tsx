@@ -8,16 +8,16 @@ import {
 
 interface Props {
   line: Line;
+  deleteLine: () => void;
 }
 
-const LineListItem: VFC<Props> = ({ line: { name, color } }) => {
+const LineListItem: VFC<Props> = ({ line: { name, color }, deleteLine }) => {
   return (
     <StyledLineListItem>
-      <div>{color}</div>
-      <LineName>{name}</LineName>
+      <LineName lineColor={color}> {name}</LineName>
       <div>
         <ControlButton>수정</ControlButton>
-        <ControlButton>삭제</ControlButton>
+        <ControlButton onClick={deleteLine}>삭제</ControlButton>
       </div>
     </StyledLineListItem>
   );
