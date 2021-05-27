@@ -8,6 +8,10 @@ const InputContainer = styled.div`
   gap: 20px;
 `;
 
+const InputWrapper = styled.div`
+  width: 100%;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -26,4 +30,4 @@ const SignupLink = styled.div`
   margin-top: 20px;
 `;
 
-export default { InputContainer, ButtonWrapper, SignupLink };
+export default { InputContainer, InputWrapper, ButtonWrapper, SignupLink };

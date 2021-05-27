@@ -5,4 +5,10 @@ const Container = styled.div`
   padding: 160px 0;
 `;
 
-export default { Container };
+const CurrentServer = styled.div`
+  position: absolute;
+  top: 88px;
+  right: 8px;
+`;
+
+export default { Container, CurrentServer };

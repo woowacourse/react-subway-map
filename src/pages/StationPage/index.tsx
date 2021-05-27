@@ -1,37 +1,75 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
-import { ButtonType, Station } from 'types';
+import Notification from 'components/shared/Notification/Notification';
+import { useAppSelector } from 'modules/hooks';
+import { ButtonType, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import saveIcon from 'assets/enter.png';
-import { END_POINT, API_STATUS } from 'constants/api';
-import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
-import useFetch from 'hooks/useFetch';
+import { API_STATUS } from 'constants/api';
+import regex from 'constants/regex';
+import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
+import { requestAddStation, requestDeleteStation, requestGetStations } from 'request/station';
 import Styled from './styles';
+import ROUTE from 'constants/routes';
 
 const StationPage = () => {
-  const { response: stations, fetchData: getStationsAsync } = useFetch<Station[]>();
-  const { fetchData: addStationAsync } = useFetch<Station>();
-  const { fetchData: deleteStationAsync } = useFetch<Station>();
+  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
+  if (!user) return <Redirect to={ROUTE.HOME} />;
+
+  const [stations, setStations] = useState<Station[]>([]);
   const [newStationName, setNewStationName] = useState('');
   const [editingStationId, setEditingStationId] = useState<number>(0);
   const [editingStationName, setEditingStationName] = useState<string>('');
+  const [isMessageValid, setMessageValid] = useState<boolean>(false);
+  const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const isValidStationName = regex.koreanAndNumber.test(newStationName);
+
+  const getStations = async () => {
+    if (!BASE_URL) return;
+
+    const res = await requestGetStations(BASE_URL);
+
+    if (res.status === API_STATUS.REJECTED) {
+      enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setStations(res.data);
+    }
+  };
 
   const addStation = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const res = await addStationAsync('POST', END_POINT.STATIONS, { name: newStationName });
+    if (!isValidStationName) {
+      setMessageValid(false);
+      setMessageVisible(true);
+
+      return;
+    }
+
+    setMessageVisible(false);
+    if (!BASE_URL) return;
+
+    const res = await requestAddStation(BASE_URL, newStationName);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_ADD_STATION);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      getStationsAsync('GET', END_POINT.STATIONS);
+      await getStations();
       setNewStationName('');
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_STAION);
     }
   };
 
@@ -43,21 +81,23 @@ const StationPage = () => {
   const saveEditForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO: update 비동기 통신 진행
+    // TODO: update api 없음
 
     setEditingStationId(0);
     setEditingStationName('');
   };
 
   const deleteStation = async (id: Station['id']) => {
-    const res = await deleteStationAsync('DELETE', `${END_POINT.STATIONS}/${id}`);
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+    if (!BASE_URL) return;
 
-    if (!window.confirm(CONFIRM_MESSAGE.DELETE_STATION)) return;
+    const res = await requestDeleteStation(BASE_URL, id);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_DELETE_STATION);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      getStationsAsync('GET', END_POINT.STATIONS);
+      await getStations();
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_STAION);
     }
   };
 
@@ -68,11 +108,7 @@ const StationPage = () => {
 
   useEffect(() => {
     const fetchStations = async () => {
-      const res = await getStationsAsync('GET', END_POINT.STATIONS);
-
-      if (res.status === API_STATUS.REJECTED) {
-        alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
-      }
+      await getStations();
     };
 
     fetchStations();
@@ -88,9 +124,15 @@ const StationPage = () => {
               labelText="지하철 역 이름을 입력해주세요."
               value={newStationName}
               onChange={(event) => setNewStationName(event.target.value)}
+              extraArgs={{ minLength: 2, maxLength: 20 }}
+            />
+            <Notification
+              isValid={isMessageValid}
+              isVisible={isMessageVisible}
+              message={NOTIFICATION.STATION_NAME}
             />
           </Styled.InputWrapper>
-          <TextButton text="추가" styleType={ButtonType.FILLED} />
+          <TextButton text="추가" styleType={ButtonType.YELLOW} />
         </Styled.InputContainer>
       </form>
 

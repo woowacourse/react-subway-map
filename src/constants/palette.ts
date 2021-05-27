@@ -6,6 +6,9 @@ const PALETTE = {
   SUBWAY_GREEN: '#009743',
   DARK_GRAY: '#808080',
   LIGHT_GRAY: '#bfbfbf',
+
+  GREEN: '#27AE60',
+  RED: '#FF0000',
 };
 
 export default PALETTE;

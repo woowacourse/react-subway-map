@@ -1,5 +1,6 @@
 export enum ButtonType {
-  FILLED = 'FILLED',
+  YELLOW = 'YELLOW',
+  GREEN = 'GREEN',
   BLANK = 'BLANK',
 }
 
@@ -8,9 +9,16 @@ export enum ButtonSize {
   SMALL = 'SMALL',
 }
 
+export interface User {
+  id: number;
+  email: string;
+  age: number;
+}
+
 export interface Station {
   id: number;
   name: string;
+  includedLines: Line['id'][];
 }
 
 export interface Section {

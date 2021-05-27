@@ -13,7 +13,7 @@ export const Filled = Template.bind({});
 export const Blank = Template.bind({});
 
 Filled.args = {
-  styleType: ButtonType.FILLED,
+  styleType: ButtonType.YELLOW,
   text: '추가',
 };
 

@@ -1,39 +1,110 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import SectionModal from 'components/SectionModal/SectionModal';
+import { useAppSelector } from 'modules/hooks';
 import deleteIcon from 'assets/delete.png';
+import { API_STATUS } from 'constants/api';
+import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
+import ROUTE from 'constants/routes';
+import { requestGetStations } from 'request/station';
+import { requestDeleteSection, requestGetLine, requestGetLines } from 'request/line';
+import { Line, Station, User } from 'types';
 import Styled from './styles';
 
-const lines = [
-  { name: '1호선', color: '#9ca3af', stations: ['노량진', '신도림', '몰라요'] },
-  { name: '2호선', color: '#f87171', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '3호선', color: '#fbbf24', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '5호선', color: '#f6ad54', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '9호선', color: '#34d399', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '신분당선', color: '#60a5fa', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '4호선', color: '#27c6da', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '6호선', color: '#818cf8', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '7호선', color: '#a78bfa', stations: ['잠실', '잠실새내', '잠실나루'] },
-  { name: '8호선', color: '#f472b6', stations: ['잠실', '잠실새내', '잠실나루'] },
-];
-
 const SectionPage = () => {
-  const [line, setLine] = useState<{ name: string; color: string; stations: string[] }>();
+  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
+  if (!user) return <Redirect to={ROUTE.HOME} />;
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [lines, setLines] = useState<Line[]>([]);
+  const [targetLine, setTargetLine] = useState<Line | undefined>();
+  const [stations, setStations] = useState<Station[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const closeModal = () => {
+  const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
+
+  const getStations = async () => {
+    if (!BASE_URL) return;
+
+    const res = await requestGetStations(BASE_URL);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setStations(res.data);
+    }
+  };
+
+  const getLines = async () => {
+    if (!BASE_URL) return;
+
+    const res = await requestGetLines(BASE_URL);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setLines(res.data);
+    }
+  };
+
+  const getLine = async (targetLineId: Line['id']) => {
+    if (!BASE_URL) return;
+
+    const res = await requestGetLine(BASE_URL, targetLineId);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      setTargetLine(res.data);
+    }
+  };
+
+  const selectTargetLine = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const targetLineId = Number(event.target.value);
+
+    await getLine(targetLineId);
+  };
+
+  const deleteStation = async (stationId: Station['id']) => {
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+    if (!targetLine) return;
+    if (!BASE_URL) return;
+
+    const res = await requestDeleteSection(BASE_URL, targetLine?.id, stationId);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_SECTION);
+
+      await getLine(targetLine.id);
+    }
+  };
+
+  const openSectionModal = async () => {
+    setModalOpen(true);
+    await getStations();
+  };
+
+  const closeModal = async () => {
     setModalOpen(false);
   };
 
-  const selectLine = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const targetLine = lines.find((line) => line.name === event.target.value);
-    setLine(targetLine);
-  };
+  useEffect(() => {
+    const fetchLines = async () => {
+      getLines();
+    };
 
-  const lineNames = lines.map((line) => line.name);
+    fetchLines();
+  }, []);
 
   return (
     <>
@@ -43,22 +114,22 @@ const SectionPage = () => {
             <Dropdown
               labelText="노선 선택"
               defaultOption="노선 선택"
-              options={lineNames}
-              onSelect={selectLine}
+              options={lineOptions}
+              onSelect={selectTargetLine}
             />
           </Styled.DropdownWrapper>
           <Styled.AddButtonWrapper>
-            <Styled.AddButton onClick={() => setModalOpen(true)}>+</Styled.AddButton>
+            <Styled.AddButton onClick={openSectionModal}>+</Styled.AddButton>
           </Styled.AddButtonWrapper>
         </Styled.TopContaier>
-        {line && (
+        {targetLine && (
           <Styled.LineDetail>
-            <Styled.LineName color={line.color}>{line.name}</Styled.LineName>
+            <Styled.LineName color={targetLine.color}>{targetLine.name}</Styled.LineName>
             <Styled.SectionsContainer>
-              {line.stations.map((station) => (
-                <Styled.SectionItem key={station}>
-                  {station}
-                  <IconButton>
+              {targetLine.stations.map((station) => (
+                <Styled.SectionItem key={station.id}>
+                  {station.name}
+                  <IconButton onClick={() => deleteStation(station.id)}>
                     <Styled.Icon src={deleteIcon} alt="delete" />
                   </IconButton>
                 </Styled.SectionItem>
@@ -68,7 +139,14 @@ const SectionPage = () => {
         )}
       </CardLayout>
       <Modal isOpen={isModalOpen} title="구간 추가" onClose={closeModal}>
-        <SectionModal targetLine={line} lineNames={lineNames} stations={line?.stations} />
+        <SectionModal
+          targetLine={targetLine}
+          selectTargetLine={selectTargetLine}
+          lines={lines}
+          stations={stations}
+          closeModal={closeModal}
+          getLine={getLine}
+        />
       </Modal>
     </>
   );

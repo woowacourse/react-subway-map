@@ -4,7 +4,7 @@ import PALETTE from 'constants/palette';
 const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const InputWrapper = styled.div`

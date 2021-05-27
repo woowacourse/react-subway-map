@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import PALETTE from 'constants/palette';
 
-const Container = styled.div`
+const Container = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -39,8 +39,9 @@ const ColorPalette = styled.ul`
   row-gap: 6px;
 `;
 
-const ColorOption = styled.li<{ color: string }>`
+const ColorOption = styled.button<{ color: string }>`
   background-color: ${({ color }) => color};
+  padding: 0;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -48,9 +49,14 @@ const ColorOption = styled.li<{ color: string }>`
   &:hover {
     border: 2px solid ${PALETTE.DARK_GRAY};
   }
+  &:disabled {
+    &:hover {
+      border: none;
+    }
+  }
 `;
 
-const SelectedColor = styled.div`
+const SelectedColor = styled.input`
   width: 100%;
   height: 86px;
   margin-left: 12px;

@@ -1,92 +1,200 @@
 import React, { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import Styled from './LineModal.styles';
-import { ButtonType } from 'types';
+import Notification from 'components/shared/Notification/Notification';
+import { ButtonType, Line, Station } from 'types';
 import LINE_COLORS from 'constants/lineColors';
+import { API_STATUS } from 'constants/api';
+import regex from 'constants/regex';
+import { useAppSelector } from 'modules/hooks';
+import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
+import { requestAddLine, requestEditLine } from 'request/line';
+import Styled from './LineModal.styles';
 
-interface LineModalProps {
-  stations: string[] | undefined;
-  selectedLine?: { name: string; color: string };
+interface Props {
+  stations: Station[] | undefined;
+  selectedLine?: Line;
+  selectedColors: string[];
+  closeModal: () => void;
+  getLines: () => Promise<void>;
 }
 
-const LineModal = ({ stations = [], selectedLine }: LineModalProps) => {
-  const [selectedColor, setSelectedColor] = useState<string>('');
-  const [name, setName] = useState('');
+const LineModal = ({
+  stations = [],
+  selectedLine,
+  selectedColors,
+  closeModal,
+  getLines,
+}: Props) => {
+  const { enqueueSnackbar } = useSnackbar();
 
-  const selectUpStation = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
+  const [color, setColor] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [upStationId, setUpStationId] = useState<number>();
+  const [downStationId, setDownStationId] = useState<number>();
+  const [distance, setDistance] = useState<number>();
+  const [extraFare, setExtraFare] = useState<number>();
+
+  const [isMessageValid, setMessageValid] = useState<boolean>(false);
+  const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
+
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
+  const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
+
+  const validateLineName = () => {
+    const isValidLineName = regex.koreanAndNumber.test(name);
+
+    if (!isValidLineName) {
+      setMessageValid(false);
+      setMessageVisible(true);
+
+      return false;
+    } else {
+      setMessageVisible(false);
+      return true;
+    }
   };
 
-  const selectDownStation = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
+  const addLine = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!validateLineName()) return;
+    if (!BASE_URL) return;
+
+    setMessageVisible(false);
+
+    const newLine = {
+      name,
+      color,
+      upStationId,
+      downStationId,
+      distance,
+      extraFare,
+    };
+
+    const res = await requestAddLine(BASE_URL, newLine);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      // TODO: form reset
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_LINE);
+      closeModal();
+      await getLines();
+    }
+  };
+
+  const editLine = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!selectedLine) return;
+    if (!BASE_URL) return;
+
+    const updatedLine = { name, color };
+    const res = await requestEditLine(BASE_URL, selectedLine.id, updatedLine);
+
+    if (res.status === API_STATUS.REJECTED) {
+      alert(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      // TODO: form reset
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
+      closeModal();
+      await getLines();
+    }
   };
 
   useEffect(() => {
     if (selectedLine) {
-      console.log(selectedLine);
       setName(selectedLine.name);
-      setSelectedColor(selectedLine.color);
+      setColor(selectedLine.color);
     } else {
       setName('');
-      setSelectedColor('');
+      setColor('');
     }
   }, [selectedLine]);
 
   return (
-    <>
-      <Styled.Container>
+    <Styled.Container onSubmit={selectedLine ? editLine : addLine}>
+      <div>
         <Input
           type="text"
           labelText="노선 이름"
           value={name}
+          onBlur={validateLineName}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
+          extraArgs={{ minLength: 2, maxLength: 10 }}
         />
-        {!selectedLine && (
-          <>
-            <Styled.StationInputWrapper>
-              <Styled.DropdownWrapper>
-                <Dropdown
-                  labelText="상행 종점"
-                  defaultOption="상행 종점"
-                  options={stations}
-                  onSelect={selectUpStation}
-                />
-              </Styled.DropdownWrapper>
-              <Styled.DropdownWrapper>
-                <Dropdown
-                  labelText="하행 종점"
-                  defaultOption="하행 종점"
-                  options={stations}
-                  onSelect={selectDownStation}
-                />
-              </Styled.DropdownWrapper>
-            </Styled.StationInputWrapper>
-            <Input type="number" labelText="거리" />
-          </>
-        )}
-        <Styled.PaletteContainer>
-          <Styled.PaletteLabel>색상</Styled.PaletteLabel>
-          <Styled.PaletteContent>
-            <Styled.ColorPalette>
-              {LINE_COLORS.map((color) => (
-                <Styled.ColorOption
-                  key={color}
-                  color={color}
-                  onClick={() => setSelectedColor(color)}
-                ></Styled.ColorOption>
-              ))}
-            </Styled.ColorPalette>
-            <Styled.SelectedColor color={selectedColor}>{selectedColor}</Styled.SelectedColor>
-          </Styled.PaletteContent>
-        </Styled.PaletteContainer>
+        <Notification
+          isValid={isMessageValid}
+          isVisible={isMessageVisible}
+          message={NOTIFICATION.STATION_NAME}
+        />
+      </div>
+      {!selectedLine && (
+        <>
+          <Styled.StationInputWrapper>
+            <Styled.DropdownWrapper>
+              <Dropdown
+                labelText="상행 종점"
+                defaultOption="상행 종점"
+                options={stationOptions}
+                onSelect={(event) => setUpStationId(Number(event.target.value))}
+              />
+            </Styled.DropdownWrapper>
+            <Styled.DropdownWrapper>
+              <Dropdown
+                labelText="하행 종점"
+                defaultOption="하행 종점"
+                options={stationOptions}
+                onSelect={(event) => setDownStationId(Number(event.target.value))}
+              />
+            </Styled.DropdownWrapper>
+          </Styled.StationInputWrapper>
+          <Input
+            type="number"
+            labelText="거리"
+            value={distance}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setDistance(Number(event.target.value))
+            }
+            extraArgs={{ min: '1' }}
+          />
+          <Input
+            type="number"
+            labelText="운임"
+            value={extraFare}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setExtraFare(Number(event.target.value))
+            }
+            extraArgs={{ min: '0' }}
+          />
+        </>
+      )}
+      <Styled.PaletteContainer>
+        <Styled.PaletteLabel>색상</Styled.PaletteLabel>
+        <Styled.PaletteContent>
+          <Styled.ColorPalette>
+            {LINE_COLORS.map((color) => (
+              <Styled.ColorOption
+                key={color}
+                type="button"
+                disabled={selectedColors.includes(color)}
+                color={color}
+                onClick={() => setColor(color)}
+              ></Styled.ColorOption>
+            ))}
+          </Styled.ColorPalette>
+          <Styled.SelectedColor color={color} value={color} required />
+        </Styled.PaletteContent>
+      </Styled.PaletteContainer>
 
-        <Styled.ButtonsContainer>
-          <TextButton text="확인" styleType={ButtonType.FILLED}></TextButton>
-        </Styled.ButtonsContainer>
-      </Styled.Container>
-    </>
+      <Styled.ButtonsContainer>
+        <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>
+      </Styled.ButtonsContainer>
+    </Styled.Container>
   );
 };
 
