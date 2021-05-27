@@ -118,7 +118,7 @@ const Sections = () => {
           </h2>
           <Select onChange={handleLineIdChange} value={lineId}>
             <option hidden>노선 선택</option>
-            {linesList.map(({ id, name }) => (
+            {[...linesList].reverse().map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
               </option>
