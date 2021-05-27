@@ -7,7 +7,6 @@ import SectionAddModal from "./Modal/SectionAddModal";
 import useStation from "../../hooks/useStation";
 import useSelect from "../../hooks/@common/useSelect";
 import useLine from "../../hooks/useLine";
-import useSection from "../../hooks/useSection";
 import ListItem from "../../components/ListItem/ListItem";
 import { CIRCLE_COLOR } from "../../constants/color";
 
@@ -15,11 +14,10 @@ const SectionManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
 
   const { stations } = useStation();
-  const { lines } = useLine();
-  const { addSection, deleteSection } = useSection();
+  const { lines, addSection, deleteSection } = useLine();
 
   const [defaultLine] = lines;
-  const { selectValue: lineId, setValueOnChange: setLineIdOnChange } = useSelect(String(defaultLine.id));
+  const { selectValue: lineId, setValueOnChange: setLineIdOnChange } = useSelect(String(defaultLine?.id));
 
   const targetLine = lines.find(({ id }) => id === Number(lineId));
 

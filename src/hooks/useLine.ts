@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from ".";
-import { LineAddRequestItem } from "../@types/types";
+import { LineAddRequestItem, SectionAddRequestItem } from "../@types/types";
 import { action } from "../modules/line";
 
 const useLine = () => {
@@ -12,13 +12,25 @@ const useLine = () => {
 
   const addLine = async (lineRequestItem: LineAddRequestItem) => {
     await dispatch(action.addLine(lineRequestItem));
+    await dispatch(action.getLines());
   };
 
   const deleteLine = async (id: number) => {
     await dispatch(action.deleteLine(id));
+    await dispatch(action.getLines());
   };
 
-  return { lines, getLines, addLine, deleteLine };
+  const addSection = async (sectionAddRequestItem: SectionAddRequestItem) => {
+    await dispatch(action.addSection(sectionAddRequestItem));
+    await dispatch(action.getLines());
+  };
+
+  const deleteSection = async ({ lineId, stationId }: { lineId: number; stationId: number }) => {
+    await dispatch(action.deleteSection({ lineId, stationId }));
+    await dispatch(action.getLines());
+  };
+
+  return { lines, getLines, addLine, deleteLine, addSection, deleteSection };
 };
 
 export default useLine;

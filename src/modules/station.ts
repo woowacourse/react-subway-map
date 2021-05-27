@@ -58,8 +58,7 @@ export const stationSlice = createSlice({
     [addStation.pending.type]: (state) => {
       state.loading = true;
     },
-    [addStation.fulfilled.type]: (state, { payload }) => {
-      state.items.push(payload);
+    [addStation.fulfilled.type]: (state) => {
       state.loading = false;
     },
     [addStation.rejected.type]: (state, { payload }) => {
@@ -69,8 +68,7 @@ export const stationSlice = createSlice({
     [deleteStation.pending.type]: (state) => {
       state.loading = true;
     },
-    [deleteStation.fulfilled.type]: (state, { payload }) => {
-      state.items = state.items.filter(({ id }) => id !== payload);
+    [deleteStation.fulfilled.type]: (state) => {
       state.loading = false;
     },
     [deleteStation.rejected.type]: (state, { payload }) => {

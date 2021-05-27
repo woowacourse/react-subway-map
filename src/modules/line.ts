@@ -81,8 +81,7 @@ export const lineSlice = createSlice({
     [addLine.pending.type]: (state) => {
       state.loading = true;
     },
-    [addLine.fulfilled.type]: (state, { payload }) => {
-      state.items.push(payload);
+    [addLine.fulfilled.type]: (state) => {
       state.loading = false;
     },
     [addLine.rejected.type]: (state, { payload }) => {
@@ -92,8 +91,7 @@ export const lineSlice = createSlice({
     [deleteLine.pending.type]: (state) => {
       state.loading = true;
     },
-    [deleteLine.fulfilled.type]: (state, { payload }) => {
-      state.items = state.items.filter(({ id }) => id !== payload);
+    [deleteLine.fulfilled.type]: (state) => {
       state.loading = false;
     },
     [deleteLine.rejected.type]: (state, { payload }) => {
@@ -103,10 +101,8 @@ export const lineSlice = createSlice({
     [addSection.pending.type]: (state) => {
       state.loading = true;
     },
-    [addSection.fulfilled.type]: (state, { payload: { lineId, ...section } }) => {
+    [addSection.fulfilled.type]: (state) => {
       state.loading = false;
-      const targetLine = state.items.find(({ id }) => id === lineId);
-      targetLine?.sections.push(section);
     },
     [addSection.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -115,15 +111,8 @@ export const lineSlice = createSlice({
     [deleteSection.pending.type]: (state) => {
       state.loading = true;
     },
-    [deleteSection.fulfilled.type]: (state, { payload: { lineId, stationId } }) => {
+    [deleteSection.fulfilled.type]: (state) => {
       state.loading = false;
-      const targetLine = state.items.find(({ id }) => id === lineId);
-
-      if (!targetLine?.stations) return;
-
-      const stationIndex = targetLine.stations.findIndex(({ id }) => id === stationId);
-
-      targetLine.stations.splice(stationIndex, 1);
     },
     [deleteSection.rejected.type]: (state, { payload }) => {
       state.error = payload;

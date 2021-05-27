@@ -11,10 +11,12 @@ const useStation = () => {
 
   const addStation = async (stationName: string) => {
     await dispatch(action.addStation(stationName));
+    await dispatch(action.getStations());
   };
 
   const deleteStation = async (id: number) => {
     await dispatch(action.deleteStation(id));
+    await dispatch(action.getStations());
   };
 
   return { stations, getStations, addStation, deleteStation };

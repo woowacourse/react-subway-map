@@ -34,7 +34,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
     validateOnBlur: validateDistanceOnBlur,
   } = useInput(validateSectionDistance);
 
-  const onAddModal: React.FormEventHandler<HTMLFormElement> = async (event) => {
+  const onAddSection: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     await addSection({
@@ -47,7 +47,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
 
   return (
     <Modal onClose={onClose}>
-      <form onSubmit={onAddModal}>
+      <form onSubmit={onAddSection}>
         <Block style={{ flexDirection: "column", maxWidth: "40.625rem" }}>
           <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>🔁 구간 추가</h3>
           <Input value={line.name} placeholder="노선 이름" style={{ marginBottom: "0.9375rem" }} disabled />
