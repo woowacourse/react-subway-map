@@ -1,5 +1,5 @@
 import { MouseEventHandler, useState } from "react";
-import { LineRequestItem, Station } from "../../../@types/types";
+import { LineAddRequestItem, Station } from "../../../@types/types";
 import { Flex } from "../../../components/@shared/FlexContainer/FlexContainer";
 
 import Block from "../../../components/Block/Block";
@@ -17,18 +17,20 @@ import { CIRCLE_COLOR } from "../../../constants/color";
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
   stations: Station[];
-  onAddLine: (lineRequestItem: LineRequestItem) => void;
+  onAddLine: (lineRequestItem: LineAddRequestItem) => void;
 }
 
 const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
+  const [firstStation, secondStation] = stations;
+
   const {
     inputValue: lineName,
     errorMessage: lineNameErrorMessage,
     setValueOnChange: setLineNameOnChange,
     validateOnBlur: lineNameValidateOnBlur,
   } = useInput(validateLineName);
-  const { selectValue: upStationId, setValueOnChange: setUpStationOnChange } = useSelect();
-  const { selectValue: downStationId, setValueOnChange: setDownStationOnChange } = useSelect();
+  const { selectValue: upStationId, setValueOnChange: setUpStationOnChange } = useSelect(String(firstStation.id));
+  const { selectValue: downStationId, setValueOnChange: setDownStationOnChange } = useSelect(String(secondStation.id));
   const {
     inputValue: distance,
     errorMessage: disatanceErrorMessage,

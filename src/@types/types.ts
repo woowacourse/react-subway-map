@@ -8,7 +8,7 @@ export interface Line {
   sections: Section[];
 }
 
-export interface LineRequestItem {
+export interface LineAddRequestItem {
   name: string;
   color: keyof typeof CIRCLE_COLOR;
   upStationId: number;
@@ -30,6 +30,13 @@ export interface Section {
     id: number;
     name: string;
   };
+  distance: number;
+}
+
+export interface SectionAddRequestItem {
+  lineId: number;
+  upStationId: number;
+  downStationId: number;
   distance: number;
 }
 

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from ".";
-import { LineRequestItem } from "../@types/types";
+import { LineAddRequestItem } from "../@types/types";
 import { action } from "../modules/line";
 
 const useLine = () => {
@@ -10,7 +10,7 @@ const useLine = () => {
     await dispatch(action.getLines());
   };
 
-  const addLine = async (lineRequestItem: LineRequestItem) => {
+  const addLine = async (lineRequestItem: LineAddRequestItem) => {
     await dispatch(action.addLine(lineRequestItem));
   };
 

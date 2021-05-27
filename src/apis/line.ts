@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Line, LineRequestItem } from "../@types/types";
+import { Line, LineAddRequestItem } from "../@types/types";
 
 export const requestLine = {
   async getAllLines() {
@@ -8,7 +8,7 @@ export const requestLine = {
 
     return response.data;
   },
-  async addLine(line: LineRequestItem) {
+  async addLine(line: LineAddRequestItem) {
     const response = await axios.post<Line>("https://subway-pomo.kro.kr/lines", line);
 
     return response.data;
