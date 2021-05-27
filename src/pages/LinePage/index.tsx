@@ -18,6 +18,7 @@ import Styled from './styles';
 
 const LinePage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
@@ -29,7 +30,9 @@ const LinePage = () => {
   const [modalTitle, setModalTitle] = useState<string>('');
 
   const getLines = async () => {
-    const res = await requestGetLines();
+    if (!BASE_URL) return;
+
+    const res = await requestGetLines(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
@@ -39,7 +42,9 @@ const LinePage = () => {
   };
 
   const getStations = async () => {
-    const res = await requestGetStations();
+    if (!BASE_URL) return;
+
+    const res = await requestGetStations(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -50,8 +55,9 @@ const LinePage = () => {
 
   const deleteLine = async (id: Line['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+    if (!BASE_URL) return;
 
-    const res = await requestDeleteLine(id);
+    const res = await requestDeleteLine(BASE_URL, id);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_LINE);
@@ -94,7 +100,7 @@ const LinePage = () => {
         <Styled.AddButtonWrapper>
           <TextButton
             text="노선 추가"
-            styleType={ButtonType.FILLED}
+            styleType={ButtonType.YELLOW}
             onClick={openLineCreateModal}
           />
         </Styled.AddButtonWrapper>

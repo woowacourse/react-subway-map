@@ -7,6 +7,7 @@ import TextButton from 'components/shared/TextButton/TextButton';
 import { API_STATUS } from 'constants/api';
 import { ALERT_MESSAGE } from 'constants/messages';
 import { requestAddSection } from 'request/line';
+import { useAppSelector } from 'modules/hooks';
 
 interface SectionModalProps {
   targetLine?: Line;
@@ -32,10 +33,13 @@ const SectionModal = ({
   const [downStationId, setDownStationId] = useState<number>();
   const [distance, setDistance] = useState<number>();
 
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
   const addSection = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!targetLine) return;
+    if (!BASE_URL) return;
 
     const newSection = {
       upStationId,
@@ -43,7 +47,7 @@ const SectionModal = ({
       distance,
     };
 
-    const res = await requestAddSection(targetLine?.id, newSection);
+    const res = await requestAddSection(BASE_URL, targetLine?.id, newSection);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_ADD_SECTION);
@@ -89,7 +93,7 @@ const SectionModal = ({
         extraArgs={{ min: '1' }}
       />
       <Styled.ButtonsContainer>
-        <TextButton text="확인" styleType={ButtonType.FILLED}></TextButton>
+        <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>
       </Styled.ButtonsContainer>
     </Styled.Container>
   );

@@ -1,11 +1,14 @@
 import axios from 'axios';
-import { API_STATUS, BASE_URL, END_POINT } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 
-export const requestSignup = async (signupData: {
-  email: string;
-  password: string;
-  age: number;
-}) => {
+export const requestSignup = async (
+  BASE_URL: string,
+  signupData: {
+    email: string;
+    password: string;
+    age: number;
+  },
+) => {
   try {
     await axios.post(`${BASE_URL}/${END_POINT.AUTH}`, signupData);
 
@@ -17,7 +20,10 @@ export const requestSignup = async (signupData: {
   }
 };
 
-export const requestLogin = async (loginData: { email: string; password: string }) => {
+export const requestLogin = async (
+  BASE_URL: string,
+  loginData: { email: string; password: string },
+) => {
   try {
     const response = await axios.post(`${BASE_URL}/${END_POINT.LOGIN}`, loginData);
 

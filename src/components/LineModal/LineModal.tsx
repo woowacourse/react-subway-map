@@ -7,6 +7,7 @@ import { ButtonType, Line, Station } from 'types';
 import LINE_COLORS from 'constants/lineColors';
 import { API_STATUS } from 'constants/api';
 import regex from 'constants/regex';
+import { useAppSelector } from 'modules/hooks';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import { requestAddLine, requestEditLine } from 'request/line';
 import Styled from './LineModal.styles';
@@ -36,6 +37,8 @@ const LineModal = ({
   const [isMessageValid, setMessageValid] = useState<boolean>(false);
   const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
   const validateLineName = () => {
@@ -56,6 +59,7 @@ const LineModal = ({
     event.preventDefault();
 
     if (!validateLineName()) return;
+    if (!BASE_URL) return;
 
     setMessageVisible(false);
 
@@ -68,7 +72,7 @@ const LineModal = ({
       extraFare,
     };
 
-    const res = await requestAddLine(newLine);
+    const res = await requestAddLine(BASE_URL, newLine);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_ADD_LINE);
@@ -83,9 +87,10 @@ const LineModal = ({
     event.preventDefault();
 
     if (!selectedLine) return;
+    if (!BASE_URL) return;
 
     const updatedLine = { name, color };
-    const res = await requestEditLine(selectedLine.id, updatedLine);
+    const res = await requestEditLine(BASE_URL, selectedLine.id, updatedLine);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_EDIT_LINE);
@@ -182,7 +187,7 @@ const LineModal = ({
       </Styled.PaletteContainer>
 
       <Styled.ButtonsContainer>
-        <TextButton text="확인" styleType={ButtonType.FILLED}></TextButton>
+        <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>
       </Styled.ButtonsContainer>
     </Styled.Container>
   );

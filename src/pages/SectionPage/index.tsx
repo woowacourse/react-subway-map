@@ -17,6 +17,7 @@ import Styled from './styles';
 
 const SectionPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
@@ -28,7 +29,9 @@ const SectionPage = () => {
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
 
   const getStations = async () => {
-    const res = await requestGetStations();
+    if (!BASE_URL) return;
+
+    const res = await requestGetStations(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -38,7 +41,9 @@ const SectionPage = () => {
   };
 
   const getLines = async () => {
-    const res = await requestGetLines();
+    if (!BASE_URL) return;
+
+    const res = await requestGetLines(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
@@ -48,7 +53,9 @@ const SectionPage = () => {
   };
 
   const getLine = async (targetLineId: Line['id']) => {
-    const res = await requestGetLine(targetLineId);
+    if (!BASE_URL) return;
+
+    const res = await requestGetLine(BASE_URL, targetLineId);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -66,8 +73,9 @@ const SectionPage = () => {
   const deleteStation = async (stationId: Station['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
     if (!targetLine) return;
+    if (!BASE_URL) return;
 
-    const res = await requestDeleteSection(targetLine?.id, stationId);
+    const res = await requestDeleteSection(BASE_URL, targetLine?.id, stationId);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_SECTION);

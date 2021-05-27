@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_STATUS, BASE_URL, END_POINT } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { Line, Station } from 'types';
 
-const requestGetLines = async () => {
+const requestGetLines = async (BASE_URL: string) => {
   try {
     const response = await axios.get(`${BASE_URL}/${END_POINT.LINES}`);
 
@@ -14,7 +14,7 @@ const requestGetLines = async () => {
   }
 };
 
-const requestGetLine = async (lineId: Line['id']) => {
+const requestGetLine = async (BASE_URL: string, lineId: Line['id']) => {
   try {
     const response = await axios.get(`${BASE_URL}/${END_POINT.LINES}/${lineId}`);
 
@@ -26,7 +26,7 @@ const requestGetLine = async (lineId: Line['id']) => {
   }
 };
 
-const requestDeleteLine = async (lineId: Line['id']) => {
+const requestDeleteLine = async (BASE_URL: string, lineId: Line['id']) => {
   try {
     await axios.delete(`${BASE_URL}/${END_POINT.LINES}/${lineId}`);
 
@@ -38,7 +38,7 @@ const requestDeleteLine = async (lineId: Line['id']) => {
   }
 };
 
-const requestAddLine = async (newLine: unknown) => {
+const requestAddLine = async (BASE_URL: string, newLine: unknown) => {
   try {
     await axios.post(`${BASE_URL}/${END_POINT.LINES}`, newLine);
 
@@ -50,7 +50,7 @@ const requestAddLine = async (newLine: unknown) => {
   }
 };
 
-const requestEditLine = async (lineId: Line['id'], updatedLine: unknown) => {
+const requestEditLine = async (BASE_URL: string, lineId: Line['id'], updatedLine: unknown) => {
   try {
     await axios.put(`${BASE_URL}/${END_POINT.LINES}/${lineId}`, updatedLine);
 
@@ -62,7 +62,7 @@ const requestEditLine = async (lineId: Line['id'], updatedLine: unknown) => {
   }
 };
 
-const requestAddSection = async (lineId: Line['id'], newSection: unknown) => {
+const requestAddSection = async (BASE_URL: string, lineId: Line['id'], newSection: unknown) => {
   try {
     await axios.post(`${BASE_URL}/${END_POINT.LINES}/${lineId}/sections`, newSection);
 
@@ -74,7 +74,11 @@ const requestAddSection = async (lineId: Line['id'], newSection: unknown) => {
   }
 };
 
-const requestDeleteSection = async (lineId: Line['id'], stationId: Station['id']) => {
+const requestDeleteSection = async (
+  BASE_URL: string,
+  lineId: Line['id'],
+  stationId: Station['id'],
+) => {
   try {
     await axios.delete(`${BASE_URL}/${END_POINT.LINES}/${lineId}/sections?stationId=${stationId}`);
 

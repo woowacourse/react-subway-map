@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API_STATUS, BASE_URL, END_POINT } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { User } from 'types';
-import { AppDispatch } from './hooks';
+import { AppDispatch, RootState } from './hooks';
 
 export interface AuthState {
   data: User | undefined;
@@ -14,26 +14,29 @@ const initialState: AuthState = {
   status: API_STATUS.IDLE,
 };
 
-export const requestGetUser = createAsyncThunk<{ user: User }, string, { dispatch: AppDispatch }>(
-  'auth/getUser',
-  async (accessToken, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/${END_POINT.AUTH}/me`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+export const requestGetUser = createAsyncThunk<
+  { user: User },
+  string,
+  { dispatch: AppDispatch; state: RootState }
+>('auth/getUser', async (accessToken, { rejectWithValue, getState }) => {
+  const BASE_URL = getState().serverSlice.server;
 
-      return { user: response.data };
-    } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
+  try {
+    const response = await axios.get(`${BASE_URL}/${END_POINT.AUTH}/me`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-      return rejectWithValue(error.response.data);
+    return { user: response.data };
+  } catch (error) {
+    if (!error.response) {
+      throw error;
     }
-  },
-);
+
+    return rejectWithValue(error.response.data);
+  }
+});
 
 const authSlice = createSlice({
   name: 'auth',

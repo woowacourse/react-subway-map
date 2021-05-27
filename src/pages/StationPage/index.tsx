@@ -22,6 +22,8 @@ const StationPage = () => {
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
   const [stations, setStations] = useState<Station[]>([]);
   const [newStationName, setNewStationName] = useState('');
   const [editingStationId, setEditingStationId] = useState<number>(0);
@@ -34,7 +36,9 @@ const StationPage = () => {
   const isValidStationName = regex.koreanAndNumber.test(newStationName);
 
   const getStations = async () => {
-    const res = await requestGetStations();
+    if (!BASE_URL) return;
+
+    const res = await requestGetStations(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -54,8 +58,9 @@ const StationPage = () => {
     }
 
     setMessageVisible(false);
+    if (!BASE_URL) return;
 
-    const res = await requestAddStation(newStationName);
+    const res = await requestAddStation(BASE_URL, newStationName);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_ADD_STATION);
@@ -81,8 +86,9 @@ const StationPage = () => {
 
   const deleteStation = async (id: Station['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
+    if (!BASE_URL) return;
 
-    const res = await requestDeleteStation(id);
+    const res = await requestDeleteStation(BASE_URL, id);
 
     if (res.status === API_STATUS.REJECTED) {
       alert(ALERT_MESSAGE.FAIL_TO_DELETE_STATION);
@@ -122,7 +128,7 @@ const StationPage = () => {
               message={NOTIFICATION.STATION_NAME}
             />
           </Styled.InputWrapper>
-          <TextButton text="추가" styleType={ButtonType.FILLED} />
+          <TextButton text="추가" styleType={ButtonType.YELLOW} />
         </Styled.InputContainer>
       </form>
 

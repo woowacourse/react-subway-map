@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_STATUS, BASE_URL, END_POINT } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { Station } from 'types';
 
-const requestGetStations = async () => {
+const requestGetStations = async (BASE_URL: string) => {
   try {
     const response = await axios.get(`${BASE_URL}/${END_POINT.STATIONS}`);
 
@@ -14,7 +14,7 @@ const requestGetStations = async () => {
   }
 };
 
-const requestAddStation = async (newStationName: Station['name']) => {
+const requestAddStation = async (BASE_URL: string, newStationName: Station['name']) => {
   try {
     await axios.post(`${BASE_URL}/${END_POINT.STATIONS}`, { name: newStationName });
 
@@ -26,7 +26,7 @@ const requestAddStation = async (newStationName: Station['name']) => {
   }
 };
 
-const requestDeleteStation = async (stationId: Station['id']) => {
+const requestDeleteStation = async (BASE_URL: string, stationId: Station['id']) => {
   try {
     await axios.delete(`${BASE_URL}/${END_POINT.STATIONS}/${stationId}`);
 
