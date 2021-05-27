@@ -10,7 +10,7 @@ import { Header } from '../../atoms';
 import { SignUpForm } from '../../molecules';
 import { Container } from './SignUp.styles';
 
-// TODO: 에러 메시지 처음에 렌더링되는 문제 해결
+// TODO: 메시지 상수화
 const SignUp = () => {
   const history = useHistory();
   const {

@@ -46,7 +46,7 @@ const SignUpForm = ({
         ariaLabel="나이"
         autoFocus
       />
-      {!isValidAge && <ErrorMessage text={'나이를 입력해주세요'} />}
+      {!isValidAge && age !== 0 && <ErrorMessage text={'나이는 200살 이하여야 합니다.'} />}
 
       <Input
         type="email"
@@ -55,7 +55,9 @@ const SignUpForm = ({
         value={email}
         ariaLabel="이메일"
       />
-      {!isValidEmail && <ErrorMessage text={'올바른 이메일 형식을 입력해주세요'} />}
+      {!isValidEmail && email.length !== 0 && (
+        <ErrorMessage text={'올바른 이메일 형식을 입력해주세요'} />
+      )}
 
       <Input
         type="password"
@@ -64,7 +66,9 @@ const SignUpForm = ({
         value={password}
         ariaLabel="비밀번호"
       />
-      {!isValidPassword && <ErrorMessage text={'비밀번호는 6자이상이어야 합니다'} />}
+      {!isValidPassword && password.length !== 0 && (
+        <ErrorMessage text={'비밀번호는 6자이상이어야 합니다'} />
+      )}
 
       <Input
         type="password"
