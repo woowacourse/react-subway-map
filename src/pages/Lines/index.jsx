@@ -110,7 +110,7 @@ const Lines = () => {
 
   return (
     <>
-      <Loading isLoading={status === STATUS.LOADING} />
+      <Loading isLoading={status === STATUS.LOADING} bgOpacity="10" />
       <Main>
         <section className="pb-8 w-144 border-t-8 border-yellow-300 rounded-sm shadow-md">
           <div className="flex items-center justify-between px-4">
