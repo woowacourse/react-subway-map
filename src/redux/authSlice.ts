@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import MESSAGE from 'constants/message';
 
 interface SignupPayload {
   email: string;
@@ -52,14 +53,13 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signupAsync.rejected, () => {
-      throw Error('회원가입에 실패하였습니다.');
+      throw Error(MESSAGE.SIGNUP.FAIL);
     });
-
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.accessToken = action.payload;
     });
     builder.addCase(loginAsync.rejected, () => {
-      throw Error('로그인에 실패하였습니다.');
+      throw Error(MESSAGE.LOGIN.FAIL);
     });
   },
 });

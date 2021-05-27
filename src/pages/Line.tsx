@@ -3,6 +3,7 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
+import MESSAGE from 'constants/message';
 // import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
@@ -38,7 +39,8 @@ const Line = () => {
     try {
       await dispatch(deleteLineAsync({ id }));
 
-      alert('선택하신 노선을 삭제했습니다.');
+      // TODO: confirm
+      alert(MESSAGE.LINE.DELETE_SUCCESS);
     } catch (error) {
       alert(error.message);
     }
@@ -48,7 +50,7 @@ const Line = () => {
     try {
       await dispatch(addLineAsync({ name, color, upStationId, downStationId, distance }));
 
-      alert('노선 추가에 성공하셨습니다.');
+      alert(MESSAGE.LINE.ADD_SUCCESS);
       setModalOpen(false);
     } catch (error) {
       throw Error(error);

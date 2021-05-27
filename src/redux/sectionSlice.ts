@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import MESSAGE from 'constants/message';
 
 export interface AddSectionPayload {
   id: number;
@@ -51,10 +52,10 @@ const sectionSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(addSectionAsync.rejected, () => {
-      throw Error('구간 추가에 실패하였습니다.');
+      throw Error(MESSAGE.SECTION.ADD_FAIL);
     });
     builder.addCase(deleteSectionAsync.rejected, () => {
-      throw Error('구간 추가에 실패하였습니다.');
+      throw Error(MESSAGE.SECTION.DELETE_FAIL);
     });
   },
 });

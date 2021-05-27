@@ -12,6 +12,7 @@ import { loginAsync } from 'redux/authSlice';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import axios from 'axios';
 import { RootState } from 'redux/store';
+import MESSAGE from 'constants/message';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Login = () => {
     // TODO: 추상화
     try {
       await dispatch(loginAsync({ email, password }));
-      alert('로그인에 성공하였습니다.');
+      alert(MESSAGE.LOGIN.SUCCESS);
 
       history.push(PATH.HOME);
     } catch (error) {

@@ -1,6 +1,7 @@
 import { LineInterface, SelectedLineInterface } from 'types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import MESSAGE from 'constants/message';
 
 export interface AddLinePayload {
   name: string;
@@ -81,25 +82,25 @@ const lineSlice = createSlice({
       state.selectedLine = action.payload;
     });
     builder.addCase(getSelectedLineAsync.rejected, () => {
-      throw Error('노선 조회에 실패하였습니다.');
+      throw Error(MESSAGE.LINE.GET_FAIL);
     });
     builder.addCase(getLinesAsync.fulfilled, (state, action) => {
       state.lines = action.payload;
     });
     builder.addCase(getLinesAsync.rejected, () => {
-      throw Error('노선 목록 조회에 실패하였습니다.');
+      throw Error(MESSAGE.LINE.GET_LIST_FAIL);
     });
     builder.addCase(addLineAsync.fulfilled, (state, action) => {
       state.lines = state.lines ? state.lines.concat(action.payload) : [action.payload];
     });
     builder.addCase(addLineAsync.rejected, () => {
-      throw Error('노선 생성에 실패하였습니다.');
+      throw Error(MESSAGE.LINE.ADD_FAIL);
     });
     builder.addCase(deleteLineAsync.fulfilled, (state, action) => {
       state.lines = state.lines?.filter(({ id }) => id !== action.payload) || null;
     });
     builder.addCase(deleteLineAsync.rejected, () => {
-      throw Error('노선 삭제에 실패하였습니다.');
+      throw Error(MESSAGE.LINE.DELETE_FAIL);
     });
   },
 });

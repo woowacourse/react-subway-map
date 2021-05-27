@@ -4,6 +4,7 @@ import Input from '@shared/Input/Input';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
+import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
@@ -35,7 +36,7 @@ const Station = () => {
     try {
       await dispatch(addStationAsync({ name }));
 
-      alert('역 추가에 성공하였습니다.');
+      alert(MESSAGE.STATION.ADD_SUCCESS);
       setName('');
     } catch (error) {
       alert(error.message);
@@ -46,7 +47,7 @@ const Station = () => {
     try {
       await dispatch(deleteStationAsync({ id }));
 
-      alert('역 삭제에 성공하였습니다.');
+      alert(MESSAGE.STATION.DELETE_SUCCESS);
     } catch (error) {
       alert(error.message);
     }

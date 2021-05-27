@@ -11,6 +11,7 @@ import { signupAsync } from 'redux/authSlice';
 import { useHistory } from 'react-router';
 import PATH from 'constants/PATH';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
+import MESSAGE from 'constants/message';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -48,11 +49,17 @@ const Signup = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (password !== passwordConfirmation) {
+      alert(MESSAGE.SIGNUP.INVALID_PASSWORD);
+
+      return;
+    }
+
     // TODO: 추상화
     // TODO: alert 변경
     try {
       await dispatch(signupAsync({ email, password, age }));
-      alert('회원가입에 성공하였습니다.');
+      alert(MESSAGE.SIGNUP.SUCCESS);
 
       history.push(PATH.LOGIN);
     } catch (error) {

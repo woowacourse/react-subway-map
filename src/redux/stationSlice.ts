@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import MESSAGE from 'constants/message';
 import { StationInterface } from 'types';
 
 interface AddStationPayload {
@@ -56,19 +57,19 @@ const stationSlice = createSlice({
       state.stations = action.payload;
     });
     builder.addCase(getStationAsync.rejected, () => {
-      throw Error('역 목록 조회에 실패하였습니다.');
+      throw Error(MESSAGE.STATION.GET_LIST_FAIL);
     });
     builder.addCase(addStationAsync.fulfilled, (state, action) => {
       state.stations = state.stations ? state.stations.concat(action.payload) : [action.payload];
     });
     builder.addCase(addStationAsync.rejected, () => {
-      throw Error('역 생성에 실패하였습니다.');
+      throw Error(MESSAGE.STATION.ADD_FAIL);
     });
     builder.addCase(deleteStationAsync.fulfilled, (state, action) => {
       state.stations = state.stations?.filter(({ id }) => id !== action.payload) || null;
     });
     builder.addCase(deleteStationAsync.rejected, () => {
-      throw Error('역 삭제에 실패하였습니다.');
+      throw Error(MESSAGE.STATION.DELETE_FAIL);
     });
   },
 });

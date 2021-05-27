@@ -4,6 +4,7 @@ import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
+import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
@@ -49,7 +50,7 @@ const Section = () => {
       await dispatch(getSelectedLineAsync({ id: selectedLineId }));
 
       // TODO: confirm으로 변경?
-      alert('구간 삭제에 성공하였습니다.');
+      alert(MESSAGE.SECTION.DELETE_SUCCESS);
     } catch (error) {
       alert(error.message);
     }
@@ -60,7 +61,7 @@ const Section = () => {
       await dispatch(addSectionAsync({ id, upStationId, downStationId, distance }));
       await dispatch(getSelectedLineAsync({ id: selectedLineId }));
 
-      alert('구간 추가에 성공하였습니다.');
+      alert(MESSAGE.SECTION.ADD_SUCCESS);
       setModalOpen(false);
     } catch (error) {
       throw Error(error);
