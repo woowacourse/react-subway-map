@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, ChangeEvent } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
@@ -7,22 +7,30 @@ import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SECTION } from '../../constants/appInfo';
-import { DUMMY_LINES } from '../../constants/dummies';
 import PALETTE from '../../constants/palette';
+import useModal from '../../hooks/useModal/useModal';
 import { loadLines } from '../../redux/lineSlice';
+import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
+import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
 
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { lines } = useSelector((state: RootState) => state.line);
+  const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
   const [targetLine, setTargetLine] = useState<Line | undefined>(undefined);
+  const sectionAddModal = useModal();
 
   useEffect(() => {
     if (lines.length === 0) {
       dispatch(loadLines(API_INFO[apiOwner].endPoint));
+    }
+
+    if (stations.length === 0) {
+      dispatch(loadStations(API_INFO[apiOwner].endPoint));
     }
   }, []);
 
@@ -30,6 +38,16 @@ const Sections: FC = () => {
     const selectedId = Number(value);
 
     setTargetLine(lines.find((line) => line.id === selectedId));
+  };
+
+  const onOpenSectionAddModal = () => {
+    if (!targetLine) {
+      alert('노선을 선택해주세요.');
+
+      return;
+    }
+
+    sectionAddModal.openModal();
   };
 
   return (
@@ -47,11 +65,7 @@ const Sections: FC = () => {
           ))}
         </LineSelectBox>
       </FlexContainer>
-      <ButtonOnLine
-        onClick={() => {
-          console.log('button');
-        }}
-      >
+      <ButtonOnLine onClick={onOpenSectionAddModal}>
         <Add width="80%" color={PALETTE.GRAY[600]} />
       </ButtonOnLine>
       <LineInfoContainer>
@@ -72,6 +86,9 @@ const Sections: FC = () => {
           </CardTemplate>
         )}
       </LineInfoContainer>
+      {sectionAddModal.isModalOpen && (
+        <SectionAddModal line={targetLine as Line} onClose={sectionAddModal.closeModal} />
+      )}
     </CardTemplate>
   );
 };

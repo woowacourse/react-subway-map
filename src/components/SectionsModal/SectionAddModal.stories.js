@@ -1,13 +1,13 @@
 import React from 'react';
-import SectionsModal from './SectionsModal';
+import SectionAddModal from './SectionAddModal';
 
 export default {
   title: 'modal/SectionsModal',
-  component: SectionsModal,
+  component: SectionAddModal,
   argTypes: {},
 };
 
-const Template = (args) => <SectionsModal {...args} />;
+const Template = (args) => <SectionAddModal {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   lineName: '선택한 노선',

@@ -19,26 +19,26 @@ const Lines: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-  const addLineModal = useModal();
-  const modifyLineModal = useModal(null);
+  const lineAddModal = useModal();
+  const lineModifyModal = useModal(null);
 
   useEffect(() => {
     dispatch(loadLines(API_INFO[apiOwner].endPoint));
   }, []);
 
   const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
-    addLineModal.openModal();
+    lineAddModal.openModal();
   };
 
   const onOpenModifyModal = (lineId: number) => () => {
     const selectedLine = lines.find((line) => line.id === lineId) as ModifyLine;
 
-    modifyLineModal.passDataToModal({
+    lineModifyModal.passDataToModal({
       id: selectedLine.id,
       name: selectedLine.name,
       color: selectedLine.color,
     });
-    modifyLineModal.openModal();
+    lineModifyModal.openModal();
   };
 
   const onDeleteLine = (lineId: number) => () => {
@@ -69,11 +69,11 @@ const Lines: FC = () => {
           ))}
         </LineList>
       )}
-      {addLineModal.isModalOpen && <LineAddModal onClose={addLineModal.closeModal} />}
-      {modifyLineModal.isModalOpen && (
+      {lineAddModal.isModalOpen && <LineAddModal onClose={lineAddModal.closeModal} />}
+      {lineModifyModal.isModalOpen && (
         <LineModifyModal
-          line={modifyLineModal.modalData as ModifyLine}
-          onClose={modifyLineModal.closeModal}
+          line={lineModifyModal.modalData as ModifyLine}
+          onClose={lineModifyModal.closeModal}
         />
       )}
     </CardTemplate>

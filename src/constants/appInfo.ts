@@ -69,6 +69,7 @@ export const SECTION = {
   MIN_DISTANCE: 1,
   DISTANCE_LABEL_TEXT: '거리',
   LINE_SELECT_TEXT: '노선을 선택해주세요',
+  ADD_MODAL_TITLE: '구간 추가',
 };
 
 export const SIGNUP = {
