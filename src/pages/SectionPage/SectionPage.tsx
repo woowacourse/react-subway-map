@@ -1,14 +1,101 @@
-import React from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useEffect } from 'react';
 import { Button, Card, Input, Select, ColorDot, Modal } from '../../components';
-import { Color } from '../../types';
 import * as Styled from './SectionPage.styles';
 import { ReactComponent as AddIcon } from '../../assets/icons/plus-solid.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/trash-solid.svg';
 import { ReactComponent as HorizontalArrowIcon } from '../../assets/icons/arrows-alt-h-solid.svg';
 import useModal from '../../hooks/useModal';
+import useSelect from '../../hooks/useSelect';
+import useInput from '../../hooks/useInput';
+import useStation from '../../hooks/useStation';
+import useLine from '../../hooks/useLine';
+import { ApiStatus, Station } from '../../types';
+import MESSAGE from '../../constants/message';
 
 const SectionPage = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
+
+  const { list: stationList } = useStation();
+  const { list: lineList, onAddSection, onDeleteSection, isLoading: isLoadingLineList } = useLine();
+
+  const {
+    valueAsNumber: selectedLineId,
+    setValue: setSelectedLineId,
+    onChange: onChangeSelectedLineId,
+  } = useSelect('');
+  const { valueAsNumber: upStationId, setValue: setUpStationId } = useSelect('');
+  const {
+    valueAsNumber: downStationId,
+    setValue: setDownStationId,
+    onChange: onChangeDownStationId,
+  } = useSelect('');
+  const {
+    value: distanceValue,
+    valueAsNumber: distance,
+    setValue: setDistance,
+    onChange: onChangeDistance,
+  } = useInput('');
+
+  const selectedLine = lineList.find((line) => line.id === selectedLineId) || lineList[0];
+
+  const downStationList = stationList.filter((station) => station.id !== upStationId);
+
+  const selectedUpStation = selectedLine?.stations.find(
+    (lineStation) => lineStation.id === upStationId
+  );
+
+  const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    const selectedStationId = event.target.value;
+    setUpStationId(selectedStationId);
+
+    if (downStationId !== Number(selectedStationId)) return;
+
+    const [firstDownStationId] = downStationList.map((station) => station.id);
+
+    setDownStationId(`${firstDownStationId}`);
+  };
+
+  const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    const response = await onAddSection({
+      lineId: selectedLineId,
+      data: {
+        upStationId,
+        downStationId,
+        distance,
+      },
+    });
+
+    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+
+    closeModal();
+    setDistance('');
+  };
+
+  const handleDelete = (stationId: Station['id']) => {
+    if (selectedLine?.stations.length <= 2) {
+      // eslint-disable-next-line no-alert
+      alert(MESSAGE.ERROR.REQUIRE_MINIMUM_STATION);
+      return;
+    }
+
+    onDeleteSection({ lineId: selectedLineId, stationId });
+  };
+
+  useEffect(() => {
+    if (lineList.length > 0 && !selectedLineId) {
+      setSelectedLineId(`${lineList[0].id}`);
+    }
+  }, [lineList, selectedLineId, setSelectedLineId]);
+
+  useEffect(() => {
+    if (stationList.length > 1) {
+      const [firstStationId, secondStationId] = stationList.map((station) => station.id);
+      setUpStationId(`${firstStationId}`);
+      setDownStationId(`${secondStationId}`);
+    }
+  }, [selectedLine, setDownStationId, setUpStationId, stationList]);
 
   return (
     <>
@@ -17,9 +104,16 @@ const SectionPage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 구간 관리</Styled.HeaderText>
-              <Select labelText="노선 선택">
-                <option value="1">1호선</option>
-                <option value="2">2호선</option>
+              <Select
+                labelText="노선 선택"
+                value={selectedLineId}
+                onChange={onChangeSelectedLineId}
+              >
+                {lineList.map((line) => (
+                  <option key={line.id} value={line.id}>
+                    {line.name}
+                  </option>
+                ))}
               </Select>
               <Styled.Control>
                 <Styled.Divider />
@@ -29,28 +123,30 @@ const SectionPage = () => {
                   </Button>
                 </Styled.ButtonList>
               </Styled.Control>
-              <Styled.LineHeader>
-                <ColorDot color={Color.RED_500} />
-                <Styled.LineName>1호선</Styled.LineName>
-              </Styled.LineHeader>
-              <Styled.List>
-                <Styled.Item>
-                  <Styled.StationName>강남역</Styled.StationName>
-                  <Styled.OptionWrapper>
-                    <Button shape="circle" variant="text">
-                      <TrashIcon />
-                    </Button>
-                  </Styled.OptionWrapper>
-                </Styled.Item>
-                <Styled.Item>
-                  <Styled.StationName>언주역</Styled.StationName>
-                  <Styled.OptionWrapper>
-                    <Button shape="circle" variant="text">
-                      <TrashIcon />
-                    </Button>
-                  </Styled.OptionWrapper>
-                </Styled.Item>
-              </Styled.List>
+              {!isLoadingLineList && (
+                <>
+                  <Styled.LineHeader>
+                    <ColorDot color={selectedLine?.color} />
+                    <Styled.LineName>{selectedLine?.name}</Styled.LineName>
+                  </Styled.LineHeader>
+                  <Styled.List>
+                    {selectedLine?.stations.map((station) => (
+                      <Styled.Item key={station.id}>
+                        <Styled.StationName>{station.name}</Styled.StationName>
+                        <Styled.OptionWrapper>
+                          <Button
+                            shape="circle"
+                            variant="text"
+                            onClick={() => handleDelete(station.id)}
+                          >
+                            <TrashIcon />
+                          </Button>
+                        </Styled.OptionWrapper>
+                      </Styled.Item>
+                    ))}
+                  </Styled.List>
+                </>
+              )}
             </Card>
           </Styled.FormContainer>
         </Styled.Container>
@@ -58,28 +154,59 @@ const SectionPage = () => {
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Styled.ModalTitle>구간 생성</Styled.ModalTitle>
-        <Styled.Form>
+        <Styled.Form onSubmit={handleAdd}>
           <Styled.SelectWrapper>
-            <Select labelText="노선 선택">
-              <option value="1">1호선</option>
-              <option value="2">2호선</option>
+            <Select
+              labelText="노선 선택"
+              value={selectedLineId}
+              onChange={onChangeSelectedLineId}
+              required
+            >
+              {lineList.map((line) => (
+                <option key={line.id} value={line.id}>
+                  {line.name}
+                </option>
+              ))}
             </Select>
           </Styled.SelectWrapper>
           <Styled.SelectWrapper>
-            <Select labelText="상행역">
-              <option value="1">강남역</option>
-              <option value="2">언주역</option>
-              <option value="3">잠실역</option>
+            <Select
+              labelText="상행역"
+              value={upStationId}
+              onChange={handleChangeUpStationId}
+              required
+            >
+              {stationList.map((station) => (
+                <option key={station.id} value={station.id}>
+                  {station.name}
+                </option>
+              ))}
             </Select>
             <HorizontalArrowIcon />
-            <Select labelText="하행역">
-              <option value="1">강남역</option>
-              <option value="2">언주역</option>
-              <option value="3">잠실역</option>
+            <Select
+              labelText="하행역"
+              value={downStationId}
+              onChange={onChangeDownStationId}
+              required
+            >
+              {downStationList?.map((station) => (
+                <option key={station.id} value={station.id}>
+                  {station.name}
+                </option>
+              ))}
             </Select>
           </Styled.SelectWrapper>
           <Styled.InputWrapper>
-            <Input labelText="거리" placeholder="거리" />
+            <Input
+              type="number"
+              labelText="거리"
+              placeholder="거리"
+              value={distanceValue}
+              onChange={onChangeDistance}
+              min={1}
+              max={selectedUpStation?.distance !== 0 ? selectedUpStation?.distance : undefined}
+              required
+            />
           </Styled.InputWrapper>
           <Styled.ButtonWrapper>
             <Button variant="text" type="button" onClick={closeModal}>

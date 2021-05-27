@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API from '../api';
-import { ApiStatus, Error, Line, LineAttribute } from '../types';
+import { ApiStatus, Error, Line, Station, LineAttribute, SectionAttribute } from '../types';
 
 interface LineState {
   status: ApiStatus;
@@ -41,7 +41,7 @@ export const addLine = createAsyncThunk(
 
 export const editLine = createAsyncThunk(
   'line/editLine',
-  async ({ id, name, color }: Line, { rejectWithValue }) => {
+  async ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>, { rejectWithValue }) => {
     try {
       const response = await API.put(`/lines/${id}`, { name, color });
 
@@ -59,6 +59,35 @@ export const deleteLine = createAsyncThunk(
       await API.delete(`/lines/${id}`);
 
       return id;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const addSection = createAsyncThunk(
+  'line/addSection',
+  async (newSection: SectionAttribute, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await API.post(`/lines/${newSection.lineId}/sections`, newSection.data);
+      dispatch(getLineList());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteSection = createAsyncThunk(
+  'line/deleteSection',
+  async (
+    { lineId, stationId }: { lineId: Line['id']; stationId: Station['id'] },
+    { rejectWithValue }
+  ) => {
+    try {
+      await API.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
+
+      return { lineId, stationId };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -123,6 +152,37 @@ export const lineSlice = createSlice({
       state.list = state.list.filter((item) => item.id !== payload);
     });
     builder.addCase(deleteLine.rejected, (state, { payload }) => {
+      state.status = ApiStatus.REJECTED;
+      state.error = payload as Error;
+    });
+
+    builder.addCase(addSection.pending, (state) => {
+      state.status = ApiStatus.PENDING;
+    });
+    builder.addCase(addSection.fulfilled, (state) => {
+      state.status = ApiStatus.FULFILLED;
+    });
+    builder.addCase(addSection.rejected, (state, { payload }) => {
+      state.status = ApiStatus.REJECTED;
+      state.error = payload as Error;
+    });
+
+    builder.addCase(deleteSection.pending, (state) => {
+      state.status = ApiStatus.PENDING;
+    });
+    builder.addCase(deleteSection.fulfilled, (state, { payload }) => {
+      state.status = ApiStatus.FULFILLED;
+
+      const targetLine = state.list.find((line) => line.id === payload.lineId);
+      const targetStationIndex = targetLine?.stations.findIndex(
+        (station) => station.id === payload.stationId
+      );
+
+      if (targetLine && targetStationIndex) {
+        targetLine.stations.splice(targetStationIndex, 1);
+      }
+    });
+    builder.addCase(deleteSection.rejected, (state, { payload }) => {
       state.status = ApiStatus.REJECTED;
       state.error = payload as Error;
     });

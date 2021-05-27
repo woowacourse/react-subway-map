@@ -26,7 +26,7 @@ const LinePage = () => {
     closeModal: closeEditModal,
   } = useModal();
 
-  const { onAdd, onEdit, onDelete, list } = useLine();
+  const { onAddLine, onEditLine, onDeleteLine, list } = useLine();
   const { list: stationList } = useStation();
 
   const { color, onChange: onChangeColor } = useColorPalette();
@@ -37,6 +37,7 @@ const LinePage = () => {
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
   const {
+    value: distanceValue,
     valueAsNumber: distance,
     setValue: setDistance,
     onChange: onChangeDistance,
@@ -61,10 +62,10 @@ const LinePage = () => {
     setDownStationId(`${firstDownStationId}`);
   };
 
-  const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleAddLine: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const response = await onAdd({
+    const response = await onAddLine({
       name,
       color,
       upStationId,
@@ -79,12 +80,12 @@ const LinePage = () => {
     setDistance('');
   };
 
-  const handleEdit: FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleEditLine: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     if (editLineId < 0) return;
 
-    const response = await onEdit({
+    const response = await onEditLine({
       id: editLineId,
       name: editName,
       color: editColor,
@@ -154,7 +155,7 @@ const LinePage = () => {
                         >
                           <EditIcon />
                         </Button>
-                        <Button shape="circle" variant="text" onClick={() => onDelete(item.id)}>
+                        <Button shape="circle" variant="text" onClick={() => onDeleteLine(item.id)}>
                           <TrashIcon />
                         </Button>
                       </Styled.OptionWrapper>
@@ -169,7 +170,7 @@ const LinePage = () => {
 
       <Modal isOpen={isAddModalOpen} onClose={closeAddModal}>
         <Styled.ModalTitle>노선 생성</Styled.ModalTitle>
-        <Styled.Form onSubmit={handleAdd}>
+        <Styled.Form onSubmit={handleAddLine}>
           <Styled.InputWrapper>
             <Input
               value={name}
@@ -203,7 +204,7 @@ const LinePage = () => {
           <Styled.InputWrapper>
             <Input
               type="number"
-              value={distance}
+              value={distanceValue}
               onChange={onChangeDistance}
               labelText="거리"
               placeholder="거리"
@@ -225,7 +226,7 @@ const LinePage = () => {
 
       <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
         <Styled.ModalTitle>노선 수정</Styled.ModalTitle>
-        <Styled.Form onSubmit={handleEdit}>
+        <Styled.Form onSubmit={handleEditLine}>
           <Styled.InputWrapper>
             <Input
               value={editName}

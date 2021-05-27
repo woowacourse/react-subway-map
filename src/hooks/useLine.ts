@@ -1,7 +1,15 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './useStore';
-import { ApiStatus, Line, LineAttribute } from '../types';
-import { addLine, deleteLine, editLine, getLineList, resetError } from '../slices/lineSlice';
+import { ApiStatus, Line, LineAttribute, SectionAttribute, Station } from '../types';
+import {
+  addLine,
+  addSection,
+  deleteLine,
+  deleteSection,
+  editLine,
+  getLineList,
+  resetError,
+} from '../slices/lineSlice';
 import { logout } from '../slices/authSlice';
 import MESSAGE from '../constants/message';
 
@@ -11,19 +19,30 @@ const useLine = () => {
 
   const { list, error, status } = line;
 
-  const onGet = useCallback(() => dispatch(getLineList()), [dispatch]);
+  const onGetLine = useCallback(() => dispatch(getLineList()), [dispatch]);
 
-  const onAdd = ({ name, color, upStationId, downStationId, distance }: LineAttribute) =>
+  const onAddLine = ({ name, color, upStationId, downStationId, distance }: LineAttribute) =>
     dispatch(addLine({ name, color, upStationId, downStationId, distance }));
 
-  const onEdit = ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) =>
+  const onEditLine = ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) =>
     dispatch(editLine({ id, name, color }));
 
-  const onDelete = (id: Line['id']) => dispatch(deleteLine(id));
+  const onDeleteLine = (id: Line['id']) => dispatch(deleteLine(id));
+
+  const onAddSection = ({ lineId, data }: SectionAttribute) =>
+    dispatch(addSection({ lineId, data }));
+
+  const onDeleteSection = ({
+    lineId,
+    stationId,
+  }: {
+    lineId: Line['id'];
+    stationId: Station['id'];
+  }) => dispatch(deleteSection({ lineId, stationId }));
 
   useEffect(() => {
-    onGet();
-  }, [onGet]);
+    onGetLine();
+  }, [onGetLine]);
 
   useEffect(() => {
     if (error) {
@@ -39,10 +58,12 @@ const useLine = () => {
   }, [error, dispatch]);
 
   return {
-    onGet,
-    onAdd,
-    onEdit,
-    onDelete,
+    onGetLine,
+    onAddLine,
+    onEditLine,
+    onDeleteLine,
+    onAddSection,
+    onDeleteSection,
     list,
     error,
     status,

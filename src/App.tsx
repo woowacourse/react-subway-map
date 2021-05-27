@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -12,15 +13,22 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Router>
-          <Header>
-            <Navbar />
-          </Header>
-          <Styled.PageContainer>
-            <Routes />
-          </Styled.PageContainer>
-        </Router>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <GlobalStyle />
+          <Router>
+            <Header>
+              <Navbar />
+            </Header>
+            <Styled.PageContainer>
+              <Routes />
+            </Styled.PageContainer>
+          </Router>
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   );
