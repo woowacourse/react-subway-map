@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ERROR } from '../../constants';
+import { ERROR, RESPONSE } from '../../constants';
 import { request } from '../../utils';
 
 export const getUserTokenThunk = createAsyncThunk(
@@ -10,15 +10,13 @@ export const getUserTokenThunk = createAsyncThunk(
     try {
       const response = await request.post('/login/token', params);
 
-      if (response.status !== 200) {
-        return rejectWithValue({
-          error: '이메일 혹은 비밀번호를 다시 확인해주세요.',
-        });
-      }
-
       return { token: response.data.accessToken };
     } catch (error) {
       console.error(error);
+
+      if (error.response.status === 401) {
+        return rejectWithValue({ error: RESPONSE.SIGN_IN.FAIL });
+      }
 
       return rejectWithValue({ error: ERROR.UNKNOWN });
     }

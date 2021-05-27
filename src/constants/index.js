@@ -108,6 +108,9 @@ export const ERROR = {
 };
 
 export const RESPONSE = {
+  SIGN_IN: {
+    FAIL: '이메일 혹은 비밀번호를 다시 확인해주세요.',
+  },
   ADD_STATION: {
     SUCCESS: '새로운 역이 추가되었습니다.',
   },
