@@ -8,3 +8,5 @@ export { default as Spinner } from './Spinner/Spinner';
 export { default as Main } from './Main/Main';
 export { default as Heading1 } from './Heading/Heading1';
 export { default as Icon } from './Icon/Icon';
+export { default as ErrorText } from './ErrorText/ErrorText';
+export { default as List } from './List/List';

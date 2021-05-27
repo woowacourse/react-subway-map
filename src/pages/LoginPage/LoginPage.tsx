@@ -2,7 +2,15 @@ import { FormEventHandler, useState, useContext } from 'react';
 import { MdEmail, MdLock } from 'react-icons/md';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import { Box, Button, Input, InputContainer, Heading1, Icon } from '../../components/shared';
+import {
+  Box,
+  Button,
+  Input,
+  InputContainer,
+  Heading1,
+  Icon,
+  ErrorText,
+} from '../../components/shared';
 
 import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -16,7 +24,7 @@ import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
-import { SignUpLink, ErrorText, Form } from './LoginPage.style';
+import { SignUpLink, Form } from './LoginPage.style';
 
 const LoginPage = ({ setIsLoading }: PageProps) => {
   const [email, onEmailChange] = useInput('');
@@ -95,7 +103,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
             aria-label="비밀번호"
           />
         </InputContainer>
-        <ErrorText>{error}</ErrorText>
+        <ErrorText textAlign="center">{error}</ErrorText>
         <Button size="m" width="100%" backgroundColor={themeColor} color={PALETTE.WHITE}>
           로그인
         </Button>

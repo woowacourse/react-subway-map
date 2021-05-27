@@ -18,6 +18,8 @@ import {
   InputContainer,
   Heading1,
   Icon,
+  ErrorText,
+  List,
 } from '../../components/shared';
 
 import REGEX from '../../constants/regex';
@@ -32,15 +34,7 @@ import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
 import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
-import {
-  Container,
-  TitleBox,
-  FormBox,
-  Form,
-  List,
-  StationSelects,
-  StationSelectError,
-} from './LinePage.style';
+import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
 
 const lineColors = [
   'PINK',
@@ -269,7 +263,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
                 </Select>
               </InputContainer>
             </div>
-            <StationSelectError>{stationSelectErrorMessage}</StationSelectError>
+            <ErrorText>{stationSelectErrorMessage}</ErrorText>
           </StationSelects>
           <InputContainer
             labelText="거리 (단위:km)"

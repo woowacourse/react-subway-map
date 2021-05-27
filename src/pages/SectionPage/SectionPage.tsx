@@ -10,6 +10,8 @@ import {
   RoundButton,
   Heading1,
   Icon,
+  ErrorText,
+  List,
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -24,16 +26,7 @@ import { SECTION_VALUE } from '../../constants/values';
 import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeLine, APIReturnTypeStation } from '../../request';
 import { PageProps } from '../types';
-import {
-  Container,
-  TitleBox,
-  Form,
-  FormBox,
-  List,
-  StationSelects,
-  Distance,
-  StationSelectError,
-} from './SectionPage.style';
+import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
 
 interface StationInLine extends APIReturnTypeStation {
@@ -306,7 +299,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
                 </Select>
               </InputContainer>
             </div>
-            <StationSelectError>{stationSelectErrorMessage}</StationSelectError>
+            <ErrorText>{stationSelectErrorMessage}</ErrorText>
           </StationSelects>
           <InputContainer
             labelText="거리 (단위:km)"
@@ -323,7 +316,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
         {!currentLine ? (
           <img src={noSelectedLine} alt="노선이 없습니다." />
         ) : (
-          <List>
+          <List position="relative">
             {stationsInLine.map(({ id, name, distance }) => {
               return (
                 <li key={id}>

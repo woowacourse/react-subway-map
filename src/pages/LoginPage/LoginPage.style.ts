@@ -20,11 +20,4 @@ const Form = styled.form`
   }
 `;
 
-const ErrorText = styled.p`
-  font-size: 0.8rem;
-  color: red;
-  text-align: center;
-  margin-bottom: 1rem;
-`;
-
-export { SignUpLink, ErrorText, Form };
+export { SignUpLink, Form };

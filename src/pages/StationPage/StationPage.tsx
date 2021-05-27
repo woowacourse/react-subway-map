@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, FormEventHandler } from 'react';
 import { MdSubway, MdDelete } from 'react-icons/md';
 
-import { Box, Button, Input, InputContainer, Heading1, Icon } from '../../components/shared';
+import { Box, Button, Input, InputContainer, Heading1, Icon, List } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
@@ -12,7 +12,7 @@ import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants
 
 import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeStation } from '../../request';
-import { Container, Form, Text, List } from './StationPage.style';
+import { Container, Form, Text } from './StationPage.style';
 import noStation from '../../assets/images/no_station.png';
 import { PageProps } from '../types';
 

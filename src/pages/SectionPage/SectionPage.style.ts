@@ -60,31 +60,6 @@ const Form = styled.form`
   }
 `;
 
-const List = styled.ul`
-  max-height: 45vh;
-  overflow: auto;
-
-  li {
-    display: flex;
-    align-items: center;
-    height: 3rem;
-    padding: 0 0.25rem;
-    border-bottom: 1px solid ${PALETTE.GRAY_100};
-    position: relative;
-
-    p {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
-
-    button {
-      margin-left: 0.5rem;
-    }
-  }
-`;
-
 const Distance = styled.span`
   position: absolute;
   left: 0.5rem;
@@ -110,11 +85,4 @@ const StationSelects = styled.div`
   }
 `;
 
-const StationSelectError = styled.div`
-  font-size: 0.8rem;
-  padding-top: 0.2rem;
-  padding-left: 0.2rem;
-  color: ${PALETTE.RED};
-`;
-
-export { Container, Form, List, StationSelects, StationSelectError, TitleBox, FormBox, Distance };
+export { Container, Form, StationSelects, TitleBox, FormBox, Distance };
