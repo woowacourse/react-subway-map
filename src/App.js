@@ -4,7 +4,7 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 import { Page } from './components';
-import { LoginPage, SignUpPage, StationPage, LinePage } from './pages';
+import { LoginPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
 import { ROUTE, SERVER_LIST } from './constants';
 
 const SERVER_ID = 'serverId';
@@ -42,6 +42,9 @@ function App() {
         </Route>
         <Route exact path={ROUTE.LINE}>
           <LinePage endpoint={endpoint} />
+        </Route>
+        <Route exact path={ROUTE.Section}>
+          <SectionPage endpoint={endpoint} />
         </Route>
       </Switch>
     </Page>

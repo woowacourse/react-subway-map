@@ -7,16 +7,10 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './redux/store';
 import { GlobalStyle } from './style';
-import { COLOR } from './constants';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SnackbarProvider
-      maxSnack={3}
-      classes={{
-        variantError: { backgroundColor: COLOR.ERROR },
-      }}
-    >
+    <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <Router>
           <App />

@@ -11,6 +11,7 @@ export { IconEyeOpen } from './atoms/IconEyeOpen';
 export { IconLock } from './atoms/IconLock';
 export { IconLogo } from './atoms/IconLogo';
 export { IconMail } from './atoms/IconMail';
+export { IconPath } from './atoms/IconPath';
 export { IconPerson } from './atoms/IconPerson';
 export { IconPlus } from './atoms/IconPlus';
 export { IconSearch } from './atoms/IconSearch';

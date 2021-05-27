@@ -100,3 +100,11 @@ export const CancelButton = styled(ButtonSquare)`
     box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
   }
 `;
+
+export const InvalidMessage = styled.div`
+  padding: 1rem 0;
+  height: 1.5rem;
+
+  color: ${COLOR.ERROR};
+  font-size: 0.85rem;
+`;

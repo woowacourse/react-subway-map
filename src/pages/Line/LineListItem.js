@@ -36,11 +36,11 @@ LineListItem.propTypes = {
     startStation: PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string,
-    }).isRequired,
+    }),
     endStation: PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string,
-    }).isRequired,
+    }),
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };

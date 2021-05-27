@@ -5,7 +5,7 @@ import { getLines, addLine, clearAddSuccess, removeLine } from '../../redux/line
 
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
-import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl } from './style';
+import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
 import { COLOR } from '../../constants';
 
 export const LinePage = (props) => {
@@ -73,17 +73,30 @@ export const LinePage = (props) => {
                 required
               />
               <StationSelect>
-                <Select id="upStation" name="upStation" optionHead="상행역" options={stations}></Select>
+                <Select
+                  id="upStation"
+                  name="upStation"
+                  optionHead="상행역"
+                  options={stations}
+                  selectProps={{ style: { width: '8.5rem' } }}
+                ></Select>
                 <IconArrowLTR />
-                <Select id="downStation" name="downStation" optionHead="하행역" options={stations}></Select>
+                <Select
+                  id="downStation"
+                  name="downStation"
+                  optionHead="하행역"
+                  options={stations}
+                  selectProps={{ style: { width: '8.5rem' } }}
+                ></Select>
               </StationSelect>
               <Input type="number" name="distance" label="거리(km)" placeholder="거리를 입력해주세요." required />
               <ColorPicker label="노선선택" colors={Object.values(COLOR.LINE)} />
+              <InvalidMessage></InvalidMessage>
+              <ButtonControl>
+                <CancelButton onClick={handleCloseModal}>취소</CancelButton>
+                <ButtonSquare>확인</ButtonSquare>
+              </ButtonControl>
             </Form>
-            <ButtonControl>
-              <CancelButton onClick={handleCloseModal}>취소</CancelButton>
-              <ButtonSquare>확인</ButtonSquare>
-            </ButtonControl>
           </Section>
         </Modal>
       )}
