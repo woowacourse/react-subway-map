@@ -3,7 +3,7 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
-import editImg from 'assets/images/edit.png';
+// import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
@@ -73,7 +73,8 @@ const Line = () => {
             key={line.id}
             id={line.id}
             title={line.name}
-            editImg={editImg}
+            // TODO 수정 기능 구현시 주석 살릴 것.
+            // editImg={editImg}
             itemColor={line.color}
           />
         ))}

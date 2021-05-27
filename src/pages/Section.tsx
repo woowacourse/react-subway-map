@@ -8,8 +8,8 @@ import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
-import { addSectionAsync, AddSectionPayload } from 'redux/sectionSlice';
+import { clearSelectedLIne, getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
+import { addSectionAsync, AddSectionPayload, deleteSectionAsync } from 'redux/sectionSlice';
 import { getStationAsync } from 'redux/stationSlice';
 import { RootState } from 'redux/store';
 import { LineInterface, SelectedLineInterface, StationInterface } from 'types';
@@ -43,13 +43,22 @@ const Section = () => {
     setSelectedLineId(Number(target.value));
   };
 
-  const handleDelete = () => {
-    // console.log('dedlete');
+  const handleDelete = async (stationId: number) => {
+    try {
+      await dispatch(deleteSectionAsync({ lineId: selectedLineId, stationId }));
+      await dispatch(getSelectedLineAsync({ id: selectedLineId }));
+
+      // TODO: confirm으로 변경?
+      alert('구간 삭제에 성공하였습니다.');
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleSubmit = async ({ id, upStationId, downStationId, distance }: AddSectionPayload) => {
     try {
       await dispatch(addSectionAsync({ id, upStationId, downStationId, distance }));
+      await dispatch(getSelectedLineAsync({ id: selectedLineId }));
 
       alert('구간 추가에 성공하였습니다.');
       setModalOpen(false);
@@ -61,7 +70,8 @@ const Section = () => {
   useEffect(() => {
     dispatch(getStationAsync());
     dispatch(getLinesAsync());
-  }, [dispatch]);
+    dispatch(clearSelectedLIne());
+  }, []);
 
   useEffect(() => {
     if (selectedLineId) {
@@ -78,6 +88,9 @@ const Section = () => {
         </div>
 
         <SelectInput onChange={handleLineChange} title="조회하실 노선을 선택해주세요." className="w-full">
+          <option selected disabled hidden>
+            노선을 선택해주세요
+          </option>
           {lines?.map((line) => (
             <option key={line.id} value={String(line.id)}>
               {line.name}

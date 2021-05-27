@@ -71,7 +71,11 @@ const initialState: {
 const lineSlice = createSlice({
   name: 'line',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSelectedLIne: (state) => {
+      state.selectedLine = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getSelectedLineAsync.fulfilled, (state, action) => {
       state.selectedLine = action.payload;
@@ -99,5 +103,7 @@ const lineSlice = createSlice({
     });
   },
 });
+
+export const { clearSelectedLIne } = lineSlice.actions;
 
 export default lineSlice.reducer;
