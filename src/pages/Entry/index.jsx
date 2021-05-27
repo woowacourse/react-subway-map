@@ -7,6 +7,8 @@ import API from "./constants";
 import { setBaseURL } from "./baseURL";
 import PATH from "../../constants/path";
 import { logout } from "../Login/slice";
+import { fetchStations } from "../Stations/slice";
+import { fetchLines, fetchLinesDetail } from "../Lines/slice";
 
 const Entry = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,9 @@ const Entry = () => {
     setBaseURL(API[event.target.name]);
     alert(`🎉🎉 ${event.target.name} 당첨 🎉🎉`);
     dispatch(logout());
+    dispatch(fetchStations());
+    dispatch(fetchLines());
+    dispatch(fetchLinesDetail());
     history.push(PATH.LOGIN);
   };
 
