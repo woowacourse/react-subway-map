@@ -22,7 +22,7 @@ const FloatingLabelInput = ({ id, type, label, value, onChange, isValid }) => {
         htmlFor={id}
         className={cx(
           "absolute -z-1 text-gray-400 transition-all duration-300",
-          isFocused ? "-top-6 left-0 text-sm " : "left-4 top-2 text-xl"
+          isFocused || value ? "-top-6 left-0 text-sm " : "left-4 top-2 text-xl"
         )}
       >
         {label}
