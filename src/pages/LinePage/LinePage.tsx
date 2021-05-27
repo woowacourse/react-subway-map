@@ -12,6 +12,7 @@ import useSelect from '../../hooks/useSelect';
 import useLine from '../../hooks/useLine';
 import useStation from '../../hooks/useStation';
 import useColorPalette from '../../hooks/useColorPalette';
+import MESSAGE from '../../constants/message';
 
 const LinePage = () => {
   const {
@@ -96,6 +97,16 @@ const LinePage = () => {
     setEditLineId(-1);
   };
 
+  const handleOpenAddModal = () => {
+    if (stationList.length < 2) {
+      // eslint-disable-next-line no-alert
+      alert(MESSAGE.ERROR.INVALID_STATION_LENGTH);
+      return;
+    }
+
+    openAddModal();
+  };
+
   const handleOpenEditModal = (editLine: Line) => {
     openEditModal();
 
@@ -122,7 +133,7 @@ const LinePage = () => {
               <Styled.Control>
                 <Styled.Divider />
                 <Styled.ButtonList>
-                  <Button shape="circle" onClick={openAddModal}>
+                  <Button shape="circle" onClick={handleOpenAddModal}>
                     <AddIcon />
                   </Button>
                 </Styled.ButtonList>
