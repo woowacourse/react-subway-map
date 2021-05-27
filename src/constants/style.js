@@ -18,16 +18,16 @@ export const COLOR = {
   ICON_DEFAULT: '#999',
 
   LINE: {
-    1: '#A5BAE2',
-    2: '#B2E4AF',
-    3: '#FFBE9F',
-    4: '#99DAED',
-    5: '#DEBAED',
-    6: '#F2C3A7',
-    7: '#BBC19E',
-    8: '#F9B7CD',
-    9: '#CFC1A4',
-    BUNDANG: '#FFDF94',
+    '1호선': '#A5BAE2',
+    '2호선': '#B2E4AF',
+    '3호선': '#FFBE9F',
+    '4호선': '#99DAED',
+    '5호선': '#DEBAED',
+    '6호선': '#F2C3A7',
+    '7호선': '#BBC19E',
+    '8호선': '#F9B7CD',
+    '9호선': '#CFC1A4',
+    분당선: '#FFDF94',
   },
 };
 

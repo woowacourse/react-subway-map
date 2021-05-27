@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
+import { getStations } from '../../redux/stationSlice';
 import { getLines, addLine, clearAddSuccess, removeLine } from '../../redux/lineSlice';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
@@ -26,12 +27,12 @@ export const LinePage = (props) => {
     e.preventDefault();
 
     const name = e.target.name.value;
-    const upStation = e.target.upStation.value;
-    const downStation = e.target.downStation.value;
+    const upStationId = e.target.upStation.value;
+    const downStationId = e.target.downStation.value;
     const distance = e.target.distance.value;
     const color = e.target.color.value;
 
-    dispatch(addLine({ endpoint, accessToken, name, upStation, downStation, distance, color }));
+    dispatch(addLine({ endpoint, accessToken, name, upStationId, downStationId, distance, color }));
   };
 
   const handleDeleteLine = (e, lineId) => {
@@ -41,6 +42,7 @@ export const LinePage = (props) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     dispatch(getLines({ endpoint, accessToken }));
+    dispatch(getStations({ endpoint, accessToken }));
   }, []);
 
   useEffect(() => {
@@ -60,6 +62,7 @@ export const LinePage = (props) => {
           <LineListItem key={line.id} line={line} onClick={handleDeleteLine} />
         ))}
       </List>
+
       {isLineAddOpen && (
         <Modal>
           <Section heading="노선 추가">
@@ -80,7 +83,7 @@ export const LinePage = (props) => {
                   optionHead="상행역"
                   options={stations}
                   selectProps={{ style: { width: '8.5rem' } }}
-                ></Select>
+                />
                 <IconArrowLTR />
                 <Select
                   id="downStation"
@@ -88,7 +91,7 @@ export const LinePage = (props) => {
                   optionHead="하행역"
                   options={stations}
                   selectProps={{ style: { width: '8.5rem' } }}
-                ></Select>
+                />
               </StationSelect>
               <Input type="number" name="distance" label="거리(km)" placeholder="거리를 입력해주세요." required />
               <ColorPicker label="노선선택" colors={Object.values(COLOR.LINE)} />

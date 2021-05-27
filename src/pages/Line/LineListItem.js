@@ -12,14 +12,14 @@ export const LineListItem = (props) => {
       <ColorBox bgColor={line.color}></ColorBox>
       <Name>{line.name}</Name>
       <StationsDetail>
-        <StationName>{line.startStation?.name}</StationName>
+        <StationName>{line.startStation.name}</StationName>
         <Flex>
           <TotalDistance>
             <strong>{line.distance}</strong>km
           </TotalDistance>
           <IconArrowLTR width={30} />
         </Flex>
-        <StationName>{line.endStation?.name}</StationName>
+        <StationName>{line.endStation.name}</StationName>
       </StationsDetail>
       <Button onClick={(e) => onClick(e, line.id)}>
         <IconTrashCan />
@@ -32,7 +32,7 @@ LineListItem.propTypes = {
   line: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    distance: PropTypes.number,
+    distance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     startStation: PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string,

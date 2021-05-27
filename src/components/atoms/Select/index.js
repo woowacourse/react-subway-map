@@ -26,6 +26,6 @@ Select.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   name: PropTypes.string.isRequired,
   optionHead: PropTypes.string.isRequired,
-  option: PropTypes.array.isRequired,
+  options: PropTypes.array.isRequired,
   selectProps: PropTypes.object,
 };

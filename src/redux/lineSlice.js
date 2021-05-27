@@ -26,7 +26,7 @@ const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToke
 
 const addLine = createAsyncThunk(
   'line/addLine',
-  async ({ endpoint, accessToken, name, upStation, downStation, distance, color }, thunkAPI) => {
+  async ({ endpoint, accessToken, name, upStationId, downStationId, distance, color }, thunkAPI) => {
     try {
       const response = await fetch(`${endpoint}/lines`, {
         method: 'POST',
@@ -37,8 +37,8 @@ const addLine = createAsyncThunk(
         },
         body: JSON.stringify({
           name,
-          upStation,
-          downStation,
+          upStationId,
+          downStationId,
           distance,
           color,
         }),
@@ -47,7 +47,14 @@ const addLine = createAsyncThunk(
       const body = await response.json();
 
       if (response.status === 201) {
-        return body;
+        return {
+          id: body.id,
+          name,
+          startStation: body.stations[0],
+          endStation: body.stations[1],
+          distance,
+          color,
+        };
       } else {
         throw new Error(body);
       }
@@ -102,9 +109,9 @@ const lineSlice = createSlice({
       state.isLoading = false;
     },
     [addLine.fulfilled]: (state, action) => {
-      const { id, name } = action.payload;
+      const line = action.payload;
 
-      state.lines = [{ id, name }, ...state.lines];
+      state.lines = [line, ...state.lines];
       state.isAddSuccess = true;
     },
     [addLine.pending]: (state) => {
