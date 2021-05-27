@@ -24,6 +24,10 @@ export const clearRootReducer = (): void => {
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
 
+export interface ErrorMessageResponse {
+  errorMessage: string;
+}
+
 export const useAppDispatch = () => useDispatch<AppDispatch>(); // Export a hook that can be reused to resolve types
 
 export default store;

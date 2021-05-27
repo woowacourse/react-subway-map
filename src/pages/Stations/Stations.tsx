@@ -8,6 +8,7 @@ import ListItem from '../../components/@common/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
@@ -16,13 +17,13 @@ import { StationForm, StationList, StationName, StationNameInput } from './Stati
 const Stations: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { stations } = useSelector((state: RootState) => state.station);
+  const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
   // TODO: form state로 하나로 묶기
   const [stationInput, setStationInput] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const isValidStationInput = stationInput !== '' && errorMessage === '';
+  const [validationErrorMessage, setValidationErrorMessage] = useState('');
+  const isValidStationInput = stationInput !== '' && validationErrorMessage === '';
 
   useEffect(() => {
     if (stations.length === 0) {
@@ -30,17 +31,25 @@ const Stations: FC = () => {
     }
   }, []);
 
+  useUpdateEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  }, [errorMessage]);
+
   const onChangeStationInput = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     if (value.length >= 2 && isKoreanAndNumber(value)) {
-      setErrorMessage('');
+      setValidationErrorMessage('');
     } else {
-      setErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
+      setValidationErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
     }
 
     if (stations?.some(({ name }) => name === value)) {
-      setErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
+      setValidationErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
     }
 
     setStationInput(value);
@@ -72,7 +81,7 @@ const Stations: FC = () => {
               minLength={STATION.NAME_MIN_LENGTH}
               maxLength={STATION.NAME_MAX_LENGTH}
               labelText={STATION.NAME_LABEL_TEXT}
-              message={{ text: errorMessage, isError: true }}
+              message={{ text: validationErrorMessage, isError: true }}
             />
             <Button disabled={!isValidStationInput}>추가</Button>
           </StationForm>

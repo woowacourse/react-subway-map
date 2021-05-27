@@ -11,6 +11,7 @@ import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
+import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
@@ -18,7 +19,7 @@ import { LineColorDot, LineList } from './Lines.styles';
 const Lines: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { lines } = useSelector((state: RootState) => state.line);
+  const { lines, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
   const lineModifyModal = useModal(null);
@@ -26,6 +27,14 @@ const Lines: FC = () => {
   useEffect(() => {
     dispatch(loadLines());
   }, []);
+
+  useUpdateEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  }, [errorMessage]);
 
   const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
     lineAddModal.openModal();

@@ -5,34 +5,39 @@ import {
   requestAddLine,
   requestDeleteLine,
   requestGetLines,
-  requestModifyLine
+  requestModifyLine,
 } from '../api/lines';
 import { Line } from '../types';
+import { ErrorMessageResponse } from './store';
 
-export const loadLines = createAsyncThunk('line/load', async (_, { rejectWithValue }) => {
-  try {
-    const response = await requestGetLines();
-
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error);
-  }
-});
-
-export const addLine = createAsyncThunk(
-  'line/add',
-  async (addLineRequestData: AddLineRequestData, { rejectWithValue }) => {
+export const loadLines = createAsyncThunk<Line[], undefined, { rejectValue: ErrorMessageResponse }>(
+  'line/load',
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await requestAddLine(addLineRequestData);
+      const response = await requestGetLines();
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const deleteLine = createAsyncThunk(
+export const addLine = createAsyncThunk<
+  Line[],
+  AddLineRequestData,
+  { rejectValue: ErrorMessageResponse }
+>('line/add', async (addLineRequestData: AddLineRequestData, { rejectWithValue }) => {
+  try {
+    const response = await requestAddLine(addLineRequestData);
+
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const deleteLine = createAsyncThunk<number, number, { rejectValue: ErrorMessageResponse }>(
   'line/delete',
   async (lineId: number, { rejectWithValue }) => {
     try {
@@ -40,23 +45,24 @@ export const deleteLine = createAsyncThunk(
 
       return lineId;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const modifyLine = createAsyncThunk(
-  'line/modify',
-  async (modifyLineRequestData: ModifyLineRequestData, { rejectWithValue }) => {
-    try {
-      await requestModifyLine(modifyLineRequestData);
+export const modifyLine = createAsyncThunk<
+  ModifyLineRequestData,
+  ModifyLineRequestData,
+  { rejectValue: ErrorMessageResponse }
+>('line/modify', async (modifyLineRequestData: ModifyLineRequestData, { rejectWithValue }) => {
+  try {
+    await requestModifyLine(modifyLineRequestData);
 
-      return modifyLineRequestData;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return modifyLineRequestData;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 const initialState = {
   isLoading: false,
@@ -94,7 +100,7 @@ const lineSlice = createSlice({
     });
     builder.addCase(addLine.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.error.message as string;
+      state.errorMessage = (action.payload as ErrorMessageResponse).errorMessage;
     });
 
     builder.addCase(deleteLine.pending, (state) => {
@@ -107,7 +113,7 @@ const lineSlice = createSlice({
     });
     builder.addCase(deleteLine.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.error.message as string;
+      state.errorMessage = (action.payload as ErrorMessageResponse).errorMessage;
     });
 
     builder.addCase(modifyLine.pending, (state) => {
@@ -124,7 +130,7 @@ const lineSlice = createSlice({
     });
     builder.addCase(modifyLine.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.error.message as string;
+      state.errorMessage = (action.payload as ErrorMessageResponse).errorMessage;
     });
   },
 });

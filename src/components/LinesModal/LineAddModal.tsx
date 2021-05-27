@@ -13,7 +13,7 @@ import ColorRadio from '../@common/ColorRadio/ColorRadio';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
 import SectionSelectBox, {
-  OnChangeSectionSelectBoxHandler
+  OnChangeSectionSelectBoxHandler,
 } from '../@shared/SectionSelectBox/SectionSelectBox';
 import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesModal.styles';
 
@@ -37,9 +37,17 @@ interface ErrorMessage {
 
 const LineAddModal: FC<Props> = ({ onClose }) => {
   const { stations } = useSelector((state: RootState) => state.station);
-  const { lines } = useSelector((state: RootState) => state.line);
+  const { lines, errorMessage } = useSelector((state: RootState) => state.line);
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  });
 
   const [formInput, setFormInput] = useState<FormInput>({
     name: '',
@@ -48,7 +56,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     distance: SECTION.MIN_DISTANCE,
     color: '',
   });
-  const [errorMessage, setErrorMessage] = useState<ErrorMessage>({
+  const [validationErrorMessage, setValidationErrorMessage] = useState<ErrorMessage>({
     name: '',
     section: '',
     distance: '',
@@ -62,36 +70,36 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
 
   useUpdateEffect(() => {
     if (formInput.upStationId === '' || formInput.downStationId === '') {
-      setErrorMessage({
-        ...errorMessage,
+      setValidationErrorMessage({
+        ...validationErrorMessage,
         section: ERROR_MESSAGE.NONE_OF_SELECTED_SECTION,
       });
       return;
     }
 
     if (formInput.upStationId === formInput.downStationId) {
-      setErrorMessage({
-        ...errorMessage,
+      setValidationErrorMessage({
+        ...validationErrorMessage,
         section: ERROR_MESSAGE.DUPLICATED_SECTION,
       });
       return;
     }
 
-    setErrorMessage({
-      ...errorMessage,
+    setValidationErrorMessage({
+      ...validationErrorMessage,
       section: '',
     });
   }, [formInput.upStationId, formInput.downStationId]);
 
   const onChangeName = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value.length >= 2 && isKoreanAndNumber(value)) {
-      setErrorMessage({
-        ...errorMessage,
+      setValidationErrorMessage({
+        ...validationErrorMessage,
         name: '',
       });
     } else {
-      setErrorMessage({
-        ...errorMessage,
+      setValidationErrorMessage({
+        ...validationErrorMessage,
         name: ERROR_MESSAGE.INVALID_LINE_NAME,
       });
     }
@@ -127,7 +135,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     event.preventDefault();
 
     if (
-      Object.values(errorMessage).some((message) => message !== '') ||
+      Object.values(validationErrorMessage).some((message) => message !== '') ||
       Object.values(formInput).some((value) => !value)
     ) {
       alert(ERROR_MESSAGE.INCOMPLETE_FORM);
@@ -152,7 +160,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
         <NotificationInput
           onChange={onChangeName}
           value={formInput.name}
-          message={{ text: errorMessage.name, isError: true }}
+          message={{ text: validationErrorMessage.name, isError: true }}
           minLength={2}
           maxLength={10}
           labelText={LINE.NAME_LABEL_TEXT}
@@ -163,7 +171,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           onChange={onChangeStations}
           upStationOptions={stations}
           downStationOptions={stations}
-          errorMessage={errorMessage.section}
+          errorMessage={validationErrorMessage.section}
         />
         <NotificationInput
           value={formInput.distance}

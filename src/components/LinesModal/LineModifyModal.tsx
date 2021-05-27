@@ -36,7 +36,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
     name: line.name,
     color: line.color,
   });
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [validationErrorMessage, setValidationErrorMessage] = useState<string>('');
   const usedLineColor = useMemo(
     () => lines.filter((ele) => ele.id !== line.id).map((ele) => ele.color),
     [lines]
@@ -44,9 +44,9 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
 
   const onChangeName = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value.length >= 2 && isKoreanAndNumber(value)) {
-      setErrorMessage('');
+      setValidationErrorMessage('');
     } else {
-      setErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
+      setValidationErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
     }
 
     setFormInput({
@@ -65,7 +65,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
     event.preventDefault();
 
     if (
-      Object.values(errorMessage).some((message) => message !== '') ||
+      Object.values(validationErrorMessage).some((message) => message !== '') ||
       Object.values(formInput).some((value) => !value)
     ) {
       alert(ERROR_MESSAGE.INCOMPLETE_FORM);
@@ -89,7 +89,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
         <NotificationInput
           onChange={onChangeName}
           value={formInput.name}
-          message={{ text: errorMessage, isError: true }}
+          message={{ text: validationErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
           labelText={LINE.NAME_LABEL_TEXT}

@@ -13,6 +13,7 @@ import { PAGE_INFO, SECTION } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
+import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -23,8 +24,10 @@ import { LineInfoContainer, LineSelectBox } from './Section.styles';
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { lines } = useSelector((state: RootState) => state.line);
-  const { stations } = useSelector((state: RootState) => state.station);
+  const { stations, errorMessage: stationErrorMessage } = useSelector(
+    (state: RootState) => state.station
+  );
+  const { lines, errorMessage: lineErrorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
 
   const sectionAddModal = useModal();
@@ -44,6 +47,18 @@ const Sections: FC = () => {
       dispatch(loadStations());
     }
   }, []);
+
+  useUpdateEffect(() => {
+    if (stationErrorMessage !== '') {
+      alert(stationErrorMessage);
+
+      return;
+    }
+
+    if (lineErrorMessage !== '') {
+      alert(lineErrorMessage);
+    }
+  }, [stationErrorMessage, lineErrorMessage]);
 
   const onChangeTargetLine = ({ target: { value } }: ChangeEvent<HTMLSelectElement>): void => {
     setTargetLineId(value);

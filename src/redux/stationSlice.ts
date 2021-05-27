@@ -1,18 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Station } from '../types';
 import { requestAddStation, requestDeleteStation, requestGetStations } from './../api/stations';
+import { ErrorMessageResponse } from './store';
 
-export const loadStations = createAsyncThunk('station/load', async (_, { rejectWithValue }) => {
+export const loadStations = createAsyncThunk<
+  Station[],
+  undefined,
+  { rejectValue: ErrorMessageResponse }
+>('station/load', async (_, { rejectWithValue }) => {
   try {
     const response = await requestGetStations();
 
     return response.data;
   } catch (error) {
-    return rejectWithValue(error);
+    return rejectWithValue(error.response.data);
   }
 });
 
-export const addStation = createAsyncThunk(
+export const addStation = createAsyncThunk<Station, string, { rejectValue: ErrorMessageResponse }>(
   'station/add',
   async (stationName: string, { rejectWithValue }) => {
     try {
@@ -20,23 +25,24 @@ export const addStation = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const deleteStation = createAsyncThunk(
-  'station/delete',
-  async (stationId: number, { rejectWithValue }) => {
-    try {
-      await requestDeleteStation(stationId);
+export const deleteStation = createAsyncThunk<
+  number,
+  number,
+  { rejectValue: ErrorMessageResponse }
+>('station/delete', async (stationId, { rejectWithValue }) => {
+  try {
+    await requestDeleteStation(stationId);
 
-      return stationId;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+    return stationId;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 const initialState = {
   isLoading: false,
@@ -61,7 +67,7 @@ const stationSlice = createSlice({
     });
     builder.addCase(loadStations.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.error.message as string;
+      state.errorMessage = (action.payload as ErrorMessageResponse).errorMessage;
     });
 
     builder.addCase(addStation.pending, (state) => {
@@ -74,7 +80,7 @@ const stationSlice = createSlice({
     });
     builder.addCase(addStation.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.error.message as string;
+      state.errorMessage = (action.payload as ErrorMessageResponse).errorMessage;
     });
 
     builder.addCase(deleteStation.pending, (state) => {
@@ -87,7 +93,7 @@ const stationSlice = createSlice({
     });
     builder.addCase(deleteStation.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.error.message as string;
+      state.errorMessage = (action.payload as ErrorMessageResponse).errorMessage;
     });
   },
 });

@@ -30,7 +30,7 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     downStationId: '',
     distance: SECTION.MIN_DISTANCE,
   });
-  const [errorMessage, setErrorMessage] = useState({
+  const [validationErrorMessage, setValidationErrorMessage] = useState({
     section: '',
   });
 
@@ -50,21 +50,21 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     }
 
     if (numberOfStationAddedInLine !== 1) {
-      setErrorMessage({
+      setValidationErrorMessage({
         section: ERROR_MESSAGE.SHOULD_CONTAIN_ONE_STATION_IN_LINE,
       });
       return;
     }
 
     if (formInput.upStationId === '' || formInput.downStationId === '') {
-      setErrorMessage({
-        ...errorMessage,
+      setValidationErrorMessage({
+        ...validationErrorMessage,
         section: ERROR_MESSAGE.NONE_OF_SELECTED_SECTION,
       });
       return;
     }
 
-    setErrorMessage({
+    setValidationErrorMessage({
       section: '',
     });
   }, [formInput.upStationId, formInput.downStationId]);
@@ -110,7 +110,7 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           onChange={onChangeStations}
           upStationOptions={stations}
           downStationOptions={stations}
-          errorMessage={errorMessage.section}
+          errorMessage={validationErrorMessage.section}
         />
         <Input
           value={formInput.distance}
