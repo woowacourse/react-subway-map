@@ -13,6 +13,12 @@ const BorderBox = styled.div`
   border-radius: 0.25rem;
   display: flex;
   position: relative;
+  align-items: center;
+  justify-content: center;
+
+  & > *:not(:last-child) {
+    margin-right: 0.5rem;
+  }
 
   &:focus-within {
     border-color: ${PALETTE.GRAY_300};

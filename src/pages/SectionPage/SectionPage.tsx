@@ -12,6 +12,7 @@ import {
   Icon,
   ErrorText,
   List,
+  ColorDot,
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -271,6 +272,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
         <InputContainer labelText="노선 선택">
+          <ColorDot size="s" backgroundColor={currentLine?.color} />
           <Select onChange={onLineSelect}>
             <option value="/" hidden>
               노선 선택
@@ -336,6 +338,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
             {stationsInLine.map(({ id, name, distance }) => {
               return (
                 <li key={id}>
+                  <ColorDot size="s" backgroundColor={currentLine.color} />
                   <p>{name}</p>
                   {distance && <Distance>{`거리 : ${distance}`}</Distance>}
                   {isLoggedIn && (

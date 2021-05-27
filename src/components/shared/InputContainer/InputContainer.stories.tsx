@@ -22,10 +22,10 @@ Default.args = {
 WithLabel.args = {
   labelText: 'label',
   children: (
-    <Select>
+    <select>
       {['option1', 'option2', 'option3'].map((option) => (
         <option value={option}>{option}</option>
       ))}
-    </Select>
+    </select>
   ),
 };

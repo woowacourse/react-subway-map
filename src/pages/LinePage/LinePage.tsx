@@ -20,6 +20,7 @@ import {
   Icon,
   ErrorText,
   List,
+  ColorDot,
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -302,8 +303,9 @@ const LinePage = ({ setIsLoading }: PageProps) => {
           <img src={noLine} alt="노선이 없습니다." />
         ) : (
           <List>
-            {lines.map(({ id, name }) => (
+            {lines.map(({ id, name, color }) => (
               <li key={id}>
+                <ColorDot size="s" backgroundColor={color} />
                 <p>{name}</p>
                 {isLoggedIn && (
                   <Button
