@@ -25,7 +25,7 @@ const Loading = ({ isLoading, bgOpacity }) =>
   isLoading && (
     <div
       className={cx(
-        "absolute left-0 top-0 flex items-center justify-center w-screen h-screen bg-black",
+        "fixed left-0 top-0 flex items-center justify-center w-screen h-screen bg-black",
         BG_OPACITY_STYLE[bgOpacity]
       )}
     >
