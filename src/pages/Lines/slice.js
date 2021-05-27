@@ -3,6 +3,7 @@ import STATUS from "../../constants/status";
 import {
   ENDPOINT,
   LINES_ADD_SUCCEED,
+  LINES_GET_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -41,6 +42,29 @@ export const addLine = createAsyncThunk(
   }
 );
 
+export const fetchLines = createAsyncThunk(
+  "lines/fetchLines",
+  async (_, { rejectWithValue, getState }) => {
+    const accessToken = selectAccessToken(getState());
+
+    try {
+      const response = await http.get(ENDPOINT.LINES, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === LINES_GET_SUCCEED.CODE) {
+        return response.json();
+      }
+
+      const { message } = await response.json();
+      return rejectWithValue(message);
+    } catch (error) {
+      console.error(error);
+
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+    }
+  }
+);
 const initialState = {
   status: STATUS.IDLE,
   error: null,
@@ -49,7 +73,7 @@ const initialState = {
 };
 
 const linesSlice = createSlice({
-  name: "stations",
+  name: "lines",
   initialState,
   reducers: {
     reset: (state) => ({ ...state, status: STATUS.IDLE }),
@@ -64,6 +88,18 @@ const linesSlice = createSlice({
       state.list.push(action.payload);
     },
     [addLine.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.error = action.error;
+      state.message = action.payload;
+    },
+    [fetchLines.pending]: (state) => {
+      state.status = STATUS.LOADING;
+    },
+    [fetchLines.fulfilled]: (state, action) => {
+      state.status = STATUS.SUCCEED;
+      state.list = action.payload;
+    },
+    [fetchLines.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;

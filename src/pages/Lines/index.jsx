@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import cx from "classnames";
 import { useModal } from "../../components/@shared/Modal/hooks";
 import Main from "../../components/@shared/Main";
 import Modal from "../../components/@shared/Modal";
@@ -11,7 +12,14 @@ import { useInput } from "../../components/@shared/Input/hooks";
 import { selectStationsList } from "../Stations/slice";
 import Loading from "../../components/@shared/Loading";
 import STATUS from "../../constants/status";
-import { selectLinesStatus, addLine, selectLinesMessage, reset } from "./slice";
+import {
+  addLine,
+  fetchLines,
+  reset,
+  selectLinesStatus,
+  selectLinesMessage,
+  selectLinesList,
+} from "./slice";
 import { useDistanceInput, useLineNameInput } from "./hooks";
 
 const Lines = () => {
@@ -28,6 +36,7 @@ const Lines = () => {
   const stationList = useSelector(selectStationsList);
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);
+  const linesList = useSelector(selectLinesList);
 
   const isSubmitEnabled = [
     isValidLineName,
@@ -36,6 +45,13 @@ const Lines = () => {
     isValidDistance,
     color !== "",
   ].every(Boolean);
+
+  useEffect(() => {
+    if (status === STATUS.IDLE) {
+      dispatch(fetchLines());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const resetInput = () => {
@@ -51,6 +67,7 @@ const Lines = () => {
       handleModalClose();
       resetInput();
     }
+
     if (status === STATUS.FAILED) {
       alert(message);
       dispatch(reset());
@@ -94,35 +111,36 @@ const Lines = () => {
               등록
             </Button>
           </div>
-          <ul className="mt-4">
-            <li className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b">
-              <div className="flex items-center">
-                <span className="block mr-2 w-5 h-5 bg-blue-400 rounded-full" />
-                <span>강남역</span>
-              </div>
-              <Button size="small" type="button" theme="round">
-                삭제
-              </Button>
-            </li>
-            <li className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b">
-              <div className="flex items-center">
-                <span className="block mr-2 w-5 h-5 bg-blue-400 rounded-full" />
-                <span>강남역</span>
-              </div>
-              <Button size="small" type="button" theme="round">
-                삭제
-              </Button>
-            </li>
-            <li className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b">
-              <div className="flex items-center">
-                <span className="block mr-2 w-5 h-5 bg-blue-400 rounded-full" />
-                <span>강남역</span>
-              </div>
-              <Button size="small" type="button" theme="round">
-                삭제
-              </Button>
-            </li>
-          </ul>
+          {linesList.length > 0 && (
+            <ul className="mt-4">
+              {[...linesList]
+                .reverse()
+                .map(({ id, name, color: lineColor }) => (
+                  <li
+                    key={id}
+                    className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b"
+                  >
+                    <div className="flex items-center">
+                      <span
+                        className={cx(
+                          "block mr-2 w-5 h-5 bg-blue-400 rounded-full",
+                          lineColor
+                        )}
+                      />
+                      <span>{name}</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+                      name={id}
+                      value={name}
+                    >
+                      🗑
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          )}
         </section>
       </Main>
       <Modal close={handleModalClose} isOpen={isModalOpen}>
