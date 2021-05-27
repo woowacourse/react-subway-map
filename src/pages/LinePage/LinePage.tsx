@@ -17,6 +17,7 @@ import {
   RoundButton,
   InputContainer,
   Heading1,
+  Icon,
 } from '../../components/shared';
 
 import REGEX from '../../constants/regex';
@@ -33,7 +34,6 @@ import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
 import {
   Container,
-  Icon,
   TitleBox,
   FormBox,
   Form,

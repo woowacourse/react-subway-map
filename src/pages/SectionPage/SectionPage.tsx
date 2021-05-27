@@ -9,6 +9,7 @@ import {
   InputContainer,
   RoundButton,
   Heading1,
+  Icon,
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -25,7 +26,6 @@ import apiRequest, { APIReturnTypeLine, APIReturnTypeStation } from '../../reque
 import { PageProps } from '../types';
 import {
   Container,
-  Icon,
   TitleBox,
   Form,
   FormBox,

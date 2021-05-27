@@ -12,15 +12,6 @@ const Container = styled.div`
   min-height: 70vh;
 `;
 
-const Icon = styled.span`
-  color: ${PALETTE.GRAY_500};
-  margin-right: 0.5rem;
-
-  * {
-    height: 100%;
-  }
-`;
-
 const TitleBox = styled<any>(Box)`
   & button[type='button'] {
     position: absolute;
@@ -126,14 +117,4 @@ const StationSelectError = styled.div`
   color: ${PALETTE.RED};
 `;
 
-export {
-  Container,
-  Icon,
-  Form,
-  List,
-  StationSelects,
-  StationSelectError,
-  TitleBox,
-  FormBox,
-  Distance,
-};
+export { Container, Form, List, StationSelects, StationSelectError, TitleBox, FormBox, Distance };

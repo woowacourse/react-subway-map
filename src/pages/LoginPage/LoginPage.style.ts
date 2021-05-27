@@ -2,11 +2,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PALETTE from '../../constants/palette';
 
-const Icon = styled.span`
-  color: ${PALETTE.GRAY_500};
-  margin-right: 0.5rem;
-`;
-
 const SignUpLink = styled(Link)`
   color: ${PALETTE.GRAY_500};
   display: block;
@@ -32,4 +27,4 @@ const ErrorText = styled.p`
   margin-bottom: 1rem;
 `;
 
-export { Icon, SignUpLink, ErrorText, Form };
+export { SignUpLink, ErrorText, Form };

@@ -10,15 +10,6 @@ const Container = styled.div`
   min-height: 70vh;
 `;
 
-const Icon = styled.span`
-  color: ${PALETTE.GRAY_500};
-  margin-right: 0.5rem;
-
-  * {
-    height: 100%;
-  }
-`;
-
 const Form = styled.form`
   display: flex;
 
@@ -57,4 +48,4 @@ const List = styled.ul`
   }
 `;
 
-export { Container, Icon, Form, List, Text };
+export { Container, Form, List, Text };
