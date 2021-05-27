@@ -44,13 +44,17 @@ const Section = () => {
     setSelectedLineId(Number(target.value));
   };
 
-  const handleDelete = async (stationId: number) => {
+  const handleDelete = async (stationId: number, station: string) => {
+    if (!window.confirm(MESSAGE.COMMON.DELETE_CONFIRM(station))) {
+      return;
+    }
+
     try {
       await dispatch(deleteSectionAsync({ lineId: selectedLineId, stationId }));
-      await dispatch(getSelectedLineAsync({ id: selectedLineId }));
 
-      // TODO: confirm으로 변경?
-      alert(MESSAGE.SECTION.DELETE_SUCCESS);
+      if (selectedLineId) {
+        await dispatch(getSelectedLineAsync({ id: selectedLineId }));
+      }
     } catch (error) {
       alert(error.message);
     }
@@ -59,7 +63,10 @@ const Section = () => {
   const handleSubmit = async ({ id, upStationId, downStationId, distance }: AddSectionPayload) => {
     try {
       await dispatch(addSectionAsync({ id, upStationId, downStationId, distance }));
-      await dispatch(getSelectedLineAsync({ id: selectedLineId }));
+
+      if (selectedLineId) {
+        await dispatch(getSelectedLineAsync({ id: selectedLineId }));
+      }
 
       alert(MESSAGE.SECTION.ADD_SUCCESS);
       setModalOpen(false);

@@ -43,11 +43,13 @@ const Station = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, station: string) => {
+    if (!window.confirm(MESSAGE.COMMON.DELETE_CONFIRM(station))) {
+      return;
+    }
+
     try {
       await dispatch(deleteStationAsync({ id }));
-
-      alert(MESSAGE.STATION.DELETE_SUCCESS);
     } catch (error) {
       alert(error.message);
     }

@@ -6,12 +6,12 @@ interface ListItemProps {
   title: string;
   editImg?: string | null;
   itemColor?: string | null;
-  onDelete: (id: number) => void;
+  onDelete: (id: number, title: string) => void;
 }
 
 const ListItem = ({ id, onDelete, title, editImg, itemColor }: ListItemProps) => {
   const handleDelete = () => {
-    onDelete(id);
+    onDelete(id, title);
   };
 
   return (

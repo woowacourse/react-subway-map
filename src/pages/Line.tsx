@@ -35,12 +35,13 @@ const Line = () => {
     setModalOpen(false);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, line: string) => {
+    if (!window.confirm(MESSAGE.COMMON.DELETE_CONFIRM(line))) {
+      return;
+    }
+
     try {
       await dispatch(deleteLineAsync({ id }));
-
-      // TODO: confirm
-      alert(MESSAGE.LINE.DELETE_SUCCESS);
     } catch (error) {
       alert(error.message);
     }
