@@ -38,9 +38,8 @@ export const LINES_DETAIL_GET_SUCCEED = {
   CODE: 200,
 };
 
-// TODO: 201 로 바뀌어야함!
 export const SECTIONS_ADD_SUCCEED = {
-  CODE: 200,
+  CODE: 201,
   MESSAGE: "성공적으로 구간이 추가되었습니다.",
 };
 
