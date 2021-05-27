@@ -75,7 +75,10 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
             className="mb-8 w-full"
           />
           <div className="flex items-center mb-8">
-            <SelectInput onChange={handleUpStationId} title="조회하실 노선을 선택해주세요." className="w-full">
+            <SelectInput onChange={handleUpStationId} title="상행역" className="w-full">
+              <option selected disabled hidden>
+                역을 선택해주세요
+              </option>
               {stations?.map((station) => (
                 <option key={station.id} value={station.id}>
                   {station.name}
@@ -83,7 +86,10 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
               ))}
             </SelectInput>
             <img className="mx-2 w-8 h-8" src={arrowImg} alt="arrowImg" />
-            <SelectInput onChange={handleDownStationId} title="조회하실 노선을 선택해주세요." className="w-full">
+            <SelectInput onChange={handleDownStationId} title="하행역" className="w-full">
+              <option selected disabled hidden>
+                역을 선택해주세요
+              </option>
               {stations?.map((station) => (
                 <option key={station.id} value={station.id}>
                   {station.name}
