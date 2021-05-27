@@ -1,12 +1,12 @@
 import React from 'react';
 import Styled from './CardLayout.styles';
 
-interface CardLayoutProps {
+interface Props {
   title: string;
   children: React.ReactNode;
 }
 
-const CardLayout = ({ title, children }: CardLayoutProps) => {
+const CardLayout = ({ title, children }: Props) => {
   return (
     <Styled.Container>
       <Styled.Title>{title}</Styled.Title>

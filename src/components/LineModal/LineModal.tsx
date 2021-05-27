@@ -12,7 +12,7 @@ import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import { requestAddLine, requestEditLine } from 'request/line';
 import Styled from './LineModal.styles';
 
-interface LineModalProps {
+interface Props {
   stations: Station[] | undefined;
   selectedLine?: Line;
   selectedColors: string[];
@@ -26,7 +26,7 @@ const LineModal = ({
   selectedColors,
   closeModal,
   getLines,
-}: LineModalProps) => {
+}: Props) => {
   const [color, setColor] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [upStationId, setUpStationId] = useState<number>();

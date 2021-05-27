@@ -9,7 +9,7 @@ import { ALERT_MESSAGE } from 'constants/messages';
 import { requestAddSection } from 'request/line';
 import { useAppSelector } from 'modules/hooks';
 
-interface SectionModalProps {
+interface Props {
   targetLine?: Line;
   lines: Line[];
   stations: Station[] | undefined;
@@ -25,7 +25,7 @@ const SectionModal = ({
   closeModal,
   selectTargetLine,
   getLine,
-}: SectionModalProps) => {
+}: Props) => {
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
