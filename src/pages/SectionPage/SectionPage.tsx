@@ -102,6 +102,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
     try {
       const newLine = await apiRequest.getLine(lineId);
+      clearTimeout(timer);
 
       setLines((prevLines) =>
         prevLines.map((line) => {
@@ -114,7 +115,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
-      clearTimeout(timer);
+    } finally {
       setIsLoading(false);
     }
   };
