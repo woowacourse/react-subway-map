@@ -1,7 +1,15 @@
 import { ChangeEventHandler, useContext, useEffect, useState, FormEventHandler } from 'react';
 import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
-import { Box, Button, Input, Select, InputContainer, RoundButton } from '../../components/shared';
+import {
+  Box,
+  Button,
+  Input,
+  Select,
+  InputContainer,
+  RoundButton,
+  Heading1,
+} from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
@@ -19,7 +27,6 @@ import {
   Container,
   Icon,
   TitleBox,
-  Heading1,
   Form,
   FormBox,
   List,

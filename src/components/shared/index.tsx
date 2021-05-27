@@ -6,3 +6,4 @@ export { default as RoundButton } from './Button/RoundButton';
 export { default as Select } from './Select/Select';
 export { default as Spinner } from './Spinner/Spinner';
 export { default as Main } from './Main/Main';
+export { default as Heading1 } from './Heading/Heading1';

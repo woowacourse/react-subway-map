@@ -19,14 +19,6 @@ const Icon = styled.span`
   }
 `;
 
-const Heading1 = styled.h1`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${PALETTE.GRAY_600};
-  margin-bottom: 1rem;
-`;
-
 const Form = styled.form`
   display: flex;
 
@@ -65,4 +57,4 @@ const List = styled.ul`
   }
 `;
 
-export { Container, Heading1, Icon, Form, List, Text };
+export { Container, Icon, Form, List, Text };

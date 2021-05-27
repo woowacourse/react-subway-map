@@ -21,14 +21,6 @@ const Icon = styled.span`
   }
 `;
 
-const Heading1 = styled.h1`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${PALETTE.GRAY_600};
-  margin-bottom: 1rem;
-`;
-
 const TitleBox = styled<any>(Box)`
   & button[type='button'] {
     position: absolute;
@@ -136,7 +128,6 @@ const StationSelectError = styled.div`
 
 export {
   Container,
-  Heading1,
   Icon,
   Form,
   List,

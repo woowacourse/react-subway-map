@@ -8,7 +8,7 @@ import {
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import { Box, Button, Input, InputContainer } from '../../components/shared';
+import { Box, Button, Input, InputContainer, Heading1 } from '../../components/shared';
 
 import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -24,7 +24,7 @@ import useDebounce from '../../hooks/useDebounce';
 import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
-import { Icon, Heading1, Form } from './SignupPage.style';
+import { Icon, Form } from './SignupPage.style';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -127,7 +127,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
-      <Heading1>회원가입</Heading1>
+      <Heading1 marginBottom="2rem">회원가입</Heading1>
       <Form onSubmit={onSignup}>
         <InputContainer
           validation={{

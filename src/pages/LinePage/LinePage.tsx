@@ -9,7 +9,15 @@ import {
 import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
 import Palette from '../../components/Palette/Palette';
-import { Box, Select, Button, Input, RoundButton, InputContainer } from '../../components/shared';
+import {
+  Box,
+  Select,
+  Button,
+  Input,
+  RoundButton,
+  InputContainer,
+  Heading1,
+} from '../../components/shared';
 
 import REGEX from '../../constants/regex';
 import PALETTE from '../../constants/palette';
@@ -26,7 +34,6 @@ import { PageProps } from '../types';
 import {
   Container,
   Icon,
-  Heading1,
   TitleBox,
   FormBox,
   Form,

@@ -2,7 +2,7 @@ import { FormEventHandler, useState, useContext } from 'react';
 import { MdEmail, MdLock } from 'react-icons/md';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import { Box, Button, Input, InputContainer } from '../../components/shared';
+import { Box, Button, Input, InputContainer, Heading1 } from '../../components/shared';
 
 import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
@@ -16,7 +16,7 @@ import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
-import { Icon, SignUpLink, Heading1, ErrorText, Form } from './LoginPage.style';
+import { Icon, SignUpLink, ErrorText, Form } from './LoginPage.style';
 
 const LoginPage = ({ setIsLoading }: PageProps) => {
   const [email, onEmailChange] = useInput('');
@@ -68,7 +68,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
-      <Heading1>로그인</Heading1>
+      <Heading1 marginBottom="2rem">로그인</Heading1>
       <Form onSubmit={onLogin}>
         <InputContainer>
           <Icon>

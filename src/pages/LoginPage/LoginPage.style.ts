@@ -7,14 +7,6 @@ const Icon = styled.span`
   margin-right: 0.5rem;
 `;
 
-const Heading1 = styled.h1`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${PALETTE.GRAY_600};
-  margin-bottom: 2rem;
-`;
-
 const SignUpLink = styled(Link)`
   color: ${PALETTE.GRAY_500};
   display: block;
@@ -40,4 +32,4 @@ const ErrorText = styled.p`
   margin-bottom: 1rem;
 `;
 
-export { Icon, SignUpLink, Heading1, ErrorText, Form };
+export { Icon, SignUpLink, ErrorText, Form };

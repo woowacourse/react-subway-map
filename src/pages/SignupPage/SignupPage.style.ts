@@ -6,18 +6,10 @@ const Icon = styled.span`
   margin-right: 0.5rem;
 `;
 
-const Heading1 = styled.h1`
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${PALETTE.GRAY_600};
-  margin-bottom: 2rem;
-`;
-
 const Form = styled.form`
   > *:not(:last-child) {
     margin-bottom: 1rem;
   }
 `;
 
-export { Icon, Heading1, Form };
+export { Icon, Form };
