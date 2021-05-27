@@ -7,6 +7,28 @@
     <meta name="description" content="동탄의 지하철 노선도입니당." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <script type="text/javascript">
+      (() => {
+        "use strict";
+        const { search, pathname, hash } = window.location;
+
+        if (search[1] !== "/") return;
+
+        const decoded = search
+          .slice(1)
+          .split("&")
+          .map((s) => s.replace(/~and~/g, "&"))
+          .join("?");
+
+        window.history.replaceState(
+          null,
+          null,
+          pathname.slice(0, -1) + decoded + hash
+        );
+      })();
+    </script>
+
     <title>동탄의 지하철 노선도</title>
   </head>
   <body class="overflow-y-scroll">

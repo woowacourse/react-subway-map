@@ -13,7 +13,7 @@ import Logout from "../pages/Logout";
 import Entry from "../pages/Entry";
 
 const App = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Header />
     <Switch>
       <Route exact path={[PATH.MAIN, PATH.ENTRY]}>
