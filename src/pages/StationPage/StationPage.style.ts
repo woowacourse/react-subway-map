@@ -35,6 +35,10 @@ const Form = styled.form`
   }
 `;
 
+const Text = styled.p`
+  text-align: center;
+`;
+
 const List = styled.ul`
   max-height: 45vh;
   overflow: auto;
@@ -59,4 +63,4 @@ const List = styled.ul`
   }
 `;
 
-export { Container, Heading1, Icon, Form, List };
+export { Container, Heading1, Icon, Form, List, Text };

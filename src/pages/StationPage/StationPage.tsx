@@ -1,38 +1,36 @@
-import { ChangeEvent, useContext, useEffect, useState, FormEventHandler } from 'react';
-import { MdSubway, MdEdit, MdCancel, MdDelete, MdCheck } from 'react-icons/md';
+import { useContext, useEffect, useState, FormEventHandler } from 'react';
+import { MdSubway, MdDelete } from 'react-icons/md';
 
-import Box from '../../components/shared/Box/Box';
-import Button from '../../components/shared/Button/Button';
-import PALETTE from '../../constants/palette';
-import Input from '../../components/shared/Input/Input';
-import InputContainer from '../../components/shared/InputContainer/InputContainer';
+import { Box, Button, Input, InputContainer } from '../../components/shared';
+
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { Container, Icon, Heading1, Form, List } from './StationPage.style';
+import { UserContext } from '../../contexts/UserContextProvider';
+import { SnackBarContext } from '../../contexts/SnackBarProvider';
+
+import PALETTE from '../../constants/palette';
+import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
+
 import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeStation } from '../../request';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
-import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
+import { Container, Icon, Heading1, Form, Text, List } from './StationPage.style';
 import noStation from '../../assets/images/no_station.png';
 import { PageProps } from '../types';
 
-interface Station extends APIReturnTypeStation {
-  editable: boolean;
-}
-
-const BEFORE_FETCH: Station[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const BEFORE_FETCH: APIReturnTypeStation[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 
 const StationPage = ({ setIsLoading }: PageProps) => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
-  const [list, setList] = useState<Station[]>(BEFORE_FETCH);
+  const [list, setList] = useState<APIReturnTypeStation[]>(BEFORE_FETCH);
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
   const fetchStations = async () => {
     const stations: APIReturnTypeStation[] = await apiRequest.getStations();
 
-    setList(stations.map((station) => ({ ...station, editable: false })));
+    setList(stations);
   };
 
   const fetchData = async () => {
@@ -115,112 +113,48 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     }
   };
 
-  const onNameChange = (id: number, event: ChangeEvent<HTMLInputElement>) => {
-    setList((prevList) =>
-      prevList.map((station) => {
-        if (station.id === id) {
-          return {
-            ...station,
-            name: event.target.value,
-          };
-        }
-
-        return {
-          ...station,
-        };
-      })
-    );
-  };
-
-  const onSetEditable = (id: number, editable: boolean) => {
-    setList((prevList) =>
-      prevList.map((station) => {
-        if (station.id === id) {
-          return {
-            ...station,
-            editable,
-          };
-        }
-
-        return {
-          ...station,
-        };
-      })
-    );
-  };
-
   return (
     <Container>
       <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
         <Heading1>지하철 역 관리</Heading1>
-        <Form onSubmit={onStationNameSubmit}>
-          <InputContainer
-            labelText="지하철 역 이름을 입력하세요"
-            validation={{ text: stationInputErrorMessage, isValid: false }}
-          >
-            <Icon>
-              <MdSubway size="1.5rem" />
-            </Icon>
-            <Input
-              type="text"
-              value={stationInput}
-              onChange={onStationInputChange}
-              aria-label="지하철 역 이름 입력"
-            />
-          </InputContainer>
-          <Button
-            size="m"
-            width="6rem"
-            height="2.8rem"
-            backgroundColor={themeColor}
-            color={PALETTE.WHITE}
-          >
-            추가
-          </Button>
-        </Form>
+        {isLoggedIn && (
+          <Form onSubmit={onStationNameSubmit}>
+            <InputContainer
+              labelText="지하철 역 이름을 입력하세요"
+              validation={{ text: stationInputErrorMessage, isValid: false }}
+            >
+              <Icon>
+                <MdSubway size="1.5rem" />
+              </Icon>
+              <Input
+                type="text"
+                value={stationInput}
+                onChange={onStationInputChange}
+                aria-label="지하철 역 이름 입력"
+              />
+            </InputContainer>
+            <Button
+              size="m"
+              width="6rem"
+              height="2.8rem"
+              backgroundColor={themeColor}
+              color={PALETTE.WHITE}
+            >
+              추가
+            </Button>
+          </Form>
+        )}
+        {!isLoggedIn && <Text>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</Text>}
       </Box>
       <Box backgroundColor={PALETTE.WHITE}>
         {list.length === 0 ? (
           <img src={noStation} alt="지하철 역 없음 이미지" />
         ) : (
           <List aria-label="역 목록">
-            {list.map(({ id, name, editable }) => (
+            {list.map(({ id, name }) => (
               <li key={id}>
-                <Input
-                  value={name}
-                  onChange={(event) => onNameChange(id, event)}
-                  readOnly={!editable}
-                />
-                {editable ? (
-                  <Button
-                    type="button"
-                    size="s"
-                    backgroundColor={themeColor}
-                    color={PALETTE.WHITE}
-                    onClick={() => {}}
-                  >
-                    <MdCheck size="15px" />
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    size="s"
-                    backgroundColor={PALETTE.GRAY_100}
-                    onClick={() => onSetEditable(id, true)}
-                  >
-                    <MdEdit size="15px" />
-                  </Button>
-                )}
-                {editable ? (
-                  <Button
-                    type="button"
-                    size="s"
-                    backgroundColor={PALETTE.GRAY_100}
-                    onClick={() => onSetEditable(id, false)}
-                  >
-                    <MdCancel size="15px" />
-                  </Button>
-                ) : (
+                <p>{name}</p>
+                {isLoggedIn && (
                   <Button
                     type="button"
                     size="s"
@@ -242,4 +176,3 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 };
 
 export default StationPage;
-export type { Station };
