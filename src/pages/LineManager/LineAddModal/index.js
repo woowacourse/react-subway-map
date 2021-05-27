@@ -68,7 +68,11 @@ const LineAddModal = ({
   };
 
   return (
-    <ModalTemplate title={'노선 생성'} onClickToClose={onClickToClose}>
+    <ModalTemplate
+      title={'노선 생성'}
+      onClickToClose={onClickToClose}
+      hasCloseButton
+    >
       <Formik
         initialValues={initialValues}
         validate={(values) => validate({ ...values, lines })}

@@ -48,8 +48,8 @@ function App() {
             </Route>
           </Switch>
         </Main>
+        <ServerSelector />
       </Router>
-      <ServerSelector />
     </>
   );
 }
