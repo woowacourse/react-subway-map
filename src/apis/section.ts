@@ -4,7 +4,7 @@ import { SectionAddRequestItem } from "../@types/types";
 
 export const requestSection = {
   async addSection({ lineId, upStationId, downStationId, distance }: SectionAddRequestItem & { lineId: number }) {
-    const response = await axios.post(`https://subway-pomo.kro.kr/lines/${lineId}/sections`, {
+    const response = await axios.post(`/lines/${lineId}/sections`, {
       upStationId,
       downStationId,
       distance,
@@ -13,7 +13,7 @@ export const requestSection = {
     return response;
   },
   async deleteSection({ lineId, stationId }: { lineId: number; stationId: number }) {
-    const response = await axios.delete(`https://subway-pomo.kro.kr/lines/${lineId}/sections?${stationId}`);
+    const response = await axios.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
 
     return response;
   },

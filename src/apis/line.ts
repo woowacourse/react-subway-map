@@ -4,17 +4,17 @@ import { Line, LineAddRequestItem } from "../@types/types";
 
 export const requestLine = {
   async getAllLines() {
-    const response = await axios.get<Line[]>("https://subway-pomo.kro.kr/lines");
+    const response = await axios.get<Line[]>("/lines");
 
     return response.data;
   },
   async addLine(line: LineAddRequestItem) {
-    const response = await axios.post<Line>("https://subway-pomo.kro.kr/lines", line);
+    const response = await axios.post<Line>("/lines", line);
 
     return response.data;
   },
   async deleteLine(id: number) {
-    const response = await axios.delete(`https://subway-pomo.kro.kr/lines/${id}`);
+    const response = await axios.delete(`/lines/${id}`);
 
     return response;
   },

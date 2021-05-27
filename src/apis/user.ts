@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const requestAuth = {
   getUserInfo: async (token: string) => {
-    const response = await axios.get("https://subway-pomo.kro.kr/members/me", {
+    const response = await axios.get("/members/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -12,7 +12,7 @@ export const requestAuth = {
   },
 
   login: async (email: string, password: string) => {
-    const response = await axios.post("https://subway-pomo.kro.kr/login/token", { email, password });
+    const response = await axios.post("/login/token", { email, password });
 
     const { accessToken } = response.data;
 
@@ -20,13 +20,13 @@ export const requestAuth = {
   },
 
   signup: async (email: string, password: string, age: number) => {
-    const response = await axios.post("https://subway-pomo.kro.kr/members", { email, password, age });
+    const response = await axios.post("/members", { email, password, age });
 
     return response;
   },
 
   checkEmailValidation: async (email: string) => {
-    const response = await axios.post("https://subway-pomo.kro.kr/members/check-validation", { email });
+    const response = await axios.post("/members/check-validation", { email });
     const { message } = response.data;
 
     return message;
