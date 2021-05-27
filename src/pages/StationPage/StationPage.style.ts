@@ -24,7 +24,7 @@ const Heading1 = styled.h1`
   font-size: 1.5rem;
   font-weight: 600;
   color: ${PALETTE.GRAY_600};
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const Form = styled.form`
@@ -37,6 +37,8 @@ const Form = styled.form`
 
 const Text = styled.p`
   text-align: center;
+  font-size: 0.75rem;
+  color: ${PALETTE.GRAY_500};
 `;
 
 const List = styled.ul`
