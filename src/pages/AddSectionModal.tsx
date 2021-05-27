@@ -67,8 +67,8 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
         </div>
         <Title text="🔁  구간 추가" className="mb-8 text-center" />
         <form onSubmit={handleSubmit}>
-          <SelectInput onChange={handleLineId} title="노선 이름" className="mb-8 w-full">
-            <option selected disabled hidden>
+          <SelectInput defaultValue="DEFAULT" onChange={handleLineId} title="노선 이름" className="mb-8 w-full">
+            <option value="DEFAULT" disabled hidden>
               노선을 선택해주세요
             </option>
             {lines?.map((line) => (
@@ -78,9 +78,9 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             ))}
           </SelectInput>
           <div className="flex items-center mb-8">
-            <SelectInput onChange={handleUpStationId} title="상행역" className="w-full">
+            <SelectInput defaultValue="DEFAULT" onChange={handleUpStationId} title="상행역" className="w-full">
               {/* TODO: option 부분을 컴포넌트로 분리해야 할까? 말까? */}
-              <option selected disabled hidden>
+              <option value="DEFAULT" disabled hidden>
                 역을 선택해주세요
               </option>
               {stations?.map((station) => (
@@ -90,8 +90,8 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
               ))}
             </SelectInput>
             <img className="mx-2 w-8 h-8" src={arrowImg} alt="arrowImg" />
-            <SelectInput onChange={handleDownStationId} title="하행역" className="w-full">
-              <option selected disabled hidden>
+            <SelectInput defaultValue="DEFAULT" onChange={handleDownStationId} title="하행역" className="w-full">
+              <option value="DEFAULT" disabled hidden>
                 역을 선택해주세요
               </option>
               {stations?.map((station) => (

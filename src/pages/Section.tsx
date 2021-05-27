@@ -95,8 +95,13 @@ const Section = () => {
           <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
         </div>
 
-        <SelectInput onChange={handleLineChange} title="조회하실 노선을 선택해주세요." className="w-full">
-          <option selected disabled hidden>
+        <SelectInput
+          defaultValue="DEFAULT"
+          onChange={handleLineChange}
+          title="조회하실 노선을 선택해주세요."
+          className="w-full"
+        >
+          <option value="DEFAULT" disabled hidden>
             노선을 선택해주세요
           </option>
           {lines?.map((line) => (
