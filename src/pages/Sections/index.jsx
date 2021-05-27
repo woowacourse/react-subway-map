@@ -153,15 +153,16 @@ const Sections = () => {
                 {lineDetail.stations.map(({ id, name }) => (
                   <li key={id} className="flex justify-between px-8 py-4">
                     <span>{name}</span>
-                    <button
+                    <Button
                       type="button"
-                      className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
-                      onClick={handleDeleteClick}
+                      theme="icon"
+                      size="auto"
                       name={id}
                       value={name}
+                      onClick={handleDeleteClick}
                     >
                       🗑
-                    </button>
+                    </Button>
                   </li>
                 ))}
               </ul>

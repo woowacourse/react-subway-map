@@ -100,7 +100,7 @@ const Lines = () => {
     );
   };
 
-  const handleDelete = (event) => {
+  const handleDeleteClick = (event) => {
     const { name: id, value } = event.target;
 
     if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
@@ -139,15 +139,16 @@ const Lines = () => {
                       />
                       <span>{name}</span>
                     </div>
-                    <button
+                    <Button
                       type="button"
-                      className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+                      theme="icon"
+                      size="auto"
                       name={id}
                       value={name}
-                      onClick={handleDelete}
+                      onClick={handleDeleteClick}
                     >
                       🗑
-                    </button>
+                    </Button>
                   </li>
                 ))}
             </ul>

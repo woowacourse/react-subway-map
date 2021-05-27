@@ -53,7 +53,7 @@ const Stations = () => {
     dispatch(addStation(stationName));
   };
 
-  const handleDelete = (event) => {
+  const handleDeleteClick = (event) => {
     const { name: id, value } = event.target;
 
     if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
@@ -89,18 +89,19 @@ const Stations = () => {
               {[...list].reverse().map(({ id, name }) => (
                 <li
                   key={id}
-                  className="flex justify-between p-2 text-gray-600 text-xl"
+                  className="flex items-center justify-between p-2 text-gray-600 text-xl"
                 >
                   <span>{name}</span>
-                  <button
+                  <Button
                     type="button"
-                    className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
+                    theme="icon"
+                    size="auto"
                     name={id}
                     value={name}
-                    onClick={handleDelete}
+                    onClick={handleDeleteClick}
                   >
                     🗑
-                  </button>
+                  </Button>
                 </li>
               ))}
             </ul>

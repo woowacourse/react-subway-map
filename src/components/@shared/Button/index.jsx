@@ -7,25 +7,37 @@ const SIZE_STYLE = {
   medium: "w-24 h-12",
   small: "w-20",
   full: "w-full",
+  auto: "w-auto",
 };
 
 const THEME_STYLE = {
-  primary: "bg-yellow-300 hover:bg-yellow-400",
-  secondary: "bg-gray-50 hover:bg-gray-100",
-  round: "bg-gray-50 hover:bg-gray-100 rounded-3xl",
+  primary: "p-3 bg-yellow-300 hover:bg-yellow-400",
+  secondary: "p-3 bg-gray-50 hover:bg-gray-100",
+  round: "p-3 bg-gray-50 hover:bg-gray-100 rounded-3xl",
+  icon: "bg-transparent hover:scale-110 transform focus:opacity-100 focus:text-black hover:text-black focus:outline-none hover:opacity-100  opacity-60",
 };
 
-const Button = ({ type, children, disabled, size, theme, onClick, name }) => (
+const Button = ({
+  type,
+  children,
+  disabled,
+  size,
+  theme,
+  onClick,
+  name,
+  value,
+}) => (
   <button
     type={type === "submit" ? "submit" : "button"}
     disabled={disabled}
     name={name}
     className={cx(
-      "p-3 disabled:text-gray-400 text-gray-700 text-base font-medium disabled:bg-gray-200 rounded focus:outline-none",
+      " disabled:text-gray-400 text-gray-700 text-base font-medium disabled:bg-gray-200 rounded focus:outline-none",
       SIZE_STYLE[size],
       THEME_STYLE[theme]
     )}
     onClick={onClick}
+    value={value}
   >
     {children}
   </button>
@@ -39,6 +51,7 @@ Button.propTypes = {
   theme: PropTypes.oneOf(Object.keys(THEME_STYLE)),
   onClick: PropTypes.func,
   name: PropTypes.string,
+  value: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -47,6 +60,7 @@ Button.defaultProps = {
   theme: "primary",
   onClick: null,
   name: null,
+  value: null,
 };
 
 export default Button;
