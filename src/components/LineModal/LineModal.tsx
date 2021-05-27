@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
@@ -27,6 +28,8 @@ const LineModal = ({
   closeModal,
   getLines,
 }: Props) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [color, setColor] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [upStationId, setUpStationId] = useState<number>();
@@ -75,9 +78,10 @@ const LineModal = ({
     const res = await requestAddLine(BASE_URL, newLine);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_ADD_LINE);
+      alert(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_LINE);
       closeModal();
       await getLines();
     }
@@ -93,9 +97,10 @@ const LineModal = ({
     const res = await requestEditLine(BASE_URL, selectedLine.id, updatedLine);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_EDIT_LINE);
+      alert(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
       closeModal();
       await getLines();
     }

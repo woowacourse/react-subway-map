@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
-import Styled from './SectionModal.styles';
-import { ButtonType, Line, Station } from 'types';
 import TextButton from 'components/shared/TextButton/TextButton';
-import { API_STATUS } from 'constants/api';
-import { ALERT_MESSAGE } from 'constants/messages';
 import { requestAddSection } from 'request/line';
 import { useAppSelector } from 'modules/hooks';
+import { ButtonType, Line, Station } from 'types';
+import { API_STATUS } from 'constants/api';
+import { ALERT_MESSAGE } from 'constants/messages';
+import Styled from './SectionModal.styles';
 
 interface Props {
   targetLine?: Line;
@@ -26,6 +27,8 @@ const SectionModal = ({
   selectTargetLine,
   getLine,
 }: Props) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
@@ -50,9 +53,10 @@ const SectionModal = ({
     const res = await requestAddSection(BASE_URL, targetLine?.id, newSection);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_ADD_SECTION);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       // TODO: form reset
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_SECTION);
       closeModal();
       await getLine(targetLine.id);
     }

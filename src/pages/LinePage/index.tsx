@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
@@ -21,6 +22,8 @@ const LinePage = () => {
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [lines, setLines] = useState<Line[]>([]);
   const [stations, setStations] = useState<Station[]>([]);
@@ -60,9 +63,10 @@ const LinePage = () => {
     const res = await requestDeleteLine(BASE_URL, id);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_DELETE_LINE);
+      alert(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       await getLines();
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_LINE);
     }
   };
 

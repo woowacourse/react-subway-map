@@ -46,6 +46,7 @@ const LoginPage = () => {
     } else if (res.status === API_STATUS.FULFILLED) {
       setInvalidNotification({ message: '', isValid: true, isVisible: false });
       setLoginResponse(res.data);
+
       history.push(ROUTE.STATIONS);
     }
   };

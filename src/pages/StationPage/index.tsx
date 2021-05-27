@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
@@ -19,10 +20,9 @@ import ROUTE from 'constants/routes';
 
 const StationPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
-
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   const [stations, setStations] = useState<Station[]>([]);
   const [newStationName, setNewStationName] = useState('');
@@ -33,6 +33,8 @@ const StationPage = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const isValidStationName = regex.koreanAndNumber.test(newStationName);
 
   const getStations = async () => {
@@ -41,7 +43,7 @@ const StationPage = () => {
     const res = await requestGetStations(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+      enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
     } else if (res.status === API_STATUS.FULFILLED) {
       setStations(res.data);
     }
@@ -63,10 +65,11 @@ const StationPage = () => {
     const res = await requestAddStation(BASE_URL, newStationName);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_ADD_STATION);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       await getStations();
       setNewStationName('');
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_STAION);
     }
   };
 
@@ -91,9 +94,10 @@ const StationPage = () => {
     const res = await requestDeleteStation(BASE_URL, id);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_DELETE_STATION);
+      enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       await getStations();
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_STAION);
     }
   };
 

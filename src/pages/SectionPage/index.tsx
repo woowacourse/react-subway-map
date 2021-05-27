@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import IconButton from 'components/shared/IconButton/IconButton';
@@ -20,6 +21,8 @@ const SectionPage = () => {
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [lines, setLines] = useState<Line[]>([]);
   const [targetLine, setTargetLine] = useState<Line | undefined>();
@@ -46,7 +49,7 @@ const SectionPage = () => {
     const res = await requestGetLines(BASE_URL);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_GET_LINES);
+      alert(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       setLines(res.data);
     }
@@ -58,7 +61,7 @@ const SectionPage = () => {
     const res = await requestGetLine(BASE_URL, targetLineId);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
+      alert(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
       setTargetLine(res.data);
     }
@@ -78,8 +81,10 @@ const SectionPage = () => {
     const res = await requestDeleteSection(BASE_URL, targetLine?.id, stationId);
 
     if (res.status === API_STATUS.REJECTED) {
-      alert(ALERT_MESSAGE.FAIL_TO_DELETE_SECTION);
+      alert(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_SECTION);
+
       await getLine(targetLine.id);
     }
   };
