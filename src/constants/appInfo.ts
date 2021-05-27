@@ -55,6 +55,7 @@ export const STATION = {
 
 export const LINE = {
   ADD_MODAL_TITLE: '노선 추가',
+  MODIFY_MODAL_TITLE: '노선 수정',
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 10,
   NAME_LABEL_TEXT: '노선 이름',

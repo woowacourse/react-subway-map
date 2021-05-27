@@ -34,7 +34,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
 
-  const [formValue, setFormValue] = useState<FormValue>({
+  const [formInput, setFormInput] = useState<FormValue>({
     name: line.name,
     color: line.color,
   });
@@ -51,8 +51,8 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
       setErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
     }
 
-    setFormValue({
-      ...formValue,
+    setFormInput({
+      ...formInput,
       name: value,
     });
   };
@@ -60,16 +60,25 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
   const isUsedLineColor = (color: string) => usedLineColor.includes(color);
 
   const onChangeLineColor = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setFormValue({ ...formValue, color: value });
+    setFormInput({ ...formInput, color: value });
   };
 
   const onModifyLine = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (
+      Object.values(errorMessage).some((message) => message !== '') ||
+      Object.values(formInput).some((value) => !value)
+    ) {
+      alert(ERROR_MESSAGE.INCOMPLETE_FORM);
+
+      return;
+    }
+
     dispatch(
       modifyLine({
         baseURL: API_INFO[apiOwner].endPoint,
-        modifyLineRequestData: { lineId: line.id, ...formValue },
+        modifyLineRequestData: { lineId: line.id, ...formInput },
       })
     );
 
@@ -77,11 +86,11 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
   };
 
   return (
-    <Modal titleText={LINE.ADD_MODAL_TITLE} onClose={onClose}>
+    <Modal titleText={LINE.MODIFY_MODAL_TITLE} onClose={onClose}>
       <LineForm onSubmit={onModifyLine}>
         <NotificationInput
           onChange={onChangeName}
-          value={formValue.name}
+          value={formInput.name}
           message={{ text: errorMessage, isError: true }}
           minLength={2}
           maxLength={10}
@@ -94,7 +103,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
             <ColorRadio
               key={color}
               value={color}
-              checked={color === formValue.color}
+              checked={color === formInput.color}
               radioColor={color}
               groupName={LINE.COLOR_SELECT_NAME}
               disabled={isUsedLineColor(color)}
@@ -103,7 +112,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
           ))}
         </LineColorContainer>
         <LineModalButtonContainer justifyContent="flex-end">
-          <Button type="button" isColored={false}>
+          <Button type="button" isColored={false} onClick={onClose}>
             취소
           </Button>
           <Button>확인</Button>
