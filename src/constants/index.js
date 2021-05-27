@@ -107,6 +107,28 @@ export const ERROR = {
   },
 };
 
+export const RESPONSE = {
+  ADD_STATION: {
+    SUCCESS: '새로운 역이 추가되었습니다.',
+  },
+  DELETE_STATION: {
+    SUCCESS: '역이 삭제되었습니다.',
+    FAIL: '노선에 추가된 역은 삭제할 수 없습니다.',
+  },
+  ADD_LINE: {
+    SUCCESS: '새로운 노선이 추가되었습니다.',
+  },
+  DELETE_LINE: {
+    SUCCESS: '노선이 삭제되었습니다.',
+  },
+  ADD_SECTION: {
+    SUCCESS: '새로운 구간이 추가되었습니다.',
+  },
+  DELETE_SECTION: {
+    SUCCESS: '구간이 삭제되었습니다.',
+  },
+};
+
 export const INPUT_TEXT = {
   EMAIL: {
     PLACE_HOLDER: '✉️ 이메일을 입력해주세요.',

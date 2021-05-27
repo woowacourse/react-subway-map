@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { ROUTE } from '../constants';
+import { setMessage } from '../redux';
 import { request } from '../utils';
 
 const useSignUp = () => {
   const [duplicateEmailError, setDuplicateEmailError] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const checkDuplicateEmail = async ({ email }) => {
     try {
@@ -28,6 +31,7 @@ const useSignUp = () => {
       await request.post('/members', { email, age, password });
 
       history.push(ROUTE.SIGN_IN.PATH);
+      dispatch(setMessage({ message: '회원가입이 완료되었습니다.' }));
     } catch (error) {
       console.error(error);
 
