@@ -8,6 +8,7 @@ import Main from "../../components/@shared/Main";
 import Modal from "../../components/@shared/Modal";
 import Select from "../../components/@shared/Select";
 import Button from "../../components/@shared/Button";
+import Loading from "../../components/@shared/Loading";
 import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
 import { useDistanceInput } from "../Lines/hooks";
 import {
@@ -111,6 +112,7 @@ const Sections = () => {
 
   return (
     <>
+      <Loading isLoading={status === STATUS.LOADING} bgOpacity="10" />
       <Main>
         <section className="pb-8 px-4 w-144 border-t-8 border-yellow-300 rounded-sm shadow-md">
           <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
