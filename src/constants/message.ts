@@ -6,6 +6,7 @@ const MESSAGE = {
     DUPLICATED_EMAIL: '이미 등록되어 있는 이메일 주소입니다',
     LOGIN_FAILURE: '로그인에 실패했습니다',
     REQUEST_FAILURE: '서버에 문제가 발생했습니다. 잠시 후에 다시 시도해주세요',
+    INVALID_STATION_LENGTH: '노선 생성을 위해서는 최소 2개의 역이 필요합니다',
   },
 };
 
