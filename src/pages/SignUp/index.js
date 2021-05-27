@@ -1,18 +1,15 @@
 import React from 'react';
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
-import {
-  COLOR,
-  ERROR,
-  INPUT_TEXT,
-  RANGE,
-  REG_EXP,
-  ROUTE,
-  SIZE,
-  TEST,
-} from '../../constants';
+import { COLOR, INPUT_TEXT, ROUTE, SIZE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
 import { useSignUp } from '../../hooks';
+import {
+  validateAge,
+  validateEmail,
+  validatePassword,
+  validatePasswordConfirm,
+} from '../../utils';
 
 const initialValues = {
   email: '',
@@ -21,130 +18,95 @@ const initialValues = {
   passwordConfirm: '',
 };
 
-const validateEmail = ({ email, checkDuplicateEmail }) => {
-  if (!email) {
-    return ERROR.EMAIL.REQUIRED;
+const validate = ({ email, age, password, passwordConfirm }) => {
+  const errors = {};
+
+  const emailError = validateEmail({ email });
+  const ageError = validateAge({ age });
+  const passwordError = validatePassword({ password });
+  const passwordConfirmError = validatePasswordConfirm({
+    password,
+    passwordConfirm,
+  });
+
+  if (emailError) {
+    errors.email = emailError;
   }
-  if (!REG_EXP.EMAIL.test(email)) {
-    return ERROR.EMAIL.INVALID;
+  if (ageError) {
+    errors.age = ageError;
+  }
+  if (passwordError) {
+    errors.password = passwordError;
+  }
+  if (passwordConfirmError) {
+    errors.passwordConfirm = passwordConfirmError;
   }
 
-  return checkDuplicateEmail({ email });
-};
-
-const validateAge = ({ age }) => {
-  if (!age) {
-    return ERROR.AGE.REQUIRED;
-  }
-  if (!REG_EXP.NUMBER.test(age)) {
-    return ERROR.AGE.INVALID;
-  }
-  if (age <= RANGE.AGE.MIN || age >= RANGE.AGE.MAX) {
-    return ERROR.AGE.INVALID;
-  }
-};
-
-const validatePassword = ({ password }) => {
-  if (!password) {
-    return ERROR.PASSWORD.REQUIRED;
-  }
-  if (!REG_EXP.PASSWORD.test(password)) {
-    return ERROR.PASSWORD.INVALID;
-  }
-};
-
-const validatePasswordConfirm = ({ password, passwordConfirm }) => {
-  if (!passwordConfirm) {
-    return ERROR.PASSWORD_CONFIRM.REQUIRED;
-  }
-  if (password !== passwordConfirm) {
-    return ERROR.PASSWORD_CONFIRM.INVALID;
-  }
+  return errors;
 };
 
 const SignUp = () => {
-  const { checkDuplicateEmail, signUp } = useSignUp();
+  const { duplicateEmailError, checkDuplicateEmail, signUp } = useSignUp();
+
+  const handleSubmitForm = async (values) => {
+    const isDuplicateEmail = await checkDuplicateEmail({ email: values.email });
+
+    if (isDuplicateEmail) return;
+
+    signUp(values);
+  };
 
   return (
     <PageTemplate title={ROUTE.SIGN_UP.NAME}>
       <Formik
         initialValues={initialValues}
-        onSubmit={signUp}
+        validate={validate}
+        onSubmit={handleSubmitForm}
         validateOnChange={false}
       >
-        {({ values, handleSubmit }) => (
+        {({ values, errors, touched, handleSubmit, getFieldProps }) => (
           <Form onSubmit={handleSubmit}>
-            <Field
-              name="email"
-              validate={(email) =>
-                validateEmail({ email, checkDuplicateEmail })
-              }
-            >
-              {({ field, meta }) => (
-                <>
-                  <Input
-                    type="email"
-                    placeholder={INPUT_TEXT.EMAIL.PLACE_HOLDER}
-                    size={SIZE.MD}
-                    {...field}
-                  />
-                  <Validator>{meta.touched && meta.error}</Validator>
-                </>
-              )}
-            </Field>
-            <Field name="age" validate={(age) => validateAge({ age })}>
-              {({ field, meta }) => (
-                <>
-                  <Input
-                    type="text"
-                    placeholder={INPUT_TEXT.AGE.PLACE_HOLDER}
-                    size={SIZE.MD}
-                    {...field}
-                  />
-                  <Validator>{meta.touched && meta.error}</Validator>
-                </>
-              )}
-            </Field>
+            <Input
+              type="email"
+              placeholder={INPUT_TEXT.EMAIL.PLACE_HOLDER}
+              size={SIZE.MD}
+              {...getFieldProps('email')}
+            />
+            <Validator>
+              {touched.email && errors.email}
+              {duplicateEmailError}
+            </Validator>
+            <Input
+              type="text"
+              placeholder={INPUT_TEXT.AGE.PLACE_HOLDER}
+              size={SIZE.MD}
+              {...getFieldProps('age')}
+            />
+            <Validator>{touched.age && errors.age}</Validator>
             <PasswordSuggestion>
               비밀번호: 6자 이상 20자 이하의 영문, 숫자, 특수문자[!, @, #, $]의
               조합
             </PasswordSuggestion>
-            <Field
-              name="password"
-              validate={(password) => validatePassword({ password })}
-            >
-              {({ field, meta }) => (
-                <>
-                  <Input
-                    type="password"
-                    placeholder={INPUT_TEXT.PASSWORD.PLACE_HOLDER}
-                    size={SIZE.MD}
-                    {...field}
-                  />
-                  <Validator>{meta.touched && meta.error}</Validator>
-                </>
-              )}
-            </Field>
-            <Field
-              name="passwordConfirm"
-              validate={() => validatePasswordConfirm(values)}
-            >
-              {({ field, meta }) => (
-                <>
-                  <Input
-                    type="password"
-                    placeholder={INPUT_TEXT.PASSWORD_CONFIRM.PLACE_HOLDER}
-                    size={SIZE.MD}
-                    {...field}
-                  />
-                  <Validator>{meta.touched && meta.error}</Validator>
-                </>
-              )}
-            </Field>
+            <Input
+              type="password"
+              placeholder={INPUT_TEXT.PASSWORD.PLACE_HOLDER}
+              size={SIZE.MD}
+              {...getFieldProps('password')}
+            />
+            <Validator>{touched.password && errors.password}</Validator>
+            <Input
+              type="password"
+              placeholder={INPUT_TEXT.PASSWORD_CONFIRM.PLACE_HOLDER}
+              size={SIZE.MD}
+              {...getFieldProps('passwordConfirm')}
+            />
+            <Validator>
+              {touched.passwordConfirm && errors.passwordConfirm}
+            </Validator>
             <Button
               type="submit"
               backgroundColor={COLOR.AMBER}
-              data-testid={TEST.ID.SIGN_UP_BUTTON}
+              data-testid="signup-button"
             >
               회원가입
             </Button>

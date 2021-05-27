@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { LS_KEY, ROUTE } from '../../constants';
@@ -8,9 +9,11 @@ const SignOut = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  removeLocalStorage(LS_KEY.TOKEN);
-  dispatch(clearUserToken());
-  history.push(ROUTE.HOME.PATH);
+  useEffect(() => {
+    removeLocalStorage(LS_KEY.TOKEN);
+    dispatch(clearUserToken());
+    history.push(ROUTE.HOME.PATH);
+  }, [dispatch, history]);
 
   return null;
 };

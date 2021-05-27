@@ -1,16 +1,9 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { PageTemplate, Input, Button, ManagementList } from '../../components';
-import {
-  ROUTE,
-  SIZE,
-  COLOR,
-  REG_EXP,
-  INPUT_TEXT,
-  ERROR,
-  TEST,
-} from '../../constants';
+import { ROUTE, SIZE, COLOR, INPUT_TEXT, TEST } from '../../constants';
 import { useStationManager } from '../../hooks';
+import { validateStationName } from '../../utils';
 import { Form, InputWrapper, ButtonWrapper, Validator } from './style';
 
 const initialValues = {
@@ -20,23 +13,13 @@ const initialValues = {
 const validate = ({ stationName, stations }) => {
   const errors = {};
 
-  if (!stationName) {
-    errors.stationName = ERROR.STATION_NAME.REQUIRED;
+  errors.stationName = validateStationName({ stationName, stations });
 
-    return errors;
-  }
-  if (!REG_EXP.STATION_NAME.test(stationName)) {
-    errors.stationName = ERROR.STATION_NAME.INVALID;
-
-    return errors;
-  }
-  if (stations.find(({ name }) => name === stationName)) {
-    errors.stationName = ERROR.STATION_NAME.DUPLICATE;
-
+  if (errors.stationName) {
     return errors;
   }
 
-  return errors;
+  return {};
 };
 
 const StationManager = () => {

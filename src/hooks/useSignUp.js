@@ -1,16 +1,22 @@
+import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { ROUTE } from '../constants';
 import { request } from '../utils';
 
 const useSignUp = () => {
+  const [duplicateEmailError, setDuplicateEmailError] = useState('');
   const history = useHistory();
 
   const checkDuplicateEmail = async ({ email }) => {
     try {
       await request.post('/members/email-check', { email });
+
+      return false;
     } catch (error) {
       if (error.response.status === 409) {
-        return error.response.data.message;
+        setDuplicateEmailError(error.response.data.message);
+
+        return true;
       }
 
       console.error(error);
@@ -30,7 +36,7 @@ const useSignUp = () => {
     }
   };
 
-  return { checkDuplicateEmail, signUp };
+  return { duplicateEmailError, checkDuplicateEmail, signUp };
 };
 
 export default useSignUp;

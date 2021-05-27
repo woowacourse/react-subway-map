@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ModalTemplate, Input, Selector } from '../../../components';
-import { COLOR, ERROR, REG_EXP, SIZE } from '../../../constants';
+import { COLOR, SIZE } from '../../../constants';
 import {
   ButtonWrapper,
   Form,
@@ -10,32 +10,12 @@ import {
   Validator,
 } from './style';
 import { Formik } from 'formik';
+import { validateDistance, validateStationId } from '../../../utils';
 
 const initialValues = {
   upStationId: '',
   downStationId: '',
   distance: '',
-};
-
-const validateStationId = ({ upStationId, downStationId }) => {
-  if (!upStationId || !downStationId) {
-    return ERROR.STATION_ID.REQUIRED;
-  }
-  if (upStationId === downStationId) {
-    return ERROR.STATION_ID.DUPLICATE;
-  }
-};
-
-const validateDistance = ({ distance }) => {
-  if (!distance) {
-    return ERROR.DISTANCE.REQUIRED;
-  }
-  if (!REG_EXP.NUMBER.test(distance)) {
-    return ERROR.DISTANCE.INVALID;
-  }
-  if (distance <= 0) {
-    return ERROR.DISTANCE.INVALID;
-  }
 };
 
 const validate = ({ upStationId, downStationId, distance }) => {

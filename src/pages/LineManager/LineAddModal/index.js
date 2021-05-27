@@ -7,56 +7,20 @@ import {
   Selector,
   ColorPicker,
 } from '../../../components';
-import {
-  COLOR,
-  ERROR,
-  INPUT_TEXT,
-  LINE_COLOR,
-  REG_EXP,
-  SIZE,
-  TEST,
-} from '../../../constants';
+import { COLOR, INPUT_TEXT, LINE_COLOR, SIZE, TEST } from '../../../constants';
 import { ButtonWrapper, Form, SelectorWrapper, Validator } from './style';
 import { Formik } from 'formik';
+import {
+  validateDistance,
+  validateLineName,
+  validateStationId,
+} from '../../../utils';
 
 const initialValues = {
   lineName: '',
   upStationId: '',
   downStationId: '',
   distance: '',
-};
-
-const validateLineName = ({ lineName, lines }) => {
-  if (!lineName) {
-    return ERROR.LINE_NAME.REQUIRED;
-  }
-  if (!REG_EXP.LINE_NAME.test(lineName)) {
-    return ERROR.LINE_NAME.INVALID;
-  }
-  if (lines.find(({ name }) => name === lineName)) {
-    return ERROR.LINE_NAME.DUPLICATE;
-  }
-};
-
-const validateStationId = ({ upStationId, downStationId }) => {
-  if (!upStationId || !downStationId) {
-    return ERROR.STATION_ID.REQUIRED;
-  }
-  if (upStationId === downStationId) {
-    return ERROR.STATION_ID.DUPLICATE;
-  }
-};
-
-const validateDistance = ({ distance }) => {
-  if (!distance) {
-    return ERROR.DISTANCE.REQUIRED;
-  }
-  if (!REG_EXP.NUMBER.test(distance)) {
-    return ERROR.DISTANCE.INVALID;
-  }
-  if (distance <= 0) {
-    return ERROR.DISTANCE.INVALID;
-  }
 };
 
 const validate = ({
