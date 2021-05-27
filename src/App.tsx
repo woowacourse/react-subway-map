@@ -1,13 +1,5 @@
 import { useContext, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  NavLink,
-  Redirect,
-  useHistory,
-} from 'react-router-dom';
+import { Switch, Route, Link, NavLink, Redirect, useHistory } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import NavBar from './components/NavBar/NavBar';
@@ -36,8 +28,6 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onLogout = async () => {
-    localStorage.setItem('accessToken', '');
-
     await userContext?.setIsLoggedIn(false);
 
     addMessage?.(SUCCESS_MESSAGE.LOGOUT);

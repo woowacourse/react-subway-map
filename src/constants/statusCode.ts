@@ -1,5 +1,7 @@
 const STATUS_CODE = {
   UNAUTHORIZED: '401',
+  STATION_IN_SECTION: '400',
+  STATION_DUPLICATED: '400',
 };
 
 export default STATUS_CODE;

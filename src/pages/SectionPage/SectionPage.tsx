@@ -28,6 +28,7 @@ import apiRequest, { APIReturnTypeLine, APIReturnTypeStation } from '../../reque
 import { PageProps } from '../types';
 import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
+import STATUS_CODE from '../../constants/statusCode';
 
 interface StationInLine extends APIReturnTypeStation {
   distance?: number;
@@ -49,6 +50,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
   const currentLine = lines.find((line) => line.id === selectedLineId);
@@ -203,6 +205,13 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       setFormOpen(false);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
@@ -225,6 +234,13 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       addMessage?.(SUCCESS_MESSAGE.DELETE_SECTION);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
 

@@ -8,6 +8,9 @@ import { UserContext } from '../../contexts/UserContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 
 import PALETTE from '../../constants/palette';
+import STATUS_CODE from '../../constants/statusCode';
+import REGEX from '../../constants/regex';
+import { STATION_VALUE } from '../../constants/values';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
 
 import useInput from '../../hooks/useInput';
@@ -26,6 +29,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   const fetchStations = async () => {
     const stations: APIReturnTypeStation[] = await apiRequest.getStations();
@@ -56,12 +60,13 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     return <></>;
   }
 
-  // TODO: 역 리스트 sorting
   const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     const isStationInputValid =
-      stationInput.length > 1 && stationInput.length < 21 && /^[가-힣0-9]+$/.test(stationInput);
+      stationInput.length >= STATION_VALUE.NAME_MIN_LENGTH &&
+      stationInput.length <= STATION_VALUE.NAME_MAX_LENGTH &&
+      REGEX.KOREAN_DIGIT.test(stationInput);
     const isStationInputDuplicated = list.some((item) => item.name === stationInput);
 
     if (!isStationInputValid) {
@@ -91,10 +96,17 @@ const StationPage = ({ setIsLoading }: PageProps) => {
       setStationInput('');
     } catch (error) {
       console.error(error);
-      // TODO: bad request처리
-      if (error.message === '400') {
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+        return;
+      }
+
+      if (error.message === STATUS_CODE.STATION_DUPLICATED) {
         setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
         await fetchData();
+
         return;
       }
       addMessage?.(ERROR_MESSAGE.DEFAULT);
@@ -109,6 +121,18 @@ const StationPage = ({ setIsLoading }: PageProps) => {
       addMessage?.(SUCCESS_MESSAGE.DELETE_STATION);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+        return;
+      }
+
+      if (error.message === STATUS_CODE.STATION_IN_SECTION) {
+        addMessage?.(ERROR_MESSAGE.STATION_IN_SECTION);
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };

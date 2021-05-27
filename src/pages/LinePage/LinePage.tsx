@@ -22,14 +22,16 @@ import {
   List,
 } from '../../components/shared';
 
-import REGEX from '../../constants/regex';
-import PALETTE from '../../constants/palette';
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
-import { LINE_VALUE } from '../../constants/values';
-
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
+
+import REGEX from '../../constants/regex';
+import PALETTE from '../../constants/palette';
+import STATUS_CODE from '../../constants/statusCode';
+import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { LINE_VALUE } from '../../constants/values';
+
 import useInput from '../../hooks/useInput';
 import apiRequest, { APIReturnTypeStation, APIReturnTypeLine } from '../../request';
 import noLine from '../../assets/images/no_line.png';
@@ -72,7 +74,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
   const isLineNameValid =
     lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
@@ -188,6 +190,14 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       setFormOpen(false);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
@@ -200,6 +210,14 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
     } catch (error) {
       console.error(error);
+
+      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        setIsLoggedIn?.(false);
+
+        return;
+      }
+
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
   };
