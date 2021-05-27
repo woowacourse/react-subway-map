@@ -50,6 +50,9 @@ export const userSlice = createSlice({
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
     },
+    resetError: state => {
+      state.error = '';
+    },
     pending: state => {
       state.error = '';
     },
@@ -61,8 +64,9 @@ export type UserAction = ReturnType<
   | typeof userSlice.actions.login
   | typeof userSlice.actions.loginAsync
   | typeof userSlice.actions.error
+  | typeof userSlice.actions.resetError
   | typeof userSlice.actions.pending
 >;
 
-export const { selectServer, login, loginAsync, error, pending } = userSlice.actions;
+export const { selectServer, login, loginAsync, error, resetError, pending } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AddSectionPayload, LineSection } from '../interfaces';
+import { AddSectionPayload, DeleteSectionPayload, LineSection } from '../interfaces';
 import { RootState } from '../modules';
-import { addSectionAsync, getSectionAsync } from '../modules/section/sectionReducer';
+import {
+  addSectionAsync,
+  deleteSectionAsync,
+  getSectionAsync,
+  resetError as _resetError,
+} from '../modules/section/sectionReducer';
 
 const useSection = () => {
   const { lineSection, error } = useSelector((state: RootState) => state.section);
@@ -15,7 +20,15 @@ const useSection = () => {
     dispatch(addSectionAsync(payload));
   };
 
-  return { lineSection, getSection, addSection, error };
+  const deleteSection = (payload: DeleteSectionPayload) => {
+    dispatch(deleteSectionAsync(payload));
+  };
+
+  const resetError = () => {
+    dispatch(_resetError());
+  };
+
+  return { lineSection, getSection, addSection, deleteSection, error, resetError };
 };
 
 export default useSection;

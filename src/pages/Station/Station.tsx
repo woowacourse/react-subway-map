@@ -1,20 +1,21 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddStationForm from '../../components/StationPage/AddStationForm';
 import StationListItem from '../../components/StationPage/StationListItem';
-import { RootState } from '../../modules';
+import useStation from '../../hook/useStation';
 
 import * as S from './Station.styles';
 
 const Station = () => {
-  const { stations, error } = useSelector((state: RootState) => state.station);
+  const { stations, error, resetError } = useStation();
 
   useEffect(() => {
     if (error) {
       window.alert(error);
+      resetError();
     }
-  }, [error]);
+  }, [error, resetError]);
 
   return (
     <S.Container>

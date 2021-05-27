@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API, RESPONSE } from '../constants/api';
-import { AddSectionPayload, LineSection } from '../interfaces';
+import { AddSectionPayload, DeleteSectionPayload, LineSection } from '../interfaces';
 
 interface GetSectionResponse {
   status: number;
@@ -29,6 +29,20 @@ export const sectionAPI = {
 
       if (response.status >= 400) {
         throw new Error('구간 추가에 실패했습니다...!');
+      }
+
+      return {};
+    } catch (error) {
+      return { error: error.message ?? RESPONSE.FAILURE };
+    }
+  },
+
+  deleteSection: async ({ lineId, stationId }: DeleteSectionPayload) => {
+    try {
+      const response = await axios.delete(`${API.SECTION(Number(lineId))}?stationId=${stationId}`);
+
+      if (response.status >= 400) {
+        throw new Error('구간 삭제에 실패했습니다...!');
       }
 
       return {};

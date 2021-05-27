@@ -8,14 +8,15 @@ import useStation from '../../hook/useStation';
 import * as S from './Line.styles';
 
 const Line = () => {
-  const { lines, addLine, deleteLine, error } = useLine();
+  const { lines, addLine, deleteLine, error, resetError } = useLine();
   const { stations } = useStation();
 
   useEffect(() => {
     if (error) {
       window.alert(error);
+      resetError();
     }
-  }, [error]);
+  }, [error, resetError]);
 
   return (
     <S.Container>

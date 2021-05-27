@@ -10,33 +10,43 @@ import * as S from './Section.styles';
 
 const getSectionStations = (lineSection: LineSection) => {
   if (!lineSection?.sections) return [];
-  console.log(lineSection.sections);
+
   const { downStation: lastStation } = lineSection.sections[lineSection.sections.length - 1];
-  console.log(lastStation);
+
   const sectionStations = lineSection.sections.map(({ upStation, distance }) => ({
     id: upStation.id,
     name: upStation.name,
     distance,
   }));
-  sectionStations.concat({ id: lastStation.id, name: lastStation.name, distance: -1 });
+  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: -1 });
 
   return sectionStations;
 };
 
 const Section = () => {
-  const { lineSection, getSection, addSection, error } = useSection();
+  const { lineSection, getSection, addSection, deleteSection, error, resetError } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
-  console.log(lineSection);
-
   useEffect(() => {
     if (error) {
       window.alert(error);
+      resetError();
     }
-  }, [error]);
+  }, [error, resetError]);
 
   const handleSelectLine = (e: React.ChangeEvent<HTMLSelectElement>) => {
     getSection(Number(e.target.value));
+  };
+
+  const handleDeleteSection = (stationId: string, name: string) => {
+    if (lineSection.stations.length <= 2) {
+      window.alert('노선에는 상행역과 하행역이 필수로 존재해야합니다...!');
+      return;
+    }
+
+    if (!window.confirm(`정말로 ${name} 역을 구간에서 삭제하시겠습니까?`)) return;
+
+    deleteSection({ lineId: String(lineSection.id), stationId });
   };
 
   return (
@@ -59,6 +69,9 @@ const Section = () => {
               name={station.name}
               distance={station.distance}
               lineColor={lineSection.color}
+              handleDeleteSection={() => {
+                handleDeleteSection(String(station.id), station.name);
+              }}
             />
           ))}
         </S.SectionStationList>

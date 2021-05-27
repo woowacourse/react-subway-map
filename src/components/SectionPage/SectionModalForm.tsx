@@ -117,6 +117,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
 
   useEffect(() => {
     setSectionInfo({ ...sectionInfo, lineId: String(lineSection.id) });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lineSection.id]);
 
   const lineErrorMessage = getLineErrorMessage(sectionInfo.lineId);

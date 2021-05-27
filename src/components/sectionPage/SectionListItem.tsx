@@ -6,9 +6,10 @@ export interface Props {
   name: string;
   distance: number;
   lineColor?: string;
+  handleDeleteSection: () => void;
 }
 
-const SectionListItem = ({ name, distance, lineColor }: Props) => {
+const SectionListItem = ({ name, distance, lineColor, handleDeleteSection }: Props) => {
   return (
     <S.SectionListItem>
       <S.NameWrapper>
@@ -25,7 +26,7 @@ const SectionListItem = ({ name, distance, lineColor }: Props) => {
           <S.Button src={editSVG} />
         </S.ButtonWrapper>
         <S.ButtonWrapper>
-          <S.Button src={trashCanSVG} />
+          <S.Button src={trashCanSVG} onClick={handleDeleteSection} />
         </S.ButtonWrapper>
       </S.ButtonContainer>
     </S.SectionListItem>

@@ -60,3 +60,8 @@ export interface AddSectionPayload {
   downStationId: string;
   distance: string;
 }
+
+export interface DeleteSectionPayload {
+  lineId: string;
+  stationId: string;
+}

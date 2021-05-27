@@ -5,5 +5,5 @@ export default {
   component: SectionListItem,
 };
 
-const Template = () => <SectionListItem name='강남역' distance={2} />;
+const Template = () => <SectionListItem name='강남역' distance={2} handleDeleteSection={() => {}} />;
 export const Default = Template.bind({});

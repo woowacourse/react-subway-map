@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../modules';
-import { addStationAsync, deleteStationAsync, getStationsAsync } from '../modules/station/stationReducer';
+import {
+  addStationAsync,
+  deleteStationAsync,
+  getStationsAsync,
+  resetError as _resetError,
+} from '../modules/station/stationReducer';
 
 const useStation = () => {
   const { stations, error } = useSelector((state: RootState) => state.station);
@@ -20,7 +25,11 @@ const useStation = () => {
     dispatch(deleteStationAsync({ id }));
   };
 
-  return { stations, error, addStation, deleteStation };
+  const resetError = () => {
+    dispatch(_resetError());
+  };
+
+  return { stations, error, addStation, deleteStation, resetError };
 };
 
 export default useStation;

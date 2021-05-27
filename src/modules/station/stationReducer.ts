@@ -32,6 +32,9 @@ export const stationSlice = createSlice({
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
     },
+    resetError: state => {
+      state.error = '';
+    },
     pending: state => {
       state.error = '';
     },
@@ -44,9 +47,10 @@ export type StationActions = ReturnType<
   | typeof stationSlice.actions.addStationAsync
   | typeof stationSlice.actions.deleteStationAsync
   | typeof stationSlice.actions.error
+  | typeof stationSlice.actions.resetError
   | typeof stationSlice.actions.pending
 >;
 
-export const { setStations, getStationsAsync, addStationAsync, deleteStationAsync, error, pending } =
+export const { setStations, getStationsAsync, addStationAsync, deleteStationAsync, error, resetError, pending } =
   stationSlice.actions;
 export default stationSlice.reducer;

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddLine } from '../interfaces';
 import { RootState } from '../modules';
-import { addLineAsync, deleteLineAsync, getLinesAsync } from '../modules/line/lineReducer';
+import { addLineAsync, deleteLineAsync, getLinesAsync, resetError as _resetError } from '../modules/line/lineReducer';
 
 const useLine = () => {
   const { lines, error } = useSelector((state: RootState) => state.line);
@@ -22,7 +22,11 @@ const useLine = () => {
     dispatch(deleteLineAsync({ id }));
   };
 
-  return { lines, addLine, deleteLine, error };
+  const resetError = () => {
+    dispatch(_resetError());
+  };
+
+  return { lines, addLine, deleteLine, error, resetError };
 };
 
 export default useLine;

@@ -40,6 +40,9 @@ export const lineSlice = createSlice({
     error: (state, action: PayloadAction<ErrorAction>) => {
       state.error = action.payload.error;
     },
+    resetError: state => {
+      state.error = '';
+    },
     pending: state => {
       state.error = '';
     },
@@ -52,8 +55,9 @@ export type LineActions = ReturnType<
   | typeof lineSlice.actions.addLineAsync
   | typeof lineSlice.actions.deleteLineAsync
   | typeof lineSlice.actions.error
+  | typeof lineSlice.actions.resetError
   | typeof lineSlice.actions.pending
 >;
 
-export const { setLines, getLinesAsync, addLineAsync, deleteLineAsync, error, pending } = lineSlice.actions;
+export const { setLines, getLinesAsync, addLineAsync, deleteLineAsync, error, resetError, pending } = lineSlice.actions;
 export default lineSlice.reducer;

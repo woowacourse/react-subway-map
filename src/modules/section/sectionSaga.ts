@@ -1,9 +1,9 @@
-import { AddSectionPayload } from './../../interfaces/index';
+import { AddSectionPayload, DeleteSectionPayload } from './../../interfaces/index';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { sectionAPI } from '../../api/section';
 import { LineSection } from '../../interfaces';
-import { getStationsAsync } from '../station/stationReducer';
-import { addSectionAsync, error, getSectionAsync, pending, setSection } from './sectionReducer';
+
+import { addSectionAsync, deleteSectionAsync, error, getSectionAsync, pending, setSection } from './sectionReducer';
 
 interface GetSectionAction {
   type: typeof getSectionAsync;
@@ -17,12 +17,20 @@ interface AddSectionAction {
   payload: AddSectionPayload;
 }
 
+interface DeleteSectionAction {
+  type: typeof deleteSectionAsync;
+  payload: DeleteSectionPayload;
+}
 interface GetLineResult {
   error: string;
   lineSection: LineSection;
 }
 
 interface AddLineResult {
+  error: string;
+}
+
+interface DeleteLineResult {
   error: string;
 }
 
@@ -48,7 +56,19 @@ function* addSectionSaga(action: AddSectionAction) {
   yield put(getSectionAsync({ id: Number(action.payload.lineId) }));
 }
 
+function* deleteSectionSaga(action: DeleteSectionAction) {
+  yield put(pending());
+  const result: DeleteLineResult = yield call(sectionAPI.deleteSection, action.payload);
+
+  if (result.error) {
+    yield put(error({ error: result.error }));
+    return;
+  }
+  yield put(getSectionAsync({ id: Number(action.payload.lineId) }));
+}
+
 export function* sectionSaga() {
   yield takeLatest(getSectionAsync.type, getSectionSaga);
   yield takeLatest(addSectionAsync.type, addSectionSaga);
+  yield takeLatest(deleteSectionAsync.type, deleteSectionSaga);
 }
