@@ -35,21 +35,25 @@ const LinePage = () => {
 
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
-  const { value: distance, setValue: setDistance, onChange: onChangeDistance } = useInput('');
-  const { value: upStationId, setValue: setUpStationId } = useSelect('');
   const {
-    value: downStationId,
+    valueAsNumber: distance,
+    setValue: setDistance,
+    onChange: onChangeDistance,
+  } = useInput('');
+  const { valueAsNumber: upStationId, setValue: setUpStationId } = useSelect('');
+  const {
+    valueAsNumber: downStationId,
     onChange: onChangeDownStationId,
     setValue: setDownStationId,
   } = useSelect('');
 
-  const downStationList = stationList.filter((station) => station.id !== Number(upStationId));
+  const downStationList = stationList.filter((station) => station.id !== upStationId);
 
   const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const selectedStationId = event.target.value;
     setUpStationId(selectedStationId);
 
-    if (downStationId !== selectedStationId) return;
+    if (downStationId !== Number(selectedStationId)) return;
 
     const [firstDownStationId] = downStationList.map((station) => station.id);
 
@@ -62,9 +66,9 @@ const LinePage = () => {
     const response = await onAdd({
       name,
       color,
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      distance: Number(distance),
+      upStationId,
+      downStationId,
+      distance,
     });
 
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
