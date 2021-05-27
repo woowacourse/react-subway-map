@@ -85,7 +85,7 @@ const Stations = () => {
         </section>
         {list.length > 0 && (
           <section className="mt-8 pb-8 pl-8 pr-6 py-4 w-144 rounded-sm shadow-md">
-            <ul className="space-y-8">
+            <ul className="space-y-6">
               {[...list].reverse().map(({ id, name }) => (
                 <li
                   key={id}
