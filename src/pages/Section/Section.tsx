@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
+import { Redirect } from 'react-router';
 import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
 import AddSectionForm from '../../components/SectionPage/AddSectionForm';
 import SectionListItem from '../../components/SectionPage/SectionListItem';
+import { ROUTE } from '../../constants/constant';
 import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
 import useStation from '../../hook/useStation';
+import useUser from '../../hook/useUser';
 import { LineSection } from '../../interfaces';
 import * as S from './Section.styles';
 
@@ -27,12 +30,18 @@ const Section = () => {
   const { lineSection, getSection, addSection, deleteSection, error, resetError } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
+  const { accessToken } = useUser();
+
   useEffect(() => {
     if (error) {
       window.alert(error);
       resetError();
     }
   }, [error, resetError]);
+
+  if (!accessToken) {
+    return <Redirect to={ROUTE.SIGN_IN} />;
+  }
 
   const handleSelectLine = (e: React.ChangeEvent<HTMLSelectElement>) => {
     getSection(Number(e.target.value));
