@@ -14,7 +14,12 @@ import saveIcon from 'assets/enter.png';
 import { API_STATUS } from 'constants/api';
 import regex from 'constants/regex';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
-import { requestAddStation, requestDeleteStation, requestGetStations } from 'request/station';
+import {
+  requestAddStation,
+  requestDeleteStation,
+  requestEditStation,
+  requestGetStations,
+} from 'request/station';
 import Styled from './styles';
 import ROUTE from 'constants/routes';
 
@@ -79,10 +84,19 @@ const StationPage = () => {
     setEditingStationName(station.name);
   };
 
-  const saveEditForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const saveEditForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO: update api 없음
+    if (!BASE_URL) return;
+
+    const res = await requestEditStation(BASE_URL, editingStationName, editingStationId);
+
+    if (res.status === API_STATUS.REJECTED) {
+      enqueueSnackbar(res.message);
+    } else if (res.status === API_STATUS.FULFILLED) {
+      await getStations();
+      enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_STATION);
+    }
 
     setEditingStationId(0);
     setEditingStationName('');

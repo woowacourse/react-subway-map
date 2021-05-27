@@ -12,6 +12,7 @@ const ALERT_MESSAGE = {
   SUCCESS_TO_SIGNUP: '회원가입에 성공했습니다.',
   SUCCESS_TO_LOGIN: '로그인되었습니다.',
   SUCCESS_TO_ADD_STAION: '지하철역을 추가했습니다.',
+  SUCCESS_TO_EDIT_STATION: '지하철역 이름을 변경했습니다.',
   SUCCESS_TO_DELETE_STAION: '지하철역을 삭제했습니다.',
   SUCCESS_TO_ADD_LINE: '노선을 추가했습니다.',
   SUCCESS_TO_DELETE_LINE: '노선을 삭제했습니다.',
