@@ -96,7 +96,7 @@ const AddLineForm = ({ lines, stations, addLine }: Props) => {
           <Button isDisabled={!isValidNameForm}>추가</Button>
         </S.ButtonWrapper>
       </S.InputWrapper>
-      <S.Message>{lineNameErrorMessage}</S.Message>
+      <S.Message>{lineInfo.name && lineNameErrorMessage}</S.Message>
       {isModalOpen && (
         <Modal onCloseModal={handleModalClose}>
           <LineModalForm

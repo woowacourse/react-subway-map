@@ -10,12 +10,13 @@ import {
 
 const useStation = () => {
   const { stations, error } = useSelector((state: RootState) => state.station);
+  const { accessToken } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (stations.length !== 0) return;
+    if (stations.length !== 0 || !accessToken) return;
     dispatch(getStationsAsync());
-  }, [dispatch, stations.length]);
+  }, [dispatch, stations.length, accessToken]);
 
   const addStation = (name: string) => {
     dispatch(addStationAsync({ name }));

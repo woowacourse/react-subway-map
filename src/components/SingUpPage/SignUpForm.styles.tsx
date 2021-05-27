@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { COLOR } from '../../constants/styleConstant';
 
 export const SignUpForm = styled.form`
   width: 100%;
@@ -28,4 +29,5 @@ export const Message = styled.div`
   text-align: center;
   margin-top: 0.5rem;
   font-size: 0.85rem;
+  color: ${COLOR.RED_400};
 `;

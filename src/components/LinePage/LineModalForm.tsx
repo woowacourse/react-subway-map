@@ -80,7 +80,7 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
       <S.Title>노선 생성</S.Title>
       <S.InputWrapper>
         <Input value={lineInfo.name} label='노선 이름' name='name' onChange={onChange} required />
-        <S.Message>{lineNameErrorMessage}</S.Message>
+        <S.Message>{lineInfo.name && lineNameErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.SelectInputWrapper>
@@ -100,11 +100,11 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
             ))}
           </SelectInput>
         </S.SelectInputWrapper>
-        <S.Message textAlign='center'>{lineStationErrorMessage}</S.Message>
+        <S.Message textAlign='center'>{lineInfo.upStationId && lineStationErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input type='number' value={lineInfo.distance} label='거리(km)' name='distance' onChange={onChange} required />
-        <S.Message>{lineDistanceErrorMessage}</S.Message>
+        <S.Message>{lineInfo.distance && lineDistanceErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.PaletteContainer>
         <S.PaletteTitle>노선 색상 선택</S.PaletteTitle>

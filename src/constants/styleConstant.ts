@@ -4,6 +4,7 @@ export const COLOR = {
   TRANSPARENT: 'transparent',
   WHITE: '#FFFFFF',
   BLACK: '#000000',
+  RED_400: '#FF5E57',
   MINT_300: '#a9f1df',
   MINT_500: '#2AC1BC',
   MINT_700: '#16aaa5',

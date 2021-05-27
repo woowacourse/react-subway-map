@@ -102,7 +102,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           required={true}
         />
-        <S.Message>{emailErrorMessage}</S.Message>
+        <S.Message>{userInfo.email && emailErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
@@ -113,7 +113,7 @@ const SignUpForm = () => {
           name='age'
           onChange={handleChange}
         />
-        <S.Message>{ageErrorMessage}</S.Message>
+        <S.Message>{userInfo.age && ageErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
@@ -125,7 +125,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           required={true}
         />
-        <S.Message>{passwordErrorMessage}</S.Message>
+        <S.Message>{userInfo.password && passwordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
@@ -137,7 +137,7 @@ const SignUpForm = () => {
           onChange={handleChange}
           required={true}
         />
-        <S.Message>{confirmPasswordErrorMessage}</S.Message>
+        <S.Message>{userInfo.confirmPassword && confirmPasswordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
         <Button isDisabled={isValidForm ? false : true}>회원가입</Button>

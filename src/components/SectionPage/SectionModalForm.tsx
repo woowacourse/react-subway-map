@@ -148,7 +148,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
             </option>
           ))}
         </SelectInput>
-        <S.Message>{lineErrorMessage}</S.Message>
+        <S.Message>{sectionInfo.lineId && lineErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.SelectInputWrapper>
@@ -180,11 +180,13 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
             ))}
           </SelectInput>
         </S.SelectInputWrapper>
-        <S.Message>{stationsErrorMessage}</S.Message>
+        <S.Message textAlign='center'>
+          {(sectionInfo.upStationId || sectionInfo.downStationId) && stationsErrorMessage}
+        </S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input label='거리' value={sectionInfo.distance} placeholder='거리' name='distance' onChange={handleChange} />
-        <S.Message>{distanceErrorMessage}</S.Message>
+        <S.Message>{sectionInfo.distance && distanceErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.ButtonContainer>
         <S.ButtonWrapper>

@@ -34,6 +34,7 @@ export const Message = styled.div<{ textAlign?: 'left' | 'center' | 'right' }>`
   margin-top: 0.5rem;
   font-size: 0.85rem;
   text-align: ${({ textAlign }) => (textAlign ? textAlign : 'left')};
+  color: ${COLOR.RED_400};
 `;
 
 export const Arrow = styled.div`

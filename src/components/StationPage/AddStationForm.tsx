@@ -65,7 +65,7 @@ const AddStationForm = () => {
           <Button isDisabled={isValidForm ? false : true}>추가</Button>
         </S.ButtonWrapper>
       </S.InputWrapper>
-      <S.Message>{stationNameErrorMessage}</S.Message>
+      <S.Message>{stationName && stationNameErrorMessage}</S.Message>
     </S.AddStationForm>
   );
 };

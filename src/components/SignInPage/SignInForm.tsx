@@ -84,7 +84,7 @@ const SignInForm = () => {
           name='email'
           onChange={handleChange}
         />
-        <S.Message>{emailErrorMessage}</S.Message>
+        <S.Message>{loginInfo.email && emailErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <Input
@@ -95,7 +95,7 @@ const SignInForm = () => {
           name='password'
           onChange={handleChange}
         />
-        <S.Message>{passwordErrorMessage}</S.Message>
+        <S.Message>{loginInfo.password && passwordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <SelectInput initialText='서버를 선택해주세요.' value={serverURL} onChange={handleSelectServer}>
