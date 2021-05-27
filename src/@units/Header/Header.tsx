@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header = ({ children }: HeaderProps) => {
   return (
-    <header className="fixed flex items-center justify-between p-4 w-full bg-red-300">
+    <header className="flex items-center justify-between mb-10 p-4 w-full bg-red-300">
       <Link to={PATH.HOME}>
         <div className="flex items-center">
           <img src={headerImg} alt="headerImg" className="w-16" />

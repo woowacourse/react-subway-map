@@ -6,6 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors,
+      minHeight: {
+        0: '0',
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
+        full: 'calc(100vh - 120px)',
+      },
     },
   },
   variants: {
