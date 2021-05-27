@@ -128,6 +128,15 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
   const onAddLine = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (
+      Object.values(errorMessage).some((message) => message !== '') ||
+      Object.values(formInput).some((value) => !value)
+    ) {
+      alert(ERROR_MESSAGE.INCOMPLETE_FORM);
+
+      return;
+    }
+
     dispatch(
       addLine({
         baseURL: API_INFO[apiOwner].endPoint,
@@ -153,6 +162,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           maxLength={10}
           labelText={LINE.NAME_LABEL_TEXT}
           placeholder={LINE.NAME_PLACEHOLDER}
+          required
         />
         <SectionSelectBox
           onChange={onChangeStations}
@@ -166,6 +176,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           type="number"
           min={SECTION.MIN_DISTANCE}
           labelText={LINE.DISTANCE_LABEL_TEXT}
+          required
         />
         <LineColorContainer justifyContent="space-between" alignItems="center">
           <span>{LINE.COLOR_LABEL_TEXT}</span>
@@ -178,11 +189,12 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
               groupName={LINE.COLOR_SELECT_NAME}
               disabled={isUsedLineColor(color)}
               onChange={onChangeLineColor}
+              required
             />
           ))}
         </LineColorContainer>
         <LineModalButtonContainer justifyContent="flex-end">
-          <Button type="button" isColored={false}>
+          <Button type="button" isColored={false} onClick={onClose}>
             취소
           </Button>
           <Button>확인</Button>
