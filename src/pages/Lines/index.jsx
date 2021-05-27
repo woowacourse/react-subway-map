@@ -15,6 +15,7 @@ import STATUS from "../../constants/status";
 import {
   addLine,
   fetchLines,
+  deleteLinesById,
   reset,
   selectLinesStatus,
   selectLinesMessage,
@@ -42,6 +43,7 @@ const Lines = () => {
     isValidLineName,
     upStationId !== "",
     downStationId !== "",
+    upStationId !== downStationId,
     isValidDistance,
     color !== "",
   ].every(Boolean);
@@ -98,6 +100,14 @@ const Lines = () => {
     );
   };
 
+  const handleDelete = (event) => {
+    const { name: id, value } = event.target;
+
+    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
+      dispatch(deleteLinesById(id));
+    }
+  };
+
   return (
     <>
       <Loading isLoading={status === STATUS.LOADING} />
@@ -134,6 +144,7 @@ const Lines = () => {
                       className="focus:text-black focus:outline-none focus:opacity-100 opacity-60"
                       name={id}
                       value={name}
+                      onClick={handleDelete}
                     >
                       🗑
                     </button>

@@ -13,6 +13,7 @@ import {
   addStation,
   fetchStations,
   deleteStationById,
+  reset,
 } from "./slice";
 
 const Stations = () => {
@@ -27,9 +28,17 @@ const Stations = () => {
     if (status === STATUS.IDLE) {
       dispatch(fetchStations());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (status === STATUS.SUCCEED) {
+      dispatch(reset());
+    }
 
     if (status === STATUS.FAILED) {
       alert(message);
+      dispatch(reset());
     }
   }, [dispatch, status, message]);
 

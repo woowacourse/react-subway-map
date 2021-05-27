@@ -4,6 +4,7 @@ import {
   ENDPOINT,
   LINES_ADD_SUCCEED,
   LINES_GET_SUCCEED,
+  LINES_DELETE_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
 } from "../../api/constants";
 import http from "../../api/http";
@@ -65,6 +66,32 @@ export const fetchLines = createAsyncThunk(
     }
   }
 );
+
+export const deleteLinesById = createAsyncThunk(
+  "lines/deleteLinesById",
+  async (id, { rejectWithValue, getState }) => {
+    const accessToken = selectAccessToken(getState());
+
+    try {
+      const response = await http.delete(`${ENDPOINT.LINES}/${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === LINES_DELETE_SUCCEED.CODE) {
+        return Number(id);
+      }
+
+      const { message } = await response.json();
+
+      return rejectWithValue(message);
+    } catch (error) {
+      console.error(error);
+
+      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+    }
+  }
+);
+
 const initialState = {
   status: STATUS.IDLE,
   error: null,
@@ -100,6 +127,18 @@ const linesSlice = createSlice({
       state.list = action.payload;
     },
     [fetchLines.rejected]: (state, action) => {
+      state.status = STATUS.FAILED;
+      state.error = action.error;
+      state.message = action.payload;
+    },
+    [deleteLinesById.pending]: (state) => {
+      state.status = STATUS.LOADING;
+    },
+    [deleteLinesById.fulfilled]: (state, action) => {
+      state.status = STATUS.SUCCEED;
+      state.list = state.list.filter((item) => item.id !== action.payload);
+    },
+    [deleteLinesById.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
       state.error = action.error;
       state.message = action.payload;

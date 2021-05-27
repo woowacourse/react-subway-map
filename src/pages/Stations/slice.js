@@ -100,6 +100,9 @@ const initialState = {
 const stationsSlice = createSlice({
   name: "stations",
   initialState,
+  reducers: {
+    reset: (state) => ({ ...state, status: STATUS.IDLE }),
+  },
   extraReducers: {
     [addStation.pending]: (state) => {
       state.status = STATUS.LOADING;
@@ -140,5 +143,7 @@ const stationsSlice = createSlice({
     },
   },
 });
+
+export const { reset } = stationsSlice.actions;
 
 export default stationsSlice.reducer;
