@@ -52,7 +52,7 @@ function App() {
         <Route exact path={ROUTE.LINE}>
           <LinePage endpoint={endpoint} />
         </Route>
-        <Route exact path={ROUTE.Section}>
+        <Route exact path={ROUTE.SECTION}>
           <SectionPage endpoint={endpoint} />
         </Route>
       </Switch>
