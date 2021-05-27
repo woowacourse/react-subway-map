@@ -7,7 +7,7 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO } from '../../constants/appInfo';
+import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { login } from '../../redux/loginSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -66,8 +66,6 @@ const Login: FC = () => {
             name="password"
             labelIcon={<Lock />}
             placeholder="비밀번호를 입력해주세요."
-            minLength={6}
-            maxLength={20}
           />
           {errorMessage && <LoginErrorMessage>{errorMessage}</LoginErrorMessage>}
           <LoginButton isColored={true}>로그인</LoginButton>

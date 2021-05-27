@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, Middleware } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import apiReducer from './apiOwnerSlice';
 import lineReducer, { clearLines } from './lineSlice';

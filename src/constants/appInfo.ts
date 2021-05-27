@@ -68,3 +68,10 @@ export const SECTION = {
   MIN_DISTANCE: 1,
   DISTANCE_LABEL_TEXT: '거리',
 };
+
+export const SIGNUP = {
+  MIN_AGE: 1,
+  MAX_AGE: 150,
+  PASSWORD_MIN_LENGTH: 4,
+  PASSWORD_MAX_LENGTH: 20,
+};
