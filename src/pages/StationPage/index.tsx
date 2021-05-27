@@ -40,7 +40,7 @@ const StationPage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const isValidStationName = regex.koreanAndNumber.test(newStationName);
+  const isValidStationName = (stationName: string) => regex.koreanAndNumber.test(stationName);
 
   const getStations = async () => {
     if (!BASE_URL) return;
@@ -57,7 +57,7 @@ const StationPage = () => {
   const addStation = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!isValidStationName) {
+    if (!isValidStationName(newStationName)) {
       setMessageValid(false);
       setMessageVisible(true);
 
@@ -88,6 +88,14 @@ const StationPage = () => {
     event.preventDefault();
 
     if (!BASE_URL) return;
+    if (!isValidStationName(editingStationName)) {
+      setMessageValid(false);
+      setMessageVisible(true);
+
+      return;
+    }
+
+    setMessageVisible(false);
 
     const res = await requestEditStation(BASE_URL, editingStationName, editingStationId);
 
@@ -160,6 +168,8 @@ const StationPage = () => {
                   ref={inputRef}
                   value={editingStationName}
                   onChange={(e) => setEditingStationName(e.target.value)}
+                  minLength={2}
+                  maxLength={20}
                 ></Styled.EditingStationInput>
                 <IconButton type="submit">
                   <Styled.Icon src={saveIcon} alt="save" />
