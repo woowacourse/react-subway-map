@@ -67,18 +67,33 @@ export type Station = {
   name: string;
 };
 
+export type LineStation = Station & {
+  distance?: number;
+  transferLines?: Line[];
+};
+
 export type Line = {
   id: number;
   name: string;
   color: Color;
+  stations: LineStation[];
 };
 
 export type LineAttribute = {
   name: Line['name'];
   color: Line['color'];
-  upStationId: number;
-  downStationId: number;
+  upStationId: Station['id'];
+  downStationId: Station['id'];
   distance: number;
+};
+
+export type SectionAttribute = {
+  lineId: Line['id'];
+  data: {
+    upStationId: Station['id'];
+    downStationId: Station['id'];
+    distance: number;
+  };
 };
 
 export type Error = {

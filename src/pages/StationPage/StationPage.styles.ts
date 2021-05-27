@@ -26,7 +26,7 @@ export const HeaderText = styled.h2`
 
 export const AddForm = styled.form`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;
 `;
