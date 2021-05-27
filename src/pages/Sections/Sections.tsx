@@ -1,4 +1,3 @@
-import { findAllByTestId } from '@testing-library/dom';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';

@@ -1,6 +1,5 @@
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
 
 interface ColorRadioInputProps extends InputHTMLAttributes<HTMLInputElement> {
   radioColor: string;

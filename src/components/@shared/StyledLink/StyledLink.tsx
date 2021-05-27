@@ -1,16 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { THEME_COLOR } from '../../../constants/appInfo';
-import { Color } from '../../../constants/palette';
 
-interface StyledLinkProps {
-  linkColor?: string;
-}
-
-const StyledLink = styled(Link)<StyledLinkProps>`
+const StyledLink = styled(Link)`
   display: block;
   position: relative;
-  background-color: ${({ linkColor }) => linkColor};
+  background-color: transparent;
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-weight: 600;
