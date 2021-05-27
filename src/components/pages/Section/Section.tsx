@@ -143,7 +143,7 @@ const Section = () => {
   return (
     <Container>
       <Header hasExtra>
-        <h3>🔁 구간 관리</h3>
+        <h3>🚉 구간 관리</h3>
         <Button onClick={openModal}>구간 추가</Button>
       </Header>
       <SelectContainer>
@@ -171,6 +171,9 @@ const Section = () => {
 
       {isModalOpen && (
         <Modal onClickClose={onClickClose}>
+          <Header>
+            <h3>{'🔁 구간 추가'}</h3>
+          </Header>
           <SectionAddForm
             stationList={stations || []}
             lineList={lines || []}

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
 import { HostSelect } from './components/molecules';
-import { Home, Login, SignUp, Station, Line, Section, Logout } from './components/pages';
+import { Home, Line, Login, Logout, Section, SignUp, Station } from './components/pages';
 import { ROUTE } from './constants';
 import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
@@ -82,12 +82,21 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path={ROUTE.HOME} component={Home} />
-          <Route exact path={ROUTE.SIGNUP} component={SignUp} />
-          <Route exact path={ROUTE.LOGIN} component={Login} />
-          <Route exact path={ROUTE.STATION} component={Station} />
-          <Route exact path={ROUTE.LINE} component={Line} />
-          <Route exact path={ROUTE.SECTION} component={Section} />
-          <Route exact path={ROUTE.LOGOUT} component={Logout} />
+          {signedUserId ? (
+            <>
+              {console.log('1')}
+              <Route exact path={ROUTE.STATION} component={Station} />
+              <Route exact path={ROUTE.LINE} component={Line} />
+              <Route exact path={ROUTE.SECTION} component={Section} />
+              <Route exact path={ROUTE.LOGOUT} component={Logout} />
+            </>
+          ) : (
+            <>
+              {console.log('2')}
+              <Route exact path={ROUTE.SIGNUP} component={SignUp} />
+              <Route exact path={ROUTE.LOGIN} component={Login} />
+            </>
+          )}
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>

@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
-import { ROUTE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { IStationReq, IStationRes } from '../../../type';
@@ -9,21 +7,22 @@ import { Header } from '../../atoms';
 import { ListItem, StationAddForm } from '../../molecules';
 import { Container } from './Station.styles';
 
-// TODO: 역 이름 유효성 검사 코드 추가
-// TODO: 역 이름 유효성 검사가 백엔드 API 마다 다른지 검사
+const isValidStationName = (stationName: string) => {
+  return /^[가-힣0-9]{2,20}$/.test(stationName);
+};
+
 const Station = () => {
+  const {
+    hostState: { host },
+  } = useSelector((state: RootState) => {
+    return { hostState: state.hostReducer };
+  });
+
   const {
     value: stationName,
     setValue: setStationName,
     onChange: onChangeStationName,
   } = useChangeEvent('');
-
-  const {
-    signedUser: { id: signedUserId },
-    hostState: { host },
-  } = useSelector((state: RootState) => {
-    return { signedUser: state.signedUserReducer, hostState: state.hostReducer };
-  });
 
   const {
     allData: stations,
@@ -35,13 +34,17 @@ const Station = () => {
     deleteDataResponse: deleteStationResponse,
   } = useServerAPI<IStationRes>(`${host}/stations`);
 
-  if (!signedUserId) {
-    window.alert('로그인이 필요합니다.');
-    return <Redirect to={ROUTE.LOGIN} />;
-  }
-
   const onSubmitStationInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
+
+    if (!isValidStationName(stationName)) {
+      window.alert(
+        '역 이름은 공백이 포함되지 않은 2자 이상 2자 이하의 한글/숫자로 이루어진 문자열이어야 합니다.',
+      );
+      setStationName('');
+
+      return;
+    }
 
     const body: IStationReq = {
       name: stationName,
@@ -52,8 +55,9 @@ const Station = () => {
   };
 
   const onDeleteStation = (stationId: number) => {
-    if(!window.confirm('해당 역을 정말로 삭제하시겠습니까?')) return;
-    deleteStation(`${stationId}`)}
+    if (!window.confirm('해당 역을 정말로 삭제하시겠습니까?')) return;
+    deleteStation(`${stationId}`);
+  };
 
   useEffect(() => {
     getAllStations();
@@ -95,7 +99,15 @@ const Station = () => {
 
       <div>
         {stations?.map(({ id, name }) => {
-          return <ListItem key={id} content={name} onClickDelete={() => {onDeleteStation(id)}} />;
+          return (
+            <ListItem
+              key={id}
+              content={name}
+              onClickDelete={() => {
+                onDeleteStation(id);
+              }}
+            />
+          );
         })}
       </div>
     </Container>
