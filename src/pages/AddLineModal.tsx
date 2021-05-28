@@ -35,10 +35,6 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
     setDownStationId(event.target.value);
   };
 
-  const handleColor = (selectedColor: string) => {
-    setColor(selectedColor);
-  };
-
   const handleDistance = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDistance(event.target.valueAsNumber);
   };
@@ -109,7 +105,7 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
             />
             <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${ringColor[color]}`} />
           </div>
-          <Palette setColor={handleColor} />
+          <Palette setColor={setColor} />
           <div className="flex justify-end mt-8">
             <Button text="확인" />
           </div>
