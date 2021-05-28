@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
-import { Button, Card, Input, Select, ColorDot, Modal } from '../../components';
+import { Button, Card, Input, Select, ColorDot, Modal, MessageBox } from '../../components';
 import * as Styled from './SectionPage.styles';
 import { ReactComponent as AddIcon } from '../../assets/icons/plus-solid.svg';
 import { ReactComponent as TrashIcon } from '../../assets/icons/trash-solid.svg';
@@ -22,7 +22,13 @@ const SectionPage = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { list: stationList } = useStation();
-  const { list: lineList, onAddSection, onDeleteSection, isLoading: isLoadingLineList } = useLine();
+  const {
+    list: lineList,
+    status: lineStatus,
+    isLoading: isLoadingLineList,
+    onAddSection,
+    onDeleteSection,
+  } = useLine();
   const { isLogin } = useAuth();
 
   const {
@@ -123,52 +129,59 @@ const SectionPage = () => {
                   목록 편집을 위해서는 <Link to={ROUTES.ROOT}>로그인</Link>이 필요합니다
                 </Styled.LoginMessage>
               )}
-              <Styled.LineSelectWrapper>
-                <Select
-                  labelText="노선 선택"
-                  value={selectedLineId}
-                  onChange={onChangeSelectedLineId}
-                >
-                  {lineList.map((line) => (
-                    <option key={line.id} value={line.id}>
-                      {line.name}
-                    </option>
-                  ))}
-                </Select>
-              </Styled.LineSelectWrapper>
-              <Styled.Control>
-                <Styled.Divider />
-                {isLogin && (
-                  <Styled.ButtonList>
-                    <Button shape="circle" onClick={openModal}>
-                      <AddIcon />
-                    </Button>
-                  </Styled.ButtonList>
-                )}
-              </Styled.Control>
-              {!isLoadingLineList && (
+              {lineStatus === ApiStatus.FULFILLED && lineList.length === 0 && (
+                <MessageBox emoji="👻">구간 목록이 비어있습니다</MessageBox>
+              )}
+              {lineList.length > 0 && (
                 <>
-                  <Styled.LineHeader>
-                    <ColorDot color={selectedLine?.color} />
-                    <Styled.LineName>{selectedLine?.name}</Styled.LineName>
-                  </Styled.LineHeader>
-                  <Styled.List>
-                    {selectedLine?.stations.map((station) => (
-                      <Styled.Item key={station.id}>
-                        <Styled.StationName>{station.name}</Styled.StationName>
-                        <Styled.OptionWrapper>
-                          <Button
-                            shape="circle"
-                            variant="text"
-                            onClick={() => handleDelete(station.id)}
-                            disabled={!isLogin}
-                          >
-                            <TrashIcon />
-                          </Button>
-                        </Styled.OptionWrapper>
-                      </Styled.Item>
-                    ))}
-                  </Styled.List>
+                  <Styled.LineSelectWrapper>
+                    <Select
+                      labelText="노선 선택"
+                      value={selectedLineId}
+                      onChange={onChangeSelectedLineId}
+                    >
+                      {lineList.map((line) => (
+                        <option key={line.id} value={line.id}>
+                          {line.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </Styled.LineSelectWrapper>
+                  <Styled.Control>
+                    <Styled.Divider />
+                    {isLogin && (
+                      <Styled.ButtonList>
+                        <Button shape="circle" onClick={openModal}>
+                          <AddIcon />
+                        </Button>
+                      </Styled.ButtonList>
+                    )}
+                  </Styled.Control>
+                  {!isLoadingLineList && (
+                    <>
+                      <Styled.LineHeader>
+                        <ColorDot color={selectedLine?.color} />
+                        <Styled.LineName>{selectedLine?.name}</Styled.LineName>
+                      </Styled.LineHeader>
+                      <Styled.List>
+                        {selectedLine?.stations.map((station) => (
+                          <Styled.Item key={station.id}>
+                            <Styled.StationName>{station.name}</Styled.StationName>
+                            <Styled.OptionWrapper>
+                              <Button
+                                shape="circle"
+                                variant="text"
+                                onClick={() => handleDelete(station.id)}
+                                disabled={!isLogin}
+                              >
+                                <TrashIcon />
+                              </Button>
+                            </Styled.OptionWrapper>
+                          </Styled.Item>
+                        ))}
+                      </Styled.List>
+                    </>
+                  )}
                 </>
               )}
             </Card>

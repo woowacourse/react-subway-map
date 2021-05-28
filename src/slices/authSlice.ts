@@ -3,6 +3,8 @@ import API from '../api';
 import BACKEND from '../constants/backend';
 import LOCAL_STORAGE_KEYS from '../constants/localStorageKeys';
 import { ApiStatus, CREWS, Error } from '../types';
+import { resetLine } from './lineSlice';
+import { resetStation } from './stationSlice';
 
 interface LoginData {
   accessToken: string;
@@ -42,7 +44,7 @@ export const requestLogin = createAsyncThunk<
   {
     rejectValue: Error;
   }
->('auth/requestLogin', async (loginData: LoginAttributes, { rejectWithValue }) => {
+>('auth/requestLogin', async (loginData: LoginAttributes, { rejectWithValue, dispatch }) => {
   const { server, form } = loginData;
   API.defaults.baseURL = BACKEND[server].baseUrl;
 
@@ -56,6 +58,9 @@ export const requestLogin = createAsyncThunk<
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
     localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, server);
+
+    dispatch(resetStation());
+    dispatch(resetLine());
 
     return { accessToken, server };
   } catch (error) {

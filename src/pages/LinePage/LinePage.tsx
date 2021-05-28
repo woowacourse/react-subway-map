@@ -1,7 +1,16 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
-import { Button, Card, ColorDot, Input, Select, ColorPalette, Modal } from '../../components';
+import {
+  Button,
+  Card,
+  ColorDot,
+  Input,
+  Select,
+  ColorPalette,
+  Modal,
+  MessageBox,
+} from '../../components';
 import { ApiStatus, Line } from '../../types';
 import * as Styled from './LinePage.styles';
 import { ReactComponent as AddIcon } from '../../assets/icons/plus-solid.svg';
@@ -32,7 +41,7 @@ const LinePage = () => {
     closeModal: closeEditModal,
   } = useModal();
 
-  const { onAddLine, onEditLine, onDeleteLine, list } = useLine();
+  const { onAddLine, onEditLine, onDeleteLine, list, status: lineStatus } = useLine();
   const { list: stationList } = useStation();
   const { isLogin } = useAuth();
 
@@ -168,6 +177,9 @@ const LinePage = () => {
                   </Styled.ButtonList>
                 )}
               </Styled.Control>
+              {lineStatus === ApiStatus.FULFILLED && list.length === 0 && (
+                <MessageBox emoji="👻">노선 목록이 비어있습니다</MessageBox>
+              )}
               {list.length > 0 && (
                 <Styled.List>
                   {list.map((item) => (

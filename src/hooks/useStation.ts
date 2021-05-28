@@ -18,7 +18,7 @@ const useStation = () => {
   const station = useAppSelector((state) => state.station);
   const dispatch = useAppDispatch();
 
-  const { list, error } = station;
+  const { list, status, error } = station;
 
   const onGet = useCallback(() => dispatch(getStationList()), [dispatch]);
 
@@ -52,6 +52,7 @@ const useStation = () => {
     onEdit,
     onDelete,
     list,
+    status,
     error,
   };
 };
