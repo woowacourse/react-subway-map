@@ -31,7 +31,7 @@ const newStation = {
   name: '포코역',
 };
 
-it('자하철 역 목록을 성공적으로 불러온다.', async () => {
+it('지하철 역 목록을 성공적으로 불러온다.', async () => {
   return expectSaga(getStationsSaga)
     .withReducer(stationReducer)
     .put(pending())
@@ -41,7 +41,7 @@ it('자하철 역 목록을 성공적으로 불러온다.', async () => {
     .run();
 });
 
-it('자하철 역 목록을 불러오는데 실패한다.', async () => {
+it('지하철 역 목록을 불러오는데 실패한다.', async () => {
   return expectSaga(getStationsSaga)
     .withReducer(stationReducer)
     .put(pending())
@@ -51,7 +51,7 @@ it('자하철 역 목록을 불러오는데 실패한다.', async () => {
     .run();
 });
 
-it('자하철 역 목록을 성공적으로 추가한다.', async () => {
+it('지하철 역 목록을 성공적으로 추가한다.', async () => {
   return expectSaga(addStationSaga, { type: addStationAsync, payload: { name: newStation.name } })
     .withReducer(stationReducer)
     .put(pending())
@@ -64,7 +64,7 @@ it('자하철 역 목록을 성공적으로 추가한다.', async () => {
     .run();
 });
 
-it('자하철 역 목록을 추가하는데 실패한다.', async () => {
+it('지하철 역 목록을 추가하는데 실패한다.', async () => {
   return expectSaga(addStationSaga, { type: addStationAsync, payload: { name: newStation.name } })
     .withReducer(stationReducer)
     .put(pending())
@@ -74,7 +74,7 @@ it('자하철 역 목록을 추가하는데 실패한다.', async () => {
     .run();
 });
 
-it('자하철 역 목록을 성공적으로 삭제한다.', async () => {
+it('지하철 역 목록을 성공적으로 삭제한다.', async () => {
   return expectSaga(deleteStationSaga, { type: deleteStationAsync, payload: { id: newStation.id } })
     .withReducer(stationReducer)
     .put(pending())
@@ -87,7 +87,7 @@ it('자하철 역 목록을 성공적으로 삭제한다.', async () => {
     .run();
 });
 
-it('자하철 역 목록을 삭제하는데 실패한다.', async () => {
+it('지하철 역 목록을 삭제하는데 실패한다.', async () => {
   return expectSaga(deleteStationSaga, { type: deleteStationAsync, payload: { id: newStation.id } })
     .withReducer(stationReducer)
     .put(pending())

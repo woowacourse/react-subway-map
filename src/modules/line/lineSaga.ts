@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from '@redux-saga/core/effects';
+import { RootState } from '..';
 import { lineAPI } from '../../api/line';
 import { AddLine, Line } from '../../interfaces';
 import { error, getLinesAsync, addLineAsync, pending, setLines, deleteLineAsync } from './lineReducer';
@@ -30,7 +31,9 @@ interface deleteLineResult {
   error: string;
 }
 
-function* getLinesSaga() {
+export const selectLines = (state: RootState) => state.line.lines;
+
+export function* getLinesSaga() {
   yield put(pending());
   const result: GetLineResult = yield call(lineAPI.getLines);
 
@@ -41,7 +44,7 @@ function* getLinesSaga() {
   yield put(setLines({ lines: result.lines }));
 }
 
-function* addLineSaga(action: AddLineAction) {
+export function* addLineSaga(action: AddLineAction) {
   yield put(pending());
   const result: AddLineResult = yield call(lineAPI.addLine, action.payload.line);
 
@@ -49,12 +52,12 @@ function* addLineSaga(action: AddLineAction) {
     yield put(error({ error: result.error }));
     return;
   }
-  const lines: Line[] = yield select(state => state.line.lines);
+  const lines: Line[] = yield select(selectLines);
 
   yield put(setLines({ lines: [...lines, result.line] }));
 }
 
-function* deleteLineSaga(action: DeleteLineAction) {
+export function* deleteLineSaga(action: DeleteLineAction) {
   yield put(pending());
   const result: deleteLineResult = yield call(lineAPI.deleteLine, action.payload.id);
 
@@ -62,7 +65,7 @@ function* deleteLineSaga(action: DeleteLineAction) {
     yield put(error({ error: result.error }));
     return;
   }
-  const lines: Line[] = yield select(state => state.line.lines);
+  const lines: Line[] = yield select(selectLines);
 
   yield put(setLines({ lines: lines.filter(line => line.id !== Number(action.payload.id)) }));
 }
