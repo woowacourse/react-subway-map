@@ -72,6 +72,9 @@ export const stationSlice = createSlice({
   name: 'station',
   initialState,
   reducers: {
+    resetStation: () => {
+      return initialState;
+    },
     resetError: (state) => {
       state.error = null;
     },
@@ -129,6 +132,6 @@ export const stationSlice = createSlice({
   },
 });
 
-export const { resetError } = stationSlice.actions;
+export const { resetStation, resetError } = stationSlice.actions;
 
 export default stationSlice.reducer;

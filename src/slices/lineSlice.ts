@@ -98,6 +98,9 @@ export const lineSlice = createSlice({
   name: 'line',
   initialState,
   reducers: {
+    resetLine: () => {
+      return initialState;
+    },
     resetError: (state) => {
       state.error = null;
     },
@@ -189,6 +192,6 @@ export const lineSlice = createSlice({
   },
 });
 
-export const { resetError } = lineSlice.actions;
+export const { resetLine, resetError } = lineSlice.actions;
 
 export default lineSlice.reducer;

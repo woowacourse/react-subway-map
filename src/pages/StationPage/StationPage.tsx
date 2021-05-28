@@ -13,6 +13,7 @@ import { ApiStatus, Station } from '../../types';
 import MESSAGE from '../../constants/message';
 import useAuth from '../../hooks/useAuth';
 import ROUTES from '../../constants/routes';
+import MessageBox from '../../components/MessageBox/MessageBox';
 
 const StationPage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -23,7 +24,7 @@ const StationPage = () => {
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
   const [editStationId, setEditStationId] = useState<Station['id'] | null>(null);
 
-  const { list, onAdd, onEdit, onDelete } = useStation();
+  const { list, status, onAdd, onEdit, onDelete } = useStation();
   const { isLogin } = useAuth();
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -95,6 +96,9 @@ const StationPage = () => {
               )}
             </Card>
           </Styled.FormContainer>
+          {status === ApiStatus.FULFILLED && list.length === 0 && (
+            <MessageBox emoji="👻">역 목록이 비어있습니다</MessageBox>
+          )}
           {list.length > 0 && (
             <Styled.ListContainer>
               <Card variant="simple">
