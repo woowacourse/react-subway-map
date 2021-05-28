@@ -22,6 +22,7 @@ export const loginRequestAsync = createAsyncThunk(
     try {
       thunkAPI.dispatch(setAccessToken({ isError: null }));
       const response = await request.post(`${loginReq.host}/login/token`, headers, loginReq.body);
+
       return response;
     } catch (error) {
       console.error(error);

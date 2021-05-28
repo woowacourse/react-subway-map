@@ -21,7 +21,7 @@ export const getSignedUserAsync = createAsyncThunk(
       Authorization: `Bearer ${getSignedUserReq.accessToken}`,
     };
 
-    // TODO: /members/me 상수화, 에러 메시지 요청
+    // TODO: /members/me 상수화
     try {
       thunkAPI.dispatch(setSignedUser({ isError: null }));
       const response = await request.get(`${getSignedUserReq.host}/members/me`, headers);

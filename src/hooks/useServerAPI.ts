@@ -1,12 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { request } from '../utils';
 
 export interface IResMeta {
   isError: boolean;
   message: string;
 }
-
-//TODO: error.response.message 백엔드에서 text로 받기
 
 const defaultHeader = {
   'Content-Type': 'application/json; charset=UTF-8',
@@ -99,7 +97,6 @@ const useServerAPI = <T>(url: string) => {
     }
   };
 
-  // TODO: 지하철역 삭제는 현재 무조건 성공 204 응답이옴.
   const deleteData = async (param: string, headers = defaultHeader) => {
     try {
       await request.delete(`${url}/${param}`, headers);
@@ -117,6 +114,17 @@ const useServerAPI = <T>(url: string) => {
       });
     }
   };
+
+  useEffect(
+    () => () => {
+      setGetAllDataResponse(null);
+      setGetDataResponse(null);
+      setPostDataResponse(null);
+      setDeleteDataResponse(null);
+      setPutDataResponse(null);
+    },
+    [],
+  );
 
   return {
     data,

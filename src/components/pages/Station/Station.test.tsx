@@ -20,8 +20,9 @@ describe('Station', () => {
     jest.spyOn(window, 'alert').mockImplementation(() => true);
     (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
   });
-
+  
   beforeEach(() => {
+    jest.spyOn(window, 'confirm').mockImplementation(() => true);
     (useSelector as jest.Mock).mockImplementation(() => {
       return {
         signedUser: validSignedUser,

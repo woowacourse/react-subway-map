@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
 import { loginRequestAsync } from '../../../features/accessTokenSlice';
@@ -16,11 +16,9 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const {
-    signedUser,
     accessTokenState,
     hostState: { host },
   } = useSelector((state: RootState) => ({
-    signedUser: state.signedUserReducer,
     accessTokenState: state.accessTokenReducer,
     hostState: state.hostReducer,
   }));
@@ -28,13 +26,14 @@ const Login = () => {
   const { value: email, onChange: onChangeEmail } = useChangeEvent('');
   const { value: password, onChange: onChangePassword } = useChangeEvent('');
 
-  if (signedUser?.id) {
-    window.alert('이미 로그인 되어 있습니다.');
-    return <Redirect to={ROUTE.HOME} />;
-  }
-
   const onSubmitLogin: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
+
+    if (email.length === 0 || password.length === 0) {
+      window.alert('계정정보를 입력해주세요.');
+
+      return;
+    }
 
     const body: ILoginReq = {
       email,
@@ -44,12 +43,12 @@ const Login = () => {
     dispatch(loginRequestAsync({ host, body }));
   };
 
-  // TODO: 빈 값 로그인 시도 GUARD
   useEffect(() => {
     if (accessTokenState?.isError === false) {
       window.alert('로그인에 성공하셨습니다.');
-      history.replace({ pathname: ROUTE.HOME });
-      dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken }));
+      dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken })).then(() => {
+        history.replace({ pathname: ROUTE.HOME });
+      });
     } else if (accessTokenState?.isError === true) {
       window.alert(accessTokenState.message);
     }

@@ -100,8 +100,13 @@ const Section = () => {
 
   const onDeleteSection = (stationId: number) => {
     if (!confirm('해당 구간을 정말로 삭제하시겠습니까?')) return;
+
     deleteSection(`${lineId}/sections?stationId=${stationId}`);
   };
+
+  useEffect(() => {
+    getAllLines();
+  }, [addSectionResponse, deleteSectionResponse]);
 
   useEffect(() => {
     if (addSectionResponse?.isError === true) {
@@ -130,10 +135,6 @@ const Section = () => {
       window.alert(getAllLineResponse.message);
     }
   }, [getAllLineResponse]);
-
-  useEffect(() => {
-    getAllLines();
-  }, [addSectionResponse, deleteSectionResponse]);
 
   useEffect(() => {
     getAllStations();

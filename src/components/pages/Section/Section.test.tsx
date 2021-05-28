@@ -1,175 +1,147 @@
-// import '@testing-library/jest-dom/extend-expect';
-// import { fireEvent, render } from '@testing-library/react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { BrowserRouter } from 'react-router-dom';
-// import lineList from '../../../fixtures/lineList';
-// import {
-//   validAccessTokenState,
-//   validHostState,
-//   validSignedUser,
-// } from '../../../fixtures/useSelectorState';
-// import useServerAPI from '../../../hooks/useServerAPI';
-// import { ILineRes } from '../../../type.d';
-// import Section from './Section';
+import '@testing-library/jest-dom/extend-expect';
+import { fireEvent, render } from '@testing-library/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import lineList from '../../../fixtures/lineList';
+import stationList from '../../../fixtures/stationList';
+import {
+  validAccessTokenState,
+  validHostState,
+  validSignedUser,
+} from '../../../fixtures/useSelectorState';
+import useServerAPI from '../../../hooks/useServerAPI';
+import { ILineRes, IStationRes } from '../../../type.d';
+import Section from './Section';
 
-// jest.mock('react-redux');
-// jest.mock('../../../hooks/useServerAPI');
+jest.mock('react-redux');
+jest.mock('../../../hooks/useServerAPI');
 
-// let newLineList: ILineRes[] = [];
+let newLineList: ILineRes[] = [];
 
-// describe('Line', () => {
-//   beforeAll(() => {
-//     jest.spyOn(window, 'alert').mockImplementation(() => true);
-//     (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
-//   });
+describe('Section', () => {
+  beforeAll(() => {
+    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
+    jest.spyOn(window, 'alert').mockImplementation(() => true);
+  });
 
-//   beforeEach(() => {
-//     (useSelector as jest.Mock).mockImplementation(() => {
-//       return {
-//         signedUser: validSignedUser,
-//         accessTokenState: validAccessTokenState,
-//         hostState: validHostState,
-//       };
-//     });
+  beforeEach(() => {
+    jest.spyOn(window, 'confirm').mockImplementation(() => true);
 
-//     newLineList = [...lineList];
-//     const newLine: ILineRes = {
-//       id: 3,
-//       name: '테스트노선',
-//       color: '#ccc',
-//       extraFare: 0,
-//       stations: [],
-//       sections: [],
-//     };
+    (useSelector as jest.Mock).mockImplementation(() => {
+      return {
+        signedUser: validSignedUser,
+        accessTokenState: validAccessTokenState,
+        hostState: validHostState,
+      };
+    });
 
-//     (useServerAPI as jest.Mock).mockImplementation(() => {
-//       return {
-//         allData: newLineList,
-//         getAllData: () => newLineList,
-//         getAllDataResponse: null,
+    newLineList = [...lineList];
 
-//         postData: () => newLineList.push(newLine),
-//         postDataResponse: null,
+    const newStation: IStationRes = {
+      id: 4,
+      name: '역삼역',
+    };
 
-//         putData: () => (newLineList[0].name = '수정된역'),
-//         putDataResponse: null,
+    (useServerAPI as jest.Mock).mockImplementation((baseUrl: string) => {
+      const stationServerAPi = {
+        allData: [...stationList],
+        getAllData: () => [...stationList],
+        getAllDataResponse: null,
+      };
 
-//         deleteData: () => {
-//           newLineList.splice(0, 1);
-//         },
+      const lineServerAPI = {
+        allData: newLineList,
+        getAllData: () => newLineList,
+        getAllDataResponse: null,
 
-//         deleteDataResponse: null,
-//       };
-//     });
-//   });
+        postData: () => {
+          newLineList[1].stations.push(newStation);
+        },
+        postDataResponse: null,
 
-//   it('노선 추가 버튼을 클릭하면, 노선 추가 모달이 띄워진다.', () => {
-//     const line = render(
-//       <BrowserRouter>
-//         <Line />
-//         <div id="modal"></div>
-//       </BrowserRouter>,
-//     );
+        deleteData: () => {
+          newLineList[2].stations.splice(0, 1);
+        },
+        deleteDataResponse: null,
+      };
 
-//     const addButton = line.getByRole('button', {
-//       name: /노선 추가/i,
-//     });
+      return baseUrl.includes('stations') ? stationServerAPi : lineServerAPI;
+    });
+  });
 
-//     fireEvent.click(addButton);
+  it('구간 추가 버튼을 클릭하면, 구간 추가 모달이 띄워진다.', () => {
+    const section = render(
+      <BrowserRouter>
+        <Section />
+        <div id="modal"></div>
+      </BrowserRouter>,
+    );
+    const addButton = section.getByRole('button', {
+      name: /구간 추가/i,
+    });
+    fireEvent.click(addButton);
+    expect(section.container.querySelector('#modal > div > div')).toBeVisible();
+  });
 
-//     expect(line.container.querySelector('#modal > div > div')).toBeVisible();
-//   });
+  it('구간 추가 모달에서, 구간을 추가하면 구간 리스트에 구간이 추가된다.', () => {
+    const section = render(
+      <BrowserRouter>
+        <Section />
+        <div id="modal"></div>
+      </BrowserRouter>,
+    );
+    const openModalButton = section.getByRole('button', {
+      name: /구간 추가/i,
+    });
+    fireEvent.click(openModalButton);
+    const addModal = section.container.querySelector('#modal > div > div');
+    if (!addModal) throw new Error('모달을 찾을 수 없습니다.');
 
-//   it('노선 추가 모달에서, 노선을 추가하면 노선 리스트에 노선이 추가된다.', () => {
-//     const line = render(
-//       <BrowserRouter>
-//         <Line />
-//         <div id="modal"></div>
-//       </BrowserRouter>,
-//     );
+    const [lineSelect, upStationSelect, downStationSelect] = Array.from(
+      addModal.querySelectorAll('select'),
+    );
+    const sectionDistanceInput = addModal.querySelector('input[type=text]');
+    const addSectionButton = addModal.querySelector('button[type=submit]');
+    if (!lineSelect) throw new Error('노선 선택창을 찾을 수 없습니다.');
+    if (!upStationSelect) throw new Error('상행선 선택란을 찾을 수 없습니다.');
+    if (!downStationSelect) throw new Error('하행선 선택란을 찾을 수 없습니다.');
+    if (!sectionDistanceInput) throw new Error('거리 입력란을 찾을 수 없습니다.');
+    if (!addSectionButton) throw new Error('노선 추가 모달에서 확인 버튼을 찾을 수 없습니다.');
 
-//     const addButton = line.getByRole('button', {
-//       name: /노선 추가/i,
-//     });
-//     fireEvent.click(addButton);
+    fireEvent.change(lineSelect, { target: { value: 2 } }); // 콜린노선
+    fireEvent.change(upStationSelect, { target: { value: 1 } }); // 강남역
+    fireEvent.change(downStationSelect, { target: { value: 4 } }); // 역삼역
+    fireEvent.change(sectionDistanceInput, { target: { value: '3' } });
+    fireEvent.click(addSectionButton);
 
-//     const addModal = line.container.querySelector('#modal > div > div');
+    expect(section.container).toHaveTextContent('역삼역');
+  });
 
-//     if (!addModal) throw new Error('모달을 찾을 수 없습니다.');
+  it('구간관리 페이지에서 특정 노선을 선택한 후, 특정 구간의 삭제버튼을 누르면 해당 구간이 삭제된다.', async () => {
+    const section = render(
+      <BrowserRouter>
+        <Section />
+        <div id="modal"></div>
+      </BrowserRouter>,
+    );
 
-//     const lineNameInput = addModal.querySelector('input[type=text]');
-//     const distanceInput = addModal.querySelector('input[type=number]');
+    const lineSelect = section.getByRole('combobox');
+    if (!lineSelect) throw new Error('노선 선택창을 찾을 수 없습니다.');
 
-//     const [upStationSelect, downStationSelect] = Array.from(addModal.querySelectorAll('select'));
-//     const [colorButton] = Array.from(addModal.querySelectorAll('button[type=button]'));
-//     const addLineButton = addModal.querySelector('button[type=submit]');
+    fireEvent.change(lineSelect, { target: { value: 3 } }); // 신분당선
 
-//     if (!lineNameInput) throw new Error('노선이름 입력란을 찾을 수 없습니다.');
-//     if (!distanceInput) throw new Error('거리 입력란을 찾을 수 없습니다.');
-//     if (!upStationSelect) throw new Error('상행선 선택란을 찾을 수 없습니다.');
-//     if (!downStationSelect) throw new Error('하행선 선택란을 찾을 수 없습니다.');
-//     if (!colorButton) throw new Error('노선 색깔 버튼을 찾을 수 없습니다.');
-//     if (!addLineButton) throw new Error('노선 추가 버튼을 찾을 수 없습니다.');
+    const deleteButton = section.getAllByRole('button', {
+      name: /삭제/i,
+    })[0];
 
-//     fireEvent.change(lineNameInput, { target: { value: '테스트노선' } });
-//     fireEvent.change(distanceInput, { target: { value: '10' } });
-//     fireEvent.change(upStationSelect, { target: { value: 2 } });
-//     fireEvent.change(downStationSelect, { target: { value: 1 } });
-//     fireEvent.click(colorButton);
+    fireEvent.click(deleteButton); // 신분당선
+    section.rerender(
+      <BrowserRouter>
+        <Section />
+        <div id="modal"></div>
+      </BrowserRouter>,
+    );
 
-//     fireEvent.click(addLineButton);
-//     expect(line.container).toHaveTextContent('테스트노선');
-//   });
-
-//   it('노선 추가 모달에서, 노선을 수정하면 노선 리스트에 노선이 반영된다.', () => {
-//     const line = render(
-//       <BrowserRouter>
-//         <Line />
-//         <div id="modal"></div>
-//       </BrowserRouter>,
-//     );
-
-//     const modifyButton = line.getAllByRole('button', {
-//       name: /수정/i,
-//     })[0];
-
-//     fireEvent.click(modifyButton);
-
-//     const modifyModal = line.container.querySelector('#modal > div > div');
-
-//     if (!modifyModal) throw new Error('모달을 찾을 수 없습니다.');
-
-//     const lineNameInput = modifyModal.querySelector('input[type=text]');
-//     const [colorButton] = Array.from(modifyModal.querySelectorAll('button[type=button]'));
-//     const modifyLineButton = modifyModal.querySelector('button[type=submit]');
-
-//     if (!lineNameInput) throw new Error('노선이름 입력란을 찾을 수 없습니다.');
-//     if (!colorButton) throw new Error('노선 색깔 버튼을 찾을 수 없습니다.');
-//     if (!modifyLineButton) throw new Error('노선 추가 버튼을 찾을 수 없습니다.');
-
-//     fireEvent.change(lineNameInput, { target: { value: '수정된역' } });
-//     fireEvent.click(colorButton);
-
-//     fireEvent.click(modifyLineButton);
-//     expect(line.container).toHaveTextContent('수정된역');
-//   });
-
-//   it.only('노선 목록에서 특정 노선의 삭제 버튼을 클릭하면 해당 노선이 노선 리스트에서 삭제된다.', () => {
-//     jest.spyOn(window, 'confirm').mockImplementation(jest.fn(() => true));
-//     const line = render(
-//       <BrowserRouter>
-//         <Line />
-//         <div id="modal"></div>
-//       </BrowserRouter>,
-//     );
-
-//     const deleteButton = line.getAllByRole('button', {
-//       name: /삭제/i,
-//     })[0];
-
-//     const prevLineItemLength = line.getAllByRole('listitem').length;
-//     fireEvent.click(deleteButton);
-
-//     expect(newLineList.length).toEqual(prevLineItemLength - 1);
-//   });
-// });
+    expect(section.container).not.toHaveTextContent('강남역');
+  });
+});

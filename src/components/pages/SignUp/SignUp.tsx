@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import { ROUTE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
@@ -14,10 +14,9 @@ import { Container } from './SignUp.styles';
 const SignUp = () => {
   const history = useHistory();
   const {
-    signedUser,
     hostState: { host },
   } = useSelector((state: RootState) => {
-    return { signedUser: state.signedUserReducer, hostState: state.hostReducer };
+    return { hostState: state.hostReducer };
   });
   const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
     `${host}/members`,
@@ -27,11 +26,6 @@ const SignUp = () => {
   const { value: email, onChange: onChangeEmail } = useChangeEvent('');
   const { value: password, onChange: onChangePassword } = useChangeEvent('');
   const { value: passwordCheck, onChange: onChangePasswordCheck } = useChangeEvent('');
-
-  if (signedUser?.id) {
-    window.alert('이미 로그인 되어 있습니다.');
-    return <Redirect to={ROUTE.HOME} />;
-  }
 
   const onSubmitSignUp: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
@@ -45,7 +39,6 @@ const SignUp = () => {
     signUpRequest(body);
   };
 
-  // TODO: 현재 회원가입에러는 무조건 500으로 반환됨. 백엔드와 협의 필요.
   useEffect(() => {
     if (signUpResponse?.isError === true) {
       window.alert(signUpResponse.message);
