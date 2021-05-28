@@ -32,7 +32,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "json-server": "json-server db.json --routes routes.json --port 3004"
+    "json-server": "json-server db.json --routes routes.json --port 3004",
+    "chromatic": "npx chromatic --project-token=ba708492826e"
   },
   "eslintConfig": {
     "extends": [
@@ -72,6 +73,7 @@
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "babel-loader": "8.1.0",
+    "chromatic": "^5.8.3",
     "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2"
   }
