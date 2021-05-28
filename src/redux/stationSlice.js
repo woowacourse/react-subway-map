@@ -15,12 +15,12 @@ const getStations = createAsyncThunk('station/getStations', async ({ endpoint, a
 
     if (response.status === 200) {
       return { stations: body };
-    } else {
-      throw new Error(body);
     }
+
+    throw new Error(body.message);
   } catch (e) {
-    console.error(e.response.data);
-    thunkAPI.rejectWithValue(e.response.data);
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
   }
 });
 
@@ -42,12 +42,12 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, acc
 
     if (response.status === 201) {
       return body;
-    } else {
-      throw new Error(body);
     }
+
+    throw new Error(body.message);
   } catch (e) {
-    console.error(e.response.data);
-    thunkAPI.rejectWithValue(e.response.data);
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
   }
 });
 
@@ -62,12 +62,14 @@ const removeStation = createAsyncThunk('station/removeStation', async ({ endpoin
 
     if (response.status === 204) {
       return { id };
-    } else {
-      throw new Error(response.body.error);
     }
+
+    const { message } = await response.json();
+
+    throw new Error(message);
   } catch (e) {
     console.error(e);
-    thunkAPI.rejectWithValue(e);
+    return thunkAPI.rejectWithValue(e);
   }
 });
 

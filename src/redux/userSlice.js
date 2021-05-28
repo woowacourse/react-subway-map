@@ -18,12 +18,12 @@ const login = createAsyncThunk('user/login', async ({ endpoint, email, password 
 
     if (response.status === 200) {
       return { ...body, email };
-    } else {
-      throw new Error(body);
     }
+
+    throw new Error(body.message);
   } catch (e) {
-    console.error(e.response.data);
-    thunkAPI.rejectWithValue(e.response.data);
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
   }
 });
 
@@ -42,12 +42,12 @@ const loginByToken = createAsyncThunk('user/loginByToken', async ({ endpoint, ac
 
     if (response.status === 200) {
       return { email: body.email, accessToken };
-    } else {
-      throw new Error(body);
     }
+
+    throw new Error(body.message);
   } catch (e) {
-    console.error(e.response.data);
-    thunkAPI.rejectWithValue(e.response.data);
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
   }
 });
 
