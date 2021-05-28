@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { fadeIn, fadeOut } from '../../styles';
 import { COLOR } from '../../constants';
 
 export const Container = styled.div`
@@ -10,6 +11,7 @@ export const Container = styled.div`
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
+  ${({ isVisible }) => (isVisible ? fadeIn : fadeOut)}
 
   & > span {
     color: ${COLOR.WHITE};

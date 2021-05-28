@@ -6,25 +6,30 @@ import { Container } from './style';
 const Snackbar = () => {
   const { message } = useSelector(({ snackbar }) => snackbar);
   const [snackMessage, setSnackMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!message) return;
-
     setSnackMessage(message);
+    setIsVisible(true);
     dispatch(clearMessage(null));
   }, [message, dispatch]);
 
   useEffect(() => {
-    const timerId = setTimeout(() => setSnackMessage(null), 2000);
+    const messageTimer = setTimeout(() => setSnackMessage(null), 3000);
+    const fadeOutTimer = setTimeout(() => setIsVisible(false), 2200);
 
     return () => {
-      clearTimeout(timerId);
+      clearTimeout(messageTimer);
+      clearTimeout(fadeOutTimer);
     };
   }, [snackMessage]);
 
   return (
-    <>{snackMessage && <Container>{<span>{snackMessage}</span>}</Container>}</>
+    <Container isVisible={isVisible}>
+      <span>{snackMessage}</span>
+    </Container>
   );
 };
 
