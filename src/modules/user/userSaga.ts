@@ -14,7 +14,7 @@ interface LoginResult {
   accessToken: string;
 }
 
-function* loginSaga(action: LoginAction) {
+export function* loginSaga(action: LoginAction) {
   yield put(pending());
   const result: LoginResult = yield call(authAPI.signIn, action.payload);
 
