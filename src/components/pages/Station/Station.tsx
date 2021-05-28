@@ -98,17 +98,9 @@ const Station = () => {
       />
 
       <div>
-        {stations?.map(({ id, name }) => {
-          return (
-            <ListItem
-              key={id}
-              content={name}
-              onClickDelete={() => {
-                onDeleteStation(id);
-              }}
-            />
-          );
-        })}
+        {stations?.map(({ id, name }) => (
+          <ListItem key={id} content={name} onClickDelete={() => onDeleteStation(id)} />
+        ))}
       </div>
     </Container>
   );

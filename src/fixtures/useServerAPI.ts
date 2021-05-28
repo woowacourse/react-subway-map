@@ -1,4 +1,4 @@
-import { IResMeta } from '../hooks/useServerAPI';
+import { IResMeta } from '../type';
 
 export const validResponse: IResMeta = {
   isError: false,

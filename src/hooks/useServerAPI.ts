@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
+import { IResMeta } from '../type';
 import { request } from '../utils';
-
-export interface IResMeta {
-  isError: boolean;
-  message: string;
-}
 
 const defaultHeader = {
   'Content-Type': 'application/json; charset=UTF-8',
@@ -125,6 +121,36 @@ const useServerAPI = <T>(url: string) => {
     },
     [],
   );
+
+  // useEffect(() => {
+  //   if (addLineResponse?.isError === true) {
+  //     window.alert(addLineResponse.message);
+  //   } else if (addLineResponse?.isError === false) {
+  //     window.alert('노선 추가 성공');
+  //   }
+  // }, [addLineResponse]);
+
+  // useEffect(() => {
+  //   if (editLineResponse?.isError === true) {
+  //     window.alert(editLineResponse.message);
+  //   } else if (editLineResponse?.isError === false) {
+  //     window.alert('노선 수정 성공');
+  //   }
+  // }, [editLineResponse]);
+
+  // useEffect(() => {
+  //   if (deleteLineResponse?.isError === true) {
+  //     window.alert(deleteLineResponse.message);
+  //   } else if (deleteLineResponse?.isError === false) {
+  //     window.alert('노선 제거 성공');
+  //   }
+  // }, [deleteLineResponse]);
+
+  // useEffect(() => {
+  //   if (getAllLineResponse?.isError === true) {
+  //     window.alert(getAllLineResponse.message);
+  //   }
+  // }, [getAllLineResponse]);
 
   return {
     data,

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { request } from '../utils';
 import { Nullable, ILoginRes, ILoginReq } from '../type';
-import { IResMeta } from '../hooks/useServerAPI';
+import { IResMeta } from '../type';
 
 export type IAccessToken = Nullable<ILoginRes & IResMeta>;
 

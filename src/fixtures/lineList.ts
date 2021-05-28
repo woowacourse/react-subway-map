@@ -1,4 +1,4 @@
-import { LineColor } from '../components/molecules/ColorSelector/ColorSelector';
+import { LineColor } from '../constants';
 import { ILineRes } from '../type';
 
 const lineList: ILineRes[] = [

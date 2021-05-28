@@ -1,22 +1,19 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
-import { ROUTE } from '../../../constants';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
 import { Button, Header, Select } from '../../atoms';
+import { IOption } from '../../atoms/Select/Select';
 import { ListItem, Modal, SectionAddForm } from '../../molecules';
 import { Container, SelectContainer } from './Section.styles';
-import { IOption } from '../../atoms/Select/Select';
-import { useEffect } from 'react';
 
 const Section = () => {
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
   const {
-    signedUser: { id: signedUserId },
     hostState: { host },
   } = useSelector((state: RootState) => {
-    return { signedUser: state.signedUserReducer, hostState: state.hostReducer };
+    return { hostState: state.hostReducer };
   });
 
   const {
@@ -37,39 +34,32 @@ const Section = () => {
   } = useServerAPI<ILineRes>(`${host}/lines`);
 
   const { value: lineId, onChange: onChangeLineId } = useChangeEvent('');
-
   const {
     value: distance,
     onChange: onChangeDistance,
     setValue: setDistance,
   } = useChangeEvent('1');
-
   const {
     value: upStationId,
     onChange: onChangeUpStationId,
     setValue: setUpStationId,
   } = useChangeEvent('');
-
   const {
     value: downStationId,
     onChange: onChangeDownStationId,
     setValue: setDownStationId,
   } = useChangeEvent('');
 
-  if (!signedUserId) {
-    window.alert('로그인이 필요합니다.');
-    return <Redirect to={ROUTE.LOGIN} />;
-  }
-  const lineOptions: IOption[] = lines?.map(({ id, name }) => ({ value: id, name })) || [];
-
-  const displayStations: IStationRes[] =
-    lines?.find(({ id }) => id === Number(lineId))?.stations || [];
-
   const resetForm = () => {
     setDistance('1');
     setUpStationId('');
     setDownStationId('');
   };
+
+  const lineOptions: IOption[] = lines?.map(({ id, name }) => ({ value: id, name })) || [];
+
+  const displayStations: IStationRes[] =
+    lines?.find(({ id }) => id === Number(lineId))?.stations || [];
 
   const onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();

@@ -1,8 +1,9 @@
-import ColorSelector, { LineColor } from '../ColorSelector/ColorSelector';
+import ColorSelector from '../ColorSelector/ColorSelector';
 import { Container, Wrapper } from './LineEditForm.styles';
 import { Button, Input, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { IStationRes } from '../../../type.d';
+import { LineColor } from '../../../constants';
 
 export interface LineAddFormProps {
   stations: IStationRes[];
@@ -17,13 +18,11 @@ export interface LineAddFormProps {
 export interface LineEditFormProps {
   onChangeLineName: React.ChangeEventHandler<HTMLInputElement>;
   lineName: string;
-  setColor: (color: LineColor) => void;
+  setColor: (color: string) => void;
   onSubmitLineInfo: React.FormEventHandler<HTMLFormElement>;
   addFormProps: LineAddFormProps | null;
 }
 
-
-// TODO: Select 컨텐츠의 길이에 따라서, Container의 너비가 늘어나는 이슈 수정하기
 const LineEditForm = ({
   onChangeLineName,
   lineName,
@@ -74,7 +73,7 @@ const LineEditForm = ({
         </>
       )}
 
-      <ColorSelector setColor={setColor} />
+      <ColorSelector colorList={Object.values(LineColor)} setColor={setColor} />
       <Button>확인</Button>
     </Container>
   );

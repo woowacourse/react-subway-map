@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
-import { ROUTE } from '../../../constants';
+import { LineColor } from '../../../constants';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
 import { Button, Header } from '../../atoms';
-import { Modal, LineEditForm } from '../../molecules';
-import { LineColor } from '../../molecules/ColorSelector/ColorSelector';
-import { Container, LineListContainer, LineItemWithCircle } from './Line.styles';
-
-// TODO: type, enum, interface 한곳으로 몰기
+import { LineEditForm, Modal } from '../../molecules';
+import { Container, LineItemWithCircle, LineListContainer } from './Line.styles';
 
 const isValidLineName = (lineName: string) => {
   return /^[가-힣0-9]{2,10}$/.test(lineName);
@@ -18,10 +14,9 @@ const isValidLineName = (lineName: string) => {
 
 const Line = () => {
   const {
-    signedUser: { id: signedUserId },
     hostState: { host },
   } = useSelector((state: RootState) => {
-    return { signedUser: state.signedUserReducer, hostState: state.hostReducer };
+    return { hostState: state.hostReducer };
   });
 
   const {
@@ -45,25 +40,20 @@ const Line = () => {
   const { isModalOpen, open: openModal, onClickClose, close: closeModal } = useModal(false);
 
   const [mode, setMode] = useState<ModeType>('ADD');
-  const [color, setColor] = useState<LineColor>(LineColor.COLOR_1);
+  const [color, setColor] = useState<string>(LineColor.COLOR_1);
+  const [selectedLineId, setSelectedLineId] = useState<number>();
 
-  const [lineId, setLineId] = useState<number>();
-
-  // TODO: 이름을 lineNameInput이라고 변경하면 어떨까?
   const { value: lineName, onChange: onChangeLineName, setValue: setLineName } = useChangeEvent('');
-
   const {
     value: distance,
     onChange: onChangeDistance,
     setValue: setDistance,
   } = useChangeEvent('1');
-
   const {
     value: upStationId,
     onChange: onChangeUpStationId,
     setValue: setUpStationId,
   } = useChangeEvent('');
-
   const {
     value: downStationId,
     onChange: onChangeDownStationId,
@@ -107,7 +97,7 @@ const Line = () => {
       color: color,
     };
 
-    editLine<ILineReq>(body, `${lineId}`);
+    editLine<ILineReq>(body, `${selectedLineId}`);
   };
 
   const onDeleteLine = (lineId: number) => {
@@ -148,11 +138,6 @@ const Line = () => {
     resetForm();
     closeModal();
   };
-
-  if (!signedUserId) {
-    window.alert('로그인이 필요합니다.');
-    return <Redirect to={ROUTE.LOGIN} />;
-  }
 
   useEffect(() => {
     if (addLineResponse?.isError === true) {
@@ -207,7 +192,7 @@ const Line = () => {
               key={id}
               content={name}
               onClickModify={() => {
-                setLineId(id);
+                setSelectedLineId(id);
                 openEditModal(name);
               }}
               onClickDelete={() => {

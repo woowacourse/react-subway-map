@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-// TODO: select 화살표 커스텀하기
 const Container = styled.select`
   border: none;
   font-size: 1.2rem;

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IResMeta } from '../hooks/useServerAPI';
+import { IResMeta } from '../type';
 import { IMyInfoRes, Nullable } from '../type';
 import { request } from '../utils';
 

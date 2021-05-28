@@ -1,5 +1,10 @@
 export type Nullable<T> = { [K in keyof T]: T[K] | null };
 
+export interface IResMeta {
+  isError: boolean;
+  message: string;
+}
+
 export type ModeType = 'ADD' | 'EDIT';
 export interface ILoginReq {
   email: string;
