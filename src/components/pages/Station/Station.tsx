@@ -5,7 +5,7 @@ import { RootState } from '../../../store';
 import { IStationReq, IStationRes } from '../../../type';
 import { Header } from '../../atoms';
 import { ListItem, StationAddForm } from '../../molecules';
-import { Container } from './Station.styles';
+import { ScrollBox, FullVerticalCenterBox } from '../../../styles/shared';
 
 const isValidStationName = (stationName: string) => {
   return /^[가-힣0-9]{2,20}$/.test(stationName);
@@ -60,10 +60,6 @@ const Station = () => {
   };
 
   useEffect(() => {
-    getAllStations();
-  }, [postStationResponse, deleteStationResponse]);
-
-  useEffect(() => {
     if (getAllStationResponse?.isError === true) {
       window.alert(getAllStationResponse.message);
     }
@@ -85,8 +81,12 @@ const Station = () => {
     }
   }, [deleteStationResponse]);
 
+  useEffect(() => {
+    getAllStations();
+  }, [postStationResponse, deleteStationResponse]);
+
   return (
-    <Container>
+    <FullVerticalCenterBox>
       <Header>
         <h3>🚉 역 관리</h3>
       </Header>
@@ -97,12 +97,12 @@ const Station = () => {
         onSubmitStationInfo={onSubmitStationInfo}
       />
 
-      <div>
+      <ScrollBox>
         {stations?.map(({ id, name }) => (
           <ListItem key={id} content={name} onClickDelete={() => onDeleteStation(id)} />
         ))}
-      </div>
-    </Container>
+      </ScrollBox>
+    </FullVerticalCenterBox>
   );
 };
 

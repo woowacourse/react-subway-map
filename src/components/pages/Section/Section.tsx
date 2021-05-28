@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
+import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
 import { Button, Header, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { ListItem, Modal, SectionAddForm } from '../../molecules';
-import { Container, SelectContainer } from './Section.styles';
+import { SelectContainer } from './Section.styles';
 
 const Section = () => {
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
@@ -132,7 +133,7 @@ const Section = () => {
   }, []);
 
   return (
-    <Container>
+    <FullVerticalCenterBox>
       <Header hasExtra>
         <h3>🚉 구간 관리</h3>
         <Button onClick={openModal}>구간 추가</Button>
@@ -146,7 +147,7 @@ const Section = () => {
         />
       </SelectContainer>
 
-      <div>
+      <ScrollBox>
         {displayStations.map(({ id: stationId, name }) => {
           return (
             <ListItem
@@ -158,7 +159,7 @@ const Section = () => {
             />
           );
         })}
-      </div>
+      </ScrollBox>
 
       {isModalOpen && (
         <Modal onClickClose={onClickClose}>
@@ -180,7 +181,7 @@ const Section = () => {
           />
         </Modal>
       )}
-    </Container>
+    </FullVerticalCenterBox>
   );
 };
 

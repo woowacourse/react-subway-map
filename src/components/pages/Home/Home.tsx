@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import MainImage from '../../../assets/img/subway.png';
 import { GUIDE_MESSAGE } from '../../../constants';
 import { RootState } from '../../../store';
-
 import { Container } from './Home.styles';
 
 const Home = () => {

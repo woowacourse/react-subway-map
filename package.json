@@ -1,6 +1,14 @@
 {
   "name": "react-subway-map",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "contributors": [
+    {
+      "name": "콜린"
+    },
+    {
+      "name": "도비"
+    }
+  ],
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.4.0",

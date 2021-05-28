@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { FlexCenterBox } from '../../../styles/css';
+import { FlexCenterBox } from '../../../styles/shared';
 
-const Container = styled.div`
-  ${FlexCenterBox};
+const Container = styled(FlexCenterBox)`
   padding: 0.5rem 1rem;
 `;
 

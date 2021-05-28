@@ -1,18 +1,8 @@
 import styled from '@emotion/styled';
-import { FlexCenterBox } from '../../../styles/css';
+import { ScrollBox } from '../../../styles/shared';
 import { ListItem } from '../../molecules';
 
-const Container = styled.div`
-  width: 100%;
-  ${FlexCenterBox};
-  flex-direction: column;
-
-  & > * {
-    width: 100%;
-  }
-`;
-
-const LineListContainer = styled.div`
+const ListItemContainer = styled(ScrollBox)`
   margin-top: 2rem;
 `;
 
@@ -30,4 +20,4 @@ const LineItemWithCircle = styled(ListItem)`
   }
 `;
 
-export { Container, LineListContainer, LineItemWithCircle };
+export { LineItemWithCircle, ListItemContainer };

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { FlexCenterBox } from '../../../styles/css';
+import { FlexCenterBox } from '../../../styles/shared';
+
 
 const Dimmer = styled.div`
   position: fixed;
@@ -12,7 +13,7 @@ const Dimmer = styled.div`
   z-index: 999;
 `;
 
-const Container = styled.div`
+const Container = styled(FlexCenterBox)`
   background-color: #fdfdfd;
   border-radius: 5px;
   position: relative;
@@ -24,7 +25,6 @@ const Container = styled.div`
   z-index: 1;
   border: 1px solid #dddddd;
   flex-direction: column;
-  ${FlexCenterBox};
 `;
 
 const CloseButton = styled.div`

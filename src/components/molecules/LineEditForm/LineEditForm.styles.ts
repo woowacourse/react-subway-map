@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { FlexCenterBox } from '../../../styles/css';
+import { FlexCenter } from '../../../styles/css';
 
 const Container = styled.form`
-  ${FlexCenterBox}
+  ${FlexCenter}
   flex-direction: column;
   background-color: #ffffff;
   padding: 2rem 10rem;

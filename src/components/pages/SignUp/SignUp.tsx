@@ -10,7 +10,6 @@ import { Header } from '../../atoms';
 import { SignUpForm } from '../../molecules';
 import { Container } from './SignUp.styles';
 
-// TODO: 메시지 상수화
 const SignUp = () => {
   const history = useHistory();
   const {
@@ -41,6 +40,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (signUpResponse?.isError === true) {
+      console.log('푸하하하하핳');
       window.alert(signUpResponse.message);
     } else if (signUpResponse?.isError === false) {
       window.alert('회원가입에 성공하셨습니다.');

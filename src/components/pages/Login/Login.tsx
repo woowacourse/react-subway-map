@@ -7,10 +7,11 @@ import { loginRequestAsync } from '../../../features/accessTokenSlice';
 import { getSignedUserAsync } from '../../../features/signedUserSlice';
 import { useChangeEvent } from '../../../hooks';
 import { RootState, useAppDispatch } from '../../../store';
+import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILoginReq } from '../../../type';
 import { Header } from '../../atoms';
 import { LoginForm } from '../../molecules';
-import { Container, Footer } from './Login.styles';
+import { Footer } from './Login.styles';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +46,6 @@ const Login = () => {
 
   useEffect(() => {
     if (accessTokenState?.isError === false) {
-      window.alert('로그인에 성공하셨습니다.');
       dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken }));
       history.replace({ pathname: ROUTE.HOME });
     } else if (accessTokenState?.isError === true) {
@@ -54,7 +54,7 @@ const Login = () => {
   }, [accessTokenState]);
 
   return (
-    <Container>
+    <FullVerticalCenterBox>
       <Header>
         <h3>로그인</h3>
       </Header>
@@ -70,7 +70,7 @@ const Login = () => {
       <Footer>
         계정이 없으신가요? <Link to={ROUTE.SIGNUP}>회원가입</Link> 을 통해 계정을 생성해보세요.
       </Footer>
-    </Container>
+    </FullVerticalCenterBox>
   );
 };
 

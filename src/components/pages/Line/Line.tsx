@@ -6,7 +6,8 @@ import { RootState } from '../../../store';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
 import { Button, Header } from '../../atoms';
 import { LineEditForm, Modal } from '../../molecules';
-import { Container, LineItemWithCircle, LineListContainer } from './Line.styles';
+import { LineItemWithCircle, ListItemContainer } from './Line.styles';
+import { FullVerticalCenterBox } from '../../../styles/shared';
 
 const isValidLineName = (lineName: string) => {
   return /^[가-힣0-9]{2,10}$/.test(lineName);
@@ -108,7 +109,6 @@ const Line = () => {
 
   const onSubmitLineInfo = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: 유효성 검사 함수로 분리
 
     if (!isValidLineName(lineName)) {
       window.alert(
@@ -179,13 +179,13 @@ const Line = () => {
   }, []);
 
   return (
-    <Container>
+    <FullVerticalCenterBox>
       <Header hasExtra>
         <h3>🚉 노선 관리</h3>
         <Button onClick={openAddModal}>노선 추가</Button>
       </Header>
 
-      <LineListContainer>
+      <ListItemContainer>
         {lines?.map(({ id, name, color }) => {
           return (
             <LineItemWithCircle
@@ -202,7 +202,7 @@ const Line = () => {
             />
           );
         })}
-      </LineListContainer>
+      </ListItemContainer>
       {isModalOpen && (
         <Modal onClickClose={onClickClose}>
           <Header>
@@ -229,7 +229,7 @@ const Line = () => {
           />
         </Modal>
       )}
-    </Container>
+    </FullVerticalCenterBox>
   );
 };
 

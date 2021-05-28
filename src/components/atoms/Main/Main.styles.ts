@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { FlexCenterBox } from '../../../styles/css';
+import { FlexCenter } from '../../../styles/css';
 
 const Container = styled.main`
   min-width: 1000px;
-  ${FlexCenterBox};
+  ${FlexCenter};
   flex-direction: column;
   background-color: #ffffff;
   border-radius: 4px;

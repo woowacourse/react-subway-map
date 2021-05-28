@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 
-const FlexCenterBox = css`
+const FlexCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export { FlexCenterBox };
+export { FlexCenter };

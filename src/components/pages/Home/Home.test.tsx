@@ -3,8 +3,8 @@ import { render } from '@testing-library/react';
 import SubwayImage from '../../../assets/img/subway.png';
 import { GUIDE_MESSAGE } from '../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
-import Home from './Home';
 import { unValidSignedUser, validSignedUser } from '../../../fixtures/useSelectorState';
+import Home from './Home';
 
 jest.mock('react-redux');
 
