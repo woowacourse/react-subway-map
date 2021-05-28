@@ -13,6 +13,7 @@ import { LoginForm } from '../../molecules';
 import { Container, Footer } from './Login.styles';
 
 const Login = () => {
+  console.log('들어왔징');
   const dispatch = useAppDispatch();
   const history = useHistory();
   const {

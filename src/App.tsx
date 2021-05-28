@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
@@ -8,6 +9,23 @@ import { ROUTE } from './constants';
 import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
 import subwayVideo from './assets/video/subwayBackground.mp4';
+
+interface ConditionalRouteProps {
+  exact?: boolean;
+  path: string;
+  Component: React.ComponentType;
+  condition: boolean;
+}
+
+const ConditionalRoute = ({ exact, path, Component, condition }: ConditionalRouteProps) => {
+  return (
+    <Route
+      exact={exact}
+      path={path}
+      render={() => (condition ? <Component /> : <Redirect to={ROUTE.HOME} />)}
+    />
+  );
+};
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -85,38 +103,35 @@ const App = () => {
         <Switch>
           <Route exact path={ROUTE.HOME} component={Home} />
 
-          <Route
+          <ConditionalRoute
             exact
             path={ROUTE.STATION}
-            render={() => (signedUserId ? <Station /> : <Redirect to={ROUTE.HOME} />)}
+            Component={Station}
+            condition={!!signedUserId}
           />
-          <Route
-            exact
-            path={ROUTE.LINE}
-            render={() => (signedUserId ? <Line /> : <Redirect to={ROUTE.HOME} />)}
-          />
-          <Route
+          <ConditionalRoute exact path={ROUTE.LINE} Component={Line} condition={!!signedUserId} />
+          <ConditionalRoute
             exact
             path={ROUTE.SECTION}
-            render={() => (signedUserId ? <Section /> : <Redirect to={ROUTE.HOME} />)}
+            Component={Section}
+            condition={!!signedUserId}
           />
-          <Route
+          <ConditionalRoute
             exact
             path={ROUTE.LOGOUT}
-            render={() => (signedUserId ? <Logout /> : <Redirect to={ROUTE.HOME} />)}
-          />
-          <Route
-            exact
-            path={ROUTE.SIGNUP}
-            render={() => (!signedUserId ? <SignUp /> : <Redirect to={ROUTE.HOME} />)}
-          />
-          <Route
-            exact
-            path={ROUTE.LOGIN}
-            render={() => (!signedUserId ? <Login /> : <Redirect to={ROUTE.HOME} />)}
+            Component={Logout}
+            condition={!!signedUserId}
           />
 
-          <Route component={() => <Redirect to={ROUTE.HOME} />} />
+          <ConditionalRoute
+            exact
+            path={ROUTE.SIGNUP}
+            Component={SignUp}
+            condition={!signedUserId}
+          />
+          <ConditionalRoute exact path={ROUTE.LOGIN} Component={Login} condition={!signedUserId} />
+
+          <Redirect to={ROUTE.HOME} />
         </Switch>
       </Main>
       <HostSelect />
