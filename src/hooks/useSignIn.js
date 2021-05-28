@@ -6,7 +6,7 @@ import { LS_KEY, ROUTE } from '../constants';
 import { setLocalStorage } from '../utils';
 
 const useSignIn = () => {
-  const { token, error } = useSelector(({ user }) => user);
+  const { token, error: authError } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -25,7 +25,7 @@ const useSignIn = () => {
     dispatch(getUserTokenThunk({ params }));
   };
 
-  return { signIn, error };
+  return { signIn, authError };
 };
 
 export default useSignIn;

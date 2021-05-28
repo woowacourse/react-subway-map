@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { ROUTE } from '../constants';
+import { ERROR, ROUTE } from '../constants';
 import { setMessage } from '../redux';
 import { request } from '../utils';
 
@@ -35,8 +35,7 @@ const useSignUp = () => {
     } catch (error) {
       console.error(error);
 
-      // TODO: 네트워크 에러 페이지 컴포넌트 만들기
-      // history.push(ROUTE.SIGN_IN.PATH);
+      dispatch(setMessage({ message: ERROR.UNKNOWN }));
     }
   };
 

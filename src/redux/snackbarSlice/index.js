@@ -10,7 +10,7 @@ const snackbarSlice = createSlice({
       state.snackbar = { message };
     },
     clearMessage: (state) => {
-      state.message = null;
+      state.snackbar = { message: null };
     },
   },
 });

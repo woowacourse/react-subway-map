@@ -26,7 +26,7 @@ const validate = ({ email, password }) => {
 };
 
 const SignIn = () => {
-  const { signIn, error } = useSignIn();
+  const { signIn, authError } = useSignIn();
 
   return (
     <PageTemplate title={ROUTE.SIGN_IN.NAME}>
@@ -53,7 +53,7 @@ const SignIn = () => {
             />
             <Validator>
               {errors.email || errors.password}
-              {error}
+              {authError}
             </Validator>
             <Button
               type="submit"

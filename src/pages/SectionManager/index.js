@@ -37,7 +37,6 @@ const SectionList = ({ line, openModal, deleteSection }) => (
     </ListHeader>
     <ManagementList
       items={line.stations}
-      // TODO: 데이터 방향 고민해보기
       onDeleteItem={({ id }) =>
         deleteSection({ lineId: line.id, stationId: id })
       }

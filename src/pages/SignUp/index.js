@@ -64,7 +64,7 @@ const SignUp = () => {
         onSubmit={handleSubmitForm}
         validateOnChange={false}
       >
-        {({ values, errors, touched, handleSubmit, getFieldProps }) => (
+        {({ errors, touched, handleSubmit, getFieldProps }) => (
           <Form onSubmit={handleSubmit}>
             <Input
               type="email"
