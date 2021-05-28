@@ -1,34 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearMessage } from '../../redux';
 import { Container } from './style';
 
 const Snackbar = () => {
-  const { message } = useSelector(({ snackbar }) => snackbar);
-  const [snackMessage, setSnackMessage] = useState('');
+  const { snackbar } = useSelector(({ snackbar }) => snackbar);
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!message) return;
-    setSnackMessage(message);
-    setIsVisible(true);
-    dispatch(clearMessage(null));
-  }, [message, dispatch]);
+    if (!snackbar.message) return;
 
-  useEffect(() => {
-    const messageTimer = setTimeout(() => setSnackMessage(null), 3000);
-    const fadeOutTimer = setTimeout(() => setIsVisible(false), 2200);
+    setIsVisible(true);
+
+    const fadeOutTimer = setTimeout(() => setIsVisible(false), 2500);
 
     return () => {
-      clearTimeout(messageTimer);
       clearTimeout(fadeOutTimer);
     };
-  }, [snackMessage]);
+  }, [snackbar, dispatch]);
 
   return (
     <Container isVisible={isVisible}>
-      <span>{snackMessage}</span>
+      <span>{snackbar.message}</span>
     </Container>
   );
 };

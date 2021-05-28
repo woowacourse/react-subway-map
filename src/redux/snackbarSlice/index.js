@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const snackbarSlice = createSlice({
   name: 'snackbar',
   initialState: {
-    message: null,
+    snackbar: { message: null },
   },
   reducers: {
     setMessage: (state, { payload: { message } }) => {
-      state.message = message;
+      state.snackbar = { message };
     },
     clearMessage: (state) => {
       state.message = null;
