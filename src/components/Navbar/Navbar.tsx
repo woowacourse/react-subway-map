@@ -12,27 +12,32 @@ const Navbar = () => {
   return (
     <Styled.Navbar>
       <Styled.NavList>
-        <Styled.NavItem>
-          <Link to={ROUTES.STATION}>
-            <Button variant="text" active={location.pathname === ROUTES.STATION}>
-              역 관리
-            </Button>
-          </Link>
-        </Styled.NavItem>
-        <Styled.NavItem>
-          <Link to={ROUTES.LINE}>
-            <Button variant="text" active={location.pathname === ROUTES.LINE}>
-              노선 관리
-            </Button>
-          </Link>
-        </Styled.NavItem>
-        <Styled.NavItem>
-          <Link to={ROUTES.SECTION}>
-            <Button variant="text" active={location.pathname === ROUTES.SECTION}>
-              구간 관리
-            </Button>
-          </Link>
-        </Styled.NavItem>
+        {isLogin && (
+          <>
+            <Styled.NavItem>
+              <Link to={ROUTES.STATION}>
+                <Button variant="text" active={location.pathname === ROUTES.STATION}>
+                  역 관리
+                </Button>
+              </Link>
+            </Styled.NavItem>
+            <Styled.NavItem>
+              <Link to={ROUTES.LINE}>
+                <Button variant="text" active={location.pathname === ROUTES.LINE}>
+                  노선 관리
+                </Button>
+              </Link>
+            </Styled.NavItem>
+            <Styled.NavItem>
+              <Link to={ROUTES.SECTION}>
+                <Button variant="text" active={location.pathname === ROUTES.SECTION}>
+                  구간 관리
+                </Button>
+              </Link>
+            </Styled.NavItem>
+          </>
+        )}
+
         <Styled.NavItem>
           {isLogin ? (
             <Button variant="text" active={location.pathname === ROUTES.ROOT} onClick={onLogout}>
