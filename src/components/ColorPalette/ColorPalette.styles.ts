@@ -15,4 +15,9 @@ export const Button = styled.button`
   border: none;
   border-radius: 30px;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.1;
+  }
 `;

@@ -19,7 +19,14 @@ export const HeaderText = styled.h2`
   margin: 0;
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 1em;
+`;
+
+export const LineSelectWrapper = styled.div`
+  margin-top: 2rem;
+`;
+
+export const LoginMessage = styled.p`
+  text-align: center;
 `;
 
 export const Control = styled.div`
