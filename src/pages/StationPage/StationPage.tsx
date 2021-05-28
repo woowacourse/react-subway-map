@@ -1,6 +1,5 @@
 import React, { FormEventHandler, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { Link } from 'react-router-dom';
 import { Button, Card, Input, Modal } from '../../components';
 import * as Styled from './StationPage.styles';
 import { ReactComponent as SubwayIcon } from '../../assets/icons/subway-solid.svg';
@@ -11,8 +10,6 @@ import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
 import { ApiStatus, Station } from '../../types';
 import MESSAGE from '../../constants/message';
-import useAuth from '../../hooks/useAuth';
-import ROUTES from '../../constants/routes';
 import MessageBox from '../../components/MessageBox/MessageBox';
 
 const StationPage = () => {
@@ -25,7 +22,6 @@ const StationPage = () => {
   const [editStationId, setEditStationId] = useState<Station['id'] | null>(null);
 
   const { list, status, onAdd, onEdit, onDelete } = useStation();
-  const { isLogin } = useAuth();
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -74,26 +70,20 @@ const StationPage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 역 관리</Styled.HeaderText>
-              {isLogin ? (
-                <Styled.AddForm onSubmit={handleAdd}>
-                  <Styled.InputWrapper>
-                    <Input
-                      labelText="지하철 역 이름을 입력해주세요"
-                      icon={<SubwayIcon />}
-                      minLength={2}
-                      maxLength={20}
-                      value={name}
-                      onChange={onChangeName}
-                      autoFocus
-                    />
-                  </Styled.InputWrapper>
-                  <Button>추가</Button>
-                </Styled.AddForm>
-              ) : (
-                <Styled.LoginMessage>
-                  목록 편집을 위해서는 <Link to={ROUTES.ROOT}>로그인</Link>이 필요합니다
-                </Styled.LoginMessage>
-              )}
+              <Styled.AddForm onSubmit={handleAdd}>
+                <Styled.InputWrapper>
+                  <Input
+                    labelText="지하철 역 이름을 입력해주세요"
+                    icon={<SubwayIcon />}
+                    minLength={2}
+                    maxLength={20}
+                    value={name}
+                    onChange={onChangeName}
+                    autoFocus
+                  />
+                </Styled.InputWrapper>
+                <Button>추가</Button>
+              </Styled.AddForm>
             </Card>
           </Styled.FormContainer>
           {status === ApiStatus.FULFILLED && list.length === 0 && (
@@ -111,16 +101,10 @@ const StationPage = () => {
                           shape="circle"
                           variant="text"
                           onClick={() => handleOpenEditModal(item)}
-                          disabled={!isLogin}
                         >
                           <EditIcon />
                         </Button>
-                        <Button
-                          shape="circle"
-                          variant="text"
-                          onClick={() => handleDelete(item.id)}
-                          disabled={!isLogin}
-                        >
+                        <Button shape="circle" variant="text" onClick={() => handleDelete(item.id)}>
                           <TrashIcon />
                         </Button>
                       </Styled.OptionWrapper>

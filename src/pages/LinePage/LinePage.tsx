@@ -1,6 +1,5 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -23,9 +22,7 @@ import useSelect from '../../hooks/useSelect';
 import useLine from '../../hooks/useLine';
 import useStation from '../../hooks/useStation';
 import useColorPalette from '../../hooks/useColorPalette';
-import useAuth from '../../hooks/useAuth';
 import MESSAGE from '../../constants/message';
-import ROUTES from '../../constants/routes';
 
 const LinePage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -43,7 +40,6 @@ const LinePage = () => {
 
   const { onAddLine, onEditLine, onDeleteLine, list, status: lineStatus } = useLine();
   const { list: stationList } = useStation();
-  const { isLogin } = useAuth();
 
   const { color, onChange: onChangeColor } = useColorPalette();
   const { color: editColor, onChange: onChangeEditColor } = useColorPalette();
@@ -162,20 +158,13 @@ const LinePage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 노선 관리</Styled.HeaderText>
-              {!isLogin && (
-                <Styled.LoginMessage>
-                  목록 편집을 위해서는 <Link to={ROUTES.ROOT}>로그인</Link>이 필요합니다
-                </Styled.LoginMessage>
-              )}
               <Styled.Control>
                 <Styled.Divider />
-                {isLogin && (
-                  <Styled.ButtonList>
-                    <Button shape="circle" onClick={handleOpenAddModal}>
-                      <AddIcon />
-                    </Button>
-                  </Styled.ButtonList>
-                )}
+                <Styled.ButtonList>
+                  <Button shape="circle" onClick={handleOpenAddModal}>
+                    <AddIcon />
+                  </Button>
+                </Styled.ButtonList>
               </Styled.Control>
               {lineStatus === ApiStatus.FULFILLED && list.length === 0 && (
                 <MessageBox emoji="👻">노선 목록이 비어있습니다</MessageBox>
@@ -193,7 +182,6 @@ const LinePage = () => {
                           shape="circle"
                           variant="text"
                           onClick={() => handleOpenEditModal(item)}
-                          disabled={!isLogin}
                         >
                           <EditIcon />
                         </Button>
@@ -201,7 +189,6 @@ const LinePage = () => {
                           shape="circle"
                           variant="text"
                           onClick={() => handleDeleteLine(item.id)}
-                          disabled={!isLogin}
                         >
                           <TrashIcon />
                         </Button>
