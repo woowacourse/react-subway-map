@@ -50,7 +50,7 @@ const StationPage = () => {
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
     } else if (res.status === API_STATUS.FULFILLED) {
-      setStations(res.data);
+      setStations(res.data.reverse());
     }
   };
 
