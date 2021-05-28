@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     if (accessToken) {
-      history.push(ROUTE.STATION);
+      history.push(ROUTE.HOME);
     } else {
       history.push(ROUTE.SIGN_IN);
     }
