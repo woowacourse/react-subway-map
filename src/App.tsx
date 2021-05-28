@@ -9,6 +9,7 @@ import { ROUTE } from './constants';
 import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
 import subwayVideo from './assets/video/subwayBackground.mp4';
+import { setAccessToken, initialState as initialAccessToken } from './features/accessTokenSlice';
 
 interface ConditionalRouteProps {
   exact?: boolean;
@@ -32,14 +33,20 @@ const App = () => {
   const history = useHistory();
 
   const {
-    signedUser: { id: signedUserId },
+    signedUserState,
     accessTokenState: { accessToken },
     hostState: { host },
   } = useSelector((state: RootState) => ({
-    signedUser: state.signedUserReducer,
+    signedUserState: state.signedUserReducer,
     accessTokenState: state.accessTokenReducer,
     hostState: state.hostReducer,
   }));
+
+  useEffect(() => {
+    if (signedUserState?.isError === true) {
+      dispatch(setAccessToken(initialAccessToken));
+    }
+  }, [signedUserState]);
 
   useEffect(() => {
     dispatch(getSignedUserAsync({ host, accessToken }));
@@ -98,7 +105,7 @@ const App = () => {
       <Title>
         <Link to={ROUTE.HOME}>지하철 노선도</Link>
       </Title>
-      <Menu>{signedUserId ? LoginedMenu : UnLoginedMenu}</Menu>
+      <Menu>{signedUserState.id ? LoginedMenu : UnLoginedMenu}</Menu>
       <Main>
         <Switch>
           <Route exact path={ROUTE.HOME} component={Home} />
@@ -107,29 +114,39 @@ const App = () => {
             exact
             path={ROUTE.STATION}
             Component={Station}
-            condition={!!signedUserId}
+            condition={!!signedUserState.id}
           />
-          <ConditionalRoute exact path={ROUTE.LINE} Component={Line} condition={!!signedUserId} />
+          <ConditionalRoute
+            exact
+            path={ROUTE.LINE}
+            Component={Line}
+            condition={!!signedUserState.id}
+          />
           <ConditionalRoute
             exact
             path={ROUTE.SECTION}
             Component={Section}
-            condition={!!signedUserId}
+            condition={!!signedUserState.id}
           />
           <ConditionalRoute
             exact
             path={ROUTE.LOGOUT}
             Component={Logout}
-            condition={!!signedUserId}
+            condition={!!signedUserState.id}
           />
 
           <ConditionalRoute
             exact
             path={ROUTE.SIGNUP}
             Component={SignUp}
-            condition={!signedUserId}
+            condition={!signedUserState.id}
           />
-          <ConditionalRoute exact path={ROUTE.LOGIN} Component={Login} condition={!signedUserId} />
+          <ConditionalRoute
+            exact
+            path={ROUTE.LOGIN}
+            Component={Login}
+            condition={!signedUserState.id}
+          />
 
           <Redirect to={ROUTE.HOME} />
         </Switch>

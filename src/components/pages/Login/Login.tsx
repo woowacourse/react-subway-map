@@ -13,7 +13,6 @@ import { LoginForm } from '../../molecules';
 import { Container, Footer } from './Login.styles';
 
 const Login = () => {
-  console.log('들어왔징');
   const dispatch = useAppDispatch();
   const history = useHistory();
   const {
@@ -47,9 +46,8 @@ const Login = () => {
   useEffect(() => {
     if (accessTokenState?.isError === false) {
       window.alert('로그인에 성공하셨습니다.');
-      dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken })).then(() => {
-        history.replace({ pathname: ROUTE.HOME });
-      });
+      dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken }));
+      history.replace({ pathname: ROUTE.HOME });
     } else if (accessTokenState?.isError === true) {
       window.alert(accessTokenState.message);
     }
