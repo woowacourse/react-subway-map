@@ -1,4 +1,12 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 import apiRequest from '../request';
 
 interface UserProviderProps {
@@ -12,19 +20,18 @@ interface User {
 
 const UserContext = createContext<User | null>(null);
 
-let isMounted: boolean = true;
-
 const UserProvider = ({ children }: UserProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    if (!isMounted && isLoggedIn === false) {
+    if (!isMounted.current && isLoggedIn === false) {
       localStorage.setItem('accessToken', '');
     }
   }, [isLoggedIn]);
 
   useEffect(() => {
-    isMounted = false;
+    isMounted.current = false;
 
     const checkLoginStatus = async () => {
       try {
