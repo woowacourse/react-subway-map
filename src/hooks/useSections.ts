@@ -14,6 +14,27 @@ interface APIReturnTypeSection {
   distance: number;
 }
 
+const API = {
+  post: async (lineId: number, data: SectionData, accessToken: string) => {
+    await request(`${REQUEST_URL}/lines/${lineId}/sections`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+  },
+  delete: async (lineId: number, stationId: number, accessToken: string) => {
+    await request(`${REQUEST_URL}/lines/${lineId}/sections?stationId=${stationId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+};
+
 const useSections = (): [
   (lineId: number, data: SectionData) => Promise<void>,
   (lineId: number, stationId: number) => Promise<void>
@@ -26,14 +47,7 @@ const useSections = (): [
       return;
     }
 
-    await request(`${REQUEST_URL}/lines/${lineId}/sections`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+    await API.post(lineId, data, accessToken);
   };
 
   const deleteSection = async (lineId: number, stationId: number): Promise<void> => {
@@ -44,16 +58,12 @@ const useSections = (): [
       return;
     }
 
-    await request(`${REQUEST_URL}/lines/${lineId}/sections?stationId=${stationId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await API.delete(lineId, stationId, accessToken);
   };
 
   return [addSection, deleteSection];
 };
 
 export default useSections;
+export { API };
 export type { APIReturnTypeSection };
