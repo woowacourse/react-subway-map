@@ -6,17 +6,18 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
+import Loading from 'components/shared/Loading/Loading';
 import ROUTE from 'constants/routes';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { ALERT_MESSAGE } from 'constants/messages';
 import { ButtonSize, ButtonType } from 'types';
 import Styled from './styles';
 import { requestGetUser } from 'modules/authSlice';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
-import { requestLogin } from 'request/auth';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
+import useFetch from 'hooks/useFetch';
 
 const LoginPage = () => {
   const history = useHistory();
@@ -34,6 +35,8 @@ const LoginPage = () => {
   const [loginResponse, setLoginResponse] = useState<{ accessToken: string }>();
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
+  const { fetchData: loginAsync, loading: loginLoading } = useFetch('POST');
+
   const login = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -44,7 +47,7 @@ const LoginPage = () => {
       return;
     }
 
-    const res = await requestLogin(BASE_URL, loginData);
+    const res = await loginAsync(END_POINT.LOGIN, loginData);
 
     if (res.status === API_STATUS.REJECTED) {
       setInvalidNotification({ message: res.message, isValid: false, isVisible: true });
@@ -75,6 +78,7 @@ const LoginPage = () => {
     <>
       <ServerSelector isMessageVisible={isServerMessageVisible} changeServer={changeServer} />
       <CardLayout title="로그인">
+        <Loading isLoading={loginLoading} />
         <form onSubmit={login}>
           <Styled.InputContainer>
             <Styled.InputWrapper>

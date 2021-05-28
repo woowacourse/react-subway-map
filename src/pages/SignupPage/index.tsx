@@ -6,20 +6,22 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
+import Loading from 'components/shared/Loading/Loading';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
 import { ButtonSize, ButtonType } from 'types';
 import ROUTE from 'constants/routes';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
 import userImg from 'assets/user.png';
 import Styled from './styles';
-import { requestCheckDuplicatedEmail, requestSignup } from 'request/auth';
+import useFetch from 'hooks/useFetch';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -39,12 +41,13 @@ const SignupPage = () => {
   });
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
-  const history = useHistory();
+  const { fetchData: checkDuplicatedEmailAsync } = useFetch('GET');
+  const { fetchData: signupAsync, loading: signupLoading } = useFetch('POST');
 
   const checkDuplicatedEmail = async () => {
     if (!email) return;
 
-    const res = await requestCheckDuplicatedEmail(BASE_URL, email);
+    const res = await checkDuplicatedEmailAsync(`${END_POINT.AUTH}/exists/${email}`);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR);
@@ -94,7 +97,7 @@ const SignupPage = () => {
 
     const signupData = { email, password, age: age || 1 };
 
-    const res = await requestSignup(BASE_URL, signupData);
+    const res = await signupAsync(`${END_POINT.AUTH}`, signupData);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -113,6 +116,7 @@ const SignupPage = () => {
     <>
       <ServerSelector isMessageVisible={isServerMessageVisible} changeServer={changeServer} />
       <CardLayout title="회원가입">
+        <Loading isLoading={signupLoading} />
         <form onSubmit={signup}>
           <Styled.InputContainer>
             <Styled.InputWrapper>

@@ -6,11 +6,10 @@ import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Line, Station } from 'types';
 import LINE_COLORS from 'constants/lineColors';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import regex from 'constants/regex';
-import { useAppSelector } from 'modules/hooks';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
-import { requestAddLine, requestEditLine } from 'request/line';
+import useFetch from 'hooks/useFetch';
 import Styled from './LineModal.styles';
 
 interface Props {
@@ -28,8 +27,6 @@ const LineModal = ({
   closeModal,
   getLines,
 }: Props) => {
-  const { enqueueSnackbar } = useSnackbar();
-
   const [color, setColor] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [upStationId, setUpStationId] = useState<string>('');
@@ -40,7 +37,10 @@ const LineModal = ({
   const [isMessageValid, setMessageValid] = useState<boolean>(false);
   const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+  const { fetchData: addLineAsync } = useFetch('POST');
+  const { fetchData: editLineAsync } = useFetch('PUT');
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
@@ -62,7 +62,6 @@ const LineModal = ({
     event.preventDefault();
 
     if (!validateLineName()) return;
-    if (!BASE_URL) return;
 
     setMessageVisible(false);
 
@@ -75,12 +74,11 @@ const LineModal = ({
       extraFare,
     };
 
-    const res = await requestAddLine(BASE_URL, newLine);
+    const res = await addLineAsync(END_POINT.LINES, newLine);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_LINE);
       resetForm();
       closeModal();
@@ -94,15 +92,13 @@ const LineModal = ({
 
     if (!validateLineName()) return;
     if (!selectedLine) return;
-    if (!BASE_URL) return;
 
     const updatedLine = { name, color };
-    const res = await requestEditLine(BASE_URL, selectedLine.id, updatedLine);
+    const res = await editLineAsync(`${END_POINT.LINES}/${selectedLine.id}`, updatedLine);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
       closeModal();
 

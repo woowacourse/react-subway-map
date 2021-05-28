@@ -6,36 +6,36 @@ import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import LineModal from 'components/LineModal/LineModal';
+import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Line, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
 import ROUTE from 'constants/routes';
-import { requestDeleteLine, requestGetLines } from 'request/line';
-import { requestGetStations } from 'request/station';
+import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 
 const LinePage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const [lines, setLines] = useState<Line[]>([]);
   const [stations, setStations] = useState<Station[]>([]);
-
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedLine, setSelectedLine] = useState<Line>();
   const [modalTitle, setModalTitle] = useState<string>('');
 
-  const getLines = async () => {
-    if (!BASE_URL) return;
+  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
+  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch('GET');
+  const { fetchData: deleteLineAsync, loading: deleteLineLoading } = useFetch('DELETE');
 
-    const res = await requestGetLines(BASE_URL);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const getLines = async () => {
+    const res = await getLinesAsync(END_POINT.LINES);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_LINES);
@@ -45,9 +45,7 @@ const LinePage = () => {
   };
 
   const getStations = async () => {
-    if (!BASE_URL) return;
-
-    const res = await requestGetStations(BASE_URL);
+    const res = await getStationsAsync(END_POINT.STATIONS);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -58,9 +56,8 @@ const LinePage = () => {
 
   const deleteLine = async (id: Line['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
-    if (!BASE_URL) return;
 
-    const res = await requestDeleteLine(BASE_URL, id);
+    const res = await deleteLineAsync(`${END_POINT.LINES}/${id}`);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -90,6 +87,8 @@ const LinePage = () => {
 
   const selectedColors = lines.map((line) => line.color);
 
+  const isLoading = getStationsLoading || getLinesLoading || deleteLineLoading;
+
   useEffect(() => {
     const fetchLines = async () => {
       await getLines();
@@ -101,6 +100,7 @@ const LinePage = () => {
   return (
     <>
       <CardLayout title={'노선 관리'}>
+        <Loading isLoading={isLoading} />
         <Styled.AddButtonWrapper>
           <TextButton
             text="노선 추가"

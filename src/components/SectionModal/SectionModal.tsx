@@ -3,11 +3,10 @@ import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import { requestAddSection } from 'request/line';
-import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Line, Station } from 'types';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { ALERT_MESSAGE } from 'constants/messages';
+import useFetch from 'hooks/useFetch';
 import Styled from './SectionModal.styles';
 
 interface Props {
@@ -27,22 +26,21 @@ const SectionModal = ({
   selectTargetLine,
   getLine,
 }: Props) => {
+  const [upStationId, setUpStationId] = useState<string>('');
+  const [downStationId, setDownStationId] = useState<string>('');
+  const [distance, setDistance] = useState<string>('');
+
+  const { fetchData: addSectionAsync } = useFetch('POST');
+
   const { enqueueSnackbar } = useSnackbar();
 
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
-  const [upStationId, setUpStationId] = useState<string>('');
-  const [downStationId, setDownStationId] = useState<string>('');
-  const [distance, setDistance] = useState<string>('');
-
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
-
   const addSection = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!targetLine) return;
-    if (!BASE_URL) return;
 
     const newSection = {
       upStationId,
@@ -50,12 +48,11 @@ const SectionModal = ({
       distance,
     };
 
-    const res = await requestAddSection(BASE_URL, targetLine?.id, newSection);
+    const res = await addSectionAsync(`${END_POINT.LINES}/${targetLine?.id}/sections`, newSection);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      // TODO: form reset
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_SECTION);
       resetForm();
       closeModal();
