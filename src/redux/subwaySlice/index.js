@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import store from '..';
 import { ERROR, RESPONSE } from '../../constants';
 import { request } from '../../utils';
-import { setMessage } from '../snackbarSlice';
 
 export const getStationsThunk = createAsyncThunk(
   'subway/getStationsThunk',
@@ -29,7 +27,6 @@ export const addStationThunk = createAsyncThunk(
     try {
       const response = await request.post('/stations', params);
 
-      store.dispatch(setMessage({ message: RESPONSE.ADD_STATION.SUCCESS }));
       return { station: response.data };
     } catch (error) {
       console.error(error);
@@ -47,15 +44,12 @@ export const deleteStationThunk = createAsyncThunk(
     try {
       await request.delete(`/stations/${id}`);
 
-      store.dispatch(setMessage({ message: RESPONSE.DELETE_STATION.SUCCESS }));
       return { stationId: id };
     } catch (error) {
       console.error(error);
 
       if (error.response.status === 400) {
-        store.dispatch(setMessage({ message: RESPONSE.DELETE_STATION.FAIL }));
-
-        return rejectWithValue({ message: RESPONSE.DELETE_STATION.FAIL });
+        return rejectWithValue({ error: RESPONSE.DELETE_STATION.FAIL });
       }
 
       return rejectWithValue({ error: ERROR.UNKNOWN });
@@ -88,7 +82,6 @@ export const addLineThunk = createAsyncThunk(
     try {
       const response = await request.post('/lines', params);
 
-      store.dispatch(setMessage({ message: RESPONSE.ADD_LINE.SUCCESS }));
       return { line: response.data };
     } catch (error) {
       console.error(error);
@@ -106,7 +99,6 @@ export const deleteLineThunk = createAsyncThunk(
     try {
       await request.delete(`/lines/${id}`);
 
-      store.dispatch(setMessage({ message: RESPONSE.DELETE_LINE.SUCCESS }));
       return { lineId: id };
     } catch (error) {
       console.error(error);
@@ -125,14 +117,11 @@ export const addSectionThunk = createAsyncThunk(
       await request.post(`/lines/${id}/sections`, params);
       const response = await request.get(`/lines/${id}`);
 
-      store.dispatch(setMessage({ message: RESPONSE.ADD_SECTION.SUCCESS }));
       return { line: response.data };
     } catch (error) {
       console.error(error);
 
       if (error.response.status === 400) {
-        store.dispatch(setMessage({ message: error.response.data.message }));
-
         return rejectWithValue({ error: error.response.data.message });
       }
 
@@ -150,14 +139,11 @@ export const deleteSectionThunk = createAsyncThunk(
       await request.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
       const response = await request.get(`/lines/${lineId}`);
 
-      store.dispatch(setMessage({ message: RESPONSE.DELETE_SECTION.SUCCESS }));
       return { line: response.data };
     } catch (error) {
       console.error(error);
 
       if (error.response.status === 400) {
-        store.dispatch(setMessage({ message: error.response.data.message }));
-
         return rejectWithValue({ error: error.response.data.message });
       }
 
