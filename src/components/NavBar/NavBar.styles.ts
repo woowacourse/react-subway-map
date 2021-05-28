@@ -23,6 +23,9 @@ const Logo = styled.img`
 
 const NavItemList = styled.ul`
   display: flex;
+  & > *:not(:last-child) {
+    margin-right: 12px;
+  }
 `;
 
 const NavItem = styled.li`
@@ -31,9 +34,6 @@ const NavItem = styled.li`
   padding: 8px 16px;
   cursor: pointer;
 
-  &:not(:last-child) {
-    margin-right: 12px;
-  }
   &:hover {
     border-radius: 8px;
     background-color: ${({ theme }) => theme.bgColor.defaultCream};
