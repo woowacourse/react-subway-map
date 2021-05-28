@@ -34,7 +34,7 @@ interface DeleteLineResult {
   error: string;
 }
 
-function* getSectionSaga(action: GetSectionAction) {
+export function* getSectionSaga(action: GetSectionAction) {
   yield put(pending());
   const result: GetLineResult = yield call(sectionAPI.getSection, action.payload.id);
 
@@ -45,7 +45,7 @@ function* getSectionSaga(action: GetSectionAction) {
   yield put(setSection({ lineSection: result.lineSection }));
 }
 
-function* addSectionSaga(action: AddSectionAction) {
+export function* addSectionSaga(action: AddSectionAction) {
   yield put(pending());
   const result: AddLineResult = yield call(sectionAPI.addSection, action.payload);
 
@@ -56,7 +56,7 @@ function* addSectionSaga(action: AddSectionAction) {
   yield put(getSectionAsync({ id: Number(action.payload.lineId) }));
 }
 
-function* deleteSectionSaga(action: DeleteSectionAction) {
+export function* deleteSectionSaga(action: DeleteSectionAction) {
   yield put(pending());
   const result: DeleteLineResult = yield call(sectionAPI.deleteSection, action.payload);
 
