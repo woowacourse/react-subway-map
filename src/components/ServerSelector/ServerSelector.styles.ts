@@ -5,6 +5,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 12px;
 `;
 
 const ButtonsContainer = styled.div`
@@ -14,7 +15,7 @@ const ButtonsContainer = styled.div`
 `;
 
 const SelectServerMessage = styled.div<{ isVisible: boolean }>`
-  margin-top: 12px;
+  margin-bottom: 12px;
   color: ${PALETTE.RED};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;

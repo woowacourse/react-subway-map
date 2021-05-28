@@ -16,6 +16,9 @@ const ServerSelector = ({ isMessageVisible, changeServer }: Props) => {
 
   return (
     <Styled.Container>
+      <Styled.SelectServerMessage isVisible={isMessageVisible}>
+        {NOTIFICATION.SELECT_SERVER}
+      </Styled.SelectServerMessage>
       <Styled.ButtonsContainer>
         <TextButton
           text="🐾 코기"
@@ -48,9 +51,6 @@ const ServerSelector = ({ isMessageVisible, changeServer }: Props) => {
           onClick={() => changeServer(SERVER.ALLI)}
         />
       </Styled.ButtonsContainer>
-      <Styled.SelectServerMessage isVisible={isMessageVisible}>
-        {NOTIFICATION.SELECT_SERVER}
-      </Styled.SelectServerMessage>
     </Styled.Container>
   );
 };
