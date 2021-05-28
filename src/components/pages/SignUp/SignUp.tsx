@@ -3,12 +3,20 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { ROUTE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
+import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
 import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
 import { Header } from '../../atoms';
 import { SignUpForm } from '../../molecules';
 import { Container } from './SignUp.styles';
+
+const signUpApiResponseMessage: ResultMessage = {
+  ['POST_DATA_RESPONSE']: {
+    fail: '회원 가입에 실패하셨습니다.',
+    success: '회원가입에 성공하셨습니다.',
+  },
+};
 
 const SignUp = () => {
   const history = useHistory();
@@ -19,6 +27,7 @@ const SignUp = () => {
   });
   const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
     `${host}/members`,
+    signUpApiResponseMessage,
   );
 
   const { value: age, onChange: onChangeAge } = useChangeEvent('');
@@ -39,11 +48,7 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    if (signUpResponse?.isError === true) {
-      console.log('푸하하하하핳');
-      window.alert(signUpResponse.message);
-    } else if (signUpResponse?.isError === false) {
-      window.alert('회원가입에 성공하셨습니다.');
+    if (signUpResponse?.isError === false) {
       history.replace({ pathname: ROUTE.LOGIN });
     }
   }, [signUpResponse]);

@@ -6,6 +6,22 @@ import { IStationReq, IStationRes } from '../../../type';
 import { Header } from '../../atoms';
 import { ListItem, StationAddForm } from '../../molecules';
 import { ScrollBox, FullVerticalCenterBox } from '../../../styles/shared';
+import { ResultMessage } from '../../../hooks/useServerAPI';
+
+const stationApiResponseMessage: ResultMessage = {
+  ['GET_ALL_DATA_RESPONSE']: {
+    fail: '노선 조회에 실패하였습니다.',
+    success: '',
+  },
+  ['POST_DATA_RESPONSE']: {
+    fail: '지하철역이 추가에 실패하셨습니다.',
+    success: '지하철역이 성공적으로 추가되었습니다.',
+  },
+  ['DELETE_RESPONSE']: {
+    fail: '지하철역 삭제에 실패하셨습니다.',
+    success: '지하철역이 성공적으로 삭제되었습니다.',
+  },
+};
 
 const isValidStationName = (stationName: string) => {
   return /^[가-힣0-9]{2,20}$/.test(stationName);
@@ -29,10 +45,9 @@ const Station = () => {
     getAllData: getAllStations,
     deleteData: deleteStation,
     postData: addStation,
-    getAllDataResponse: getAllStationResponse,
     postDataResponse: postStationResponse,
     deleteDataResponse: deleteStationResponse,
-  } = useServerAPI<IStationRes>(`${host}/stations`);
+  } = useServerAPI<IStationRes>(`${host}/stations`, stationApiResponseMessage);
 
   const onSubmitStationInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
@@ -58,28 +73,6 @@ const Station = () => {
     if (!window.confirm('해당 역을 정말로 삭제하시겠습니까?')) return;
     deleteStation(`${stationId}`);
   };
-
-  useEffect(() => {
-    if (getAllStationResponse?.isError === true) {
-      window.alert(getAllStationResponse.message);
-    }
-  }, [getAllStationResponse]);
-
-  useEffect(() => {
-    if (postStationResponse?.isError === true) {
-      window.alert(postStationResponse.message);
-    } else if (postStationResponse?.isError === false) {
-      window.alert('지하철역이 성공적으로 추가되었습니다.');
-    }
-  }, [postStationResponse]);
-
-  useEffect(() => {
-    if (deleteStationResponse?.isError === true) {
-      window.alert(deleteStationResponse.message);
-    } else if (deleteStationResponse?.isError === false) {
-      window.alert('지하철역이 성공적으로 삭제되었습니다.');
-    }
-  }, [deleteStationResponse]);
 
   useEffect(() => {
     getAllStations();

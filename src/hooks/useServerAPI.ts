@@ -2,11 +2,31 @@ import { useState, useEffect } from 'react';
 import { IResMeta } from '../type';
 import { request } from '../utils';
 
+type ResultMessageKeyType =
+  | 'GET_ALL_DATA_RESPONSE'
+  | 'GET_DATA_RESPONSE'
+  | 'POST_DATA_RESPONSE'
+  | 'DELETE_RESPONSE'
+  | 'PUT_RESPONSE';
+
+export type ResultMessage = Partial<
+  {
+    [key in ResultMessageKeyType]: {
+      success: string;
+      fail: string;
+    };
+  }
+>;
+
 const defaultHeader = {
   'Content-Type': 'application/json; charset=UTF-8',
 };
 
-const useServerAPI = <T>(url: string) => {
+const useServerAPI = <T>(
+  url: string,
+  resultMessage: ResultMessage,
+  messageCallBack = (msg: string) => window.alert(msg),
+) => {
   const [data, setData] = useState<T | null>();
   const [allData, setAllData] = useState<T[] | null>();
 
@@ -122,35 +142,63 @@ const useServerAPI = <T>(url: string) => {
     [],
   );
 
-  // useEffect(() => {
-  //   if (addLineResponse?.isError === true) {
-  //     window.alert(addLineResponse.message);
-  //   } else if (addLineResponse?.isError === false) {
-  //     window.alert('노선 추가 성공');
-  //   }
-  // }, [addLineResponse]);
+  useEffect(() => {
+    if (getAllDataResponse?.isError === true) {
+      getAllDataResponse.message
+        ? messageCallBack(getAllDataResponse.message)
+        : resultMessage?.GET_ALL_DATA_RESPONSE?.fail &&
+          messageCallBack(resultMessage.GET_ALL_DATA_RESPONSE.fail);
+    } else if (getAllDataResponse?.isError === false) {
+      resultMessage.GET_ALL_DATA_RESPONSE?.success &&
+        messageCallBack(resultMessage.GET_ALL_DATA_RESPONSE.success);
+    }
+  }, [getAllDataResponse]);
 
-  // useEffect(() => {
-  //   if (editLineResponse?.isError === true) {
-  //     window.alert(editLineResponse.message);
-  //   } else if (editLineResponse?.isError === false) {
-  //     window.alert('노선 수정 성공');
-  //   }
-  // }, [editLineResponse]);
+  useEffect(() => {
+    if (getDataResponse?.isError === true) {
+      getDataResponse.message
+        ? messageCallBack(getDataResponse.message)
+        : resultMessage?.GET_DATA_RESPONSE?.fail &&
+          messageCallBack(resultMessage.GET_DATA_RESPONSE.fail);
+    } else if (getDataResponse?.isError === false) {
+      resultMessage.GET_DATA_RESPONSE?.success &&
+        messageCallBack(resultMessage.GET_DATA_RESPONSE.success);
+    }
+  }, [getDataResponse]);
 
-  // useEffect(() => {
-  //   if (deleteLineResponse?.isError === true) {
-  //     window.alert(deleteLineResponse.message);
-  //   } else if (deleteLineResponse?.isError === false) {
-  //     window.alert('노선 제거 성공');
-  //   }
-  // }, [deleteLineResponse]);
+  useEffect(() => {
+    if (postDataResponse?.isError === true) {
+      postDataResponse.message
+        ? messageCallBack(postDataResponse.message)
+        : resultMessage?.POST_DATA_RESPONSE?.fail &&
+          messageCallBack(resultMessage.POST_DATA_RESPONSE.fail);
+    } else if (postDataResponse?.isError === false) {
+      resultMessage.POST_DATA_RESPONSE?.success &&
+        messageCallBack(resultMessage.POST_DATA_RESPONSE.success);
+    }
+  }, [postDataResponse]);
 
-  // useEffect(() => {
-  //   if (getAllLineResponse?.isError === true) {
-  //     window.alert(getAllLineResponse.message);
-  //   }
-  // }, [getAllLineResponse]);
+  useEffect(() => {
+    if (deleteDataResponse?.isError === true) {
+      deleteDataResponse.message
+        ? messageCallBack(deleteDataResponse.message)
+        : resultMessage?.DELETE_RESPONSE?.fail &&
+          messageCallBack(resultMessage.DELETE_RESPONSE.fail);
+    } else if (deleteDataResponse?.isError === false) {
+      resultMessage.DELETE_RESPONSE?.success &&
+        messageCallBack(resultMessage.DELETE_RESPONSE.success);
+    }
+  }, [deleteDataResponse]);
+
+  useEffect(() => {
+    if (putDataResponse?.isError === true) {
+      putDataResponse.message
+        ? messageCallBack(putDataResponse.message)
+        : resultMessage.PUT_RESPONSE && messageCallBack(resultMessage.PUT_RESPONSE.fail);
+    } else if (putDataResponse?.isError === false) {
+      resultMessage.PUT_RESPONSE?.success && messageCallBack(resultMessage.PUT_RESPONSE.success);
+    }
+  }, [putDataResponse]);
 
   return {
     data,

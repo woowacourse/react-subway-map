@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
+import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
@@ -8,6 +9,24 @@ import { Button, Header, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { ListItem, Modal, SectionAddForm } from '../../molecules';
 import { SelectContainer } from './Section.styles';
+
+const lineApiResponseMessage: ResultMessage = {
+  ['GET_ALL_DATA_RESPONSE']: {
+    fail: '노선 조회에 실패하였습니다.',
+    success: '',
+  },
+};
+
+const sectionApiResponseMessage: ResultMessage = {
+  ['POST_DATA_RESPONSE']: {
+    fail: '구간 추가에 실패하셨습니다.',
+    success: '구간 추가에 성공하셨습니다.',
+  },
+  ['DELETE_RESPONSE']: {
+    fail: '구간 삭제에 실패하셨습니다.',
+    success: '구간 삭제에 성공하셨습니다.',
+  },
+};
 
 const Section = () => {
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
@@ -17,22 +36,19 @@ const Section = () => {
     return { hostState: state.hostReducer };
   });
 
-  const {
-    allData: stations,
-    getAllData: getAllStations,
-    getAllDataResponse: getAllStationResponse,
-  } = useServerAPI<IStationRes>(`${host}/stations`);
+  const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
+    `${host}/stations`,
+    sectionApiResponseMessage,
+  );
 
   const {
     allData: lines,
     getAllData: getAllLines,
-    getAllDataResponse: getAllLineResponse,
-
     deleteData: deleteSection,
     deleteDataResponse: deleteSectionResponse,
     postData: addSection,
     postDataResponse: addSectionResponse,
-  } = useServerAPI<ILineRes>(`${host}/lines`);
+  } = useServerAPI<ILineRes>(`${host}/lines`, lineApiResponseMessage);
 
   const { value: lineId, onChange: onChangeLineId } = useChangeEvent('');
   const {
@@ -98,34 +114,6 @@ const Section = () => {
   useEffect(() => {
     getAllLines();
   }, [addSectionResponse, deleteSectionResponse]);
-
-  useEffect(() => {
-    if (addSectionResponse?.isError === true) {
-      window.alert(addSectionResponse.message);
-    } else if (addSectionResponse?.isError === false) {
-      window.alert('구간 추가 성공');
-    }
-  }, [addSectionResponse]);
-
-  useEffect(() => {
-    if (deleteSectionResponse?.isError === true) {
-      window.alert(deleteSectionResponse.message);
-    } else if (deleteSectionResponse?.isError === false) {
-      window.alert('구간 제거 성공');
-    }
-  }, [deleteSectionResponse]);
-
-  useEffect(() => {
-    if (getAllStationResponse?.isError === true) {
-      window.alert(getAllStationResponse.message);
-    }
-  }, [getAllStationResponse]);
-
-  useEffect(() => {
-    if (getAllLineResponse?.isError === true) {
-      window.alert(getAllLineResponse.message);
-    }
-  }, [getAllLineResponse]);
 
   useEffect(() => {
     getAllStations();

@@ -46,6 +46,7 @@ const Login = () => {
 
   useEffect(() => {
     if (accessTokenState?.isError === false) {
+      window.alert('로그인에 성공하셨습니다.');
       dispatch(getSignedUserAsync({ host, accessToken: accessTokenState.accessToken }));
       history.replace({ pathname: ROUTE.HOME });
     } else if (accessTokenState?.isError === true) {
