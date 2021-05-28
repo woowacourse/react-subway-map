@@ -9,8 +9,10 @@ import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectServer } from '../../modules/user/userReducer';
 import React, { useEffect, useState } from 'react';
+
 import { RootState } from '../../modules';
 import { REGEXP } from '../../constants/regularExpression';
+import useUser from '../../hook/useUser';
 
 const getEmailErrorMessage = (email: string) => {
   if (!REGEXP.EMAIL.test(email)) {
@@ -30,6 +32,7 @@ const getPasswordErrorMessage = (password: string) => {
 
 const SignInForm = () => {
   const { serverName, error, accessToken } = useSelector((state: RootState) => state.user);
+  const { resetError } = useUser();
   const [serverURL, setServerURL] = useState('');
   const isServerSelected = Boolean(serverName);
   const dispatch = useDispatch();
@@ -43,12 +46,13 @@ const SignInForm = () => {
   useEffect(() => {
     if (error) {
       alert(error);
+      resetError();
     }
 
     if (accessToken) {
       history.push(ROUTE.HOME);
     }
-  }, [error, accessToken, history]);
+  }, [error, accessToken, history, resetError]);
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     SERVER.URL = e.target.value;
