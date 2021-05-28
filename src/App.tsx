@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
+import { Button, Main, Menu, RootContainer, Title, Video } from './components/atoms';
 import { HostSelect } from './components/molecules';
 import { Home, Line, Login, Logout, Section, SignUp, Station } from './components/pages';
 import { ROUTE } from './constants';
 import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
+import subwayVideo from './assets/video/subwayBackground.mp4';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -75,6 +76,7 @@ const App = () => {
 
   return (
     <RootContainer>
+      <Video src={subwayVideo} loop autoPlay muted />
       <Title>
         <Link to={ROUTE.HOME}>지하철 노선도</Link>
       </Title>
@@ -82,19 +84,38 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path={ROUTE.HOME} component={Home} />
-          {signedUserId ? (
-            <>
-              <Route exact path={ROUTE.STATION} component={Station} />
-              <Route exact path={ROUTE.LINE} component={Line} />
-              <Route exact path={ROUTE.SECTION} component={Section} />
-              <Route exact path={ROUTE.LOGOUT} component={Logout} />
-            </>
-          ) : (
-            <>
-              <Route exact path={ROUTE.SIGNUP} component={SignUp} />
-              <Route exact path={ROUTE.LOGIN} component={Login} />
-            </>
-          )}
+
+          <Route
+            exact
+            path={ROUTE.STATION}
+            render={() => (signedUserId ? <Station /> : <Redirect to={ROUTE.HOME} />)}
+          />
+          <Route
+            exact
+            path={ROUTE.LINE}
+            render={() => (signedUserId ? <Line /> : <Redirect to={ROUTE.HOME} />)}
+          />
+          <Route
+            exact
+            path={ROUTE.SECTION}
+            render={() => (signedUserId ? <Section /> : <Redirect to={ROUTE.HOME} />)}
+          />
+          <Route
+            exact
+            path={ROUTE.LOGOUT}
+            render={() => (signedUserId ? <Logout /> : <Redirect to={ROUTE.HOME} />)}
+          />
+          <Route
+            exact
+            path={ROUTE.SIGNUP}
+            render={() => (!signedUserId ? <SignUp /> : <Redirect to={ROUTE.HOME} />)}
+          />
+          <Route
+            exact
+            path={ROUTE.LOGIN}
+            render={() => (!signedUserId ? <Login /> : <Redirect to={ROUTE.HOME} />)}
+          />
+
           <Route component={() => <Redirect to={ROUTE.HOME} />} />
         </Switch>
       </Main>
