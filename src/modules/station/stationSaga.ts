@@ -2,6 +2,7 @@ import { setStations, getStationsAsync, error, pending, addStationAsync, deleteS
 import { call, takeLatest, put, select } from 'redux-saga/effects';
 import { stationAPI } from '../../api/station';
 import { Station } from '../../interfaces';
+import { RootState } from '..';
 
 interface GetStationResult {
   error: string;
@@ -34,6 +35,8 @@ interface DeleteStationResult {
   error: string;
 }
 
+export const selectStations = (state: RootState) => state.station.stations;
+
 export function* getStationsSaga() {
   yield put(pending());
   const result: GetStationResult = yield call(stationAPI.getStations);
@@ -54,7 +57,7 @@ export function* addStationSaga(action: AddStationAction) {
     return;
   }
 
-  const stations: Station[] = yield select(state => state.station.stations);
+  const stations: Station[] = yield select(selectStations);
 
   yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
 }
@@ -67,7 +70,7 @@ export function* deleteStationSaga(action: DeleteStationAction) {
     yield put(error({ error: result.error }));
     return;
   }
-  const stations: Station[] = yield select(state => state.station.stations);
+  const stations: Station[] = yield select(selectStations);
   yield put(setStations({ stations: stations.filter(station => station.id !== action.payload.id) }));
 }
 
