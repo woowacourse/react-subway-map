@@ -1,5 +1,5 @@
 import React from 'react';
-import Snackbar from '.';
+import Snackbar from './Snackbar';
 
 export default {
   title: 'Common/Snackbar',
