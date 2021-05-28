@@ -47,7 +47,11 @@ const LoginPage = () => {
     const res = await requestLogin(BASE_URL, loginData);
 
     if (res.status === API_STATUS.REJECTED) {
-      setInvalidNotification({ message: res.message, isValid: false, isVisible: true });
+      setInvalidNotification({
+        message: res.message || ALERT_MESSAGE.SERVER_ERROR,
+        isValid: false,
+        isVisible: true,
+      });
     } else if (res.status === API_STATUS.FULFILLED) {
       setInvalidNotification({ message: '', isValid: true, isVisible: false });
       setLoginResponse(res.data);

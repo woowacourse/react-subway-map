@@ -47,7 +47,7 @@ const SignupPage = () => {
     const res = await requestCheckDuplicatedEmail(BASE_URL, email);
 
     if (res.status === API_STATUS.REJECTED) {
-      enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR);
+      enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR || ALERT_MESSAGE.SERVER_ERROR);
     } else if (res.status === API_STATUS.FULFILLED) {
       if (res.data.exist) {
         setEmailNotification({
@@ -97,7 +97,7 @@ const SignupPage = () => {
     const res = await requestSignup(BASE_URL, signupData);
 
     if (res.status === API_STATUS.REJECTED) {
-      enqueueSnackbar(res.message);
+      enqueueSnackbar(res.message || ALERT_MESSAGE.SERVER_ERROR);
     } else if (res.status === API_STATUS.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_SIGNUP);
       history.push(ROUTE.LOGIN);

@@ -28,7 +28,7 @@ const requestSignup = async (
   } catch (error) {
     console.error(error);
 
-    return { status: API_STATUS.REJECTED, message: error.response.data.message };
+    return { status: API_STATUS.REJECTED, message: error.response?.data.message };
   }
 };
 
@@ -40,7 +40,7 @@ const requestLogin = async (BASE_URL: string, loginData: { email: string; passwo
   } catch (error) {
     console.error(error);
 
-    return { status: API_STATUS.REJECTED, message: error.response.data.message };
+    return { status: API_STATUS.REJECTED, message: error.response?.data.message };
   }
 };
 
