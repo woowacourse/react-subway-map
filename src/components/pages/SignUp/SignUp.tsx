@@ -18,7 +18,7 @@ const SignUp = () => {
     return { hostState: state.hostReducer };
   });
   const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
-    BASE_URL.ME(host),
+    BASE_URL.SIGNUP(host),
     RESPONSE_MESSAGE.SIGNUP,
   );
 
