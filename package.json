@@ -83,6 +83,19 @@
         "rules": {
           "no-param-reassign": "off"
         }
+      },
+      {
+        "files": [
+          "**/test.{js,jsx}"
+        ],
+        "rules": {
+          "import/no-extraneous-dependencies": [
+            "error",
+            {
+              "devDependencies": true
+            }
+          ]
+        }
       }
     ],
     "ignorePatterns": [
@@ -118,6 +131,11 @@
   "lint-staged": {
     "*.{js,jsx}": "eslint --fix",
     "*.{js,jsx,json,html,css,md}": "prettier --write"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test.{js,jsx}"
+    ]
   },
   "homepage": "https://shinsehantan.github.io/react-subway-map"
 }
