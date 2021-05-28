@@ -43,8 +43,11 @@ const SectionAddModal = ({
   closeModal,
   onClickToClose,
 }) => {
-  const handleSubmitForm = (values) => {
-    addSection({ ...values, id: line.id });
+  const handleSubmitForm = async (values) => {
+    const response = await addSection({ ...values, id: line.id });
+
+    if (response.error) return;
+
     closeModal();
   };
 

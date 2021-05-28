@@ -8,6 +8,7 @@ export const Container = styled.div`
   padding: 12px;
   border-radius: 4px;
   position: fixed;
+  z-index: 30;
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
