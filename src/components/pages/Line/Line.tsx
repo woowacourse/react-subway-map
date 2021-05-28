@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { LineColor } from '../../../constants';
+import { LineColor, RESPONSE_MESSAGE } from '../../../constants';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
-import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
@@ -10,32 +9,6 @@ import { isValidUpDownStation } from '../../../utils';
 import { Button, Header } from '../../atoms';
 import { LineEditForm, Modal } from '../../molecules';
 import { LineItemWithCircle, ListItemContainer } from './Line.styles';
-
-const stationApiResponseMessage: ResultMessage = {
-  ['GET_ALL_DATA_RESPONSE']: {
-    fail: '노선 조회에 실패하였습니다.',
-    success: '',
-  },
-};
-
-const lineApiResponseMessage: ResultMessage = {
-  ['GET_ALL_DATA_RESPONSE']: {
-    fail: '노선 조회에 실패하였습니다.',
-    success: '',
-  },
-  ['POST_DATA_RESPONSE']: {
-    fail: '노선 추가를 실패하셨습니다.',
-    success: '노선 추가에 성공하셨습니다.',
-  },
-  ['DELETE_RESPONSE']: {
-    fail: '노선 제거에 실패하셨습니다.',
-    success: '노선 제거에 성공하셨습니다.',
-  },
-  ['PUT_RESPONSE']: {
-    fail: '노선 수정에 실패하셨습니다.',
-    success: '노선 수정에 성공하셨습니다.',
-  },
-};
 
 const isValidLineName = (lineName: string) => {
   return /^[가-힣0-9]{2,10}$/.test(lineName);
@@ -60,11 +33,11 @@ const Line = () => {
 
     deleteData: deleteLine,
     deleteDataResponse: deleteLineResponse,
-  } = useServerAPI<ILineRes>(`${host}/lines`, lineApiResponseMessage);
+  } = useServerAPI<ILineRes>(`${host}/lines`, RESPONSE_MESSAGE.LINE);
 
   const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
     `${host}/stations`,
-    stationApiResponseMessage,
+    RESPONSE_MESSAGE.STATION,
   );
 
   const { isModalOpen, open: openModal, onClickClose, close: closeModal } = useModal(false);

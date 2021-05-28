@@ -1,15 +1,14 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import subwayVideo from './assets/video/subwayBackground.mp4';
 import { Button, Main, Menu, RootContainer, Title, Video } from './components/atoms';
 import { HostSelect } from './components/molecules';
 import { Home, Line, Login, Logout, Section, SignUp, Station } from './components/pages';
 import { ROUTE } from './constants';
+import { initialState as initialAccessToken, setAccessToken } from './features/accessTokenSlice';
 import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
-import subwayVideo from './assets/video/subwayBackground.mp4';
-import { setAccessToken, initialState as initialAccessToken } from './features/accessTokenSlice';
 
 interface ConditionalRouteProps {
   exact?: boolean;

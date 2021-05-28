@@ -22,7 +22,7 @@ export const isValidPassword = (value: string) => {
 };
 
 export const isValidLoginInput = (email: string, password: string) =>
-  email.length === 0 || password.length === 0;
+  email.length > 0 || password.length > 0;
 
 export const isValidStationName = (stationName: string) => /^[가-힣0-9]{2,20}$/.test(stationName);
 

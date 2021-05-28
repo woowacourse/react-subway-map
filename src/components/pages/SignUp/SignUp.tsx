@@ -1,22 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { ROUTE } from '../../../constants';
+import { RESPONSE_MESSAGE, ROUTE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
-import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
 import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
 import { Header } from '../../atoms';
 import { SignUpForm } from '../../molecules';
 import { Container } from './SignUp.styles';
-
-const signUpApiResponseMessage: ResultMessage = {
-  ['POST_DATA_RESPONSE']: {
-    fail: '회원 가입에 실패하셨습니다.',
-    success: '회원가입에 성공하셨습니다.',
-  },
-};
 
 const SignUp = () => {
   const history = useHistory();
@@ -27,7 +19,7 @@ const SignUp = () => {
   });
   const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
     `${host}/members`,
-    signUpApiResponseMessage,
+    RESPONSE_MESSAGE.SIGNUP,
   );
 
   const { value: age, onChange: onChangeAge } = useChangeEvent('');

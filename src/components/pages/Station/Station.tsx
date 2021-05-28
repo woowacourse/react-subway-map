@@ -1,28 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { RESPONSE_MESSAGE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
+import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { IStationReq, IStationRes } from '../../../type';
+import { isValidStationName } from '../../../utils';
 import { Header } from '../../atoms';
 import { ListItem, StationAddForm } from '../../molecules';
-import { ScrollBox, FullVerticalCenterBox } from '../../../styles/shared';
-import { ResultMessage } from '../../../hooks/useServerAPI';
-import { isValidStationName } from '../../../utils';
-
-const stationApiResponseMessage: ResultMessage = {
-  ['GET_ALL_DATA_RESPONSE']: {
-    fail: '노선 조회에 실패하였습니다.',
-    success: '',
-  },
-  ['POST_DATA_RESPONSE']: {
-    fail: '지하철역이 추가에 실패하셨습니다.',
-    success: '지하철역이 성공적으로 추가되었습니다.',
-  },
-  ['DELETE_RESPONSE']: {
-    fail: '지하철역 삭제에 실패하셨습니다.',
-    success: '지하철역이 성공적으로 삭제되었습니다.',
-  },
-};
 
 const Station = () => {
   const {
@@ -44,7 +29,7 @@ const Station = () => {
     postData: addStation,
     postDataResponse: postStationResponse,
     deleteDataResponse: deleteStationResponse,
-  } = useServerAPI<IStationRes>(`${host}/stations`, stationApiResponseMessage);
+  } = useServerAPI<IStationRes>(`${host}/stations`, RESPONSE_MESSAGE.STATION);
 
   const onSubmitStationInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { RESPONSE_MESSAGE } from '../../../constants';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
-import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
@@ -10,24 +10,6 @@ import { Button, Header, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { ListItem, Modal, SectionAddForm } from '../../molecules';
 import { SelectContainer } from './Section.styles';
-
-const lineApiResponseMessage: ResultMessage = {
-  ['GET_ALL_DATA_RESPONSE']: {
-    fail: '노선 조회에 실패하였습니다.',
-    success: '',
-  },
-};
-
-const sectionApiResponseMessage: ResultMessage = {
-  ['POST_DATA_RESPONSE']: {
-    fail: '구간 추가에 실패하셨습니다.',
-    success: '구간 추가에 성공하셨습니다.',
-  },
-  ['DELETE_RESPONSE']: {
-    fail: '구간 삭제에 실패하셨습니다.',
-    success: '구간 삭제에 성공하셨습니다.',
-  },
-};
 
 const Section = () => {
   const {
@@ -38,10 +20,8 @@ const Section = () => {
 
   const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
     `${host}/stations`,
-    sectionApiResponseMessage,
+    RESPONSE_MESSAGE.SECTION,
   );
-
-  const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 
   const {
     allData: lines,
@@ -50,7 +30,9 @@ const Section = () => {
     deleteDataResponse: deleteSectionResponse,
     postData: addSection,
     postDataResponse: addSectionResponse,
-  } = useServerAPI<ILineRes>(`${host}/lines`, lineApiResponseMessage);
+  } = useServerAPI<ILineRes>(`${host}/lines`, RESPONSE_MESSAGE.LINE);
+
+  const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 
   const { value: lineId, onChange: onChangeLineId } = useChangeEvent('');
   const {
