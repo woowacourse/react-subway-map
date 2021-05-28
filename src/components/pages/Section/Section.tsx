@@ -5,6 +5,7 @@ import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
+import { isValidUpDownStation } from '../../../utils';
 import { Button, Header, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { ListItem, Modal, SectionAddForm } from '../../molecules';
@@ -29,7 +30,6 @@ const sectionApiResponseMessage: ResultMessage = {
 };
 
 const Section = () => {
-  const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
   const {
     hostState: { host },
   } = useSelector((state: RootState) => {
@@ -40,6 +40,8 @@ const Section = () => {
     `${host}/stations`,
     sectionApiResponseMessage,
   );
+
+  const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 
   const {
     allData: lines,
@@ -81,7 +83,7 @@ const Section = () => {
   const onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
 
-    if (upStationId === '' || downStationId === '') {
+    if (!isValidUpDownStation(upStationId, downStationId)) {
       window.alert('상행선, 하행선을 선택해주세요');
 
       return;
@@ -141,9 +143,7 @@ const Section = () => {
             <ListItem
               key={stationId}
               content={name}
-              onClickDelete={() => {
-                onDeleteSection(stationId);
-              }}
+              onClickDelete={() => onDeleteSection(stationId)}
             />
           );
         })}

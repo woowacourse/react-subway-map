@@ -6,6 +6,7 @@ import { ResultMessage } from '../../../hooks/useServerAPI';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
+import { isValidUpDownStation } from '../../../utils';
 import { Button, Header } from '../../atoms';
 import { LineEditForm, Modal } from '../../molecules';
 import { LineItemWithCircle, ListItemContainer } from './Line.styles';
@@ -148,7 +149,7 @@ const Line = () => {
     }
 
     if (mode === 'ADD') {
-      if (upStationId === '' || downStationId === '') {
+      if (!isValidUpDownStation(upStationId, downStationId)) {
         window.alert('상행선, 하행선을 선택해주세요');
 
         return;

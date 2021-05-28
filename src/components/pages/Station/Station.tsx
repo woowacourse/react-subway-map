@@ -7,6 +7,7 @@ import { Header } from '../../atoms';
 import { ListItem, StationAddForm } from '../../molecules';
 import { ScrollBox, FullVerticalCenterBox } from '../../../styles/shared';
 import { ResultMessage } from '../../../hooks/useServerAPI';
+import { isValidStationName } from '../../../utils';
 
 const stationApiResponseMessage: ResultMessage = {
   ['GET_ALL_DATA_RESPONSE']: {
@@ -21,10 +22,6 @@ const stationApiResponseMessage: ResultMessage = {
     fail: '지하철역 삭제에 실패하셨습니다.',
     success: '지하철역이 성공적으로 삭제되었습니다.',
   },
-};
-
-const isValidStationName = (stationName: string) => {
-  return /^[가-힣0-9]{2,20}$/.test(stationName);
 };
 
 const Station = () => {

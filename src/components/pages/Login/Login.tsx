@@ -9,6 +9,7 @@ import { useChangeEvent } from '../../../hooks';
 import { RootState, useAppDispatch } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILoginReq } from '../../../type';
+import { isValidLoginInput } from '../../../utils';
 import { Header } from '../../atoms';
 import { LoginForm } from '../../molecules';
 import { Footer } from './Login.styles';
@@ -30,7 +31,7 @@ const Login = () => {
   const onSubmitLogin: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
 
-    if (email.length === 0 || password.length === 0) {
+    if (!isValidLoginInput(email, password)) {
       window.alert('계정정보를 입력해주세요.');
 
       return;
