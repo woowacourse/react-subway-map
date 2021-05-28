@@ -229,6 +229,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
               backgroundColor={themeColor}
               color={PALETTE.WHITE}
               onClick={() => setFormOpen(!formOpen)}
+              aria-label="노선 추가"
             >
               <MdAdd size="1.5rem" />
             </RoundButton>
@@ -238,17 +239,25 @@ const LinePage = ({ setIsLoading }: PageProps) => {
         )}
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
-        <Form onSubmit={onLineSubmit}>
+        <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식">
           <InputContainer
             labelText="노선 이름"
             validation={{ text: lineNameErrorMessage, isValid: false }}
           >
-            <Input value={lineName} onChange={onlineNameChange} />
+            <Input
+              value={lineName}
+              onChange={onlineNameChange}
+              aria-label="지하철 노선 이름 입력"
+            />
           </InputContainer>
           <StationSelects>
             <div>
               <InputContainer labelText="상행 종점">
-                <Select value={upStationId} onChange={onUpStationIdChange}>
+                <Select
+                  value={upStationId}
+                  onChange={onUpStationIdChange}
+                  aria-label="상행종점 선택"
+                >
                   <option value="/" hidden>
                     역 선택
                   </option>
@@ -263,7 +272,11 @@ const LinePage = ({ setIsLoading }: PageProps) => {
                 <MdArrowForward size="1.5rem" />
               </Icon>
               <InputContainer labelText="하행 종점">
-                <Select value={downStationId} onChange={onDownStationIdChange}>
+                <Select
+                  value={downStationId}
+                  onChange={onDownStationIdChange}
+                  aria-label="하행종점 선택"
+                >
                   <option value="/" hidden>
                     역 선택
                   </option>
@@ -281,7 +294,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
             labelText="거리 (단위:km)"
             validation={{ text: distanceErrorMessage, isValid: false }}
           >
-            <Input value={distance} onChange={onDistanceChange} />
+            <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>
           <InputContainer labelText="색상을 선택하세요 (이미 등록된 색상은 선택할 수 없습니다.)">
             <Palette inputName={'color'} colors={colors} />
@@ -293,9 +306,9 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
         {lines.length === 0 ? (
-          <img src={noLine} alt="노선이 없습니다." />
+          <img src={noLine} alt="지하철 노선 없음 이미지" />
         ) : (
-          <List>
+          <List aria-label="노선 목록">
             {lines.map(({ id, name, color }) => (
               <li key={id}>
                 <ColorDot size="s" backgroundColor={color} />
@@ -307,6 +320,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
                     backgroundColor={PALETTE.PINK}
                     color={PALETTE.WHITE}
                     onClick={() => onLineDelete(id, name)}
+                    aria-label={`${name} 삭제`}
                   >
                     <MdDelete size="15px" />
                   </Button>
