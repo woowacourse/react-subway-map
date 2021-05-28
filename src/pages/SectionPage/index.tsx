@@ -6,35 +6,37 @@ import Dropdown from 'components/shared/Dropdown/Dropdown';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import SectionModal from 'components/SectionModal/SectionModal';
+import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import deleteIcon from 'assets/delete.png';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
 import ROUTE from 'constants/routes';
-import { requestGetStations } from 'request/station';
-import { requestDeleteSection, requestGetLine, requestGetLines } from 'request/line';
 import { Line, Station, User } from 'types';
+import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 
 const SectionPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
-
-  const { enqueueSnackbar } = useSnackbar();
 
   const [lines, setLines] = useState<Line[]>([]);
   const [targetLine, setTargetLine] = useState<Line | undefined>();
   const [stations, setStations] = useState<Station[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
+  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
+  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch('GET');
+  const { fetchData: getLineAsync, loading: getLineLoading } = useFetch('GET');
+  const { fetchData: deleteSectionAsync, loading: deleteSectionLoading } = useFetch('DELETE');
+
+  const { enqueueSnackbar } = useSnackbar();
+
   const lineOptions = lines.map((line) => ({ id: line.id, value: line.name }));
 
   const getStations = async () => {
-    if (!BASE_URL) return;
-
-    const res = await requestGetStations(BASE_URL);
+    const res = await getStationsAsync(END_POINT.STATIONS);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -44,9 +46,7 @@ const SectionPage = () => {
   };
 
   const getLines = async () => {
-    if (!BASE_URL) return;
-
-    const res = await requestGetLines(BASE_URL);
+    const res = await getLinesAsync(END_POINT.LINES);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -56,9 +56,7 @@ const SectionPage = () => {
   };
 
   const getLine = async (targetLineId: Line['id']) => {
-    if (!BASE_URL) return;
-
-    const res = await requestGetLine(BASE_URL, targetLineId);
+    const res = await getLineAsync(`${END_POINT.LINES}/${targetLineId}`);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -76,9 +74,10 @@ const SectionPage = () => {
   const deleteStation = async (stationId: Station['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
     if (!targetLine) return;
-    if (!BASE_URL) return;
 
-    const res = await requestDeleteSection(BASE_URL, targetLine?.id, stationId);
+    const res = await deleteSectionAsync(
+      `${END_POINT.LINES}/${targetLine?.id}/sections?stationId=${stationId}`,
+    );
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -98,6 +97,8 @@ const SectionPage = () => {
     setModalOpen(false);
   };
 
+  const isLoading = getStationsLoading || getLinesLoading || getLineLoading || deleteSectionLoading;
+
   useEffect(() => {
     const fetchLines = async () => {
       getLines();
@@ -109,6 +110,7 @@ const SectionPage = () => {
   return (
     <>
       <CardLayout title="구간 관리">
+        <Loading isLoading={isLoading} />
         <Styled.TopContaier>
           <Styled.DropdownWrapper>
             <Dropdown

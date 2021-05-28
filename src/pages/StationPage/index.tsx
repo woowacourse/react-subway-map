@@ -6,26 +6,21 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
 import Notification from 'components/shared/Notification/Notification';
+import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import saveIcon from 'assets/enter.png';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS, END_POINT } from 'constants/api';
 import regex from 'constants/regex';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
-import {
-  requestAddStation,
-  requestDeleteStation,
-  requestEditStation,
-  requestGetStations,
-} from 'request/station';
+import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 import ROUTE from 'constants/routes';
 
 const StationPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
@@ -36,6 +31,11 @@ const StationPage = () => {
   const [isMessageValid, setMessageValid] = useState<boolean>(false);
   const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
+  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
+  const { fetchData: addStationAsync, loading: addStationLoading } = useFetch('POST');
+  const { fetchData: deleteStationAsync, loading: deleteStationLoading } = useFetch('DELETE');
+  const { fetchData: editStationAsync, loading: editStationLoading } = useFetch('PUT');
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -43,9 +43,7 @@ const StationPage = () => {
   const isValidStationName = (stationName: string) => regex.koreanAndNumber.test(stationName);
 
   const getStations = async () => {
-    if (!BASE_URL) return;
-
-    const res = await requestGetStations(BASE_URL);
+    const res = await getStationsAsync(END_POINT.STATIONS);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
@@ -65,9 +63,10 @@ const StationPage = () => {
     }
 
     setMessageVisible(false);
-    if (!BASE_URL) return;
 
-    const res = await requestAddStation(BASE_URL, newStationName);
+    const res = await addStationAsync(END_POINT.STATIONS, {
+      name: newStationName,
+    });
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -87,7 +86,6 @@ const StationPage = () => {
   const saveEditForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!BASE_URL) return;
     if (!isValidStationName(editingStationName)) {
       setMessageValid(false);
       setMessageVisible(true);
@@ -97,7 +95,9 @@ const StationPage = () => {
 
     setMessageVisible(false);
 
-    const res = await requestEditStation(BASE_URL, editingStationName, editingStationId);
+    const res = await editStationAsync(`${END_POINT.STATIONS}/${editingStationId}`, {
+      name: editingStationName,
+    });
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -112,9 +112,8 @@ const StationPage = () => {
 
   const deleteStation = async (id: Station['id']) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE)) return;
-    if (!BASE_URL) return;
 
-    const res = await requestDeleteStation(BASE_URL, id);
+    const res = await deleteStationAsync(`${END_POINT.STATIONS}/${id}`);
 
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
@@ -123,6 +122,9 @@ const StationPage = () => {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_STAION);
     }
   };
+
+  const isLoading =
+    getStationsLoading || addStationLoading || deleteStationLoading || editStationLoading;
 
   // TOOD: 첫 번째 클릭에는 focus 실패
   useEffect(() => {
@@ -139,6 +141,7 @@ const StationPage = () => {
 
   return (
     <CardLayout title={'지하철 역 관리'}>
+      <Loading isLoading={isLoading} />
       <form onSubmit={addStation}>
         <Styled.InputContainer>
           <Styled.InputWrapper>
