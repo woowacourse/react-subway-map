@@ -1,4 +1,4 @@
-const LOCAL_STORAGE_KEY = "accessToken";
+const LOCAL_STORAGE_KEY = "dongtan/accessToken";
 
 const EXPIRY_TIME_IN_MS = 60 * 60 * 1000;
 
