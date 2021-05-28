@@ -1,5 +1,6 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 import { Button, Card, ColorDot, Input, Select, ColorPalette, Modal } from '../../components';
 import { ApiStatus, Line } from '../../types';
 import * as Styled from './LinePage.styles';
@@ -13,7 +14,9 @@ import useSelect from '../../hooks/useSelect';
 import useLine from '../../hooks/useLine';
 import useStation from '../../hooks/useStation';
 import useColorPalette from '../../hooks/useColorPalette';
+import useAuth from '../../hooks/useAuth';
 import MESSAGE from '../../constants/message';
+import ROUTES from '../../constants/routes';
 
 const LinePage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -31,6 +34,7 @@ const LinePage = () => {
 
   const { onAddLine, onEditLine, onDeleteLine, list } = useLine();
   const { list: stationList } = useStation();
+  const { isLogin } = useAuth();
 
   const { color, onChange: onChangeColor } = useColorPalette();
   const { color: editColor, onChange: onChangeEditColor } = useColorPalette();
@@ -53,6 +57,9 @@ const LinePage = () => {
   } = useSelect('');
 
   const downStationList = stationList.filter((station) => station.id !== upStationId);
+
+  const unableAddColors = list.map((line) => line.color);
+  const unableEditColors = list.filter((item) => item.id !== editLineId).map((item) => item.color);
 
   const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const selectedStationId = event.target.value;
@@ -146,13 +153,20 @@ const LinePage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 노선 관리</Styled.HeaderText>
+              {!isLogin && (
+                <Styled.LoginMessage>
+                  목록 편집을 위해서는 <Link to={ROUTES.ROOT}>로그인</Link>이 필요합니다
+                </Styled.LoginMessage>
+              )}
               <Styled.Control>
                 <Styled.Divider />
-                <Styled.ButtonList>
-                  <Button shape="circle" onClick={handleOpenAddModal}>
-                    <AddIcon />
-                  </Button>
-                </Styled.ButtonList>
+                {isLogin && (
+                  <Styled.ButtonList>
+                    <Button shape="circle" onClick={handleOpenAddModal}>
+                      <AddIcon />
+                    </Button>
+                  </Styled.ButtonList>
+                )}
               </Styled.Control>
               {list.length > 0 && (
                 <Styled.List>
@@ -167,6 +181,7 @@ const LinePage = () => {
                           shape="circle"
                           variant="text"
                           onClick={() => handleOpenEditModal(item)}
+                          disabled={!isLogin}
                         >
                           <EditIcon />
                         </Button>
@@ -174,6 +189,7 @@ const LinePage = () => {
                           shape="circle"
                           variant="text"
                           onClick={() => handleDeleteLine(item.id)}
+                          disabled={!isLogin}
                         >
                           <TrashIcon />
                         </Button>
@@ -232,7 +248,7 @@ const LinePage = () => {
             />
           </Styled.InputWrapper>
           <Styled.ColorPaletteWrapper>
-            <ColorPalette onClick={onChangeColor} />
+            <ColorPalette onClick={onChangeColor} disabledColors={unableAddColors} />
           </Styled.ColorPaletteWrapper>
           <Styled.ButtonWrapper>
             <Button variant="text" type="button" onClick={closeAddModal}>
@@ -260,7 +276,7 @@ const LinePage = () => {
             />
           </Styled.InputWrapper>
           <Styled.ColorPaletteWrapper>
-            <ColorPalette onClick={onChangeEditColor} />
+            <ColorPalette onClick={onChangeEditColor} disabledColors={unableEditColors} />
           </Styled.ColorPaletteWrapper>
           <Styled.ButtonWrapper>
             <Button variant="text" type="button" onClick={closeEditModal}>

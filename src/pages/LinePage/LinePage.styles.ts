@@ -23,6 +23,11 @@ export const HeaderText = styled.h2`
   font-size: 2rem;
 `;
 
+export const LoginMessage = styled.p`
+  margin-bottom: 0;
+  text-align: center;
+`;
+
 export const Control = styled.div`
   position: relative;
   padding: 30px 0;

@@ -19,7 +19,6 @@ export const ListContainer = styled.div``;
 
 export const HeaderText = styled.h2`
   margin: 0;
-  margin-bottom: 1em;
   text-align: center;
   font-size: 2rem;
 `;
@@ -28,7 +27,13 @@ export const AddForm = styled.form`
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+`;
+
+export const LoginMessage = styled.p`
+  margin-bottom: 0;
+  text-align: center;
 `;
 
 export const InputWrapper = styled.div`

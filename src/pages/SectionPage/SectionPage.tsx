@@ -1,5 +1,6 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 import { Button, Card, Input, Select, ColorDot, Modal } from '../../components';
 import * as Styled from './SectionPage.styles';
 import { ReactComponent as AddIcon } from '../../assets/icons/plus-solid.svg';
@@ -12,6 +13,8 @@ import useStation from '../../hooks/useStation';
 import useLine from '../../hooks/useLine';
 import { ApiStatus, Station } from '../../types';
 import MESSAGE from '../../constants/message';
+import useAuth from '../../hooks/useAuth';
+import ROUTES from '../../constants/routes';
 
 const SectionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -20,6 +23,7 @@ const SectionPage = () => {
 
   const { list: stationList } = useStation();
   const { list: lineList, onAddSection, onDeleteSection, isLoading: isLoadingLineList } = useLine();
+  const { isLogin } = useAuth();
 
   const {
     valueAsNumber: selectedLineId,
@@ -114,24 +118,33 @@ const SectionPage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 구간 관리</Styled.HeaderText>
-              <Select
-                labelText="노선 선택"
-                value={selectedLineId}
-                onChange={onChangeSelectedLineId}
-              >
-                {lineList.map((line) => (
-                  <option key={line.id} value={line.id}>
-                    {line.name}
-                  </option>
-                ))}
-              </Select>
+              {!isLogin && (
+                <Styled.LoginMessage>
+                  목록 편집을 위해서는 <Link to={ROUTES.ROOT}>로그인</Link>이 필요합니다
+                </Styled.LoginMessage>
+              )}
+              <Styled.LineSelectWrapper>
+                <Select
+                  labelText="노선 선택"
+                  value={selectedLineId}
+                  onChange={onChangeSelectedLineId}
+                >
+                  {lineList.map((line) => (
+                    <option key={line.id} value={line.id}>
+                      {line.name}
+                    </option>
+                  ))}
+                </Select>
+              </Styled.LineSelectWrapper>
               <Styled.Control>
                 <Styled.Divider />
-                <Styled.ButtonList>
-                  <Button shape="circle" onClick={openModal}>
-                    <AddIcon />
-                  </Button>
-                </Styled.ButtonList>
+                {isLogin && (
+                  <Styled.ButtonList>
+                    <Button shape="circle" onClick={openModal}>
+                      <AddIcon />
+                    </Button>
+                  </Styled.ButtonList>
+                )}
               </Styled.Control>
               {!isLoadingLineList && (
                 <>
@@ -148,6 +161,7 @@ const SectionPage = () => {
                             shape="circle"
                             variant="text"
                             onClick={() => handleDelete(station.id)}
+                            disabled={!isLogin}
                           >
                             <TrashIcon />
                           </Button>

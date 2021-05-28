@@ -74,6 +74,8 @@ export const Button = styled.button<ButtonIProps>`
   ${({ shape }) => shapeStyles[shape]};
 
   &:disabled {
-    cursor: default;
+    cursor: not-allowed;
+    background: none;
+    opacity: 0.1;
   }
 `;
