@@ -9,8 +9,6 @@ import useStation from "../../hooks/useStation";
 import useInput from "../../hooks/@common/useInput";
 import { validateStationName } from "../../validations/station";
 
-// TODO : 에러 메세지 있을 때 예외처리 추가 필요
-
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();
   const {
@@ -42,6 +40,7 @@ const StationManagementPage = () => {
           <Flex style={{ width: "100%", marginBottom: "1rem" }}>
             <Flex style={{ width: "100%", flexDirection: "column", marginRight: "0.625rem" }}>
               <Input
+                data-testid="station-name-input"
                 value={stationName}
                 errorMessage={stationNameErrorMessage}
                 placeholder="역 이름"
@@ -50,7 +49,7 @@ const StationManagementPage = () => {
                 required
               ></Input>
             </Flex>
-            <Button>확인</Button>
+            <Button data-testid="station-add-button">확인</Button>
           </Flex>
         </form>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
