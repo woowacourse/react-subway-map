@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ModalTemplate, Input, Selector } from '../../../components';
-import { COLOR, SIZE } from '../../../constants';
+import { COLOR, SIZE, TEST, INPUT_TEXT } from '../../../constants';
 import {
   ButtonWrapper,
   Form,
@@ -69,16 +69,16 @@ const SectionAddModal = ({
           <Form onSubmit={handleSubmit}>
             <SelectorWrapper>
               <Selector
-                label="상행역"
-                defaultOption="상행역"
+                label={INPUT_TEXT.UP_STATION.LABEL}
+                defaultOption={INPUT_TEXT.UP_STATION.LABEL}
                 options={stations}
                 size={SIZE.LG}
                 {...getFieldProps('upStationId')}
               />
               <span>↔️</span>
               <Selector
-                label="하행역"
-                defaultOption="하행역"
+                label={INPUT_TEXT.DOWN_STATION.LABEL}
+                defaultOption={INPUT_TEXT.DOWN_STATION.LABEL}
                 options={stations}
                 size={SIZE.LG}
                 {...getFieldProps('downStationId')}
@@ -94,7 +94,11 @@ const SectionAddModal = ({
             />
             {errors.distance && <Validator>{errors.distance}</Validator>}
             <ButtonWrapper>
-              <Button type="submit" backgroundColor={COLOR.AMBER}>
+              <Button
+                type="submit"
+                backgroundColor={COLOR.AMBER}
+                data-testid={TEST.ID.SECTION_ADD_BUTTON}
+              >
                 확인
               </Button>
             </ButtonWrapper>

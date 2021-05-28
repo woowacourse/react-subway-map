@@ -2,10 +2,16 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignUp from '.';
 import { ERROR, INPUT_TEXT, TEST } from '../../constants';
+import { Provider } from 'react-redux';
+import store from '../../redux';
 
 describe('<SignUp />', () => {
   const setup = () => {
-    const utils = render(<SignUp />);
+    const utils = render(
+      <Provider store={store}>
+        <SignUp />
+      </Provider>
+    );
     const { getByTestId, getByPlaceholderText } = utils;
     const button = getByTestId(TEST.ID.SIGN_UP_BUTTON);
     const input = {

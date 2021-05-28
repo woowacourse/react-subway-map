@@ -153,10 +153,10 @@ export const INPUT_TEXT = {
     LABEL: '노선 이름',
   },
   UP_STATION: {
-    LABEL: '상행 종점',
+    LABEL: '상행역',
   },
   DOWN_STATION: {
-    LABEL: '하행 종점',
+    LABEL: '하행역',
   },
   DISTANCE: {
     LABEL: '거리',
@@ -173,5 +173,6 @@ export const TEST = {
     SIGN_IN_BUTTON: 'signin-button',
     STATION_ADD_BUTTON: 'station-add-button',
     LINE_ADD_BUTTON: 'line-add-button',
+    SECTION_ADD_BUTTON: 'section-add-button',
   },
 };
