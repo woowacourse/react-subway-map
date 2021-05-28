@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { request } from '../utils';
 import { Nullable, ILoginRes, ILoginReq } from '../type';
 import { IResMeta } from '../type';
+import { BASE_URL } from '../constants';
 
 export type IAccessToken = Nullable<ILoginRes & IResMeta>;
 
@@ -21,7 +22,7 @@ export const loginRequestAsync = createAsyncThunk(
 
     try {
       thunkAPI.dispatch(setAccessToken({ isError: null }));
-      const response = await request.post(`${loginReq.host}/login/token`, headers, loginReq.body);
+      const response = await request.post(BASE_URL.LOGIN(loginReq.host), headers, loginReq.body);
 
       return response;
     } catch (error) {

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { RESPONSE_MESSAGE, ROUTE } from '../../../constants';
+import { BASE_URL, RESPONSE_MESSAGE, ROUTE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
@@ -18,7 +18,7 @@ const SignUp = () => {
     return { hostState: state.hostReducer };
   });
   const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
-    `${host}/members`,
+    BASE_URL.ME(host),
     RESPONSE_MESSAGE.SIGNUP,
   );
 

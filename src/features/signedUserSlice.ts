@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { BASE_URL } from '../constants';
 import { IResMeta } from '../type';
 import { IMyInfoRes, Nullable } from '../type';
 import { request } from '../utils';
@@ -23,7 +24,7 @@ export const getSignedUserAsync = createAsyncThunk(
 
     try {
       thunkAPI.dispatch(setSignedUser({ isError: null }));
-      const response = await request.get(`${getSignedUserReq.host}/members/me`, headers);
+      const response = await request.get(BASE_URL.ME(getSignedUserReq.host), headers);
 
       return response;
     } catch (error) {

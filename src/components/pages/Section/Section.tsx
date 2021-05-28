@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RESPONSE_MESSAGE } from '../../../constants';
+import { BASE_URL, RESPONSE_MESSAGE } from '../../../constants';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
@@ -19,7 +19,7 @@ const Section = () => {
   });
 
   const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
-    `${host}/stations`,
+    BASE_URL.STATION(host),
     RESPONSE_MESSAGE.SECTION,
   );
 
@@ -30,7 +30,7 @@ const Section = () => {
     deleteDataResponse: deleteSectionResponse,
     postData: addSection,
     postDataResponse: addSectionResponse,
-  } = useServerAPI<ILineRes>(`${host}/lines`, RESPONSE_MESSAGE.LINE);
+  } = useServerAPI<ILineRes>(BASE_URL.LINE(host), RESPONSE_MESSAGE.LINE);
 
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 

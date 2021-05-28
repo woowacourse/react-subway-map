@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RESPONSE_MESSAGE } from '../../../constants';
+import { BASE_URL, RESPONSE_MESSAGE } from '../../../constants';
 import { useChangeEvent, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
@@ -29,7 +29,7 @@ const Station = () => {
     postData: addStation,
     postDataResponse: postStationResponse,
     deleteDataResponse: deleteStationResponse,
-  } = useServerAPI<IStationRes>(`${host}/stations`, RESPONSE_MESSAGE.STATION);
+  } = useServerAPI<IStationRes>(BASE_URL.STATION(host), RESPONSE_MESSAGE.STATION);
 
   const onSubmitStationInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
