@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { Redirect } from 'react-router';
 
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
-import AddStationForm from '../../components/StationPage/AddStationForm';
-import StationListItem from '../../components/StationPage/StationListItem';
+import AddStationForm from '../../components/StationPage/AddStationForm/AddStationForm';
+import StationListItem from '../../components/StationPage/StationListItem/StationListItem';
 import { ROUTE } from '../../constants/constant';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import * as S from './StationListItem.styles';
-import trashCanSVG from '../../assets/svg/trash-can.svg';
-import editSVG from '../../assets/svg/edit.svg';
+import trashCanSVG from '../../../assets/svg/trash-can.svg';
+import editSVG from '../../../assets/svg/edit.svg';
 import { deleteStationAsync } from '../../../modules/station/stationReducer';
 
 interface Props {

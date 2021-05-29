@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { COLOR, SIZE } from '../../../constants/styleConstant';
 
 export const ModalWrapper = styled.div`
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,7 +15,7 @@ export const ModalWrapper = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   transition: opacity 0.25s ease;
-  z-index: 2;
+  z-index: 101;
 `;
 
 export const ModalInner = styled.div`

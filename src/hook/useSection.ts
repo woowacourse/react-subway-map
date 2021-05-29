@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AddSectionPayload, DeleteSectionPayload, LineSection } from '../interfaces';
+import { AddSectionAction, DeleteSectionAction, SectionState } from '../interfaces/section';
 import { RootState } from '../modules';
 import {
   addSectionAsync,
@@ -12,15 +12,15 @@ const useSection = () => {
   const { lineSection, error } = useSelector((state: RootState) => state.section);
   const dispatch = useDispatch();
 
-  const getSection = (id: LineSection['id']) => {
+  const getSection = (id: SectionState['lineSection']['id']) => {
     dispatch(getSectionAsync({ id }));
   };
 
-  const addSection = (payload: AddSectionPayload) => {
+  const addSection = (payload: AddSectionAction['payload']) => {
     dispatch(addSectionAsync(payload));
   };
 
-  const deleteSection = (payload: DeleteSectionPayload) => {
+  const deleteSection = (payload: DeleteSectionAction['payload']) => {
     dispatch(deleteSectionAsync(payload));
   };
 

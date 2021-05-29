@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddLine } from '../interfaces';
+import { LineInfoState } from '../interfaces/line';
 import { RootState } from '../modules';
 import { addLineAsync, deleteLineAsync, getLinesAsync, resetError as _resetError } from '../modules/line/lineReducer';
 
@@ -15,7 +15,7 @@ const useLine = () => {
     dispatch(getLinesAsync());
   }, [dispatch, lines.length, accessToken]);
 
-  const addLine = (newLine: AddLine) => {
+  const addLine = (newLine: LineInfoState) => {
     dispatch(addLineAsync({ line: newLine }));
   };
 

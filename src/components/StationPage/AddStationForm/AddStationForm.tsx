@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as S from './AddStationForm.styles';
 
-import subwaySVG from '../../assets/svg/subway.svg';
+import subwaySVG from '../../../assets/svg/subway.svg';
 import Input from '../../@commons/Input/Input';
 import Button from '../../@commons/Button/Button';
 

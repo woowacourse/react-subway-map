@@ -26,6 +26,7 @@ export const STATION = {
 export const LINE = {
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 20,
+  MIN_STATIONS: 2,
 };
 
 export const SECTION = {
@@ -66,6 +67,7 @@ export const MESSAGE = {
       CHOOSE_STATIONS: '상행역과 하행역을 모두 선택해주세요.',
       SAME_STATIONS: '상행 종점역과 하행 종점역은 동일할 수 없습니다.',
       SHOULD_ONLY_ONE_STATION_REGISTERED: '상행역과 하행역 둘 중에 하나의 역만 기존 노선에 등록되어 있어야합니다.',
+      ESSENTIAL_STATIONS: '노선에는 상행역과 하행역이 필수로 존재해야합니다.',
     },
     SECTION: {
       LOAD_FAILED: '구간 정보를 불러오는데 실패했습니다...!',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './AddLineForm.styles';
-import subwaySVG from '../../assets/svg/subway.svg';
+import subwaySVG from '../../../assets/svg/subway.svg';
 
 import Button from '../../@commons/Button/Button';
 import Input from '../../@commons/Input/Input';

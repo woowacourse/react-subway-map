@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import * as S from './SignInForm.styles';
 
-import mailSVG from '../../assets/svg/mail.svg';
-import lockSVG from '../../assets/svg/lock.svg';
+import mailSVG from '../../../assets/svg/mail.svg';
+import lockSVG from '../../../assets/svg/lock.svg';
 import Button from '../../@commons/Button/Button';
 import SelectInput from '../../@commons/SelectInput/SelectInput';
 import Input from '../../@commons/Input/Input';

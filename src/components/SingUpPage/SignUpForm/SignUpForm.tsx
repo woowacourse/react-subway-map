@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import * as S from './SignUpForm.styles';
 
-import mailSVG from '../../assets/svg/mail.svg';
-import userSVG from '../../assets/svg/user.svg';
-import lockSVG from '../../assets/svg/lock.svg';
+import mailSVG from '../../../assets/svg/mail.svg';
+import userSVG from '../../../assets/svg/user.svg';
+import lockSVG from '../../../assets/svg/lock.svg';
 import Button from '../../@commons/Button/Button';
 import Input from '../../@commons/Input/Input';
 import { BASE_URL, MESSAGE, ROUTE } from '../../../constants/constant';

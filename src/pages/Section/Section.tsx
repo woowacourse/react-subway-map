@@ -1,17 +1,20 @@
 import { useEffect } from 'react';
 import { Redirect } from 'react-router';
+import * as S from './Section.styles';
+
 import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
-import AddSectionForm from '../../components/SectionPage/AddSectionForm';
-import SectionListItem from '../../components/SectionPage/SectionListItem';
-import { ROUTE } from '../../constants/constant';
+import AddSectionForm from '../../components/SectionPage/AddSectionForm/AddSectionForm';
+import SectionListItem from '../../components/SectionPage/SectionListItem/SectionListItem';
+
 import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
-import { LineSection } from '../../interfaces';
-import * as S from './Section.styles';
 
-const getSectionStations = (lineSection: LineSection) => {
+import { SectionState } from '../../interfaces/section';
+import { LINE, MESSAGE, ROUTE } from '../../constants/constant';
+
+const getSectionStations = (lineSection: SectionState['lineSection']) => {
   if (!lineSection?.sections) return [];
 
   const { downStation: lastStation } = lineSection.sections[lineSection.sections.length - 1];
@@ -21,8 +24,8 @@ const getSectionStations = (lineSection: LineSection) => {
     name: upStation.name,
     distance,
   }));
-  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: -1 });
 
+  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: -1 });
   return sectionStations;
 };
 
@@ -48,8 +51,8 @@ const Section = () => {
   };
 
   const handleDeleteSection = (stationId: string, name: string) => {
-    if (lineSection.stations.length <= 2) {
-      window.alert('노선에는 상행역과 하행역이 필수로 존재해야합니다...!');
+    if (lineSection.stations.length <= LINE.MIN_STATIONS) {
+      window.alert(MESSAGE.ERROR.LINE.ESSENTIAL_STATIONS);
       return;
     }
 
