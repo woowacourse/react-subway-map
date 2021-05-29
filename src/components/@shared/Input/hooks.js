@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-export const useInput = (validator, replacement = "") => {
+export const useInput = (validator, replacement) => {
   const [value, setValue] = useState("");
   const [isValid, setIsValid] = useState(false);
 
   const handleChange = (event) => {
-    const newValue = event.target.value.replace(replacement, "");
+    const newValue = replacement
+      ? event.target.value.replace(replacement, "")
+      : event.target.value;
 
     setValue(newValue);
 
