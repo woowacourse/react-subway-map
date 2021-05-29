@@ -1,55 +1,20 @@
-import Input from '../@commons/Input/Input';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import * as S from './SignUpForm.styles';
+
 import mailSVG from '../../assets/svg/mail.svg';
 import userSVG from '../../assets/svg/user.svg';
 import lockSVG from '../../assets/svg/lock.svg';
-import Button from '../@commons/Button/Button';
-import React, { useState } from 'react';
-import { BASE_URL, ROUTE } from '../../constants/constant';
-import { authAPI } from '../../api/auth';
-import { RESPONSE } from '../../constants/api';
-import { useHistory } from 'react-router';
-import { REGEXP } from '../../constants/regularExpression';
-
-const getEmailErrorMessage = (email: string) => {
-  if (!REGEXP.EMAIL.test(email)) {
-    return '이메일 형식이 아닙니다.';
-  }
-
-  return '';
-};
-
-const getAgeErrorMessage = (age: string) => {
-  if (isNaN(Number(age))) {
-    return '나이는 숫자여야 합니다.';
-  }
-
-  if (!(1 <= Number(age) && Number(age) <= 200)) {
-    return '나이는 1살 이상 200살 이하여야 합니다.';
-  }
-
-  return '';
-};
-
-const getPasswordErrorMessage = (password: string) => {
-  if (!(4 <= password.length && password.length <= 20)) {
-    return '비밀번호는 최소 4글자에서 최대 20 글자여야 합니다.';
-  }
-
-  return '';
-};
-
-const getConfirmPasswordErrorMessage = (password: string, confirmPassword: string) => {
-  if (!(4 <= confirmPassword.length && confirmPassword.length <= 20)) {
-    return '비밀번호는 최소 4글자에서 최대 20 글자여야 합니다.';
-  }
-
-  if (password !== confirmPassword) {
-    return '동일한 비밀번호를 입력해주세요.';
-  }
-
-  return '';
-};
+import Button from '../../@commons/Button/Button';
+import Input from '../../@commons/Input/Input';
+import { BASE_URL, MESSAGE, ROUTE } from '../../../constants/constant';
+import { authAPI } from '../../../api/auth';
+import {
+  getAgeErrorMessage,
+  getConfirmPasswordErrorMessage,
+  getEmailErrorMessage,
+  getPasswordErrorMessage,
+} from '../../SignInPage/authValidation';
 
 const SignUpForm = () => {
   const history = useHistory();
@@ -72,6 +37,7 @@ const SignUpForm = () => {
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!isValidForm) return;
 
     const { email, age, password } = userInfo;
@@ -79,13 +45,13 @@ const SignUpForm = () => {
       Object.values(BASE_URL).map(({ URL }) => authAPI.signUp({ url: URL, email, password, age }))
     );
 
-    const errorMessage = results.find(result => result !== RESPONSE.SUCCESS);
+    const errorMessage = results.find(result => result !== MESSAGE.SUCCESS.RESPONSE);
     if (errorMessage) {
       alert(errorMessage);
       return;
     }
 
-    alert('회원가입에 성공하였습니다!');
+    alert(MESSAGE.SUCCESS.SIGN_UP);
     history.push(ROUTE.SIGN_IN);
   };
 

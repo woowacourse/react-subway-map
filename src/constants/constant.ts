@@ -26,6 +26,13 @@ export const SECTION = {
   DISTANCE: 1,
 };
 
+export const AUTH = {
+  PASSWORD_MIN_LENGTH: 4,
+  PASSWORD_MAX_LENGTH: 20,
+  AGE_MIN: 1,
+  AGE_MAX: 200,
+};
+
 export const MESSAGE = {
   ERROR: {
     RESPONSE: '요청에 실패했습니다.',
@@ -63,8 +70,16 @@ export const MESSAGE = {
       REGISTERED_COLOR: '이미 노선에 등록된 색상입니다.\n다른 색상을 선택해주세요.',
       SHOULD_SMALLER_DISTANCE: '해당 구역의 거리보다 긴 거리를 등록할 순 없습니다.',
     },
+    AUTH: {
+      INVALID_EMAIL: '이메일 형식이 아닙니다.',
+      INVALID_PASSWORD_LENGTH: `비밀번호는 최소 ${AUTH.PASSWORD_MIN_LENGTH}글자 이상 ${AUTH.PASSWORD_MAX_LENGTH}글자 이하여야 합니다.`,
+      INVALID_AGE: '나이는 숫자여야 합니다.',
+      INVALID_AGE_LENGTH: `나이는 ${AUTH.AGE_MIN}살 이상 ${AUTH.AGE_MAX}살 이하여야 합니다.`,
+      NOT_SAME_PASSWORD: '동일한 비밀번호를 입력해주세요.',
+    },
   },
   SUCCESS: {
     RESPONSE: '요청에 성공했습니다.',
+    SIGN_UP: '회원가입에 성공하였습니다!',
   },
 };

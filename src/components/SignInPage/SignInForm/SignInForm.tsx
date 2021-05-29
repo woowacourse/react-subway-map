@@ -1,47 +1,35 @@
-import Input from '../@commons/Input/Input';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import * as S from './SignInForm.styles';
+
 import mailSVG from '../../assets/svg/mail.svg';
 import lockSVG from '../../assets/svg/lock.svg';
-import Button from '../@commons/Button/Button';
-import SelectInput from '../@commons/SelectInput/SelectInput';
-import { Link, useHistory } from 'react-router-dom';
-import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginAsync, selectServer } from '../../modules/user/userReducer';
-import React, { useEffect, useState } from 'react';
+import Button from '../../@commons/Button/Button';
+import SelectInput from '../../@commons/SelectInput/SelectInput';
+import Input from '../../@commons/Input/Input';
 
-import { RootState } from '../../modules';
-import { REGEXP } from '../../constants/regularExpression';
-import useUser from '../../hook/useUser';
+import { BASE_URL, ROUTE, SERVER } from '../../../constants/constant';
+import { RootState } from '../../../modules';
+import { loginAsync, selectServer } from '../../../modules/user/userReducer';
 
-const getEmailErrorMessage = (email: string) => {
-  if (!REGEXP.EMAIL.test(email)) {
-    return '이메일 형식이 아닙니다.';
-  }
-
-  return '';
-};
-
-const getPasswordErrorMessage = (password: string) => {
-  if (!(4 <= password.length && password.length <= 20)) {
-    return '비밀번호는 최소 4글자 이상 20글자 이하여야 합니다.';
-  }
-
-  return '';
-};
+import useUser from '../../../hook/useUser';
+import { getEmailErrorMessage, getPasswordErrorMessage } from '../authValidation';
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { serverName, error, accessToken } = useSelector((state: RootState) => state.user);
   const { resetError } = useUser();
   const [serverURL, setServerURL] = useState('');
-  const isServerSelected = Boolean(serverName);
-  const dispatch = useDispatch();
-  const history = useHistory();
-
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
+
+  const emailErrorMessage = getEmailErrorMessage(loginInfo.email);
+  const passwordErrorMessage = getPasswordErrorMessage(loginInfo.password);
+  const isValidForm = !(emailErrorMessage || passwordErrorMessage) && Boolean(serverName);
 
   useEffect(() => {
     if (error) {
@@ -71,10 +59,6 @@ const SignInForm = () => {
     const { email, password } = loginInfo;
     dispatch(loginAsync({ email, password }));
   };
-
-  const emailErrorMessage = getEmailErrorMessage(loginInfo.email);
-  const passwordErrorMessage = getPasswordErrorMessage(loginInfo.password);
-  const isValidForm = !(emailErrorMessage || passwordErrorMessage) && isServerSelected;
 
   return (
     <S.SignInForm onSubmit={handleLogIn}>
