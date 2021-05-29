@@ -98,6 +98,7 @@ const useLine = () => {
     isValidName,
     isValidColor,
     isValidForm,
+    isSelectedUpStation,
   };
 };
 

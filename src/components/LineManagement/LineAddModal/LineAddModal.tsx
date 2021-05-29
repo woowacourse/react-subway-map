@@ -33,9 +33,9 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     setDownStationId,
     setColor,
     addLine,
-    isValidColor,
     isValidName,
     isValidForm,
+    isSelectedUpStation,
   } = useLine();
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
@@ -82,6 +82,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             value={downStationId}
             defaultValue={-1}
             onChange={({ target }) => setDownStationId(Number(target.value))}
+            disabled={!isSelectedUpStation}
           >
             <option value={-1} disabled selected hidden>
               하행역

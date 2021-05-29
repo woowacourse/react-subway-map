@@ -3,15 +3,10 @@ import StyledSelectBox, { Label } from './SelectBox.styles';
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {}
 
-const SelectBox: FC<Props> = ({
-  children,
-  placeholder,
-  className,
-  onChange,
-}) => {
+const SelectBox: FC<Props> = ({ className, children, ...args }) => {
   return (
     <Label className={className}>
-      <StyledSelectBox onChange={onChange}>{children}</StyledSelectBox>
+      <StyledSelectBox {...args}>{children}</StyledSelectBox>
     </Label>
   );
 };
