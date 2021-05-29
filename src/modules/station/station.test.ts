@@ -4,8 +4,9 @@ import { stationAPI } from '../../api/station';
 import { addStationAsync, deleteStationAsync, error, pending, setStations } from './stationReducer';
 import { getStationsSaga, addStationSaga, selectStations, deleteStationSaga } from './stationSaga';
 import stationReducer from './stationReducer';
+import { Station } from '../../interfaces';
 
-const stationList = [
+const stationList: Station[] = [
   {
     id: 1,
     name: '인치역',
@@ -52,7 +53,7 @@ it('지하철 역 목록을 불러오는데 실패한다.', async () => {
 });
 
 it('지하철 역 목록을 성공적으로 추가한다.', async () => {
-  return expectSaga(addStationSaga, { type: addStationAsync, payload: { name: newStation.name } })
+  return expectSaga(addStationSaga, { type: addStationAsync.type, payload: { name: newStation.name } })
     .withReducer(stationReducer)
     .put(pending())
     .provide([
@@ -65,7 +66,7 @@ it('지하철 역 목록을 성공적으로 추가한다.', async () => {
 });
 
 it('지하철 역 목록을 추가하는데 실패한다.', async () => {
-  return expectSaga(addStationSaga, { type: addStationAsync, payload: { name: newStation.name } })
+  return expectSaga(addStationSaga, { type: addStationAsync.type, payload: { name: newStation.name } })
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.addStation, newStation.name), { error: errorMessage }]])
@@ -75,7 +76,7 @@ it('지하철 역 목록을 추가하는데 실패한다.', async () => {
 });
 
 it('지하철 역 목록을 성공적으로 삭제한다.', async () => {
-  return expectSaga(deleteStationSaga, { type: deleteStationAsync, payload: { id: newStation.id } })
+  return expectSaga(deleteStationSaga, { type: deleteStationAsync.type, payload: { id: newStation.id } })
     .withReducer(stationReducer)
     .put(pending())
     .provide([
@@ -88,7 +89,7 @@ it('지하철 역 목록을 성공적으로 삭제한다.', async () => {
 });
 
 it('지하철 역 목록을 삭제하는데 실패한다.', async () => {
-  return expectSaga(deleteStationSaga, { type: deleteStationAsync, payload: { id: newStation.id } })
+  return expectSaga(deleteStationSaga, { type: deleteStationAsync.type, payload: { id: newStation.id } })
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.deleteStation, newStation.id), { error: errorMessage }]])

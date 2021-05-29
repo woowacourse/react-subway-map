@@ -3,9 +3,9 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { getLinesSaga, addLineSaga, deleteLineSaga, selectLines } from './lineSaga';
 import lineReducer, { addLineAsync, deleteLineAsync, error, pending, setLines } from './lineReducer';
 import { lineAPI } from '../../api/line';
-import { addStationAsync } from '../station/stationReducer';
+import { AddLineRequest, Line } from '../../interfaces';
 
-const lineList = [
+const lineList: Line[] = [
   {
     id: 1,
     name: '인치선',
@@ -20,8 +20,7 @@ const lineList = [
 
 const errorMessage = '에러 메세지';
 
-const newLine = {
-  id: '3',
+const newLine: AddLineRequest = {
   name: '포코선',
   color: '#123456',
   upStationId: '1',
@@ -29,7 +28,9 @@ const newLine = {
   distance: '100',
 };
 
-const newLineResult = {
+const deletedLineId: Line['id'] = 3;
+
+const newLineResult: Line = {
   id: 3,
   name: '포코선',
   color: '#123456',
@@ -56,7 +57,7 @@ it('지하철 노선 목록을 불러오는데 실패한다.', async () => {
 });
 
 it('지하철 노선 목록을 성공적으로 추가한다.', async () => {
-  return expectSaga(addLineSaga, { type: addLineAsync, payload: { line: newLine } })
+  return expectSaga(addLineSaga, { type: addLineAsync.type, payload: { line: newLine } })
     .withReducer(lineReducer)
     .put(pending())
     .provide([
@@ -69,7 +70,7 @@ it('지하철 노선 목록을 성공적으로 추가한다.', async () => {
 });
 
 it('지하철 노선 목록을 추가하는데 실패한다.', async () => {
-  return expectSaga(addLineSaga, { type: addLineAsync, payload: { line: newLine } })
+  return expectSaga(addLineSaga, { type: addLineAsync.type, payload: { line: newLine } })
     .withReducer(lineReducer)
     .put(pending())
     .provide([[call(lineAPI.addLine, newLine), { error: errorMessage }]])
@@ -79,23 +80,23 @@ it('지하철 노선 목록을 추가하는데 실패한다.', async () => {
 });
 
 it('지하철 노선 목록을 성공적으로 삭제한다.', async () => {
-  return expectSaga(deleteLineSaga, { type: deleteLineAsync, payload: { id: Number(newLine.id) } })
+  return expectSaga(deleteLineSaga, { type: deleteLineAsync.type, payload: { id: deletedLineId } })
     .withReducer(lineReducer)
     .put(pending())
     .provide([
-      [call(lineAPI.deleteLine, Number(newLine.id)), {}],
+      [call(lineAPI.deleteLine, deletedLineId), {}],
       [select(selectLines), lineList.concat(newLineResult)],
     ])
-    .put(setLines({ lines: lineList.filter(line => line.id !== Number(newLine.id)) }))
-    .hasFinalState({ lines: lineList.filter(line => line.id !== Number(newLine.id)), error: '' })
+    .put(setLines({ lines: lineList.filter(line => line.id !== deletedLineId) }))
+    .hasFinalState({ lines: lineList.filter(line => line.id !== deletedLineId), error: '' })
     .run();
 });
 
 it('지하철 노선 목록을 삭제하는데 실패한다.', async () => {
-  return expectSaga(deleteLineSaga, { type: deleteLineAsync, payload: { id: Number(newLine.id) } })
+  return expectSaga(deleteLineSaga, { type: deleteLineAsync.type, payload: { id: deletedLineId } })
     .withReducer(lineReducer)
     .put(pending())
-    .provide([[call(lineAPI.deleteLine, Number(newLine.id)), { error: errorMessage }]])
+    .provide([[call(lineAPI.deleteLine, deletedLineId), { error: errorMessage }]])
     .put(error({ error: errorMessage }))
     .hasFinalState({ lines: [], error: errorMessage })
     .run();

@@ -8,7 +8,7 @@ const userInfo = { email: '1234@gmail.com', password: '1234' };
 const userAccessToken = 'ThisIsMockAccessToken';
 
 it('로그인에 성공한다', () => {
-  return expectSaga(loginSaga, { type: typeof loginAsync, payload: userInfo })
+  return expectSaga(loginSaga, { type: loginAsync.type, payload: userInfo })
     .withReducer(userReducer)
     .put(pending())
     .provide([[call(authAPI.signIn, userInfo), { accessToken: userAccessToken }]])
@@ -25,7 +25,7 @@ it('로그인에 성공한다', () => {
 
 it('로그인에 실패한다', () => {
   const errorMessage = '에러 메세지';
-  return expectSaga(loginSaga, { type: typeof loginAsync, payload: userInfo })
+  return expectSaga(loginSaga, { type: loginAsync.type, payload: userInfo })
     .withReducer(userReducer)
     .put(pending())
     .provide([[call(authAPI.signIn, userInfo), { error: errorMessage }]])
