@@ -1,5 +1,5 @@
 import APIClient from '../API/API';
-import { LineId, Section, SectionForm, StationId } from '../types';
+import { LineId, SectionForm, StationId } from '../types';
 
 export const requestSection = async (lineId: LineId, accessToken: string) => {
   const response = await APIClient.get(`/lines/${lineId}`, accessToken);

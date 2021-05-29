@@ -18,3 +18,7 @@ export const ChildrenContainer = styled(Container)`
     margin-bottom: 1.75rem;
   }
 `;
+
+export const InputContainer = styled.div`
+  width: 100%;
+`;

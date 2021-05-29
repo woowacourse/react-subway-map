@@ -1,6 +1,6 @@
 import { REGEX } from './../constants/validate';
 import { requestSignUp } from './../service/auth';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { SignUpForm } from '../types';
 import useLogin from './useLogin';
 
@@ -12,8 +12,28 @@ const useSignUp = () => {
     passwordForValidation: '',
   });
 
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const { email, age, password, passwordForValidation } = form;
+
   const login = useLogin();
+
+  const isValidEmail = REGEX.EMAIL.test(email);
+
+  const isValidAge = age > 0;
+
+  const isValidPassword = password.length > 0;
+
+  const isValidPasswordForValidation = password === passwordForValidation;
+
+  useEffect(() => {
+    setIsFormValid(
+      isValidEmail &&
+        isValidAge &&
+        isValidPassword &&
+        isValidPasswordForValidation
+    );
+  }, [isValidEmail, isValidAge, isValidPassword, isValidPasswordForValidation]);
 
   const setEmail = (email: string) => {
     setForm({ ...form, email });
@@ -31,16 +51,8 @@ const useSignUp = () => {
     setForm({ ...form, passwordForValidation });
   };
 
-  const isValidForm = () => {
-    const { email, age, password, passwordForValidation } = form;
-
-    return (
-      REGEX.EMAIL.test(email) && age > 0 && password === passwordForValidation
-    );
-  };
-
   const signUp = async () => {
-    if (!isValidForm()) return;
+    if (!isFormValid) return;
 
     try {
       await requestSignUp(form);
@@ -58,11 +70,16 @@ const useSignUp = () => {
     age,
     password,
     passwordForValidation,
+    isFormValid,
     setEmail,
     setAge,
     setPassword,
     setPasswordForValidation,
     signUp,
+    isValidEmail,
+    isValidAge,
+    isValidPassword,
+    isValidPasswordForValidation,
   };
 };
 
