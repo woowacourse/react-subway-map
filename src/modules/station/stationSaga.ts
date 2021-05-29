@@ -1,39 +1,15 @@
-import { setStations, getStationsAsync, error, pending, addStationAsync, deleteStationAsync } from './stationReducer';
 import { call, takeLatest, put, select } from 'redux-saga/effects';
-import { stationAPI } from '../../api/station';
-import { Station } from '../../interfaces';
 import { RootState } from '..';
-
-interface GetStationResult {
-  error: string;
-  stations: Station[];
-}
-
-interface AddStationAction {
-  type: typeof addStationAsync;
-  payload: {
-    name: string;
-  };
-}
-
-interface AddStationResult {
-  error: string;
-  station: {
-    id: number;
-    name: string;
-  };
-}
-
-interface DeleteStationAction {
-  type: typeof deleteStationAsync;
-  payload: {
-    id: number;
-  };
-}
-
-interface DeleteStationResult {
-  error: string;
-}
+import { stationAPI } from '../../api/station';
+import { setStations, getStationsAsync, error, pending, addStationAsync, deleteStationAsync } from './stationReducer';
+import {
+  AddStationAction,
+  AddStationResult,
+  DeleteStationAction,
+  DeleteStationResult,
+  GetStationResult,
+  StationState,
+} from '../../interfaces/station';
 
 export const selectStations = (state: RootState) => state.station.stations;
 
@@ -45,6 +21,7 @@ export function* getStationsSaga() {
     yield put(error({ error: result.error }));
     return;
   }
+
   yield put(setStations({ stations: result.stations }));
 }
 
@@ -57,8 +34,7 @@ export function* addStationSaga(action: AddStationAction) {
     return;
   }
 
-  const stations: Station[] = yield select(selectStations);
-
+  const stations: StationState['stations'] = yield select(selectStations);
   yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
 }
 
@@ -70,7 +46,8 @@ export function* deleteStationSaga(action: DeleteStationAction) {
     yield put(error({ error: result.error }));
     return;
   }
-  const stations: Station[] = yield select(selectStations);
+
+  const stations: StationState['stations'] = yield select(selectStations);
   yield put(setStations({ stations: stations.filter(station => station.id !== action.payload.id) }));
 }
 

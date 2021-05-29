@@ -1,18 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Station } from '../../interfaces';
-
-interface SetStationAction {
-  stations: Station[];
-}
-
-export interface ErrorAction {
-  error: string;
-}
-
-export interface StationState {
-  stations: Station[];
-  error: string;
-}
+import {
+  StationState,
+  AddStationAction,
+  DeleteStationAction,
+  ErrorAction,
+  SetStationAction,
+} from '../../interfaces/station';
 
 const initialState = {
   stations: [],
@@ -23,34 +16,34 @@ export const stationSlice = createSlice({
   name: 'station',
   initialState,
   reducers: {
-    setStations: (state, action: PayloadAction<SetStationAction>) => {
-      state.stations = action.payload.stations.sort((a, b) => b.id - a.id);
+    pending: state => {
+      state.error = '';
     },
-    getStationsAsync: () => {},
-    addStationAsync: (state, action: PayloadAction<{ name: string }>) => {},
-    deleteStationAsync: (state, action: PayloadAction<{ id: number }>) => {},
-    error: (state, action: PayloadAction<ErrorAction>) => {
+    error: (state, action: PayloadAction<ErrorAction['payload']>) => {
       state.error = action.payload.error;
     },
     resetError: state => {
       state.error = '';
     },
-    pending: state => {
-      state.error = '';
+    setStations: (state, action: PayloadAction<SetStationAction['payload']>) => {
+      state.stations = action.payload.stations.sort((a, b) => b.id - a.id);
     },
+    getStationsAsync: () => {},
+    addStationAsync: (state, action: PayloadAction<AddStationAction['payload']>) => {},
+    deleteStationAsync: (state, action: PayloadAction<DeleteStationAction['payload']>) => {},
   },
 });
 
 export type StationActions = ReturnType<
+  | typeof stationSlice.actions.pending
+  | typeof stationSlice.actions.error
+  | typeof stationSlice.actions.resetError
   | typeof stationSlice.actions.setStations
   | typeof stationSlice.actions.getStationsAsync
   | typeof stationSlice.actions.addStationAsync
   | typeof stationSlice.actions.deleteStationAsync
-  | typeof stationSlice.actions.error
-  | typeof stationSlice.actions.resetError
-  | typeof stationSlice.actions.pending
 >;
 
-export const { setStations, getStationsAsync, addStationAsync, deleteStationAsync, error, resetError, pending } =
+export const { pending, error, resetError, setStations, getStationsAsync, addStationAsync, deleteStationAsync } =
   stationSlice.actions;
 export default stationSlice.reducer;
