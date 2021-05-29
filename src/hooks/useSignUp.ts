@@ -22,7 +22,7 @@ const useSignUp = () => {
 
   const isValidAge = age > 0;
 
-  const isValidPassword = password.length > 0;
+  const isValidPassword = password.length >= 6;
 
   const isValidPasswordForValidation = password === passwordForValidation;
 

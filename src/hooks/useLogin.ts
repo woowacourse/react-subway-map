@@ -3,6 +3,7 @@ import { LoginForm } from '../types';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { loginAction, loginAsyncAction } from '../state/slices/login';
 import { useHistory } from 'react-router';
+import { REGEX } from '../constants/validate';
 
 const useLogin = () => {
   const { accessToken, error } = useAppSelector(
@@ -47,9 +48,15 @@ const useLogin = () => {
 
   const isLogin = !!accessToken;
 
+  const isValidEmail = REGEX.EMAIL.test(email);
+
+  const isValidPassword = password.length >= 6;
+
   return {
     accessToken,
     email,
+    isValidEmail,
+    isValidPassword,
     password,
     setEmail,
     setPassword,

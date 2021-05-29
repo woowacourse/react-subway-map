@@ -3,8 +3,8 @@ import { StyledAlertText } from './AlertText.styles';
 
 export interface AlertTextProps {
   isValid: boolean;
-  invalidText: string;
-  validText: string;
+  validText?: string;
+  invalidText?: string;
 }
 
 const AlertText: VFC<AlertTextProps> = ({
