@@ -161,7 +161,7 @@ const LinePage = () => {
               <Styled.Control>
                 <Styled.Divider />
                 <Styled.ButtonList>
-                  <Button shape="circle" onClick={handleOpenAddModal}>
+                  <Button aria-label="노선 추가" shape="circle" onClick={handleOpenAddModal}>
                     <AddIcon />
                   </Button>
                 </Styled.ButtonList>
@@ -181,6 +181,7 @@ const LinePage = () => {
                         <Button
                           shape="circle"
                           variant="text"
+                          aria-label="노선 수정"
                           onClick={() => handleOpenEditModal(item)}
                         >
                           <EditIcon />
@@ -188,6 +189,7 @@ const LinePage = () => {
                         <Button
                           shape="circle"
                           variant="text"
+                          aria-label="노선 삭제"
                           onClick={() => handleDeleteLine(item.id)}
                         >
                           <TrashIcon />

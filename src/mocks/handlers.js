@@ -47,4 +47,38 @@ export const handlers = [
   rest.get(`${BACKEND[CREWS.DANYEE].baseUrl}/lines`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(LINE_LIST));
   }),
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/lines`, (req, res, ctx) => {
+    if (req.body.name.length < 2 || req.body.name.length > 10) {
+      return res(
+        ctx.status(400),
+        ctx.json({ status: 400, message: MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH })
+      );
+    }
+
+    const newLine = {
+      id: 100,
+      ...req.body,
+    };
+
+    return res(ctx.status(201), ctx.json(newLine));
+  }),
+  rest.put(`${BACKEND[CREWS.DANYEE].baseUrl}/lines/:id`, (req, res, ctx) => {
+    if (req.body.name.length < 2 || req.body.name.length > 10) {
+      return res(
+        ctx.status(400),
+        ctx.json({ status: 400, message: MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH })
+      );
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: Number(req.params.id),
+        ...req.body,
+      })
+    );
+  }),
+  rest.delete(`${BACKEND[CREWS.DANYEE].baseUrl}/lines/:id`, (req, res, ctx) => {
+    return res(ctx.status(204));
+  }),
 ];
