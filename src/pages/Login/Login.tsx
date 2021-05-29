@@ -54,7 +54,7 @@ const Login: FC = () => {
       titleText={PAGE_INFO.LOGIN.text}
     >
       <LoginContainer>
-        <LoginForm onSubmit={onLogin}>
+        <LoginForm onSubmit={onLogin} role="form">
           <Input
             type="email"
             name="email"
