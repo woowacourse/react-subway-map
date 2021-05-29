@@ -25,7 +25,9 @@ const StationAddForm: VFC = () => {
         <InputWithAlertText
           value={name}
           isValid={isValidName}
-          invalidText={'2글자 이상의 역 이름을 입력해주세요.'}
+          invalidText={
+            '2글자 이상 20글자 이하의 한글로 된 역 이름을 입력해주세요.'
+          }
           onChange={({ target: { value } }) => setName(value)}
           placeholder="지하철 역 이름을 입력해주세요."
         />

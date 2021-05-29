@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { REGEX } from '../constants/validate';
+import { requestLines } from '../service/line';
 import {
   requestAddStation,
   requestDeleteStation,
@@ -13,6 +15,7 @@ const useStation = () => {
   const { name } = form;
   const { accessToken } = useLogin();
   const queryClient = useQueryClient();
+  const lines = useQuery('requestLines', () => requestLines(accessToken));
 
   const addMutation = useMutation(() => requestAddStation(form, accessToken), {
     onSuccess: () => {
@@ -33,7 +36,7 @@ const useStation = () => {
     requestStations(accessToken)
   );
 
-  const isValidName = name.length > 2;
+  const isValidName = REGEX.STATION_NAME.test(name);
 
   const setName = (name: string) => {
     setForm({ ...form, name });
@@ -44,6 +47,8 @@ const useStation = () => {
   };
 
   const deleteStation = (stationId: StationId) => {
+    if (false) return;
+
     deleteMutation.mutate(stationId);
   };
 
