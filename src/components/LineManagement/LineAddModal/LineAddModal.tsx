@@ -33,7 +33,9 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     setDownStationId,
     setColor,
     addLine,
-    isLineNameValid,
+    isValidColor,
+    isValidName,
+    isValidForm,
   } = useLine();
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
@@ -48,7 +50,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
       <Title>노선 생성</Title>
       <LineAddForm onSubmit={handleAddLine}>
         <StyledInputWithAlertText
-          isValid={isLineNameValid}
+          isValid={isValidName}
           invalidText={'노선 이름은 2글자 이상이어야 합니다.'}
           placeholder="노선 이름"
           value={name}
@@ -61,7 +63,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option value={-1} disabled hidden>
+            <option value={-1} disabled selected hidden>
               상행역
             </option>
             <Suspense fallback={true}>
@@ -81,7 +83,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             defaultValue={-1}
             onChange={({ target }) => setDownStationId(Number(target.value))}
           >
-            <option value={-1} disabled hidden>
+            <option value={-1} disabled selected hidden>
               하행역
             </option>
             <Suspense fallback={true}>
@@ -99,9 +101,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           placeholder="거리"
           type="number"
           value={distance}
-          onChange={({ target: { valueAsNumber } }) =>
-            setDistance(valueAsNumber)
-          }
+          onChange={({ target }) => setDistance(target.valueAsNumber)}
         />
 
         <StyledInput
@@ -110,7 +110,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           onChange={({ target: { value } }) => setColor(value)}
         />
 
-        <Button>노선 만들기</Button>
+        <Button disabled={!isValidForm}>노선 만들기</Button>
       </LineAddForm>
     </Modal>
   );

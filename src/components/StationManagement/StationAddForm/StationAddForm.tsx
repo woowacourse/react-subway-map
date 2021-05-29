@@ -29,7 +29,7 @@ const StationAddForm: VFC = () => {
           onChange={({ target: { value } }) => setName(value)}
           placeholder="지하철 역 이름을 입력해주세요."
         />
-        <AddButton>추가</AddButton>
+        <AddButton disabled={!isValidName}>추가</AddButton>
       </InputContainer>
     </StyledStationAddForm>
   );

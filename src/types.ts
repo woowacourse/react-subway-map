@@ -44,17 +44,20 @@ export interface Section {
   distance: number;
 }
 
-export type LineColor =
-  | 'red'
-  | 'purple'
-  | 'black'
-  | 'green'
-  | 'orange'
-  | 'blue'
-  | 'beige'
-  | 'deepskyblue'
-  | 'aqua'
-  | 'darksalmon';
+export const lineColors = [
+  'red',
+  'purple',
+  'black',
+  'green',
+  'orange',
+  'blue',
+  'beige',
+  'deepskyblue',
+  'aqua',
+  'darksalmon',
+] as const;
+
+export type LineColor = typeof lineColors[number];
 
 export type LineId = number;
 

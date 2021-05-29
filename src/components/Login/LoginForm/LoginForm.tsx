@@ -17,6 +17,7 @@ const LoginForm: VFC<LoginFormProps> = () => {
     login,
     isValidEmail,
     isValidPassword,
+    isValidForm,
   } = useLogin();
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
@@ -41,7 +42,7 @@ const LoginForm: VFC<LoginFormProps> = () => {
         isValid={isValidPassword}
         invalidText="비밀번호는 6자 이상입니다."
       />
-      <Button>로그인</Button>
+      <Button disabled={!isValidForm}>로그인</Button>
       <Container>
         아직 회원이 아니신가요? <SignUpLink to="/signup">회원가입</SignUpLink>
       </Container>

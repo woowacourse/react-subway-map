@@ -57,10 +57,13 @@ const useSection = () => {
   );
 
   useEffect(() => {
-    console.log(currentLineId);
     if (currentLineId === -1) return;
 
     updateCurrentSection();
+
+    return () => {
+      dispatch(lineAction.initLineId());
+    };
   }, [currentLineId, shouldUpdate]);
 
   const updateCurrentSection = async () => {
@@ -92,6 +95,20 @@ const useSection = () => {
     setForm({ ...form, downStationId });
   };
 
+  const isSelectedLine = currentLineDetail.id !== -1;
+
+  const isValidDistance = distance > 0;
+
+  const isSelectedUpStation = upStationId !== -1;
+
+  const isSelectedDownStation = downStationId !== -1;
+
+  const isValidForm =
+    isSelectedLine &&
+    isValidDistance &&
+    isSelectedUpStation &&
+    isSelectedDownStation;
+
   return {
     distance,
     upStationId,
@@ -105,6 +122,7 @@ const useSection = () => {
     setUpStationId,
     setDownStationId,
     updateCurrentSection,
+    isValidForm,
   };
 };
 

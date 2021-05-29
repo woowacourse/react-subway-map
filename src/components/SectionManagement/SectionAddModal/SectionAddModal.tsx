@@ -29,6 +29,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     currentLineId,
     setCurrentLineId,
     addSection,
+    isValidForm,
   } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
@@ -46,9 +47,10 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
       <form onSubmit={onAddSection} style={{ width: '100%' }}>
         <SectionSelectBox
           value={currentLineId}
+          defaultValue="-1"
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
-          <option defaultValue="0" selected hidden>
+          <option value={-1} selected hidden>
             노선 선택
           </option>
           <Suspense fallback={true}>
@@ -66,7 +68,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
             defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option value={-1} disabled hidden>
+            <option value={-1} disabled selected hidden>
               상행역
             </option>
             <Suspense fallback={true}>
@@ -103,7 +105,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
 
         <ControlContainer>
           <CancelButton onClick={closeModal}>취소</CancelButton>
-          <Button>확인</Button>
+          <Button disabled={!isValidForm}>확인</Button>
         </ControlContainer>
       </form>
     </Modal>

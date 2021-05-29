@@ -6,7 +6,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import useLogin from './useLogin';
 import { useState } from 'react';
-import { LineForm, LineId, StationId } from '../types';
+import { LineColor, lineColors, LineForm, LineId, StationId } from '../types';
 
 const useLine = () => {
   const [form, setForm] = useState<LineForm>({
@@ -64,7 +64,22 @@ const useLine = () => {
     deleteLineMutation.mutate(lineId);
   };
 
-  const isLineNameValid = name.length > 2;
+  const isValidName = name.length > 2;
+
+  const isValidColor = lineColors.includes(color as LineColor);
+
+  const isValidDistance = distance > 0;
+
+  const isSelectedUpStation = upStationId !== -1;
+
+  const isSelectedDownStation = downStationId !== -1;
+
+  const isValidForm =
+    isValidName &&
+    isValidColor &&
+    isValidDistance &&
+    isSelectedUpStation &&
+    isSelectedDownStation;
 
   return {
     name,
@@ -80,7 +95,9 @@ const useLine = () => {
     setColor,
     addLine,
     deleteLine,
-    isLineNameValid,
+    isValidName,
+    isValidColor,
+    isValidForm,
   };
 };
 

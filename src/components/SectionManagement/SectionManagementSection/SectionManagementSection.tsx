@@ -26,9 +26,10 @@ const SectionManagementSection = () => {
         <SectionAddButton onClick={openModal}>구간추가</SectionAddButton>
         <LineSelectBox
           value={currentLineId}
+          defaultValue={-1}
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
-          <option defaultValue="노선 이름" selected disabled hidden>
+          <option value={-1} selected disabled hidden>
             노선 이름
           </option>
           <Suspense fallback={true}>

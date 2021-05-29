@@ -52,11 +52,14 @@ const useLogin = () => {
 
   const isValidPassword = password.length >= 6;
 
+  const isValidForm = isValidEmail && isValidPassword;
+
   return {
     accessToken,
     email,
     isValidEmail,
     isValidPassword,
+    isValidForm,
     password,
     setEmail,
     setPassword,
