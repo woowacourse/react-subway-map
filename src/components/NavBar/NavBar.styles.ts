@@ -10,7 +10,7 @@ const Container = styled.nav`
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 64px;
   background-color: ${PALETTE.DEFAULT_WHITE};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
@@ -31,7 +31,7 @@ const NavItemList = styled.ul`
 
 const NavItem = styled.li`
   margin-left: auto;
-  font-size: 1.4rem;
+  font-size: 1rem;
   padding: 8px 16px;
   cursor: pointer;
 

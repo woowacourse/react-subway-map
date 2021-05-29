@@ -7,8 +7,8 @@ const Container = styled.div`
 
 const CurrentServer = styled.div`
   position: absolute;
-  top: 88px;
-  right: 8px;
+  top: 84px;
+  right: 44px;
 `;
 
 export default { Container, CurrentServer };

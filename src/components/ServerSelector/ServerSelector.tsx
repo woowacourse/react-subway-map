@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Styled from './ServerSelector.styles';
 import { ButtonType } from 'types';
 import TextButton from 'components/shared/TextButton/TextButton';
+import Notification from 'components/shared/Notification/Notification';
 import { SERVER, NOTIFICATION } from '../../constants';
 import { useAppSelector } from 'modules/hooks';
+import useNotify from 'hooks/useNotify';
 
 interface Props {
   isMessageVisible: boolean;
@@ -13,11 +15,19 @@ interface Props {
 const ServerSelector = ({ isMessageVisible, changeServer }: Props) => {
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
+  const { notification, setNotification } = useNotify();
+
+  useEffect(() => {
+    setNotification({
+      message: NOTIFICATION.SELECT_SERVER,
+      isValid: false,
+      isVisible: isMessageVisible,
+    });
+  }, [isMessageVisible]);
+
   return (
     <Styled.Container>
-      <Styled.SelectServerMessage isVisible={isMessageVisible}>
-        {NOTIFICATION.SELECT_SERVER}
-      </Styled.SelectServerMessage>
+      <Styled.Title>서버</Styled.Title>
       <Styled.ButtonsContainer>
         <TextButton
           text="🐾 코기"
@@ -50,6 +60,11 @@ const ServerSelector = ({ isMessageVisible, changeServer }: Props) => {
           onClick={() => changeServer(SERVER.ALLI)}
         />
       </Styled.ButtonsContainer>
+      <Notification
+        message={notification.message}
+        isValid={notification.isValid}
+        isVisible={notification.isVisible}
+      />
     </Styled.Container>
   );
 };

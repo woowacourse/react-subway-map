@@ -17,6 +17,7 @@ import {
   NOTIFICATION,
   INPUT,
 } from '../../constants';
+import useNotify from 'hooks/useNotify';
 
 interface Props {
   stations: Station[] | undefined;
@@ -40,8 +41,9 @@ const LineModal = ({
   const [distance, setDistance] = useState<string>('');
   const [extraFare, setExtraFare] = useState<string>('');
 
-  const [isMessageValid, setMessageValid] = useState<boolean>(false);
-  const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
+  const { notification: lineNameNoti, setNotification: setLineNameNoti } = useNotify();
+  // const [isMessageValid, setMessageValid] = useState<boolean>(false);
+  // const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
   const { fetchData: addLineAsync } = useFetch(API_METHOD.POST);
   const { fetchData: editLineAsync } = useFetch(API_METHOD.PUT);
@@ -54,12 +56,12 @@ const LineModal = ({
     const isValidLineName = REGEX.ONLY_KOREAN_AND_NUMBER.test(name);
 
     if (!isValidLineName) {
-      setMessageValid(false);
-      setMessageVisible(true);
+      setLineNameNoti({ message: NOTIFICATION.LINEN_NAME, isValid: false, isVisible: true });
 
       return false;
     } else {
-      setMessageVisible(false);
+      setLineNameNoti({ message: '', isValid: false, isVisible: false });
+
       return true;
     }
   };
@@ -68,8 +70,7 @@ const LineModal = ({
     event.preventDefault();
 
     if (!validateLineName()) return;
-
-    setMessageVisible(false);
+    setLineNameNoti({ message: '', isValid: false, isVisible: false });
 
     const newLine = {
       name,
@@ -146,9 +147,9 @@ const LineModal = ({
           }}
         />
         <Notification
-          isValid={isMessageValid}
-          isVisible={isMessageVisible}
-          message={NOTIFICATION.STATION_NAME}
+          message={lineNameNoti.message}
+          isValid={lineNameNoti.isValid}
+          isVisible={lineNameNoti.isVisible}
         />
       </div>
       {!selectedLine && (
@@ -207,7 +208,7 @@ const LineModal = ({
               ></Styled.ColorOption>
             ))}
           </Styled.ColorPalette>
-          <Styled.SelectedColor color={color} value={color} required />
+          <Styled.SelectedColor color={color} value={color} readOnly required />
         </Styled.PaletteContent>
       </Styled.PaletteContainer>
 

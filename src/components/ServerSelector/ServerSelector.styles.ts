@@ -4,20 +4,21 @@ import PALETTE from 'constants/palette';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+`;
+
+const Title = styled.div`
+  font-size: 12px;
+  color: ${PALETTE.DARK_GRAY};
+  margin-right: auto;
+  margin-bottom: 2px;
 `;
 
 const ButtonsContainer = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 16px;
 `;
 
-const SelectServerMessage = styled.div<{ isVisible: boolean }>`
-  margin-bottom: 12px;
-  color: ${PALETTE.RED};
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-`;
-
-export default { Container, ButtonsContainer, SelectServerMessage };
+export default { Container, ButtonsContainer, Title };

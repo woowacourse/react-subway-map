@@ -25,6 +25,7 @@ import {
   API_METHOD,
   INPUT,
 } from '../../constants';
+import useNotify from 'hooks/useNotify';
 
 const StationPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
@@ -35,8 +36,6 @@ const StationPage = () => {
   const [newStationName, setNewStationName] = useState('');
   const [editingStationId, setEditingStationId] = useState<number>(0);
   const [editingStationName, setEditingStationName] = useState<string>('');
-  const [isMessageValid, setMessageValid] = useState<boolean>(false);
-  const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
   const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch(API_METHOD.GET);
   const { fetchData: addStationAsync, loading: addStationLoading } = useFetch(API_METHOD.POST);
@@ -44,6 +43,7 @@ const StationPage = () => {
     API_METHOD.DELETE,
   );
   const { fetchData: editStationAsync, loading: editStationLoading } = useFetch(API_METHOD.PUT);
+  const { notification: stationNoti, setNotification: setStationNoti } = useNotify();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,13 +66,12 @@ const StationPage = () => {
     event.preventDefault();
 
     if (!isValidStationName(newStationName)) {
-      setMessageValid(false);
-      setMessageVisible(true);
+      setStationNoti({ message: NOTIFICATION.STATION_NAME, isValid: false, isVisible: true });
 
       return;
     }
 
-    setMessageVisible(false);
+    setStationNoti({ message: '', isValid: false, isVisible: false });
 
     const res = await addStationAsync(END_POINT.STATIONS, {
       name: newStationName,
@@ -97,13 +96,11 @@ const StationPage = () => {
     event.preventDefault();
 
     if (!isValidStationName(editingStationName)) {
-      setMessageValid(false);
-      setMessageVisible(true);
+      setStationNoti({ message: NOTIFICATION.STATION_NAME, isValid: false, isVisible: true });
 
       return;
     }
-
-    setMessageVisible(false);
+    setStationNoti({ message: '', isValid: false, isVisible: false });
 
     const res = await editStationAsync(`${END_POINT.STATIONS}/${editingStationId}`, {
       name: editingStationName,
@@ -166,9 +163,9 @@ const StationPage = () => {
               }}
             />
             <Notification
-              isValid={isMessageValid}
-              isVisible={isMessageVisible}
-              message={NOTIFICATION.STATION_NAME}
+              message={stationNoti.message}
+              isValid={stationNoti.isValid}
+              isVisible={stationNoti.isVisible}
             />
           </Styled.InputWrapper>
           <TextButton text="추가" styleType={ButtonType.YELLOW} />

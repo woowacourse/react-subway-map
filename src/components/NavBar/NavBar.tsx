@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { ROUTE, PALETTE, SESSION_STORAGE } from '../../constants';
 import logo from 'assets/logo.png';
 import Styled from './NavBar.styles';
@@ -9,7 +9,6 @@ import { resetServer } from 'modules/serverSlice';
 import { User } from 'types';
 
 const NavBar = () => {
-  const history = useHistory();
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
   const dispatch = useAppDispatch();
 
@@ -24,8 +23,6 @@ const NavBar = () => {
 
     dispatch(logoutAction());
     dispatch(resetServer());
-
-    history.push(ROUTE.LOGIN);
   };
 
   return (
@@ -45,7 +42,9 @@ const NavBar = () => {
             <NavLink to={ROUTE.SECTIONS} activeStyle={selectedNavStyle}>
               <Styled.NavItem>구간 관리</Styled.NavItem>
             </NavLink>
-            <Styled.NavItem onClick={logout}>로그아웃</Styled.NavItem>
+            <NavLink to={ROUTE.LOGIN} activeStyle={selectedNavStyle} onClick={logout}>
+              <Styled.NavItem>로그아웃</Styled.NavItem>
+            </NavLink>
           </>
         ) : (
           <>

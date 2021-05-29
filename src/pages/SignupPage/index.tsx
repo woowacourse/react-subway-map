@@ -24,6 +24,7 @@ import {
   NOTIFICATION,
   ROUTE,
 } from '../../constants';
+import useNotify from 'hooks/useNotify';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();
@@ -35,18 +36,10 @@ const SignupPage = () => {
   const [age, setAge] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [passwordNotification, setPasswordNotification] = useState({
-    message: '',
-    isValid: false,
-    isVisible: false,
-  });
-  const [emailNotification, setEmailNotification] = useState({
-    message: '',
-    isValid: false,
-    isVisible: false,
-  });
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
+  const { notification: passwordNoti, setNotification: setPasswordNoti } = useNotify();
+  const { notification: emailNoti, setNotification: setEmailNoti } = useNotify();
   const { fetchData: checkDuplicatedEmailAsync } = useFetch(API_METHOD.GET);
   const { fetchData: signupAsync, loading: signupLoading } = useFetch(API_METHOD.POST);
 
@@ -59,13 +52,13 @@ const SignupPage = () => {
       enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR || ALERT_MESSAGE.SERVER_ERROR);
     } else if (res.status === API_STATUS.FULFILLED) {
       if (res.data.exist) {
-        setEmailNotification({
+        setEmailNoti({
           message: NOTIFICATION.DUPLICATED_EMAIL,
           isValid: false,
           isVisible: true,
         });
       } else {
-        setEmailNotification({
+        setEmailNoti({
           message: NOTIFICATION.AVAILABLE_EMAIL,
           isValid: true,
           isVisible: true,
@@ -76,14 +69,14 @@ const SignupPage = () => {
 
   const checkPasswordMatch = () => {
     if (password !== confirmPassword) {
-      setPasswordNotification({
+      setPasswordNoti({
         message: NOTIFICATION.DISMATCH_PASSWORD,
         isValid: false,
         isVisible: true,
       });
       return false;
     } else {
-      setPasswordNotification({
+      setPasswordNoti({
         message: NOTIFICATION.MATCH_PASSWORD,
         isValid: true,
         isVisible: true,
@@ -119,79 +112,77 @@ const SignupPage = () => {
   };
 
   return (
-    <>
+    <CardLayout title="회원가입">
+      <Loading isLoading={signupLoading} />
       <ServerSelector isMessageVisible={isServerMessageVisible} changeServer={changeServer} />
-      <CardLayout title="회원가입">
-        <Loading isLoading={signupLoading} />
-        <form onSubmit={signup}>
-          <Styled.InputContainer>
-            <Styled.InputWrapper>
-              <Input
-                type="email"
-                labelText="이메일"
-                placeholder="이메일을 입력해주세요."
-                value={email}
-                icon={emailImg}
-                onBlur={checkDuplicatedEmail}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-              <Notification
-                message={emailNotification.message}
-                isValid={emailNotification.isValid}
-                isVisible={emailNotification.isVisible}
-              />
-            </Styled.InputWrapper>
-            <Styled.InputWrapper>
-              <Input
-                type="number"
-                labelText="나이"
-                placeholder="나이를 입력해주세요."
-                value={age}
-                icon={userImg}
-                onChange={(event) => setAge(event.target.value)}
-                extraArgs={{ min: INPUT.AGE.MIN, max: INPUT.AGE.MAX }}
-              />
-            </Styled.InputWrapper>
-            <Styled.InputWrapper>
-              <Input
-                type="password"
-                labelText="비밀번호"
-                placeholder="비밀번호를 입력해주세요."
-                value={password}
-                icon={lockImg}
-                onChange={(event) => setPassword(event.target.value)}
-                extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
-              />
-            </Styled.InputWrapper>
-            <Styled.InputWrapper>
-              <Input
-                type="password"
-                labelText="비밀번호 확인"
-                placeholder="비밀번호를 한번 더 입력해주세요."
-                value={confirmPassword}
-                icon={lockImg}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                onBlur={checkPasswordMatch}
-                extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
-              />
-              <Notification
-                message={passwordNotification.message}
-                isValid={passwordNotification.isValid}
-                isVisible={passwordNotification.isVisible}
-              />
-            </Styled.InputWrapper>
-          </Styled.InputContainer>
+      <form onSubmit={signup}>
+        <Styled.InputContainer>
+          <Styled.InputWrapper>
+            <Input
+              type="email"
+              labelText="이메일"
+              placeholder="이메일을 입력해주세요."
+              value={email}
+              icon={emailImg}
+              onBlur={checkDuplicatedEmail}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <Notification
+              message={emailNoti.message}
+              isValid={emailNoti.isValid}
+              isVisible={emailNoti.isVisible}
+            />
+          </Styled.InputWrapper>
+          <Styled.InputWrapper>
+            <Input
+              type="number"
+              labelText="나이"
+              placeholder="나이를 입력해주세요."
+              value={age}
+              icon={userImg}
+              onChange={(event) => setAge(event.target.value)}
+              extraArgs={{ min: INPUT.AGE.MIN, max: INPUT.AGE.MAX }}
+            />
+          </Styled.InputWrapper>
+          <Styled.InputWrapper>
+            <Input
+              type="password"
+              labelText="비밀번호"
+              placeholder="비밀번호를 입력해주세요."
+              value={password}
+              icon={lockImg}
+              onChange={(event) => setPassword(event.target.value)}
+              extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
+            />
+          </Styled.InputWrapper>
+          <Styled.InputWrapper>
+            <Input
+              type="password"
+              labelText="비밀번호 확인"
+              placeholder="비밀번호를 한번 더 입력해주세요."
+              value={confirmPassword}
+              icon={lockImg}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              onBlur={checkPasswordMatch}
+              extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
+            />
+            <Notification
+              message={passwordNoti.message}
+              isValid={passwordNoti.isValid}
+              isVisible={passwordNoti.isVisible}
+            />
+          </Styled.InputWrapper>
+        </Styled.InputContainer>
 
-          <Styled.ButtonWrapper>
-            <TextButton
-              text="회원가입하기"
-              styleType={ButtonType.YELLOW}
-              sizeType={ButtonSize.LARGE}
-            ></TextButton>
-          </Styled.ButtonWrapper>
-        </form>
-      </CardLayout>
-    </>
+        <Styled.ButtonWrapper>
+          <TextButton
+            text="회원가입하기"
+            styleType={ButtonType.YELLOW}
+            sizeType={ButtonSize.LARGE}
+          ></TextButton>
+        </Styled.ButtonWrapper>
+      </form>
+    </CardLayout>
   );
 };
 

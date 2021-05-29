@@ -23,24 +23,22 @@ import {
 } from '../../constants';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
+import useNotify from 'hooks/useNotify';
 
 const LoginPage = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
-
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [invalidNotification, setInvalidNotification] = useState({
-    message: '',
-    isValid: false,
-    isVisible: false,
-  });
   const [loginResponse, setLoginResponse] = useState<{ accessToken: string }>();
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
   const { fetchData: loginAsync, loading: loginLoading } = useFetch(API_METHOD.POST);
+  const { notification: loginNoti, setNotification: setLoginNoti } = useNotify();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const login = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,13 +53,13 @@ const LoginPage = () => {
     const res = await loginAsync(END_POINT.LOGIN, loginData);
 
     if (res.status === API_STATUS.REJECTED) {
-      setInvalidNotification({
+      setLoginNoti({
         message: res.message || ALERT_MESSAGE.SERVER_ERROR,
         isValid: false,
         isVisible: true,
       });
     } else if (res.status === API_STATUS.FULFILLED) {
-      setInvalidNotification({ message: '', isValid: true, isVisible: false });
+      setLoginNoti({ message: '', isValid: true, isVisible: false });
       setLoginResponse(res.data);
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_LOGIN);
 
@@ -87,53 +85,51 @@ const LoginPage = () => {
   }, [loginResponse]);
 
   return (
-    <>
+    <CardLayout title="로그인">
+      <Loading isLoading={loginLoading} />
       <ServerSelector isMessageVisible={isServerMessageVisible} changeServer={changeServer} />
-      <CardLayout title="로그인">
-        <Loading isLoading={loginLoading} />
-        <form onSubmit={login}>
-          <Styled.InputContainer>
-            <Styled.InputWrapper>
-              <Input
-                type="email"
-                labelText="이메일"
-                placeholder="이메일을 입력해주세요."
-                value={email}
-                icon={emailImg}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </Styled.InputWrapper>
+      <form onSubmit={login}>
+        <Styled.InputContainer>
+          <Styled.InputWrapper>
+            <Input
+              type="email"
+              labelText="이메일"
+              placeholder="이메일을 입력해주세요."
+              value={email}
+              icon={emailImg}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </Styled.InputWrapper>
 
-            <Styled.InputWrapper>
-              <Input
-                type="password"
-                labelText="비밀번호"
-                placeholder="비밀번호를 입력해주세요."
-                value={password}
-                icon={lockImg}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              <Notification
-                message={invalidNotification.message}
-                isValid={invalidNotification.isValid}
-                isVisible={invalidNotification.isVisible}
-              />
-            </Styled.InputWrapper>
-          </Styled.InputContainer>
+          <Styled.InputWrapper>
+            <Input
+              type="password"
+              labelText="비밀번호"
+              placeholder="비밀번호를 입력해주세요."
+              value={password}
+              icon={lockImg}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <Notification
+              message={loginNoti.message}
+              isValid={loginNoti.isValid}
+              isVisible={loginNoti.isVisible}
+            />
+          </Styled.InputWrapper>
+        </Styled.InputContainer>
 
-          <Styled.ButtonWrapper>
-            <TextButton
-              text="로그인하기"
-              styleType={ButtonType.YELLOW}
-              sizeType={ButtonSize.LARGE}
-            ></TextButton>
-          </Styled.ButtonWrapper>
-        </form>
-        <Styled.SignupLink>
-          <Link to={ROUTE.SIGNUP}>아직 회원이 아니신가요?</Link>
-        </Styled.SignupLink>
-      </CardLayout>
-    </>
+        <Styled.ButtonWrapper>
+          <TextButton
+            text="로그인하기"
+            styleType={ButtonType.YELLOW}
+            sizeType={ButtonSize.LARGE}
+          ></TextButton>
+        </Styled.ButtonWrapper>
+      </form>
+      <Styled.SignupLink>
+        <Link to={ROUTE.SIGNUP}>아직 회원이 아니신가요?</Link>
+      </Styled.SignupLink>
+    </CardLayout>
   );
 };
 
