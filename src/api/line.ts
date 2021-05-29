@@ -1,10 +1,20 @@
 import axios from 'axios';
-import { API, RESPONSE } from '../constants/api';
-import { AddLine, Line } from '../interfaces';
+import { API } from '../constants/api';
+import { MESSAGE } from '../constants/constant';
+import { AddLineAction, DeleteLineAction, LineState } from '../interfaces/line';
 
 interface GetLinesResponse {
   status: number;
-  data: Line[];
+  data: LineState['lines'];
+}
+
+interface AddLineResponse {
+  status: number;
+  data: LineState['lines'];
+}
+
+interface DeleteLineResponse {
+  status: number;
 }
 
 export const lineAPI = {
@@ -13,38 +23,40 @@ export const lineAPI = {
       const response: GetLinesResponse = await axios.get(API.LINES());
 
       if (response.status >= 400) {
-        throw new Error('노선 정보를 불러오는데 실패했습니다...!');
+        throw new Error(MESSAGE.ERROR.LINE.LOAD_FAILED);
       }
 
       return { lines: response.data };
     } catch (error) {
-      return { error: error.message ?? RESPONSE.FAILURE };
+      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
     }
   },
 
-  addLine: async (line: AddLine) => {
+  addLine: async (line: AddLineAction['payload']['line']) => {
     try {
-      const response: { status: number; data: Line } = await axios.post(API.LINES(), line);
+      const response: AddLineResponse = await axios.post(API.LINES(), line);
+
       if (response.status >= 400) {
-        throw new Error('노선을 추가하는데 실패했습니다...!');
+        throw new Error(MESSAGE.ERROR.LINE.ADD_FAILED);
       }
 
       return { line: response.data };
     } catch (error) {
-      return { error: error.message ?? RESPONSE.FAILURE };
+      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
     }
   },
 
-  deleteLine: async (id: number) => {
+  deleteLine: async (id: DeleteLineAction['payload']['id']) => {
     try {
-      const response: { status: number } = await axios.delete(`${API.LINES()}/${id}`);
+      const response: DeleteLineResponse = await axios.delete(`${API.LINES()}/${id}`);
+
       if (response.status >= 400) {
-        throw new Error('노선을 삭제하는데 실패했습니다...!');
+        throw new Error(MESSAGE.ERROR.LINE.DELETE_FAILED);
       }
 
       return {};
     } catch (error) {
-      return { error: error.message ?? RESPONSE.FAILURE };
+      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
     }
   },
 };

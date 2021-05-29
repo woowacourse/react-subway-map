@@ -1,57 +1,63 @@
 import axios from 'axios';
-import { API, RESPONSE } from '../constants/api';
-import { Station } from '../interfaces';
+import { API } from '../constants/api';
+import { MESSAGE } from '../constants/constant';
+import { StationLineState, StationState } from '../interfaces/station';
 
-interface GetStationsReponse {
+interface GetStationsResponse {
   status: number;
-  data: Station[];
+  data: StationState['stations'];
+}
+
+interface AddStationResponse {
+  status: number;
+  data: StationState['stations'];
 }
 
 export const stationAPI = {
   getStations: async () => {
     try {
-      const response: GetStationsReponse = await axios.get(API.GET_STATIONS());
+      const response: GetStationsResponse = await axios.get(API.GET_STATIONS());
 
       if (response.status >= 400) {
-        throw new Error('역 정보를 불러오는데 실패했습니다...!');
+        throw new Error(MESSAGE.ERROR.STATION.LOAD_FAILED);
       }
 
       return { stations: response.data };
     } catch (error) {
-      return { error: error.message ?? RESPONSE.FAILURE };
+      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
     }
   },
 
-  addStation: async (name: Station['name']) => {
+  addStation: async (name: StationLineState['name']) => {
     try {
       const data = { name };
-      const response: GetStationsReponse = await axios.post(API.GET_STATIONS(), data);
+      const response: AddStationResponse = await axios.post(API.GET_STATIONS(), data);
 
       if (response.status >= 400) {
-        throw new Error('역 생성에 실패했습니다...!');
+        throw new Error(MESSAGE.ERROR.STATION.ADD_FAILED);
       }
 
       return { station: response.data };
     } catch (error) {
-      return { error: error.message ?? RESPONSE.FAILURE };
+      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
     }
   },
 
-  deleteStation: async (id: Station['id']) => {
+  deleteStation: async (id: StationLineState['id']) => {
     try {
       const response = await axios.delete(`${API.GET_STATIONS()}/${id}`);
 
       if (response.status === 400) {
-        throw new Error('노선에 등록된 역은 삭제가 불가능합니다.');
+        throw new Error(MESSAGE.ERROR.STATION.REGISTERED_STATION);
       }
 
       if (response.status !== 204) {
-        throw new Error('역 삭제에 실패했습니다...!');
+        throw new Error(MESSAGE.ERROR.STATION.DELETE_FAILED);
       }
 
       return {};
     } catch (error) {
-      return { error: error.message ?? RESPONSE.FAILURE };
+      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
     }
   },
 };
