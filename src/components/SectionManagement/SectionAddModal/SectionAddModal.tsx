@@ -30,7 +30,10 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     setCurrentLineId,
     addSection,
     isValidForm,
+    isSelectedLine,
     isSelectedUpStation,
+    availableUpStations,
+    availableDownStations,
   } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
@@ -67,9 +70,10 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
             value={upStationId}
             defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
+            disabled={!isSelectedLine}
           >
             <Suspense fallback={true}>
-              {(stations.data as Station[]).map(({ id, name }) => (
+              {availableUpStations.map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}
                 </option>
@@ -84,7 +88,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
             disabled={!isSelectedUpStation}
           >
             <Suspense fallback={true}>
-              {(stations.data as Station[]).map(({ id, name }) => (
+              {availableDownStations.map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}
                 </option>

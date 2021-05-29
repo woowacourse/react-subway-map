@@ -9,6 +9,7 @@ import useLogin from './useLogin';
 import { useMutation } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { lineAction } from '../state/slices/line';
+import useStation from './useStation';
 
 const useSection = () => {
   const { currentLineId, shouldUpdate } = useAppSelector(
@@ -21,7 +22,7 @@ const useSection = () => {
   const dispatch = useAppDispatch();
 
   const [currentLineDetail, setCurrentLineDetail] = useState<LineDetail>({
-    id: 0,
+    id: -1,
     name: '',
     color: 'red',
     stations: [],
@@ -36,6 +37,7 @@ const useSection = () => {
 
   const { distance, downStationId, upStationId } = form;
 
+  const { stations } = useStation();
   const { accessToken } = useLogin();
   const addSectionMutation = useMutation(
     () => requestAddSection(currentLineId, form, accessToken),
@@ -61,12 +63,6 @@ const useSection = () => {
 
     updateCurrentSection();
   }, [currentLineId, shouldUpdate]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(lineAction.initLineId());
-    };
-  }, []);
 
   const updateCurrentSection = async () => {
     // TODO: magic number!
@@ -97,6 +93,19 @@ const useSection = () => {
     setForm({ ...form, downStationId });
   };
 
+  const availableUpStations = currentLineDetail.stations;
+
+  const availableDownStations = stations.isSuccess
+    ? stations.data.filter(
+        (station) =>
+          !currentLineDetail.stations.some(
+            (listedStation) => listedStation.id === station.id
+          )
+      )
+    : [];
+
+  // stations, currentLineDetail.stations
+
   const isSelectedLine = currentLineDetail.id !== -1;
 
   const isValidDistance = distance > 0;
@@ -125,7 +134,10 @@ const useSection = () => {
     setDownStationId,
     updateCurrentSection,
     isValidForm,
+    isSelectedLine,
     isSelectedUpStation,
+    availableUpStations,
+    availableDownStations,
   };
 };
 
