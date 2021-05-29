@@ -21,6 +21,8 @@ const MESSAGE = {
     REQUEST_FAILURE: '서버에 문제가 발생했습니다. 잠시 후에 다시 시도해주세요',
     INVALID_STATION_LENGTH: '노선 생성을 위해서는 최소 2개의 역이 필요합니다',
     REQUIRE_MINIMUM_STATION: '노선에는 최소 2개의 역이 필요하므로 삭제할 수 없습니다',
+    INVALID_STATION_NAME_LENGTH: '2 ~ 20글자 사이의 역 이름을 입력해주세요',
+    INVALID_LINE_NAME_LENGTH: '2 ~ 10글자 사이의 노선 이름을 입력해주세요',
   },
 };
 
