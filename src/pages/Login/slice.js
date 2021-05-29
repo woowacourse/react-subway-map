@@ -75,6 +75,9 @@ const loginSlice = createSlice({
       state.message = action.payload;
       state.error = action.error;
     },
+    [logout.fulfilled]: (state) => {
+      state.accessToken = null;
+    },
   },
 });
 
