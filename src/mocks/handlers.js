@@ -3,9 +3,49 @@ import { rest } from 'msw';
 import BACKEND from '../constants/backend';
 import MESSAGE from '../constants/message';
 import { CREWS } from '../types';
-import { LINE_LIST, STATION_LIST } from './mockData';
+import { LINE_LIST, STATION_LIST, USER_LIST } from './mockData';
 
 export const handlers = [
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/login`, (req, res, ctx) => {
+    const { email, password } = req.body;
+
+    const currentUser = USER_LIST.find((user) => user.email === email);
+
+    if (!currentUser) {
+      return res(ctx.status(400), ctx.json({ status: 400, message: MESSAGE.ERROR.LOGIN_FAILURE }));
+    }
+
+    if (currentUser.password !== password) {
+      return res(ctx.status(400), ctx.json({ status: 400, message: MESSAGE.ERROR.LOGIN_FAILURE }));
+    }
+
+    return res(ctx.status(200), ctx.json({ accessToken: '1234' }));
+  }),
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/members`, (req, res, ctx) => {
+    const { email, password, age } = req.body;
+
+    if (!email || !password || !age) {
+      return res(ctx.status(400), ctx.json({ status: 400, message: MESSAGE.ERROR.SIGNUP_FAILURE }));
+    }
+
+    return res(ctx.status(200), ctx.json({ accessToken: '1234' }));
+  }),
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/members/exists`, (req, res, ctx) => {
+    const { email } = req.body;
+
+    if (!email) {
+      return res(ctx.status(400));
+    }
+
+    const existUser = USER_LIST.find((user) => user.email === email);
+
+    if (existUser) {
+      return res(ctx.status(400));
+    }
+
+    return res(ctx.status(200));
+  }),
+
   rest.get(`${BACKEND[CREWS.DANYEE].baseUrl}/stations`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(STATION_LIST));
   }),
@@ -93,21 +133,24 @@ export const handlers = [
     const { upStationId, downStationId, distance } = req.body;
 
     const targetLine = LINE_LIST.find((line) => line.id === lineId);
-    if (!targetLine)
+    if (!targetLine) {
       return res(
         ctx.status(404),
         ctx.json({ status: 404, message: MESSAGE.ERROR.LINE_NOT_EXISTS })
       );
+    }
 
     const upStation = targetLine.stations.find((station) => station.id === upStationId);
     const downStation = targetLine.stations.find((station) => station.id === downStationId);
 
-    if (upStation && downStation)
+    if (upStation && downStation) {
       return res(
         ctx.status(400),
         ctx.json({ status: 404, message: MESSAGE.ERROR.STATIONS_ALREADY_CONTAINS })
       );
-    if (!upStation && !downStation)
+    }
+
+    if (!upStation && !downStation) {
       return res(
         ctx.status(400),
         ctx.json({
@@ -115,6 +158,7 @@ export const handlers = [
           message: MESSAGE.ERROR.REQUIRE_CONNECT_STATION,
         })
       );
+    }
 
     return res(ctx.status(201), ctx.json({ upStationId, downStationId, distance }));
   }),
@@ -123,7 +167,7 @@ export const handlers = [
     const lineId = Number(req.params.id);
 
     const targetLine = LINE_LIST.find((line) => line.id === lineId);
-    if (!targetLine)
+    if (!targetLine) {
       return res(
         ctx.status(404),
         ctx.json({
@@ -131,9 +175,10 @@ export const handlers = [
           message: MESSAGE.ERROR.LINE_NOT_EXISTS,
         })
       );
+    }
 
     const targetStation = targetLine.stations.find((station) => station.id === stationId);
-    if (!targetStation)
+    if (!targetStation) {
       return res(
         ctx.status(404),
         ctx.json({
@@ -141,6 +186,7 @@ export const handlers = [
           message: MESSAGE.ERROR.DELETE_STATION_NOT_EXISTS,
         })
       );
+    }
 
     return res(
       ctx.status(204),

@@ -1,3 +1,11 @@
+export const USER_LIST = [
+  {
+    id: 1,
+    email: 'test@test.com',
+    password: 'testtest',
+  },
+];
+
 export const STATION_LIST = [
   {
     id: 1,

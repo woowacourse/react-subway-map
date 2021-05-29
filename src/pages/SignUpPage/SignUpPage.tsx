@@ -72,7 +72,6 @@ const SignUpPage = () => {
       await requestCheckDuplicateEmail(email);
       setDuplicatedEmail(false);
     } catch (error) {
-      // TODO: 네트워크 응답을 아예 받지 못했을 때의 에러 처리 필요
       setDuplicatedEmail(true);
     }
   };
