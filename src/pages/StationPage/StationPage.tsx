@@ -1,15 +1,7 @@
 import { useContext, useEffect, useState, FormEventHandler } from 'react';
 import { MdSubway, MdDelete } from 'react-icons/md';
 
-import {
-  Box,
-  Button,
-  Input,
-  InputContainer,
-  Heading1,
-  Icon,
-  ColorDot,
-} from '../../components/shared';
+import { Box, Button, Input, InputContainer, Heading1, Icon, Chip } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
@@ -179,9 +171,9 @@ const StationPage = ({ setIsLoading }: PageProps) => {
                 <p>
                   {name}
                   {lines?.map(({ id, name, color }) => (
-                    <ColorDot key={id} size="s" backgroundColor={color}>
+                    <Chip key={id} size="s" backgroundColor={color}>
                       {name}
-                    </ColorDot>
+                    </Chip>
                   ))}
                 </p>
 
