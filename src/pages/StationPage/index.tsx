@@ -22,6 +22,8 @@ import {
   ALERT_MESSAGE,
   CONFIRM_MESSAGE,
   NOTIFICATION,
+  API_METHOD,
+  INPUT,
 } from '../../constants';
 
 const StationPage = () => {
@@ -36,10 +38,12 @@ const StationPage = () => {
   const [isMessageValid, setMessageValid] = useState<boolean>(false);
   const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
-  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
-  const { fetchData: addStationAsync, loading: addStationLoading } = useFetch('POST');
-  const { fetchData: deleteStationAsync, loading: deleteStationLoading } = useFetch('DELETE');
-  const { fetchData: editStationAsync, loading: editStationLoading } = useFetch('PUT');
+  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch(API_METHOD.GET);
+  const { fetchData: addStationAsync, loading: addStationLoading } = useFetch(API_METHOD.POST);
+  const { fetchData: deleteStationAsync, loading: deleteStationLoading } = useFetch(
+    API_METHOD.DELETE,
+  );
+  const { fetchData: editStationAsync, loading: editStationLoading } = useFetch(API_METHOD.PUT);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -156,7 +160,10 @@ const StationPage = () => {
               labelText="지하철 역 이름을 입력해주세요."
               value={newStationName}
               onChange={(event) => setNewStationName(event.target.value)}
-              extraArgs={{ minLength: 2, maxLength: 20 }}
+              extraArgs={{
+                minLength: INPUT.STATION_NAME.MIN_LENGTH,
+                maxLength: INPUT.STATION_NAME.MAX_LENGTH,
+              }}
             />
             <Notification
               isValid={isMessageValid}
@@ -177,8 +184,8 @@ const StationPage = () => {
                   ref={inputRef}
                   value={editingStationName}
                   onChange={(e) => setEditingStationName(e.target.value)}
-                  minLength={2}
-                  maxLength={20}
+                  minLength={INPUT.STATION_NAME.MIN_LENGTH}
+                  maxLength={INPUT.STATION_NAME.MAX_LENGTH}
                 ></Styled.EditingStationInput>
                 <IconButton type="submit">
                   <Styled.Icon src={saveIcon} alt="save" />

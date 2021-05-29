@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useAppSelector } from 'modules/hooks';
-import { API_STATUS } from 'constants/api';
+import { API_METHOD, API_STATUS } from '../constants';
 
-type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE';
-
-const useFetch = (method: HTTP_METHOD) => {
+const useFetch = (method: API_METHOD) => {
   const [loading, setLoading] = useState<boolean>(false);
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 

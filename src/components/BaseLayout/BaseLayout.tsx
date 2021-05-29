@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from 'components/NavBar/NavBar';
 import Styled from './BaseLayout.styles';
 import { useAppSelector } from 'modules/hooks';
-import { SERVER, KOREAN_SERVER } from 'constants/api';
+import { SERVER, KOREAN_SERVER } from '../../constants';
 
 interface Props {
   children: React.ReactNode;

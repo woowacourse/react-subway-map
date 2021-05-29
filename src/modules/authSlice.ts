@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API_STATUS, END_POINT } from 'constants/api';
+import { API_STATUS, END_POINT } from '../constants';
 import { User } from 'types';
 import { AppDispatch, RootState } from './hooks';
 

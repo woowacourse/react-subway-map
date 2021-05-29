@@ -15,7 +15,15 @@ import lockImg from 'assets/lock.png';
 import userImg from 'assets/user.png';
 import Styled from './styles';
 import useFetch from 'hooks/useFetch';
-import { ALERT_MESSAGE, API_STATUS, END_POINT, NOTIFICATION, ROUTE } from '../../constants';
+import {
+  ALERT_MESSAGE,
+  API_METHOD,
+  API_STATUS,
+  END_POINT,
+  INPUT,
+  NOTIFICATION,
+  ROUTE,
+} from '../../constants';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +32,7 @@ const SignupPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [email, setEmail] = useState<string>('');
-  const [age, setAge] = useState<number>();
+  const [age, setAge] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [passwordNotification, setPasswordNotification] = useState({
@@ -39,8 +47,8 @@ const SignupPage = () => {
   });
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
-  const { fetchData: checkDuplicatedEmailAsync } = useFetch('GET');
-  const { fetchData: signupAsync, loading: signupLoading } = useFetch('POST');
+  const { fetchData: checkDuplicatedEmailAsync } = useFetch(API_METHOD.GET);
+  const { fetchData: signupAsync, loading: signupLoading } = useFetch(API_METHOD.POST);
 
   const checkDuplicatedEmail = async () => {
     if (!email) return;
@@ -93,7 +101,7 @@ const SignupPage = () => {
       return;
     }
 
-    const signupData = { email, password, age: age || 1 };
+    const signupData = { email, password, age: age || INPUT.AGE.MIN };
 
     const res = await signupAsync(`${END_POINT.AUTH}`, signupData);
 
@@ -140,8 +148,8 @@ const SignupPage = () => {
                 placeholder="나이를 입력해주세요."
                 value={age}
                 icon={userImg}
-                onChange={(event) => setAge(Number(event.target.value))}
-                extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
+                onChange={(event) => setAge(event.target.value)}
+                extraArgs={{ min: INPUT.AGE.MIN, max: INPUT.AGE.MAX }}
               />
             </Styled.InputWrapper>
             <Styled.InputWrapper>
@@ -152,7 +160,7 @@ const SignupPage = () => {
                 value={password}
                 icon={lockImg}
                 onChange={(event) => setPassword(event.target.value)}
-                extraArgs={{ minLength: 6 }}
+                extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
               />
             </Styled.InputWrapper>
             <Styled.InputWrapper>
@@ -164,7 +172,7 @@ const SignupPage = () => {
                 icon={lockImg}
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 onBlur={checkPasswordMatch}
-                extraArgs={{ minLength: 6 }}
+                extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
               />
               <Notification
                 message={passwordNotification.message}

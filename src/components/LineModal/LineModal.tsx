@@ -5,11 +5,18 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Line, Station } from 'types';
-import { API_STATUS, END_POINT } from 'constants/api';
-import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import useFetch from 'hooks/useFetch';
 import Styled from './LineModal.styles';
-import { LINE_COLORS, REGEX } from '../../constants';
+import {
+  LINE_COLORS,
+  REGEX,
+  API_METHOD,
+  API_STATUS,
+  END_POINT,
+  ALERT_MESSAGE,
+  NOTIFICATION,
+  INPUT,
+} from '../../constants';
 
 interface Props {
   stations: Station[] | undefined;
@@ -36,8 +43,8 @@ const LineModal = ({
   const [isMessageValid, setMessageValid] = useState<boolean>(false);
   const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
 
-  const { fetchData: addLineAsync } = useFetch('POST');
-  const { fetchData: editLineAsync } = useFetch('PUT');
+  const { fetchData: addLineAsync } = useFetch(API_METHOD.POST);
+  const { fetchData: editLineAsync } = useFetch(API_METHOD.PUT);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -133,7 +140,10 @@ const LineModal = ({
           value={name}
           onBlur={validateLineName}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
-          extraArgs={{ minLength: 2, maxLength: 10 }}
+          extraArgs={{
+            minLength: INPUT.LINE_NAME.MIN_LENGTH,
+            maxLength: INPUT.LINE_NAME.MAX_LENGTH,
+          }}
         />
         <Notification
           isValid={isMessageValid}
@@ -170,7 +180,7 @@ const LineModal = ({
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setDistance(event.target.value)
             }
-            extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
+            extraArgs={{ min: INPUT.DISTANCE.MIN, max: INPUT.DISTANCE.MAX }}
           />
           <Input
             type="number"
@@ -179,7 +189,7 @@ const LineModal = ({
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setExtraFare(event.target.value)
             }
-            extraArgs={{ min: '0', max: Number.MAX_SAFE_INTEGER.toString() }}
+            extraArgs={{ min: INPUT.EXTRA_FARE.MIN, max: INPUT.EXTRA_FARE.MAX }}
           />
         </>
       )}

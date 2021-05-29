@@ -1,10 +1,10 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { Global, ThemeProvider } from '@emotion/react';
+import { Global } from '@emotion/react';
 import { SnackbarProvider } from 'notistack';
 import { render } from '@testing-library/react';
-import ROUTE from 'constants/routes';
-import { globalStyle, theme } from 'App.styles';
+import { ROUTE } from './constants';
+import { globalStyle } from 'App.styles';
 
 // eslint-disable-next-line react/prop-types
 const AllTheProviders = ({ children }) => {
@@ -16,10 +16,8 @@ const AllTheProviders = ({ children }) => {
       }}
       maxSnack={3}
     >
-      <ThemeProvider theme={theme}>
-        <Global styles={globalStyle} />
-        <MemoryRouter initialEntries={[ROUTE.HOME]}>{children}</MemoryRouter>
-      </ThemeProvider>
+      <Global styles={globalStyle} />
+      <MemoryRouter initialEntries={[ROUTE.HOME]}>{children}</MemoryRouter>
     </SnackbarProvider>
   );
 };

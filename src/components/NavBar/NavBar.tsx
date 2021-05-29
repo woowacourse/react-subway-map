@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
-import ROUTE from 'constants/routes';
-import PALETTE from 'constants/palette';
+import { ROUTE, PALETTE, SESSION_STORAGE } from '../../constants';
 import logo from 'assets/logo.png';
 import Styled from './NavBar.styles';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
@@ -20,8 +19,8 @@ const NavBar = () => {
   };
 
   const logout = () => {
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('server');
+    sessionStorage.removeItem(SESSION_STORAGE.KEY.ACCESS_TOKEN);
+    sessionStorage.removeItem(SESSION_STORAGE.KEY.SERVER);
 
     dispatch(logoutAction());
     dispatch(resetServer());

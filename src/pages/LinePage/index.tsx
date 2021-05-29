@@ -12,7 +12,14 @@ import { ButtonType, Line, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import useFetch from 'hooks/useFetch';
-import { ALERT_MESSAGE, API_STATUS, CONFIRM_MESSAGE, END_POINT, ROUTE } from '../../constants';
+import {
+  ALERT_MESSAGE,
+  API_METHOD,
+  API_STATUS,
+  CONFIRM_MESSAGE,
+  END_POINT,
+  ROUTE,
+} from '../../constants';
 import Styled from './styles';
 
 const LinePage = () => {
@@ -26,9 +33,9 @@ const LinePage = () => {
   const [selectedLine, setSelectedLine] = useState<Line>();
   const [modalTitle, setModalTitle] = useState<string>('');
 
-  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
-  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch('GET');
-  const { fetchData: deleteLineAsync, loading: deleteLineLoading } = useFetch('DELETE');
+  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch(API_METHOD.GET);
+  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch(API_METHOD.GET);
+  const { fetchData: deleteLineAsync, loading: deleteLineLoading } = useFetch(API_METHOD.DELETE);
 
   const { enqueueSnackbar } = useSnackbar();
 

@@ -4,9 +4,8 @@ import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import { ButtonType, Line, Station } from 'types';
-import { API_STATUS, END_POINT } from 'constants/api';
-import { ALERT_MESSAGE } from 'constants/messages';
 import useFetch from 'hooks/useFetch';
+import { API_STATUS, END_POINT, ALERT_MESSAGE, API_METHOD, INPUT } from '../../constants';
 import Styled from './SectionModal.styles';
 
 interface Props {
@@ -30,7 +29,7 @@ const SectionModal = ({
   const [downStationId, setDownStationId] = useState<string>('');
   const [distance, setDistance] = useState<string>('');
 
-  const { fetchData: addSectionAsync } = useFetch('POST');
+  const { fetchData: addSectionAsync } = useFetch(API_METHOD.POST);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -101,7 +100,7 @@ const SectionModal = ({
         labelText="거리"
         value={distance}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDistance(event.target.value)}
-        extraArgs={{ min: '1', max: Number.MAX_SAFE_INTEGER.toString() }}
+        extraArgs={{ min: INPUT.DISTANCE.MIN, max: INPUT.DISTANCE.MAX }}
       />
       <Styled.ButtonsContainer>
         <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>

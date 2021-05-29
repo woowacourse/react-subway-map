@@ -2,9 +2,8 @@ import React from 'react';
 import Styled from './ServerSelector.styles';
 import { ButtonType } from 'types';
 import TextButton from 'components/shared/TextButton/TextButton';
-import { SERVER } from 'constants/api';
+import { SERVER, NOTIFICATION } from '../../constants';
 import { useAppSelector } from 'modules/hooks';
-import { NOTIFICATION } from 'constants/messages';
 
 interface Props {
   isMessageVisible: boolean;

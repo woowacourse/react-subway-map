@@ -4,7 +4,7 @@ import { setupServer } from 'msw/node';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor, within } from 'test-util';
-import { API_STATUS } from 'constants/api';
+import { API_STATUS } from '../../constants';
 import StationPage from '.';
 
 const stationsData = [

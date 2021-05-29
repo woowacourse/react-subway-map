@@ -13,7 +13,14 @@ import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
-import { ALERT_MESSAGE, API_STATUS, END_POINT, ROUTE } from '../../constants';
+import {
+  ALERT_MESSAGE,
+  API_METHOD,
+  API_STATUS,
+  END_POINT,
+  ROUTE,
+  SESSION_STORAGE,
+} from '../../constants';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 
@@ -33,7 +40,7 @@ const LoginPage = () => {
   const [loginResponse, setLoginResponse] = useState<{ accessToken: string }>();
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
-  const { fetchData: loginAsync, loading: loginLoading } = useFetch('POST');
+  const { fetchData: loginAsync, loading: loginLoading } = useFetch(API_METHOD.POST);
 
   const login = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,8 +76,11 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (loginResponse) {
-      sessionStorage.setItem('accessToken', JSON.stringify(loginResponse.accessToken));
-      sessionStorage.setItem('server', JSON.stringify(BASE_URL));
+      sessionStorage.setItem(
+        SESSION_STORAGE.KEY.ACCESS_TOKEN,
+        JSON.stringify(loginResponse.accessToken),
+      );
+      sessionStorage.setItem(SESSION_STORAGE.KEY.SERVER, JSON.stringify(BASE_URL));
 
       dispatch(requestGetUser(loginResponse.accessToken));
     }

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { PALETTE } from '../../constants';
 
 const Container = styled.nav`
   display: flex;
@@ -10,7 +11,7 @@ const Container = styled.nav`
   left: 0;
   width: 100%;
   height: 80px;
-  background-color: ${({ theme }) => theme.bgColor.defaultWhite};
+  background-color: ${PALETTE.DEFAULT_WHITE};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
 `;
@@ -36,7 +37,7 @@ const NavItem = styled.li`
 
   &:hover {
     border-radius: 8px;
-    background-color: ${({ theme }) => theme.bgColor.defaultCream};
+    background-color: ${PALETTE.DEFAULT_CREAM};
   }
 `;
 

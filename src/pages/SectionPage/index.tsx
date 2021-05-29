@@ -12,7 +12,14 @@ import deleteIcon from 'assets/delete.png';
 import { Line, Station, User } from 'types';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
-import { ALERT_MESSAGE, API_STATUS, CONFIRM_MESSAGE, END_POINT, ROUTE } from '../../constants';
+import {
+  ALERT_MESSAGE,
+  API_METHOD,
+  API_STATUS,
+  CONFIRM_MESSAGE,
+  END_POINT,
+  ROUTE,
+} from '../../constants';
 
 const SectionPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
@@ -24,10 +31,12 @@ const SectionPage = () => {
   const [stations, setStations] = useState<Station[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
-  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch('GET');
-  const { fetchData: getLineAsync, loading: getLineLoading } = useFetch('GET');
-  const { fetchData: deleteSectionAsync, loading: deleteSectionLoading } = useFetch('DELETE');
+  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch(API_METHOD.GET);
+  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch(API_METHOD.GET);
+  const { fetchData: getLineAsync, loading: getLineLoading } = useFetch(API_METHOD.GET);
+  const { fetchData: deleteSectionAsync, loading: deleteSectionLoading } = useFetch(
+    API_METHOD.DELETE,
+  );
 
   const { enqueueSnackbar } = useSnackbar();
 
