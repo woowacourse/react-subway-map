@@ -15,7 +15,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <SnackbarProvider>
           <GlobalStyle />
-          <Router>
+          <Router basename="/react-subway-map">
             <Header>
               <Navbar />
             </Header>

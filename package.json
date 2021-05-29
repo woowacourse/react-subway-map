@@ -2,6 +2,7 @@
   "name": "react-subway-map",
   "version": "0.0.1",
   "license": "MIT",
+  "homepage": "https://puterism.github.io/react-subway-map",
   "contributors": [
     {
       "name": "ditto",
@@ -36,6 +37,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -70,6 +73,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
+    "gh-pages": "^3.2.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "msw": "^0.29.0",
