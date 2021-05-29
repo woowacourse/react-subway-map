@@ -1,21 +1,19 @@
 import * as S from './StationListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
-import { useDispatch } from 'react-redux';
-import { deleteStationAsync } from '../../modules/station/stationReducer';
+import { Station } from '../../interfaces';
 
 export interface Props {
   name: String;
   id: number;
+  deleteStation: (id: Station['id']) => void;
 }
 
-const StationListItem = ({ name, id }: Props) => {
-  const dispatch = useDispatch();
-
+const StationListItem = ({ name, id, deleteStation }: Props) => {
   const handleDeleteStation = () => {
     if (!window.confirm(`${name}을 삭제하시겠습니까?`)) return;
 
-    dispatch(deleteStationAsync({ id }));
+    deleteStation(id);
   };
 
   return (

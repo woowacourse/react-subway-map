@@ -7,10 +7,10 @@ export default {
 
 const Template = () => (
   <AddSectionForm
-    onChange={() => {}}
+    lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
     lines={[]}
     stations={[]}
-    lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
+    getLineSection={() => {}}
     addSection={() => {}}
   />
 );

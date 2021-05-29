@@ -5,5 +5,5 @@ export default {
   component: AddStationForm,
 };
 
-const Template = () => <AddStationForm />;
+const Template = () => <AddStationForm stations={[]} addStation={() => {}} />;
 export const Default = Template.bind({});

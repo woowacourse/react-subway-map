@@ -5,5 +5,13 @@ export default {
   component: SectionListItem,
 };
 
-const Template = () => <SectionListItem name='강남역' distance={2} handleDeleteSection={() => {}} />;
+const Template = () => (
+  <SectionListItem
+    id={1}
+    name='강남역'
+    distance={2}
+    lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
+    deleteSection={() => {}}
+  />
+);
 export const Default = Template.bind({});

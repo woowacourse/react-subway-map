@@ -1,4 +1,4 @@
-export { SignUpRequest, SignInRequest } from './auth';
-export { StationLine, Station } from './station';
-export { Line, AddLineRequest } from './line';
-export { LineSection, AddSectionRequest, DeleteSectionRequest } from './section';
+export type { SignUpRequest, SignInRequest } from './auth';
+export type { StationLine, Station } from './station';
+export type { Line, AddLineRequest } from './line';
+export type { LineSection, AddSectionRequest, DeleteSectionRequest } from './section';

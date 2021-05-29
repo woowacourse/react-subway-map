@@ -8,15 +8,19 @@ import * as S from './AddSectionForm.styles';
 import SectionModalForm from './SectionModalForm';
 
 interface Props {
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   lineSection: LineSection;
   lines: Line[];
   stations: Station[];
-  addSection: (payload: AddSectionRequest) => void;
+  getLineSection: (id: Line['id']) => void;
+  addSection: (section: AddSectionRequest) => void;
 }
 
-const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: Props) => {
+const AddSectionForm = ({ lineSection, lines, stations, getLineSection, addSection }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSelectLine = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    getLineSection(Number(e.target.value));
+  };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -30,7 +34,7 @@ const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: 
     <S.AddSectionForm>
       <S.Title>지하철 구간 관리</S.Title>
       <S.InputWrapper>
-        <SelectInput initialText='지하철 노선을 선택해주세요.' value={lineSection.id} onChange={onChange}>
+        <SelectInput initialText='지하철 노선을 선택해주세요.' value={lineSection.id} onChange={handleSelectLine}>
           {lines.map(line => (
             <option key={line.id} value={line.id}>
               {line.name}
@@ -49,7 +53,7 @@ const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: 
             lineSection={lineSection}
             lines={lines}
             stations={stations}
-            onLineChange={onChange}
+            onLineChange={handleSelectLine}
             onModalClose={handleModalClose}
             addSection={addSection}
           />

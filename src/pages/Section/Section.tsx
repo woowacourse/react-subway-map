@@ -27,7 +27,7 @@ const getSectionStations = (lineSection: LineSection) => {
 };
 
 const Section = () => {
-  const { lineSection, getSection, addSection, deleteSection, error, resetError } = useSection();
+  const { lineSection, getLineSection, addSection, deleteSection, error, resetError } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
   const { accessToken } = useUser();
@@ -43,29 +43,14 @@ const Section = () => {
     return <Redirect to={ROUTE.SIGN_IN} />;
   }
 
-  const handleSelectLine = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    getSection(Number(e.target.value));
-  };
-
-  const handleDeleteSection = (stationId: string, name: string) => {
-    if (lineSection.stations.length <= 2) {
-      window.alert('노선에는 상행역과 하행역이 필수로 존재해야합니다...!');
-      return;
-    }
-
-    if (!window.confirm(`정말로 ${name} 역을 구간에서 삭제하시겠습니까?`)) return;
-
-    deleteSection({ lineId: String(lineSection.id), stationId });
-  };
-
   return (
     <S.Container>
       <ContentContainer hasHat={true}>
         <AddSectionForm
-          onChange={handleSelectLine}
           lineSection={lineSection}
           lines={lines}
           stations={stations}
+          getLineSection={getLineSection}
           addSection={addSection}
         />
       </ContentContainer>
@@ -75,12 +60,12 @@ const Section = () => {
           {getSectionStations(lineSection).map(station => (
             <SectionListItem
               key={station.id}
+              id={station.id}
               name={station.name}
               distance={station.distance}
               lineColor={lineSection.color}
-              handleDeleteSection={() => {
-                handleDeleteSection(String(station.id), station.name);
-              }}
+              lineSection={lineSection}
+              deleteSection={deleteSection}
             />
           ))}
         </S.SectionStationList>

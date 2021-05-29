@@ -1,15 +1,29 @@
 import * as S from './SectionListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
+import { DeleteSectionRequest, LineSection } from '../../interfaces';
 
 export interface Props {
   name: string;
+  id: number;
   distance: number;
   lineColor?: string;
-  handleDeleteSection: () => void;
+  lineSection: LineSection;
+  deleteSection: ({ lineId, stationId }: DeleteSectionRequest) => void;
 }
 
-const SectionListItem = ({ name, distance, lineColor, handleDeleteSection }: Props) => {
+const SectionListItem = ({ id, name, distance, lineColor, lineSection, deleteSection }: Props) => {
+  const handleDeleteSection = () => {
+    if (lineSection.stations.length <= 2) {
+      window.alert('노선에는 상행역과 하행역이 필수로 존재해야합니다...!');
+      return;
+    }
+
+    if (!window.confirm(`정말로 ${name} 역을 구간에서 삭제하시겠습니까?`)) return;
+
+    deleteSection({ lineId: String(lineSection.id), stationId: String(id) });
+  };
+
   return (
     <S.SectionListItem>
       <S.NameWrapper>

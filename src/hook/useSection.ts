@@ -12,7 +12,7 @@ const useSection = () => {
   const { lineSection, error } = useSelector((state: RootState) => state.section);
   const dispatch = useDispatch();
 
-  const getSection = (id: LineSection['id']) => {
+  const getLineSection = (id: LineSection['id']) => {
     dispatch(getLineSectionAsync({ id }));
   };
 
@@ -28,7 +28,7 @@ const useSection = () => {
     dispatch(_resetError());
   };
 
-  return { lineSection, getSection, addSection, deleteSection, error, resetError };
+  return { lineSection, getLineSection, addSection, deleteSection, error, resetError };
 };
 
 export default useSection;

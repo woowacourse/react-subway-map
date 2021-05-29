@@ -3,16 +3,16 @@ import * as S from './AddStationForm.styles';
 import subwaySVG from '../../assets/svg/subway.svg';
 import Button from '../@commons/Button/Button';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { addStationAsync } from '../../modules/station/stationReducer';
-import useStation from '../../hook/useStation';
 import { getStationNameErrorMessage } from './AddStationForm.validation';
+import { Station } from '../../interfaces';
 
-const AddStationForm = () => {
-  const dispatch = useDispatch();
+interface Props {
+  stations: Station[];
+  addStation: (name: Station['name']) => void;
+}
+
+const AddStationForm = ({ stations, addStation }: Props) => {
   const [stationName, setStationName] = useState('');
-  const { stations } = useStation();
   const stationNameErrorMessage = getStationNameErrorMessage(stationName, stations);
   const isValidForm = !stationNameErrorMessage;
 
@@ -28,7 +28,7 @@ const AddStationForm = () => {
     e.preventDefault();
     if (!isValidForm) return;
 
-    dispatch(addStationAsync({ name: stationName }));
+    addStation(stationName);
     setStationName('');
   };
 

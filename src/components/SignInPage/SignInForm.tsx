@@ -4,39 +4,25 @@ import mailSVG from '../../assets/svg/mail.svg';
 import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectServer } from '../../modules/user/userReducer';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { RootState } from '../../modules';
-import useUser from '../../hook/useUser';
 import { getEmailErrorMessage, getPasswordErrorMessage } from './SignInForm.validation';
 
 const SignInForm = () => {
-  const { serverName, error, accessToken } = useSelector((state: RootState) => state.user);
-  const { resetError } = useUser();
+  const { serverName } = useSelector((state: RootState) => state.user);
   const [serverURL, setServerURL] = useState('');
   const isServerSelected = Boolean(serverName);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
-
-  useEffect(() => {
-    if (error) {
-      alert(error);
-      resetError();
-    }
-
-    if (accessToken) {
-      history.push(ROUTE.HOME);
-    }
-  }, [error, accessToken, history, resetError]);
 
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     SERVER.URL = e.target.value;
