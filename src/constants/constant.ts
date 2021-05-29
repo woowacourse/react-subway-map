@@ -34,6 +34,9 @@ export const MESSAGE = {
       LOAD_FAILED: '노선 정보를 불러오는데 실패했습니다...!',
       ADD_FAILED: '노선을 추가하는데 실패했습니다...!',
       DELETE_FAILED: '노선을 삭제하는데 실패했습니다...!',
+      INVALID_NAME_LENGTH: '노선 이름은 최소 2글자 이상 20글자 이하여야 합니다.',
+      NOT_KOREAN_AND_NUMBER: '노선 이름은 한글과 숫자만 입력할 수 있습니다.',
+      REGISTERED_LINE: '이미 존재하는 노선 이름입니다.',
     },
     SECTION: {
       LOAD_FAILED: '구간 정보를 불러오는데 실패했습니다...!',
@@ -44,4 +47,9 @@ export const MESSAGE = {
   SUCCESS: {
     RESPONSE: '요청에 성공했습니다.',
   },
+};
+
+export const LINE = {
+  NAME_MIN_LENGTH: 2,
+  NAME_MAX_LENGTH: 20,
 };
