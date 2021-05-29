@@ -1,10 +1,10 @@
+import { useDispatch } from 'react-redux';
 import * as S from './StationListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
-import { useDispatch } from 'react-redux';
-import { deleteStationAsync } from '../../modules/station/stationReducer';
+import { deleteStationAsync } from '../../../modules/station/stationReducer';
 
-export interface Props {
+interface Props {
   name: String;
   id: number;
 }

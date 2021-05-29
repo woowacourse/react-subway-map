@@ -48,7 +48,7 @@ export const stationAPI = {
       const response = await axios.delete(`${API.GET_STATIONS()}/${id}`);
 
       if (response.status === 400) {
-        throw new Error(MESSAGE.ERROR.STATION.REGISTERED_STATION);
+        throw new Error(MESSAGE.ERROR.STATION.REGISTERED_LINE_STATION);
       }
 
       if (response.status !== 204) {

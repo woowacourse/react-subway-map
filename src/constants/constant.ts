@@ -17,6 +17,12 @@ export const BASE_URL = {
 export const SERVER = {
   URL: '',
 };
+
+export const STATION = {
+  NAME_MIN_LENGTH: 2,
+  NAME_MAX_LENGTH: 20,
+};
+
 export const LINE = {
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 20,
@@ -43,7 +49,10 @@ export const MESSAGE = {
       LOAD_FAILED: '역 정보를 불러오는데 실패했습니다...!',
       ADD_FAILED: '역을 추가하는데 실패했습니다...!',
       DELETE_FAILED: '역을 삭제하는데 실패했습니다...!',
-      REGISTERED_STATION: '노선에 등록된 역은 삭제가 불가능합니다.',
+      REGISTERED_LINE_STATION: '노선에 등록된 역은 삭제가 불가능합니다.',
+      INVALID_STATION_LENGTH: `역 이름은 최소 ${STATION.NAME_MIN_LENGTH}글자 이상 ${STATION.NAME_MAX_LENGTH}글자 이하여야 합니다.`,
+      NOT_KOREAN_AND_NUMBER: '역 이름은 한글과 숫자만 입력할 수 있습니다.',
+      REGISTERED_STATION: '이미 존재하는 역 이름입니다.',
     },
     LINE: {
       LOAD_FAILED: '노선 정보를 불러오는데 실패했습니다...!',
