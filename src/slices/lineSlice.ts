@@ -176,13 +176,12 @@ export const lineSlice = createSlice({
     builder.addCase(deleteSection.fulfilled, (state, { payload }) => {
       state.status = ApiStatus.FULFILLED;
 
-      const targetLine = state.list.find((line) => line.id === payload.lineId);
-      const targetStationIndex = targetLine?.stations.findIndex(
-        (station) => station.id === payload.stationId
-      );
+      const targetLineIndex = state.list.findIndex((line) => line.id === payload.lineId);
 
-      if (targetLine && targetStationIndex) {
-        targetLine.stations.splice(targetStationIndex, 1);
+      if (state.list[targetLineIndex]) {
+        state.list[targetLineIndex].stations = state.list[targetLineIndex].stations.filter(
+          (station) => station.id !== payload.stationId
+        );
       }
     });
     builder.addCase(deleteSection.rejected, (state, { payload }) => {

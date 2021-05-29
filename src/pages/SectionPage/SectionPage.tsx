@@ -19,13 +19,7 @@ const SectionPage = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { list: stationList } = useStation();
-  const {
-    list: lineList,
-    status: lineStatus,
-    isLoading: isLoadingLineList,
-    onAddSection,
-    onDeleteSection,
-  } = useLine();
+  const { list: lineList, status: lineStatus, onAddSection, onDeleteSection } = useLine();
 
   const {
     valueAsNumber: selectedLineId,
@@ -141,35 +135,34 @@ const SectionPage = () => {
                   <Styled.Control>
                     <Styled.Divider />
                     <Styled.ButtonList>
-                      <Button shape="circle" onClick={openModal}>
+                      <Button shape="circle" onClick={openModal} aria-label="구간 추가">
                         <AddIcon />
                       </Button>
                     </Styled.ButtonList>
                   </Styled.Control>
-                  {!isLoadingLineList && (
-                    <>
-                      <Styled.LineHeader>
-                        <ColorDot color={selectedLine?.color} />
-                        <Styled.LineName>{selectedLine?.name}</Styled.LineName>
-                      </Styled.LineHeader>
-                      <Styled.List>
-                        {selectedLine?.stations.map((station) => (
-                          <Styled.Item key={station.id}>
-                            <Styled.StationName>{station.name}</Styled.StationName>
-                            <Styled.OptionWrapper>
-                              <Button
-                                shape="circle"
-                                variant="text"
-                                onClick={() => handleDelete(station.id)}
-                              >
-                                <TrashIcon />
-                              </Button>
-                            </Styled.OptionWrapper>
-                          </Styled.Item>
-                        ))}
-                      </Styled.List>
-                    </>
-                  )}
+                  <>
+                    <Styled.LineHeader>
+                      <ColorDot color={selectedLine?.color} />
+                      <Styled.LineName>{selectedLine?.name}</Styled.LineName>
+                    </Styled.LineHeader>
+                    <Styled.List>
+                      {selectedLine?.stations.map((station) => (
+                        <Styled.Item key={station.id}>
+                          <Styled.StationName>{station.name}</Styled.StationName>
+                          <Styled.OptionWrapper>
+                            <Button
+                              shape="circle"
+                              variant="text"
+                              aria-label="구간 삭제"
+                              onClick={() => handleDelete(station.id)}
+                            >
+                              <TrashIcon />
+                            </Button>
+                          </Styled.OptionWrapper>
+                        </Styled.Item>
+                      ))}
+                    </Styled.List>
+                  </>
                 </>
               )}
             </Card>
