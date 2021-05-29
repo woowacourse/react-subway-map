@@ -100,11 +100,17 @@ const StationPage = () => {
                         <Button
                           shape="circle"
                           variant="text"
+                          aria-label="역 수정"
                           onClick={() => handleOpenEditModal(item)}
                         >
                           <EditIcon />
                         </Button>
-                        <Button shape="circle" variant="text" onClick={() => handleDelete(item.id)}>
+                        <Button
+                          shape="circle"
+                          variant="text"
+                          aria-label="역 삭제"
+                          onClick={() => handleDelete(item.id)}
+                        >
                           <TrashIcon />
                         </Button>
                       </Styled.OptionWrapper>
@@ -134,7 +140,7 @@ const StationPage = () => {
             <Button type="button" variant="text" onClick={closeModal}>
               취소
             </Button>
-            <Button>추가</Button>
+            <Button>수정</Button>
           </Styled.ButtonWrapper>
         </Styled.EditForm>
       </Modal>
