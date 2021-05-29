@@ -12,6 +12,7 @@ interface Props {
 const LineListItem = ({ name, id, color, deleteLine }: Props) => {
   const handleDeleteLine = () => {
     if (!window.confirm(`${name}을 삭제하시겠습니까?`)) return;
+
     deleteLine(id);
   };
 

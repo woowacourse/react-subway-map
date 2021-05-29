@@ -8,17 +8,17 @@ import Modal from '../../@commons/Modal/Modal';
 
 import LineModalForm from '../LineModalForm/LineModalForm';
 import { StationState } from '../../../interfaces/station';
-import { AddLineAction, LineState } from '../../../interfaces/line';
+import { LineState, LineInfoState } from '../../../interfaces/line';
 
 import { getLineNameErrorMessage } from '../lineFormValidation';
 
 interface Props {
   lines: LineState['lines'];
   stations: StationState['stations'];
-  addLine: (newLine: AddLineAction['payload']['line']) => void;
+  addLine: (newLine: LineInfoState) => void;
 }
 
-const initLineInfo = {
+const initLineInfo: LineInfoState = {
   name: '',
   color: '',
   upStationId: '',

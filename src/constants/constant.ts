@@ -45,6 +45,11 @@ export const MESSAGE = {
       INVALID_NAME_LENGTH: '노선 이름은 최소 2글자 이상 20글자 이하여야 합니다.',
       NOT_KOREAN_AND_NUMBER: '노선 이름은 한글과 숫자만 입력할 수 있습니다.',
       REGISTERED_LINE: '이미 존재하는 노선 이름입니다.',
+      CHOOSE_LINE: '구간을 생성할 노선을 선택해주세요.',
+      CHOOSE_LINE_FIRST: '노선을 먼저 선택해주세요.',
+      CHOOSE_STATIONS: '상행역과 하행역을 모두 선택해주세요.',
+      SAME_STATIONS: '상행 종점역과 하행 종점역은 동일할 수 없습니다.',
+      SHOULD_ONLY_ONE_STATION_REGISTERED: '상행역과 하행역 둘 중에 하나의 역만 기존 노선에 등록되어 있어야합니다.',
     },
     SECTION: {
       LOAD_FAILED: '구간 정보를 불러오는데 실패했습니다...!',
@@ -56,6 +61,7 @@ export const MESSAGE = {
       INVALID_DISTANCE: `노선의 거리는 최소 ${SECTION.DISTANCE}km 이상이여야 합니다.`,
       SHOULD_CHOOSE_COLOR: '노선 색상을 선택해주세요.',
       REGISTERED_COLOR: '이미 노선에 등록된 색상입니다.\n다른 색상을 선택해주세요.',
+      SHOULD_SMALLER_DISTANCE: '해당 구역의 거리보다 긴 거리를 등록할 순 없습니다.',
     },
   },
   SUCCESS: {

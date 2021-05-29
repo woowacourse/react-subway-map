@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import { AddSectionPayload, Line, LineSection, Station } from '../../interfaces';
-import Button from '../@commons/Button/Button';
-import Modal from '../@commons/Modal/Modal';
-import SelectInput from '../@commons/SelectInput/SelectInput';
 import * as S from './AddSectionForm.styles';
-import SectionModalForm from './SectionModalForm';
+
+import Button from '../../@commons/Button/Button';
+import Modal from '../../@commons/Modal/Modal';
+import SelectInput from '../../@commons/SelectInput/SelectInput';
+
+import SectionModalForm from '../SectionModalForm/SectionModalForm';
+import { AddSectionAction, SectionState } from '../../../interfaces/section';
+import { LineState } from '../../../interfaces/line';
+import { StationState } from '../../../interfaces/station';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  lineSection: LineSection;
-  lines: Line[];
-  stations: Station[];
-  addSection: (payload: AddSectionPayload) => void;
+  lineSection: SectionState['lineSection'];
+  lines: LineState['lines'];
+  stations: StationState['stations'];
+  addSection: (payload: AddSectionAction['payload']) => void;
 }
 
 const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: Props) => {
