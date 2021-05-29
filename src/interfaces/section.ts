@@ -22,7 +22,6 @@ interface SectionSectionState {
 interface SectionStationState {
   id: number;
   name: string;
-  color: string;
   transferLines: LineState['lines'];
 }
 
