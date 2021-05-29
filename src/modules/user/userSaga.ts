@@ -14,7 +14,7 @@ export function* loginSaga(action: PayloadAction<SignInRequest>) {
   const result: LoginResult = yield call(authAPI.signIn, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
   yield put(login({ email: action.payload.email, accessToken: result.accessToken }));

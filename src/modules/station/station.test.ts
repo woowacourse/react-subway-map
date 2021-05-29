@@ -37,7 +37,7 @@ it('지하철 역 목록을 성공적으로 불러온다.', async () => {
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.getStations), { stations: stationList }]])
-    .put(setStations({ stations: stationList }))
+    .put(setStations(stationList))
     .hasFinalState({ stations: stationList, error: '' })
     .run();
 });
@@ -47,53 +47,53 @@ it('지하철 역 목록을 불러오는데 실패한다.', async () => {
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.getStations), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ stations: [], error: errorMessage })
     .run();
 });
 
 it('지하철 역 목록을 성공적으로 추가한다.', async () => {
-  return expectSaga(addStationSaga, { type: addStationAsync.type, payload: { name: newStation.name } })
+  return expectSaga(addStationSaga, { type: addStationAsync.type, payload: newStation.name })
     .withReducer(stationReducer)
     .put(pending())
     .provide([
       [call(stationAPI.addStation, newStation.name), { station: newStation }],
       [select(selectStations), stationList],
     ])
-    .put(setStations({ stations: [Object.assign(newStation, { lines: [] }), ...stationList] }))
+    .put(setStations([Object.assign(newStation, { lines: [] }), ...stationList]))
     .hasFinalState({ stations: [Object.assign(newStation, { lines: [] }), ...stationList], error: '' })
     .run();
 });
 
 it('지하철 역 목록을 추가하는데 실패한다.', async () => {
-  return expectSaga(addStationSaga, { type: addStationAsync.type, payload: { name: newStation.name } })
+  return expectSaga(addStationSaga, { type: addStationAsync.type, payload: newStation.name })
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.addStation, newStation.name), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ stations: [], error: errorMessage })
     .run();
 });
 
 it('지하철 역 목록을 성공적으로 삭제한다.', async () => {
-  return expectSaga(deleteStationSaga, { type: deleteStationAsync.type, payload: { id: newStation.id } })
+  return expectSaga(deleteStationSaga, { type: deleteStationAsync.type, payload: newStation.id })
     .withReducer(stationReducer)
     .put(pending())
     .provide([
       [call(stationAPI.deleteStation, newStation.id), {}],
       [select(selectStations), stationList],
     ])
-    .put(setStations({ stations: stationList.filter(station => station.id !== newStation.id) }))
+    .put(setStations(stationList.filter(station => station.id !== newStation.id)))
     .hasFinalState({ stations: stationList.filter(station => station.id !== newStation.id), error: '' })
     .run();
 });
 
 it('지하철 역 목록을 삭제하는데 실패한다.', async () => {
-  return expectSaga(deleteStationSaga, { type: deleteStationAsync.type, payload: { id: newStation.id } })
+  return expectSaga(deleteStationSaga, { type: deleteStationAsync.type, payload: newStation.id })
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.deleteStation, newStation.id), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ stations: [], error: errorMessage })
     .run();
 });

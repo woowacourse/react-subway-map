@@ -37,36 +37,36 @@ export function* getStationsSaga() {
   const result: GetStationResult = yield call(stationAPI.getStations);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
-  yield put(setStations({ stations: result.stations }));
+  yield put(setStations(result.stations));
 }
 
 export function* addStationSaga(action: PayloadAction<AddStationPayload>) {
   yield put(pending());
-  const result: AddStationResult = yield call(stationAPI.addStation, action.payload.name);
+  const result: AddStationResult = yield call(stationAPI.addStation, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
 
   const stations: Station[] = yield select(selectStations);
 
-  yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
+  yield put(setStations([Object.assign(result.station, { lines: [] }), ...stations]));
 }
 
 export function* deleteStationSaga(action: PayloadAction<DeleteStationPayload>) {
   yield put(pending());
-  const result: DeleteStationResult = yield call(stationAPI.deleteStation, action.payload.id);
+  const result: DeleteStationResult = yield call(stationAPI.deleteStation, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
   const stations: Station[] = yield select(selectStations);
-  yield put(setStations({ stations: stations.filter(station => station.id !== action.payload.id) }));
+  yield put(setStations(stations.filter(station => station.id !== action.payload)));
 }
 
 export function* stationSaga() {

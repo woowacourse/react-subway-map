@@ -41,7 +41,7 @@ it('지하철 노선 목록을 성공적으로 불러온다.', async () => {
     .withReducer(lineReducer)
     .put(pending())
     .provide([[call(lineAPI.getLines), { lines: lineList }]])
-    .put(setLines({ lines: lineList }))
+    .put(setLines(lineList))
     .hasFinalState({ lines: lineList, error: '' })
     .run();
 });
@@ -51,53 +51,53 @@ it('지하철 노선 목록을 불러오는데 실패한다.', async () => {
     .withReducer(lineReducer)
     .put(pending())
     .provide([[call(lineAPI.getLines), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ lines: [], error: errorMessage })
     .run();
 });
 
 it('지하철 노선 목록을 성공적으로 추가한다.', async () => {
-  return expectSaga(addLineSaga, { type: addLineAsync.type, payload: { line: newLine } })
+  return expectSaga(addLineSaga, { type: addLineAsync.type, payload: newLine })
     .withReducer(lineReducer)
     .put(pending())
     .provide([
       [call(lineAPI.addLine, newLine), { line: newLineResult }],
       [select(selectLines), lineList],
     ])
-    .put(setLines({ lines: [newLineResult, ...lineList] }))
+    .put(setLines([newLineResult, ...lineList]))
     .hasFinalState({ lines: [newLineResult, ...lineList], error: '' })
     .run();
 });
 
 it('지하철 노선 목록을 추가하는데 실패한다.', async () => {
-  return expectSaga(addLineSaga, { type: addLineAsync.type, payload: { line: newLine } })
+  return expectSaga(addLineSaga, { type: addLineAsync.type, payload: newLine })
     .withReducer(lineReducer)
     .put(pending())
     .provide([[call(lineAPI.addLine, newLine), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ lines: [], error: errorMessage })
     .run();
 });
 
 it('지하철 노선 목록을 성공적으로 삭제한다.', async () => {
-  return expectSaga(deleteLineSaga, { type: deleteLineAsync.type, payload: { id: deletedLineId } })
+  return expectSaga(deleteLineSaga, { type: deleteLineAsync.type, payload: deletedLineId })
     .withReducer(lineReducer)
     .put(pending())
     .provide([
       [call(lineAPI.deleteLine, deletedLineId), {}],
       [select(selectLines), lineList.concat(newLineResult)],
     ])
-    .put(setLines({ lines: lineList.filter(line => line.id !== deletedLineId) }))
+    .put(setLines(lineList.filter(line => line.id !== deletedLineId)))
     .hasFinalState({ lines: lineList.filter(line => line.id !== deletedLineId), error: '' })
     .run();
 });
 
 it('지하철 노선 목록을 삭제하는데 실패한다.', async () => {
-  return expectSaga(deleteLineSaga, { type: deleteLineAsync.type, payload: { id: deletedLineId } })
+  return expectSaga(deleteLineSaga, { type: deleteLineAsync.type, payload: deletedLineId })
     .withReducer(lineReducer)
     .put(pending())
     .provide([[call(lineAPI.deleteLine, deletedLineId), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ lines: [], error: errorMessage })
     .run();
 });

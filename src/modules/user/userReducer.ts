@@ -9,9 +9,8 @@ export interface LoginPayload {
   email: SignInRequest['email'];
   accessToken: string;
 }
-export interface ErrorPayload {
-  error: string;
-}
+
+export type ErrorPayload = string;
 
 interface UserState {
   serverName: string;
@@ -44,7 +43,7 @@ export const userSlice = createSlice({
 
     loginAsync: (state, action: PayloadAction<SignInRequest>) => {},
     error: (state, action: PayloadAction<ErrorPayload>) => {
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
     resetError: state => {
       state.error = '';

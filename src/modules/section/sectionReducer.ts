@@ -1,24 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AddSectionRequest, DeleteSectionRequest, LineSection } from '../../interfaces';
 
-interface SetLineSectionPayload {
-  lineSection: LineSection;
-}
+type SetLineSectionPayload = LineSection;
 
-export interface GetLineSectionPayload {
-  id: LineSection['id'];
-}
+export type GetLineSectionPayload = LineSection['id'];
 
-export interface AddSectionPayload {
-  section: AddSectionRequest;
-}
+export type AddSectionPayload = AddSectionRequest;
 
-export interface DeleteSectionPayload {
-  section: DeleteSectionRequest;
-}
-export interface ErrorAction {
-  error: string;
-}
+export type DeleteSectionPayload = DeleteSectionRequest;
+
+export type ErrorPayload = string;
 
 interface SectionState {
   lineSection: LineSection;
@@ -35,13 +26,13 @@ export const sectionSlice = createSlice({
   initialState,
   reducers: {
     setLineSection: (state, action: PayloadAction<SetLineSectionPayload>) => {
-      state.lineSection = action.payload.lineSection;
+      state.lineSection = action.payload;
     },
     getLineSectionAsync: (state, action: PayloadAction<GetLineSectionPayload>) => {},
     addSectionAsync: (state, action: PayloadAction<AddSectionPayload>) => {},
     deleteSectionAsync: (state, action: PayloadAction<DeleteSectionPayload>) => {},
-    error: (state, action: PayloadAction<ErrorAction>) => {
-      state.error = action.payload.error;
+    error: (state, action: PayloadAction<ErrorPayload>) => {
+      state.error = action.payload;
     },
     resetError: state => {
       state.error = '';

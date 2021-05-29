@@ -41,57 +41,57 @@ const deletedSection: DeleteSectionRequest = { lineId: '1', stationId: '3' };
 const errorMessage = '에러 메세지';
 
 it('지하철 구간 목록을 성공적으로 불러온다.', async () => {
-  return expectSaga(getSectionSaga, { type: getLineSectionAsync.type, payload: { id: lineSection.id } })
+  return expectSaga(getSectionSaga, { type: getLineSectionAsync.type, payload: lineSection.id })
     .withReducer(sectionReducer)
     .put(pending())
     .provide([[call(sectionAPI.getSection, lineSection.id), { lineSection: lineSection }]])
-    .put(setLineSection({ lineSection: lineSection }))
+    .put(setLineSection(lineSection))
     .hasFinalState({ lineSection: lineSection, error: '' })
     .run();
 });
 
 it('지하철 구간 목록을 불러오는데 실패한다.', async () => {
-  return expectSaga(getSectionSaga, { type: getLineSectionAsync.type, payload: { id: lineSection.id } })
+  return expectSaga(getSectionSaga, { type: getLineSectionAsync.type, payload: lineSection.id })
     .withReducer(sectionReducer)
     .put(pending())
     .provide([[call(sectionAPI.getSection, lineSection.id), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ lineSection: {}, error: errorMessage })
     .run();
 });
 
 it('지하철 구간 목록을 성공적으로 추가한다.', async () => {
-  return expectSaga(addSectionSaga, { type: addSectionAsync.type, payload: { section: newSection } })
+  return expectSaga(addSectionSaga, { type: addSectionAsync.type, payload: newSection })
     .put(pending())
     .provide([[call(sectionAPI.addSection, newSection), {}]])
-    .put(getLineSectionAsync({ id: Number(newSection.lineId) }))
+    .put(getLineSectionAsync(Number(newSection.lineId)))
     .run();
 });
 
 it('지하철 구간 목록을 추가하는데 실패한다.', async () => {
-  return expectSaga(addSectionSaga, { type: addSectionAsync.type, payload: { section: newSection } })
+  return expectSaga(addSectionSaga, { type: addSectionAsync.type, payload: newSection })
     .withReducer(sectionReducer)
     .put(pending())
     .provide([[call(sectionAPI.addSection, newSection), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ lineSection: {}, error: errorMessage })
     .run();
 });
 
 it('지하철 구간 목록을 성공적으로 삭제한다.', async () => {
-  return expectSaga(deleteSectionSaga, { type: deleteSectionAsync.type, payload: { section: deletedSection } })
+  return expectSaga(deleteSectionSaga, { type: deleteSectionAsync.type, payload: deletedSection })
     .put(pending())
     .provide([[call(sectionAPI.deleteSection, deletedSection), {}]])
-    .put(getLineSectionAsync({ id: Number(newSection.lineId) }))
+    .put(getLineSectionAsync(Number(newSection.lineId)))
     .run();
 });
 
 it('지하철 구간 목록을 삭제하는데 실패한다.', async () => {
-  return expectSaga(deleteSectionSaga, { type: deleteSectionAsync.type, payload: { section: deletedSection } })
+  return expectSaga(deleteSectionSaga, { type: deleteSectionAsync.type, payload: deletedSection })
     .withReducer(sectionReducer)
     .put(pending())
     .provide([[call(sectionAPI.deleteSection, deletedSection), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({ lineSection: {}, error: errorMessage })
     .run();
 });

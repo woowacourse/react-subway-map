@@ -13,15 +13,15 @@ const useSection = () => {
   const dispatch = useDispatch();
 
   const getLineSection = (id: LineSection['id']) => {
-    dispatch(getLineSectionAsync({ id }));
+    dispatch(getLineSectionAsync(id));
   };
 
   const addSection = (section: AddSectionRequest) => {
-    dispatch(addSectionAsync({ section }));
+    dispatch(addSectionAsync(section));
   };
 
   const deleteSection = (section: DeleteSectionRequest) => {
-    dispatch(deleteSectionAsync({ section }));
+    dispatch(deleteSectionAsync(section));
   };
 
   const resetError = () => {

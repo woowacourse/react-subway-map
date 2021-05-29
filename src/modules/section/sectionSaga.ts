@@ -30,35 +30,35 @@ interface DeleteSectionResult {
 
 export function* getSectionSaga(action: PayloadAction<GetLineSectionPayload>) {
   yield put(pending());
-  const result: GetLineSectionResult = yield call(sectionAPI.getSection, action.payload.id);
+  const result: GetLineSectionResult = yield call(sectionAPI.getSection, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
-  yield put(setLineSection({ lineSection: result.lineSection }));
+  yield put(setLineSection(result.lineSection));
 }
 
 export function* addSectionSaga(action: PayloadAction<AddSectionPayload>) {
   yield put(pending());
-  const result: AddSectionResult = yield call(sectionAPI.addSection, action.payload.section);
+  const result: AddSectionResult = yield call(sectionAPI.addSection, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
-  yield put(getLineSectionAsync({ id: Number(action.payload.section.lineId) }));
+  yield put(getLineSectionAsync(Number(action.payload.lineId)));
 }
 
 export function* deleteSectionSaga(action: PayloadAction<DeleteSectionPayload>) {
   yield put(pending());
-  const result: DeleteSectionResult = yield call(sectionAPI.deleteSection, action.payload.section);
+  const result: DeleteSectionResult = yield call(sectionAPI.deleteSection, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
-  yield put(getLineSectionAsync({ id: Number(action.payload.section.lineId) }));
+  yield put(getLineSectionAsync(Number(action.payload.lineId)));
 }
 
 export function* sectionSaga() {

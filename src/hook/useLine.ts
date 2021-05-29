@@ -16,11 +16,11 @@ const useLine = () => {
   }, [dispatch, lines.length, accessToken]);
 
   const addLine = (newLine: AddLineRequest) => {
-    dispatch(addLineAsync({ line: newLine }));
+    dispatch(addLineAsync(newLine));
   };
 
   const deleteLine = (id: number) => {
-    dispatch(deleteLineAsync({ id }));
+    dispatch(deleteLineAsync(id));
   };
 
   const resetError = () => {

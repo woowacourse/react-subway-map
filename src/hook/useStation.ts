@@ -19,11 +19,11 @@ const useStation = () => {
   }, [dispatch, stations.length, accessToken]);
 
   const addStation = (name: string) => {
-    dispatch(addStationAsync({ name }));
+    dispatch(addStationAsync(name));
   };
 
   const deleteStation = (id: number) => {
-    dispatch(deleteStationAsync({ id }));
+    dispatch(deleteStationAsync(id));
   };
 
   const resetError = () => {

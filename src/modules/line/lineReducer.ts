@@ -1,21 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AddLineRequest, Line } from '../../interfaces';
 
-export interface SetLinePayload {
-  lines: Line[];
-}
+export type SetLinePayload = Line[];
 
-export interface AddLinePayload {
-  line: AddLineRequest;
-}
+export type AddLinePayload = AddLineRequest;
 
-export interface DeleteLinePayload {
-  id: Line['id'];
-}
+export type DeleteLinePayload = Line['id'];
 
-export interface ErrorPayload {
-  error: string;
-}
+export type ErrorPayload = string;
 
 export interface LineState {
   lines: Line[];
@@ -32,13 +24,13 @@ export const lineSlice = createSlice({
   initialState,
   reducers: {
     setLines: (state, action: PayloadAction<SetLinePayload>) => {
-      state.lines = action.payload.lines.sort((a, b) => b.id - a.id);
+      state.lines = action.payload.sort((a, b) => b.id - a.id);
     },
     getLinesAsync: () => {},
     addLineAsync: (state, action: PayloadAction<AddLinePayload>) => {},
     deleteLineAsync: (state, action: PayloadAction<DeleteLinePayload>) => {},
     error: (state, action: PayloadAction<ErrorPayload>) => {
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
     resetError: state => {
       state.error = '';

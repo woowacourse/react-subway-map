@@ -29,7 +29,7 @@ it('로그인에 실패한다', () => {
     .withReducer(userReducer)
     .put(pending())
     .provide([[call(authAPI.signIn, userInfo), { error: errorMessage }]])
-    .put(error({ error: errorMessage }))
+    .put(error(errorMessage))
     .hasFinalState({
       serverName: '',
       baseURL: '',

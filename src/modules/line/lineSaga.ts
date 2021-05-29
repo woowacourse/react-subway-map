@@ -34,36 +34,36 @@ export function* getLinesSaga() {
   const result: GetLineResult = yield call(lineAPI.getLines);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
-  yield put(setLines({ lines: result.lines }));
+  yield put(setLines(result.lines));
 }
 
 export function* addLineSaga(action: PayloadAction<AddLinePayload>) {
   yield put(pending());
-  const result: AddLineResult = yield call(lineAPI.addLine, action.payload.line);
+  const result: AddLineResult = yield call(lineAPI.addLine, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
   const lines: Line[] = yield select(selectLines);
 
-  yield put(setLines({ lines: [...lines, result.line] }));
+  yield put(setLines([...lines, result.line]));
 }
 
 export function* deleteLineSaga(action: PayloadAction<DeleteLinePayload>) {
   yield put(pending());
-  const result: deleteLineResult = yield call(lineAPI.deleteLine, action.payload.id);
+  const result: deleteLineResult = yield call(lineAPI.deleteLine, action.payload);
 
   if (result.error) {
-    yield put(error({ error: result.error }));
+    yield put(error(result.error));
     return;
   }
   const lines: Line[] = yield select(selectLines);
 
-  yield put(setLines({ lines: lines.filter(line => line.id !== Number(action.payload.id)) }));
+  yield put(setLines(lines.filter(line => line.id !== Number(action.payload))));
 }
 
 export function* lineSaga() {
