@@ -19,7 +19,6 @@ const List = styled.ul<Properties>`
       display: flex;
       align-items: center;
       flex-grow: 1;
-      line-height: 0.8;
     }
 
     button {

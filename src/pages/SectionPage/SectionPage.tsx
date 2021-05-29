@@ -58,29 +58,10 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
   const currentLine = lines.find((line) => line.id === selectedLineId);
-  const lastStation = currentLine?.sections[currentLine?.sections.length - 1].downStation;
-
-  const stationsInLine: StationInLine[] = (() => {
-    if (currentLine && lastStation) {
-      return [
-        ...currentLine.sections.map((section) => ({
-          id: section.upStation.id,
-          name: section.upStation.name,
-          distance: section.distance,
-        })),
-        {
-          id: lastStation.id,
-          name: lastStation.name,
-        },
-      ];
-    }
-
-    return [];
-  })();
 
   const isOnlyOneStationInCurrentLine = Boolean(
-    Number(stationsInLine.some(({ id }) => id === Number(upStationId))) ^
-      Number(stationsInLine.some(({ id }) => id === Number(downStationId)))
+    Number(currentLine?.stations.some(({ id }) => id === Number(upStationId))) ^
+      Number(currentLine?.stations.some(({ id }) => id === Number(downStationId)))
   );
   const isStationSelectDuplicated = upStationId === downStationId;
 
@@ -206,7 +187,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const onSectionDelete = async (stationId: number, stationName: string) => {
     if (stationId === -1 || stationName === '') return;
 
-    if (currentLine?.sections.length === 1) {
+    if (currentLine?.stations.length === 1) {
       addMessage?.(ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE);
       return;
     }
@@ -250,6 +231,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
               backgroundColor={themeColor}
               color={PALETTE.WHITE}
               onClick={() => setFormOpen(!formOpen)}
+              aria-label="구간 추가"
             >
               <MdAdd size="1.5rem" />
             </RoundButton>
@@ -259,7 +241,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
         )}
         <InputContainer labelText="노선 선택">
           <ColorDot size="s" backgroundColor={currentLine?.color} />
-          <Select onChange={onLineSelect}>
+          <Select onChange={onLineSelect} aria-label="노선 선택">
             <option value="/" hidden>
               노선 선택
             </option>
@@ -275,8 +257,8 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
         <Form onSubmit={onSectionSubmit}>
           <StationSelects>
             <div>
-              <InputContainer labelText="상행 종점">
-                <Select value={upStationId} onChange={onUpStationIdChange}>
+              <InputContainer labelText="상행역">
+                <Select value={upStationId} onChange={onUpStationIdChange} aria-label="상행역 선택">
                   <option value="/" hidden>
                     역 선택
                   </option>
@@ -290,8 +272,12 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
               <Icon>
                 <MdArrowForward size="1.5rem" />
               </Icon>
-              <InputContainer labelText="하행 종점">
-                <Select value={downStationId} onChange={onDownStationIdChange}>
+              <InputContainer labelText="하행역">
+                <Select
+                  value={downStationId}
+                  onChange={onDownStationIdChange}
+                  aria-label="하행역 선택"
+                >
                   <option value="/" hidden>
                     역 선택
                   </option>
@@ -309,7 +295,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
             labelText="거리 (단위:km)"
             validation={{ text: distanceErrorMessage, isValid: false }}
           >
-            <Input value={distance} onChange={onDistanceChange} />
+            <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>
           <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>
             추가
@@ -318,10 +304,10 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
         {!currentLine ? (
-          <img src={noSelectedLine} alt="노선이 없습니다." />
+          <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
         ) : (
-          <List position="relative">
-            {stationsInLine.map(({ id, name, distance }) => {
+          <List position="relative" aria-label="구간 목록">
+            {currentLine.stations.map(({ id, name, distance }) => {
               return (
                 <li key={id}>
                   <ColorDot size="s" backgroundColor={currentLine.color} />
@@ -334,6 +320,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
                       backgroundColor={PALETTE.PINK}
                       color={PALETTE.WHITE}
                       onClick={() => onSectionDelete(id, name)}
+                      aria-label={`${name} 삭제`}
                     >
                       <MdDelete size="15px" />
                     </Button>

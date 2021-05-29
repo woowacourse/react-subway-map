@@ -11,3 +11,4 @@ export { default as Icon } from './Icon/Icon';
 export { default as ErrorText } from './ErrorText/ErrorText';
 export { default as List } from './List/List';
 export { default as ColorDot } from './ColorDot/ColorDot';
+export { default as Chip } from './Chip/Chip';

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { request, REQUEST_URL } from '../request';
+import { StationData } from './useStations';
 import { APIReturnTypeSection } from './useSections';
 
 interface LineData {
@@ -13,8 +14,50 @@ interface APIReturnTypeLine {
   id: number;
   name: string;
   color: string;
-  sections: APIReturnTypeSection[];
+  stations: {
+    id: number;
+    name: string;
+    distance?: number;
+  }[];
 }
+
+const API = {
+  get: async (): Promise<APIReturnTypeLine[]> => {
+    const response = await request(`${REQUEST_URL}/lines`, {
+      method: 'GET',
+    });
+
+    return await response.json();
+  },
+
+  getOne: async (lineId: number): Promise<APIReturnTypeLine> => {
+    const response = await request(`${REQUEST_URL}/lines/${lineId}`, {
+      method: 'GET',
+    });
+
+    return await response.json();
+  },
+
+  post: async (data: LineData, accessToken: string): Promise<void> => {
+    await request(`${REQUEST_URL}/lines`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    });
+  },
+
+  delete: async (lineId: number, accessToken: string): Promise<void> => {
+    await request(`${REQUEST_URL}/lines/${lineId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+};
 
 const useLines = (
   initialLines: APIReturnTypeLine[]
@@ -29,11 +72,7 @@ const useLines = (
   const [lines, setLines] = useState<APIReturnTypeLine[]>(initialLines);
 
   const fetchLine = async (lineId: number): Promise<void> => {
-    const response = await request(`${REQUEST_URL}/lines/${lineId}`, {
-      method: 'GET',
-    });
-
-    const fetchedLine = await response.json();
+    const fetchedLine: APIReturnTypeLine = await API.getOne(lineId);
 
     setLines((prevLines) =>
       prevLines.map((line) => {
@@ -46,13 +85,9 @@ const useLines = (
   };
 
   const fetchLines = async (): Promise<void> => {
-    const response = await request(`${REQUEST_URL}/lines`, {
-      method: 'GET',
-    });
+    const response = await API.get();
 
-    const fetchedLines = await response.json();
-
-    setLines(fetchedLines);
+    setLines(response);
   };
 
   const addLine = async (data: LineData): Promise<void> => {
@@ -64,14 +99,7 @@ const useLines = (
       return;
     }
 
-    await request(`${REQUEST_URL}/lines`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+    await API.post(data, accessToken);
   };
 
   const deleteLine = async (lineId: number): Promise<void> => {
@@ -83,16 +111,12 @@ const useLines = (
       return;
     }
 
-    await request(`${REQUEST_URL}/lines/${lineId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await API.delete(lineId, accessToken);
   };
 
   return [lines, setLines, fetchLines, fetchLine, addLine, deleteLine];
 };
 
 export default useLines;
+export { API };
 export type { APIReturnTypeLine };

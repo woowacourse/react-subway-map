@@ -10,9 +10,9 @@ interface PaletteProps {
 }
 
 const Palette = ({ inputName, colors }: PaletteProps) => (
-  <Container>
+  <Container aria-label="색상 선택">
     {colors.map(({ disabled, name }) => (
-      <label key={name}>
+      <label key={name} aria-label={`${name} 색상 선택`}>
         <input
           name={inputName}
           type="radio"
