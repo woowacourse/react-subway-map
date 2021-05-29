@@ -6,5 +6,5 @@ export const StyledAlertText = styled.span<Pick<AlertTextProps, 'isValid'>>`
   font-size: 0.725rem;
   position: absolute;
   padding: 0.125rem;
-  bottom: 0.375rem;
+  bottom: -1.25rem;
 `;

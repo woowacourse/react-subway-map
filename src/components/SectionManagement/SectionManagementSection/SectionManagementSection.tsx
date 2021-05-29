@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import useLine from '../../../hooks/useLine';
 import useModal from '../../../hooks/useModal';
 import useSection from '../../../hooks/useSection';
@@ -31,13 +31,13 @@ const SectionManagementSection = () => {
           <option defaultValue="노선 이름" selected disabled hidden>
             노선 이름
           </option>
-
-          {!lines.isLoading &&
-            (lines.data as Line[]).map((line) => (
+          <Suspense fallback={true}>
+            {(lines.data as Line[]).map((line) => (
               <option key={line.id} value={line.id}>
                 {line.name}
               </option>
             ))}
+          </Suspense>
         </LineSelectBox>
         <StationList
           stations={currentLineDetail.stations}

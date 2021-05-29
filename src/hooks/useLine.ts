@@ -64,6 +64,8 @@ const useLine = () => {
     deleteLineMutation.mutate(lineId);
   };
 
+  const isLineNameValid = name.length > 2;
+
   return {
     name,
     color,
@@ -78,6 +80,7 @@ const useLine = () => {
     setColor,
     addLine,
     deleteLine,
+    isLineNameValid,
   };
 };
 

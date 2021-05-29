@@ -1,8 +1,6 @@
 import { FormEvent, VFC } from 'react';
 import Button from '../../@common/Button/Button.styles';
-import Input from '../../@common/Input/Input';
 import AuthForm from '../../@mixins/Auth/AuthForm';
-import AlertText from '../../@common/AlertText/AlertText';
 import useSignUp from '../../../hooks/useSignUp';
 import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
 
@@ -41,6 +39,7 @@ const SignUpForm: VFC = () => {
         validText="올바른 이메일입니다."
       />
       <InputWithAlertText
+        type="number"
         value={age}
         min={1}
         onChange={({ target: { valueAsNumber } }) => setAge(valueAsNumber)}
@@ -49,6 +48,7 @@ const SignUpForm: VFC = () => {
         validText="올바른 나이입니다."
         invalidText=" 1세 이상만 가입할 수 있습니다."
       />
+
       <InputWithAlertText
         type="password"
         value={password}

@@ -1,4 +1,4 @@
-import { FormEvent, VFC } from 'react';
+import { FormEvent, Suspense, VFC } from 'react';
 import useLine from '../../../hooks/useLine';
 import useStation from '../../../hooks/useStation';
 import { Station } from '../../../types';
@@ -11,6 +11,7 @@ import {
   StyledContainer,
   BidirectionArrowIcon,
   LineAddForm,
+  StyledInputWithAlertText,
 } from './LineAddModal.styles';
 
 export interface LineAddModalProps {
@@ -32,6 +33,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     setDownStationId,
     setColor,
     addLine,
+    isLineNameValid,
   } = useLine();
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
@@ -45,7 +47,9 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     <Modal size="medium" closeModal={closeModal}>
       <Title>노선 생성</Title>
       <LineAddForm onSubmit={handleAddLine}>
-        <StyledInput
+        <StyledInputWithAlertText
+          isValid={isLineNameValid}
+          invalidText={'노선 이름은 2글자 이상이어야 합니다.'}
           placeholder="노선 이름"
           value={name}
           onChange={({ target: { value } }) => setName(value)}
@@ -54,17 +58,19 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
         <StyledContainer>
           <SelectBox
             value={upStationId}
+            defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option defaultValue="상행역" disabled selected hidden>
+            <option value={-1} disabled hidden>
               상행역
             </option>
-            {!stations.isLoading &&
-              (stations.data as Station[]).map((station) => (
+            <Suspense fallback={true}>
+              {(stations.data as Station[]).map((station) => (
                 <option key={station.id} value={station.id}>
                   {station.name}
                 </option>
               ))}
+            </Suspense>
           </SelectBox>
 
           <BidirectionArrowIcon />
@@ -72,18 +78,20 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           <SelectBox
             placeholder="하행 종점"
             value={downStationId}
+            defaultValue={-1}
             onChange={({ target }) => setDownStationId(Number(target.value))}
           >
-            <option defaultValue="하행역" disabled selected hidden>
+            <option value={-1} disabled hidden>
               하행역
             </option>
-            {stations &&
-              !stations.isLoading &&
-              (stations.data as Station[]).map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
+            <Suspense fallback={true}>
+              {stations &&
+                (stations.data as Station[]).map((station) => (
+                  <option key={station.id} value={station.id}>
+                    {station.name}
+                  </option>
+                ))}
+            </Suspense>
           </SelectBox>
         </StyledContainer>
 

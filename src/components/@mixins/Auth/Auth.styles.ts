@@ -14,8 +14,7 @@ export const StyledAuthForm = styled.form`
 export const ChildrenContainer = styled(Container)`
   flex-direction: column;
 
-  & input,
-  & button {
+  & > * {
     margin-bottom: 1.75rem;
   }
 `;

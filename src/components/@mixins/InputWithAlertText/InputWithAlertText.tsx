@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, VFC } from 'react';
-import AlertText, { AlertTextProps } from '../../@common/AlertText/AlertText';
+import AlertText, { AlertTextProps } from './AlertText/AlertText';
 import Input from '../../@common/Input/Input';
 import { InputContainer } from './InputWithAlertText.styles';
 
@@ -12,10 +12,11 @@ const InputWithAlertText: VFC<InputWithAlertTextProps> = ({
   invalidText,
   validText,
   value,
+  className,
   ...inputArgs
 }) => {
   return (
-    <InputContainer>
+    <InputContainer className={className}>
       <Input value={value} {...inputArgs} />
       {!!value && (
         <AlertText

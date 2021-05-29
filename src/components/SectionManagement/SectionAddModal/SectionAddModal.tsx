@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, VFC } from 'react';
+import { FormEvent, Suspense, useEffect, VFC } from 'react';
 import useLine from '../../../hooks/useLine';
 import useSection from '../../../hooks/useSection';
 import useStation from '../../../hooks/useStation';
@@ -51,28 +51,31 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           <option defaultValue="0" selected hidden>
             노선 선택
           </option>
-          {!lines.isLoading &&
-            (lines.data as Line[]).map(({ id, name }) => (
+          <Suspense fallback={true}>
+            {(lines.data as Line[]).map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
               </option>
             ))}
+          </Suspense>
         </SectionSelectBox>
 
         <Container>
           <SectionSelectBox
             value={upStationId}
+            defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option defaultValue="상행역" disabled selected hidden>
+            <option value={-1} disabled hidden>
               상행역
             </option>
-            {!stations.isLoading &&
-              (stations.data as Station[]).map(({ id, name }) => (
+            <Suspense fallback={true}>
+              {(stations.data as Station[]).map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}
                 </option>
               ))}
+            </Suspense>
           </SectionSelectBox>
           <SectionSelectBox
             value={downStationId}
@@ -81,12 +84,13 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
             <option defaultValue="하행역" disabled selected hidden>
               하행역
             </option>
-            {!stations.isLoading &&
-              (stations.data as Station[]).map(({ id, name }) => (
+            <Suspense fallback={true}>
+              {(stations.data as Station[]).map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}
                 </option>
               ))}
+            </Suspense>
           </SectionSelectBox>
         </Container>
 

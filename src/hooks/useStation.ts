@@ -33,6 +33,8 @@ const useStation = () => {
     requestStations(accessToken)
   );
 
+  const isValidName = name.length > 2;
+
   const setName = (name: string) => {
     setForm({ ...form, name });
   };
@@ -54,6 +56,7 @@ const useStation = () => {
     addStation,
     isAddStationError,
     deleteStation,
+    isValidName,
   };
 };
 

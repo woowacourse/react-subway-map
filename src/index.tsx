@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import GlobalStyle from './Global.styles';
 import { store } from './state/store';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { suspense: true },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,7 +20,11 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <ErrorBoundary>
+            <Suspense fallback={false}>
+              <App />
+            </Suspense>
+          </ErrorBoundary>
         </BrowserRouter>
       </Provider>
     </QueryClientProvider>
