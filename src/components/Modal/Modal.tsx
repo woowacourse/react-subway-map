@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, children }: IProps) => {
   if (!isOpen) return null;
 
   return (
-    <Styled.Modal onClick={handleClose}>
+    <Styled.Modal role="dialog" onClick={handleClose}>
       <Styled.Inner>{children}</Styled.Inner>
     </Styled.Modal>
   );

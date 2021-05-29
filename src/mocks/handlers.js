@@ -8,13 +8,22 @@ export const handlers = [
   rest.get(`${BACKEND[CREWS.DANYEE].baseUrl}/stations`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(STATION_LIST));
   }),
-  rest.post('/stations', (req, res, ctx) => {
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/stations`, (req, res, ctx) => {
     const newStation = {
-      id: 13,
+      id: 14,
       ...req.body,
     };
 
     return res(ctx.status(201), ctx.json(newStation));
+  }),
+  rest.put(`${BACKEND[CREWS.DANYEE].baseUrl}/stations/:id`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        id: Number(req.params.id),
+        ...req.body,
+      })
+    );
   }),
   rest.delete(`${BACKEND[CREWS.DANYEE].baseUrl}/stations/:id`, (req, res, ctx) => {
     return res(ctx.status(204));
