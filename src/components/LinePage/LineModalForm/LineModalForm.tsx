@@ -43,12 +43,25 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
     <S.LineModalForm onSubmit={e => onSubmit(isValidForm, e)}>
       <S.Title>노선 생성</S.Title>
       <S.InputWrapper>
-        <Input value={lineInfo.name} label='노선 이름' name='name' onChange={onChange} required />
+        <Input
+          value={lineInfo.name}
+          label='노선 이름'
+          name='name'
+          onChange={onChange}
+          error={lineInfo.name && lineNameErrorMessage ? true : false}
+          required
+        />
         <S.Message>{lineInfo.name && lineNameErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.SelectInputWrapper>
-          <SelectInput initialText='상행 종점' name='upStationId' value={lineInfo.upStationId} onChange={onChange}>
+          <SelectInput
+            initialText='상행 종점'
+            name='upStationId'
+            value={lineInfo.upStationId}
+            onChange={onChange}
+            error={lineInfo.upStationId && lineStationErrorMessage ? true : false}
+          >
             {stations.map(station => (
               <option key={station.id} value={station.id}>
                 {station.name}
@@ -56,7 +69,13 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
             ))}
           </SelectInput>
           <S.Arrow>↔</S.Arrow>
-          <SelectInput initialText='하행 종점' name='downStationId' value={lineInfo.downStationId} onChange={onChange}>
+          <SelectInput
+            initialText='하행 종점'
+            name='downStationId'
+            value={lineInfo.downStationId}
+            onChange={onChange}
+            error={lineInfo.upStationId && lineStationErrorMessage ? true : false}
+          >
             {stations.map(station => (
               <option key={station.id} value={station.id}>
                 {station.name}
@@ -67,7 +86,15 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
         <S.Message textAlign='center'>{lineInfo.upStationId && lineStationErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <Input type='number' value={lineInfo.distance} label='거리(km)' name='distance' onChange={onChange} required />
+        <Input
+          type='number'
+          value={lineInfo.distance}
+          label='거리(km)'
+          name='distance'
+          onChange={onChange}
+          required
+          error={lineInfo.distance && lineDistanceErrorMessage ? true : false}
+        />
         <S.Message>{lineInfo.distance && lineDistanceErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.PaletteContainer>

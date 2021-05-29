@@ -42,6 +42,7 @@ const AddStationForm = () => {
           emoji={subwaySVG}
           label='지하철 역 이름을 입력해주세요.'
           name='station'
+          error={stationName && stationNameErrorMessage ? true : false}
           onChange={handleChange}
           required
         />

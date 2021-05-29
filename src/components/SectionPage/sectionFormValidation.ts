@@ -23,7 +23,7 @@ export const getStationsErrorMessage = (
   }
 
   if (upStationId === downStationId) {
-    return MESSAGE.ERROR.LINE.CHOOSE_LINE_FIRST;
+    return MESSAGE.ERROR.LINE.SAME_STATIONS;
   }
 
   const hasUpStationInLine = lineSection.stations.some(({ id }) => String(id) === upStationId);

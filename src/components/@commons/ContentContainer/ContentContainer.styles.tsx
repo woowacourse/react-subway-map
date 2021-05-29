@@ -6,8 +6,8 @@ export const ContentContainer = styled.section<Props>`
   max-width: ${SIZE.PAGE_MAX_WIDTH};
   width: ${SIZE.PAGE_MIN_WIDTH};
   height: fit-content;
-  max-height: 40rem;
-  margin: 1.5rem;
+  max-height: 38rem;
+  margin: 1.5rem auto;
   margin-top: 0;
   padding: 2.5rem;
   border-radius: 0.5rem;

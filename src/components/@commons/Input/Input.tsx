@@ -8,8 +8,8 @@ export interface Props {
   label?: string;
   placeholder?: string;
   borderColor?: Color;
-  outLine?: Color;
   name?: string;
+  error?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   value?: string;
@@ -21,7 +21,7 @@ const Input = ({
   label,
   placeholder,
   borderColor,
-  outLine,
+  error,
   name,
   onChange,
   required,
@@ -36,7 +36,7 @@ const Input = ({
         value={value}
         placeholder={placeholder}
         borderColor={borderColor}
-        outLine={outLine}
+        error={error}
         emoji={emoji}
         name={name}
         onChange={onChange}

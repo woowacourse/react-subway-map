@@ -13,14 +13,15 @@ export const Container = styled.div`
 export const SelectInput = styled.select<SelectProps>`
   width: 100%;
   height: 100%;
-  border-color: ${({ borderColor }) => (borderColor ? COLOR[borderColor] : COLOR.GRAY_400)};
+  border-color: ${({ borderColor, error }) =>
+    error ? COLOR.RED_400 : borderColor ? COLOR[borderColor] : COLOR.GRAY_400};
   border-radius: 0.25rem;
   border-width: 0.1rem;
   padding: 0.5rem 1rem;
   color: ${COLOR.GRAY_800};
 
   &:focus {
-    outline-color: ${({ outLine }) => (outLine ? COLOR[outLine] : COLOR.GRAY_700)};
+    outline-color: ${({ error }) => (error ? COLOR.RED_400 : COLOR.GRAY_700)};
   }
 `;
 

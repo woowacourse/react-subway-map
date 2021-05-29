@@ -71,8 +71,7 @@ const SignInForm = () => {
           placeholder='이메일을 입력해주세요'
           name='email'
           onChange={handleChange}
-          borderColor={loginInfo.email && emailErrorMessage ? 'RED_400' : 'GRAY_400'}
-          outLine={loginInfo.email && emailErrorMessage ? 'RED_400' : 'GRAY_700'}
+          error={loginInfo.email && emailErrorMessage ? true : false}
         />
         <S.Message>{loginInfo.email && emailErrorMessage}</S.Message>
       </S.InputWrapper>
@@ -84,8 +83,7 @@ const SignInForm = () => {
           placeholder='비밀번호를 입력해주세요'
           name='password'
           onChange={handleChange}
-          borderColor={loginInfo.password && passwordErrorMessage ? 'RED_400' : 'GRAY_400'}
-          outLine={loginInfo.password && passwordErrorMessage ? 'RED_400' : 'GRAY_700'}
+          error={loginInfo.password && passwordErrorMessage ? true : false}
         />
         <S.Message>{loginInfo.password && passwordErrorMessage}</S.Message>
       </S.InputWrapper>
@@ -94,8 +92,7 @@ const SignInForm = () => {
           initialText='서버를 선택해주세요.'
           value={serverURL}
           onChange={handleSelectServer}
-          borderColor={!serverURL ? 'RED_400' : 'GRAY_400'}
-          outLine={!serverURL ? 'RED_400' : 'GRAY_700'}
+          error={!serverURL ? true : false}
         >
           {Object.values(BASE_URL).map(({ name, URL }) => (
             <option key={name} value={URL}>
@@ -109,7 +106,7 @@ const SignInForm = () => {
         <Button isDisabled={isValidForm ? false : true}>로그인</Button>
       </S.ButtonWrapper>
       <S.SignUpLinkWrapper>
-        <Link to={ROUTE.SIGN_UP}>아직 회원이 아니신가요?</Link>
+        아직 회원이 아니신가요? <S.SignUpLink to={ROUTE.SIGN_UP}>회원가입</S.SignUpLink>
       </S.SignUpLinkWrapper>
     </S.SignInForm>
   );

@@ -33,7 +33,12 @@ const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: 
     <S.AddSectionForm>
       <S.Title>지하철 구간 관리</S.Title>
       <S.InputWrapper>
-        <SelectInput initialText='지하철 노선을 선택해주세요.' value={lineSection.id} onChange={onChange}>
+        <SelectInput
+          initialText='지하철 노선을 선택해주세요.'
+          value={lineSection.id}
+          onChange={onChange}
+          error={!lineSection.id ? true : false}
+        >
           {lines.map(line => (
             <option key={line.id} value={line.id}>
               {line.name}

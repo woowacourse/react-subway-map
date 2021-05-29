@@ -32,13 +32,14 @@ export const Emoji = styled.img`
 export const Input = styled.input<InputProps>`
   width: 100%;
   height: 100%;
-  border-color: ${({ borderColor }) => (borderColor ? COLOR[borderColor] : COLOR.GRAY_400)};
+  border-color: ${({ borderColor, error }) =>
+    error ? COLOR.RED_400 : borderColor ? COLOR[borderColor] : COLOR.GRAY_400};
   border-width: 0.1rem;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
   ${({ emoji }) => emoji && 'padding-left: 2.5rem'};
 
   &:focus {
-    outline-color: ${({ outLine }) => (outLine ? COLOR[outLine] : COLOR.GRAY_800)};
+    outline-color: ${({ error }) => (error ? COLOR.RED_400 : COLOR.GRAY_800)};
   }
 `;

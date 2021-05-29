@@ -69,6 +69,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
           initialText='노선을 선택해주세요'
           label='노선 선택'
           onChange={handleLineChange}
+          error={sectionInfo.lineId && lineErrorMessage ? true : false}
         >
           {lines.map(line => (
             <option key={line.id} value={line.id}>
@@ -86,6 +87,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
             label='상행역'
             name='upStationId'
             onChange={handleChange}
+            error={sectionInfo.downStationId && stationsErrorMessage ? true : false}
           >
             {stations.map(station => (
               <option key={station.id} value={station.id}>
@@ -100,6 +102,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
             label='하행역'
             name='downStationId'
             onChange={handleChange}
+            error={sectionInfo.upStationId && stationsErrorMessage ? true : false}
           >
             {stations.map(station => (
               <option key={station.id} value={station.id}>

@@ -72,6 +72,7 @@ const AddLineForm = ({ lines, stations, addLine }: Props) => {
           value={lineInfo.name}
           name='name'
           emoji={subwaySVG}
+          error={lineInfo.name && lineNameErrorMessage ? true : false}
           label='지하철 노선 이름을 입력해주세요.'
           onChange={handleChange}
           required

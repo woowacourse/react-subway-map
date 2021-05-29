@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { COLOR } from '../../../constants/styleConstant';
+import { Link } from 'react-router-dom';
 
 export const SignInForm = styled.form`
   width: 100%;
@@ -35,5 +36,13 @@ export const Message = styled.div`
 export const SignUpLinkWrapper = styled.div`
   width: 100%;
   text-align: center;
-  color: ${COLOR.GRAY_400};
+  color: ${COLOR.GRAY_700};
+`;
+
+export const SignUpLink = styled(Link)`
+  color: ${COLOR.MINT_500};
+
+  &:hover {
+    color: ${COLOR.BLACK};
+  }
 `;
