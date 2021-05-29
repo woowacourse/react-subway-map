@@ -14,7 +14,7 @@ export const ModalWrapper = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   transition: opacity 0.25s ease;
-  z-index: 2;
+  z-index: 200;
 `;
 
 export const ModalInner = styled.div`
