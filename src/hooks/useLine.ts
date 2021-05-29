@@ -6,11 +6,6 @@ const useLine = () => {
   const { items: lines, error } = useAppSelector(({ line: { items, error } }) => ({ items, error }));
   const dispatch = useAppDispatch();
 
-  const wrap = () => async (func: Function) => {
-    await func();
-    await dispatch(action.getLines());
-  };
-
   const getLines = async () => {
     await dispatch(action.getLines());
   };

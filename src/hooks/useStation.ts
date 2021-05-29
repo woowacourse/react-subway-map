@@ -8,11 +8,6 @@ const useStation = () => {
   }));
   const dispatch = useAppDispatch();
 
-  const wrap = async (func: Function) => {
-    await func();
-    await dispatch(action.getStations());
-  };
-
   const getStations = async () => {
     await dispatch(action.getStations());
   };
@@ -27,7 +22,7 @@ const useStation = () => {
     await dispatch(action.getStations());
   };
 
-  return { stations, getStations, addStation: addStation, deleteStation: deleteStation, error };
+  return { stations, getStations, addStation: addStation, deleteStation, error };
 };
 
 export default useStation;
