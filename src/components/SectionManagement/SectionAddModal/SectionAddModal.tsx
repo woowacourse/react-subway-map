@@ -8,6 +8,7 @@ import Container from '../../@common/Container/Container.styles';
 import Input from '../../@common/Input/Input';
 import Modal from '../../@common/Modal/Modal';
 import Title from '../../@common/Title/Title.styles';
+import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
 import {
   SectionSelectBox,
   ControlContainer,
@@ -34,9 +35,10 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     isSelectedUpStation,
     availableUpStations,
     availableDownStations,
+    selectedSectionDistance,
+    isValidDistance,
   } = useSection();
   const { lines } = useLine();
-  const { stations } = useStation();
 
   const onAddSection = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -97,11 +99,19 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           </SectionSelectBox>
         </Container>
 
-        <Input
+        <InputWithAlertText
           type="number"
-          placeholder="거리"
+          min="0"
+          max={selectedSectionDistance - 1}
+          placeholder={
+            isSelectedUpStation
+              ? `거리 (${selectedSectionDistance}까지)`
+              : '거리'
+          }
           value={distance}
           onChange={({ target }) => setDistance(target.valueAsNumber)}
+          isValid={isValidDistance}
+          disabled={!selectedSectionDistance}
         />
 
         <ControlContainer>

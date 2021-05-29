@@ -4,7 +4,7 @@ import {
   requestSection,
 } from './../service/section';
 import { useEffect, useState } from 'react';
-import { LineDetail, LineId, SectionForm, StationId } from '../types';
+import { LineDetail, LineId, Section, SectionForm, StationId } from '../types';
 import useLogin from './useLogin';
 import { useMutation } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../state/store';
@@ -30,7 +30,7 @@ const useSection = () => {
   });
 
   const [form, setForm] = useState<SectionForm>({
-    distance: 0,
+    distance: 1,
     downStationId: -1,
     upStationId: -1,
   });
@@ -82,6 +82,8 @@ const useSection = () => {
   };
 
   const setDistance = (distance: number) => {
+    if (distance === 0) return;
+
     setForm({ ...form, distance });
   };
 
@@ -104,11 +106,16 @@ const useSection = () => {
       )
     : [];
 
-  // stations, currentLineDetail.stations
-
   const isSelectedLine = currentLineDetail.id !== -1;
 
-  const isValidDistance = distance > 0;
+  const selectedSectionDistance =
+    (
+      currentLineDetail.sections.find(
+        (section) => section.upStation.id === upStationId
+      ) as Section
+    )?.distance ?? 0;
+
+  const isValidDistance = distance < selectedSectionDistance;
 
   const isSelectedUpStation = upStationId !== -1;
 
@@ -138,6 +145,8 @@ const useSection = () => {
     isSelectedUpStation,
     availableUpStations,
     availableDownStations,
+    selectedSectionDistance,
+    isValidDistance,
   };
 };
 
