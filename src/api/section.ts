@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { API, RESPONSE } from '../constants/api';
-import { AddSectionPayload, DeleteSectionPayload, LineSection } from '../interfaces';
+import { AddSectionRequest, DeleteSectionRequest, LineSection } from '../interfaces/section';
 
 interface GetSectionResponse {
   status: number;
-
   data: LineSection;
 }
 
@@ -23,7 +22,7 @@ export const sectionAPI = {
     }
   },
 
-  addSection: async ({ lineId, ...data }: AddSectionPayload) => {
+  addSection: async ({ lineId, ...data }: AddSectionRequest) => {
     try {
       const response = await axios.post(`${API.SECTION(Number(lineId))}`, data);
 
@@ -37,7 +36,7 @@ export const sectionAPI = {
     }
   },
 
-  deleteSection: async ({ lineId, stationId }: DeleteSectionPayload) => {
+  deleteSection: async ({ lineId, stationId }: DeleteSectionRequest) => {
     try {
       const response = await axios.delete(`${API.SECTION(Number(lineId))}?stationId=${stationId}`);
 

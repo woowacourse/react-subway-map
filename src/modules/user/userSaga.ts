@@ -1,20 +1,15 @@
 import { authAPI } from '../../api/auth';
 import { loginAsync, login, error, pending } from './userReducer';
 import { call, takeLatest, put } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { SignInRequest } from '../../interfaces/auth';
 
-type LoginAction = {
-  type: typeof loginAsync.type;
-  payload: {
-    email: string;
-    password: string;
-  };
-};
 interface LoginResult {
   error: string;
   accessToken: string;
 }
 
-export function* loginSaga(action: LoginAction) {
+export function* loginSaga(action: PayloadAction<SignInRequest>) {
   yield put(pending());
   const result: LoginResult = yield call(authAPI.signIn, action.payload);
 

@@ -1,74 +1,68 @@
-import { AddSectionPayload, DeleteSectionPayload } from './../../interfaces/index';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { sectionAPI } from '../../api/section';
-import { LineSection } from '../../interfaces';
 
-import { addSectionAsync, deleteSectionAsync, error, getSectionAsync, pending, setSection } from './sectionReducer';
+import {
+  addSectionAsync,
+  deleteSectionAsync,
+  error,
+  pending,
+  setLineSection,
+  GetLineSectionPayload,
+  AddSectionPayload,
+  DeleteSectionPayload,
+  getLineSectionAsync,
+} from './sectionReducer';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { LineSection } from '../../interfaces/section';
 
-interface GetSectionAction {
-  type: typeof getSectionAsync;
-  payload: {
-    id: LineSection['id'];
-  };
-}
-
-interface AddSectionAction {
-  type: typeof addSectionAsync;
-  payload: AddSectionPayload;
-}
-
-interface DeleteSectionAction {
-  type: typeof deleteSectionAsync;
-  payload: DeleteSectionPayload;
-}
-interface GetLineResult {
+interface GetLineSectionResult {
   error: string;
   lineSection: LineSection;
 }
 
-interface AddLineResult {
+interface AddSectionResult {
   error: string;
 }
 
-interface DeleteLineResult {
+interface DeleteSectionResult {
   error: string;
 }
 
-export function* getSectionSaga(action: GetSectionAction) {
+export function* getSectionSaga(action: PayloadAction<GetLineSectionPayload>) {
   yield put(pending());
-  const result: GetLineResult = yield call(sectionAPI.getSection, action.payload.id);
+  const result: GetLineSectionResult = yield call(sectionAPI.getSection, action.payload.id);
 
   if (result.error) {
     yield put(error({ error: result.error }));
     return;
   }
-  yield put(setSection({ lineSection: result.lineSection }));
+  yield put(setLineSection({ lineSection: result.lineSection }));
 }
 
-export function* addSectionSaga(action: AddSectionAction) {
+export function* addSectionSaga(action: PayloadAction<AddSectionPayload>) {
   yield put(pending());
-  const result: AddLineResult = yield call(sectionAPI.addSection, action.payload);
+  const result: AddSectionResult = yield call(sectionAPI.addSection, action.payload.section);
 
   if (result.error) {
     yield put(error({ error: result.error }));
     return;
   }
-  yield put(getSectionAsync({ id: Number(action.payload.lineId) }));
+  yield put(getLineSectionAsync({ id: Number(action.payload.section.lineId) }));
 }
 
-export function* deleteSectionSaga(action: DeleteSectionAction) {
+export function* deleteSectionSaga(action: PayloadAction<DeleteSectionPayload>) {
   yield put(pending());
-  const result: DeleteLineResult = yield call(sectionAPI.deleteSection, action.payload);
+  const result: DeleteSectionResult = yield call(sectionAPI.deleteSection, action.payload.section);
 
   if (result.error) {
     yield put(error({ error: result.error }));
     return;
   }
-  yield put(getSectionAsync({ id: Number(action.payload.lineId) }));
+  yield put(getLineSectionAsync({ id: Number(action.payload.section.lineId) }));
 }
 
 export function* sectionSaga() {
-  yield takeLatest(getSectionAsync.type, getSectionSaga);
+  yield takeLatest(getLineSectionAsync.type, getSectionSaga);
   yield takeLatest(addSectionAsync.type, addSectionSaga);
   yield takeLatest(deleteSectionAsync.type, deleteSectionSaga);
 }

@@ -1,16 +1,11 @@
 import axios from 'axios';
 import { API, RESPONSE } from '../constants/api';
-import { AddLine, Line } from '../interfaces';
-
-interface GetLinesResponse {
-  status: number;
-  data: Line[];
-}
+import { AddLineRequest, Line } from '../interfaces';
 
 export const lineAPI = {
   getLines: async () => {
     try {
-      const response: GetLinesResponse = await axios.get(API.LINES());
+      const response: { status: number; data: Line[] } = await axios.get(API.LINES());
 
       if (response.status >= 400) {
         throw new Error('노선 정보를 불러오는데 실패했습니다...!');
@@ -22,7 +17,7 @@ export const lineAPI = {
     }
   },
 
-  addLine: async (line: AddLine) => {
+  addLine: async (line: AddLineRequest) => {
     try {
       const response: { status: number; data: Line } = await axios.post(API.LINES(), line);
       if (response.status >= 400) {
@@ -35,7 +30,7 @@ export const lineAPI = {
     }
   },
 
-  deleteLine: async (id: number) => {
+  deleteLine: async (id: Line['id']) => {
     try {
       const response: { status: number } = await axios.delete(`${API.LINES()}/${id}`);
       if (response.status >= 400) {

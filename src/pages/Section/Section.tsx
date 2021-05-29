@@ -8,7 +8,7 @@ import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
-import { LineSection } from '../../interfaces';
+import { LineSection } from '../../interfaces/section';
 import * as S from './Section.styles';
 
 const getSectionStations = (lineSection: LineSection) => {

@@ -1,17 +1,27 @@
-import { AddSectionPayload, DeleteSectionPayload } from './../../interfaces/index';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LineSection } from '../../interfaces';
+import { AddSectionRequest, DeleteSectionRequest, LineSection } from '../../interfaces';
 
-interface SetSectionAction {
+interface SetLineSectionPayload {
   lineSection: LineSection;
+}
+
+export interface GetLineSectionPayload {
+  id: LineSection['id'];
+}
+
+export interface AddSectionPayload {
+  section: AddSectionRequest;
+}
+
+export interface DeleteSectionPayload {
+  section: DeleteSectionRequest;
+}
+export interface ErrorAction {
+  error: string;
 }
 
 interface SectionState {
   lineSection: LineSection;
-  error: string;
-}
-
-export interface ErrorAction {
   error: string;
 }
 
@@ -24,10 +34,10 @@ export const sectionSlice = createSlice({
   name: 'section',
   initialState,
   reducers: {
-    setSection: (state, action: PayloadAction<SetSectionAction>) => {
+    setLineSection: (state, action: PayloadAction<SetLineSectionPayload>) => {
       state.lineSection = action.payload.lineSection;
     },
-    getSectionAsync: (state, action: PayloadAction<{ id: LineSection['id'] }>) => {},
+    getLineSectionAsync: (state, action: PayloadAction<GetLineSectionPayload>) => {},
     addSectionAsync: (state, action: PayloadAction<AddSectionPayload>) => {},
     deleteSectionAsync: (state, action: PayloadAction<DeleteSectionPayload>) => {},
     error: (state, action: PayloadAction<ErrorAction>) => {
@@ -43,8 +53,8 @@ export const sectionSlice = createSlice({
 });
 
 export type SectionActions = ReturnType<
-  | typeof sectionSlice.actions.setSection
-  | typeof sectionSlice.actions.getSectionAsync
+  | typeof sectionSlice.actions.setLineSection
+  | typeof sectionSlice.actions.getLineSectionAsync
   | typeof sectionSlice.actions.addSectionAsync
   | typeof sectionSlice.actions.deleteSectionAsync
   | typeof sectionSlice.actions.error
@@ -52,6 +62,6 @@ export type SectionActions = ReturnType<
   | typeof sectionSlice.actions.pending
 >;
 
-export const { setSection, getSectionAsync, addSectionAsync, deleteSectionAsync, error, resetError, pending } =
+export const { setLineSection, getLineSectionAsync, addSectionAsync, deleteSectionAsync, error, resetError, pending } =
   sectionSlice.actions;
 export default sectionSlice.reducer;

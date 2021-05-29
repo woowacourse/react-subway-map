@@ -1,33 +1,28 @@
-import { setStations, getStationsAsync, error, pending, addStationAsync, deleteStationAsync } from './stationReducer';
+import {
+  setStations,
+  getStationsAsync,
+  error,
+  pending,
+  addStationAsync,
+  deleteStationAsync,
+  AddStationPayload,
+  DeleteStationPayload,
+} from './stationReducer';
 import { call, takeLatest, put, select } from 'redux-saga/effects';
 import { stationAPI } from '../../api/station';
 import { Station } from '../../interfaces';
 import { RootState } from '..';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 interface GetStationResult {
   error: string;
   stations: Station[];
 }
-
-interface AddStationAction {
-  type: typeof addStationAsync;
-  payload: {
-    name: string;
-  };
-}
-
 interface AddStationResult {
   error: string;
   station: {
     id: number;
     name: string;
-  };
-}
-
-interface DeleteStationAction {
-  type: typeof deleteStationAsync;
-  payload: {
-    id: number;
   };
 }
 
@@ -48,7 +43,7 @@ export function* getStationsSaga() {
   yield put(setStations({ stations: result.stations }));
 }
 
-export function* addStationSaga(action: AddStationAction) {
+export function* addStationSaga(action: PayloadAction<AddStationPayload>) {
   yield put(pending());
   const result: AddStationResult = yield call(stationAPI.addStation, action.payload.name);
 
@@ -62,7 +57,7 @@ export function* addStationSaga(action: AddStationAction) {
   yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
 }
 
-export function* deleteStationSaga(action: DeleteStationAction) {
+export function* deleteStationSaga(action: PayloadAction<DeleteStationPayload>) {
   yield put(pending());
   const result: DeleteStationResult = yield call(stationAPI.deleteStation, action.payload.id);
 

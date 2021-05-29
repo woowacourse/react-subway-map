@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { AddSectionPayload, Line, LineSection, Station } from '../../interfaces';
+import { Line, Station } from '../../interfaces';
+import { AddSectionRequest, LineSection } from '../../interfaces/section';
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
 import SelectInput from '../@commons/SelectInput/SelectInput';
@@ -11,7 +12,7 @@ interface Props {
   stations: Station[];
   onLineChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onModalClose: () => void;
-  addSection: (payload: AddSectionPayload) => void;
+  addSection: (payload: AddSectionRequest) => void;
 }
 
 const initSectionInfo = {

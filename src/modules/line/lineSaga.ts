@@ -1,22 +1,18 @@
 import { call, put, select, takeLatest } from '@redux-saga/core/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { lineAPI } from '../../api/line';
-import { AddLine, Line } from '../../interfaces';
-import { error, getLinesAsync, addLineAsync, pending, setLines, deleteLineAsync } from './lineReducer';
-
-interface AddLineAction {
-  type: typeof addLineAsync;
-  payload: {
-    line: AddLine;
-  };
-}
-
-interface DeleteLineAction {
-  type: typeof deleteLineAsync;
-  payload: {
-    id: number;
-  };
-}
+import { Line } from '../../interfaces/line';
+import {
+  error,
+  getLinesAsync,
+  addLineAsync,
+  pending,
+  setLines,
+  deleteLineAsync,
+  AddLinePayload,
+  DeleteLinePayload,
+} from './lineReducer';
 interface GetLineResult {
   error: string;
   lines: Line[];
@@ -44,7 +40,7 @@ export function* getLinesSaga() {
   yield put(setLines({ lines: result.lines }));
 }
 
-export function* addLineSaga(action: AddLineAction) {
+export function* addLineSaga(action: PayloadAction<AddLinePayload>) {
   yield put(pending());
   const result: AddLineResult = yield call(lineAPI.addLine, action.payload.line);
 
@@ -57,7 +53,7 @@ export function* addLineSaga(action: AddLineAction) {
   yield put(setLines({ lines: [...lines, result.line] }));
 }
 
-export function* deleteLineSaga(action: DeleteLineAction) {
+export function* deleteLineSaga(action: PayloadAction<DeleteLinePayload>) {
   yield put(pending());
   const result: deleteLineResult = yield call(lineAPI.deleteLine, action.payload.id);
 

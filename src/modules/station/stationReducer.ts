@@ -1,11 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Station } from '../../interfaces';
 
-interface SetStationAction {
+interface SetStationPayload {
   stations: Station[];
 }
 
-export interface ErrorAction {
+export interface AddStationPayload {
+  name: Station['name'];
+}
+
+export interface DeleteStationPayload {
+  id: Station['id'];
+}
+export interface ErrorPayload {
   error: string;
 }
 
@@ -23,13 +30,13 @@ export const stationSlice = createSlice({
   name: 'station',
   initialState,
   reducers: {
-    setStations: (state, action: PayloadAction<SetStationAction>) => {
+    setStations: (state, action: PayloadAction<SetStationPayload>) => {
       state.stations = action.payload.stations.sort((a, b) => b.id - a.id);
     },
     getStationsAsync: () => {},
-    addStationAsync: (state, action: PayloadAction<{ name: string }>) => {},
-    deleteStationAsync: (state, action: PayloadAction<{ id: number }>) => {},
-    error: (state, action: PayloadAction<ErrorAction>) => {
+    addStationAsync: (state, action: PayloadAction<AddStationPayload>) => {},
+    deleteStationAsync: (state, action: PayloadAction<DeleteStationPayload>) => {},
+    error: (state, action: PayloadAction<ErrorPayload>) => {
       state.error = action.payload.error;
     },
     resetError: state => {

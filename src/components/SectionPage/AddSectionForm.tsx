@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { AddSectionPayload, Line, LineSection, Station } from '../../interfaces';
+import { Line, Station } from '../../interfaces';
+import { AddSectionRequest, LineSection } from '../../interfaces/section';
 import Button from '../@commons/Button/Button';
 import Modal from '../@commons/Modal/Modal';
 import SelectInput from '../@commons/SelectInput/SelectInput';
@@ -11,7 +12,7 @@ interface Props {
   lineSection: LineSection;
   lines: Line[];
   stations: Station[];
-  addSection: (payload: AddSectionPayload) => void;
+  addSection: (payload: AddSectionRequest) => void;
 }
 
 const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: Props) => {

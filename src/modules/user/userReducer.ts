@@ -1,22 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SignInRequest } from '../../interfaces';
 
-interface SelectServerAction {
+export interface SelectServerPayload {
   serverName: string;
   baseURL: string;
 }
-export interface LoginAction {
-  email: string;
+export interface LoginPayload {
+  email: SignInRequest['email'];
   accessToken: string;
 }
-
-export interface LoginAsyncAction {
-  email: string;
-  password: string;
-}
-
-export interface ErrorAction {
+export interface ErrorPayload {
   error: string;
 }
+
 interface UserState {
   serverName: string;
   baseURL: string;
@@ -37,17 +33,17 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    selectServer: (state, action: PayloadAction<SelectServerAction>) => {
+    selectServer: (state, action: PayloadAction<SelectServerPayload>) => {
       state.serverName = action.payload.serverName;
       state.baseURL = action.payload.baseURL;
     },
-    login: (state, action: PayloadAction<LoginAction>) => {
+    login: (state, action: PayloadAction<LoginPayload>) => {
       state.email = action.payload.email;
       state.accessToken = action.payload.accessToken;
     },
 
-    loginAsync: (state, action: PayloadAction<LoginAsyncAction>) => {},
-    error: (state, action: PayloadAction<ErrorAction>) => {
+    loginAsync: (state, action: PayloadAction<SignInRequest>) => {},
+    error: (state, action: PayloadAction<ErrorPayload>) => {
       state.error = action.payload.error;
     },
     resetError: state => {

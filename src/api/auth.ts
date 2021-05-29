@@ -1,17 +1,6 @@
 import axios from 'axios';
 import { API, RESPONSE } from '../constants/api';
-
-interface SignUp {
-  url: string;
-  email: string;
-  password: string;
-  age: string;
-}
-
-interface SignIn {
-  email: string;
-  password: string;
-}
+import { SignInRequest, SignUpRequest } from '../interfaces';
 
 interface SignInResponse {
   status: number;
@@ -20,8 +9,9 @@ interface SignInResponse {
     accessToken: string;
   };
 }
+
 export const authAPI = {
-  signUp: async ({ url, email, password, age }: SignUp) => {
+  signUp: async ({ url, email, password, age }: SignUpRequest) => {
     try {
       const data = {
         email: email,
@@ -44,12 +34,12 @@ export const authAPI = {
     }
   },
 
-  signIn: async ({ email, password }: SignIn) => {
-    const data = {
-      email: email,
-      password: password,
-    };
+  signIn: async ({ email, password }: SignInRequest) => {
     try {
+      const data = {
+        email: email,
+        password: password,
+      };
       const response: SignInResponse = await axios.post(API.SIGN_IN(), data);
       if (!response.data.accessToken) {
         throw new Error('로그인에 실패하였습니다.');
