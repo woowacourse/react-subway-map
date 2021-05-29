@@ -5,9 +5,14 @@ import { Line, Station } from '../../interfaces';
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import { getLineNameErrorMessage } from './AddLineForm';
 
 import * as S from './LineModalForm.styles';
+import {
+  getLineColorErrorMessage,
+  getLineDistanceErrorMessage,
+  getLineNameErrorMessage,
+  getLineStationErrorMessage,
+} from './LineModalForm.validation';
 
 export interface LineInfo {
   name: string;
@@ -24,41 +29,6 @@ interface Props {
   onSubmit: (isValidForm: boolean, e: React.FormEvent<HTMLFormElement>) => void;
   onModalClose: () => void;
 }
-
-const getLineStationErrorMessage = (upStationId: number, downStationId: number) => {
-  if (!upStationId || !downStationId) {
-    return '상행 종점역과 하행 종점역을 선택해주세요.';
-  }
-
-  if (upStationId === downStationId) {
-    return '상행 종점역과 하행 종점역은 동일할 수 없습니다.';
-  }
-
-  return '';
-};
-
-const getLineDistanceErrorMessage = (distance: number) => {
-  if (isNaN(distance)) {
-    return '노선의 거리는 숫자여야 합니다.';
-  }
-  if (distance < 1) {
-    return '노선의 거리는 최소 1km 이상이여야 합니다.';
-  }
-
-  return '';
-};
-
-const getLineColorErrorMessage = (color: string, lines: Line[]) => {
-  if (!color) {
-    return '노선 색상을 선택해주세요.';
-  }
-
-  if (lines.some(line => line.color === color)) {
-    return '이미 노선에 등록된 색상입니다.\n다른 색상을 선택해주세요.';
-  }
-
-  return '';
-};
 
 const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalClose }: Props) => {
   const lineNameErrorMessage = getLineNameErrorMessage(lineInfo.name, lines);

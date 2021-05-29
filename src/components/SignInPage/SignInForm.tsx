@@ -11,24 +11,8 @@ import { loginAsync, selectServer } from '../../modules/user/userReducer';
 import React, { useEffect, useState } from 'react';
 
 import { RootState } from '../../modules';
-import { REGEXP } from '../../constants/regularExpression';
 import useUser from '../../hook/useUser';
-
-const getEmailErrorMessage = (email: string) => {
-  if (!REGEXP.EMAIL.test(email)) {
-    return '이메일 형식이 아닙니다.';
-  }
-
-  return '';
-};
-
-const getPasswordErrorMessage = (password: string) => {
-  if (!(4 <= password.length && password.length <= 20)) {
-    return '비밀번호는 최소 4글자 이상 20글자 이하여야 합니다.';
-  }
-
-  return '';
-};
+import { getEmailErrorMessage, getPasswordErrorMessage } from './SignInForm.validation';
 
 const SignInForm = () => {
   const { serverName, error, accessToken } = useSelector((state: RootState) => state.user);

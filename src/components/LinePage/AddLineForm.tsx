@@ -5,26 +5,10 @@ import Button from '../@commons/Button/Button';
 
 import React, { useEffect, useState } from 'react';
 
-import { REGEXP } from '../../constants/regularExpression';
 import LineModalForm from './LineModalForm';
 import Modal from '../@commons/Modal/Modal';
 import { AddLineRequest, Line, Station } from '../../interfaces';
-
-export const getLineNameErrorMessage = (name: string, lines: Line[]) => {
-  if (!(2 <= name.length && name.length <= 20)) {
-    return '노선 이름은 최소 2글자 이상 20글자 이하여야 합니다.';
-  }
-
-  if (!(REGEXP.KOR.test(name) || REGEXP.NUMBER.test(name))) {
-    return '노선 이름은 한글과 숫자만 입력할 수 있습니다.';
-  }
-
-  if (lines.some(line => line.name === name)) {
-    return '이미 존재하는 노선 이름입니다.';
-  }
-
-  return '';
-};
+import { getLineNameErrorMessage } from './LineModalForm.validation';
 
 interface Props {
   lines: Line[];
