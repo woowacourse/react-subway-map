@@ -162,9 +162,9 @@ const StationPage = () => {
         </Styled.InputContainer>
       </form>
 
-      <Styled.StationsContainer>
+      <Styled.StationsContainer data-testid="station-list">
         {stations?.map((station) => (
-          <Styled.StationItem key={station.id}>
+          <Styled.StationItem key={station.id} data-testid="station-item">
             {station.id === editingStationId ? (
               <Styled.EditingStationForm onSubmit={saveEditForm}>
                 <Styled.EditingStationInput
