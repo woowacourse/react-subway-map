@@ -71,6 +71,8 @@ const SignInForm = () => {
           placeholder='이메일을 입력해주세요'
           name='email'
           onChange={handleChange}
+          borderColor={loginInfo.email && emailErrorMessage ? 'RED_400' : 'GRAY_400'}
+          outLine={loginInfo.email && emailErrorMessage ? 'RED_400' : 'GRAY_700'}
         />
         <S.Message>{loginInfo.email && emailErrorMessage}</S.Message>
       </S.InputWrapper>
@@ -82,11 +84,19 @@ const SignInForm = () => {
           placeholder='비밀번호를 입력해주세요'
           name='password'
           onChange={handleChange}
+          borderColor={loginInfo.password && passwordErrorMessage ? 'RED_400' : 'GRAY_400'}
+          outLine={loginInfo.password && passwordErrorMessage ? 'RED_400' : 'GRAY_700'}
         />
         <S.Message>{loginInfo.password && passwordErrorMessage}</S.Message>
       </S.InputWrapper>
       <S.InputWrapper>
-        <SelectInput initialText='서버를 선택해주세요.' value={serverURL} onChange={handleSelectServer}>
+        <SelectInput
+          initialText='서버를 선택해주세요.'
+          value={serverURL}
+          onChange={handleSelectServer}
+          borderColor={!serverURL ? 'RED_400' : 'GRAY_400'}
+          outLine={!serverURL ? 'RED_400' : 'GRAY_700'}
+        >
           {Object.values(BASE_URL).map(({ name, URL }) => (
             <option key={name} value={URL}>
               {name}

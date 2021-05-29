@@ -8,13 +8,25 @@ export interface Props {
   label?: string;
   placeholder?: string;
   borderColor?: Color;
+  outLine?: Color;
   name?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   value?: string;
 }
 
-const Input = ({ type = 'text', emoji, label, placeholder, borderColor, name, onChange, required, value }: Props) => {
+const Input = ({
+  type = 'text',
+  emoji,
+  label,
+  placeholder,
+  borderColor,
+  outLine,
+  name,
+  onChange,
+  required,
+  value,
+}: Props) => {
   return (
     <S.InputContainer>
       {label && <S.Label>{label}</S.Label>}
@@ -24,6 +36,7 @@ const Input = ({ type = 'text', emoji, label, placeholder, borderColor, name, on
         value={value}
         placeholder={placeholder}
         borderColor={borderColor}
+        outLine={outLine}
         emoji={emoji}
         name={name}
         onChange={onChange}

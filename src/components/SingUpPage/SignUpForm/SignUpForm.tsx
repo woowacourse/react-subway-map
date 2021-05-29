@@ -67,6 +67,8 @@ const SignUpForm = () => {
           name='email'
           onChange={handleChange}
           required={true}
+          borderColor={userInfo.email && emailErrorMessage ? 'RED_400' : 'GRAY_400'}
+          outLine={userInfo.email && emailErrorMessage ? 'RED_400' : 'GRAY_700'}
         />
         <S.Message>{userInfo.email && emailErrorMessage}</S.Message>
       </S.InputWrapper>
@@ -78,6 +80,8 @@ const SignUpForm = () => {
           placeholder='나이를 입력해주세요'
           name='age'
           onChange={handleChange}
+          borderColor={userInfo.age && ageErrorMessage ? 'RED_400' : 'GRAY_400'}
+          outLine={userInfo.age && ageErrorMessage ? 'RED_400' : 'GRAY_700'}
         />
         <S.Message>{userInfo.age && ageErrorMessage}</S.Message>
       </S.InputWrapper>
@@ -90,6 +94,8 @@ const SignUpForm = () => {
           name='password'
           onChange={handleChange}
           required={true}
+          borderColor={userInfo.password && passwordErrorMessage ? 'RED_400' : 'GRAY_400'}
+          outLine={userInfo.password && passwordErrorMessage ? 'RED_400' : 'GRAY_700'}
         />
         <S.Message>{userInfo.password && passwordErrorMessage}</S.Message>
       </S.InputWrapper>
@@ -102,6 +108,8 @@ const SignUpForm = () => {
           name='confirmPassword'
           onChange={handleChange}
           required={true}
+          borderColor={userInfo.confirmPassword && confirmPasswordErrorMessage ? 'RED_400' : 'GRAY_400'}
+          outLine={userInfo.confirmPassword && confirmPasswordErrorMessage ? 'RED_400' : 'GRAY_700'}
         />
         <S.Message>{userInfo.confirmPassword && confirmPasswordErrorMessage}</S.Message>
       </S.InputWrapper>
