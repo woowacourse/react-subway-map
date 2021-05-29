@@ -51,8 +51,8 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
       <LineAddForm onSubmit={handleAddLine}>
         <StyledInputWithAlertText
           isValid={isValidName}
-          invalidText={'노선 이름은 2글자 이상이어야 합니다.'}
-          placeholder="노선 이름"
+          invalidText="노선 이름은 2글자 이상 10글자 이하의 한글이어야 합니다."
+          placeholder="노선 이름 (2-10글자의 한글)"
           value={name}
           onChange={({ target: { value } }) => setName(value)}
         />

@@ -8,6 +8,7 @@ import useLogin from './useLogin';
 import { useState } from 'react';
 import { LineColor, lineColors, LineForm, LineId, StationId } from '../types';
 import useStation from './useStation';
+import { REGEX } from '../constants/validate';
 
 const useLine = () => {
   const [form, setForm] = useState<LineForm>({
@@ -70,7 +71,7 @@ const useLine = () => {
     ? stations.data.filter((station) => station.id !== upStationId)
     : [];
 
-  const isValidName = name.length > 2;
+  const isValidName = REGEX.LINE_NAME.test(name);
 
   const isValidColor = lineColors.includes(color as LineColor);
 
