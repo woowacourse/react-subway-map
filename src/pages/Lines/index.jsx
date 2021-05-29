@@ -1,112 +1,46 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import cx from "classnames";
+import STATUS from "../../constants/status";
 import { useModal } from "../../components/@shared/Modal/hooks";
 import Main from "../../components/@shared/Main";
-import Modal from "../../components/@shared/Modal";
 import Button from "../../components/@shared/Button";
-import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
-import Select from "../../components/@shared/Select";
-import ColorSelect from "../../components/ColorSelect";
-import { useInput } from "../../components/@shared/Input/hooks";
-import { selectStationsList } from "../Stations/slice";
 import Loading from "../../components/@shared/Loading";
-import STATUS from "../../constants/status";
+import LinesList from "../../components/LinesList";
+import LinesModal from "../../components/LinesModal";
 import {
-  addLine,
   fetchLines,
-  deleteLinesById,
   reset,
   selectLinesStatus,
   selectLinesMessage,
   selectLinesList,
 } from "./slice";
-import { useDistanceInput, useLineNameInput } from "./hooks";
 
 const Lines = () => {
   const dispatch = useDispatch();
   const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
-  const [lineName, handleLineNameChange, isValidLineName, resetLineName] =
-    useLineNameInput();
-  const [upStationId, handleUpStationIdChange, , resetUpStationId] = useInput();
-  const [downStationId, handleDownStationIdChange, , resetDownStationId] =
-    useInput();
-  const [distance, handleDistanceChange, isValidDistance, resetDistance] =
-    useDistanceInput();
-  const [color, handleColorChange, , resetColor] = useInput();
-  const stationList = useSelector(selectStationsList);
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);
-  const linesList = useSelector(selectLinesList);
-
-  const isSubmitEnabled = [
-    isValidLineName,
-    upStationId !== "",
-    downStationId !== "",
-    upStationId !== downStationId,
-    isValidDistance,
-    color !== "",
-  ].every(Boolean);
+  const list = useSelector(selectLinesList);
 
   useEffect(() => {
     if (status === STATUS.IDLE) {
       dispatch(fetchLines());
     }
+
+    return () => dispatch(reset());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const resetInput = () => {
-      resetLineName();
-      resetUpStationId();
-      resetDownStationId();
-      resetDistance();
-      resetColor();
-    };
-
     if (status === STATUS.SUCCEED) {
       dispatch(reset());
-      handleModalClose();
-      resetInput();
     }
 
     if (status === STATUS.FAILED) {
       alert(message);
       dispatch(reset());
     }
-  }, [
-    status,
-    message,
-    handleModalClose,
-    dispatch,
-    resetLineName,
-    resetUpStationId,
-    resetDownStationId,
-    resetDistance,
-    resetColor,
-  ]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    dispatch(
-      addLine({
-        lineName,
-        color,
-        upStationId,
-        downStationId,
-        distance,
-      })
-    );
-  };
-
-  const handleDeleteClick = (event) => {
-    const { name: id, value } = event.target;
-
-    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
-      dispatch(deleteLinesById(id));
-    }
-  };
+  }, [status, message, dispatch]);
 
   return (
     <>
@@ -121,92 +55,10 @@ const Lines = () => {
               등록
             </Button>
           </div>
-          {linesList.length > 0 && (
-            <ul className="mt-4">
-              {[...linesList]
-                .reverse()
-                .map(({ id, name, color: lineColor }) => (
-                  <li
-                    key={id}
-                    className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b"
-                  >
-                    <div className="flex items-center">
-                      <span
-                        className={cx(
-                          "block mr-2 w-5 h-5 bg-blue-400 rounded-full",
-                          lineColor
-                        )}
-                      />
-                      <span>{name}</span>
-                    </div>
-                    <Button
-                      type="button"
-                      theme="icon"
-                      size="auto"
-                      name={id}
-                      value={name}
-                      onClick={handleDeleteClick}
-                    >
-                      🗑
-                    </Button>
-                  </li>
-                ))}
-            </ul>
-          )}
+          <LinesList list={list} />
         </section>
       </Main>
-      <Modal close={handleModalClose} isOpen={isModalOpen}>
-        <form
-          className="flex flex-col items-center px-4 py-12 w-144 bg-white rounded-lg shadow-2xl"
-          onSubmit={handleSubmit}
-        >
-          <h2 className="mb-4 pb-6 text-center text-2xl">노선 생성</h2>
-
-          <FloatingLabelInput
-            type="text"
-            id="line-name"
-            label="노선이름"
-            value={lineName}
-            onChange={handleLineNameChange}
-            isValid={isValidLineName}
-          />
-
-          <div className="flex mx-4 my-10 w-full">
-            <Select value={upStationId} onChange={handleUpStationIdChange}>
-              <option hidden>상행종점</option>
-              {stationList.map(({ id, name }) => (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              ))}
-            </Select>
-            <span className="mx-6 text-gray-400 text-3xl">⬌</span>
-            <Select value={downStationId} onChange={handleDownStationIdChange}>
-              <option hidden>하행종점</option>
-              {stationList.map(({ id, name }) => (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              ))}
-            </Select>
-          </div>
-
-          <FloatingLabelInput
-            value={distance}
-            onChange={handleDistanceChange}
-            isValid={isValidDistance}
-            type="text"
-            id="line-distance"
-            label="거리"
-          />
-
-          <ColorSelect value={color} onChange={handleColorChange} />
-
-          <Button type="submit" size="full" disabled={!isSubmitEnabled}>
-            생성
-          </Button>
-        </form>
-      </Modal>
+      <LinesModal close={handleModalClose} isOpen={isModalOpen} />
     </>
   );
 };
