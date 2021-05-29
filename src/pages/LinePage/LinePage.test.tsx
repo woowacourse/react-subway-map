@@ -8,7 +8,6 @@ import { API as lineAPI } from '../../hooks/useLines';
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
 
-const BASE_URL = 'https://subwaybot.n-e.kr';
 const mock_stations = [
   {
     id: 1,
@@ -24,11 +23,7 @@ const mock_stations = [
   },
   {
     id: 4,
-    name: '삼성역',
-  },
-  {
-    id: 5,
-    name: '선릉역',
+    name: '강남역',
   },
 ];
 
@@ -37,19 +32,18 @@ const mock_lines = [
     id: 0,
     name: '피터선',
     color: 'RED',
-    sections: [
+    stations: [
       {
-        id: 0,
-        upStation: {
-          id: 1,
-          name: '잠실역',
-        },
-        downStation: {
-          id: 5,
-          name: '선릉역',
-        },
+        id: 1,
+        name: '잠실역',
         distance: 100,
       },
+      {
+        id: 2,
+        name: '잠실새내역',
+        distance: 100,
+      },
+      { id: 3, name: '종합운동장역' },
     ],
   },
 ];

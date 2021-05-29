@@ -9,7 +9,6 @@ import { API as sectionAPI } from '../../hooks/useSections';
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
 
-const BASE_URL = 'https://subwaybot.n-e.kr';
 const mock_stations = [
   {
     id: 1,
@@ -34,31 +33,18 @@ const mock_lines = [
     id: 0,
     name: '피터선',
     color: 'RED',
-    sections: [
-      {
-        id: 0,
-        upStation: {
-          id: 1,
-          name: '잠실역',
-        },
-        downStation: {
-          id: 2,
-          name: '잠실새내역',
-        },
-        distance: 100,
-      },
+    stations: [
       {
         id: 1,
-        upStation: {
-          id: 2,
-          name: '잠실새내역',
-        },
-        downStation: {
-          id: 3,
-          name: '종합운동장역',
-        },
+        name: '잠실역',
         distance: 100,
       },
+      {
+        id: 2,
+        name: '잠실새내역',
+        distance: 100,
+      },
+      { id: 3, name: '종합운동장역' },
     ],
   },
 ];

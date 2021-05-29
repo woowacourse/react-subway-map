@@ -14,7 +14,11 @@ interface APIReturnTypeLine {
   id: number;
   name: string;
   color: string;
-  sections: APIReturnTypeSection[];
+  stations: {
+    id: number;
+    name: string;
+    distance?: number;
+  }[];
 }
 
 const API = {

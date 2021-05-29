@@ -9,6 +9,11 @@ interface StationData {
 interface APIReturnTypeStation {
   id: number;
   name: string;
+  lines?: {
+    id: number;
+    name: string;
+    color: string;
+  }[];
 }
 
 const API = {

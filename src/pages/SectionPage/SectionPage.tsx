@@ -58,29 +58,10 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
   const currentLine = lines.find((line) => line.id === selectedLineId);
-  const lastStation = currentLine?.sections[currentLine?.sections.length - 1].downStation;
-
-  const stationsInLine: StationInLine[] = (() => {
-    if (currentLine && lastStation) {
-      return [
-        ...currentLine.sections.map((section) => ({
-          id: section.upStation.id,
-          name: section.upStation.name,
-          distance: section.distance,
-        })),
-        {
-          id: lastStation.id,
-          name: lastStation.name,
-        },
-      ];
-    }
-
-    return [];
-  })();
 
   const isOnlyOneStationInCurrentLine = Boolean(
-    Number(stationsInLine.some(({ id }) => id === Number(upStationId))) ^
-      Number(stationsInLine.some(({ id }) => id === Number(downStationId)))
+    Number(currentLine?.stations.some(({ id }) => id === Number(upStationId))) ^
+      Number(currentLine?.stations.some(({ id }) => id === Number(downStationId)))
   );
   const isStationSelectDuplicated = upStationId === downStationId;
 
@@ -206,7 +187,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const onSectionDelete = async (stationId: number, stationName: string) => {
     if (stationId === -1 || stationName === '') return;
 
-    if (currentLine?.sections.length === 1) {
+    if (currentLine?.stations.length === 1) {
       addMessage?.(ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE);
       return;
     }
@@ -326,7 +307,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
         ) : (
           <List position="relative" aria-label="구간 목록">
-            {stationsInLine.map(({ id, name, distance }) => {
+            {currentLine.stations.map(({ id, name, distance }) => {
               return (
                 <li key={id}>
                   <ColorDot size="s" backgroundColor={currentLine.color} />

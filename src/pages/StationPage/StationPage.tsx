@@ -23,46 +23,17 @@ import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants
 
 import useInput from '../../hooks/useInput';
 import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
-import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
 
-import { Container, Form, Text, StationList, LineCategory } from './StationPage.style';
+import { Container, Form, Text, StationList } from './StationPage.style';
 import noStation from '../../assets/images/no_station.png';
 import { PageProps } from '../types';
 
-const getLineStationTable = (lines: APIReturnTypeLine[]) => {
-  return lines.map((line) => ({
-    id: line.id,
-    name: line.name,
-    color: line.color,
-    stations: [
-      ...line.sections.map((section) => section.upStation.id),
-      line.sections[line.sections.length - 1].downStation.id,
-    ],
-  }));
-};
-
-const getProcessedStations = (stations: APIReturnTypeStation[], lines: APIReturnTypeLine[]) => {
-  const lineStationTable = getLineStationTable(lines);
-
-  const result = stations.map(({ id, name }) => {
-    const lineColors = lineStationTable
-      .filter((line) => line.stations.includes(id))
-      .map((line) => line.color);
-
-    return { id, name, lineColors };
-  });
-
-  return result;
-};
-
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+const STATION_BEFORE_FETCH: APIReturnTypeStation[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 
 const StationPage = ({ setIsLoading }: PageProps) => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
   const [stations, setStations, fetchStations, addStation, deleteStation] =
     useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines] = useLines(LINE_BEFORE_FETCH);
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
@@ -74,11 +45,10 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     const timer = setTimeout(() => setIsLoading(true), 500);
 
     try {
-      await Promise.all([fetchStations(), fetchLines()]);
+      await fetchStations();
     } catch (error) {
       console.error(error);
       addMessage?.(ERROR_MESSAGE.DEFAULT);
-      setLines([]);
       setStations([]);
     } finally {
       clearTimeout(timer);
@@ -90,7 +60,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
+  if (stations === STATION_BEFORE_FETCH) {
     return <></>;
   }
 
@@ -204,20 +174,14 @@ const StationPage = ({ setIsLoading }: PageProps) => {
           <img src={noStation} alt="지하철 역 없음 이미지" />
         ) : (
           <StationList aria-label="역 목록">
-            <LineCategory>
-              {getLineStationTable(lines).map(({ id, name, color }) => (
-                <div key={id}>
-                  <ColorDot key={color} size="s" backgroundColor={color} />
-                  <span>{name}</span>
-                </div>
-              ))}
-            </LineCategory>
-            {getProcessedStations(stations, lines).map(({ id, name, lineColors }) => (
+            {stations.map(({ id, name, lines }) => (
               <li key={id}>
                 <p>
                   {name}
-                  {lineColors.map((color) => (
-                    <ColorDot key={color} size="s" backgroundColor={color} />
+                  {lines?.map(({ id, name, color }) => (
+                    <ColorDot key={id} size="s" backgroundColor={color}>
+                      {name}
+                    </ColorDot>
                   ))}
                 </p>
 

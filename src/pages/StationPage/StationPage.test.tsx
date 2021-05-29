@@ -3,54 +3,25 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 
 import StationPage from './StationPage';
 import { API as stationAPI } from '../../hooks/useStations';
-import { API as lineAPI } from '../../hooks/useLines';
 
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
 
-const BASE_URL = 'https://subwaybot.n-e.kr';
 const mock_stations = [
   {
     id: 1,
     name: '잠실역',
+    lines: [{ id: 1, name: '안녕', color: 'RED' }],
   },
   {
     id: 2,
     name: '잠실새내역',
+    lines: [{ id: 2, name: '1호선', color: 'MALCHA' }],
   },
   {
     id: 3,
     name: '종합운동장역',
-  },
-  {
-    id: 4,
-    name: '삼성역',
-  },
-  {
-    id: 5,
-    name: '선릉역',
-  },
-];
-
-const mock_lines = [
-  {
-    id: 0,
-    name: '피터선',
-    color: 'RED',
-    sections: [
-      {
-        id: 0,
-        upStation: {
-          id: 1,
-          name: '잠실역',
-        },
-        downStation: {
-          id: 5,
-          name: '선릉역',
-        },
-        distance: 100,
-      },
-    ],
+    lines: [],
   },
 ];
 
@@ -66,10 +37,6 @@ describe('사용자는 지하철 역 관리 기능을 이용할 수 있다.', ()
     stationAPI.post = jest.fn();
     stationAPI.delete = jest.fn();
 
-    lineAPI.get = jest.fn().mockImplementation(() => {
-      return mock_lines;
-    });
-
     localStorage.setItem(
       'accessToken',
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjIyMDMzMjkxLCJleHAiOjE2MjIwMzY4OTF9.-M7TyMMvXk-y5-kIoPP4crTt6Nnvv8ubREKKZjO5d7A'
@@ -82,7 +49,6 @@ describe('사용자는 지하철 역 관리 기능을 이용할 수 있다.', ()
     );
 
     await waitFor(() => expect(stationAPI.get).toBeCalled());
-    await waitFor(() => expect(lineAPI.get).toBeCalled());
   });
 
   afterEach(() => {});
