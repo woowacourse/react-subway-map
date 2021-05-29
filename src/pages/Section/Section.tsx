@@ -12,7 +12,8 @@ import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
 
 import { SectionState } from '../../interfaces/section';
-import { LINE, MESSAGE, ROUTE } from '../../constants/constant';
+import { LINE, MESSAGE } from '../../constants/constant';
+import { ROUTE } from '../../constants/api';
 
 const getSectionStations = (lineSection: SectionState['lineSection']) => {
   if (!lineSection?.sections) return [];

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { COLOR } from '../../../constants/styleConstant';
+import { COLOR } from '../../../constants/style';
 import { Props } from './Button';
 
 const CircleButtonStyle = css`

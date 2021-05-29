@@ -3,7 +3,7 @@ import Navigation from './components/@commons/Navigation/Navigation';
 import * as S from './App.styles';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
-import { ROUTE } from './constants/constant';
+import { ROUTE } from './constants/api';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Station from './pages/Station/Station';

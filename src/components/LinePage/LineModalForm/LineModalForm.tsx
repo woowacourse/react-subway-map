@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './LineModalForm.styles';
-import { PALETTE } from '../../../constants/styleConstant';
+import { PALETTE } from '../../../constants/style';
 import { LineInfoState, LineState } from '../../../interfaces/line';
 import { StationState } from '../../../interfaces/station';
 

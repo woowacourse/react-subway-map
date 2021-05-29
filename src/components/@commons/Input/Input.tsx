@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color } from '../../../constants/styleType';
+import { Color } from '../../../constants/style';
 import * as S from './Input.styles';
 
 export interface Props {

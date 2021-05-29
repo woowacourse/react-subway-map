@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { COLOR, SIZE } from '../../../constants/styleConstant';
+import { COLOR, SIZE } from '../../../constants/style';
 
 export const ModalWrapper = styled.div`
   padding: 2rem;

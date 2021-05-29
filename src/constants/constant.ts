@@ -1,23 +1,3 @@
-export const ROUTE = {
-  HOME: '/',
-  SIGN_IN: '/signin',
-  SIGN_UP: '/signup',
-  STATION: '/station',
-  LINE: '/line',
-  SECTION: '/section',
-};
-
-export const BASE_URL = {
-  ROOT: { name: '루트', URL: 'https://junroot.kro.kr' },
-  CHUNSIK: { name: '춘식', URL: 'https://choonsik.n-e.kr' },
-  SAKJEONG: { name: '삭정', URL: 'https://sakjung-subway.kro.kr' },
-  SONNEOJAL: { name: '손너잘', URL: 'https://bperhaps.p-e.kr' },
-};
-
-export const SERVER = {
-  URL: '',
-};
-
 export const STATION = {
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 20,
@@ -93,4 +73,10 @@ export const MESSAGE = {
     RESPONSE: '요청에 성공했습니다.',
     SIGN_UP: '회원가입에 성공하였습니다!',
   },
+};
+
+export const REGEXP = {
+  KOR: /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/,
+  NUMBER: /[0-9]/,
+  EMAIL: /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/,
 };

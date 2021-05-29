@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddStationForm from '../../components/StationPage/AddStationForm/AddStationForm';
 import StationListItem from '../../components/StationPage/StationListItem/StationListItem';
-import { ROUTE } from '../../constants/constant';
+import { ROUTE } from '../../constants/api';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
 

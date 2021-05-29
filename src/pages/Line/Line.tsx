@@ -6,7 +6,7 @@ import ContentContainer from '../../components/@commons/ContentContainer/Content
 import AddLineForm from '../../components/LinePage/AddLineForm/AddLineForm';
 import LineListItem from '../../components/LinePage/LineListItem/LineListItem';
 
-import { ROUTE } from '../../constants/constant';
+import { ROUTE } from '../../constants/api';
 import useStation from '../../hook/useStation';
 import useLine from '../../hook/useLine';
 import useUser from '../../hook/useUser';

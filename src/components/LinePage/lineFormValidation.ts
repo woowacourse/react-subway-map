@@ -1,5 +1,5 @@
 import { LineState } from '../../interfaces/line';
-import { REGEXP } from '../../constants/regularExpression';
+import { REGEXP } from '../../constants/constant';
 import { LINE, MESSAGE, SECTION } from '../../constants/constant';
 
 export const getLineNameErrorMessage = (name: string, lines: LineState['lines']) => {

@@ -1,5 +1,5 @@
 import { AUTH, MESSAGE } from '../../constants/constant';
-import { REGEXP } from '../../constants/regularExpression';
+import { REGEXP } from '../../constants/constant';
 
 export const getEmailErrorMessage = (email: string) => {
   if (!REGEXP.EMAIL.test(email)) {

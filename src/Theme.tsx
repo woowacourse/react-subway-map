@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { MAIN_COLOR } from './constants/styleConstant';
+import { MAIN_COLOR } from './constants/style';
 import { RootState } from './modules';
 
 interface Props {

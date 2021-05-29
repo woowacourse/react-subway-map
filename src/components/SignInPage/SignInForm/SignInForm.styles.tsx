@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { COLOR } from '../../../constants/styleConstant';
+import { COLOR } from '../../../constants/style';
 import { Link } from 'react-router-dom';
 
 export const SignInForm = styled.form`

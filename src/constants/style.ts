@@ -1,4 +1,6 @@
-import { BASE_URL } from './constant';
+import { BASE_URL } from './api';
+
+export type Color = keyof typeof COLOR;
 
 export const COLOR = {
   TRANSPARENT: 'transparent',

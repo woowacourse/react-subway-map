@@ -1,4 +1,4 @@
-import { Color } from '../../../constants/styleType';
+import { Color } from '../../../constants/style';
 import * as S from './SelectInput.styles';
 
 export interface Props {

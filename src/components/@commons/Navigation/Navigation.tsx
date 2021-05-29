@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ROUTE } from '../../../constants/constant';
+import { ROUTE } from '../../../constants/api';
 import { RootState } from '../../../modules';
 import * as S from './Navigation.styles';
 

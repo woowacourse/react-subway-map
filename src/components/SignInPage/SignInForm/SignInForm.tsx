@@ -9,7 +9,7 @@ import Button from '../../@commons/Button/Button';
 import SelectInput from '../../@commons/SelectInput/SelectInput';
 import Input from '../../@commons/Input/Input';
 
-import { BASE_URL, ROUTE, SERVER } from '../../../constants/constant';
+import { BASE_URL, ROUTE, SERVER } from '../../../constants/api';
 import { RootState } from '../../../modules';
 import { loginAsync, selectServer } from '../../../modules/user/userReducer';
 

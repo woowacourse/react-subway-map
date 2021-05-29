@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { SIZE } from '../../../constants/styleConstant';
+import { SIZE } from '../../../constants/style';
 import { Props } from './ContentContainer';
 
 export const ContentContainer = styled.section<Props>`

@@ -1,6 +1,6 @@
 import { Redirect } from 'react-router';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
-import { ROUTE } from '../../constants/constant';
+import { ROUTE } from '../../constants/api';
 import useUser from '../../hook/useUser';
 import * as S from './Home.styles';
 

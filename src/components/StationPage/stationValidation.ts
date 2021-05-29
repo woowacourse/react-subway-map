@@ -1,5 +1,5 @@
 import { MESSAGE, STATION } from '../../constants/constant';
-import { REGEXP } from '../../constants/regularExpression';
+import { REGEXP } from '../../constants/constant';
 import { StationState } from '../../interfaces/station';
 
 export const getStationNameErrorMessage = (name: string, stations: StationState['stations']) => {

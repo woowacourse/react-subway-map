@@ -7,7 +7,8 @@ import userSVG from '../../../assets/svg/user.svg';
 import lockSVG from '../../../assets/svg/lock.svg';
 import Button from '../../@commons/Button/Button';
 import Input from '../../@commons/Input/Input';
-import { BASE_URL, MESSAGE, ROUTE } from '../../../constants/constant';
+import { BASE_URL, ROUTE } from '../../../constants/api';
+import { MESSAGE } from '../../../constants/constant';
 import { authAPI } from '../../../api/auth';
 import {
   getAgeErrorMessage,

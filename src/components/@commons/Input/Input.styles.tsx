@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Props } from './Input';
-import { COLOR } from '../../../constants/styleConstant';
+import { COLOR } from '../../../constants/style';
 
 type InputProps = Omit<Props, 'type' | 'label'>;
 
