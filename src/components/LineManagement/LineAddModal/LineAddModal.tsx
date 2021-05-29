@@ -19,8 +19,6 @@ export interface LineAddModalProps {
 }
 
 const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
-  const { stations } = useStation();
-
   const {
     name,
     color,
@@ -36,7 +34,9 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     isValidName,
     isValidForm,
     isSelectedUpStation,
+    availableDownStations,
   } = useLine();
+  const { stations } = useStation();
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,12 +88,11 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
               하행역
             </option>
             <Suspense fallback={true}>
-              {stations &&
-                (stations.data as Station[]).map((station) => (
-                  <option key={station.id} value={station.id}>
-                    {station.name}
-                  </option>
-                ))}
+              {availableDownStations.map((station) => (
+                <option key={station.id} value={station.id}>
+                  {station.name}
+                </option>
+              ))}
             </Suspense>
           </SelectBox>
         </StyledContainer>

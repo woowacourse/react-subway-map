@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import useLogin from './useLogin';
 import { useState } from 'react';
 import { LineColor, lineColors, LineForm, LineId, StationId } from '../types';
+import useStation from './useStation';
 
 const useLine = () => {
   const [form, setForm] = useState<LineForm>({
@@ -19,6 +20,7 @@ const useLine = () => {
   const { name, color, upStationId, downStationId, distance } = form;
 
   const { accessToken } = useLogin();
+  const { stations } = useStation();
   const queryClient = useQueryClient();
   const lines = useQuery('requestLines', () => requestLines(accessToken));
   const addLineMutation = useMutation(() => requestAddLine(form, accessToken), {
@@ -64,6 +66,10 @@ const useLine = () => {
     deleteLineMutation.mutate(lineId);
   };
 
+  const availableDownStations = stations.isSuccess
+    ? stations.data.filter((station) => station.id !== upStationId)
+    : [];
+
   const isValidName = name.length > 2;
 
   const isValidColor = lineColors.includes(color as LineColor);
@@ -99,6 +105,7 @@ const useLine = () => {
     isValidColor,
     isValidForm,
     isSelectedUpStation,
+    availableDownStations,
   };
 };
 
