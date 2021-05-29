@@ -1,3 +1,5 @@
-const koreanAndNumber = /^[가-힣0-9]+$/;
+const REGEX = {
+  ONLY_KOREAN_AND_NUMBER: /^[가-힣0-9]+$/,
+};
 
-export default { koreanAndNumber };
+export default REGEX;

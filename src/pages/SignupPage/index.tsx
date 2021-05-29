@@ -10,14 +10,12 @@ import Loading from 'components/shared/Loading/Loading';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
 import { ButtonSize, ButtonType } from 'types';
-import ROUTE from 'constants/routes';
-import { API_STATUS, END_POINT } from 'constants/api';
-import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
 import userImg from 'assets/user.png';
 import Styled from './styles';
 import useFetch from 'hooks/useFetch';
+import { ALERT_MESSAGE, API_STATUS, END_POINT, NOTIFICATION, ROUTE } from '../../constants';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();

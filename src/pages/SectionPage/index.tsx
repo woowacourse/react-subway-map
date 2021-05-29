@@ -9,12 +9,10 @@ import SectionModal from 'components/SectionModal/SectionModal';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import deleteIcon from 'assets/delete.png';
-import { API_STATUS, END_POINT } from 'constants/api';
-import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
-import ROUTE from 'constants/routes';
 import { Line, Station, User } from 'types';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
+import { ALERT_MESSAGE, API_STATUS, CONFIRM_MESSAGE, END_POINT, ROUTE } from '../../constants';
 
 const SectionPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);

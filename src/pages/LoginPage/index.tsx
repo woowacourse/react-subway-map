@@ -7,17 +7,15 @@ import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
-import ROUTE from 'constants/routes';
-import { API_STATUS, END_POINT } from 'constants/api';
-import { ALERT_MESSAGE } from 'constants/messages';
 import { ButtonSize, ButtonType } from 'types';
-import Styled from './styles';
 import { requestGetUser } from 'modules/authSlice';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
+import { ALERT_MESSAGE, API_STATUS, END_POINT, ROUTE } from '../../constants';
 import useFetch from 'hooks/useFetch';
+import Styled from './styles';
 
 const LoginPage = () => {
   const history = useHistory();

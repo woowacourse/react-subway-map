@@ -11,10 +11,8 @@ import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Line, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
-import { API_STATUS, END_POINT } from 'constants/api';
-import { ALERT_MESSAGE, CONFIRM_MESSAGE } from 'constants/messages';
-import ROUTE from 'constants/routes';
 import useFetch from 'hooks/useFetch';
+import { ALERT_MESSAGE, API_STATUS, CONFIRM_MESSAGE, END_POINT, ROUTE } from '../../constants';
 import Styled from './styles';
 
 const LinePage = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAppSelector } from 'modules/hooks';
 import { User } from 'types';
-import Styled from './styles';
 import sandwich from 'assets/sandwich.png';
 import cookie from 'assets/cookie.png';
+import Styled from './styles';
 
 const LandingPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);

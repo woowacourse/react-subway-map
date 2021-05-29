@@ -5,12 +5,11 @@ import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Line, Station } from 'types';
-import LINE_COLORS from 'constants/lineColors';
 import { API_STATUS, END_POINT } from 'constants/api';
-import regex from 'constants/regex';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import useFetch from 'hooks/useFetch';
 import Styled from './LineModal.styles';
+import { LINE_COLORS, REGEX } from '../../constants';
 
 interface Props {
   stations: Station[] | undefined;
@@ -45,7 +44,7 @@ const LineModal = ({
   const stationOptions = stations.map((station) => ({ id: station.id, value: station.name }));
 
   const validateLineName = () => {
-    const isValidLineName = regex.koreanAndNumber.test(name);
+    const isValidLineName = REGEX.ONLY_KOREAN_AND_NUMBER.test(name);
 
     if (!isValidLineName) {
       setMessageValid(false);

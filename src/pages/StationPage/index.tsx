@@ -12,12 +12,17 @@ import { ButtonType, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
 import editIcon from 'assets/edit.png';
 import saveIcon from 'assets/enter.png';
-import { API_STATUS, END_POINT } from 'constants/api';
-import regex from 'constants/regex';
-import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
-import ROUTE from 'constants/routes';
+import {
+  ROUTE,
+  REGEX,
+  END_POINT,
+  API_STATUS,
+  ALERT_MESSAGE,
+  CONFIRM_MESSAGE,
+  NOTIFICATION,
+} from '../../constants';
 
 const StationPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
@@ -40,7 +45,8 @@ const StationPage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const isValidStationName = (stationName: string) => regex.koreanAndNumber.test(stationName);
+  const isValidStationName = (stationName: string) =>
+    REGEX.ONLY_KOREAN_AND_NUMBER.test(stationName);
 
   const getStations = async () => {
     const res = await getStationsAsync(END_POINT.STATIONS);
