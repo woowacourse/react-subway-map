@@ -15,9 +15,9 @@ import saveIcon from 'assets/enter.png';
 import { API_STATUS, END_POINT } from 'constants/api';
 import regex from 'constants/regex';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
+import ROUTE from 'constants/routes';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
-import ROUTE from 'constants/routes';
 
 const StationPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
@@ -162,36 +162,38 @@ const StationPage = () => {
         </Styled.InputContainer>
       </form>
 
-      <Styled.StationsContainer>
+      <Styled.StationsContainer data-testid="station-list">
         {stations?.map((station) => (
-          <Styled.StationItem key={station.id}>
-            {station.id === editingStationId ? (
-              <Styled.EditingStationForm onSubmit={saveEditForm}>
-                <Styled.EditingStationInput
-                  ref={inputRef}
-                  value={editingStationName}
-                  onChange={(e) => setEditingStationName(e.target.value)}
-                  minLength={2}
-                  maxLength={20}
-                ></Styled.EditingStationInput>
-                <IconButton type="submit">
-                  <Styled.Icon src={saveIcon} alt="save" />
-                </IconButton>
-              </Styled.EditingStationForm>
-            ) : (
-              <>
-                {station.name}
-                <Styled.ButtonsContainer>
-                  <IconButton onClick={() => editStation(station)}>
-                    <Styled.Icon src={editIcon} alt="edit" />
+          <li key={station.id} data-testid="station-item">
+            <Styled.StationItem>
+              {station.id === editingStationId ? (
+                <Styled.EditingStationForm onSubmit={saveEditForm}>
+                  <Styled.EditingStationInput
+                    ref={inputRef}
+                    value={editingStationName}
+                    onChange={(e) => setEditingStationName(e.target.value)}
+                    minLength={2}
+                    maxLength={20}
+                  ></Styled.EditingStationInput>
+                  <IconButton type="submit">
+                    <Styled.Icon src={saveIcon} alt="save" />
                   </IconButton>
-                  <IconButton onClick={() => deleteStation(station.id)}>
-                    <Styled.Icon src={deleteIcon} alt="delete" />
-                  </IconButton>
-                </Styled.ButtonsContainer>
-              </>
-            )}
-          </Styled.StationItem>
+                </Styled.EditingStationForm>
+              ) : (
+                <>
+                  {station.name}
+                  <Styled.ButtonsContainer>
+                    <IconButton onClick={() => editStation(station)}>
+                      <Styled.Icon src={editIcon} alt="edit" />
+                    </IconButton>
+                    <IconButton onClick={() => deleteStation(station.id)}>
+                      <Styled.Icon src={deleteIcon} alt="delete" />
+                    </IconButton>
+                  </Styled.ButtonsContainer>
+                </>
+              )}
+            </Styled.StationItem>
+          </li>
         ))}
       </Styled.StationsContainer>
     </CardLayout>
