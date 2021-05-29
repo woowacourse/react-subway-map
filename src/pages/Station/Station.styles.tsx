@@ -13,7 +13,7 @@ export const StationList = styled.ul`
   & > li:not(:last-child) {
     border-bottom: 1px solid ${COLOR.GRAY_300};
   }
-  max-height: 30rem;
+  max-height: 35rem;
   overflow-y: auto;
   ::-webkit-scrollbar {
     width: 0.5rem;

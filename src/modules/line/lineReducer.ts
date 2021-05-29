@@ -10,7 +10,7 @@ export interface AddLinePayload {
 }
 
 export interface DeleteLinePayload {
-  id: number;
+  id: Line['id'];
 }
 
 export interface ErrorPayload {

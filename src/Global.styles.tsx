@@ -17,6 +17,21 @@ const globalStyles = css`
     font-family: 'Noto Sans KR', sans-serif;
     color: ${COLOR.TEXT_COLOR};
   }
+  @media screen and (max-width: 1280px) {
+    html {
+      font-size: 14px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    html {
+      font-size: 12px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    html {
+      font-size: 8px;
+    }
+  }
 
   input {
     border-style: solid;
