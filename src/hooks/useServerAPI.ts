@@ -30,8 +30,8 @@ const useServerAPI = <T>(
   const [data, setData] = useState<T | null>();
   const [allData, setAllData] = useState<T[] | null>();
 
-  const [getAllDataResponse, setGetAllDataResponse] = useState<IResMeta | null>(null);
   const [getDataResponse, setGetDataResponse] = useState<IResMeta | null>(null);
+  const [getAllDataResponse, setGetAllDataResponse] = useState<IResMeta | null>(null);
   const [postDataResponse, setPostDataResponse] = useState<IResMeta | null>(null);
   const [deleteDataResponse, setDeleteDataResponse] = useState<IResMeta | null>(null);
   const [putDataResponse, setPutDataResponse] = useState<IResMeta | null>(null);
@@ -130,17 +130,6 @@ const useServerAPI = <T>(
       });
     }
   };
-
-  useEffect(
-    () => () => {
-      setGetAllDataResponse(null);
-      setGetDataResponse(null);
-      setPostDataResponse(null);
-      setDeleteDataResponse(null);
-      setPutDataResponse(null);
-    },
-    [],
-  );
 
   useEffect(() => {
     if (getAllDataResponse?.isError === true) {
