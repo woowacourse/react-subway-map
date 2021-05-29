@@ -79,6 +79,75 @@ export const handlers = [
     );
   }),
   rest.delete(`${BACKEND[CREWS.DANYEE].baseUrl}/lines/:id`, (req, res, ctx) => {
-    return res(ctx.status(204));
+    return res(
+      ctx.status(204),
+      ctx.json({
+        status: 204,
+        message: MESSAGE.SUCCESS.LINE_DELETED,
+      })
+    );
+  }),
+
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/lines/:id/sections`, (req, res, ctx) => {
+    const lineId = Number(req.params.id);
+    const { upStationId, downStationId, distance } = req.body;
+
+    const targetLine = LINE_LIST.find((line) => line.id === lineId);
+    if (!targetLine)
+      return res(
+        ctx.status(404),
+        ctx.json({ status: 404, message: MESSAGE.ERROR.LINE_NOT_EXISTS })
+      );
+
+    const upStation = targetLine.stations.find((station) => station.id === upStationId);
+    const downStation = targetLine.stations.find((station) => station.id === downStationId);
+
+    if (upStation && downStation)
+      return res(
+        ctx.status(400),
+        ctx.json({ status: 404, message: MESSAGE.ERROR.STATIONS_ALREADY_CONTAINS })
+      );
+    if (!upStation && !downStation)
+      return res(
+        ctx.status(400),
+        ctx.json({
+          status: 404,
+          message: MESSAGE.ERROR.REQUIRE_CONNECT_STATION,
+        })
+      );
+
+    return res(ctx.status(201), ctx.json({ upStationId, downStationId, distance }));
+  }),
+  rest.delete(`${BACKEND[CREWS.DANYEE].baseUrl}/lines/:id/sections`, (req, res, ctx) => {
+    const stationId = Number(req.url.searchParams.get('stationId'));
+    const lineId = Number(req.params.id);
+
+    const targetLine = LINE_LIST.find((line) => line.id === lineId);
+    if (!targetLine)
+      return res(
+        ctx.status(404),
+        ctx.json({
+          status: 404,
+          message: MESSAGE.ERROR.LINE_NOT_EXISTS,
+        })
+      );
+
+    const targetStation = targetLine.stations.find((station) => station.id === stationId);
+    if (!targetStation)
+      return res(
+        ctx.status(404),
+        ctx.json({
+          status: 404,
+          message: MESSAGE.ERROR.DELETE_STATION_NOT_EXISTS,
+        })
+      );
+
+    return res(
+      ctx.status(204),
+      ctx.json({
+        status: 204,
+        message: MESSAGE.SUCCESS.SECTION_DELETED,
+      })
+    );
   }),
 ];
