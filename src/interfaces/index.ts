@@ -1,40 +1,3 @@
-// export interface StationLines {
-//   id: number;
-//   name: string;
-//   color: string;
-// }
-
-// export interface Station {
-//   id: number;
-//   name: string;
-//   lines: StationLines[];
-// }
-
-export interface Line {
-  id: number;
-  name: string;
-  color: string;
-}
-
-export interface AddLine {
-  name: string;
-  color: string;
-  upStationId: string;
-  downStationId: string;
-  distance: string;
-}
-
-interface LineSectionTransferLine {
-  id: number;
-  name: string;
-  color: string;
-}
-interface LineSectionStation {
-  id: number;
-  name: string;
-  transferLines: LineSectionTransferLine[];
-}
-
 interface Section {
   upStation: {
     id: number;
@@ -45,6 +8,16 @@ interface Section {
     name: string;
   };
   distance: number;
+}
+
+interface LineSectionStation {
+  id: number;
+  name: string;
+  transferLines: {
+    id: number;
+    name: string;
+    color: string;
+  }[];
 }
 export interface LineSection {
   id: number;

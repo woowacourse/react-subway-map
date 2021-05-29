@@ -15,25 +15,7 @@ export interface StationState {
   error: string;
 }
 
-// sga
-export interface GetStationResult {
-  error: StationState['error'];
-  stations: StationState['stations'];
-}
-
-export interface AddStationResult {
-  error: StationState['error'];
-  station: {
-    id: number;
-    name: string;
-  };
-}
-
-export interface DeleteStationResult {
-  error: StationState['error'];
-}
-
-// Action
+// action
 export interface SetStationAction {
   type: typeof setStations;
   payload: {
@@ -60,4 +42,22 @@ export interface ErrorAction {
   payload: {
     error: string;
   };
+}
+
+// responseResult
+export interface GetStationResult {
+  error: StationState['error'];
+  stations: StationState['stations'];
+}
+
+export interface AddStationResult {
+  error: StationState['error'];
+  station: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface DeleteStationResult {
+  error: StationState['error'];
 }

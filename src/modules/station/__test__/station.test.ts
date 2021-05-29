@@ -1,11 +1,10 @@
 import { call, select } from '@redux-saga/core/effects';
 import { expectSaga } from 'redux-saga-test-plan';
-import { stationAPI } from '../../../api/station';
-import { addStationAsync, deleteStationAsync, error, pending, setStations } from '../stationReducer';
-import { getStationsSaga, addStationSaga, selectStations, deleteStationSaga } from '../stationSaga';
-
-import stationReducer from '../stationReducer';
 import { mockAddedStations, mockErrorMessage, mockNewStation, mockStations } from './station.data';
+
+import { stationAPI } from '../../../api/station';
+import { getStationsSaga, addStationSaga, selectStations, deleteStationSaga } from '../stationSaga';
+import stationReducer, { addStationAsync, deleteStationAsync, error, pending, setStations } from '../stationReducer';
 
 it('지하철 역 목록을 성공적으로 불러온다.', async () => {
   return expectSaga(getStationsSaga)
