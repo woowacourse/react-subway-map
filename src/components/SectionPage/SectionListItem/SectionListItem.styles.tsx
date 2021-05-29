@@ -16,6 +16,7 @@ export const SectionListItem = styled.li`
 
 export const Name = styled.div<NameProp>`
   width: fit-content;
+
   margin-right: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 3rem;
@@ -25,6 +26,8 @@ export const Name = styled.div<NameProp>`
 export const NameWrapper = styled.div`
   display: flex;
   align-items: center;
+  max-width: 90%;
+  overflow: auto;
 `;
 
 export const Distance = styled.div`

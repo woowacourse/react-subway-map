@@ -19,16 +19,12 @@ export const InputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 export const ButtonWrapper = styled.div`
-  position: absolute;
-  right: -1.5rem;
-  bottom: -6.5rem;
-  margin-left: 2rem;
-  width: 5rem;
-  height: 5rem;
-  font-size: 2rem;
+  width: 100%;
+  height: 3rem;
 `;
 
 export const Message = styled.div`

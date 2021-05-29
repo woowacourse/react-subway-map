@@ -42,8 +42,8 @@ const AddSectionForm = ({ onChange, lineSection, lines, stations, addSection }: 
         </SelectInput>
       </S.InputWrapper>
       <S.ButtonWrapper>
-        <Button shape='CIRCLE' type='button' onClick={handleModalOpen}>
-          +
+        <Button type='button' onClick={handleModalOpen}>
+          구간추가
         </Button>
       </S.ButtonWrapper>
       {isModalOpen && (
