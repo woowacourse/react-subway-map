@@ -13,7 +13,7 @@ export const SectionListItem = (props) => {
         <Flex>
           <Name>{section.name}</Name>
           {section.transferLines?.map((line) => (
-            <ColorBox content={line.name[0]} bgColor={line.color}></ColorBox>
+            <ColorBox key={line.color} content={line.name[0]} bgColor={line.color}></ColorBox>
           ))}
         </Flex>
         <Button onClick={(e) => onClick(e, section.id)}>

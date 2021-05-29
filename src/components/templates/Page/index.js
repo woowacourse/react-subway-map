@@ -7,6 +7,7 @@ import { useCookies } from 'react-cookie';
 import { logout } from '../../../redux/userSlice';
 import { clearStation } from '../../../redux/stationSlice';
 import { clearLine } from '../../../redux/lineSlice';
+import { clearMap } from '../../../redux/mapSlice';
 import { NavBar, ServerSelect } from '../..';
 import { Header, ServerSelectButton, Main } from './style';
 import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from '../../../constants';
@@ -37,6 +38,7 @@ export const Page = (props) => {
     removeCookie(ACCESS_TOKEN);
     dispatch(clearLine());
     dispatch(clearStation());
+    dispatch(clearMap());
 
     setIsServerSelectOpen(false);
     history.push(ROUTE.LOGIN);

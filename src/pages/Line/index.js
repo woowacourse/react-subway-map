@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import { useSnackbar } from 'notistack';
 
 import { getStations } from '../../redux/stationSlice';
 import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
@@ -9,7 +10,6 @@ import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/li
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
-import { useSnackbar } from 'notistack';
 import { COLOR, ACCESS_TOKEN, LINE } from '../../constants';
 
 export const LinePage = (props) => {
