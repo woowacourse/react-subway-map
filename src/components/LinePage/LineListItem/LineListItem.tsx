@@ -2,7 +2,7 @@ import * as S from './LineListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
 
-export interface Props {
+interface Props {
   name: string;
   id: number;
   color: string;

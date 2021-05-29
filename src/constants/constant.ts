@@ -17,6 +17,14 @@ export const BASE_URL = {
 export const SERVER = {
   URL: '',
 };
+export const LINE = {
+  NAME_MIN_LENGTH: 2,
+  NAME_MAX_LENGTH: 20,
+};
+
+export const SECTION = {
+  DISTANCE: 1,
+};
 
 export const MESSAGE = {
   ERROR: {
@@ -42,14 +50,15 @@ export const MESSAGE = {
       LOAD_FAILED: '구간 정보를 불러오는데 실패했습니다...!',
       ADD_FAILED: '구간을 추가하는데 실패했습니다...!',
       DELETE_FAILED: '구간을 삭제하는데 실패했습니다...!',
+      SHOULD_CHOOSE_STATION: '상행 종점역과 하행 종점역을 선택해주세요.',
+      SAME_STATIONS: '상행 종점역과 하행 종점역은 동일할 수 없습니다.',
+      DISTANCE_NOT_A_NUMBER: '노선의 거리는 숫자여야 합니다.',
+      INVALID_DISTANCE: `노선의 거리는 최소 ${SECTION.DISTANCE}km 이상이여야 합니다.`,
+      SHOULD_CHOOSE_COLOR: '노선 색상을 선택해주세요.',
+      REGISTERED_COLOR: '이미 노선에 등록된 색상입니다.\n다른 색상을 선택해주세요.',
     },
   },
   SUCCESS: {
     RESPONSE: '요청에 성공했습니다.',
   },
-};
-
-export const LINE = {
-  NAME_MIN_LENGTH: 2,
-  NAME_MAX_LENGTH: 20,
 };

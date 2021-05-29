@@ -6,11 +6,11 @@ import Button from '../../@commons/Button/Button';
 import Input from '../../@commons/Input/Input';
 import Modal from '../../@commons/Modal/Modal';
 
-import LineModalForm from '../LineModalForm';
+import LineModalForm from '../LineModalForm/LineModalForm';
 import { StationState } from '../../../interfaces/station';
 import { AddLineAction, LineState } from '../../../interfaces/line';
 
-import { getLineNameErrorMessage } from './addLineFormValidation';
+import { getLineNameErrorMessage } from '../lineFormValidation';
 
 interface Props {
   lines: LineState['lines'];

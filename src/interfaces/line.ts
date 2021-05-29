@@ -7,6 +7,13 @@ interface LineLinesState {
   color: string;
 }
 
+export interface LineInfoState {
+  name: string;
+  color: string;
+  upStationId: string;
+  downStationId: string;
+  distance: string;
+}
 export interface LineState {
   lines: LineLinesState[];
   error: string;
@@ -23,13 +30,7 @@ export interface SetLineAction {
 export interface AddLineAction {
   type: typeof addLineAsync;
   payload: {
-    line: {
-      name: string;
-      color: string;
-      upStationId: string;
-      downStationId: string;
-      distance: string;
-    };
+    line: LineInfoState;
   };
 }
 
