@@ -30,6 +30,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     setCurrentLineId,
     addSection,
     isValidForm,
+    isSelectedUpStation,
   } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
@@ -46,13 +47,11 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
       <Title>구간 추가</Title>
       <form onSubmit={onAddSection} style={{ width: '100%' }}>
         <SectionSelectBox
+          placeholder="노선 선택"
           value={currentLineId}
           defaultValue="-1"
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
-          <option value={-1} selected hidden>
-            노선 선택
-          </option>
           <Suspense fallback={true}>
             {(lines.data as Line[]).map(({ id, name }) => (
               <option key={id} value={id}>
@@ -64,13 +63,11 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
 
         <Container>
           <SectionSelectBox
+            placeholder="상행역"
             value={upStationId}
             defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option value={-1} disabled selected hidden>
-              상행역
-            </option>
             <Suspense fallback={true}>
               {(stations.data as Station[]).map(({ id, name }) => (
                 <option key={id} value={id}>
@@ -80,12 +77,12 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
             </Suspense>
           </SectionSelectBox>
           <SectionSelectBox
+            placeholder="하행역"
             value={downStationId}
+            defaultValue={-1}
             onChange={({ target }) => setDownStationId(Number(target.value))}
+            disabled={!isSelectedUpStation}
           >
-            <option defaultValue="하행역" disabled selected hidden>
-              하행역
-            </option>
             <Suspense fallback={true}>
               {(stations.data as Station[]).map(({ id, name }) => (
                 <option key={id} value={id}>

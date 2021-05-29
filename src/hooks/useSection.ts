@@ -60,11 +60,13 @@ const useSection = () => {
     if (currentLineId === -1) return;
 
     updateCurrentSection();
+  }, [currentLineId, shouldUpdate]);
 
+  useEffect(() => {
     return () => {
       dispatch(lineAction.initLineId());
     };
-  }, [currentLineId, shouldUpdate]);
+  }, []);
 
   const updateCurrentSection = async () => {
     // TODO: magic number!
@@ -123,6 +125,7 @@ const useSection = () => {
     setDownStationId,
     updateCurrentSection,
     isValidForm,
+    isSelectedUpStation,
   };
 };
 

@@ -59,13 +59,11 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
 
         <StyledContainer>
           <SelectBox
+            placeholder="상행역"
             value={upStationId}
             defaultValue={-1}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
-            <option value={-1} disabled selected hidden>
-              상행역
-            </option>
             <Suspense fallback={true}>
               {(stations.data as Station[]).map((station) => (
                 <option key={station.id} value={station.id}>
@@ -78,15 +76,12 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           <BidirectionArrowIcon />
 
           <SelectBox
-            placeholder="하행 종점"
+            placeholder="하행역"
             value={downStationId}
             defaultValue={-1}
             onChange={({ target }) => setDownStationId(Number(target.value))}
             disabled={!isSelectedUpStation}
           >
-            <option value={-1} disabled selected hidden>
-              하행역
-            </option>
             <Suspense fallback={true}>
               {availableDownStations.map((station) => (
                 <option key={station.id} value={station.id}>

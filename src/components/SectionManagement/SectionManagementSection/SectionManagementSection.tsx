@@ -25,13 +25,11 @@ const SectionManagementSection = () => {
         <Title>구간 관리</Title>
         <SectionAddButton onClick={openModal}>구간추가</SectionAddButton>
         <LineSelectBox
+          placeholder="노선 선택"
           value={currentLineId}
           defaultValue={-1}
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
-          <option value={-1} selected disabled hidden>
-            노선 이름
-          </option>
           <Suspense fallback={true}>
             {(lines.data as Line[]).map((line) => (
               <option key={line.id} value={line.id}>

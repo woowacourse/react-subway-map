@@ -33,4 +33,17 @@ const StyledSelectBox = styled.select`
   font-size: 1.125rem;
 `;
 
+export const LabelText = styled.span`
+  display: block;
+  position: absolute;
+  top: -0.35rem;
+  left: 0.625rem;
+  background-color: white;
+  color: ${PALETTE.GRAY_500};
+  font-weight: 500;
+  width: max-content;
+  font-size: 0.75rem;
+  padding: 0 0.25rem;
+`;
+
 export default StyledSelectBox;
