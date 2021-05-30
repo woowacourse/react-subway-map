@@ -1,5 +1,4 @@
 import React, { FormEventHandler, useState } from 'react';
-import { useSnackbar } from 'notistack';
 import { Button, Card, Input, Modal } from '../../components';
 import * as Styled from './StationPage.styles';
 import { ReactComponent as SubwayIcon } from '../../assets/icons/subway-solid.svg';
@@ -9,29 +8,24 @@ import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
 import { ApiStatus, Station } from '../../types';
-import MESSAGE from '../../constants/message';
 import MessageBox from '../../components/MessageBox/MessageBox';
 
 const StationPage = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
   const [editStationId, setEditStationId] = useState<Station['id'] | null>(null);
 
-  const { list, status, onAdd, onEdit, onDelete } = useStation();
+  const { list, status, onAddStation, onEditStation, onDeleteStation } = useStation();
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const response = await onAdd(name);
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+    const isSuccess = await onAddStation(name);
 
-    enqueueSnackbar(MESSAGE.SUCCESS.STATION_ADDED, {
-      variant: 'success',
-    });
+    if (!isSuccess) return;
+
     setName('');
   };
 
@@ -47,20 +41,17 @@ const StationPage = () => {
 
     if (!editStationId) return;
 
-    const response = await onEdit({ id: editStationId, name: editName });
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+    const isSuccess = await onEditStation({ id: editStationId, name: editName });
 
-    enqueueSnackbar(MESSAGE.SUCCESS.STATION_EDITED);
+    if (!isSuccess) return;
+
     setEditStationId(null);
     setEditName('');
     closeModal();
   };
 
-  const handleDelete = async (id: Station['id']) => {
-    const response = await onDelete(id);
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
-
-    enqueueSnackbar(MESSAGE.SUCCESS.STATION_DELETED);
+  const handleDelete = (id: Station['id']) => {
+    onDeleteStation(id);
   };
 
   return (

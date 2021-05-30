@@ -22,13 +22,6 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(STATION_LIST));
   }),
   rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/stations`, (req, res, ctx) => {
-    if (req.body.name.length < 2 || req.body.name.length > 20) {
-      return res(
-        ctx.status(400),
-        ctx.json({ status: 400, message: MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH })
-      );
-    }
-
     const newStation = {
       id: 14,
       ...req.body,
@@ -37,13 +30,6 @@ export const handlers = [
     return res(ctx.status(201), ctx.json(newStation));
   }),
   rest.put(`${BACKEND[CREWS.DANYEE].baseUrl}/stations/:id`, (req, res, ctx) => {
-    if (req.body.name.length < 2 || req.body.name.length > 20) {
-      return res(
-        ctx.status(400),
-        ctx.json({ status: 400, message: MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH })
-      );
-    }
-
     return res(
       ctx.status(200),
       ctx.json({

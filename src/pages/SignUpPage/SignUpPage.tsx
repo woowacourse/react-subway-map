@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './SignUpPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -19,9 +19,12 @@ import {
   isValidPassword,
   isValidPasswordConfirm,
 } from './SignUpPageValidation';
+import ROUTES from '../../constants/routes';
 
 const SignUpPage = () => {
   const { onSignUp, onCheckDuplicateEmail } = useSignUp();
+
+  const history = useHistory();
 
   const { value: server, onChange: onChangeServer } = useSelect(CREWS.DANYEE);
   const { value: email, onChange: onChangeEmail, ref: emailRef } = useInput('');
@@ -67,8 +70,18 @@ const SignUpPage = () => {
 
     const invalidFormRef = getInvalidFormRef();
 
-    await onSignUp({ server, email, age: Number(age), password, passwordConfirm });
+    const isSuccess = await onSignUp({
+      server,
+      email,
+      age: Number(age),
+      password,
+      passwordConfirm,
+    });
     invalidFormRef?.current?.focus();
+
+    if (!isSuccess) return;
+
+    history.replace(ROUTES.ROOT);
   };
 
   return (

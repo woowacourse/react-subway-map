@@ -1,10 +1,8 @@
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 import { SignUp } from '../types';
 import MESSAGE from '../constants/message';
 import BACKEND from '../constants/backend';
-import ROUTES from '../constants/routes';
 import {
   isValidAge,
   isValidEmail,
@@ -14,7 +12,6 @@ import {
 
 const useSignUp = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
 
   const onSignUp = async ({ server, email, age, password, passwordConfirm }: SignUp) => {
     if (!isValidEmail(email)) {
@@ -51,12 +48,14 @@ const useSignUp = () => {
         variant: 'success',
       });
 
-      history.replace(ROUTES.ROOT);
+      return true;
     } catch (error) {
       enqueueSnackbar(MESSAGE.ERROR.SIGN_UP_FAILURE, {
         variant: 'error',
       });
     }
+
+    return false;
   };
 
   const onCheckDuplicateEmail = async ({ server, email }: Pick<SignUp, 'server' | 'email'>) => {
