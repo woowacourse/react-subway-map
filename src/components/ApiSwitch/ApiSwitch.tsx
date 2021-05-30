@@ -2,6 +2,7 @@ import { Container } from './ApiSwitch.style';
 import { API_HOST, ApiHostList } from '../../request';
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
+import { CONFIRM_MESSAGE } from '../../constants/messages';
 
 const ApiSwitch = () => {
   const themeColor = useContext(ThemeContext)?.themeColor;
@@ -15,6 +16,7 @@ const ApiSwitch = () => {
             type="radio"
             name="api-host"
             onChange={() => {
+              if (!confirm(CONFIRM_MESSAGE.CHANGE_SERVER)) return;
               localStorage.setItem('hostName', host);
               localStorage.setItem('accessToken', '');
               location.reload();

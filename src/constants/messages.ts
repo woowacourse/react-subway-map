@@ -40,6 +40,7 @@ const CONFIRM_MESSAGE = {
   DELETE_LINE: (line: string) => `"${line}"을(를) 삭제하시겠습니까?`,
   DELETE_SECTION: (line: string, station: string) =>
     `"${line}"에서 ${station}을(를) 삭제하시겠습니까?`,
+  CHANGE_SERVER: '서버를 변경하면 로그아웃됩니다. 서버를 변경하시겠습니까?',
 };
 
 export { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE };

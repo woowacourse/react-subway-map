@@ -200,15 +200,14 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
     try {
       await deleteLine(id);
-      await fetchData();
       addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
+      await fetchData();
     } catch (error) {
       console.error(error);
 
       if (error.message === STATUS_CODE.UNAUTHORIZED) {
         addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
-
         return;
       }
 

@@ -167,6 +167,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       await addSection(selectedLineId, newSection);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_SECTION);
+      await fetchData();
       await getLine(selectedLineId);
 
       reset();
@@ -200,6 +201,8 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       await deleteSection(selectedLineId, stationId);
 
       addMessage?.(SUCCESS_MESSAGE.DELETE_SECTION);
+      await fetchData();
+      await getLine(selectedLineId);
     } catch (error) {
       console.error(error);
 
@@ -211,10 +214,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
-
-    await getLine(selectedLineId);
-
-    return stationId;
   };
 
   return (

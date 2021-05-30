@@ -72,6 +72,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
     if (isStationInputDuplicated) {
       setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
+      await fetchData();
       return;
     }
 
@@ -79,8 +80,8 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
     try {
       await addStation({ name: stationInput });
-      await fetchData();
       addMessage?.(SUCCESS_MESSAGE.ADD_STATION);
+      await fetchData();
 
       setStationInput('');
     } catch (error) {
@@ -95,7 +96,6 @@ const StationPage = ({ setIsLoading }: PageProps) => {
       if (error.message === STATUS_CODE.STATION_DUPLICATED) {
         setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
         await fetchData();
-
         return;
       }
 
@@ -108,8 +108,8 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
     try {
       await deleteStation(id);
-      await fetchData();
       addMessage?.(SUCCESS_MESSAGE.DELETE_STATION);
+      await fetchData();
     } catch (error) {
       console.error(error);
 
@@ -121,6 +121,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
       if (error.message === STATUS_CODE.STATION_IN_SECTION) {
         addMessage?.(ERROR_MESSAGE.STATION_IN_SECTION);
+        await fetchData();
         return;
       }
 
