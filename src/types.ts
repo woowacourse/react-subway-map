@@ -62,6 +62,14 @@ export enum ApiStatus {
   REJECTED = 'rejected',
 }
 
+export type SignUp = {
+  server: CREWS;
+  email: string;
+  age: number;
+  password: string;
+  passwordConfirm: string;
+};
+
 export type Station = {
   id: number;
   name: string;

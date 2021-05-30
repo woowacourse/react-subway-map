@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './SignUpPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -10,19 +8,24 @@ import { ReactComponent as UserIcon } from '../../assets/icons/user-solid.svg';
 import BACKEND from '../../constants/backend';
 import useInput from '../../hooks/useInput';
 import useSelect from '../../hooks/useSelect';
-import ROUTES from '../../constants/routes';
 import MESSAGE from '../../constants/message';
 import REGEX from '../../constants/regex';
 import { CREWS } from '../../types';
+import useSignUp from '../../hooks/useSignUp';
+import { SIGN_UP } from '../../constants/validation';
+import {
+  isValidAge,
+  isValidEmail,
+  isValidPassword,
+  isValidPasswordConfirm,
+} from './SignUpPageValidation';
 
 const SignUpPage = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const history = useHistory();
+  const { onSignUp, onCheckDuplicateEmail } = useSignUp();
 
   const { value: server, onChange: onChangeServer } = useSelect(CREWS.DANYEE);
   const { value: email, onChange: onChangeEmail, ref: emailRef } = useInput('');
-  const { value: age, onChange: onChangeAge } = useInput('');
+  const { value: ageValue, valueAsNumber: age, onChange: onChangeAge, ref: ageRef } = useInput('');
   const { value: password, onChange: onChangePassword, ref: passwordRef } = useInput('');
   const {
     value: passwordConfirm,
@@ -31,29 +34,12 @@ const SignUpPage = () => {
   } = useInput('');
   const [isDuplicatedEmail, setDuplicatedEmail] = useState(false);
 
-  const isValidEmail = REGEX.isEmail.test(email);
-  const isValidPassword = password.length >= 8;
-  const isValidPasswordConfirm = password === passwordConfirm;
-
-  const requestCreateMember = (newMember: { email: string; age: number; password: string }) =>
-    axios.post(`${BACKEND[server].baseUrl}/members`, newMember, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-  const requestCheckDuplicateEmail = (currentEmail: string) =>
-    axios.post(
-      `${BACKEND[server].baseUrl}/members/exists`,
-      { email: currentEmail },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
-
   const getInvalidFormRef = () => {
     if (isDuplicatedEmail) return emailRef;
-    if (!isValidEmail) return emailRef;
-    if (!isValidPassword) return passwordRef;
-    if (!isValidPasswordConfirm) return passwordConfirmRef;
+    if (!isValidEmail(email)) return emailRef;
+    if (!isValidAge(age)) return ageRef;
+    if (!isValidPassword(password)) return passwordRef;
+    if (!isValidPasswordConfirm(password, passwordConfirm)) return passwordConfirmRef;
 
     return null;
   };
@@ -61,7 +47,7 @@ const SignUpPage = () => {
   const getErrorMessageEmail = () => {
     if (!email) return null;
 
-    if (!isValidEmail) return MESSAGE.ERROR.INVALID_EMAIL;
+    if (!isValidEmail(email)) return MESSAGE.ERROR.INVALID_EMAIL;
     if (isDuplicatedEmail) return MESSAGE.ERROR.DUPLICATED_EMAIL;
 
     return null;
@@ -69,10 +55,9 @@ const SignUpPage = () => {
 
   const handleCheckDuplicateEmail = async () => {
     try {
-      await requestCheckDuplicateEmail(email);
+      await onCheckDuplicateEmail({ server, email });
       setDuplicatedEmail(false);
     } catch (error) {
-      // TODO: 네트워크 응답을 아예 받지 못했을 때의 에러 처리 필요
       setDuplicatedEmail(true);
     }
   };
@@ -81,28 +66,9 @@ const SignUpPage = () => {
     event.preventDefault();
 
     const invalidFormRef = getInvalidFormRef();
-    if (invalidFormRef) {
-      invalidFormRef.current?.focus();
 
-      return;
-    }
-
-    const newMember = {
-      email,
-      age: Number(age),
-      password,
-    };
-
-    try {
-      await requestCreateMember(newMember);
-
-      enqueueSnackbar(MESSAGE.SUCCESS.SIGNUP);
-      history.replace(ROUTES.ROOT);
-    } catch (error) {
-      enqueueSnackbar(error?.response?.data?.message, {
-        variant: 'error',
-      });
-    }
+    await onSignUp({ server, email, age: Number(age), password, passwordConfirm });
+    invalidFormRef?.current?.focus();
   };
 
   return (
@@ -137,11 +103,13 @@ const SignUpPage = () => {
             </Styled.FormItem>
             <Styled.FormItem>
               <Input
-                value={age}
+                ref={ageRef}
+                value={ageValue}
                 onChange={onChangeAge}
                 icon={<UserIcon />}
                 labelText="나이"
                 placeholder="나이를 입력해주세요"
+                errorMessage={age && !isValidAge(age) ? MESSAGE.ERROR.INVALID_AGE : null}
                 type="number"
                 min="1"
                 max="150"
@@ -155,11 +123,13 @@ const SignUpPage = () => {
                 onChange={onChangePassword}
                 icon={<KeyIcon />}
                 type="password"
-                minLength={8}
+                minLength={SIGN_UP.MIN_PASSWORD_LENGTH}
                 labelText="비밀번호"
                 placeholder="비밀번호를 입력해주세요"
                 pattern={REGEX.noWhiteSpace.source}
-                errorMessage={password && !isValidPassword ? MESSAGE.ERROR.INVALID_PASSWORD : null}
+                errorMessage={
+                  password && !isValidPassword(password) ? MESSAGE.ERROR.INVALID_PASSWORD : null
+                }
                 required
               />
             </Styled.FormItem>
@@ -170,12 +140,12 @@ const SignUpPage = () => {
                 onChange={onChangePasswordConfirm}
                 icon={<KeyIcon />}
                 type="password"
-                minLength={8}
+                minLength={SIGN_UP.MIN_PASSWORD_LENGTH}
                 labelText="비밀번호 확인"
                 placeholder="비밀번호를 한 번 더 입력해주세요"
                 pattern={REGEX.noWhiteSpace.source}
                 errorMessage={
-                  passwordConfirm && !isValidPasswordConfirm
+                  passwordConfirm && !isValidPasswordConfirm(password, passwordConfirm)
                     ? MESSAGE.ERROR.DIFFERENT_PASSWORD
                     : null
                 }

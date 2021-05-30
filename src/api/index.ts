@@ -20,9 +20,6 @@ const server = getServer();
 
 const API = axios.create({
   baseURL: BACKEND[server].baseUrl,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 if (accessToken) {
