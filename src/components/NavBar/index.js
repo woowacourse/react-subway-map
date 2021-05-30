@@ -6,12 +6,13 @@ import { ROUTE } from '../../constants';
 import { useModal } from '../../hooks';
 import { Container, Logo, List } from './style';
 
-const publicRoutes = [ROUTE.SIGN_IN];
+const publicRoutes = [ROUTE.MAP, ROUTE.SIGN_IN];
 
 const privateRoutes = [
   ROUTE.STATION_MANAGE,
   ROUTE.LINE_MANAGE,
   ROUTE.SECTION_MANAGE,
+  ROUTE.MAP,
   ROUTE.SIGN_OUT,
 ];
 
