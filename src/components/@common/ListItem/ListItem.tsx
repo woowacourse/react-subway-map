@@ -25,7 +25,13 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete }) => {
         </ListItemButton>
       )}
       {isLogin && onDelete && (
-        <ListItemButton type="button" buttonType="round" isColored={false} onClick={onDelete}>
+        <ListItemButton
+          type="button"
+          aria-label="삭제버튼"
+          buttonType="round"
+          isColored={false}
+          onClick={onDelete}
+        >
           <TrashBin width="70%" />
         </ListItemButton>
       )}
