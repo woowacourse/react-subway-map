@@ -17,6 +17,7 @@ export const NavBar = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLogin, isLogout } = useSelector((store) => store.user);
+  /* eslint-disable-next-line no-unused-vars */
   const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID]);
   const subTitle = serverOwner ? `${serverOwner} & ${FE_CONTRIBUTORS}` : `${FE_CONTRIBUTORS}`;
 

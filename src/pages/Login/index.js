@@ -15,6 +15,7 @@ export const LoginPage = (props) => {
 
   const history = useHistory();
   const dispatch = useDispatch();
+  /* eslint-disable-next-line no-unused-vars */
   const [cookies, setCookie] = useCookies([ACCESS_TOKEN]);
   const { isLogin, isLoginFail, accessToken } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
