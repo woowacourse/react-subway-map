@@ -38,8 +38,8 @@ const LinePage = () => {
     closeModal: closeEditModal,
   } = useModal();
 
-  const { onAddLine, onEditLine, onDeleteLine, list, status: lineStatus } = useLine();
   const { list: stationList } = useStation();
+  const { onAddLine, onEditLine, onDeleteLine, list, status: lineStatus } = useLine();
 
   const { color, onChange: onChangeColor } = useColorPalette();
   const { color: editColor, onChange: onChangeEditColor } = useColorPalette();
@@ -80,7 +80,7 @@ const LinePage = () => {
   const handleAddLine: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const response = await onAddLine({
+    const isSuccess = await onAddLine({
       name,
       color,
       upStationId,
@@ -88,11 +88,8 @@ const LinePage = () => {
       distance,
     });
 
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+    if (!isSuccess) return;
 
-    enqueueSnackbar(MESSAGE.SUCCESS.LINE_ADDED, {
-      variant: 'success',
-    });
     closeAddModal();
     setName('');
     setDistance('');
@@ -103,25 +100,21 @@ const LinePage = () => {
 
     if (editLineId < 0) return;
 
-    const response = await onEditLine({
+    const isSuccess = await onEditLine({
       id: editLineId,
       name: editName,
       color: editColor,
     });
 
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+    if (!isSuccess) return;
 
-    enqueueSnackbar(MESSAGE.SUCCESS.LINE_EDITED);
     closeEditModal();
     setEditName('');
     setEditLineId(-1);
   };
 
-  const handleDeleteLine = async (id: Line['id']) => {
-    const response = await onDeleteLine(id);
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
-
-    enqueueSnackbar(MESSAGE.SUCCESS.LINE_DELETED);
+  const handleDeleteLine = (id: Line['id']) => {
+    onDeleteLine(id);
   };
 
   const handleOpenAddModal = () => {

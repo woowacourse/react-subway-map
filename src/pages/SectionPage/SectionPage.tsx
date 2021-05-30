@@ -61,7 +61,7 @@ const SectionPage = () => {
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const response = await onAddSection({
+    const isSuccess = await onAddSection({
       lineId: selectedLineId,
       data: {
         upStationId,
@@ -70,27 +70,22 @@ const SectionPage = () => {
       },
     });
 
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
+    if (!isSuccess) return;
 
-    enqueueSnackbar(MESSAGE.SUCCESS.SECTION_ADDED, {
-      variant: 'success',
-    });
     closeModal();
     setDistance('');
   };
 
-  const handleDelete = async (stationId: Station['id']) => {
+  const handleDelete = (stationId: Station['id']) => {
     if (selectedLine?.stations.length <= 2) {
       enqueueSnackbar(MESSAGE.ERROR.REQUIRE_MINIMUM_STATION, {
         variant: 'warning',
       });
+
       return;
     }
 
-    const response = await onDeleteSection({ lineId: selectedLineId, stationId });
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
-
-    enqueueSnackbar(MESSAGE.SUCCESS.SECTION_DELETED);
+    onDeleteSection({ lineId: selectedLineId, stationId });
   };
 
   useEffect(() => {

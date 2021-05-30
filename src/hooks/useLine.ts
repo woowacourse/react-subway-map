@@ -1,5 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from './useStore';
 import { ApiStatus, Line, LineAttribute, SectionAttribute, Station } from '../types';
 import {
@@ -21,44 +22,146 @@ const useLine = () => {
 
   const { list, error, status } = line;
 
-  const onGetLine = useCallback(() => dispatch(getLineList()), [dispatch]);
+  const onGetLine = () => dispatch(getLineList());
 
-  const onAddLine = ({ name, color, upStationId, downStationId, distance }: LineAttribute) =>
-    dispatch(addLine({ name, color, upStationId, downStationId, distance }));
+  const onAddLine = async ({
+    name,
+    color,
+    upStationId,
+    downStationId,
+    distance,
+  }: LineAttribute) => {
+    if (!(name.length > 1 && name.length < 11)) {
+      enqueueSnackbar(MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH);
 
-  const onEditLine = ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) =>
-    dispatch(editLine({ id, name, color }));
+      return;
+    }
 
-  const onDeleteLine = (id: Line['id']) => dispatch(deleteLine(id));
+    try {
+      const response = await dispatch(
+        addLine({ name, color, upStationId, downStationId, distance })
+      );
 
-  const onAddSection = ({ lineId, data }: SectionAttribute) =>
-    dispatch(addSection({ lineId, data }));
+      unwrapResult(response);
 
-  const onDeleteSection = ({
+      enqueueSnackbar(MESSAGE.SUCCESS.LINE_ADDED, {
+        variant: 'success',
+      });
+
+      return true;
+    } catch ({ message }) {
+      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
+        variant: 'error',
+      });
+
+      return false;
+    }
+  };
+
+  const onEditLine = async ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) => {
+    if (!(name.length > 1 && name.length < 11)) {
+      enqueueSnackbar(MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH);
+
+      return;
+    }
+
+    try {
+      const response = await dispatch(editLine({ id, name, color }));
+
+      unwrapResult(response);
+
+      enqueueSnackbar(MESSAGE.SUCCESS.LINE_EDITED, {
+        variant: 'success',
+      });
+
+      return true;
+    } catch ({ message }) {
+      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
+        variant: 'error',
+      });
+
+      return false;
+    }
+  };
+
+  const onDeleteLine = async (id: Line['id']) => {
+    try {
+      const response = await dispatch(deleteLine(id));
+
+      unwrapResult(response);
+
+      enqueueSnackbar(MESSAGE.SUCCESS.LINE_DELETED, {
+        variant: 'success',
+      });
+
+      return true;
+    } catch ({ message }) {
+      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
+        variant: 'error',
+      });
+
+      return false;
+    }
+  };
+
+  const onAddSection = async ({ lineId, data }: SectionAttribute) => {
+    try {
+      const response = await dispatch(addSection({ lineId, data }));
+
+      unwrapResult(response);
+
+      enqueueSnackbar(MESSAGE.SUCCESS.SECTION_ADDED, {
+        variant: 'success',
+      });
+
+      return true;
+    } catch ({ message }) {
+      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
+        variant: 'error',
+      });
+
+      return false;
+    }
+  };
+
+  const onDeleteSection = async ({
     lineId,
     stationId,
   }: {
     lineId: Line['id'];
     stationId: Station['id'];
-  }) => dispatch(deleteSection({ lineId, stationId }));
+  }) => {
+    try {
+      const response = await dispatch(deleteSection({ lineId, stationId }));
 
-  useEffect(() => {
-    onGetLine();
-  }, [onGetLine]);
+      unwrapResult(response);
 
-  useEffect(() => {
-    if (error) {
-      enqueueSnackbar(error.message || MESSAGE.ERROR.REQUEST_FAILURE, {
+      enqueueSnackbar(MESSAGE.SUCCESS.SECTION_DELETED, {
+        variant: 'success',
+      });
+
+      return true;
+    } catch ({ message }) {
+      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
         variant: 'error',
       });
 
-      if (error.status === 401) {
-        dispatch(logout());
-      }
-
-      dispatch(resetError());
+      return false;
     }
-  }, [error, dispatch, enqueueSnackbar]);
+  };
+
+  useEffect(() => {
+    onGetLine();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (error?.status === 401 || error?.httpStatus === 401) {
+      dispatch(logout());
+    }
+
+    dispatch(resetError());
+  }, [error, dispatch]);
 
   return {
     onGetLine,

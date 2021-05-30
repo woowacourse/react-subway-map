@@ -24,7 +24,7 @@ const useStation = () => {
   const onGetStation = () => dispatch(getStationList());
 
   const onAddStation = async (name: Station['name']) => {
-    if (!(name.length < 21 && name.length > 1)) {
+    if (!(name.length > 1 && name.length < 21)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH);
 
       return;
@@ -50,7 +50,7 @@ const useStation = () => {
   };
 
   const onEditStation = async ({ id, name }: Station) => {
-    if (!(name.length < 21 && name.length > 1)) {
+    if (!(name.length > 1 && name.length < 21)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH);
 
       return;
