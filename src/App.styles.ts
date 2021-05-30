@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react';
+import { css } from '@emotion/react';
 
 export const globalStyle = css`
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
@@ -58,14 +58,3 @@ export const globalStyle = css`
     }
   }
 `;
-
-export const theme: Theme = {
-  bgColor: {
-    defaultWhite: '#fff',
-    defaultCream: '#faf1e6',
-  },
-  color: {
-    subwayYellow: '#ffcb0a',
-    subwayGreen: '#009743',
-  },
-};

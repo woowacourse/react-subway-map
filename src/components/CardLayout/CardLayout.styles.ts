@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import PALETTE from 'constants/palette';
 
 export const Container = styled.section`
   width: 640px;
@@ -6,10 +7,10 @@ export const Container = styled.section`
   margin: 0 auto;
   padding: 24px;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.bgColor.defaultWhite};
+  background-color: ${PALETTE.DEFAULT_WHITE};
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-  border-top: 10px solid ${({ theme }) => theme.color.subwayYellow};
-  border-bottom: 10px solid ${({ theme }) => theme.color.subwayGreen};
+  border-top: 10px solid ${PALETTE.SUBWAY_YELLOW};
+  border-bottom: 10px solid ${PALETTE.SUBWAY_GREEN};
 `;
 
 const Title = styled.h1`
