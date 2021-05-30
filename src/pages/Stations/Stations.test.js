@@ -10,7 +10,7 @@ jest.mock('../../api/stations');
 
 describe('역 관리 페이지 테스트', () => {
   it('역 목록 조회 요청', () => {
-    const screen = customRender(<Stations />);
+    customRender(<Stations />);
 
     expect(requestGetStations).toBeCalledTimes(1);
   });
@@ -20,13 +20,11 @@ describe('역 관리 페이지 테스트', () => {
     const stationInput = screen.getByRole('textbox', {
       name: '지하철 역 이름을 입력해주세요',
     });
-
-    userEvent.type(stationInput, '새로운역');
-
     const addButton = screen.getByRole('button', {
       name: '추가',
     });
 
+    userEvent.type(stationInput, '새로운역');
     userEvent.click(addButton);
 
     expect(requestAddStation).toBeCalledTimes(1);
