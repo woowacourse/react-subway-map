@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {
-  ChangeEvent,
   ChangeEventHandler,
   FC,
-  FormEvent,
   FormEventHandler,
   useEffect,
   useMemo,

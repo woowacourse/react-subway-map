@@ -19,7 +19,6 @@ const Stations: FC = () => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
-
   const [stationInput, setStationInput] = useState('');
   const [validationErrorMessage, setValidationErrorMessage] = useState('');
   const isValidStationInput = stationInput !== '' && validationErrorMessage === '';

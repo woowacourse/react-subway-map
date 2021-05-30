@@ -15,7 +15,6 @@ import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styl
 
 const Signup: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
-  //TODO: formInput으로 통일하기
   const [formInput, setFormInput] = useState({
     email: '',
     age: '',

@@ -24,7 +24,6 @@ interface Props {
 const SectionAddModal: FC<Props> = ({ onClose, line }) => {
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
-
   const [formInput, setFormInput] = useState({
     upStationId: '',
     downStationId: '',
@@ -122,7 +121,7 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           labelText={SECTION.DISTANCE_LABEL_TEXT}
         />
         <SectionModalButtonContainer justifyContent="flex-end">
-          <Button type="button" isColored={false}>
+          <Button onClick={onClose} type="button" isColored={false}>
             취소
           </Button>
           <Button>확인</Button>
