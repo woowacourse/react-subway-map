@@ -3,7 +3,6 @@ import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Line, Station } from 'types';
 import LINE_COLORS from 'constants/lineColors';
 import { API_STATUS, END_POINT } from 'constants/api';
@@ -11,6 +10,7 @@ import regex from 'constants/regex';
 import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import useFetch from 'hooks/useFetch';
 import Styled from './LineModal.styles';
+import useNotify from 'hooks/useNotify';
 
 interface Props {
   stations: Station[] | undefined;
@@ -34,8 +34,7 @@ const LineModal = ({
   const [distance, setDistance] = useState<string>('');
   const [extraFare, setExtraFare] = useState<string>('');
 
-  const [isMessageValid, setMessageValid] = useState<boolean>(false);
-  const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
+  const { NotiMessage, showNotiMessage } = useNotify();
 
   const { fetchData: addLineAsync } = useFetch('POST');
   const { fetchData: editLineAsync } = useFetch('PUT');
@@ -48,12 +47,11 @@ const LineModal = ({
     const isValidLineName = regex.koreanAndNumber.test(name);
 
     if (!isValidLineName) {
-      setMessageValid(false);
-      setMessageVisible(true);
+      showNotiMessage({ message: NOTIFICATION.LINE_NAME, valid: false, visible: true });
 
       return false;
     } else {
-      setMessageVisible(false);
+      showNotiMessage({ visible: false });
 
       return true;
     }
@@ -64,7 +62,7 @@ const LineModal = ({
 
     if (!validateLineName()) return;
 
-    setMessageVisible(false);
+    showNotiMessage({ visible: false });
 
     const newLine = {
       name,
@@ -137,11 +135,7 @@ const LineModal = ({
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
           extraArgs={{ minLength: 2, maxLength: 10 }}
         />
-        <Notification
-          isValid={isMessageValid}
-          isVisible={isMessageVisible}
-          message={NOTIFICATION.STATION_NAME}
-        />
+        <NotiMessage />
       </div>
       {!selectedLine && (
         <>

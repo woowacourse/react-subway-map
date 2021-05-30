@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
 import ROUTE from 'constants/routes';
@@ -18,23 +17,21 @@ import { selectServer } from 'modules/serverSlice';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
 import useFetch from 'hooks/useFetch';
+import useNotify from 'hooks/useNotify';
 
 const LoginPage = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
+
   const { enqueueSnackbar } = useSnackbar();
 
-  const BASE_URL = useAppSelector((state) => state.serverSlice.server);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [invalidNotification, setInvalidNotification] = useState({
-    message: '',
-    isValid: false,
-    isVisible: false,
-  });
   const [loginResponse, setLoginResponse] = useState<{ accessToken: string }>();
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
+  const { NotiMessage, showNotiMessage } = useNotify();
   const { fetchData: loginAsync, loading: loginLoading } = useFetch('POST');
 
   const login = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,9 +47,9 @@ const LoginPage = () => {
     const res = await loginAsync(END_POINT.LOGIN, loginData);
 
     if (res.status === API_STATUS.REJECTED) {
-      setInvalidNotification({ message: res.message, isValid: false, isVisible: true });
+      showNotiMessage({ message: res.message, valid: false, visible: true });
     } else if (res.status === API_STATUS.FULFILLED) {
-      setInvalidNotification({ message: '', isValid: true, isVisible: false });
+      showNotiMessage({ message: '', valid: true, visible: false });
       setLoginResponse(res.data);
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_LOGIN);
 
@@ -101,11 +98,7 @@ const LoginPage = () => {
                 icon={lockImg}
                 onChange={(event) => setPassword(event.target.value)}
               />
-              <Notification
-                message={invalidNotification.message}
-                isValid={invalidNotification.isValid}
-                isVisible={invalidNotification.isVisible}
-              />
+              <NotiMessage />
             </Styled.InputWrapper>
           </Styled.InputContainer>
 
