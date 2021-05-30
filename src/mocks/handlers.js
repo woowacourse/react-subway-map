@@ -6,6 +6,16 @@ import { CREWS } from '../types';
 import { LINE_LIST, STATION_LIST } from './mockData';
 
 export const handlers = [
+  rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/login`, (req, res, ctx) => {
+    const { server } = req.body;
+    return res(
+      ctx.status(200),
+      ctx.json({
+        accessToken: '12345',
+        server,
+      })
+    );
+  }),
   rest.get(`${BACKEND[CREWS.DANYEE].baseUrl}/stations`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(STATION_LIST));
   }),
