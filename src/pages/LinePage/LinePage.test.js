@@ -50,7 +50,7 @@ const addLine = async (name, distance) => {
   fireEvent.click(addButton);
 };
 
-const editLine = async (targetLine, name) => {
+const editLine = async (name) => {
   const editModal = await waitFor(() => screen.getByRole('dialog'));
   const editLineNameInput = getByPlaceholderText(editModal, '노선 이름');
   const editButton = getByRole(editModal, 'button', {
@@ -126,7 +126,7 @@ describe('지하철 노선 관리', () => {
       const [targetLine] = lineList;
 
       openEditLineModal(targetLine);
-      await editLine(targetLine, keyword);
+      await editLine(keyword);
 
       await waitFor(() => expect(targetLine).toHaveTextContent(new RegExp(keyword)));
     });
@@ -138,7 +138,7 @@ describe('지하철 노선 관리', () => {
       const [targetLine] = lineList;
 
       openEditLineModal(targetLine);
-      await editLine(targetLine, keyword);
+      await editLine(keyword);
 
       const alertMessage = await waitFor(() => screen.getByRole('alert'));
 
@@ -153,7 +153,7 @@ describe('지하철 노선 관리', () => {
       const [targetLine] = lineList;
 
       openEditLineModal(targetLine);
-      await editLine(targetLine, keyword);
+      await editLine(keyword);
 
       const alertMessage = await waitFor(() => screen.getByRole('alert'));
 

@@ -71,6 +71,7 @@ export const addSection = createAsyncThunk(
     try {
       const response = await API.post(`/lines/${newSection.lineId}/sections`, newSection.data);
       dispatch(getLineList());
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -86,7 +87,6 @@ export const deleteSection = createAsyncThunk(
   ) => {
     try {
       await API.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
-
       return { lineId, stationId };
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -181,8 +181,8 @@ export const lineSlice = createSlice({
         (station) => station.id === payload.stationId
       );
 
-      if (targetLine && targetStationIndex) {
-        targetLine.stations.splice(targetStationIndex, 1);
+      if (targetStationIndex === 0 || targetStationIndex) {
+        targetLine?.stations.splice(targetStationIndex, 1);
       }
     });
     builder.addCase(deleteSection.rejected, (state, { payload }) => {
