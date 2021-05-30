@@ -1,5 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEvent, FC, FormEvent, useEffect, useMemo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  ChangeEventHandler,
+  FC,
+  FormEvent,
+  FormEventHandler,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -10,6 +19,7 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
+import Input from '../@common/Input/Input';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
 import SectionSelectBox, {
@@ -91,7 +101,9 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     });
   }, [formInput.upStationId, formInput.downStationId]);
 
-  const onChangeName = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const isUsedLineColor = (color: string): boolean => usedLineColors.includes(color);
+
+  const onChangeName: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     if (value.length >= 2 && isKoreanAndNumber(value)) {
       setValidationErrorMessage({
         ...validationErrorMessage,
@@ -110,7 +122,6 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     });
   };
 
-  // TODO: 리팩터링 생각해보기
   const onChangeStations: OnChangeSectionSelectBoxHandler = (type) => ({ target: { value } }) => {
     setFormInput({
       ...formInput,
@@ -118,20 +129,20 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     });
   };
 
-  const onChangeDistance = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeDistance: ChangeEventHandler<HTMLInputElement> = ({
+    target: { valueAsNumber },
+  }) => {
     setFormInput({
       ...formInput,
       distance: valueAsNumber,
     });
   };
 
-  const isUsedLineColor = (color: string): boolean => usedLineColors.includes(color);
-
-  const onChangeLineColor = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeLineColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({ ...formInput, color: value });
   };
 
-  const onAddLine = (event: FormEvent<HTMLFormElement>) => {
+  const onAddLine: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
     if (
@@ -173,7 +184,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           downStationOptions={stations}
           errorMessage={validationErrorMessage.section}
         />
-        <NotificationInput
+        <Input
           value={formInput.distance}
           onChange={onChangeDistance}
           type="number"

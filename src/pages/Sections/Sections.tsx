@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -60,7 +60,9 @@ const Sections: FC = () => {
     }
   }, [stationErrorMessage, lineErrorMessage]);
 
-  const onChangeTargetLine = ({ target: { value } }: ChangeEvent<HTMLSelectElement>): void => {
+  const onChangeTargetLine: ChangeEventHandler<HTMLSelectElement> = ({
+    target: { value },
+  }): void => {
     setTargetLineId(value);
   };
 

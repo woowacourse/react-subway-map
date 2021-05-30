@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
+import React, { ChangeEventHandler, FC, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -14,7 +14,7 @@ const Home: FC = () => {
   const dispatch = useAppDispatch();
   const [selectedAPI, setSelectedAPI] = useState(apiOwner);
 
-  const onChangeApi = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeApi: ChangeEventHandler<HTMLInputElement> = (event) => {
     const owner = event.target.value;
     setSelectedAPI(owner);
   };

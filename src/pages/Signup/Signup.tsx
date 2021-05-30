@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, FC, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestSignup } from '../../api/member';
@@ -31,7 +31,7 @@ const Signup: FC = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const history = useHistory();
 
-  const onChangeEmail = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({ ...formInput, email: value });
 
     if (!isEmail(value)) {
@@ -45,7 +45,7 @@ const Signup: FC = () => {
     setErrorMessage({ ...errorMessage, email: '' });
   };
 
-  const onChangeAge = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeAge: ChangeEventHandler<HTMLInputElement> = ({ target: { valueAsNumber } }) => {
     setFormInput({
       ...formInput,
       age: String(valueAsNumber),
@@ -66,7 +66,7 @@ const Signup: FC = () => {
     });
   };
 
-  const onChangePassword = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({
       ...formInput,
       password: value,
@@ -76,6 +76,7 @@ const Signup: FC = () => {
       password: '',
     });
 
+    //TODO: SIGNUP -> SIGN_UP 일관된 네이밍 ....
     if (value.length < SIGNUP.PASSWORD_MIN_LENGTH || SIGNUP.PASSWORD_MAX_LENGTH < value.length) {
       setErrorMessage({
         ...errorMessage,
@@ -92,7 +93,7 @@ const Signup: FC = () => {
     }
   };
 
-  const onChangePasswordConfirm = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangePasswordConfirm: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({
       ...formInput,
       passwordConfirm: value,

@@ -1,11 +1,10 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, FC, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
-import Snackbar from '../../components/@common/Snackbar/Snackbar';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -39,7 +38,7 @@ const Stations: FC = () => {
     alert(errorMessage);
   }, [errorMessage]);
 
-  const onChangeStationInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeStationInput: ChangeEventHandler<HTMLInputElement> = (event) => {
     const value = event.target.value;
 
     if (value.length >= 2 && isKoreanAndNumber(value)) {

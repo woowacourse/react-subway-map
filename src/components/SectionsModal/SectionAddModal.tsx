@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
+import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
@@ -76,14 +76,16 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     });
   };
 
-  const onChangeDistance = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeDistance: ChangeEventHandler<HTMLInputElement> = ({
+    target: { valueAsNumber },
+  }) => {
     setFormInput({
       ...formInput,
       distance: valueAsNumber,
     });
   };
 
-  const onAddSection = async (event: FormEvent<HTMLFormElement>) => {
+  const onAddSection: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     try {

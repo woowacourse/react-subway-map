@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEvent, FC, FormEvent, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, FC, FormEventHandler, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -31,7 +31,6 @@ interface FormValue {
 const LineModifyModal: FC<Props> = ({ line, onClose }) => {
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-
   const [formInput, setFormInput] = useState<FormValue>({
     name: line.name,
     color: line.color,
@@ -42,7 +41,9 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
     [lines]
   );
 
-  const onChangeName = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const isUsedLineColor = (color: string) => usedLineColor.includes(color);
+
+  const onChangeName: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     if (value.length >= 2 && isKoreanAndNumber(value)) {
       setValidationErrorMessage('');
     } else {
@@ -55,13 +56,11 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
     });
   };
 
-  const isUsedLineColor = (color: string) => usedLineColor.includes(color);
-
-  const onChangeLineColor = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeLineColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({ ...formInput, color: value });
   };
 
-  const onModifyLine = (event: FormEvent<HTMLFormElement>) => {
+  const onModifyLine: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
     if (
