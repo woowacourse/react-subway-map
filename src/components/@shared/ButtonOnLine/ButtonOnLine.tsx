@@ -8,10 +8,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonOnLine: FC<Props> = ({ children, onClick }) => {
+const ButtonOnLine: FC<Props> = ({ children, onClick, 'aria-label': ariaLabel }) => {
   return (
     <ButtonOnLineContainer>
-      <Button onClick={onClick} buttonType="round">
+      <Button onClick={onClick} aria-label={ariaLabel} buttonType="round">
         {children}
       </Button>
     </ButtonOnLineContainer>
@@ -21,6 +21,7 @@ const ButtonOnLine: FC<Props> = ({ children, onClick }) => {
 ButtonOnLine.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func.isRequired,
+  'aria-label': PropTypes.string,
 };
 
 export default ButtonOnLine;
