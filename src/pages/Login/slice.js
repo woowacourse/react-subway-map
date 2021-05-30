@@ -25,6 +25,8 @@ export const login = createAsyncThunk(
       const { accessToken, message } = await response.json();
 
       if (response.status === LOGIN_SUCCEED.CODE) {
+        saveAccessToken(accessToken);
+
         return accessToken;
       }
 
@@ -36,6 +38,12 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const logout = () => {
+  removeAccessToken();
+
+  return { type: "login/logout" };
+};
 
 const initialState = {
   status: STATUS.IDLE,
@@ -51,8 +59,6 @@ const loginSlice = createSlice({
     reset: (state) => ({ ...initialState, accessToken: state.accessToken }),
     logout: (state) => {
       state.accessToken = null;
-
-      removeAccessToken();
     },
   },
   extraReducers: {
@@ -63,8 +69,6 @@ const loginSlice = createSlice({
       state.status = STATUS.SUCCEED;
       state.message = LOGIN_SUCCEED.MESSAGE;
       state.accessToken = action.payload;
-
-      saveAccessToken(action.payload);
     },
     [login.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
@@ -74,6 +78,6 @@ const loginSlice = createSlice({
   },
 });
 
-export const { reset, logout } = loginSlice.actions;
+export const { reset } = loginSlice.actions;
 
 export default loginSlice.reducer;
