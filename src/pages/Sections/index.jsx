@@ -6,12 +6,11 @@ import { useModal } from "../../components/@shared/Modal/hooks";
 import { useInput } from "../../components/@shared/Input/hooks";
 import {
   fetchLines,
-  fetchLinesDetail,
   reset,
-  selectLinesDetailByLineId,
   selectLinesList,
   selectLinesStatus,
   selectLinesMessage,
+  selectLineByLineId,
 } from "../Lines/slice";
 import Main from "../../components/@shared/Main";
 import Loading from "../../components/@shared/Loading";
@@ -27,12 +26,9 @@ const Sections = () => {
   const linesList = useSelector(selectLinesList);
   const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
   const [lineId, handleLineIdChange] = useInput();
-  const lineDetail = useSelector((state) =>
-    selectLinesDetailByLineId(state, lineId)
-  );
+  const lineDetail = useSelector(selectLineByLineId(lineId));
 
   useEffect(() => {
-    console.log("[Sections] useEffect []", status);
     if (status === STATUS.IDLE) {
       dispatch(fetchLines())
         .then(unwrapResult)
@@ -43,7 +39,6 @@ const Sections = () => {
             target: { value: list[list.length - 1].id.toString() },
           });
         });
-      dispatch(fetchLinesDetail());
     }
 
     return () => dispatch(reset());
@@ -52,24 +47,18 @@ const Sections = () => {
   }, []);
 
   useEffect(() => {
-    console.log(
-      "[Sections] useEffect [message, status, dispatch, handleModalClose]",
-      status
-    );
-    (async () => {
-      if (status === STATUS.SUCCEED) {
-        if (message) {
-          alert(message);
-        }
-
-        dispatch(reset());
-      }
-
-      if (status === STATUS.FAILED) {
+    if (status === STATUS.SUCCEED) {
+      if (message) {
         alert(message);
-        dispatch(reset());
       }
-    })();
+
+      dispatch(reset());
+    }
+
+    if (status === STATUS.FAILED) {
+      alert(message);
+      dispatch(reset());
+    }
   }, [message, status, dispatch, handleModalClose]);
 
   return (

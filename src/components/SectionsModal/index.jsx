@@ -5,7 +5,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useInput } from "../@shared/Input/hooks";
 import { useDistanceInput } from "../LinesModal/hooks";
 import { selectStationsList } from "../../pages/Stations/slice";
-import { addSection, fetchLinesDetail } from "../../pages/Lines/slice";
+import { addSection } from "../../pages/Lines/slice";
 import Modal from "../@shared/Modal";
 import Select from "../@shared/Select";
 import FloatingLabelInput from "../@shared/FloatingLabelInput";
@@ -41,7 +41,6 @@ const SectionsModal = ({ isOpen, close, lineDetail }) => {
         resetDownStationId();
         resetDistance();
         close();
-        dispatch(fetchLinesDetail());
       })
       .catch(/* do nothing */);
   };

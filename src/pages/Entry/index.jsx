@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchStations, reset } from "../Stations/slice";
-import {
-  fetchLines,
-  fetchLinesDetail,
-  reset as resetLines,
-} from "../Lines/slice";
+import { fetchStations, reset as resetStations } from "../Stations/slice";
+import { fetchLines, reset as resetLines } from "../Lines/slice";
 import Main from "../../components/@shared/Main";
 import EntryCrewListItem from "../../components/EntryCrewListItem";
 
@@ -14,13 +10,9 @@ const Entry = () => {
 
   useEffect(
     () => () => {
-      Promise.all([
-        dispatch(fetchStations()),
-        dispatch(fetchLines()),
-        dispatch(fetchLinesDetail()),
-      ]).then(() => {
-        Promise.all([dispatch(reset()), dispatch(resetLines())]);
-      });
+      Promise.all([dispatch(fetchStations()), dispatch(fetchLines())]).then(
+        () => Promise.all([dispatch(resetStations()), dispatch(resetLines())])
+      );
     },
     [dispatch]
   );

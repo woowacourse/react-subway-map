@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { deleteSection, fetchLinesDetail } from "../../pages/Lines/slice";
+import { deleteSection } from "../../pages/Lines/slice";
 import Button from "../@shared/Button";
 
 const SectionsDetailListItem = ({ stationId, stationName, lineId }) => {
@@ -9,8 +9,7 @@ const SectionsDetailListItem = ({ stationId, stationName, lineId }) => {
 
   const handleDeleteClick = async () => {
     if (window.confirm(`${stationName}를 삭제하시겠습니까?`)) {
-      await dispatch(deleteSection({ lineId, stationId }));
-      await dispatch(fetchLinesDetail());
+      dispatch(deleteSection({ lineId, stationId }));
     }
   };
 

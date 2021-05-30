@@ -6,7 +6,6 @@ import {
   LINES_ADD_SUCCEED,
   LINES_GET_SUCCEED,
   LINES_DELETE_SUCCEED,
-  LINES_DETAIL_GET_SUCCEED,
   SECTIONS_ADD_SUCCEED,
   UNKNOWN_ERROR_MESSAGE,
   SECTIONS_DELETE_SUCCEED,
@@ -17,9 +16,8 @@ import { selectAccessToken } from "../Login/slice";
 export const selectLinesStatus = (state) => state.lines.status;
 export const selectLinesMessage = (state) => state.lines.message;
 export const selectLinesList = (state) => state.lines.list;
-export const selectLinesDetails = (state) => state.lines.details;
-export const selectLinesDetailByLineId = (state, id) =>
-  state.lines.details.find((line) => line.id === Number(id));
+export const selectLineByLineId = (id) => (state) =>
+  state.lines.list.find((line) => line.id === Number(id));
 
 export const addLine = createAsyncThunk(
   "lines/addLine",
@@ -99,30 +97,6 @@ export const deleteLinesById = createAsyncThunk(
   }
 );
 
-export const fetchLinesDetail = createAsyncThunk(
-  "lines/fetchLinesDetail",
-  async (_, { rejectWithValue, getState }) => {
-    const accessToken = selectAccessToken(getState());
-
-    try {
-      const response = await http.get(ENDPOINT.LINES_DETAIL, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      if (response.status === LINES_DETAIL_GET_SUCCEED.CODE) {
-        return response.json();
-      }
-
-      const { message } = await response.json();
-      return rejectWithValue(message);
-    } catch (error) {
-      console.error(error);
-
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
-    }
-  }
-);
-
 export const addSection = createAsyncThunk(
   "lines/addSection",
   async (
@@ -138,7 +112,7 @@ export const addSection = createAsyncThunk(
       });
 
       if (response.status === SECTIONS_ADD_SUCCEED.CODE) {
-        return;
+        return response.json();
       }
 
       const { message } = await response.json();
@@ -185,7 +159,6 @@ const initialState = {
   error: null,
   message: "",
   list: [],
-  details: [],
 };
 
 const linesSlice = createSlice({
@@ -237,24 +210,18 @@ const linesSlice = createSlice({
       state.error = action.error;
       state.message = action.payload;
     },
-    [fetchLinesDetail.pending]: (state) => {
-      state.status = STATUS.LOADING;
-    },
-    [fetchLinesDetail.fulfilled]: (state, action) => {
-      state.status = STATUS.SUCCEED;
-      state.details = action.payload;
-    },
-    [fetchLinesDetail.rejected]: (state, action) => {
-      state.status = STATUS.FAILED;
-      state.error = action.error;
-      state.message = action.payload;
-    },
     [addSection.pending]: (state) => {
       state.status = STATUS.LOADING;
     },
-    [addSection.fulfilled]: (state) => {
+    [addSection.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
       state.message = SECTIONS_ADD_SUCCEED.MESSAGE;
+
+      const newLineInfo = action.payload;
+
+      state.list = state.list.map((line) =>
+        line.id === newLineInfo.id ? newLineInfo : line
+      );
     },
     [addSection.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
