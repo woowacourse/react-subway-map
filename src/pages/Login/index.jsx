@@ -5,13 +5,14 @@ import PATH from "../../constants/path";
 import STATUS from "../../constants/status";
 import Main from "../../components/@shared/Main";
 import Loading from "../../components/@shared/Loading";
-import { reset } from "./slice";
-import LoginForm from "../../components/LoginForm/index";
+import LoginForm from "../../components/LoginForm";
+import { reset, selectLoginMessage, selectLoginStatus } from "./slice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { status, message } = useSelector((state) => state.login);
+  const status = useSelector(selectLoginStatus);
+  const message = useSelector(selectLoginMessage);
 
   useEffect(() => {
     if (status === STATUS.SUCCEED) {
@@ -24,8 +25,6 @@ const Login = () => {
       alert(message);
       dispatch(reset());
     }
-
-    return () => dispatch(reset());
   }, [status, message, dispatch, history]);
 
   return (

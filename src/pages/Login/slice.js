@@ -13,6 +13,8 @@ import {
 } from "./localStorage";
 
 export const selectAccessToken = (state) => state.login.accessToken;
+export const selectLoginStatus = (state) => state.login.status;
+export const selectLoginMessage = (state) => state.login.message;
 
 export const login = createAsyncThunk(
   "login/login",
@@ -56,7 +58,9 @@ const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    reset: (state) => ({ ...initialState, accessToken: state.accessToken }),
+    reset: (state) => {
+      state.status = STATUS.IDLE;
+    },
     logout: (state) => {
       state.accessToken = null;
     },
