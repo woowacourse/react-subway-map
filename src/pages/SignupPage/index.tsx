@@ -16,8 +16,8 @@ import { ALERT_MESSAGE, NOTIFICATION } from 'constants/messages';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
 import userImg from 'assets/user.png';
-import Styled from './styles';
 import useFetch from 'hooks/useFetch';
+import Styled from './styles';
 
 const SignupPage = () => {
   const dispatch = useAppDispatch();

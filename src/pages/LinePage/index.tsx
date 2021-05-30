@@ -108,9 +108,9 @@ const LinePage = () => {
             onClick={openLineCreateModal}
           />
         </Styled.AddButtonWrapper>
-        <Styled.LinesContainer>
+        <Styled.LinesContainer data-testid="line-list">
           {lines?.map((line) => (
-            <Styled.LineItem key={line.id}>
+            <Styled.LineItem key={line.id} data-testid="line-item">
               <Styled.Color color={line.color}></Styled.Color>
               {line.name}
               <Styled.ButtonsContainer>

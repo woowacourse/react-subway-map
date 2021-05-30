@@ -1,52 +1,12 @@
 import React from 'react';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { render, fireEvent, waitFor, within } from 'test-util';
+import { setupServer } from 'msw/node';
+import { render, fireEvent, waitFor, within } from 'test/test-util';
+import { stationHandlers } from 'test/server';
+import { stations as stationsData } from 'test/mock';
 import { API_STATUS } from 'constants/api';
 import StationPage from '.';
-
-const stationsData = [
-  {
-    id: 1,
-    name: '잠실',
-  },
-  {
-    id: 2,
-    name: '경찰병원',
-  },
-];
-
-const server = setupServer(
-  rest.get('/stations', (_, res, ctx) => {
-    return res(ctx.json(stationsData));
-  }),
-  rest.post('/stations', (_, res, ctx) => {
-    return res(
-      ctx.json({
-        id: 3,
-        name: '흑석',
-      }),
-    );
-  }),
-  rest.delete('/stations/3', (_, res, ctx) => {
-    return res(
-      ctx.json({
-        id: 3,
-        name: '흑석',
-      }),
-    );
-  }),
-  rest.put('/stations/1', (_, res, ctx) => {
-    return res(
-      ctx.json({
-        id: 1,
-        name: '흑석',
-      }),
-    );
-  }),
-);
 
 const user = {
   id: 1,
@@ -61,17 +21,17 @@ const mockStore = configureStore({
   },
 });
 
+const server = setupServer(...stationHandlers);
+
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('StationPage 테스트', () => {
   const setup = () => {
-    window.confirm = () => true;
-
     const utils = render(
       <Provider store={mockStore}>
-        <StationPage />
+        <StationPage />,
       </Provider>,
     );
     const { getByTestId } = utils;
@@ -86,7 +46,7 @@ describe('StationPage 테스트', () => {
     const { stationList, getAllByTestId } = setup();
     expect(stationList).toBeInTheDocument();
     const stations = await waitFor(() => getAllByTestId('station-item'));
-    expect(stations).toHaveLength(2);
+    expect(stations).toHaveLength(5);
   });
 
   it('새로운 지하철역을 추가할 수 있다.', async () => {
@@ -96,40 +56,29 @@ describe('StationPage 테스트', () => {
     });
     const addButton = getByRole('button', { name: /추가/i });
 
-    stationsData.push({ id: 3, name: '흑석' });
-    fireEvent.change(newStationInput, { target: { value: '흑석' } });
+    stationsData.push({ id: 6, name: '신반포역' });
+    fireEvent.change(newStationInput, { target: { value: '신반포역' } });
     fireEvent.click(addButton);
 
-    const newStation = await waitFor(() => getByText(/흑석/i));
+    const newStation = await waitFor(() => getByText(/신반포역/i));
     expect(newStation).toBeInTheDocument();
-  });
-
-  it('지하철역을 삭제할 수 있다.', async () => {
-    const { getAllByTestId, getByText } = setup();
-    const targetStation = await waitFor(() => getByText(/흑석/i));
-    const deleteButton = within(targetStation).getAllByRole('button')[1];
-
-    fireEvent.click(deleteButton);
-    stationsData.pop();
-
-    await waitFor(() => expect(getAllByTestId('station-item')).toHaveLength(2));
   });
 
   it('지하철역을 수정할 수 있다.', async () => {
     const { getByText } = setup();
-    const targetStation = await waitFor(() => getByText(/잠실/i));
+    const targetStation = await waitFor(() => getByText(/구반포역/i));
     const editButton = within(targetStation).getAllByRole('button')[0];
     fireEvent.click(editButton);
 
     const editInput = await waitFor(() => within(targetStation).getByRole('textbox'));
-    fireEvent.change(editInput, { target: { value: '흑석' } });
+    fireEvent.change(editInput, { target: { value: '잠실역' } });
 
     const confirmButton = within(targetStation).getAllByRole('button')[0];
     fireEvent.click(confirmButton);
 
-    stationsData.find((station) => station.name === '잠실').name = '흑석';
+    stationsData.find((station) => station.name === '구반포역').name = '잠실역';
 
-    const updatedStation = await waitFor(() => getByText(/흑석/i));
+    const updatedStation = await waitFor(() => getByText(/잠실역/i));
     expect(updatedStation).toBeInTheDocument();
   });
 });

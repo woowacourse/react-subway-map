@@ -54,6 +54,7 @@ const LineModal = ({
       return false;
     } else {
       setMessageVisible(false);
+
       return true;
     }
   };
@@ -126,7 +127,7 @@ const LineModal = ({
   }, [selectedLine]);
 
   return (
-    <Styled.Container onSubmit={selectedLine ? editLine : addLine}>
+    <Styled.Container onSubmit={selectedLine ? editLine : addLine} data-testid="line-modal">
       <div>
         <Input
           type="text"
@@ -195,6 +196,7 @@ const LineModal = ({
                 disabled={selectedColors.includes(color)}
                 color={color}
                 onClick={() => setColor(color)}
+                data-testid="color-option"
               ></Styled.ColorOption>
             ))}
           </Styled.ColorPalette>

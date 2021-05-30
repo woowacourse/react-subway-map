@@ -164,36 +164,34 @@ const StationPage = () => {
 
       <Styled.StationsContainer data-testid="station-list">
         {stations?.map((station) => (
-          <li key={station.id} data-testid="station-item">
-            <Styled.StationItem>
-              {station.id === editingStationId ? (
-                <Styled.EditingStationForm onSubmit={saveEditForm}>
-                  <Styled.EditingStationInput
-                    ref={inputRef}
-                    value={editingStationName}
-                    onChange={(e) => setEditingStationName(e.target.value)}
-                    minLength={2}
-                    maxLength={20}
-                  ></Styled.EditingStationInput>
-                  <IconButton type="submit">
-                    <Styled.Icon src={saveIcon} alt="save" />
+          <Styled.StationItem key={station.id} data-testid="station-item">
+            {station.id === editingStationId ? (
+              <Styled.EditingStationForm onSubmit={saveEditForm}>
+                <Styled.EditingStationInput
+                  ref={inputRef}
+                  value={editingStationName}
+                  onChange={(e) => setEditingStationName(e.target.value)}
+                  minLength={2}
+                  maxLength={20}
+                ></Styled.EditingStationInput>
+                <IconButton type="submit">
+                  <Styled.Icon src={saveIcon} alt="save" />
+                </IconButton>
+              </Styled.EditingStationForm>
+            ) : (
+              <>
+                {station.name}
+                <Styled.ButtonsContainer>
+                  <IconButton onClick={() => editStation(station)}>
+                    <Styled.Icon src={editIcon} alt="edit" />
                   </IconButton>
-                </Styled.EditingStationForm>
-              ) : (
-                <>
-                  {station.name}
-                  <Styled.ButtonsContainer>
-                    <IconButton onClick={() => editStation(station)}>
-                      <Styled.Icon src={editIcon} alt="edit" />
-                    </IconButton>
-                    <IconButton onClick={() => deleteStation(station.id)}>
-                      <Styled.Icon src={deleteIcon} alt="delete" />
-                    </IconButton>
-                  </Styled.ButtonsContainer>
-                </>
-              )}
-            </Styled.StationItem>
-          </li>
+                  <IconButton onClick={() => deleteStation(station.id)}>
+                    <Styled.Icon src={deleteIcon} alt="delete" />
+                  </IconButton>
+                </Styled.ButtonsContainer>
+              </>
+            )}
+          </Styled.StationItem>
         ))}
       </Styled.StationsContainer>
     </CardLayout>
