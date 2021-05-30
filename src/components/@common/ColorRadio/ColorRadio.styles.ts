@@ -54,6 +54,6 @@ export const ColorRadioInput = styled.input<ColorRadioInputProps>`
   }
 `;
 
-export const ColorRadioLabelText = styled.span`
+export const ColorRadioLabelText = styled.div`
   margin-left: 0.5rem;
 `;

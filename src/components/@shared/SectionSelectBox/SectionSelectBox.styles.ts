@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
 import FlexContainer from '../../@common/FlexContainer/FlexContainer';
-import HiddenLabel from '../../@common/HiddenLabel/HiddenLabel';
+import HiddenLabel from '../../@common/a11y/HiddenLabel/HiddenLabel';
 
 export const SectionSelectBoxContainer = styled(FlexContainer)`
   height: 5rem;

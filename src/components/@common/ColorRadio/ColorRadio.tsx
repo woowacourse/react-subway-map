@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { FC, InputHTMLAttributes } from 'react';
+import HiddenDiv from '../a11y/HiddenDiv/HiddenDiv';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
 interface LabelText {
@@ -10,7 +11,7 @@ interface LabelText {
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   groupName: string;
   radioColor: string;
-  labelText?: LabelText;
+  labelText: LabelText;
 }
 
 const ColorRadio: FC<Props> = ({
@@ -29,7 +30,11 @@ const ColorRadio: FC<Props> = ({
         checked={checked}
         {...options}
       />
-      {labelText && <ColorRadioLabelText>{labelText.text}</ColorRadioLabelText>}
+      {labelText.isVisible ? (
+        <ColorRadioLabelText>{labelText.text}</ColorRadioLabelText>
+      ) : (
+        <HiddenDiv>{labelText.text}</HiddenDiv>
+      )}
     </ColorRadioLabel>
   );
 };
@@ -41,7 +46,7 @@ ColorRadio.propTypes = {
   labelText: PropTypes.shape({
     text: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
-  }),
+  }).isRequired,
 };
 
 export default ColorRadio;

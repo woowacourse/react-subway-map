@@ -13,14 +13,20 @@ interface Props {
 }
 
 // TODO: 컴포넌트 이름 변경 고려하기
-const ListItem: FC<Props> = ({ children, onModify, onDelete }) => {
+const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 
   return (
-    <StyledListItem>
+    <StyledListItem {...options}>
       <ListContent alignItems="center">{children}</ListContent>
       {isLogin && onModify && (
-        <ListItemButton type="button" buttonType="round" isColored={false} onClick={onModify}>
+        <ListItemButton
+          type="button"
+          aria-label="수정버튼"
+          buttonType="round"
+          isColored={false}
+          onClick={onModify}
+        >
           <Pencil width="70%" />
         </ListItemButton>
       )}

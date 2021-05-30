@@ -4,7 +4,13 @@ import ReactDOM from 'react-dom';
 import Close from '../Icon/Close';
 import { CloseButton, ModalContainer, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
 
-const $modalRoot = document.getElementById('modal-root');
+let $modalRoot = document.getElementById('modal-root');
+
+if (!$modalRoot) {
+  $modalRoot = document.createElement('div');
+  $modalRoot.setAttribute('id', 'modal-root');
+  document.body.appendChild($modalRoot);
+}
 
 export interface Props {
   children: React.ReactNode;

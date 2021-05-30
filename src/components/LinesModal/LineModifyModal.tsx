@@ -106,6 +106,10 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
               groupName={LINE.COLOR_SELECT_NAME}
               disabled={isUsedLineColor(color)}
               onChange={onChangeLineColor}
+              labelText={{
+                text: '노선 색상 선택 라디오버튼',
+                isVisible: false,
+              }}
             />
           ))}
         </LineColorContainer>

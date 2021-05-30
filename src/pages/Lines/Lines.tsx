@@ -57,13 +57,14 @@ const Lines: FC = () => {
     }
   };
 
+  //aria-label 상수화
   return (
     <CardTemplate
       titleText={PAGE_INFO.LINES.text}
       templateColor={API_INFO[apiOwner].themeColor[400]}
     >
       {isLogin && (
-        <ButtonOnLine onClick={onOpenAddModal}>
+        <ButtonOnLine onClick={onOpenAddModal} aria-label="노선 추가 버튼">
           <Add width="80%" color={PALETTE.GRAY[600]} />
         </ButtonOnLine>
       )}
@@ -74,6 +75,7 @@ const Lines: FC = () => {
               key={line.id}
               onDelete={onDeleteLine(line.id)}
               onModify={onOpenModifyModal(line.id)}
+              data-testid="lineListItem"
             >
               <LineColorDot dotColor={line.color} />
               {line.name}
