@@ -1,74 +1,49 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import Button from "../../components/@shared/Button";
-import Main from "../../components/@shared/Main";
-import API from "./constants";
-import { setBaseURL } from "./baseURL";
-import PATH from "../../constants/path";
-import STATUS from "../../constants/status";
-import { logout } from "../Login/slice";
-
+import { useDispatch } from "react-redux";
+import { fetchStations, reset } from "../Stations/slice";
 import {
-  selectStationsStatus,
-  fetchStations,
-  reset as resetStations,
-} from "../Stations/slice";
-import {
-  selectLinesStatus,
   fetchLines,
   fetchLinesDetail,
   reset as resetLines,
 } from "../Lines/slice";
+import Main from "../../components/@shared/Main";
+import EntryCrewListItem from "../../components/EntryCrewListItem";
 
 const Entry = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const stationsStatus = useSelector(selectStationsStatus);
-  const linesStatus = useSelector(selectLinesStatus);
 
-  const handleButtonClick = async (event) => {
-    setBaseURL(API[event.target.name]);
-    alert(`🎉🎉 ${event.target.name} 당첨 🎉🎉`);
-    dispatch(logout());
-    await dispatch(fetchStations());
-    await dispatch(fetchLines());
-    await dispatch(fetchLinesDetail());
-    history.push(PATH.LOGIN);
-  };
+  useEffect(
+    () => () => {
+      Promise.all([
+        dispatch(fetchStations()),
+        dispatch(fetchLines()),
+        dispatch(fetchLinesDetail()),
+      ]).then(() => {
+        Promise.all([dispatch(reset()), dispatch(resetLines())]);
+      });
+    },
+    [dispatch]
+  );
 
-  useEffect(() => {
-    if (stationsStatus === STATUS.SUCCEED) {
-      dispatch(resetStations());
-    }
-
-    if (linesStatus === STATUS.SUCCEED) {
-      dispatch(resetLines());
-    }
-  }, [stationsStatus, linesStatus, dispatch]);
+  const crews = [
+    { name: "검프", baseURL: "https://gump-subway.p-e.kr" },
+    { name: "포츈", baseURL: "https://fortune-subway.p-e.kr" },
+    { name: "에어", baseURL: "https://air-subway.p-e.kr" },
+    { name: "바다", baseURL: "https://bada-subway.kro.kr" },
+    { name: "우기", baseURL: "https://woogie-subway.kro.kr" },
+  ];
 
   return (
-    <>
-      <Main>
-        <h2 className="flex justify-center mb-4 mt-6 p-4 text-gray-700 text-2xl font-medium">
-          가장 취약할 것 같은 백엔드 크루의 API를 선택해주세요: 공개처형 🔫
-        </h2>
-        <ul className="flex space-x-4">
-          {["검프", "포츈", "에어", "바다", "우기"].map((name) => (
-            <li key={name}>
-              <Button
-                type="button"
-                onClick={handleButtonClick}
-                size="large"
-                name={name}
-              >
-                {name}
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </Main>
-    </>
+    <Main>
+      <h2 className="flex justify-center mb-4 mt-6 p-4 text-gray-700 text-2xl font-medium">
+        가장 취약할 것 같은 백엔드 크루의 API를 선택해주세요: 공개처형 🔫
+      </h2>
+      <ul className="flex space-x-4">
+        {crews.map(({ name, baseURL }) => (
+          <EntryCrewListItem key={name} name={name} baseURL={baseURL} />
+        ))}
+      </ul>
+    </Main>
   );
 };
 
