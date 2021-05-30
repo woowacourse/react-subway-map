@@ -6,6 +6,7 @@ export const ROUTE = {
   STATION_MANAGE: { NAME: '역 관리', PATH: '/station-mange' },
   LINE_MANAGE: { NAME: '노선 관리', PATH: '/line-manage' },
   SECTION_MANAGE: { NAME: '구간 관리', PATH: '/section-manage' },
+  MAP: { NAME: '전체 보기', PATH: '/map' },
 };
 
 export const COLOR = {
