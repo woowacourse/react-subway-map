@@ -24,15 +24,17 @@ import { COLOR, ACCESS_TOKEN, SECTION } from '../../constants';
 export const SectionPage = (props) => {
   const { endpoint } = props;
 
-  const dispatch = useDispatch();
   const [cookies] = useCookies([ACCESS_TOKEN]);
   const accessToken = cookies[ACCESS_TOKEN];
 
+  const dispatch = useDispatch();
   const { stations } = useSelector((store) => store.station);
   const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
 
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
-  const [selectedLine, setSelectedLine] = useState(map[0]);
+  const [selectedLineId, setSelectedLineId] = useState(map[0]?.id);
+  const selectedLine = map.find((line) => line.id === selectedLineId);
+
   const lineNames = map.map((section) => ({ id: section.id, name: section.name }));
   const { enqueueSnackbar } = useSnackbar();
 
@@ -40,17 +42,13 @@ export const SectionPage = (props) => {
   const handleCloseModal = () => setIsSectionAddOpen(false);
 
   const handleSelectLine = (e) => {
-    const selectedLineId = Number(e.target.value);
-    const selectedLine = map.find((line) => line.id === selectedLineId);
-
-    setSelectedLine(selectedLine);
+    setSelectedLineId(Number(e.target.value));
   };
 
   const handleAddSection = (e) => {
     e.preventDefault();
 
     const lineId = e.target.line.value;
-
     const upStationId = e.target.upStation.value;
     const downStationId = e.target.downStation.value;
     const distance = e.target.distance.value;
@@ -59,14 +57,13 @@ export const SectionPage = (props) => {
   };
 
   const handleDeleteSection = (e, stationId) => {
-    dispatch(removeSection({ endpoint, accessToken, lineId: selectedLine.id, stationId }));
+    dispatch(removeSection({ endpoint, accessToken, lineId: selectedLineId, stationId }));
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     dispatch(getMap({ endpoint, accessToken }));
     dispatch(getStations({ endpoint, accessToken }));
-    setSelectedLine(map[0]);
   }, []);
 
   useEffect(() => {

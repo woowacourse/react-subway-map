@@ -42,7 +42,7 @@ const addSection = createAsyncThunk(
         }),
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         return;
       }
 
@@ -65,7 +65,7 @@ const removeSection = createAsyncThunk(
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         return;
       }
 
