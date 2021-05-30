@@ -200,7 +200,7 @@ const LineModal = ({
               ></Styled.ColorOption>
             ))}
           </Styled.ColorPalette>
-          <Styled.SelectedColor color={color} value={color} required />
+          <Styled.SelectedColor color={color} value={color} readOnly required />
         </Styled.PaletteContent>
       </Styled.PaletteContainer>
 
