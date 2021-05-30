@@ -17,24 +17,24 @@ describe('역 관리 페이지 테스트', () => {
 
   it('역 추가 요청', () => {
     const screen = customRender(<Stations />);
-    const stationInput = screen.getByRole('textbox', {
+    const $stationInput = screen.getByRole('textbox', {
       name: '지하철 역 이름을 입력해주세요',
     });
-    const addButton = screen.getByRole('button', {
+    const $addButton = screen.getByRole('button', {
       name: '추가',
     });
 
-    userEvent.type(stationInput, '새로운역');
-    userEvent.click(addButton);
+    userEvent.type($stationInput, '새로운역');
+    userEvent.click($addButton);
 
     expect(requestAddStation).toBeCalledTimes(1);
   });
 
   it('역 삭제 요청', async () => {
     const screen = customRender(<Stations />);
-    const [deleteButton] = screen.getAllByLabelText('삭제버튼');
+    const [$deleteButton] = screen.getAllByLabelText('삭제버튼');
 
-    userEvent.click(deleteButton);
+    userEvent.click($deleteButton);
 
     expect(requestDeleteStation).toBeCalledTimes(1);
   });

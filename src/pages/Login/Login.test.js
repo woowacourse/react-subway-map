@@ -11,10 +11,10 @@ describe('로그인 페이지 테스트', () => {
   it('로그인 요청', () => {
     const screen = customRender(<Login />);
 
-    const loginForm = screen.getByRole('form');
+    const $loginForm = screen.getByRole('form');
 
     act(() => {
-      fireEvent.submit(loginForm, {
+      fireEvent.submit($loginForm, {
         target: {
           email: 'test@test.com',
           password: '123456',
@@ -28,12 +28,12 @@ describe('로그인 페이지 테스트', () => {
   it('회원가입 페이지로 이동', async () => {
     const screen = customRender(<Login />);
 
-    const linkToSignUp = screen.getByRole('link', {
+    const $linkToSignUp = screen.getByRole('link', {
       name: '아직 회원이 아니신가요?',
     });
 
     act(() => {
-      fireEvent.click(linkToSignUp);
+      fireEvent.click($linkToSignUp);
     });
 
     expect(window.location.pathname).toEqual('/signup');
