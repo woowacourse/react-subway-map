@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
-import { COLOR, INPUT_TEXT, ROUTE, SIZE } from '../../constants';
+import { COLOR, INPUT_TEXT, ROUTE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
 import { useSignUp } from '../../hooks';
 import {
@@ -69,7 +69,6 @@ const SignUp = () => {
             <Input
               type="email"
               placeholder={INPUT_TEXT.EMAIL.PLACE_HOLDER}
-              size={SIZE.MD}
               {...getFieldProps('email')}
             />
             <Validator>
@@ -79,7 +78,6 @@ const SignUp = () => {
             <Input
               type="text"
               placeholder={INPUT_TEXT.AGE.PLACE_HOLDER}
-              size={SIZE.MD}
               {...getFieldProps('age')}
             />
             <Validator>{touched.age && errors.age}</Validator>
@@ -90,14 +88,12 @@ const SignUp = () => {
             <Input
               type="password"
               placeholder={INPUT_TEXT.PASSWORD.PLACE_HOLDER}
-              size={SIZE.MD}
               {...getFieldProps('password')}
             />
             <Validator>{touched.password && errors.password}</Validator>
             <Input
               type="password"
               placeholder={INPUT_TEXT.PASSWORD_CONFIRM.PLACE_HOLDER}
-              size={SIZE.MD}
               {...getFieldProps('passwordConfirm')}
             />
             <Validator>

@@ -27,7 +27,7 @@ export const ColorWrapper = styled.li`
   height: 50px;
 `;
 
-export const Color = styled.div`
+export const Color = styled.button`
   width: 44px;
   height: 44px;
   border-radius: 50%;

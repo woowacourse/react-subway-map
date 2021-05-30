@@ -62,16 +62,15 @@ const ServerSelector = () => {
       </Container>
       {isModalOpen && (
         <ConfirmModal
-          messages={[
-            '서버를 변경하면 자동으로 로그아웃이 됩니다.',
-            '계속 진행 하시겠습니까?',
-          ]}
-          closeModal={closeModal}
+          onCloseModal={closeModal}
           onConfirm={() => {
             changeServer();
             history.push(ROUTE.SIGN_OUT.PATH);
           }}
-        />
+        >
+          <span>서버를 변경하면 자동으로 로그아웃이 됩니다.</span>
+          <span>계속 진행 하시겠습니까?</span>
+        </ConfirmModal>
       )}
     </>
   );

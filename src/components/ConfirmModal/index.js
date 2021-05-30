@@ -5,20 +5,18 @@ import { COLOR } from '../../constants';
 import Button from '../@commons/Button';
 import { ButtonWrapper, Container } from './style';
 
-const ConfirmModal = ({ messages, closeModal, onConfirm }) => (
+const ConfirmModal = ({ onCloseModal, onConfirm, children }) => (
   <ModalTemplate>
     <Container>
-      {messages.map((message, index) => (
-        <span key={index}>{message}</span>
-      ))}
+      {children}
       <ButtonWrapper>
-        <Button onClick={closeModal} hasShadow>
+        <Button onClick={onCloseModal} hasShadow>
           취소
         </Button>
         <Button
           onClick={() => {
             onConfirm();
-            closeModal();
+            onCloseModal();
           }}
           backgroundColor={COLOR.AMBER}
           hasShadow
@@ -31,8 +29,7 @@ const ConfirmModal = ({ messages, closeModal, onConfirm }) => (
 );
 
 ConfirmModal.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  closeModal: PropTypes.func.isRequired,
+  onCloseModal: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
 };
 

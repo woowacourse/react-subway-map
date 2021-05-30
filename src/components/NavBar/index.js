@@ -59,10 +59,11 @@ const NavBar = () => {
       </Container>
       {isModalOpen && (
         <ConfirmModal
-          messages={['로그아웃 하시겠습니까?']}
-          closeModal={closeModal}
+          onCloseModal={closeModal}
           onConfirm={() => history.push(ROUTE.SIGN_OUT.PATH)}
-        />
+        >
+          <span>로그아웃 하시겠습니까?</span>
+        </ConfirmModal>
       )}
     </>
   );

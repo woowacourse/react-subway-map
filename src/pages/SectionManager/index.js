@@ -5,7 +5,7 @@ import {
   ManagementList,
   Button,
 } from '../../components';
-import { COLOR, ROUTE, SIZE } from '../../constants';
+import { COLOR, ROUTE } from '../../constants';
 import {
   useLineManager,
   useModal,
@@ -66,12 +66,15 @@ const SectionManager = () => {
         <Selector
           name="section-select-line"
           label="노선 선택"
-          defaultOption="노선 선택"
+          defaults={{
+            value: '',
+            option: '노선 선택',
+            disabled: true,
+          }}
           options={lines}
-          size={SIZE.MD}
           value={selectedLineId}
           onChange={handleChangeSelector}
-        ></Selector>
+        />
         {selectedLine.stations.length > 0 && (
           <SectionList
             line={selectedLine}

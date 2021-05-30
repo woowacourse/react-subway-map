@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { PageTemplate, Input, Button, ManagementList } from '../../components';
-import { ROUTE, SIZE, COLOR, INPUT_TEXT, TEST } from '../../constants';
+import { ROUTE, COLOR, INPUT_TEXT, TEST } from '../../constants';
 import { useStationManager } from '../../hooks';
 import { validateStationName } from '../../utils';
 import { Form, InputWrapper, ButtonWrapper, Validator } from './style';
@@ -47,7 +47,6 @@ const StationManager = () => {
                   type="text"
                   label={INPUT_TEXT.STATION_NAME.LABEL}
                   placeholder={INPUT_TEXT.STATION_NAME.PLACE_HOLDER}
-                  size={SIZE.MD}
                   {...getFieldProps('stationName')}
                 />
               </InputWrapper>

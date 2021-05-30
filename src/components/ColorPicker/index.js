@@ -7,7 +7,12 @@ const colors = Object.values(LINE_COLOR);
 
 const ColorItem = ({ color, isPicked, onClickColor }) => (
   <ColorWrapper>
-    <Color color={color} isPicked={isPicked} onClick={onClickColor} />
+    <Color
+      type="button"
+      color={color}
+      isPicked={isPicked}
+      onClick={onClickColor}
+    />
   </ColorWrapper>
 );
 

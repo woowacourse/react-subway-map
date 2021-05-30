@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { Form, Validator } from './style';
-import { COLOR, ERROR, INPUT_TEXT, ROUTE, SIZE, TEST } from '../../constants';
+import { COLOR, ERROR, INPUT_TEXT, ROUTE, TEST } from '../../constants';
 import { useSignIn } from '../../hooks';
 
 const initialValues = {
@@ -42,13 +42,11 @@ const SignIn = () => {
             <Input
               type="email"
               placeholder={INPUT_TEXT.EMAIL.PLACE_HOLDER}
-              size={SIZE.MD}
               {...getFieldProps('email')}
             />
             <Input
               type="password"
               placeholder={INPUT_TEXT.PASSWORD.PLACE_HOLDER}
-              size={SIZE.MD}
               {...getFieldProps('password')}
             />
             <Validator>

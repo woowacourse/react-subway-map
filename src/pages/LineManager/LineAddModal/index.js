@@ -93,7 +93,11 @@ const LineAddModal = ({
             <SelectorWrapper>
               <Selector
                 label={INPUT_TEXT.UP_STATION.LABEL}
-                defaultOption={INPUT_TEXT.UP_STATION.LABEL}
+                defaults={{
+                  value: '',
+                  option: INPUT_TEXT.UP_STATION.LABEL,
+                  disabled: true,
+                }}
                 options={stations}
                 size={SIZE.LG}
                 {...getFieldProps('upStationId')}
@@ -101,7 +105,11 @@ const LineAddModal = ({
               <span>↔️</span>
               <Selector
                 label={INPUT_TEXT.DOWN_STATION.LABEL}
-                defaultOption={INPUT_TEXT.UP_STATION.LABEL}
+                defaults={{
+                  value: '',
+                  option: INPUT_TEXT.DOWN_STATION.LABEL,
+                  disabled: true,
+                }}
                 options={stations}
                 size={SIZE.LG}
                 {...getFieldProps('downStationId')}

@@ -33,13 +33,14 @@ const ManagementList = ({ items, onDeleteItem }) => {
       </Container>
       {isModalOpen && (
         <ConfirmModal
-          messages={['정말 삭제하시겠습니까?']}
-          closeModal={closeModal}
+          onCloseModal={closeModal}
           onConfirm={() => {
             onDeleteItem({ id: deleteId });
             setDeleteId(null);
           }}
-        />
+        >
+          <span>정말 삭제하시겠습니까?</span>
+        </ConfirmModal>
       )}
     </>
   );
