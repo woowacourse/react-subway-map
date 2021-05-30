@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import { Card, Input, Button, Select } from '../../components';
 import * as Styled from './LoginPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
@@ -10,18 +9,16 @@ import useSelect from '../../hooks/useSelect';
 import REGEX from '../../constants/regex';
 import ROUTES from '../../constants/routes';
 import BACKEND from '../../constants/backend';
-import { ApiStatus, CREWS } from '../../types';
+import { CREWS } from '../../types';
 import useAuth from '../../hooks/useAuth';
-import MESSAGE from '../../constants/message';
+import { LOGIN } from '../../constants/validation';
 
 interface ILocationState {
   from: { pathname: string };
 }
 
 const LoginPage = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const { onLogin, onResetError, server, isLogin, error } = useAuth();
+  const { onLogin, server, isLogin, showErrorMessage, isError } = useAuth();
 
   const { value: selectedServer, onChange: onChangeSelectedServer } = useSelect(
     server || CREWS.DANYEE
@@ -32,13 +29,10 @@ const LoginPage = () => {
   const history = useHistory();
   const location = useLocation<ILocationState>();
 
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await onLogin(selectedServer, { email, password });
-
-    if (response.meta.requestStatus === ApiStatus.REJECTED) return;
-    enqueueSnackbar(MESSAGE.SUCCESS.LOGIN);
+    onLogin(selectedServer, { email, password });
   };
 
   useEffect(() => {
@@ -50,13 +44,10 @@ const LoginPage = () => {
   }, [history, isLogin, location.state?.from]);
 
   useEffect(() => {
-    if (error) {
-      enqueueSnackbar(error.message || MESSAGE.ERROR.LOGIN_FAILURE, {
-        variant: 'error',
-      });
-      onResetError();
+    if (isError) {
+      showErrorMessage();
     }
-  }, [enqueueSnackbar, error, onResetError]);
+  }, [isError, showErrorMessage]);
 
   return (
     <Styled.LoginPage>
@@ -94,7 +85,7 @@ const LoginPage = () => {
                 onChange={onChangePassword}
                 icon={<KeyIcon />}
                 type="password"
-                minLength={8}
+                minLength={LOGIN.MIN_PASSWORD_LENGTH}
                 placeholder="비밀번호를 입력해주세요"
                 required
               />
