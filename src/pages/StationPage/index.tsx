@@ -5,7 +5,6 @@ import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
 import IconButton from 'components/shared/IconButton/IconButton';
-import Notification from 'components/shared/Notification/Notification';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Station, User } from 'types';
@@ -43,7 +42,8 @@ const StationPage = () => {
     API_METHOD.DELETE,
   );
   const { fetchData: editStationAsync, loading: editStationLoading } = useFetch(API_METHOD.PUT);
-  const { notification: stationNoti, setNotification: setStationNoti } = useNotify();
+  const { setNotification: setStationNotification, Notification: StationNotification } =
+    useNotify();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,12 +66,16 @@ const StationPage = () => {
     event.preventDefault();
 
     if (!isValidStationName(newStationName)) {
-      setStationNoti({ message: NOTIFICATION.STATION_NAME, isValid: false, isVisible: true });
+      setStationNotification({
+        message: NOTIFICATION.STATION_NAME,
+        isValid: false,
+        isVisible: true,
+      });
 
       return;
     }
 
-    setStationNoti({ message: '', isValid: false, isVisible: false });
+    setStationNotification({ message: '', isValid: false, isVisible: false });
 
     const res = await addStationAsync(END_POINT.STATIONS, {
       name: newStationName,
@@ -96,11 +100,15 @@ const StationPage = () => {
     event.preventDefault();
 
     if (!isValidStationName(editingStationName)) {
-      setStationNoti({ message: NOTIFICATION.STATION_NAME, isValid: false, isVisible: true });
+      setStationNotification({
+        message: NOTIFICATION.STATION_NAME,
+        isValid: false,
+        isVisible: true,
+      });
 
       return;
     }
-    setStationNoti({ message: '', isValid: false, isVisible: false });
+    setStationNotification({ message: '', isValid: false, isVisible: false });
 
     const res = await editStationAsync(`${END_POINT.STATIONS}/${editingStationId}`, {
       name: editingStationName,
@@ -162,11 +170,7 @@ const StationPage = () => {
                 maxLength: INPUT.STATION_NAME.MAX_LENGTH,
               }}
             />
-            <Notification
-              message={stationNoti.message}
-              isValid={stationNoti.isValid}
-              isVisible={stationNoti.isVisible}
-            />
+            <StationNotification />
           </Styled.InputWrapper>
           <TextButton text="추가" styleType={ButtonType.YELLOW} />
         </Styled.InputContainer>

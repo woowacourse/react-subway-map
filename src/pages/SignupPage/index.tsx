@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
@@ -38,8 +37,9 @@ const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
-  const { notification: passwordNoti, setNotification: setPasswordNoti } = useNotify();
-  const { notification: emailNoti, setNotification: setEmailNoti } = useNotify();
+  const { setNotification: setPasswordNotification, Notification: Passwordnotification } =
+    useNotify();
+  const { setNotification: setEmailNotification, Notification: EmailNotification } = useNotify();
   const { fetchData: checkDuplicatedEmailAsync } = useFetch(API_METHOD.GET);
   const { fetchData: signupAsync, loading: signupLoading } = useFetch(API_METHOD.POST);
 
@@ -52,13 +52,13 @@ const SignupPage = () => {
       enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR || ALERT_MESSAGE.SERVER_ERROR);
     } else if (res.status === API_STATUS.FULFILLED) {
       if (res.data.exist) {
-        setEmailNoti({
+        setEmailNotification({
           message: NOTIFICATION.DUPLICATED_EMAIL,
           isValid: false,
           isVisible: true,
         });
       } else {
-        setEmailNoti({
+        setEmailNotification({
           message: NOTIFICATION.AVAILABLE_EMAIL,
           isValid: true,
           isVisible: true,
@@ -69,14 +69,14 @@ const SignupPage = () => {
 
   const checkPasswordMatch = () => {
     if (password !== confirmPassword) {
-      setPasswordNoti({
+      setPasswordNotification({
         message: NOTIFICATION.DISMATCH_PASSWORD,
         isValid: false,
         isVisible: true,
       });
       return false;
     } else {
-      setPasswordNoti({
+      setPasswordNotification({
         message: NOTIFICATION.MATCH_PASSWORD,
         isValid: true,
         isVisible: true,
@@ -127,11 +127,7 @@ const SignupPage = () => {
               onBlur={checkDuplicatedEmail}
               onChange={(event) => setEmail(event.target.value)}
             />
-            <Notification
-              message={emailNoti.message}
-              isValid={emailNoti.isValid}
-              isVisible={emailNoti.isVisible}
-            />
+            <EmailNotification />
           </Styled.InputWrapper>
           <Styled.InputWrapper>
             <Input
@@ -166,11 +162,7 @@ const SignupPage = () => {
               onBlur={checkPasswordMatch}
               extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
             />
-            <Notification
-              message={passwordNoti.message}
-              isValid={passwordNoti.isValid}
-              isVisible={passwordNoti.isVisible}
-            />
+            <Passwordnotification />
           </Styled.InputWrapper>
         </Styled.InputContainer>
 

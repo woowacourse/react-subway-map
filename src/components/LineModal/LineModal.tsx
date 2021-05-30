@@ -3,7 +3,6 @@ import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import Notification from 'components/shared/Notification/Notification';
 import { ButtonType, Line, Station } from 'types';
 import useFetch from 'hooks/useFetch';
 import Styled from './LineModal.styles';
@@ -41,9 +40,8 @@ const LineModal = ({
   const [distance, setDistance] = useState<string>('');
   const [extraFare, setExtraFare] = useState<string>('');
 
-  const { notification: lineNameNoti, setNotification: setLineNameNoti } = useNotify();
-  // const [isMessageValid, setMessageValid] = useState<boolean>(false);
-  // const [isMessageVisible, setMessageVisible] = useState<boolean>(false);
+  const { setNotification: setLineNameNotification, Notification: LineNameNotification } =
+    useNotify();
 
   const { fetchData: addLineAsync } = useFetch(API_METHOD.POST);
   const { fetchData: editLineAsync } = useFetch(API_METHOD.PUT);
@@ -56,11 +54,15 @@ const LineModal = ({
     const isValidLineName = REGEX.ONLY_KOREAN_AND_NUMBER.test(name);
 
     if (!isValidLineName) {
-      setLineNameNoti({ message: NOTIFICATION.LINEN_NAME, isValid: false, isVisible: true });
+      setLineNameNotification({
+        message: NOTIFICATION.LINEN_NAME,
+        isValid: false,
+        isVisible: true,
+      });
 
       return false;
     } else {
-      setLineNameNoti({ message: '', isValid: false, isVisible: false });
+      setLineNameNotification({ message: '', isValid: false, isVisible: false });
 
       return true;
     }
@@ -70,7 +72,7 @@ const LineModal = ({
     event.preventDefault();
 
     if (!validateLineName()) return;
-    setLineNameNoti({ message: '', isValid: false, isVisible: false });
+    setLineNameNotification({ message: '', isValid: false, isVisible: false });
 
     const newLine = {
       name,
@@ -146,11 +148,7 @@ const LineModal = ({
             maxLength: INPUT.LINE_NAME.MAX_LENGTH,
           }}
         />
-        <Notification
-          message={lineNameNoti.message}
-          isValid={lineNameNoti.isValid}
-          isVisible={lineNameNoti.isVisible}
-        />
+        <LineNameNotification />
       </div>
       {!selectedLine && (
         <>

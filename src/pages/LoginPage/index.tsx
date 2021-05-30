@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
 import TextButton from 'components/shared/TextButton/TextButton';
-import Notification from 'components/shared/Notification/Notification';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
 import { ButtonSize, ButtonType } from 'types';
@@ -36,7 +35,7 @@ const LoginPage = () => {
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
   const { fetchData: loginAsync, loading: loginLoading } = useFetch(API_METHOD.POST);
-  const { notification: loginNoti, setNotification: setLoginNoti } = useNotify();
+  const { setNotification: setLoginNotification, Notification: LoginNotification } = useNotify();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -53,13 +52,13 @@ const LoginPage = () => {
     const res = await loginAsync(END_POINT.LOGIN, loginData);
 
     if (res.status === API_STATUS.REJECTED) {
-      setLoginNoti({
+      setLoginNotification({
         message: res.message || ALERT_MESSAGE.SERVER_ERROR,
         isValid: false,
         isVisible: true,
       });
     } else if (res.status === API_STATUS.FULFILLED) {
-      setLoginNoti({ message: '', isValid: true, isVisible: false });
+      setLoginNotification({ message: '', isValid: true, isVisible: false });
       setLoginResponse(res.data);
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_LOGIN);
 
@@ -110,11 +109,7 @@ const LoginPage = () => {
               icon={lockImg}
               onChange={(event) => setPassword(event.target.value)}
             />
-            <Notification
-              message={loginNoti.message}
-              isValid={loginNoti.isValid}
-              isVisible={loginNoti.isVisible}
-            />
+            <LoginNotification />
           </Styled.InputWrapper>
         </Styled.InputContainer>
 
