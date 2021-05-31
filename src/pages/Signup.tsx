@@ -55,8 +55,6 @@ const Signup = () => {
       return;
     }
 
-    // TODO: 추상화
-    // TODO: alert 변경
     try {
       await dispatch(signupAsync({ email, password, age }));
       alert(MESSAGE.SIGNUP.SUCCESS);

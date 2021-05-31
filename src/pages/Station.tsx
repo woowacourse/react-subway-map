@@ -18,7 +18,6 @@ const Station = () => {
 
   const dispatch = useDispatch();
 
-  // TODO useAppSelector 추상화 하기
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
 

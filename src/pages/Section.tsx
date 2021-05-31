@@ -9,11 +9,11 @@ import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clearSelectedLIne, getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
 import { addSectionAsync, AddSectionPayload, deleteSectionAsync } from 'redux/sectionSlice';
 import { getStationAsync } from 'redux/stationSlice';
-import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import { LineInterface, SelectedLineInterface, StationInterface } from 'types';
 import AddSectionModal from './AddSectionModal';
 
@@ -22,7 +22,6 @@ const Section = () => {
 
   const dispatch = useDispatch();
 
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
   const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
   const selectedLine: SelectedLineInterface | null = useAppSelector((state) => state.line.selectedLine);

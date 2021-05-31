@@ -7,18 +7,17 @@ import lockImg from 'assets/images/lock.png';
 import Title from '@shared/Title/Title';
 import PATH from 'constants/PATH';
 import { Link, useHistory } from 'react-router-dom';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginAsync } from 'redux/authSlice';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import axios from 'axios';
-import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import MESSAGE from 'constants/message';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const accessToken: string | null = useAppSelector((state) => state.auth.accessToken);
 
   const [email, setEmail] = useState('');

@@ -13,7 +13,6 @@ interface LoginPayload {
   password: string;
 }
 
-// TODO: 추상화
 export const signupAsync = createAsyncThunk('auth/signupAsync', async ({ email, password, age }: SignupPayload) => {
   try {
     await axios.post(`/members`, {

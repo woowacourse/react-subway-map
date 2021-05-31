@@ -5,7 +5,6 @@ interface PaletteProps {
   setColor: (color: string) => void;
 }
 
-// TODO: 칼라 obj로 정리하기 constant/colors.ts와 함께
 const colors = [
   { bgColor: 'bg-pink-300', hoverBgColor: 'bg-pink-400' },
   { bgColor: 'bg-red-300', hoverBgColor: 'bg-red-400' },

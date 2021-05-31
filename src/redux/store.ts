@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import authReducer from './authSlice';
 import stationReducer from './stationSlice';
 import lineReducer from './lineSlice';
@@ -16,5 +17,7 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

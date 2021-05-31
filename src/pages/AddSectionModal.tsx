@@ -79,7 +79,6 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
           </SelectInput>
           <div className="flex items-center mb-8">
             <SelectInput defaultValue="DEFAULT" onChange={handleUpStationId} title="상행역" className="w-full">
-              {/* TODO: option 부분을 컴포넌트로 분리해야 할까? 말까? */}
               <option value="DEFAULT" disabled hidden>
                 역을 선택해주세요
               </option>

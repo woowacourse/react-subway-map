@@ -4,14 +4,13 @@ import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import MESSAGE from 'constants/message';
-// import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
 import { getStationAsync } from 'redux/stationSlice';
-import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import { LineInterface, StationInterface } from 'types';
 import AddLineModal from './AddLineModal';
 
@@ -20,8 +19,6 @@ const Line = () => {
 
   const dispatch = useDispatch();
 
-  // TODO useAppSelector 추상화 하기
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
   const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
 
@@ -71,15 +68,7 @@ const Line = () => {
           <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
         </div>
         {lines?.map((line) => (
-          <ListItem
-            onDelete={handleDelete}
-            key={line.id}
-            id={line.id}
-            title={line.name}
-            // TODO 수정 기능 구현시 주석 살릴 것.
-            // editImg={editImg}
-            itemColor={line.color}
-          />
+          <ListItem onDelete={handleDelete} key={line.id} id={line.id} title={line.name} itemColor={line.color} />
         ))}
       </Container>
       {modalOpen && <AddLineModal stations={stations} onModalClose={handleModalClose} onSubmit={handleSubmit} />}
