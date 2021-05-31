@@ -7,7 +7,7 @@ import { ReactComponent as EditIcon } from '../../assets/icons/edit-solid.svg';
 import useModal from '../../hooks/useModal';
 import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
-import { ApiStatus, Station } from '../../types';
+import { Station } from '../../types';
 import MessageBox from '../../components/MessageBox/MessageBox';
 
 const StationPage = () => {
@@ -17,12 +17,13 @@ const StationPage = () => {
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
   const [editStationId, setEditStationId] = useState<Station['id']>(-1);
 
-  const { stationList, status, onAddStation, onEditStation, onDeleteStation } = useStation();
+  const { stationList, requestAddStation, requestEditStation, requestDeleteStation, isLoading } =
+    useStation();
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const isSuccess = await onAddStation(name);
+    const isSuccess = await requestAddStation(name);
 
     if (!isSuccess) return;
 
@@ -41,7 +42,7 @@ const StationPage = () => {
 
     if (!editStationId) return;
 
-    const isSuccess = await onEditStation({ id: editStationId, name: editName });
+    const isSuccess = await requestEditStation({ id: editStationId, name: editName });
 
     if (!isSuccess) return;
 
@@ -51,7 +52,7 @@ const StationPage = () => {
   };
 
   const handleDelete = (id: Station['id']) => {
-    onDeleteStation(id);
+    requestDeleteStation(id);
   };
 
   return (
@@ -77,7 +78,7 @@ const StationPage = () => {
               </Styled.AddForm>
             </Card>
           </Styled.FormContainer>
-          {status === ApiStatus.FULFILLED && stationList.length === 0 && (
+          {!isLoading && stationList.length === 0 && (
             <MessageBox emoji="👻">역 목록이 비어있습니다</MessageBox>
           )}
           {stationList.length > 0 && (

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from './useStore';
-import { Station } from '../types';
+import { ApiStatus, Station } from '../types';
 import {
   addStation,
   deleteStation,
@@ -21,9 +21,7 @@ const useStation = () => {
 
   const { list: stationList, status, error } = station;
 
-  const onGetStation = () => dispatch(getStationList());
-
-  const onAddStation = async (name: Station['name']) => {
+  const requestAddStation = async (name: Station['name']) => {
     if (!(name.length > 1 && name.length < 21)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH);
 
@@ -49,7 +47,7 @@ const useStation = () => {
     }
   };
 
-  const onEditStation = async ({ id, name }: Station) => {
+  const requestEditStation = async ({ id, name }: Station) => {
     if (!(name.length > 1 && name.length < 21)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH);
 
@@ -75,7 +73,7 @@ const useStation = () => {
     }
   };
 
-  const onDeleteStation = async (id: Station['id']) => {
+  const requestDeleteStation = async (id: Station['id']) => {
     try {
       const response = await dispatch(deleteStation(id));
 
@@ -96,7 +94,7 @@ const useStation = () => {
   };
 
   useEffect(() => {
-    onGetStation();
+    dispatch(getStationList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -109,13 +107,13 @@ const useStation = () => {
   }, [error, dispatch]);
 
   return {
-    onGetStation,
-    onAddStation,
-    onEditStation,
-    onDeleteStation,
+    requestAddStation,
+    requestEditStation,
+    requestDeleteStation,
     stationList,
     status,
     error,
+    isLoading: status === ApiStatus.IDLE || status === ApiStatus.PENDING,
   };
 };
 

@@ -15,7 +15,7 @@ const useSection = () => {
 
   const dispatch = useAppDispatch();
 
-  const onAddSection = async ({ lineId, data }: SectionAttribute) => {
+  const requestAddSection = async ({ lineId, data }: SectionAttribute) => {
     try {
       const response = await dispatch(addSection({ lineId, data }));
 
@@ -35,7 +35,7 @@ const useSection = () => {
     }
   };
 
-  const onDeleteSection = async ({
+  const requestDeleteSection = async ({
     lineId,
     stationId,
   }: {
@@ -64,8 +64,8 @@ const useSection = () => {
   return {
     stationList,
     lineList,
-    onAddSection,
-    onDeleteSection,
+    requestAddSection,
+    requestDeleteSection,
     isLoading,
   };
 };

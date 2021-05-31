@@ -39,7 +39,13 @@ const LinePage = () => {
   } = useModal();
 
   const { stationList } = useStation();
-  const { onAddLine, onEditLine, onDeleteLine, lineList, status: lineStatus } = useLine();
+  const {
+    requestAddLine,
+    requestEditLine,
+    requestDeleteLine,
+    lineList,
+    status: lineStatus,
+  } = useLine();
 
   const { color, onChange: onChangeColor } = useColorPalette();
   const { color: editColor, onChange: onChangeEditColor } = useColorPalette();
@@ -77,7 +83,7 @@ const LinePage = () => {
   const handleAddLine: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const isSuccess = await onAddLine({
+    const isSuccess = await requestAddLine({
       name,
       color,
       upStationId,
@@ -97,7 +103,7 @@ const LinePage = () => {
 
     if (editLineId < 0) return;
 
-    const isSuccess = await onEditLine({
+    const isSuccess = await requestEditLine({
       id: editLineId,
       name: editName,
       color: editColor,
@@ -111,7 +117,7 @@ const LinePage = () => {
   };
 
   const handleDeleteLine = (id: Line['id']) => {
-    onDeleteLine(id);
+    requestDeleteLine(id);
   };
 
   const handleOpenAddModal = () => {

@@ -14,9 +14,7 @@ const useLine = () => {
 
   const { list: lineList, error, status } = line;
 
-  const onGetLine = () => dispatch(getLineList());
-
-  const onAddLine = async ({
+  const requestAddLine = async ({
     name,
     color,
     upStationId,
@@ -50,7 +48,7 @@ const useLine = () => {
     }
   };
 
-  const onEditLine = async ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) => {
+  const requestEditLine = async ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) => {
     if (!(name.length > 1 && name.length < 11)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH);
 
@@ -76,7 +74,7 @@ const useLine = () => {
     }
   };
 
-  const onDeleteLine = async (id: Line['id']) => {
+  const requestDeleteLine = async (id: Line['id']) => {
     try {
       const response = await dispatch(deleteLine(id));
 
@@ -97,7 +95,7 @@ const useLine = () => {
   };
 
   useEffect(() => {
-    onGetLine();
+    dispatch(getLineList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -110,10 +108,9 @@ const useLine = () => {
   }, [error, dispatch]);
 
   return {
-    onGetLine,
-    onAddLine,
-    onEditLine,
-    onDeleteLine,
+    requestAddLine,
+    requestEditLine,
+    requestDeleteLine,
     lineList,
     error,
     status,

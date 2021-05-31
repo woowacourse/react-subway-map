@@ -17,7 +17,8 @@ const SectionPage = () => {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const { stationList, lineList, onAddSection, onDeleteSection, isLoading } = useSection();
+  const { stationList, lineList, requestAddSection, requestDeleteSection, isLoading } =
+    useSection();
 
   const {
     value: selectedLineId,
@@ -54,7 +55,7 @@ const SectionPage = () => {
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const isSuccess = await onAddSection({
+    const isSuccess = await requestAddSection({
       lineId: selectedLineId,
       data: {
         upStationId,
@@ -78,7 +79,7 @@ const SectionPage = () => {
       return;
     }
 
-    onDeleteSection({ lineId: selectedLineId, stationId });
+    requestDeleteSection({ lineId: selectedLineId, stationId });
   };
 
   useEffect(() => {
