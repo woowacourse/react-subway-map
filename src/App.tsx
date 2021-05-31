@@ -27,31 +27,10 @@ const ConditionalRoute = ({ exact, path, Component, condition }: ConditionalRout
   );
 };
 
-const App = () => {
-  const dispatch = useAppDispatch();
+const LoginedMenu = () => {
   const history = useHistory();
 
-  const {
-    signedUserState,
-    accessTokenState: { accessToken },
-    hostState: { host },
-  } = useSelector((state: RootState) => ({
-    signedUserState: state.signedUserReducer,
-    accessTokenState: state.accessTokenReducer,
-    hostState: state.hostReducer,
-  }));
-
-  useEffect(() => {
-    if (signedUserState?.isError === true) {
-      dispatch(setAccessToken(initialAccessToken));
-    }
-  }, [signedUserState]);
-
-  useEffect(() => {
-    dispatch(getSignedUserAsync({ host, accessToken }));
-  }, []);
-
-  const LoginedMenu = (
+  return (
     <>
       <Button
         type="button"
@@ -85,8 +64,12 @@ const App = () => {
       </Button>
     </>
   );
+};
 
-  const UnLoginedMenu = (
+const UnLoginedMenu = () => {
+  const history = useHistory();
+
+  return (
     <>
       <Button
         type="button"
@@ -97,6 +80,30 @@ const App = () => {
       </Button>
     </>
   );
+};
+
+const App = () => {
+  const dispatch = useAppDispatch();
+
+  const {
+    signedUserState,
+    accessTokenState: { accessToken },
+    hostState: { host },
+  } = useSelector((state: RootState) => ({
+    signedUserState: state.signedUserReducer,
+    accessTokenState: state.accessTokenReducer,
+    hostState: state.hostReducer,
+  }));
+
+  useEffect(() => {
+    if (signedUserState?.isError === true) {
+      dispatch(setAccessToken(initialAccessToken));
+    }
+  }, [signedUserState]);
+
+  useEffect(() => {
+    dispatch(getSignedUserAsync({ host, accessToken }));
+  }, []);
 
   return (
     <RootContainer>
@@ -104,7 +111,7 @@ const App = () => {
       <Title>
         <Link to={ROUTE.HOME}>지하철 노선도</Link>
       </Title>
-      <Menu>{signedUserState.id ? LoginedMenu : UnLoginedMenu}</Menu>
+      <Menu>{signedUserState.id ? LoginedMenu() : UnLoginedMenu()}</Menu>
       <Main>
         <Switch>
           <Route exact path={ROUTE.HOME} component={Home} />
