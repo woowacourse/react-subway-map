@@ -9,8 +9,6 @@ import { SnackBarContext } from '../../contexts/SnackBarProvider';
 
 import PALETTE from '../../constants/palette';
 import STATUS_CODE from '../../constants/statusCode';
-import REGEX from '../../constants/regex';
-import { STATION_VALUE } from '../../constants/values';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
 
 import useInput from '../../hooks/useInput';
@@ -19,6 +17,10 @@ import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
 import { Container, Form, Text, StationList } from './StationPage.style';
 import noStation from '../../assets/images/no_station.png';
 import { PageProps } from '../types';
+import {
+  isStationInputDuplicated,
+  isStationInputValid,
+} from '../../utils/validations/stationValidation';
 
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 
@@ -59,18 +61,12 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const isStationInputValid =
-      stationInput.length >= STATION_VALUE.NAME_MIN_LENGTH &&
-      stationInput.length <= STATION_VALUE.NAME_MAX_LENGTH &&
-      REGEX.KOREAN_DIGIT.test(stationInput);
-    const isStationInputDuplicated = stations.some((item) => item.name === stationInput);
-
-    if (!isStationInputValid) {
+    if (!isStationInputValid(stationInput)) {
       setStationInputErrorMessage(ERROR_MESSAGE.INVALID_STATION_INPUT);
       return;
     }
 
-    if (isStationInputDuplicated) {
+    if (isStationInputDuplicated(stations, stationInput)) {
       setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
       await fetchData();
       return;

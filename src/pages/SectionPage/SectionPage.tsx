@@ -20,9 +20,7 @@ import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
 import PALETTE from '../../constants/palette';
-import REGEX from '../../constants/regex';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
-import { SECTION_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
 import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
@@ -33,10 +31,11 @@ import { PageProps } from '../types';
 import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
 import STATUS_CODE from '../../constants/statusCode';
-
-interface StationInLine extends APIReturnTypeStation {
-  distance?: number;
-}
+import {
+  distanceErrorMessage,
+  isFormCompleted,
+  stationSelectErrorMessage,
+} from '../../utils/validations/sectionValidation';
 
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
@@ -58,35 +57,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
   const currentLine = lines.find((line) => line.id === selectedLineId);
-
-  const isOnlyOneStationInCurrentLine = Boolean(
-    Number(currentLine?.stations.some(({ id }) => id === Number(upStationId))) ^
-      Number(currentLine?.stations.some(({ id }) => id === Number(downStationId)))
-  );
-  const isStationSelectDuplicated = upStationId === downStationId;
-
-  const isDistanceValid =
-    REGEX.ONLY_DIGIT.test(distance) &&
-    Number(distance) >= SECTION_VALUE.DISTANCE_MIN_VALUE &&
-    Number(distance) <= SECTION_VALUE.DISTANCE_MAX_VALUE;
-
-  const stationSelectErrorMessage =
-    upStationId && downStationId
-      ? isStationSelectDuplicated
-        ? ERROR_MESSAGE.DUPLICATED_TERMINAL
-        : isOnlyOneStationInCurrentLine
-        ? ''
-        : ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED
-      : '';
-
-  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
-  const isFormCompleted =
-    upStationId &&
-    downStationId &&
-    distance &&
-    !isStationSelectDuplicated &&
-    isDistanceValid &&
-    isOnlyOneStationInCurrentLine;
 
   const getLine = async (lineId: number) => {
     const timer = setTimeout(() => setIsLoading(true), 500);
@@ -152,7 +122,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    if (!isFormCompleted) {
+    if (!isFormCompleted(currentLine, { upStationId, downStationId, distance })) {
       addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
       return;
     }
@@ -167,11 +137,12 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       await addSection(selectedLineId, newSection);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_SECTION);
-      await fetchData();
-      await getLine(selectedLineId);
 
       reset();
       setFormOpen(false);
+
+      await fetchData();
+      await getLine(selectedLineId);
     } catch (error) {
       console.error(error);
 
@@ -220,7 +191,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 구간 관리</Heading1>
-
         {isLoggedIn ? (
           <>
             <p>구간을 추가하시려면 '+' 버튼을 눌러주세요</p>
@@ -288,11 +258,13 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
                 </Select>
               </InputContainer>
             </div>
-            <ErrorText>{stationSelectErrorMessage}</ErrorText>
+            <ErrorText>
+              {currentLine && stationSelectErrorMessage(currentLine, upStationId, downStationId)}
+            </ErrorText>
           </StationSelects>
           <InputContainer
             labelText="거리 (단위:km)"
-            validation={{ text: distanceErrorMessage, isValid: false }}
+            validation={{ text: distanceErrorMessage(distance), isValid: false }}
           >
             <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>

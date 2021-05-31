@@ -27,20 +27,23 @@ import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
-import REGEX from '../../constants/regex';
 import PALETTE from '../../constants/palette';
 import STATUS_CODE from '../../constants/statusCode';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
-import { LINE_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
 import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
 import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
 
-import apiRequest from '../../request';
 import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
 import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
+import {
+  lineNameErrorMessage,
+  stationSelectErrorMessage,
+  distanceErrorMessage,
+  isFormCompleted,
+} from '../../utils/validations/lineValidation';
 
 const lineColors = [
   'PINK',
@@ -80,39 +83,6 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
-
-  const isLineNameValid =
-    lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
-    lineName.length <= LINE_VALUE.NAME_MAX_LENGTH &&
-    REGEX.KOREAN_DIGIT.test(lineName);
-  const isLineNameDuplicated = lines.some((item) => item.name === lineName);
-  const isStationSelectDuplicated = upStationId === downStationId;
-  const isDistanceValid =
-    REGEX.ONLY_DIGIT.test(distance) &&
-    Number(distance) >= LINE_VALUE.DISTANCE_MIN_VALUE &&
-    Number(distance) <= LINE_VALUE.DISTANCE_MAX_VALUE;
-
-  const lineNameErrorMessage =
-    lineName &&
-    (!isLineNameValid
-      ? ERROR_MESSAGE.INVALID_LINE_INPUT
-      : isLineNameDuplicated
-      ? ERROR_MESSAGE.DUPLICATED_LINE_NAME
-      : '');
-  const stationSelectErrorMessage =
-    upStationId && downStationId && isStationSelectDuplicated
-      ? ERROR_MESSAGE.DUPLICATED_TERMINAL
-      : '';
-  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
-  const isFormCompleted =
-    lineName &&
-    upStationId &&
-    downStationId &&
-    distance &&
-    isLineNameValid &&
-    !isLineNameDuplicated &&
-    !isStationSelectDuplicated &&
-    isDistanceValid;
 
   const reset = () => {
     setLineName('');
@@ -160,7 +130,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     const formElement = event.currentTarget;
     const color = formElement['color'].value;
 
-    if (!isFormCompleted || !color) {
+    if (!isFormCompleted(lines, { lineName, upStationId, downStationId, distance }) || !color) {
       addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
       return;
     }
@@ -241,7 +211,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
         <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식">
           <InputContainer
             labelText="노선 이름"
-            validation={{ text: lineNameErrorMessage, isValid: false }}
+            validation={{ text: lineNameErrorMessage(lines, lineName), isValid: false }}
           >
             <Input
               value={lineName}
@@ -287,11 +257,11 @@ const LinePage = ({ setIsLoading }: PageProps) => {
                 </Select>
               </InputContainer>
             </div>
-            <ErrorText>{stationSelectErrorMessage}</ErrorText>
+            <ErrorText>{stationSelectErrorMessage(upStationId, downStationId)}</ErrorText>
           </StationSelects>
           <InputContainer
             labelText="거리 (단위:km)"
-            validation={{ text: distanceErrorMessage, isValid: false }}
+            validation={{ text: distanceErrorMessage(distance), isValid: false }}
           >
             <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>

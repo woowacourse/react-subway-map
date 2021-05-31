@@ -14,7 +14,6 @@ import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 
-import REGEX from '../../constants/regex';
 import { SIGNUP_VALUE } from '../../constants/values';
 import PATH from '../../constants/path';
 import PALETTE from '../../constants/palette';
@@ -25,6 +24,17 @@ import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
 import { Form } from './SignupPage.style';
+import {
+  isEmailFormatValid,
+  isAgeValid,
+  isPasswordValid,
+  isPasswordMatched,
+  emailMessage,
+  ageErrorMessage,
+  passwordErrorMessage,
+  passwordMatchedErrorMessage,
+  isFormCompleted,
+} from '../../utils/validations/signupValidation';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -39,37 +49,6 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const [age, onAgeChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const [passwordConfirm, onPasswordConfirmChange] = useInput('');
-
-  const isEmailFormatValid = !email || REGEX.EMAIL.test(email);
-  const isAgeValid =
-    !age ||
-    (Number(age) >= SIGNUP_VALUE.AGE_MIN_VALUE && Number(age) <= SIGNUP_VALUE.AGE_MAX_VALUE);
-  const isPasswordValid = !password || REGEX.PASSWORD.test(password);
-  const isPasswordMatched = !passwordConfirm || password === passwordConfirm;
-
-  const emailMessage = email
-    ? isEmailFormatValid
-      ? isEmailDuplicated
-        ? ERROR_MESSAGE.DUPLICATED_EMAIL
-        : SUCCESS_MESSAGE.AVAILABLE_EMAIL
-      : ERROR_MESSAGE.INVALID_EMAIL
-    : '';
-  const ageErrorMessage = isAgeValid ? '' : ERROR_MESSAGE.INVALID_AGE;
-  const passwordErrorMessage = isPasswordValid ? '' : ERROR_MESSAGE.INVALID_PASSWORD;
-  const passwordMatchedErrorMessage = isPasswordMatched
-    ? ''
-    : ERROR_MESSAGE.INVALID_PASSWORD_CONFIRM;
-
-  const isFormCompleted =
-    email &&
-    age &&
-    password &&
-    passwordConfirm &&
-    isEmailFormatValid &&
-    !isEmailDuplicated &&
-    isAgeValid &&
-    isPasswordValid &&
-    isPasswordMatched;
 
   const checkEmailDuplicated = useDebounce(async (value: string) => {
     try {
@@ -106,7 +85,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const onSignup: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    if (!isFormCompleted) {
+    if (!isFormCompleted(isEmailDuplicated, { email, age, password, passwordConfirm })) {
       return;
     }
 
@@ -131,8 +110,8 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
       <Form onSubmit={onSignup}>
         <InputContainer
           validation={{
-            text: emailMessage,
-            isValid: isEmailFormatValid && !isEmailDuplicated,
+            text: emailMessage(email, isEmailDuplicated),
+            isValid: isEmailFormatValid(email) && !isEmailDuplicated,
           }}
         >
           <Icon>
@@ -147,7 +126,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
             aria-label="이메일 입력"
           />
         </InputContainer>
-        <InputContainer validation={{ text: ageErrorMessage, isValid: isAgeValid }}>
+        <InputContainer validation={{ text: ageErrorMessage(age), isValid: isAgeValid(age) }}>
           <Icon>
             <MdPerson />
           </Icon>
@@ -161,7 +140,9 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
             aria-label="나이 입력"
           />
         </InputContainer>
-        <InputContainer validation={{ text: passwordErrorMessage, isValid: isPasswordValid }}>
+        <InputContainer
+          validation={{ text: passwordErrorMessage(password), isValid: isPasswordValid(password) }}
+        >
           <Icon>
             <MdLock />
           </Icon>
@@ -176,7 +157,10 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
           />
         </InputContainer>
         <InputContainer
-          validation={{ text: passwordMatchedErrorMessage, isValid: isPasswordMatched }}
+          validation={{
+            text: passwordMatchedErrorMessage(password, passwordConfirm),
+            isValid: isPasswordMatched(password, passwordConfirm),
+          }}
         >
           <Icon>
             <MdLock />
@@ -196,7 +180,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
           width="100%"
           backgroundColor={themeColor}
           color={PALETTE.WHITE}
-          disabled={!isFormCompleted}
+          disabled={!isFormCompleted(isEmailDuplicated, { email, age, password, passwordConfirm })}
         >
           회원가입
         </Button>
