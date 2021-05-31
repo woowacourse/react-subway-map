@@ -1,3 +1,4 @@
+/* Note: 현재는 사용하지 않는 코드로, 추후 삭제할 예정입니다. */
 import { useState } from 'react';
 
 const useLocalStorage = (key: string, initialValue = '') => {
@@ -20,7 +21,7 @@ const useLocalStorage = (key: string, initialValue = '') => {
     }
   };
 
-  return [storageValue, setValue];
+  return [storageValue, setValue] as const;
 };
 
 export default useLocalStorage;
