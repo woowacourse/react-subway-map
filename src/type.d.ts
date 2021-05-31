@@ -64,3 +64,21 @@ export interface ISectionRes {
   downStation: IStation;
   distance: number;
 }
+
+export type REQUEST_TYPE = 'get' | 'post' | 'put' | 'delete';
+
+type ResultMessageKeyType =
+  | 'GET_ALL_DATA_RESPONSE'
+  | 'GET_DATA_RESPONSE'
+  | 'POST_DATA_RESPONSE'
+  | 'DELETE_RESPONSE'
+  | 'PUT_RESPONSE';
+
+export type ResultMessage = Partial<
+  {
+    [key in ResultMessageKeyType]: {
+      success: string;
+      fail: string;
+    };
+  }
+>;

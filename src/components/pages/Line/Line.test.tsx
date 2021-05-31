@@ -8,13 +8,19 @@ import {
   validHostState,
   validSignedUser,
 } from '../../../fixtures/useSelectorState';
-import useServerAPI from '../../../hooks/useServerAPI';
+
 import { ILineRes } from '../../../type.d';
 import Line from './Line';
+import usePostRequest from '../../../hooks/usePostRequest';
+import useDeleteRequest from '../../../hooks/useDeleteRequest';
+import useGetAllRequest from '../../../hooks/useGetAllRequest';
+import usePutRequest from '../../../hooks/usePutRequest';
 
+jest.mock('../../../hooks/usePostRequest');
+jest.mock('../../../hooks/useDeleteRequest');
+jest.mock('../../../hooks/useGetAllRequest');
+jest.mock('../../../hooks/usePutRequest');
 jest.mock('react-redux');
-jest.mock('../../../hooks/useServerAPI');
-
 let newLineList: ILineRes[] = [];
 
 describe('Line', () => {
@@ -42,18 +48,26 @@ describe('Line', () => {
       sections: [],
     };
 
-    (useServerAPI as jest.Mock).mockImplementation(() => {
+    (useGetAllRequest as jest.Mock).mockImplementation(() => {
       return {
         allData: newLineList,
         getAllData: () => newLineList,
         getAllDataResponse: null,
-
-        postData: () => newLineList.push(newLine),
+      };
+    });
+    (usePostRequest as jest.Mock).mockImplementation(() => {
+      return {
         postDataResponse: null,
-
+      };
+    });
+    (usePutRequest as jest.Mock).mockImplementation(() => {
+      return {
         putData: () => (newLineList[0].name = '수정된역'),
         putDataResponse: null,
-
+      };
+    });
+    (useDeleteRequest as jest.Mock).mockImplementation(() => {
+      return {
         deleteData: () => {
           newLineList.splice(0, 1);
         },

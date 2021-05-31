@@ -9,18 +9,25 @@ import {
   validHostState,
   validSignedUser,
 } from '../../../fixtures/useSelectorState';
-import useServerAPI from '../../../hooks/useServerAPI';
 import { IStationRes } from '../../../type.d';
+import usePostRequest from '../../../hooks/usePostRequest';
+import useDeleteRequest from '../../../hooks/useDeleteRequest';
+import useGetAllRequest from '../../../hooks/useGetAllRequest';
 
+jest.mock('../../../hooks/usePostRequest');
+jest.mock('../../../hooks/useDeleteRequest');
+jest.mock('../../../hooks/useGetAllRequest');
 jest.mock('react-redux');
-jest.mock('../../../hooks/useServerAPI');
+
+let newStationList: IStationRes[];
+let newStation: IStationRes;
 
 describe('Station', () => {
   beforeAll(() => {
     jest.spyOn(window, 'alert').mockImplementation(() => true);
     (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
   });
-  
+
   beforeEach(() => {
     jest.spyOn(window, 'confirm').mockImplementation(() => true);
     (useSelector as jest.Mock).mockImplementation(() => {
@@ -30,25 +37,35 @@ describe('Station', () => {
         hostState: validHostState,
       };
     });
-  });
 
-  it('지하철 역 이름을 입력한 후 추가 버튼을 클릭하면, 지하철 역이 추가된다.', () => {
-    const newStationList = [...stationList];
-    const newStation: IStationRes = {
+    newStationList = [...stationList];
+    newStation = {
       id: 100,
       name: '도비역',
     };
-
-    (useServerAPI as jest.Mock).mockImplementation(() => {
+    (useGetAllRequest as jest.Mock).mockImplementation(() => {
       return {
         allData: newStationList,
         getAllData: () => newStationList,
+      };
+    });
+    (usePostRequest as jest.Mock).mockImplementation(() => {
+      return {
         postData: () => {
           newStationList.push(newStation);
         },
       };
     });
+    (useDeleteRequest as jest.Mock).mockImplementation(() => {
+      return {
+        deleteData: () => {
+          newStationList.splice(0, 1);
+        },
+      };
+    });
+  });
 
+  it('지하철 역 이름을 입력한 후 추가 버튼을 클릭하면, 지하철 역이 추가된다.', () => {
     const station = render(
       <BrowserRouter>
         <Station />
@@ -66,18 +83,6 @@ describe('Station', () => {
   });
 
   it('지하철역 목록 중 특정 지하철 역의 삭제 버튼을 누르면, 해당 지하철 역이 삭제 된다.', () => {
-    const newStationList: IStationRes[] = [...stationList];
-
-    (useServerAPI as jest.Mock).mockImplementation(() => {
-      return {
-        allData: newStationList,
-        getAllData: () => newStationList,
-        deleteData: () => {
-          newStationList.splice(0, 1);
-        },
-      };
-    });
-
     const station = render(
       <BrowserRouter>
         <Station />

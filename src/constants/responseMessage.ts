@@ -1,4 +1,4 @@
-import { ResultMessage } from '../hooks/useServerAPI';
+import { ResultMessage } from '../type';
 
 const GET_ALL_DATA_RESPONSE = 'GET_ALL_DATA_RESPONSE';
 const POST_DATA_RESPONSE = 'POST_DATA_RESPONSE';

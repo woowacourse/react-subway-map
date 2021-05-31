@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../constants';
-import { IResMeta } from '../type';
-import { IMyInfoRes, Nullable } from '../type';
+import { IMyInfoRes, IResMeta, Nullable } from '../type';
 import { request } from '../utils';
 
 export type ISignedUser = Nullable<IMyInfoRes & IResMeta>;

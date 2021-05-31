@@ -9,12 +9,16 @@ import {
   validHostState,
   validSignedUser,
 } from '../../../fixtures/useSelectorState';
-import useServerAPI from '../../../hooks/useServerAPI';
 import { ILineRes, IStationRes } from '../../../type.d';
 import Section from './Section';
+import usePostRequest from '../../../hooks/usePostRequest';
+import useDeleteRequest from '../../../hooks/useDeleteRequest';
+import useGetAllRequest from '../../../hooks/useGetAllRequest';
 
+jest.mock('../../../hooks/usePostRequest');
+jest.mock('../../../hooks/useDeleteRequest');
+jest.mock('../../../hooks/useGetAllRequest');
 jest.mock('react-redux');
-jest.mock('../../../hooks/useServerAPI');
 
 let newLineList: ILineRes[] = [];
 
@@ -42,8 +46,8 @@ describe('Section', () => {
       name: '역삼역',
     };
 
-    (useServerAPI as jest.Mock).mockImplementation((baseUrl: string) => {
-      const stationServerAPi = {
+    (useGetAllRequest as jest.Mock).mockImplementation((baseUrl: string) => {
+      const stationServerAPI = {
         allData: [...stationList],
         getAllData: () => [...stationList],
         getAllDataResponse: null,
@@ -53,19 +57,27 @@ describe('Section', () => {
         allData: newLineList,
         getAllData: () => newLineList,
         getAllDataResponse: null,
+      };
 
+      return baseUrl.includes('stations') ? stationServerAPI : lineServerAPI;
+    });
+
+    (usePostRequest as jest.Mock).mockImplementation(() => {
+      return {
         postData: () => {
           newLineList[1].stations.push(newStation);
         },
         postDataResponse: null,
+      };
+    });
 
+    (useDeleteRequest as jest.Mock).mockImplementation(() => {
+      return {
         deleteData: () => {
           newLineList[2].stations.splice(0, 1);
         },
         deleteDataResponse: null,
       };
-
-      return baseUrl.includes('stations') ? stationServerAPi : lineServerAPI;
     });
   });
 
@@ -117,7 +129,7 @@ describe('Section', () => {
     expect(section.container).toHaveTextContent('역삼역');
   });
 
-  it('구간관리 페이지에서 특정 노선을 선택한 후, 특정 구간의 삭제버튼을 누르면 해당 구간이 삭제된다.', async () => {
+  it('구간관리 페이지에서 특정 노선을 선택한 후, 특정 구간의 삭제버튼을 누르면 해당 구간이 삭제된다.', () => {
     const section = render(
       <BrowserRouter>
         <Section />

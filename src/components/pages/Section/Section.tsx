@@ -1,7 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_URL, RESPONSE_MESSAGE } from '../../../constants';
-import { useLineInput, useModal, useServerAPI } from '../../../hooks';
+import {
+  useGetAllRequest,
+  useLineInput,
+  useModal,
+  usePostRequest,
+  useDeleteRequest,
+} from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
@@ -18,19 +24,24 @@ const Section = () => {
     return { hostState: state.hostReducer };
   });
 
-  const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
+  const { allData: lines, getAllData: getAllLines } = useGetAllRequest<ILineRes>(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.LINE,
+  );
+  const { postData: addSection, dataResponse: addSectionResponse } = usePostRequest(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.LINE,
+  );
+
+  const { deleteData: deleteSection, dataResponse: deleteSectionResponse } = useDeleteRequest(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.LINE,
+  );
+
+  const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
     RESPONSE_MESSAGE.SECTION,
   );
-
-  const {
-    allData: lines,
-    getAllData: getAllLines,
-    deleteData: deleteSection,
-    deleteDataResponse: deleteSectionResponse,
-    postData: addSection,
-    postDataResponse: addSectionResponse,
-  } = useServerAPI<ILineRes>(BASE_URL.LINE(host), RESPONSE_MESSAGE.LINE);
 
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { BASE_URL, RESPONSE_MESSAGE, ROUTE } from '../../../constants';
-import { useChangeEvent, useServerAPI } from '../../../hooks';
+import { useChangeEvent, usePostRequest } from '../../../hooks';
 import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
 import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
@@ -17,7 +17,8 @@ const SignUp = () => {
   } = useSelector((state: RootState) => {
     return { hostState: state.hostReducer };
   });
-  const { postData: signUpRequest, postDataResponse: signUpResponse } = useServerAPI(
+
+  const { postData: signUpRequest, dataResponse: signUpResponse } = usePostRequest(
     BASE_URL.SIGNUP(host),
     RESPONSE_MESSAGE.SIGNUP,
   );

@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_URL, LineColor, RESPONSE_MESSAGE } from '../../../constants';
-import { useLineInput, useModal, useServerAPI } from '../../../hooks';
+import {
+  useDeleteRequest,
+  useGetAllRequest,
+  useLineInput,
+  useModal,
+  usePostRequest,
+  usePutRequest,
+} from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
@@ -21,21 +28,23 @@ const Line = () => {
     return { hostState: state.hostReducer };
   });
 
-  const {
-    allData: lines,
-    getAllData: getAllLines,
-
-    postData: addLine,
-    postDataResponse: addLineResponse,
-
-    putData: editLine,
-    putDataResponse: editLineResponse,
-
-    deleteData: deleteLine,
-    deleteDataResponse: deleteLineResponse,
-  } = useServerAPI<ILineRes>(BASE_URL.LINE(host), RESPONSE_MESSAGE.LINE);
-
-  const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
+  const { allData: lines, getAllData: getAllLines } = useGetAllRequest<ILineRes>(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.LINE,
+  );
+  const { postData: addLine, dataResponse: addLineResponse } = usePostRequest(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.LINE,
+  );
+  const { putData: editLine, dataResponse: editLineResponse } = usePutRequest(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.STATION,
+  );
+  const { deleteData: deleteLine, dataResponse: deleteLineResponse } = useDeleteRequest(
+    BASE_URL.LINE(host),
+    RESPONSE_MESSAGE.LINE,
+  );
+  const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
     RESPONSE_MESSAGE.STATION,
   );

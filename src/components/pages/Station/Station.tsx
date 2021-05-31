@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_URL, RESPONSE_MESSAGE } from '../../../constants';
-import { useChangeEvent, useServerAPI } from '../../../hooks';
+import { useChangeEvent, useDeleteRequest, useGetAllRequest, usePostRequest } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { IStationReq, IStationRes } from '../../../type';
@@ -22,14 +22,18 @@ const Station = () => {
     onChange: onChangeStationName,
   } = useChangeEvent('');
 
-  const {
-    allData: stations,
-    getAllData: getAllStations,
-    deleteData: deleteStation,
-    postData: addStation,
-    postDataResponse: postStationResponse,
-    deleteDataResponse: deleteStationResponse,
-  } = useServerAPI<IStationRes>(BASE_URL.STATION(host), RESPONSE_MESSAGE.STATION);
+  const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
+    BASE_URL.STATION(host),
+    RESPONSE_MESSAGE.STATION,
+  );
+  const { postData: addStation, dataResponse: postStationResponse } = usePostRequest(
+    BASE_URL.STATION(host),
+    RESPONSE_MESSAGE.STATION,
+  );
+  const { deleteData: deleteStation, dataResponse: deleteStationResponse } = useDeleteRequest(
+    BASE_URL.STATION(host),
+    RESPONSE_MESSAGE.STATION,
+  );
 
   const onSubmitStationInfo: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
