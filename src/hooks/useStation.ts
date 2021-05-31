@@ -22,11 +22,11 @@ const useStation = () => {
 
   const onGet = useCallback(() => dispatch(getStationList()), [dispatch]);
 
-  const onAdd = (name: Station['name']) => dispatch(addStation(name));
+  const add = (name: Station['name']) => dispatch(addStation(name));
 
-  const onEdit = ({ id, name }: Station) => dispatch(editStation({ id, name }));
+  const edit = ({ id, name }: Station) => dispatch(editStation({ id, name }));
 
-  const onDelete = (id: Station['id']) => dispatch(deleteStation(id));
+  const remove = (id: Station['id']) => dispatch(deleteStation(id));
 
   useEffect(() => {
     onGet();
@@ -48,9 +48,9 @@ const useStation = () => {
 
   return {
     onGet,
-    onAdd,
-    onEdit,
-    onDelete,
+    add,
+    edit,
+    remove,
     list,
     status,
     error,

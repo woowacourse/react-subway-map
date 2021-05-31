@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { useAppDispatch, useAppSelector } from './useStore';
-import { ApiStatus, Line, LineAttribute, SectionAttribute, Station } from '../types';
+import { ApiStatus, Line, LineAttribute } from '../types';
 import {
   addLine,
   addSection,
@@ -23,24 +23,13 @@ const useLine = () => {
 
   const onGetLine = useCallback(() => dispatch(getLineList()), [dispatch]);
 
-  const onAddLine = ({ name, color, upStationId, downStationId, distance }: LineAttribute) =>
+  const add = ({ name, color, upStationId, downStationId, distance }: LineAttribute) =>
     dispatch(addLine({ name, color, upStationId, downStationId, distance }));
 
-  const onEditLine = ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) =>
+  const edit = ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) =>
     dispatch(editLine({ id, name, color }));
 
-  const onDeleteLine = (id: Line['id']) => dispatch(deleteLine(id));
-
-  const onAddSection = ({ lineId, data }: SectionAttribute) =>
-    dispatch(addSection({ lineId, data }));
-
-  const onDeleteSection = ({
-    lineId,
-    stationId,
-  }: {
-    lineId: Line['id'];
-    stationId: Station['id'];
-  }) => dispatch(deleteSection({ lineId, stationId }));
+  const remove = (id: Line['id']) => dispatch(deleteLine(id));
 
   useEffect(() => {
     onGetLine();
@@ -62,11 +51,11 @@ const useLine = () => {
 
   return {
     onGetLine,
-    onAddLine,
-    onEditLine,
-    onDeleteLine,
-    onAddSection,
-    onDeleteSection,
+    add,
+    edit,
+    remove,
+    addSection,
+    deleteSection,
     list,
     error,
     status,

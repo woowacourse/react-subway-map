@@ -10,6 +10,7 @@ import useSelect from '../../hooks/useSelect';
 import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
 import useLine from '../../hooks/useLine';
+import useSection from '../../hooks/useSection';
 import { ApiStatus, Station } from '../../types';
 import MESSAGE from '../../constants/message';
 
@@ -19,7 +20,8 @@ const SectionPage = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { list: stationList } = useStation();
-  const { list: lineList, status: lineStatus, onAddSection, onDeleteSection } = useLine();
+  const { list: lineList, status: lineStatus } = useLine();
+  const { add, remove } = useSection();
 
   const {
     valueAsNumber: selectedLineId,
@@ -61,7 +63,7 @@ const SectionPage = () => {
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const response = await onAddSection({
+    const response = await add({
       lineId: selectedLineId,
       data: {
         upStationId,
@@ -87,7 +89,7 @@ const SectionPage = () => {
       return;
     }
 
-    const response = await onDeleteSection({ lineId: selectedLineId, stationId });
+    const response = await remove({ lineId: selectedLineId, stationId });
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
     enqueueSnackbar(MESSAGE.SUCCESS.SECTION_DELETED);

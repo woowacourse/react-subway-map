@@ -21,12 +21,12 @@ const StationPage = () => {
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
   const [editStationId, setEditStationId] = useState<Station['id'] | null>(null);
 
-  const { list, status, onAdd, onEdit, onDelete } = useStation();
+  const { list, status, add, edit, remove } = useStation();
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const response = await onAdd(name);
+    const response = await add(name);
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
     enqueueSnackbar(MESSAGE.SUCCESS.STATION_ADDED, {
@@ -47,7 +47,7 @@ const StationPage = () => {
 
     if (!editStationId) return;
 
-    const response = await onEdit({ id: editStationId, name: editName });
+    const response = await edit({ id: editStationId, name: editName });
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
     enqueueSnackbar(MESSAGE.SUCCESS.STATION_EDITED);
@@ -57,7 +57,7 @@ const StationPage = () => {
   };
 
   const handleDelete = async (id: Station['id']) => {
-    const response = await onDelete(id);
+    const response = await remove(id);
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
 
     enqueueSnackbar(MESSAGE.SUCCESS.STATION_DELETED);
