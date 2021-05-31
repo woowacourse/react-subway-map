@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import cx from "classnames";
 import { useModal } from "../../components/@shared/Modal/hooks";
 import Main from "../../components/@shared/Main";
 import Modal from "../../components/@shared/Modal";
@@ -8,6 +7,7 @@ import Button from "../../components/@shared/Button";
 import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
 import Select from "../../components/@shared/Select";
 import ColorSelect from "../../components/ColorSelect";
+import LinesList from "../../components/LinesList";
 import { useInput } from "../../components/@shared/Input/hooks";
 import { selectStationsList } from "../Stations/slice";
 import Loading from "../../components/@shared/Loading";
@@ -15,7 +15,6 @@ import STATUS from "../../constants/status";
 import {
   addLine,
   fetchLines,
-  deleteLinesById,
   reset,
   selectLinesStatus,
   selectLinesMessage,
@@ -37,7 +36,7 @@ const Lines = () => {
   const stationList = useSelector(selectStationsList);
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);
-  const linesList = useSelector(selectLinesList);
+  const lineList = useSelector(selectLinesList);
 
   const isSubmitEnabled = [
     isValidLineName,
@@ -100,14 +99,6 @@ const Lines = () => {
     );
   };
 
-  const handleDeleteClick = (event) => {
-    const { name: id, value } = event.target;
-
-    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
-      dispatch(deleteLinesById(id));
-    }
-  };
-
   return (
     <>
       <Loading isLoading={status === STATUS.LOADING} bgOpacity="10" />
@@ -129,39 +120,7 @@ const Lines = () => {
               등록
             </Button>
           </div>
-          {linesList.length > 0 && (
-            <ul className="mt-4">
-              {[...linesList]
-                .reverse()
-                .map(({ id, name, color: lineColor }) => (
-                  <li
-                    key={id}
-                    className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b"
-                  >
-                    <div className="flex items-center">
-                      <span
-                        className={cx(
-                          "block mr-2 w-5 h-5 bg-blue-400 rounded-full",
-                          lineColor
-                        )}
-                      />
-                      <span>{name}</span>
-                    </div>
-                    <Button
-                      type="button"
-                      disabled={false}
-                      size="auto"
-                      theme="icon"
-                      onClick={handleDeleteClick}
-                      name={id}
-                      value={name}
-                    >
-                      🗑
-                    </Button>
-                  </li>
-                ))}
-            </ul>
-          )}
+          <LinesList lineList={lineList} />
         </section>
       </Main>
       <Modal onClose={handleModalClose} isOpen={isModalOpen}>
