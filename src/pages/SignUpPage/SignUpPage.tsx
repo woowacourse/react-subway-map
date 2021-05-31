@@ -28,7 +28,7 @@ const SignUpPage = () => {
 
   const { value: server, onChange: onChangeServer } = useSelect(CREWS.DANYEE);
   const { value: email, onChange: onChangeEmail, ref: emailRef } = useInput('');
-  const { value: ageValue, valueAsNumber: age, onChange: onChangeAge, ref: ageRef } = useInput('');
+  const { value: age, onChange: onChangeAge, ref: ageRef } = useInput(-1);
   const { value: password, onChange: onChangePassword, ref: passwordRef } = useInput('');
   const {
     value: passwordConfirm,
@@ -73,7 +73,7 @@ const SignUpPage = () => {
     const isSuccess = await onSignUp({
       server,
       email,
-      age: Number(age),
+      age,
       password,
       passwordConfirm,
     });
@@ -117,7 +117,7 @@ const SignUpPage = () => {
             <Styled.FormItem>
               <Input
                 ref={ageRef}
-                value={ageValue}
+                value={age}
                 onChange={onChangeAge}
                 icon={<UserIcon />}
                 labelText="나이"

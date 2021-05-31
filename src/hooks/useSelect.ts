@@ -8,7 +8,11 @@ const useSelect = <T extends unknown>(initialValue: T) => {
     setValue(event.target.value as T);
   };
 
-  return { value, valueAsNumber: Number(value), onChange, setValue, ref };
+  const onChangeNumber: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setValue(Number(event.target.value) as T);
+  };
+
+  return { value, onChange, onChangeNumber, setValue, ref };
 };
 
 export default useSelect;

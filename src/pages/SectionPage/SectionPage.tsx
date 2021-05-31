@@ -10,7 +10,7 @@ import useSelect from '../../hooks/useSelect';
 import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
 import useLine from '../../hooks/useLine';
-import { ApiStatus, Station } from '../../types';
+import { Station } from '../../types';
 import MESSAGE from '../../constants/message';
 
 const SectionPage = () => {
@@ -19,25 +19,20 @@ const SectionPage = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { list: stationList } = useStation();
-  const { list: lineList, status: lineStatus, onAddSection, onDeleteSection } = useLine();
+  const { list: lineList, isLoading, onAddSection, onDeleteSection } = useLine();
 
   const {
-    valueAsNumber: selectedLineId,
+    value: selectedLineId,
     setValue: setSelectedLineId,
-    onChange: onChangeSelectedLineId,
-  } = useSelect('');
-  const { valueAsNumber: upStationId, setValue: setUpStationId } = useSelect('');
+    onChangeNumber: onChangeSelectedLineId,
+  } = useSelect(-1);
+  const { value: upStationId, setValue: setUpStationId } = useSelect(-1);
   const {
-    valueAsNumber: downStationId,
+    value: downStationId,
     setValue: setDownStationId,
-    onChange: onChangeDownStationId,
-  } = useSelect('');
-  const {
-    value: distanceValue,
-    valueAsNumber: distance,
-    setValue: setDistance,
-    onChange: onChangeDistance,
-  } = useInput('');
+    onChangeNumber: onChangeDownStationId,
+  } = useSelect(-1);
+  const { value: distance, setValue: setDistance, onChangeNumber: onChangeDistance } = useInput(-1);
 
   const selectedLine = lineList.find((line) => line.id === selectedLineId) || lineList[0];
 
@@ -48,14 +43,14 @@ const SectionPage = () => {
   );
 
   const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const selectedStationId = event.target.value;
+    const selectedStationId = Number(event.target.value);
     setUpStationId(selectedStationId);
 
-    if (downStationId !== Number(selectedStationId)) return;
+    if (downStationId !== selectedStationId) return;
 
     const [firstDownStationId] = downStationList.map((station) => station.id);
 
-    setDownStationId(`${firstDownStationId}`);
+    setDownStationId(firstDownStationId);
   };
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -73,7 +68,7 @@ const SectionPage = () => {
     if (!isSuccess) return;
 
     closeModal();
-    setDistance('');
+    setDistance(-1);
   };
 
   const handleDelete = (stationId: Station['id']) => {
@@ -89,16 +84,16 @@ const SectionPage = () => {
   };
 
   useEffect(() => {
-    if (lineList.length > 0 && !selectedLineId) {
-      setSelectedLineId(`${lineList[0].id}`);
+    if (lineList.length > 0 && selectedLineId === -1) {
+      setSelectedLineId(lineList[0].id);
     }
   }, [lineList, selectedLineId, setSelectedLineId]);
 
   useEffect(() => {
     if (stationList.length > 1) {
       const [firstStationId, secondStationId] = stationList.map((station) => station.id);
-      setUpStationId(`${firstStationId}`);
-      setDownStationId(`${secondStationId}`);
+      setUpStationId(firstStationId);
+      setDownStationId(secondStationId);
     }
   }, [selectedLine, setDownStationId, setUpStationId, stationList]);
 
@@ -109,7 +104,7 @@ const SectionPage = () => {
           <Styled.FormContainer>
             <Card>
               <Styled.HeaderText>지하철 구간 관리</Styled.HeaderText>
-              {lineStatus === ApiStatus.FULFILLED && lineList.length === 0 && (
+              {!isLoading && lineList.length === 0 && (
                 <MessageBox emoji="👻">구간 목록이 비어있습니다</MessageBox>
               )}
               {lineList.length > 0 && (
@@ -213,10 +208,14 @@ const SectionPage = () => {
               type="number"
               labelText="거리"
               placeholder="거리"
-              value={distanceValue}
+              value={distance === -1 ? undefined : distance}
               onChange={onChangeDistance}
               min={1}
-              max={selectedUpStation?.distance !== 0 ? selectedUpStation?.distance : undefined}
+              max={
+                selectedUpStation?.distance === -1 || !selectedUpStation?.distance
+                  ? undefined
+                  : selectedUpStation?.distance
+              }
               required
             />
           </Styled.InputWrapper>

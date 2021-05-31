@@ -48,18 +48,13 @@ const LinePage = () => {
 
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
+  const { value: distance, setValue: setDistance, onChangeNumber: onChangeDistance } = useInput(-1);
+  const { value: upStationId, setValue: setUpStationId } = useSelect(-1);
   const {
-    value: distanceValue,
-    valueAsNumber: distance,
-    setValue: setDistance,
-    onChange: onChangeDistance,
-  } = useInput('');
-  const { valueAsNumber: upStationId, setValue: setUpStationId } = useSelect('');
-  const {
-    valueAsNumber: downStationId,
-    onChange: onChangeDownStationId,
+    value: downStationId,
+    onChangeNumber: onChangeDownStationId,
     setValue: setDownStationId,
-  } = useSelect('');
+  } = useSelect(-1);
 
   const downStationList = stationList.filter((station) => station.id !== upStationId);
 
@@ -67,14 +62,14 @@ const LinePage = () => {
   const unableEditColors = list.filter((item) => item.id !== editLineId).map((item) => item.color);
 
   const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const selectedStationId = event.target.value;
+    const selectedStationId = Number(event.target.value);
     setUpStationId(selectedStationId);
 
-    if (downStationId !== Number(selectedStationId)) return;
+    if (downStationId !== selectedStationId) return;
 
     const [firstDownStationId] = downStationList.map((station) => station.id);
 
-    setDownStationId(`${firstDownStationId}`);
+    setDownStationId(firstDownStationId);
   };
 
   const handleAddLine: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -92,7 +87,7 @@ const LinePage = () => {
 
     closeAddModal();
     setName('');
-    setDistance('');
+    setDistance(-1);
   };
 
   const handleEditLine: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -139,8 +134,8 @@ const LinePage = () => {
   useEffect(() => {
     if (stationList.length > 1) {
       const [firstStationId, secondStationId] = stationList.map((station) => station.id);
-      setUpStationId(`${firstStationId}`);
-      setDownStationId(`${secondStationId}`);
+      setUpStationId(firstStationId);
+      setDownStationId(secondStationId);
     }
   }, [setDownStationId, setUpStationId, stationList]);
 
@@ -233,7 +228,7 @@ const LinePage = () => {
           <Styled.InputWrapper>
             <Input
               type="number"
-              value={distanceValue}
+              value={distance === -1 ? undefined : distance}
               onChange={onChangeDistance}
               labelText="거리"
               placeholder="거리"

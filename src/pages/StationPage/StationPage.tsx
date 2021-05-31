@@ -15,7 +15,7 @@ const StationPage = () => {
 
   const { value: name, setValue: setName, onChange: onChangeName } = useInput('');
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
-  const [editStationId, setEditStationId] = useState<Station['id'] | null>(null);
+  const [editStationId, setEditStationId] = useState<Station['id']>(-1);
 
   const { list, status, onAddStation, onEditStation, onDeleteStation } = useStation();
 
@@ -45,7 +45,7 @@ const StationPage = () => {
 
     if (!isSuccess) return;
 
-    setEditStationId(null);
+    setEditStationId(-1);
     setEditName('');
     closeModal();
   };
