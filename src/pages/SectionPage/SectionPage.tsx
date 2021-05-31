@@ -18,8 +18,8 @@ const SectionPage = () => {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const { list: stationList } = useStation();
-  const { list: lineList, isLoading, onAddSection, onDeleteSection } = useLine();
+  const { stationList } = useStation();
+  const { lineList, isLoading, onAddSection, onDeleteSection } = useLine();
 
   const {
     value: selectedLineId,
@@ -208,12 +208,12 @@ const SectionPage = () => {
               type="number"
               labelText="거리"
               placeholder="거리"
-              value={distance === -1 ? undefined : distance}
+              value={distance === -1 ? '' : distance}
               onChange={onChangeDistance}
               min={1}
               max={
                 selectedUpStation?.distance === -1 || !selectedUpStation?.distance
-                  ? undefined
+                  ? ''
                   : selectedUpStation?.distance
               }
               required

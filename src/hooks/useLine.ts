@@ -20,7 +20,7 @@ const useLine = () => {
   const line = useAppSelector((state) => state.line);
   const dispatch = useAppDispatch();
 
-  const { list, error, status } = line;
+  const { list: lineList, error, status } = line;
 
   const onGetLine = () => dispatch(getLineList());
 
@@ -170,7 +170,7 @@ const useLine = () => {
     onDeleteLine,
     onAddSection,
     onDeleteSection,
-    list,
+    lineList,
     error,
     status,
     isLoading: status === ApiStatus.IDLE || status === ApiStatus.PENDING,

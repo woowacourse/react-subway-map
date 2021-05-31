@@ -38,8 +38,8 @@ const LinePage = () => {
     closeModal: closeEditModal,
   } = useModal();
 
-  const { list: stationList } = useStation();
-  const { onAddLine, onEditLine, onDeleteLine, list, status: lineStatus } = useLine();
+  const { stationList } = useStation();
+  const { onAddLine, onEditLine, onDeleteLine, lineList, status: lineStatus } = useLine();
 
   const { color, onChange: onChangeColor } = useColorPalette();
   const { color: editColor, onChange: onChangeEditColor } = useColorPalette();
@@ -58,8 +58,10 @@ const LinePage = () => {
 
   const downStationList = stationList.filter((station) => station.id !== upStationId);
 
-  const unableAddColors = list.map((line) => line.color);
-  const unableEditColors = list.filter((item) => item.id !== editLineId).map((item) => item.color);
+  const unableAddColors = lineList.map((line) => line.color);
+  const unableEditColors = lineList
+    .filter((line) => line.id !== editLineId)
+    .map((line) => line.color);
 
   const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const selectedStationId = Number(event.target.value);
@@ -154,23 +156,23 @@ const LinePage = () => {
                   </Button>
                 </Styled.ButtonList>
               </Styled.Control>
-              {lineStatus === ApiStatus.FULFILLED && list.length === 0 && (
+              {lineStatus === ApiStatus.FULFILLED && lineList.length === 0 && (
                 <MessageBox emoji="👻">노선 목록이 비어있습니다</MessageBox>
               )}
-              {list.length > 0 && (
+              {lineList.length > 0 && (
                 <Styled.List>
-                  {list.map((item) => (
-                    <Styled.Item key={item.id}>
+                  {lineList.map((line) => (
+                    <Styled.Item key={line.id}>
                       <Styled.NameWrapper>
-                        <ColorDot color={item.color} />
-                        <Styled.Name>{item.name}</Styled.Name>
+                        <ColorDot color={line.color} />
+                        <Styled.Name>{line.name}</Styled.Name>
                       </Styled.NameWrapper>
                       <Styled.OptionWrapper>
                         <Button
                           shape="circle"
                           variant="text"
                           aria-label="노선 수정"
-                          onClick={() => handleOpenEditModal(item)}
+                          onClick={() => handleOpenEditModal(line)}
                         >
                           <EditIcon />
                         </Button>
@@ -178,7 +180,7 @@ const LinePage = () => {
                           shape="circle"
                           variant="text"
                           aria-label="노선 삭제"
-                          onClick={() => handleDeleteLine(item.id)}
+                          onClick={() => handleDeleteLine(line.id)}
                         >
                           <TrashIcon />
                         </Button>
@@ -228,7 +230,7 @@ const LinePage = () => {
           <Styled.InputWrapper>
             <Input
               type="number"
-              value={distance === -1 ? undefined : distance}
+              value={distance === -1 ? '' : distance}
               onChange={onChangeDistance}
               labelText="거리"
               placeholder="거리"

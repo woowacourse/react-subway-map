@@ -19,7 +19,7 @@ const useStation = () => {
   const station = useAppSelector((state) => state.station);
   const dispatch = useAppDispatch();
 
-  const { list, status, error } = station;
+  const { list: stationList, status, error } = station;
 
   const onGetStation = () => dispatch(getStationList());
 
@@ -113,7 +113,7 @@ const useStation = () => {
     onAddStation,
     onEditStation,
     onDeleteStation,
-    list,
+    stationList,
     status,
     error,
   };

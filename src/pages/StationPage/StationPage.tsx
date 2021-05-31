@@ -17,7 +17,7 @@ const StationPage = () => {
   const { value: editName, setValue: setEditName, onChange: onChangeEditName } = useInput('');
   const [editStationId, setEditStationId] = useState<Station['id']>(-1);
 
-  const { list, status, onAddStation, onEditStation, onDeleteStation } = useStation();
+  const { stationList, status, onAddStation, onEditStation, onDeleteStation } = useStation();
 
   const handleAdd: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -77,22 +77,22 @@ const StationPage = () => {
               </Styled.AddForm>
             </Card>
           </Styled.FormContainer>
-          {status === ApiStatus.FULFILLED && list.length === 0 && (
+          {status === ApiStatus.FULFILLED && stationList.length === 0 && (
             <MessageBox emoji="👻">역 목록이 비어있습니다</MessageBox>
           )}
-          {list.length > 0 && (
+          {stationList.length > 0 && (
             <Styled.ListContainer>
               <Card variant="simple">
                 <Styled.List>
-                  {list.map((item) => (
-                    <Styled.Item key={item.id}>
-                      <Styled.Name>{item.name}</Styled.Name>
+                  {stationList.map((station) => (
+                    <Styled.Item key={station.id}>
+                      <Styled.Name>{station.name}</Styled.Name>
                       <Styled.OptionWrapper>
                         <Button
                           shape="circle"
                           variant="text"
                           aria-label="역 수정"
-                          onClick={() => handleOpenEditModal(item)}
+                          onClick={() => handleOpenEditModal(station)}
                         >
                           <EditIcon />
                         </Button>
@@ -100,7 +100,7 @@ const StationPage = () => {
                           shape="circle"
                           variant="text"
                           aria-label="역 삭제"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(station.id)}
                         >
                           <TrashIcon />
                         </Button>
