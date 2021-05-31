@@ -30,7 +30,7 @@ const SectionsMain = ({ lineId, openModal, onLineChange }) => {
           if (!list || list.length === 0) return;
 
           onLineChange({
-            target: { value: list[list.length - 1].id.toString() },
+            target: { value: list[list.length - 1].id },
           });
         });
     }
@@ -76,7 +76,7 @@ const SectionsMain = ({ lineId, openModal, onLineChange }) => {
 };
 
 SectionsMain.propTypes = {
-  lineId: PropTypes.string.isRequired,
+  lineId: PropTypes.number.isRequired,
   openModal: PropTypes.func.isRequired,
   onLineChange: PropTypes.func.isRequired,
 };

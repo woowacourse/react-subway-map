@@ -20,13 +20,14 @@ const Select = ({ children, value, onChange, disabled }) => (
 
 Select.propTypes = {
   children: PropTypes.node.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
 Select.defaultProps = {
   disabled: false,
+  onChange: null,
 };
 
 export default Select;

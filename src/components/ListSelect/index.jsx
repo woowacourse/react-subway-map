@@ -15,7 +15,7 @@ const ListSelect = ({ list, placeholder, value, onChange }) => (
 );
 
 ListSelect.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   list: PropTypes.arrayOf(

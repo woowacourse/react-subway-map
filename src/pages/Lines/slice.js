@@ -16,9 +16,8 @@ import { selectAccessToken } from "../Login/slice";
 export const selectLinesStatus = (state) => state.lines.status;
 export const selectLinesMessage = (state) => state.lines.message;
 export const selectLinesList = (state) => state.lines.list;
-// TODO: id 는 Number Type 으로 일치시킨다
 export const selectLineByLineId = (state, id) =>
-  state.lines.list.find((line) => line.id === Number(id));
+  state.lines.list.find((line) => line.id === id);
 
 export const addLine = createAsyncThunk(
   "lines/addLine",
@@ -84,7 +83,7 @@ export const deleteLinesById = createAsyncThunk(
       });
 
       if (response.status === LINES_DELETE_SUCCEED.CODE) {
-        return Number(id);
+        return id;
       }
 
       const { message } = await response.json();
@@ -236,12 +235,10 @@ const linesSlice = createSlice({
       state.status = STATUS.SUCCEED;
 
       const { lineId, stationId } = action.payload;
-      const lineIndex = state.list.findIndex(
-        (line) => line.id === Number(lineId)
-      );
+      const lineIndex = state.list.findIndex((line) => line.id === lineId);
 
       state.list[lineIndex].stations = state.list[lineIndex].stations.filter(
-        (station) => station.id !== Number(stationId)
+        (station) => station.id !== stationId
       );
     },
     [deleteSection.rejected]: (state, action) => {

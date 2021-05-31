@@ -29,8 +29,8 @@ const SectionsDetailListItem = ({ stationId, stationName, lineId }) => {
 };
 
 SectionsDetailListItem.propTypes = {
-  lineId: PropTypes.string.isRequired,
-  stationId: PropTypes.string.isRequired,
+  lineId: PropTypes.number.isRequired,
+  stationId: PropTypes.number.isRequired,
   stationName: PropTypes.string.isRequired,
 };
 

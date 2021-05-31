@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,33 +15,28 @@ const SectionsForm = ({ lineId, closeModal }) => {
   const dispatch = useDispatch();
   const line = useSelector((state) => selectLineByLineId(state, lineId));
   const stationList = useSelector(selectStationsList);
-  const [upStationId, handleUpStationIdChange, , resetUpStationId] = useInput();
-  const [downStationId, handleDownStationIdChange, , resetDownStationId] =
-    useInput();
-  const [distance, handleDistanceChange, isValidDistance, resetDistance] =
-    useDistanceInput();
+  const [upStationId, handleUpStationIdChange] = useInput();
+  const [downStationId, handleDownStationIdChange] = useInput();
+  const [distance, handleDistanceChange, isValidDistance] = useDistanceInput();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    dispatch(
-      addSection({
-        lineId,
-        upStationId,
-        downStationId,
-        distance,
-      })
-    )
-      .then(unwrapResult)
-      .then(() => {
-        resetUpStationId();
-        resetDownStationId();
-        resetDistance();
-        closeModal();
-      })
-      .catch(() => {
-        /* do nothing */
-      });
+    try {
+      const result = await dispatch(
+        addSection({
+          lineId,
+          upStationId,
+          downStationId,
+          distance,
+        })
+      );
+      await unwrapResult(result);
+
+      closeModal();
+    } catch {
+      /* do nothing */
+    }
   };
 
   const isSubmitEnabled = [
@@ -107,7 +101,7 @@ const SectionsForm = ({ lineId, closeModal }) => {
 };
 
 SectionsForm.propTypes = {
-  lineId: PropTypes.string.isRequired,
+  lineId: PropTypes.number.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 

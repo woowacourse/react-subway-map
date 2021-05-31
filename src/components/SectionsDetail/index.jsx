@@ -24,7 +24,7 @@ const SectionsDetail = ({ lineId }) => {
 };
 
 SectionsDetail.propTypes = {
-  lineId: PropTypes.string.isRequired,
+  lineId: PropTypes.number.isRequired,
 };
 
 export default SectionsDetail;

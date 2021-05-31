@@ -76,7 +76,7 @@ export const deleteStationById = createAsyncThunk(
       });
 
       if (response.status === STATIONS_DELETE_SUCCEED.CODE) {
-        return Number(id);
+        return id;
       }
 
       const { message } = await response.json();
