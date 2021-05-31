@@ -28,7 +28,8 @@ const Button = ({
   value,
 }) => (
   <button
-    type={type === "submit" ? "submit" : "button"}
+    // eslint-disable-next-line react/button-has-type
+    type={type}
     disabled={disabled}
     name={name}
     className={cx(
@@ -44,23 +45,14 @@ const Button = ({
 );
 
 Button.propTypes = {
-  type: PropTypes.oneOf(["button", "submit"]).isRequired,
+  type: PropTypes.oneOf(["button", "submit", "reset"]).isRequired,
   children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool,
-  size: PropTypes.oneOf(Object.keys(SIZE_STYLE)),
-  theme: PropTypes.oneOf(Object.keys(THEME_STYLE)),
-  onClick: PropTypes.func,
-  name: PropTypes.string,
-  value: PropTypes.string,
-};
-
-Button.defaultProps = {
-  disabled: false,
-  size: "full",
-  theme: "primary",
-  onClick: null,
-  name: null,
-  value: null,
+  disabled: PropTypes.bool.isRequired,
+  size: PropTypes.oneOf(Object.keys(SIZE_STYLE)).isRequired,
+  theme: PropTypes.oneOf(Object.keys(THEME_STYLE)).isRequired,
+  onClick: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default Button;

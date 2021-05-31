@@ -58,9 +58,12 @@ const Entry = () => {
             <li key={name}>
               <Button
                 type="button"
-                onClick={handleButtonClick}
+                disabled={false}
                 size="large"
+                theme="primary"
+                onClick={handleButtonClick}
                 name={name}
+                value={null}
               >
                 {name}
               </Button>

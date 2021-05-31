@@ -70,7 +70,15 @@ const Login = () => {
               onChange={handlePasswordChange}
               isValid
             />
-            <Button type="submit" disabled={false}>
+            <Button
+              type="submit"
+              disabled={false}
+              size="full"
+              theme="primary"
+              onClick={null}
+              name={null}
+              value={null}
+            >
               로그인
             </Button>
             <Link to={PATH.SIGNUP} className="mt-8 text-center text-gray-700">

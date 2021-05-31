@@ -102,7 +102,15 @@ const Signup = () => {
               isValid={isPasswordConfirmValid}
               onChange={handlePasswordConfirmChange}
             />
-            <Button type="submit" disabled={!isSubmitEnabled}>
+            <Button
+              type="submit"
+              disabled={!isSubmitEnabled}
+              size="full"
+              theme="primary"
+              onClick={null}
+              name={null}
+              value={null}
+            >
               회원가입
             </Button>
           </form>
