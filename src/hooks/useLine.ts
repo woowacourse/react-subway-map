@@ -2,16 +2,8 @@ import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from './useStore';
-import { ApiStatus, Line, LineAttribute, SectionAttribute, Station } from '../types';
-import {
-  addLine,
-  addSection,
-  deleteLine,
-  deleteSection,
-  editLine,
-  getLineList,
-  resetError,
-} from '../slices/lineSlice';
+import { ApiStatus, Line, LineAttribute } from '../types';
+import { addLine, deleteLine, editLine, getLineList, resetError } from '../slices/lineSlice';
 import { logout } from '../slices/authSlice';
 import MESSAGE from '../constants/message';
 
@@ -104,52 +96,6 @@ const useLine = () => {
     }
   };
 
-  const onAddSection = async ({ lineId, data }: SectionAttribute) => {
-    try {
-      const response = await dispatch(addSection({ lineId, data }));
-
-      unwrapResult(response);
-
-      enqueueSnackbar(MESSAGE.SUCCESS.SECTION_ADDED, {
-        variant: 'success',
-      });
-
-      return true;
-    } catch ({ message }) {
-      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
-        variant: 'error',
-      });
-
-      return false;
-    }
-  };
-
-  const onDeleteSection = async ({
-    lineId,
-    stationId,
-  }: {
-    lineId: Line['id'];
-    stationId: Station['id'];
-  }) => {
-    try {
-      const response = await dispatch(deleteSection({ lineId, stationId }));
-
-      unwrapResult(response);
-
-      enqueueSnackbar(MESSAGE.SUCCESS.SECTION_DELETED, {
-        variant: 'success',
-      });
-
-      return true;
-    } catch ({ message }) {
-      enqueueSnackbar(message || MESSAGE.ERROR.REQUEST_FAILURE, {
-        variant: 'error',
-      });
-
-      return false;
-    }
-  };
-
   useEffect(() => {
     onGetLine();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,8 +114,6 @@ const useLine = () => {
     onAddLine,
     onEditLine,
     onDeleteLine,
-    onAddSection,
-    onDeleteSection,
     lineList,
     error,
     status,

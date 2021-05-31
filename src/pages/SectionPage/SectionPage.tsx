@@ -8,18 +8,16 @@ import { ReactComponent as HorizontalArrowIcon } from '../../assets/icons/arrows
 import useModal from '../../hooks/useModal';
 import useSelect from '../../hooks/useSelect';
 import useInput from '../../hooks/useInput';
-import useStation from '../../hooks/useStation';
-import useLine from '../../hooks/useLine';
 import { Station } from '../../types';
 import MESSAGE from '../../constants/message';
+import useSection from '../../hooks/useSection';
 
 const SectionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const { stationList } = useStation();
-  const { lineList, isLoading, onAddSection, onDeleteSection } = useLine();
+  const { stationList, lineList, onAddSection, onDeleteSection, isLoading } = useSection();
 
   const {
     value: selectedLineId,
