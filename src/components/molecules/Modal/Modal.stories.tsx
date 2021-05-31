@@ -11,7 +11,7 @@ export default {
 const Portal = document.createElement('div');
 Portal.setAttribute('id', 'modal');
 
-document.querySelector('body')?.append(Portal);
+document.body?.append(Portal);
 
 const ModalPortal = ({ children }: ModalProps) => {
   const $modal = document.getElementById('modal');
