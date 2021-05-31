@@ -15,11 +15,12 @@ const ListSelect = ({ list, placeholder, value, onChange }) => (
 );
 
 ListSelect.propTypes = {
-  ...Select.propTypes,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   list: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
     })
   ).isRequired,

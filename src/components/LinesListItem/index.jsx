@@ -17,9 +17,7 @@ const LinesListItem = ({ id, name, color }) => {
   return (
     <li className="flex items-center justify-between mt-5 mx-6 pb-1 text-gray-600 text-xl border-b">
       <div className="flex items-center">
-        <span
-          className={cx("block mr-2 w-5 h-5 bg-blue-400 rounded-full", color)}
-        />
+        <span className={cx("block mr-2 w-5 h-5 rounded-full", color)} />
         <span>{name}</span>
       </div>
       <Button
@@ -35,7 +33,7 @@ const LinesListItem = ({ id, name, color }) => {
 };
 
 LinesListItem.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
 };

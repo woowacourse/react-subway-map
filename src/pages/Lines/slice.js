@@ -16,7 +16,8 @@ import { selectAccessToken } from "../Login/slice";
 export const selectLinesStatus = (state) => state.lines.status;
 export const selectLinesMessage = (state) => state.lines.message;
 export const selectLinesList = (state) => state.lines.list;
-export const selectLineByLineId = (id) => (state) =>
+// TODO: id 는 Number Type 으로 일치시킨다
+export const selectLineByLineId = (state, id) =>
   state.lines.list.find((line) => line.id === Number(id));
 
 export const addLine = createAsyncThunk(
@@ -140,7 +141,7 @@ export const deleteSection = createAsyncThunk(
       );
 
       if (response.status === SECTIONS_DELETE_SUCCEED.CODE) {
-        return;
+        return { lineId, stationId };
       }
 
       const { message } = await response.json();
@@ -231,8 +232,17 @@ const linesSlice = createSlice({
     [deleteSection.pending]: (state) => {
       state.status = STATUS.LOADING;
     },
-    [deleteSection.fulfilled]: (state) => {
+    [deleteSection.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
+
+      const { lineId, stationId } = action.payload;
+      const lineIndex = state.list.findIndex(
+        (line) => line.id === Number(lineId)
+      );
+
+      state.list[lineIndex].stations = state.list[lineIndex].stations.filter(
+        (station) => station.id !== Number(stationId)
+      );
     },
     [deleteSection.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
