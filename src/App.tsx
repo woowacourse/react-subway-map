@@ -41,10 +41,10 @@ const App = () => {
           <TextLogo height="32px" />
         </Link>
         <NavBar>
+          <NavLink to={PATH.MAP}>전체보기</NavLink>
           <NavLink to={PATH.STATIONS}>역관리</NavLink>
           <NavLink to={PATH.LINES}>노선관리</NavLink>
           <NavLink to={PATH.SECTIONS}>구간관리</NavLink>
-          <NavLink to={PATH.MAP}>전체보기</NavLink>
           {userContext?.isLoggedIn ? (
             <button
               onClick={() => {

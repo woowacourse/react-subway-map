@@ -1,13 +1,13 @@
-import { APIReturnTypeLine } from '../../hooks/useLines';
+import { Line } from '../../types';
 import { Container, LineTag, StationDot } from './SectionGraph.style';
 
 interface SectionGraphProps {
-  line: APIReturnTypeLine;
+  line: Line;
 }
 
 const SectionGraph = ({ line }: SectionGraphProps) => (
   <Container borderColor={line.color}>
-    <LineTag backgroundColor={line.color}>{line.name}</LineTag>
+    <LineTag borderColor={line.color}>{line.name}</LineTag>
     {line.stations.map(({ id, name }) => (
       <StationDot key={id} borderColor={line.color}>
         <span>{name}</span>

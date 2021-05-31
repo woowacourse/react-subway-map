@@ -14,4 +14,8 @@ const Container = styled.div`
   }
 `;
 
-export { Container };
+const Lines = styled.div`
+  overflow-x: auto;
+`;
+
+export { Container, Lines };
