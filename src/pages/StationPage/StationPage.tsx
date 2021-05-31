@@ -23,24 +23,25 @@ import { PageProps } from '../types';
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 
 const StationPage = ({ setIsLoading }: PageProps) => {
-  const [stationInput, onStationInputChange, setStationInput] = useInput('');
   const [stations, setStations, fetchStations, addStation, deleteStation] =
     useStations(STATION_BEFORE_FETCH);
+  const [stationInput, onStationInputChange, setStationInput] = useInput('');
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   const fetchData = async () => {
+    // 요청이 빠르게 끝나는 경우 로딩화면을 띄우지 않기 위함.
     const timer = setTimeout(() => setIsLoading(true), 500);
 
     try {
       await fetchStations();
     } catch (error) {
       console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
       setStations([]);
     } finally {
       clearTimeout(timer);
@@ -56,9 +57,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     return <></>;
   }
 
-  const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
+  const formValidator = () => {
     const isStationInputValid =
       stationInput.length >= STATION_VALUE.NAME_MIN_LENGTH &&
       stationInput.length <= STATION_VALUE.NAME_MAX_LENGTH &&
@@ -67,27 +66,37 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
     if (!isStationInputValid) {
       setStationInputErrorMessage(ERROR_MESSAGE.INVALID_STATION_INPUT);
-      return;
+      return false;
     }
 
     if (isStationInputDuplicated) {
       setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
-      return;
+      return false;
     }
 
     setStationInputErrorMessage('');
+    return true;
+  };
+
+  const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    const isValidForm = formValidator();
+    if (!isValidForm) {
+      return;
+    }
 
     try {
       await addStation({ name: stationInput });
       await fetchData();
-      addMessage?.(SUCCESS_MESSAGE.ADD_STATION);
+      addSnackBar?.(SUCCESS_MESSAGE.ADD_STATION);
 
       setStationInput('');
     } catch (error) {
       console.error(error);
 
       if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
         return;
       }
@@ -99,7 +108,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
   };
 
@@ -109,22 +118,22 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     try {
       await deleteStation(id);
       await fetchData();
-      addMessage?.(SUCCESS_MESSAGE.DELETE_STATION);
+      addSnackBar?.(SUCCESS_MESSAGE.DELETE_STATION);
     } catch (error) {
       console.error(error);
 
       if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
         return;
       }
 
       if (error.message === STATUS_CODE.STATION_IN_SECTION) {
-        addMessage?.(ERROR_MESSAGE.STATION_IN_SECTION);
+        addSnackBar?.(ERROR_MESSAGE.STATION_IN_SECTION);
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
   };
 
