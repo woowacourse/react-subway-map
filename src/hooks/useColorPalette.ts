@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Color } from '../types';
 
-const useColorPalette = (initialValue?: Color) => {
-  const [color, setColor] = useState<Color>(initialValue || Color.RED_200);
+const useColorPalette = (initialValue = Color.RED_200) => {
+  const [color, setColor] = useState(initialValue);
 
-  const onChange = (selectedColor: Color): void => {
+  const onChange = (selectedColor: Color) => {
     setColor(selectedColor);
   };
 
