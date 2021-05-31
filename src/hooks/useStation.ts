@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { requestLines } from '../service/line';
 import {
   requestAddStation,
   requestDeleteStation,
   requestStations,
 } from '../service/station';
-import { StationForm, StationId } from '../types';
+import { Line, StationForm, StationId } from '../types';
 import useLogin from './useLogin';
 
 const useStation = () => {
@@ -43,7 +44,21 @@ const useStation = () => {
     addMutation.mutate();
   };
 
+  const lines = useQuery('requestLines', () => requestLines(accessToken));
+
+  const isStationInLine = (lines: Line[], stationId: number) =>
+    lines.some((line: Line) =>
+      line.stations.some((station) => station.id === stationId)
+    );
+
   const deleteStation = (stationId: StationId) => {
+    if (isStationInLine(lines.data as Line[], stationId)) {
+      alert('노선에 등록된 역은 삭제하실 수 없습니다.');
+      return;
+    }
+
+    if (!window.confirm('정말로 삭제하시겠습니까?')) return;
+
     deleteMutation.mutate(stationId);
   };
 

@@ -65,6 +65,7 @@ export interface Line {
   id: LineId;
   name: string;
   color: LineColor;
+  stations: Station[];
 }
 
 export interface LineDetail extends Line {
