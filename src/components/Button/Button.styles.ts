@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { ButtonVariant, ButtonShape } from '../../types';
+import { ButtonVariant, ButtonShape } from './Button.types';
 
 interface ButtonIProps {
   variant: ButtonVariant;

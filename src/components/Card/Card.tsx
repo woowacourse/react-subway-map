@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Styled from './Card.styles';
-import { CardVariant } from '../../types';
+import { CardVariant } from './Card.types';
 
 interface IProps {
   children: React.ReactNode;

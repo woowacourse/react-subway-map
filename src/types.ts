@@ -1,8 +1,3 @@
-export type ButtonVariant = 'primary' | 'text' | 'link';
-export type ButtonShape = 'default' | 'circle';
-
-export type CardVariant = 'primary' | 'simple';
-
 export enum Color {
   RED_200 = 'rgb(254, 202, 202)',
   RED_300 = 'rgb(252, 165, 165)',

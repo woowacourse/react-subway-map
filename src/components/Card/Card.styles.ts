@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { CardVariant } from '../../types';
+import { CardVariant } from './Card.types';
 
 interface CardIProps {
   variant: CardVariant;

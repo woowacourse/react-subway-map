@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import * as Styled from './Button.styles';
-import { ButtonVariant, ButtonShape } from '../../types';
+import { ButtonShape, ButtonVariant } from './Button.types';
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
