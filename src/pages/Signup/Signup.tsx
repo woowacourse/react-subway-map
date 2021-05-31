@@ -130,7 +130,6 @@ const Signup: FC = () => {
       return;
     }
 
-    // TODO : input태그 name vs id
     const memberInfo = {
       email: formInput.email,
       age: Number(formInput.age),

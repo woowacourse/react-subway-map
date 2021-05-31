@@ -5,7 +5,6 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
-import Snackbar from '../../components/@common/Snackbar/Snackbar';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
