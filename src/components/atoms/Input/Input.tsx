@@ -1,16 +1,8 @@
 import { Container } from './Input.styles';
 
-export interface InputProps {
-  placeholder: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+export interface InputProps extends React.HTMLProps<HTMLInputElement> {
   value: string | number;
-  type?: string;
-  min?: number;
-  max?: number;
-  maxLength?: number;
-  minLength?: number;
   ariaLabel?: string;
-  autoFocus?: boolean;
 }
 const Input = ({
   type = 'text',
