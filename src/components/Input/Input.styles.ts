@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface InputIProps {
+interface InputProps {
   hasIcon: boolean;
   isError: boolean;
 }
@@ -22,7 +22,7 @@ export const LabelText = styled.span`
   color: ${({ theme }) => theme.color.text.label};
 `;
 
-export const Input = styled.input<InputIProps>`
+export const Input = styled.input<InputProps>`
   border: 1px solid
     ${({ theme, isError }) => (isError ? theme.color.border.error : theme.color.border.primary)};
   border-radius: 5px;

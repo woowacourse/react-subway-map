@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 import { CardVariant } from './Card.types';
 
-interface CardIProps {
+interface CardProps {
   variant: CardVariant;
 }
 
 const variantStyles = {
-  primary: css<CardIProps>`
+  primary: css<CardProps>`
     border-radius: 4px;
 
     &::before {
@@ -23,7 +23,7 @@ const variantStyles = {
   simple: css``,
 };
 
-export const Card = styled.div<CardIProps>`
+export const Card = styled.div<CardProps>`
   box-shadow: 0 4px 6px -1px ${({ theme }) => theme.color.border.secondary};
 
   ${({ variant }) => variantStyles[variant]}

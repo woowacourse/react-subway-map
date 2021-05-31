@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Color } from '../../types';
 
-interface ColorDotIProps {
+interface ColorDotProps {
   color: Color;
 }
 
-export const ColorDot = styled.span<ColorDotIProps>`
+export const ColorDot = styled.span<ColorDotProps>`
   display: inline-block;
   background-color: ${({ color }) => color};
   width: 14px;

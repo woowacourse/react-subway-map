@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { ButtonVariant, ButtonShape } from './Button.types';
 
-interface ButtonIProps {
+interface ButtonProps {
   variant: ButtonVariant;
   shape: ButtonShape;
   fullWidth: boolean;
@@ -20,7 +20,7 @@ const variantStyles = {
     }
   `,
 
-  text: css<ButtonIProps>`
+  text: css<ButtonProps>`
     background: ${({ active, theme }) => (active ? theme.color.bg.secondary.active : 'none')};
 
     &:hover,
@@ -29,7 +29,7 @@ const variantStyles = {
     }
   `,
 
-  link: css<ButtonIProps>`
+  link: css<ButtonProps>`
     background: ${({ active, theme }) => (active ? theme.color.bg.secondary.active : 'none')};
     color: ${({ theme }) => theme.color.text.link};
 
@@ -61,7 +61,7 @@ const shapeStyles = {
   `,
 };
 
-export const Button = styled.button<ButtonIProps>`
+export const Button = styled.button<ButtonProps>`
   border: none;
   font-size: 16px;
   cursor: pointer;

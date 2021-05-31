@@ -2,10 +2,10 @@ import React from 'react';
 import { Color } from '../../types';
 import * as Styled from './ColorDot.styles';
 
-interface IProps {
+interface Props {
   color: Color;
 }
 
-const ColorDot = ({ color }: IProps) => <Styled.ColorDot color={color} />;
+const ColorDot = ({ color }: Props) => <Styled.ColorDot color={color} />;
 
 export default ColorDot;

@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes } from 'react';
 import * as Styled from './Button.styles';
 import { ButtonShape, ButtonVariant } from './Button.types';
 
-interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: ButtonVariant;
   shape?: ButtonShape;
@@ -17,7 +17,7 @@ const Button = ({
   fullWidth = false,
   active = false,
   ...props
-}: IProps) => (
+}: Props) => (
   <Styled.Button variant={variant} shape={shape} fullWidth={fullWidth} active={active} {...props}>
     {children}
   </Styled.Button>

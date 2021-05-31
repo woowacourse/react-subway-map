@@ -2,12 +2,12 @@ import React from 'react';
 import * as Styled from './Card.styles';
 import { CardVariant } from './Card.types';
 
-interface IProps {
+interface Props {
   children: React.ReactNode;
   variant?: CardVariant;
 }
 
-const Card = ({ children, variant = 'primary' }: IProps) => (
+const Card = ({ children, variant = 'primary' }: Props) => (
   <Styled.Card variant={variant}>
     <Styled.Inner>{children}</Styled.Inner>
   </Styled.Card>

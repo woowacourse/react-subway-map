@@ -1,14 +1,14 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
 import * as Styled from './Input.styles';
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
   labelText?: string;
   errorMessage?: string | null;
 }
 
-const Input = forwardRef<HTMLInputElement, IProps>(
-  ({ icon, labelText = '', errorMessage, ...props }: IProps, ref?) => {
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ icon, labelText = '', errorMessage, ...props }: Props, ref?) => {
     return (
       <Styled.Label>
         <Styled.LabelText>{labelText}</Styled.LabelText>

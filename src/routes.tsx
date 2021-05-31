@@ -8,11 +8,11 @@ import SectionPage from './pages/SectionPage/SectionPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import StationPage from './pages/StationPage/StationPage';
 
-interface PrivateRouteIProps extends RouteProps {
+interface PrivateRouteProps extends RouteProps {
   children?: React.ReactNode;
 }
 
-const PrivateRoute = ({ children, ...props }: PrivateRouteIProps) => {
+const PrivateRoute = ({ children, ...props }: PrivateRouteProps) => {
   const { isLogin } = useAuth();
 
   return (
