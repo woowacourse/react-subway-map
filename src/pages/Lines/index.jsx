@@ -117,7 +117,15 @@ const Lines = () => {
             <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
               노선 관리
             </h2>
-            <Button onClick={handleModalOpen} type="button" size="medium">
+            <Button
+              type="button"
+              disabled={false}
+              size="medium"
+              theme="primary"
+              onClick={handleModalOpen}
+              name={null}
+              value={null}
+            >
               등록
             </Button>
           </div>
@@ -141,11 +149,12 @@ const Lines = () => {
                     </div>
                     <Button
                       type="button"
-                      theme="icon"
+                      disabled={false}
                       size="auto"
+                      theme="icon"
+                      onClick={handleDeleteClick}
                       name={id}
                       value={name}
-                      onClick={handleDeleteClick}
                     >
                       🗑
                     </Button>
@@ -155,7 +164,7 @@ const Lines = () => {
           )}
         </section>
       </Main>
-      <Modal close={handleModalClose} isOpen={isModalOpen}>
+      <Modal onClose={handleModalClose} isOpen={isModalOpen}>
         <form
           className="flex flex-col items-center px-4 py-12 w-144 bg-white rounded-lg shadow-2xl"
           onSubmit={handleSubmit}
@@ -202,7 +211,15 @@ const Lines = () => {
 
           <ColorSelect value={color} onChange={handleColorChange} />
 
-          <Button type="submit" size="full" disabled={!isSubmitEnabled}>
+          <Button
+            type="submit"
+            disabled={!isSubmitEnabled}
+            size="full"
+            theme="primary"
+            onClick={null}
+            name={null}
+            value={null}
+          >
             생성
           </Button>
         </form>

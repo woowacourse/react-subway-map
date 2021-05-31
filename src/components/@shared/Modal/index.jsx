@@ -4,12 +4,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import ModalPortal from "../../Portal/ModalPortal";
 
-const Modal = ({ isOpen, children, close }) => {
+const Modal = ({ isOpen, children, onClose }) => {
   const handleClick = (event) => {
     const isDimmedClicked = event.currentTarget === event.target;
 
     if (isDimmedClicked) {
-      close();
+      onClose();
     }
   };
 
@@ -30,7 +30,7 @@ const Modal = ({ isOpen, children, close }) => {
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 

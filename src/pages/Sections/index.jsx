@@ -167,11 +167,12 @@ const Sections = () => {
                     <span>{name}</span>
                     <Button
                       type="button"
-                      theme="icon"
+                      disabled={false}
                       size="auto"
+                      theme="icon"
+                      onClick={handleDeleteClick}
                       name={id}
                       value={name}
-                      onClick={handleDeleteClick}
                     >
                       🗑
                     </Button>
@@ -183,7 +184,7 @@ const Sections = () => {
         </section>
       </Main>
 
-      <Modal isOpen={isModalOpen} close={handleModalClose}>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
         <form
           className="flex flex-col items-center px-4 py-12 w-144 bg-white rounded-lg shadow-2xl"
           onSubmit={handleSubmit}

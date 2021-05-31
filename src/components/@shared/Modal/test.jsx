@@ -6,7 +6,7 @@ import Modal from ".";
 describe("Modal", () => {
   test("Modal의 props 중 isOpen이 true일 때 모달이 화면에 표시된다.", () => {
     render(
-      <Modal isOpen close={jest.fn()}>
+      <Modal isOpen onClose={jest.fn()}>
         hello dongdong
       </Modal>
     );
@@ -16,7 +16,7 @@ describe("Modal", () => {
 
   test("Modal의 props 중 isOpen이 false일 때 모달이 화면에 표시되지 않는다.", () => {
     render(
-      <Modal isOpen={false} close={jest.fn()}>
+      <Modal isOpen={false} onClose={jest.fn()}>
         hello dongdong
       </Modal>
     );
