@@ -10,7 +10,7 @@ interface VideoProps {
 const Video = ({ src, loop, autoPlay, muted }: VideoProps) => {
   return (
     <Container src={src} loop={loop} autoPlay={autoPlay} muted={muted}>
-      <source src="assets/videos/background.mp4" type="video/mp4" />
+      <source src={src} type="video/mp4" />
     </Container>
   );
 };
