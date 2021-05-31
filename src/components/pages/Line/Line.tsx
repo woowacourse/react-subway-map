@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_URL, LineColor, RESPONSE_MESSAGE } from '../../../constants';
-import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
+import { useLineInput, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
@@ -46,29 +46,22 @@ const Line = () => {
   const [color, setColor] = useState<string>(LineColor.COLOR_1);
   const [selectedLineId, setSelectedLineId] = useState<number>();
 
-  const { value: lineName, onChange: onChangeLineName, setValue: setLineName } = useChangeEvent('');
   const {
-    value: distance,
-    onChange: onChangeDistance,
-    setValue: setDistance,
-  } = useChangeEvent('1');
-  const {
-    value: upStationId,
-    onChange: onChangeUpStationId,
-    setValue: setUpStationId,
-  } = useChangeEvent('');
-  const {
-    value: downStationId,
-    onChange: onChangeDownStationId,
-    setValue: setDownStationId,
-  } = useChangeEvent('');
+    lineInput: lineName,
+    onChangeLineInput: onChangeLineName,
+    setLineInput: setLineName,
 
-  const resetForm = () => {
-    setLineName('');
-    setUpStationId('');
-    setDownStationId('');
-    setDistance('1');
-  };
+    distance,
+    onChangeDistance,
+
+    upStationId,
+    onChangeUpStationId,
+
+    downStationId,
+    onChangeDownStationId,
+
+    resetForm,
+  } = useLineInput();
 
   const openAddModal = () => {
     openModal();

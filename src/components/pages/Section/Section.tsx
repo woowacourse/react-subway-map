@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_URL, RESPONSE_MESSAGE } from '../../../constants';
-import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
+import { useLineInput, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
 import { ILineRes, ISectionReq, IStationRes } from '../../../type';
@@ -34,28 +34,21 @@ const Section = () => {
 
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 
-  const { value: lineId, onChange: onChangeLineId } = useChangeEvent('');
   const {
-    value: distance,
-    onChange: onChangeDistance,
-    setValue: setDistance,
-  } = useChangeEvent('1');
-  const {
-    value: upStationId,
-    onChange: onChangeUpStationId,
-    setValue: setUpStationId,
-  } = useChangeEvent('');
-  const {
-    value: downStationId,
-    onChange: onChangeDownStationId,
-    setValue: setDownStationId,
-  } = useChangeEvent('');
+    lineInput: lineId,
+    onChangeLineInput: onChangeLineId,
 
-  const resetForm = () => {
-    setDistance('1');
-    setUpStationId('');
-    setDownStationId('');
-  };
+    distance,
+    onChangeDistance,
+
+    upStationId,
+    onChangeUpStationId,
+
+    downStationId,
+    onChangeDownStationId,
+
+    resetForm,
+  } = useLineInput();
 
   const lineOptions: IOption[] = lines?.map(({ id, name }) => ({ value: id, name })) || [];
 
