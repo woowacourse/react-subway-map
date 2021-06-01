@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 
@@ -12,14 +11,12 @@ import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
 import { COLOR, LINE } from '../../constants';
 
-export const LinePage = (props) => {
-  const { endpoint } = props;
-
+export const LinePage = () => {
   const dispatch = useDispatch();
   const { stations } = useSelector((store) => store.station);
   const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
-  const { accessTokenInCookie: accessToken } = useCookie();
+  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsLineAddOpen(true);
@@ -122,8 +119,4 @@ export const LinePage = (props) => {
       )}
     </Section>
   );
-};
-
-LinePage.propTypes = {
-  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };

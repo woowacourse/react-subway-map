@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 
@@ -21,13 +20,11 @@ import {
 } from './style';
 import { COLOR, SECTION } from '../../constants';
 
-export const SectionPage = (props) => {
-  const { endpoint } = props;
-
+export const SectionPage = () => {
   const dispatch = useDispatch();
   const { stations } = useSelector((store) => store.station);
   const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
-  const { accessTokenInCookie: accessToken } = useCookie();
+  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
 
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
   const [selectedLineId, setSelectedLineId] = useState(map[0]?.id);
@@ -123,8 +120,4 @@ export const SectionPage = (props) => {
       )}
     </Section>
   );
-};
-
-SectionPage.propTypes = {
-  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };

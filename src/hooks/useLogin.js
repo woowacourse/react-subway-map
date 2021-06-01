@@ -7,12 +7,12 @@ import { LOGIN, LOGOUT } from './../constants';
 
 export const useLogin = () => {
   const { goToHome, goToLogin } = useRouter();
-  const { setAccessTokenInCookie, removeAccessTokenFromCookie } = useCookie();
+  const { setAccessTokenInCookie, removeAccessTokenFromCookie, endpoint } = useCookie();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const { isLogin, isLoginFail, accessToken, isLogout } = useSelector((store) => store.user);
 
-  const requestLogin = ({ endpoint, email, password }) => {
+  const requestLogin = ({ email, password }) => {
     dispatch(
       login({
         endpoint,

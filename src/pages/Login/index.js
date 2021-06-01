@@ -1,21 +1,16 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { PropTypes } from 'prop-types';
 
 import { useLogin } from '../../hooks';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
 import { ROUTE } from '../../constants';
 
-export const LoginPage = (props) => {
-  const { endpoint } = props;
-  const { requestLogin, goToAllowedPage, notifyLoginResult } = useLogin();
-  const { isLogin, isLoginFail } = useSelector((store) => store.user);
+export const LoginPage = () => {
+  const { isLogin, isLoginFail, requestLogin, goToAllowedPage, notifyLoginResult } = useLogin();
 
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
     requestLogin({
-      endpoint,
       email: e.target.email.value,
       password: e.target.password.value,
     });
@@ -37,8 +32,4 @@ export const LoginPage = (props) => {
       </Form>
     </Section>
   );
-};
-
-LoginPage.propTypes = {
-  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 };

@@ -37,19 +37,19 @@ function App() {
     <Page serverId={serverId} setServerId={setServerId}>
       <Switch>
         <Route exact path={ROUTE.LOGIN}>
-          <LoginPage endpoint={endpoint} />
+          <LoginPage />
         </Route>
         <Route exact path={ROUTE.SING_UP}>
-          <SignUpPage endpoint={endpoint} />
+          <SignUpPage />
         </Route>
         <Route exact path={ROUTE.STATION}>
-          <StationPage endpoint={endpoint} />
+          <StationPage />
         </Route>
         <Route exact path={ROUTE.LINE}>
-          <LinePage endpoint={endpoint} />
+          <LinePage />
         </Route>
         <Route exact path={ROUTE.SECTION}>
-          <SectionPage endpoint={endpoint} />
+          <SectionPage />
         </Route>
       </Switch>
     </Page>

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { PropTypes } from 'prop-types';
 import { useSnackbar } from 'notistack';
 
-import { useRouter } from '../../hooks';
+import { useCookie, useRouter } from '../../hooks';
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 
-export const SignUpPage = (props) => {
-  const { endpoint } = props;
-
+export const SignUpPage = () => {
+  const { endpoint } = useCookie();
   const { goToLogin } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -111,10 +109,6 @@ export const SignUpPage = (props) => {
       </Form>
     </Section>
   );
-};
-
-SignUpPage.propTypes = {
-  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 };
 
 function getEmailValidationMessage(email) {
