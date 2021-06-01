@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { FC, MouseEventHandler } from 'react';
 import ReactDOM from 'react-dom';
+import Dimmed from '../Dimmed/Dimmed';
 import Close from '../Icon/Close';
 import { CloseButton, ModalContainer, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
 
@@ -20,7 +21,7 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
   };
 
   return ReactDOM.createPortal(
-    <ModalContainer onMouseDown={onClickDimmed}>
+    <Dimmed onMouseDown={onClickDimmed}>
       <ModalInner>
         <CloseButton buttonType="round" isColored={false} onClick={onClose}>
           <Close width="90%" />
@@ -28,7 +29,7 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
         {titleText && <ModalTitle>{titleText}</ModalTitle>}
         <ModalContent hasTitle={!!titleText}>{children}</ModalContent>
       </ModalInner>
-    </ModalContainer>,
+    </Dimmed>,
     $modalRoot as HTMLDivElement
   );
 };

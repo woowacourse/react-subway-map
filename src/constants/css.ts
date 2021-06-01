@@ -1,4 +1,4 @@
 export const Z_INDEX = {
   HEADER: 9,
-  MODAL: 10,
+  DIMMED: 10,
 };

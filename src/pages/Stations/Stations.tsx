@@ -2,8 +2,10 @@ import React, { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } 
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import Dimmed from '../../components/@common/Dimmed/Dimmed';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
+import Loading from '../../components/@common/Loading/Loading';
 import ListItem from '../../components/@shared/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
@@ -17,7 +19,7 @@ import { StationForm, StationList, StationName, StationNameInput } from './Stati
 const Stations: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { stations, errorMessage } = useSelector((state: RootState) => state.station);
+  const { stations, isLoading, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
   const [formInput, setFormInput] = useState('');
@@ -68,6 +70,11 @@ const Stations: FC = () => {
       templateColor={API_INFO[apiOwner].themeColor[400]}
       titleText={PAGE_INFO.STATIONS.text}
     >
+      {isLoading && (
+        <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
+          <Loading />
+        </Dimmed>
+      )}
       {isLogin && (
         <>
           <StationForm onSubmit={onAddStation}>

@@ -9,7 +9,7 @@ interface ModalContentProps {
 export const ModalContainer = styled.div`
   display: flex;
   position: fixed;
-  z-index: ${Z_INDEX.MODAL};
+  z-index: ${Z_INDEX.DIMMED};
   top: 0;
   right: 0;
   bottom: 0;

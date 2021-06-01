@@ -15,11 +15,13 @@ import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
+import Dimmed from '../../components/@common/Dimmed/Dimmed';
+import Loading from '../../components/@common/Loading/Loading';
 
 const Lines: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { lines, errorMessage } = useSelector((state: RootState) => state.line);
+  const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
   const lineModifyModal = useModal(null);
@@ -62,6 +64,11 @@ const Lines: FC = () => {
       titleText={PAGE_INFO.LINES.text}
       templateColor={API_INFO[apiOwner].themeColor[400]}
     >
+      {isLoading && (
+        <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
+          <Loading />
+        </Dimmed>
+      )}
       {isLogin && (
         <ButtonOnLine onClick={onOpenAddModal}>
           <Add width="80%" color={PALETTE.GRAY[600]} />

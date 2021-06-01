@@ -2,9 +2,11 @@ import React, { ChangeEventHandler, FC, useEffect, useMemo, useState } from 'rea
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import Dimmed from '../../components/@common/Dimmed/Dimmed';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
 import Subway from '../../components/@common/Icon/Subway';
+import Loading from '../../components/@common/Loading/Loading';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import ListItem from '../../components/@shared/ListItem/ListItem';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
@@ -24,10 +26,12 @@ import { LineInfoContainer, LineSelectBox } from './Section.styles';
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { stations, errorMessage: stationErrorMessage } = useSelector(
+  const { stations, isLoading: stationsIsLoading, errorMessage: stationErrorMessage } = useSelector(
     (state: RootState) => state.station
   );
-  const { lines, errorMessage: lineErrorMessage } = useSelector((state: RootState) => state.line);
+  const { lines, isLoading: linesIsLoading, errorMessage: lineErrorMessage } = useSelector(
+    (state: RootState) => state.line
+  );
   const dispatch = useAppDispatch();
 
   const sectionAddModal = useModal();
@@ -87,7 +91,6 @@ const Sections: FC = () => {
         stationId,
       });
 
-      // TODO: 일관성있게 삭제 진행하기
       dispatch(loadLines());
     } catch (error) {
       alert(ERROR_MESSAGE.DELETE_SECTION_FAILURE);
@@ -99,6 +102,11 @@ const Sections: FC = () => {
       titleText={PAGE_INFO.SECTIONS.text}
       templateColor={API_INFO[apiOwner].themeColor[400]}
     >
+      {stationsIsLoading && linesIsLoading && (
+        <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
+          <Loading />
+        </Dimmed>
+      )}
       <FlexContainer>
         <LineSelectBox onChange={onChangeTargetLine}>
           <option value="">{SECTION.LINE_SELECT_TEXT}</option>
