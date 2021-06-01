@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { useCookie, useRouter } from '../../../hooks';
-import { logout } from '../../../redux/userSlice';
+import { useCookie, useLogin } from '../../../hooks';
 import { clearStation } from '../../../redux/stationSlice';
 import { clearLine } from '../../../redux/lineSlice';
 import { clearMap } from '../../../redux/mapSlice';
@@ -17,8 +16,8 @@ export const Page = (props) => {
   const dispatch = useDispatch();
 
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
-  const { goToLogin } = useRouter();
-  const { setServerIdInCookie, removeAccessTokenFromCookie } = useCookie();
+  const { requestLogout } = useLogin();
+  const { setServerIdInCookie } = useCookie();
 
   const handleServerSubmit = (e) => {
     e.preventDefault();
@@ -33,14 +32,12 @@ export const Page = (props) => {
     setServerId(selectedId);
     setServerIdInCookie(selectedId);
 
-    dispatch(logout());
-    removeAccessTokenFromCookie();
+    requestLogout();
     dispatch(clearLine());
     dispatch(clearStation());
     dispatch(clearMap());
 
     setIsServerSelectOpen(false);
-    goToLogin();
   };
 
   const handleServerSelectButtonClick = () => {

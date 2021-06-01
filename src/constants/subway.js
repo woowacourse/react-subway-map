@@ -3,6 +3,10 @@ export const LOGIN = {
   FAIL: '로그인에 실패하였습니다.',
 };
 
+export const LOGOUT = {
+  SUCCEED: '로그아웃 되었습니다.',
+};
+
 export const SIGN_UP = {
   SUCCEED: '회원가입에 성공하였습니다.',
   FAIL: '회원가입에 실패하였습니다.',

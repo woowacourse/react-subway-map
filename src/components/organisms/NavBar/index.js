@@ -1,10 +1,8 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-import { useCookie, useRouter } from '../../../hooks';
-import { logout, clearLogout } from '../../../redux/userSlice';
+import { useLogin } from '../../../hooks';
 import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
 import { Nav, TitleButton, Title, SubTitle, MainTitle, Menu, MenuList, MenuItem } from './style';
 import { ROUTE } from '../../../constants';
@@ -13,21 +11,19 @@ const FE_CONTRIBUTORS = '티케 하루의';
 
 export const NavBar = (props) => {
   const { serverOwner } = props;
-  const dispatch = useDispatch();
-  const { isLogin, isLogout } = useSelector((store) => store.user);
-  const { goToLogin } = useRouter();
-  const { removeAccessTokenFromCookie } = useCookie();
+  const { isLogin, isLogout, requestLogout, removeToken, goToAllowedPage, notifyLogoutResult } = useLogin();
   const subTitle = serverOwner ? `${serverOwner} & ${FE_CONTRIBUTORS}` : `${FE_CONTRIBUTORS}`;
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogoutRequest = () => requestLogout();
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
     if (isLogout) {
-      removeAccessTokenFromCookie();
-      dispatch(clearLogout());
+      notifyLogoutResult();
+      removeToken();
+      goToAllowedPage();
     }
-    goToLogin();
-  };
+  }, [isLogout]);
 
   return (
     <Nav>
@@ -82,7 +78,7 @@ export const NavBar = (props) => {
         <MenuList>
           <MenuItem>
             {isLogin ? (
-              <Button onClick={handleLogout}>
+              <Button onClick={handleLogoutRequest}>
                 <IconPerson />
                 로그아웃
               </Button>
