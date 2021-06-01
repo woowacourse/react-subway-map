@@ -9,15 +9,7 @@ import { useAppDispatch } from '../../state/store';
 import { APIAction } from '../../state/slices/API';
 import { lineAction } from '../../state/slices/line';
 import { loginAction } from '../../state/slices/login';
-
-type APIName = 'PIKA' | 'MUNGTO' | 'BETTER' | 'KEVIN';
-
-const URL = {
-  BETTER: 'https://subway-fare-mission.kro.kr',
-  KEVIN: 'https://jipark.p-e.kr',
-  MUNGTO: 'https://mungto-subway.o-r.kr',
-  PIKA: 'https://pika-subway-fare.kro.kr',
-};
+import { APIName, URL } from '../../constants/API';
 
 const APISelectPage: VFC<RouteComponentProps> = ({ history }) => {
   const dispatch = useAppDispatch();
