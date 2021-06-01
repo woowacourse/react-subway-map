@@ -15,6 +15,7 @@ import { addStation, deleteStation, loadStations } from '../../redux/stationSlic
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
+import { CONFIRM_MESSAGE } from '../../constants/message';
 
 const Stations: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
@@ -63,6 +64,10 @@ const Stations: FC = () => {
   };
 
   const onDeleteStation = (stationId: number) => () => {
+    if (!confirm(CONFIRM_MESSAGE.DELETE_STATION)) {
+      return;
+    }
+
     dispatch(deleteStation(stationId));
   };
 
