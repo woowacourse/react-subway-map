@@ -47,29 +47,23 @@ export const LINE_COLORS: string[] = [
   PALETTE.CYAN[400],
 ];
 
+export const HOME = {
+  API_SELECT_GROUP: 'api',
+};
+
 export const STATION = {
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 10,
-  NAME_LABEL_TEXT: '지하철 역 이름을 입력해주세요',
 };
 
 export const LINE = {
-  ADD_MODAL_TITLE: '노선 추가',
-  MODIFY_MODAL_TITLE: '노선 수정',
   NAME_MIN_LENGTH: 2,
   NAME_MAX_LENGTH: 10,
-  NAME_LABEL_TEXT: '노선 이름',
-  NAME_PLACEHOLDER: '노선 이름',
-  DISTANCE_LABEL_TEXT: '거리',
-  COLOR_LABEL_TEXT: '노선색상',
-  COLOR_SELECT_NAME: 'lineColor',
+  COLOR_SELECT_GROUP: 'lineColor',
 };
 
 export const SECTION = {
   MIN_DISTANCE: 1,
-  DISTANCE_LABEL_TEXT: '거리',
-  LINE_SELECT_TEXT: '노선을 선택해주세요',
-  ADD_MODAL_TITLE: '구간 추가',
 };
 
 export const SIGNUP = {

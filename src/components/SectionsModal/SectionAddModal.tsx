@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { FC, FormEventHandler } from 'react';
 import { requestAddSection } from '../../api/lines';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import useInput from '../../hooks/@shared/useInput/useInput';
@@ -100,9 +101,9 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
   };
 
   return (
-    <Modal titleText={SECTION.ADD_MODAL_TITLE} onClose={onClose}>
+    <Modal titleText={LABEL_TEXT.ADD_SECTION} onClose={onClose}>
       <SectionForm onSubmit={onAddSection}>
-        <Input labelText="노선선택" value={line.name} disabled={true} />
+        <Input labelText={LABEL_TEXT.SELECTED_LINE} value={line.name} disabled={true} />
         <SectionSelectBox
           onChangeUpStation={onChangeUpStationId}
           onChangeDownStation={onChangeDownStationId}
@@ -113,13 +114,13 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           onChange={onChangeDistance}
           type="number"
           min={SECTION.MIN_DISTANCE}
-          labelText={SECTION.DISTANCE_LABEL_TEXT}
+          labelText={LABEL_TEXT.DISTANCE}
         />
         <SectionModalButtonContainer justifyContent="flex-end">
           <Button onClick={onClose} type="button" isColored={false}>
-            취소
+            {LABEL_TEXT.CANCEL}
           </Button>
-          <Button disabled={!isReadyToSubmit}>확인</Button>
+          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.DISTANCE}</Button>
         </SectionModalButtonContainer>
       </SectionForm>
     </Modal>

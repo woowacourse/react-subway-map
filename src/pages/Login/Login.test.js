@@ -4,6 +4,7 @@ import Login from './Login';
 import { customRender } from '../../test-utils';
 import { act } from 'react-dom/test-utils';
 import { requestLogin } from '../../api/member';
+import { LABEL_TEXT } from '../../constants/a11y';
 
 jest.mock('../../api/member');
 
@@ -29,7 +30,7 @@ describe('로그인 페이지 테스트', () => {
     const screen = customRender(<Login />);
 
     const $linkToSignUp = screen.getByRole('link', {
-      name: '아직 회원이 아니신가요?',
+      name: LABEL_TEXT.ARE_YOU_NOT_MEMBER,
     });
 
     act(() => {

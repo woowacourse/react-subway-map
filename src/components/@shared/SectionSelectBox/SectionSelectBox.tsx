@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { ChangeEvent, ChangeEventHandler, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import { Station } from '../../../types';
 import Arrow from '../../@common/Icon/Arrow';
 import SelectBox from '../../@common/SelectBox/SelectBox';
 import {

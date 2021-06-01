@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { LABEL_TEXT } from '../../../constants/a11y';
 import { RootState } from '../../../redux/store';
 import Pencil from '../Icon/Pencil';
 import TrashBin from '../Icon/TrashBin';
@@ -12,7 +13,6 @@ interface Props {
   onDelete?: () => void;
 }
 
-// TODO: 컴포넌트 이름 변경 고려하기
 const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 
@@ -22,7 +22,7 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
       {isLogin && onModify && (
         <ListItemButton
           type="button"
-          aria-label="수정버튼"
+          aria-label={LABEL_TEXT.MODIFY_BUTTON}
           buttonType="round"
           isColored={false}
           onClick={onModify}
@@ -33,7 +33,7 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
       {isLogin && onDelete && (
         <ListItemButton
           type="button"
-          aria-label="삭제버튼"
+          aria-label={LABEL_TEXT.DELETE_BUTTON}
           buttonType="round"
           isColored={false}
           onClick={onDelete}

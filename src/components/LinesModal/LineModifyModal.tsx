@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { FC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import useInput from '../../hooks/@shared/useInput/useInput';
@@ -80,7 +81,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
   }, []);
 
   return (
-    <Modal titleText={LINE.MODIFY_MODAL_TITLE} onClose={onClose}>
+    <Modal titleText={LABEL_TEXT.MODIFY_LINE} onClose={onClose}>
       <LineForm onSubmit={onModifyLine}>
         <NotificationInput
           value={nameInput}
@@ -88,11 +89,11 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
           message={{ text: nameErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
-          labelText={LINE.NAME_LABEL_TEXT}
-          placeholder={LINE.NAME_PLACEHOLDER}
+          labelText={LABEL_TEXT.LINE_NAME}
+          placeholder={LABEL_TEXT.LINE_NAME}
         />
         <LineColorContainer justifyContent="space-between" alignItems="center">
-          <span>{LINE.COLOR_LABEL_TEXT}</span>
+          <span>{LABEL_TEXT.LINE_COLOR}</span>
           {LINE_COLORS.map((color) => (
             <ColorRadio
               key={color}
@@ -100,10 +101,10 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
               onChange={onChangeColor}
               checked={color === colorInput}
               radioColor={color}
-              groupName={LINE.COLOR_SELECT_NAME}
+              groupName={LINE.COLOR_SELECT_GROUP}
               disabled={isUsedLineColor(color)}
               labelText={{
-                text: '노선 색상 선택 라디오버튼',
+                text: LABEL_TEXT.LINE_COLOR_SELECT_RADIO,
                 isVisible: false,
               }}
             />
@@ -111,9 +112,9 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
         </LineColorContainer>
         <LineModalButtonContainer justifyContent="flex-end">
           <Button type="button" isColored={false} onClick={onClose}>
-            취소
+            {LABEL_TEXT.CANCEL}
           </Button>
-          <Button disabled={!isReadyToSubmit}>확인</Button>
+          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.ADD_LINE}</Button>
         </LineModalButtonContainer>
       </LineForm>
     </Modal>

@@ -10,7 +10,6 @@ export interface AddLineRequestData {
 }
 
 export interface ModifyLineRequestData {
-  // TODO: lineId -> id
   lineId: number;
   name: string;
   color: string;

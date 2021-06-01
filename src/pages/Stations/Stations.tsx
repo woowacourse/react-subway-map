@@ -16,6 +16,7 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
 import { CONFIRM_MESSAGE } from '../../constants/message';
+import { LABEL_TEXT } from '../../constants/a11y';
 
 const Stations: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
@@ -29,7 +30,7 @@ const Stations: FC = () => {
     onChangeStationInput,
     setStationInput,
   ] = useNotificationInput(({ setInput, setErrorMessage, targetValue }) => {
-    if (targetValue.length >= 2 && isKoreanAndNumber(targetValue)) {
+    if (targetValue.length >= STATION.NAME_MIN_LENGTH && isKoreanAndNumber(targetValue)) {
       setErrorMessage('');
     } else {
       setErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
@@ -85,10 +86,10 @@ const Stations: FC = () => {
               labelIcon={<Subway />}
               minLength={STATION.NAME_MIN_LENGTH}
               maxLength={STATION.NAME_MAX_LENGTH}
-              labelText={STATION.NAME_LABEL_TEXT}
+              labelText={LABEL_TEXT.PLEASE_INPUT_STATION_NAME}
               message={{ text: stationErrorMessage, isError: true }}
             />
-            <Button disabled={!isValidStationInput}>추가</Button>
+            <Button disabled={!isValidStationInput}>{LABEL_TEXT.ADD}</Button>
           </StationForm>
           <HorizontalLine />
         </>

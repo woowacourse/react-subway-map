@@ -8,8 +8,9 @@ import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, SECTION } from '../../constants/appInfo';
+import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useInput from '../../hooks/@shared/useInput/useInput';
@@ -25,9 +26,7 @@ import { LineInfoContainer, LineSelectBox } from './Section.styles';
 const Sections: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { stations, errorMessage: stationErrorMessage } = useSelector(
-    (state: RootState) => state.station
-  );
+  const { errorMessage: stationErrorMessage } = useSelector((state: RootState) => state.station);
   const { lines, errorMessage: lineErrorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const sectionAddModal = useModal();
@@ -64,7 +63,6 @@ const Sections: FC = () => {
         stationId,
       });
 
-      // TODO: 일관성있게 삭제 진행하기
       dispatch(loadLines());
     } catch (error) {
       alert(ERROR_MESSAGE.DELETE_SECTION_FAILURE);
@@ -95,7 +93,7 @@ const Sections: FC = () => {
     >
       <FlexContainer>
         <LineSelectBox onChange={onChangeTargetLineId}>
-          <option value="">{SECTION.LINE_SELECT_TEXT}</option>
+          <option value="">{LABEL_TEXT.PLEASE_SELECT_LINE}</option>
           {lines.map((line) => (
             <option key={line.id} value={line.id}>
               {line.name}

@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { requestSignup } from '../../api/member';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { customRender } from '../../test-utils';
 import Signup from './Signup';
 
@@ -10,12 +11,14 @@ describe('회원가입 페이지 테스트', () => {
   it('로그인 요청', () => {
     const screen = customRender(<Signup />);
 
-    const $emailInput = screen.getByPlaceholderText('이메일을 입력해주세요.');
-    const $ageInput = screen.getByPlaceholderText('나이를 입력해주세요.');
-    const $passwordInput = screen.getByPlaceholderText('비밀번호를 입력해주세요.');
-    const $passwordConfirmInput = screen.getByPlaceholderText('비밀번호를 한번 더 입력해주세요.');
+    const $emailInput = screen.getByPlaceholderText(LABEL_TEXT.PLEASE_INPUT_EMAIL);
+    const $ageInput = screen.getByPlaceholderText(LABEL_TEXT.PLEASE_INPUT_AGE);
+    const $passwordInput = screen.getByPlaceholderText(LABEL_TEXT.PLEASE_INPUT_PASSWORD);
+    const $passwordConfirmInput = screen.getByPlaceholderText(
+      LABEL_TEXT.PLEASE_INPUT_PASSWORD_CONFIRM
+    );
     const $signUpButton = screen.getByRole('button', {
-      name: '회원가입',
+      name: LABEL_TEXT.SIGNUP,
     });
 
     const PASSWORD = '123456';

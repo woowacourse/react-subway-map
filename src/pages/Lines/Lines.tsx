@@ -6,10 +6,12 @@ import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
+import { TEST_ID } from '../../constants/test';
 import useModal from '../../hooks/@shared/useModal/useModal';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/slice/lineSlice';
@@ -57,14 +59,13 @@ const Lines: FC = () => {
     alert(errorMessage);
   }, [errorMessage]);
 
-  //aria-label 상수화
   return (
     <CardTemplate
       titleText={PAGE_INFO.LINES.text}
       templateColor={API_INFO[apiOwner].themeColor[400]}
     >
       {isLogin && (
-        <ButtonOnLine onClick={onOpenAddModal} aria-label="노선 추가 버튼">
+        <ButtonOnLine onClick={onOpenAddModal} aria-label={LABEL_TEXT.LINE_ADD_BUTTON}>
           <Add width="80%" color={PALETTE.GRAY[600]} />
         </ButtonOnLine>
       )}
@@ -75,7 +76,7 @@ const Lines: FC = () => {
               key={line.id}
               onDelete={onDeleteLine(line.id)}
               onModify={onOpenModifyModal(line.id)}
-              data-testid="lineListItem"
+              data-testid={TEST_ID.LINE_LIST_ITEM}
             >
               <LineColorDot dotColor={line.color} />
               {line.name}

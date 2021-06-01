@@ -1,9 +1,9 @@
 import React from 'react';
 import { customRender } from '../../test-utils';
-import { getSessionStorageItem } from '../../util/sessionStorage';
 import Stations from './Stations';
 import userEvent from '@testing-library/user-event';
 import { requestAddStation, requestDeleteStation, requestGetStations } from '../../api/stations';
+import { LABEL_TEXT } from '../../constants/a11y';
 
 jest.mock('../../util/sessionStorage');
 jest.mock('../../api/stations');
@@ -18,10 +18,10 @@ describe('역 관리 페이지 테스트', () => {
   it('역 추가 요청', () => {
     const screen = customRender(<Stations />);
     const $stationInput = screen.getByRole('textbox', {
-      name: '지하철 역 이름을 입력해주세요',
+      name: LABEL_TEXT.PLEASE_INPUT_STATION_NAME,
     });
     const $addButton = screen.getByRole('button', {
-      name: '추가',
+      name: LABEL_TEXT.ADD,
     });
 
     userEvent.type($stationInput, '새로운역');
@@ -32,7 +32,7 @@ describe('역 관리 페이지 테스트', () => {
 
   it('역 삭제 요청', async () => {
     const screen = customRender(<Stations />);
-    const [$deleteButton] = screen.getAllByLabelText('삭제버튼');
+    const [$deleteButton] = screen.getAllByLabelText(LABEL_TEXT.DELETE_BUTTON);
 
     userEvent.click($deleteButton);
 

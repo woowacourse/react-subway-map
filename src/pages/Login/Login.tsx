@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, FormEventHandler, useState } from 'react';
+import React, { FC, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestLogin } from '../../api/member';
@@ -6,6 +6,7 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -54,18 +55,18 @@ const Login: FC = () => {
             type="email"
             name="email"
             labelIcon={<Email />}
-            placeholder="이메일을 입력해주세요."
+            placeholder={LABEL_TEXT.PLEASE_INPUT_EMAIL}
           />
           <Input
             type="password"
             name="password"
             labelIcon={<Lock />}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder={LABEL_TEXT.PLEASE_INPUT_PASSWORD}
           />
           {errorMessage && <LoginErrorMessage>{errorMessage}</LoginErrorMessage>}
-          <LoginButton isColored={true}>로그인</LoginButton>
+          <LoginButton isColored={true}>{LABEL_TEXT.LOGIN}</LoginButton>
         </LoginForm>
-        <SignupLink to={PAGE_INFO.SIGN_UP.path}>아직 회원이 아니신가요?</SignupLink>
+        <SignupLink to={PAGE_INFO.SIGN_UP.path}>{LABEL_TEXT.ARE_YOU_NOT_MEMBER}</SignupLink>
       </LoginContainer>
     </CardTemplate>
   );

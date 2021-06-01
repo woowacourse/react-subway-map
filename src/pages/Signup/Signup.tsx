@@ -6,6 +6,7 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Person from '../../components/@common/Icon/Person';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
@@ -28,7 +29,6 @@ const Signup: FC = () => {
         return;
       }
 
-      // TODO: 이메일 중복 확인
       setErrorMessage('');
     }
   );
@@ -128,7 +128,7 @@ const Signup: FC = () => {
           value={emailInput}
           onChange={onChangeEmail}
           labelIcon={<Email />}
-          placeholder="이메일을 입력해주세요."
+          placeholder={LABEL_TEXT.PLEASE_INPUT_EMAIL}
           message={{ text: emailErrorMessage, isError: true }}
           required
         />
@@ -137,7 +137,7 @@ const Signup: FC = () => {
           value={ageInput}
           onChange={onChangeAge}
           labelIcon={<Person />}
-          placeholder="나이를 입력해주세요."
+          placeholder={LABEL_TEXT.PLEASE_INPUT_AGE}
           min={SIGNUP.MIN_AGE}
           max={SIGNUP.MAX_AGE}
           message={{ text: ageErrorMessage, isError: true }}
@@ -148,7 +148,7 @@ const Signup: FC = () => {
           value={passwordInput}
           onChange={onChangePassword}
           labelIcon={<Lock />}
-          placeholder="비밀번호를 입력해주세요."
+          placeholder={LABEL_TEXT.PLEASE_INPUT_PASSWORD}
           minLength={SIGNUP.PASSWORD_MIN_LENGTH}
           maxLength={SIGNUP.PASSWORD_MAX_LENGTH}
           message={{ text: passwordErrorMessage, isError: true }}
@@ -160,13 +160,13 @@ const Signup: FC = () => {
           onChange={onChangePasswordConfirm}
           message={{ text: passwordConfirmErrorMessage, isError: true }}
           labelIcon={<Lock />}
-          placeholder="비밀번호를 한번 더 입력해주세요."
+          placeholder={LABEL_TEXT.PLEASE_INPUT_PASSWORD_CONFIRM}
           minLength={SIGNUP.PASSWORD_MIN_LENGTH}
           maxLength={SIGNUP.PASSWORD_MAX_LENGTH}
           required
         />
         <SignupButton isColored={true} disabled={!isReadyToSubmit}>
-          회원가입
+          {LABEL_TEXT.SIGNUP}
         </SignupButton>
       </SignupForm>
     </CardTemplate>

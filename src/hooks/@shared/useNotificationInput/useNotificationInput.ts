@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import { BaseInputElement, SetText } from '../../../types';
 import useUpdateEffect from '../useUpdateEffect/useUpdateEffect';
 

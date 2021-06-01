@@ -1,20 +1,12 @@
 import PropTypes from 'prop-types';
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { LABEL_TEXT } from '../../constants/a11y';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import useInput from '../../hooks/@shared/useInput/useInput';
 import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
-import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addLine } from '../../redux/slice/lineSlice';
 import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -24,27 +16,11 @@ import ColorRadio from '../@common/ColorRadio/ColorRadio';
 import Input from '../@common/Input/Input';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
-import SectionSelectBox, {
-  OnChangeSectionSelectBoxHandler,
-} from '../@shared/SectionSelectBox/SectionSelectBox';
+import SectionSelectBox from '../@shared/SectionSelectBox/SectionSelectBox';
 import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesModal.styles';
 
 interface Props {
   onClose: () => void;
-}
-
-interface FormInput {
-  name: string;
-  upStationId: string;
-  downStationId: string;
-  distance: number;
-  color: string;
-}
-
-interface ErrorMessage {
-  name: string;
-  section: string;
-  distance: string;
 }
 
 const LineAddModal: FC<Props> = ({ onClose }) => {
@@ -147,7 +123,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
   }, []);
 
   return (
-    <Modal titleText={LINE.ADD_MODAL_TITLE} onClose={onClose}>
+    <Modal titleText={LABEL_TEXT.ADD_LINE} onClose={onClose}>
       <LineForm onSubmit={onAddLine}>
         <NotificationInput
           value={nameInput}
@@ -155,8 +131,8 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           message={{ text: nameErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
-          labelText={LINE.NAME_LABEL_TEXT}
-          placeholder={LINE.NAME_PLACEHOLDER}
+          labelText={LABEL_TEXT.LINE_NAME}
+          placeholder={LABEL_TEXT.LINE_NAME}
           required
         />
         <SectionSelectBox
@@ -169,11 +145,11 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           onChange={onChangeDistance}
           type="number"
           min={SECTION.MIN_DISTANCE}
-          labelText={LINE.DISTANCE_LABEL_TEXT}
+          labelText={LABEL_TEXT.DISTANCE}
           required
         />
         <LineColorContainer justifyContent="space-between" alignItems="center">
-          <span>{LINE.COLOR_LABEL_TEXT}</span>
+          <span>{LABEL_TEXT.LINE_COLOR}</span>
           {LINE_COLORS.map((color) => (
             <ColorRadio
               key={color}
@@ -181,10 +157,10 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
               checked={color === colorInput}
               onChange={onChangeColor}
               radioColor={color}
-              groupName={LINE.COLOR_SELECT_NAME}
+              groupName={LINE.COLOR_SELECT_GROUP}
               disabled={isUsedLineColor(color)}
               labelText={{
-                text: '노선 색상 선택 라디오버튼',
+                text: LABEL_TEXT.LINE_COLOR_SELECT_RADIO,
                 isVisible: false,
               }}
               required
@@ -193,9 +169,9 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
         </LineColorContainer>
         <LineModalButtonContainer justifyContent="flex-end">
           <Button type="button" isColored={false} onClick={onClose}>
-            취소
+            {LABEL_TEXT.CANCEL}
           </Button>
-          <Button disabled={!isReadyToSubmit}>확인</Button>
+          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.CONFIRM}</Button>
         </LineModalButtonContainer>
       </LineForm>
     </Modal>
