@@ -23,14 +23,14 @@ import {
   selectLinesStatus,
   selectLinesMessage,
 } from "../Lines/slice";
-import { selectStationsList } from "../Stations/slice";
+import { selectStationList } from "../Stations/slice";
 
 const Sections = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);
   const linesList = useSelector(selectLinesList);
-  const stationList = useSelector(selectStationsList);
+  const stationList = useSelector(selectStationList);
   const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
   const [lineId, handleLineIdChange] = useInput();
   const [upStationId, handleUpStationIdChange, , resetUpStationId] = useInput();
@@ -232,13 +232,24 @@ const Sections = () => {
           <div className="flex justify-end mr-4 mt-14 w-full space-x-4">
             <Button
               type="button"
+              disabled={false}
               size="medium"
               theme="secondary"
               onClick={handleModalClose}
+              name={null}
+              value={null}
             >
               취소
             </Button>
-            <Button type="submit" size="medium" disabled={!isSubmitEnabled}>
+            <Button
+              type="submit"
+              disabled={!isSubmitEnabled}
+              size="medium"
+              theme="primary"
+              onClick={null}
+              name={null}
+              value={null}
+            >
               확인
             </Button>
           </div>
