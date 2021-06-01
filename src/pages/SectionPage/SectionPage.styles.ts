@@ -77,15 +77,29 @@ export const List = styled.ul`
 `;
 
 export const Item = styled.li`
+  position: relative;
   padding: 0.5em;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.color.border.secondary};
+
+  :last-child {
+    border-bottom: none;
+  }
 `;
 
 export const StationName = styled.span`
   margin-left: 0.8em;
   font-size: 1.1rem;
+`;
+
+export const StationDistance = styled.span`
+  position: absolute;
+  background-color: white;
+  top: 100%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
 `;
 
 export const OptionWrapper = styled.div``;

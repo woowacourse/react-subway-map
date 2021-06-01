@@ -69,7 +69,7 @@ describe('지하철 구간 관리', () => {
   });
 
   describe('지하철 구간 삭제', () => {
-    it('지하철 구간 삭제 시 구간이 삭제되고, 삭제되었다는 메시지를 확인할 수 있다.', async () => {
+    it('지하철 구간 삭제 시 삭제되었다는 메시지를 확인할 수 있다.', async () => {
       const lineId = 2;
       const lineSelect = screen.getByRole('combobox', {
         name: /노선 선택/,
@@ -87,7 +87,6 @@ describe('지하철 구간 관리', () => {
 
       const alertMessage = await waitFor(() => screen.getByRole('alert'));
 
-      await waitFor(() => expect(targetStation).not.toBeInTheDocument());
       expect(alertMessage).toHaveTextContent(MESSAGE.SUCCESS.SECTION_DELETED);
     });
   });

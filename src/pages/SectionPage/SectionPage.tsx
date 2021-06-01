@@ -138,6 +138,9 @@ const SectionPage = () => {
                     {selectedLine?.stations.map((station) => (
                       <Styled.Item key={station.id}>
                         <Styled.StationName>{station.name}</Styled.StationName>
+                        {station.distance ? (
+                          <Styled.StationDistance>거리: {station.distance}</Styled.StationDistance>
+                        ) : null}
                         <Styled.OptionWrapper>
                           <Button
                             shape="circle"
