@@ -19,7 +19,7 @@ import {
   reset,
   deleteSection,
   selectLinesDetailByLineId,
-  selectLinesList,
+  selectLineList,
   selectLinesStatus,
   selectLinesMessage,
 } from "../Lines/slice";
@@ -29,7 +29,7 @@ const Sections = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);
-  const linesList = useSelector(selectLinesList);
+  const lineList = useSelector(selectLineList);
   const stationList = useSelector(selectStationList);
   const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
   const [lineId, handleLineIdChange] = useInput();
@@ -130,7 +130,7 @@ const Sections = () => {
           </h2>
           <Select onChange={handleLineIdChange} value={lineId}>
             <option hidden>노선 선택</option>
-            {[...linesList].reverse().map(({ id, name }) => (
+            {[...lineList].reverse().map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
               </option>
@@ -193,7 +193,7 @@ const Sections = () => {
 
           <Select value={lineId} onChange={handleLineIdChange} disabled>
             <option hidden>노선 선택</option>
-            {linesList.map(({ id, name }) => (
+            {lineList.map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
               </option>

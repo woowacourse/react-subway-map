@@ -16,7 +16,7 @@ import { selectAccessToken } from "../Login/slice";
 
 export const selectLinesStatus = (state) => state.lines.status;
 export const selectLinesMessage = (state) => state.lines.message;
-export const selectLinesList = (state) => state.lines.list;
+export const selectLineList = (state) => state.lines.list;
 export const selectLinesDetails = (state) => state.lines.details;
 export const selectLinesDetailByLineId = (state, id) =>
   state.lines.details.find((line) => line.id === Number(id));

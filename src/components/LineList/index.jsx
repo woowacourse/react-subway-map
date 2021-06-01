@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectLinesList } from "../../pages/Lines/slice";
+import { selectLineList } from "../../pages/Lines/slice";
 import LinesItems from "../LinesItems";
 
-const LinesList = () => {
-  const lineList = useSelector(selectLinesList);
+const LineList = () => {
+  const lineList = useSelector(selectLineList);
 
   return (
     lineList.length > 0 && (
@@ -17,4 +17,4 @@ const LinesList = () => {
   );
 };
 
-export default LinesList;
+export default LineList;

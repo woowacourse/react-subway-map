@@ -5,7 +5,7 @@ import Main from "../../components/@shared/Main";
 
 import Modal from "../../components/@shared/Modal";
 import Button from "../../components/@shared/Button";
-import LinesList from "../../components/LinesList";
+import LineList from "../../components/LineList";
 import LinesModalInner from "../../components/LinesModalInner";
 import Loading from "../../components/@shared/Loading";
 import STATUS from "../../constants/status";
@@ -64,7 +64,7 @@ const Lines = () => {
               등록
             </Button>
           </div>
-          <LinesList />
+          <LineList />
         </section>
       </Main>
       <Modal onClose={handleModalClose} isOpen={isModalOpen}>
