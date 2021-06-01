@@ -1,0 +1,5 @@
+export const SERVICE = {
+  MIN_DISTANCE: 1,
+  MIN_AGE: 0,
+  MIN_PASSWORD_LENGTH: 6,
+};

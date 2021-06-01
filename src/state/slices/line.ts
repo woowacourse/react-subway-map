@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { INVALID_VALUE } from '../../constants/validate';
 import { LineId } from '../../types';
 
 interface LineState {
@@ -9,7 +10,7 @@ interface LineState {
 const name = 'line';
 
 const initialState: LineState = {
-  currentLineId: -1,
+  currentLineId: INVALID_VALUE,
   shouldUpdate: false,
 };
 
@@ -21,7 +22,7 @@ const lineSlice = createSlice({
       state.currentLineId = action.payload;
     },
     initLineId: (state) => {
-      state.currentLineId = -1;
+      state.currentLineId = INVALID_VALUE;
     },
     setShouldUpdate: (state) => {
       state.shouldUpdate = !state.shouldUpdate;

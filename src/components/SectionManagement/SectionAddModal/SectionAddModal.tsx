@@ -1,11 +1,11 @@
-import { FormEvent, Suspense, useEffect, VFC } from 'react';
+import { FormEvent, Suspense, VFC } from 'react';
+import { SERVICE } from '../../../constants/service';
+import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../hooks/useLine';
 import useSection from '../../../hooks/useSection';
-import useStation from '../../../hooks/useStation';
-import { Line, LineId, Station } from '../../../types';
+import { Line } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
-import Input from '../../@common/Input/Input';
 import Modal from '../../@common/Modal/Modal';
 import Title from '../../@common/Title/Title.styles';
 import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
@@ -54,7 +54,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
         <SectionSelectBox
           placeholder="노선 선택"
           value={currentLineId}
-          defaultValue="-1"
+          defaultValue={INVALID_VALUE}
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
           <Suspense fallback={true}>
@@ -70,7 +70,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           <SectionSelectBox
             placeholder="상행역"
             value={upStationId}
-            defaultValue={-1}
+            defaultValue={INVALID_VALUE}
             onChange={({ target }) => setUpStationId(Number(target.value))}
             disabled={!isSelectedLine}
           >
@@ -85,7 +85,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           <SectionSelectBox
             placeholder="하행역"
             value={downStationId}
-            defaultValue={-1}
+            defaultValue={INVALID_VALUE}
             onChange={({ target }) => setDownStationId(Number(target.value))}
             disabled={!isSelectedUpStation}
           >
@@ -101,7 +101,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
 
         <InputWithAlertText
           type="number"
-          min="0"
+          min={SERVICE.MIN_DISTANCE - 1}
           max={selectedSectionDistance - 1}
           placeholder={
             isSelectedUpStation

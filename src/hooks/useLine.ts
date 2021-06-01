@@ -8,25 +8,34 @@ import useLogin from './useLogin';
 import { useState } from 'react';
 import { LineColor, lineColors, LineForm, LineId, StationId } from '../types';
 import useStation from './useStation';
-import { REGEX } from '../constants/validate';
+import { INVALID_VALUE, REGEX } from '../constants/validate';
+import { QUERY } from '../constants/API';
+import { SERVICE } from '../constants/service';
 
 const useLine = () => {
   const [form, setForm] = useState<LineForm>({
     name: '',
     color: '',
-    upStationId: -1,
-    downStationId: -1,
-    distance: 0,
+    upStationId: INVALID_VALUE,
+    downStationId: INVALID_VALUE,
+    distance: SERVICE.MIN_DISTANCE,
   });
   const { name, color, upStationId, downStationId, distance } = form;
 
   const { accessToken } = useLogin();
   const { stations } = useStation();
   const queryClient = useQueryClient();
-  const lines = useQuery('requestLines', () => requestLines(accessToken));
+  const lines = useQuery(QUERY.REQUEST_LINES, () => requestLines(accessToken), {
+    onError: () => {
+      alert('노선을 불러오지 못했습니다!');
+    },
+  });
   const addLineMutation = useMutation(() => requestAddLine(form, accessToken), {
     onSuccess: () => {
-      queryClient.invalidateQueries('requestLines');
+      queryClient.invalidateQueries(QUERY.REQUEST_LINES);
+    },
+    onError: () => {
+      alert('노선을 추가하지 못했습니다!');
     },
   });
 
@@ -34,7 +43,10 @@ const useLine = () => {
     (lineId: LineId) => requestDeleteLine(lineId, accessToken),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('requestLines');
+        queryClient.invalidateQueries(QUERY.REQUEST_LINES);
+      },
+      onError: () => {
+        alert('노선을 삭제하지 못했습니다!');
       },
     }
   );
@@ -75,12 +87,11 @@ const useLine = () => {
 
   const isValidColor = lineColors.includes(color as LineColor);
 
-  const isValidDistance = distance > 0;
+  const isValidDistance = distance >= SERVICE.MIN_DISTANCE;
 
-  const isSelectedUpStation = upStationId !== -1;
+  const isSelectedUpStation = upStationId !== INVALID_VALUE;
 
-  const isSelectedDownStation = downStationId !== -1;
-
+  const isSelectedDownStation = downStationId !== INVALID_VALUE;
   const isValidForm =
     isValidName &&
     isValidColor &&

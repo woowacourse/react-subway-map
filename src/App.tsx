@@ -50,7 +50,6 @@ function App() {
           component={StationManagementPage}
           isAuthenticated={isLogin && hasAPI}
         />
-        {/* <Route path="/search" component={SignUpPage} /> */}
       </Switch>
       <CurrentAPIName />
     </div>

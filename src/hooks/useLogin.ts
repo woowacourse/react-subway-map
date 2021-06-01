@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../state/store';
 import { loginAction, loginAsyncAction } from '../state/slices/login';
 import { useHistory } from 'react-router';
 import { REGEX } from '../constants/validate';
+import { SERVICE } from '../constants/service';
 
 const useLogin = () => {
   const { accessToken, error } = useAppSelector(
@@ -50,7 +51,7 @@ const useLogin = () => {
 
   const isValidEmail = REGEX.EMAIL.test(email);
 
-  const isValidPassword = password.length >= 6;
+  const isValidPassword = password.length >= SERVICE.MIN_PASSWORD_LENGTH;
 
   const isValidForm = isValidEmail && isValidPassword;
 

@@ -10,6 +10,8 @@ import { useMutation } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { lineAction } from '../state/slices/line';
 import useStation from './useStation';
+import { INVALID_VALUE } from '../constants/validate';
+import { SERVICE } from '../constants/service';
 
 const useSection = () => {
   const { currentLineId, shouldUpdate } = useAppSelector(
@@ -22,7 +24,7 @@ const useSection = () => {
   const dispatch = useAppDispatch();
 
   const [currentLineDetail, setCurrentLineDetail] = useState<LineDetail>({
-    id: -1,
+    id: INVALID_VALUE,
     name: '',
     color: 'red',
     stations: [],
@@ -30,9 +32,9 @@ const useSection = () => {
   });
 
   const [form, setForm] = useState<SectionForm>({
-    distance: 1,
-    downStationId: -1,
-    upStationId: -1,
+    distance: SERVICE.MIN_DISTANCE,
+    downStationId: INVALID_VALUE,
+    upStationId: INVALID_VALUE,
   });
 
   const { distance, downStationId, upStationId } = form;
@@ -45,6 +47,9 @@ const useSection = () => {
       onSuccess: () => {
         dispatch(lineAction.setShouldUpdate());
       },
+      onError: () => {
+        alert('구간을 추가하지 못했습니다!');
+      },
     }
   );
 
@@ -55,18 +60,23 @@ const useSection = () => {
   const deleteSectionMutation = useMutation(
     (stationId: StationId) =>
       requestDeleteSection(currentLineId, stationId, accessToken),
-    { onSuccess: () => updateCurrentSection() }
+    {
+      onSuccess: () => updateCurrentSection(),
+      onError: () => {
+        alert('구간을 삭제하지 못했습니다!');
+      },
+    }
   );
 
   useEffect(() => {
-    if (currentLineId === -1) return;
+    if (currentLineId === INVALID_VALUE) return;
 
     updateCurrentSection();
   }, [currentLineId, shouldUpdate]);
 
   const updateCurrentSection = async () => {
     // TODO: magic number!
-    if (currentLineId === -1) return;
+    if (currentLineId === INVALID_VALUE) return;
 
     const data = await requestSection(currentLineId, accessToken);
 
@@ -106,7 +116,7 @@ const useSection = () => {
       )
     : [];
 
-  const isSelectedLine = currentLineDetail.id !== -1;
+  const isSelectedLine = currentLineDetail.id !== INVALID_VALUE;
 
   const selectedSectionDistance =
     (
@@ -117,9 +127,9 @@ const useSection = () => {
 
   const isValidDistance = distance < selectedSectionDistance;
 
-  const isSelectedUpStation = upStationId !== -1;
+  const isSelectedUpStation = upStationId !== INVALID_VALUE;
 
-  const isSelectedDownStation = downStationId !== -1;
+  const isSelectedDownStation = downStationId !== INVALID_VALUE;
 
   const isValidForm =
     isSelectedLine &&

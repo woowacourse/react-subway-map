@@ -1,8 +1,9 @@
 import { REGEX } from './../constants/validate';
 import { requestSignUp } from './../service/auth';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SignUpForm } from '../types';
 import useLogin from './useLogin';
+import { SERVICE } from '../constants/service';
 
 const useSignUp = () => {
   const [form, setForm] = useState<SignUpForm>({
@@ -20,9 +21,9 @@ const useSignUp = () => {
 
   const isValidEmail = REGEX.EMAIL.test(email);
 
-  const isValidAge = age > 0;
+  const isValidAge = age > SERVICE.MIN_AGE;
 
-  const isValidPassword = password.length >= 6;
+  const isValidPassword = password.length >= SERVICE.MIN_PASSWORD_LENGTH;
 
   const isValidPasswordForValidation = password === passwordForValidation;
 

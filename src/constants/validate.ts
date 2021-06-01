@@ -4,3 +4,5 @@ export const REGEX = {
   STATION_NAME: /^[가-힣|ㄱ-ㅎ]{2,20}$/,
   LINE_NAME: /^[가-힣|ㄱ-ㅎ]{2,10}$/,
 };
+
+export const INVALID_VALUE: number = -1;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { QUERY } from '../constants/API';
 import { REGEX } from '../constants/validate';
 import { requestLines } from '../service/line';
 import {
@@ -19,7 +20,10 @@ const useStation = () => {
 
   const addMutation = useMutation(() => requestAddStation(form, accessToken), {
     onSuccess: () => {
-      queryClient.invalidateQueries('requestStations');
+      queryClient.invalidateQueries(QUERY.REQUEST_STATIONS);
+    },
+    onError: () => {
+      alert('역을 추가하지 못했습니다!');
     },
   });
 
@@ -27,12 +31,15 @@ const useStation = () => {
     (stationId: StationId) => requestDeleteStation(stationId, accessToken),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('requestStations');
+        queryClient.invalidateQueries(QUERY.REQUEST_STATIONS);
+      },
+      onError: () => {
+        alert('역을 삭제하지 못했습니다!');
       },
     }
   );
 
-  const stations = useQuery('requestStations', () =>
+  const stations = useQuery(QUERY.REQUEST_STATIONS, () =>
     requestStations(accessToken)
   );
 

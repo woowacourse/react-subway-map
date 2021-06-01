@@ -1,4 +1,5 @@
 import { FormEvent, Suspense, VFC } from 'react';
+import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../hooks/useLine';
 import useStation from '../../../hooks/useStation';
 import { Station } from '../../../types';
@@ -61,7 +62,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           <SelectBox
             placeholder="상행역"
             value={upStationId}
-            defaultValue={-1}
+            defaultValue={INVALID_VALUE}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
             <Suspense fallback={true}>
@@ -78,7 +79,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           <SelectBox
             placeholder="하행역"
             value={downStationId}
-            defaultValue={-1}
+            defaultValue={INVALID_VALUE}
             onChange={({ target }) => setDownStationId(Number(target.value))}
             disabled={!isSelectedUpStation}
           >

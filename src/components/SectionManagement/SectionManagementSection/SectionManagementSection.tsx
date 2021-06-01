@@ -1,4 +1,5 @@
 import { Suspense, useEffect } from 'react';
+import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../hooks/useLine';
 import useModal from '../../../hooks/useModal';
 import useSection from '../../../hooks/useSection';
@@ -27,7 +28,7 @@ const SectionManagementSection = () => {
         <LineSelectBox
           placeholder="노선 선택"
           value={currentLineId}
-          defaultValue={-1}
+          defaultValue={INVALID_VALUE}
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
           <Suspense fallback={true}>
