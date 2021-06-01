@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { BASE_URL, RESPONSE_MESSAGE, ROUTE } from '../../../constants';
-import { useChangeEvent, usePostRequest } from '../../../hooks';
+import { usePostRequest, useSignUpInput } from '../../../hooks';
 import { RootState } from '../../../store';
 import { ISignUpReq } from '../../../type';
 import { isValidAge, isValidEmail, isValidPassword } from '../../../utils';
@@ -23,10 +23,16 @@ const SignUp = () => {
     RESPONSE_MESSAGE.SIGNUP,
   );
 
-  const { value: age, onChange: onChangeAge } = useChangeEvent('');
-  const { value: email, onChange: onChangeEmail } = useChangeEvent('');
-  const { value: password, onChange: onChangePassword } = useChangeEvent('');
-  const { value: passwordCheck, onChange: onChangePasswordCheck } = useChangeEvent('');
+  const {
+    age,
+    onChangeAge,
+    email,
+    onChangeEmail,
+    password,
+    onChangePassword,
+    passwordCheck,
+    onChangePasswordCheck,
+  } = useSignUpInput();
 
   const onSubmitSignUp: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
