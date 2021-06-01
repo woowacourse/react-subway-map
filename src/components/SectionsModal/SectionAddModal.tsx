@@ -122,7 +122,7 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           labelText={SECTION.DISTANCE_LABEL_TEXT}
         />
         <SectionModalButtonContainer justifyContent="flex-end">
-          <Button type="button" isColored={false}>
+          <Button type="button" isColored={false} onClick={onClose}>
             취소
           </Button>
           <Button>확인</Button>
