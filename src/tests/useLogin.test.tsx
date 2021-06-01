@@ -18,13 +18,14 @@ interface useLoginProps {
   children: React.ReactNode;
 }
 
+const wrapper: FC<useLoginProps> = ({ children }) => (
+  <Provider store={store}>
+    <BrowserRouter>{children}</BrowserRouter>
+  </Provider>
+);
+
 describe('useLogin', () => {
   test('사용자는 로그인 할 수 있다.', async () => {
-    const wrapper: FC<useLoginProps> = ({ children }) => (
-      <Provider store={store}>
-        <BrowserRouter>{children}</BrowserRouter>
-      </Provider>
-    );
     const { result, waitForNextUpdate } = renderHook(() => useLogin(), {
       wrapper,
     });
@@ -40,5 +41,13 @@ describe('useLogin', () => {
     expect(result.current.accessToken).toBe(mockToken);
   });
 
-  test('사용자는 로그아웃 할 수 있다.', () => {});
+  test('사용자는 로그아웃 할 수 있다.', () => {
+    const { result } = renderHook(() => useLogin(), { wrapper });
+
+    act(() => {
+      result.current.logout();
+    });
+
+    expect(result.current.accessToken).toBe('');
+  });
 });
