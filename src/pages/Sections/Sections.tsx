@@ -12,6 +12,7 @@ import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SECTION } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
+import useInput from '../../hooks/@shared/useInput/useInput';
 import useModal from '../../hooks/@shared/useModal/useModal';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
@@ -29,14 +30,46 @@ const Sections: FC = () => {
   );
   const { lines, errorMessage: lineErrorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-
   const sectionAddModal = useModal();
 
-  const [targetLineId, setTargetLineId] = useState('');
+  const [targetLineIdInput, onChangeTargetLineId] = useInput<HTMLSelectElement>(
+    ({ setInput, targetValue }) => {
+      setInput(targetValue);
+    }
+  );
+
   const targetLine = useMemo(() => {
-    const id = Number(targetLineId);
+    const id = Number(targetLineIdInput);
     return lines.find((line) => line.id === id);
-  }, [targetLineId, lines]);
+  }, [targetLineIdInput]);
+
+  const onOpenSectionAddModal = () => {
+    if (!targetLine) {
+      alert(ERROR_MESSAGE.NOT_SELECTED_LINE);
+
+      return;
+    }
+
+    sectionAddModal.openModal();
+  };
+
+  const onDeleteSection = (stationId: number) => async () => {
+    if (!confirm(CONFIRM_MESSAGE.DELETE_SECTION)) {
+      return;
+    }
+
+    try {
+      await requestDeleteSection({
+        lineId: Number(targetLineIdInput),
+        stationId,
+      });
+
+      // TODO: 일관성있게 삭제 진행하기
+      dispatch(loadLines());
+    } catch (error) {
+      alert(ERROR_MESSAGE.DELETE_SECTION_FAILURE);
+    }
+  };
 
   useEffect(() => {
     if (lines.length === 0) {
@@ -60,47 +93,13 @@ const Sections: FC = () => {
     }
   }, [stationErrorMessage, lineErrorMessage]);
 
-  const onChangeTargetLine: ChangeEventHandler<HTMLSelectElement> = ({
-    target: { value },
-  }): void => {
-    setTargetLineId(value);
-  };
-
-  const onOpenSectionAddModal = () => {
-    if (!targetLine) {
-      alert(ERROR_MESSAGE.NOT_SELECTED_LINE);
-
-      return;
-    }
-
-    sectionAddModal.openModal();
-  };
-
-  const onDeleteSection = (stationId: number) => async () => {
-    if (!confirm(CONFIRM_MESSAGE.DELETE_SECTION)) {
-      return;
-    }
-
-    try {
-      await requestDeleteSection({
-        lineId: Number(targetLineId),
-        stationId,
-      });
-
-      // TODO: 일관성있게 삭제 진행하기
-      dispatch(loadLines());
-    } catch (error) {
-      alert(ERROR_MESSAGE.DELETE_SECTION_FAILURE);
-    }
-  };
-
   return (
     <CardTemplate
       titleText={PAGE_INFO.SECTIONS.text}
       templateColor={API_INFO[apiOwner].themeColor[400]}
     >
       <FlexContainer>
-        <LineSelectBox onChange={onChangeTargetLine}>
+        <LineSelectBox onChange={onChangeTargetLineId}>
           <option value="">{SECTION.LINE_SELECT_TEXT}</option>
           {lines.map((line) => (
             <option key={line.id} value={line.id}>
