@@ -13,11 +13,11 @@ interface ImageButtonProps {
 const ImageButton = ({ onClick, imgUrl, size, imgSize, bgColor, hoverBgColor, className }: ImageButtonProps) => {
   return (
     <button
-      onClick={onClick}
-      type="button"
       className={`flex justify-center items-center shadow-md rounded-full focus:outline-none ${size} ${bgColor} hover:${hoverBgColor} ${className}`}
+      type="button"
+      onClick={onClick}
     >
-      <img className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} alt="" />
+      <img alt="" className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} />
     </button>
   );
 };

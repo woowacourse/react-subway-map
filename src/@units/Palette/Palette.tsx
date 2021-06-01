@@ -25,11 +25,11 @@ const Palette = ({ setColor }: PaletteProps) => {
       {colors.map((color) => (
         <Button
           key={color.bgColor}
+          bgColor={color.bgColor}
+          className="mr-1"
+          hoverBgColor={color.hoverBgColor}
           setColor={setColor}
           type="button"
-          bgColor={color.bgColor}
-          hoverBgColor={color.hoverBgColor}
-          className="mr-1"
         />
       ))}
     </div>

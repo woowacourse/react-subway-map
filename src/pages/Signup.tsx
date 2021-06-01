@@ -72,39 +72,39 @@ const Signup = () => {
       <Title className="mb-10 mt-6" text="회원가입" />
       <form onSubmit={handleSubmit}>
         <Input
-          onChange={handleEmail}
-          value={email}
-          type="email"
           className="mb-4"
           imgUrl={mailImg}
           placeholder="이메일을 입력해주세요"
+          type="email"
+          value={email}
+          onChange={handleEmail}
         />
         <Input
-          onChange={handleAge}
-          value={age}
-          type="number"
           className="mb-4"
           imgUrl={personImg}
           placeholder="나이를 입력해주세요"
+          type="number"
+          value={age}
+          onChange={handleAge}
         />
         <Input
-          onChange={handlePassword}
-          value={password}
-          type="password"
           className="mb-4"
           imgUrl={lockImg}
           placeholder="비밀번호를 입력해주세요"
+          type="password"
+          value={password}
+          onChange={handlePassword}
         />
         <Input
-          onChange={handlePasswordConfirmation}
-          type="password"
-          value={passwordConfirmation}
           className="mb-8"
           imgUrl={lockImg}
           placeholder="비밀번호를 한번 더 입력해주세요"
+          type="password"
+          value={passwordConfirmation}
+          onChange={handlePasswordConfirmation}
         />
         <ProfileSelector />
-        <Button type="submit" className="mb-4 p-2" text="회원가입" size="w-full" />
+        <Button className="mb-4 p-2" size="w-full" text="회원가입" type="submit" />
       </form>
     </Container>
   );

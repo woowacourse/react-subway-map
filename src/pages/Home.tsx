@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <img src={metroImg} alt="metroImg" />
+      <img alt="metroImg" src={metroImg} />
     </div>
   );
 };

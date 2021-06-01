@@ -33,10 +33,10 @@ const ProfileSelector = () => {
   return (
     <>
       <div className="flex justify-center mb-4">
-        <ProfileButton handleUrl={handleUrl} url={URL.KODA} className="mx-4" imgUrl={kodaImg} />
-        <ProfileButton handleUrl={handleUrl} url={URL.PK} className="mx-4" imgUrl={pkImg} />
-        <ProfileButton handleUrl={handleUrl} url={URL.WEDGE} className="mx-4" imgUrl={wedgeImg} />
-        <ProfileButton handleUrl={handleUrl} url={URL.ROKI} className="mx-4" imgUrl={rokiImg} />
+        <ProfileButton className="mx-4" handleUrl={handleUrl} imgUrl={kodaImg} url={URL.KODA} />
+        <ProfileButton className="mx-4" handleUrl={handleUrl} imgUrl={pkImg} url={URL.PK} />
+        <ProfileButton className="mx-4" handleUrl={handleUrl} imgUrl={wedgeImg} url={URL.WEDGE} />
+        <ProfileButton className="mx-4" handleUrl={handleUrl} imgUrl={rokiImg} url={URL.ROKI} />
       </div>
       <div className="mb-4 text-center text-gray-800">{message}</div>
     </>

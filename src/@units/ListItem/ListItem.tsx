@@ -23,15 +23,15 @@ const ListItem = ({ id, onDelete, title, editImg, itemColor }: ListItemProps) =>
       <div className="flex items-center">
         {editImg && (
           <button className="flex items-center mr-2 focus:outline-none hover:opacity-100 opacity-30" type="button">
-            <img src={editImg} alt="editImg" />
+            <img alt="editImg" src={editImg} />
           </button>
         )}
         <button
-          onClick={handleDelete}
           className="flex items-center focus:outline-none hover:opacity-100 opacity-30"
           type="button"
+          onClick={handleDelete}
         >
-          <img src={delImg} alt="deleteImg" />
+          <img alt="deleteImg" src={delImg} />
         </button>
       </div>
     </li>

@@ -61,23 +61,23 @@ const Login = () => {
       <Title className="mb-10 mt-6" text="로그인" />
       <form onSubmit={handleSubmit}>
         <Input
-          onChange={handleEmail}
-          value={email}
-          type="email"
           className="mb-4"
           imgUrl={mailImg}
           placeholder="이메일을 입력해주세요"
+          type="email"
+          value={email}
+          onChange={handleEmail}
         />
         <Input
-          onChange={handlePassword}
-          value={password}
-          type="password"
           className="mb-8"
           imgUrl={lockImg}
           placeholder="비밀번호를 입력해주세요"
+          type="password"
+          value={password}
+          onChange={handlePassword}
         />
         <ProfileSelector />
-        <Button className="mb-4 p-2 shadow-md" text="로그인" size="w-full" />
+        <Button className="mb-4 p-2 shadow-md" size="w-full" text="로그인" />
       </form>
       <Link to={PATH.SIGN_UP}>
         <div className="text-l text-center text-black text-opacity-50">아직 회원이 아니신가요?</div>

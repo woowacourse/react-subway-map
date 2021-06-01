@@ -93,16 +93,16 @@ const Section = () => {
       <Container>
         <div className="flex items-center justify-between mb-8">
           <Title text="🔁 지하철 구간 관리" />
-          <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
+          <ImageButton imgUrl={addImg} onClick={handleModalOpen} />
         </div>
 
         <SelectInput
-          defaultValue="DEFAULT"
-          onChange={handleLineChange}
-          title="조회하실 노선을 선택해주세요."
           className="w-full"
+          defaultValue="DEFAULT"
+          title="조회하실 노선을 선택해주세요."
+          onChange={handleLineChange}
         >
-          <option value="DEFAULT" disabled hidden>
+          <option disabled hidden value="DEFAULT">
             노선을 선택해주세요
           </option>
           {lines?.map((line) => (
@@ -114,22 +114,22 @@ const Section = () => {
         {selectedLine && (
           <Container className={`mt-6 w-full ${borderColor[selectedLine.color]}`}>
             <div className={`flex justify-center items-center  rounded-2xl py-1 mb-3 ${selectedLine.color}`}>
-              <Title text={selectedLine.name} textSize="text-xl" className="text-center" />
+              <Title className="text-center" text={selectedLine.name} textSize="text-xl" />
             </div>
             {selectedLine?.stations.map((station) => (
               <ListItem
-                onDelete={handleDelete}
                 key={station.id}
                 id={station.id}
-                title={station.name}
                 itemColor={selectedLine.color}
+                title={station.name}
+                onDelete={handleDelete}
               />
             ))}
           </Container>
         )}
       </Container>
       {modalOpen && (
-        <AddSectionModal stations={stations} lines={lines} onModalClose={handleModalClose} onSubmit={handleSubmit} />
+        <AddSectionModal lines={lines} stations={stations} onModalClose={handleModalClose} onSubmit={handleSubmit} />
       )}
     </>
   );

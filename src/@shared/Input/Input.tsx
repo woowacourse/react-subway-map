@@ -16,13 +16,13 @@ const Input = ({ type, title, placeholder, imgUrl, className, onChange, value }:
       {title && (
         <div className="absolute bottom-10 left-3 px-1 text-black text-opacity-30 text-xs bg-white">{title}</div>
       )}
-      {imgUrl && <img className="w-6 h-6" src={imgUrl} alt={imgUrl.split('/').pop()} />}
+      {imgUrl && <img alt={imgUrl.split('/').pop()} className="w-6 h-6" src={imgUrl} />}
       <input
-        onChange={onChange}
-        value={value}
-        type={type}
         className="ml-2 w-full focus:outline-none"
         placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );

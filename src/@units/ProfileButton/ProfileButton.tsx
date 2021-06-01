@@ -16,11 +16,11 @@ const ProfileButton = ({ handleUrl, url, imgUrl, size, imgSize, className }: Pro
 
   return (
     <button
-      onClick={handleClick}
-      type="button"
       className={`flex justify-center items-center shadow-md rounded-full focus:outline-none ${size} ${className}`}
+      type="button"
+      onClick={handleClick}
     >
-      <img className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} alt="" />
+      <img alt="" className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} />
     </button>
   );
 };

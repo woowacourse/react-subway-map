@@ -16,6 +16,15 @@ module.exports = {
     ],
     'react/jsx-props-no-spreading': 0,
     'react/no-unescaped-entities': 0,
+    'react/jsx-sort-props': [
+      1,
+      {
+        callbacksLast: true,
+        shorthandFirst: true,
+        ignoreCase: true,
+        reservedFirst: ['key'],
+      },
+    ],
     'import/no-unresolved': 0,
     'no-param-reassign': 0,
     'no-alert': 0,

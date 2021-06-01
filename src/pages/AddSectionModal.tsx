@@ -57,18 +57,18 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
       <Container className="w-1/2 bg-white">
         <div className="flex justify-end -mb-4">
           <ImageButton
-            onClick={onModalClose}
-            imgUrl={closeImg}
             bgColor="bg-gray-100"
-            size="w-8 h-8"
-            imgSize="w-4"
             hoverBgColor="bg-gray-200"
+            imgSize="w-4"
+            imgUrl={closeImg}
+            size="w-8 h-8"
+            onClick={onModalClose}
           />
         </div>
-        <Title text="🔁  구간 추가" className="mb-8 text-center" />
+        <Title className="mb-8 text-center" text="🔁  구간 추가" />
         <form onSubmit={handleSubmit}>
-          <SelectInput defaultValue="DEFAULT" onChange={handleLineId} title="노선 이름" className="mb-8 w-full">
-            <option value="DEFAULT" disabled hidden>
+          <SelectInput className="mb-8 w-full" defaultValue="DEFAULT" title="노선 이름" onChange={handleLineId}>
+            <option disabled hidden value="DEFAULT">
               노선을 선택해주세요
             </option>
             {lines?.map((line) => (
@@ -78,9 +78,9 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             ))}
           </SelectInput>
           <div className="flex items-center mb-8">
-            <SelectInput defaultValue="DEFAULT" onChange={handleUpStationId} title="상행역" className="w-full">
+            <SelectInput className="w-full" defaultValue="DEFAULT" title="상행역" onChange={handleUpStationId}>
               {/* TODO: option 부분을 컴포넌트로 분리해야 할까? 말까? */}
-              <option value="DEFAULT" disabled hidden>
+              <option disabled hidden value="DEFAULT">
                 역을 선택해주세요
               </option>
               {stations?.map((station) => (
@@ -89,9 +89,9 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
                 </option>
               ))}
             </SelectInput>
-            <img className="mx-2 w-8 h-8" src={arrowImg} alt="arrowImg" />
-            <SelectInput defaultValue="DEFAULT" onChange={handleDownStationId} title="하행역" className="w-full">
-              <option value="DEFAULT" disabled hidden>
+            <img alt="arrowImg" className="mx-2 w-8 h-8" src={arrowImg} />
+            <SelectInput className="w-full" defaultValue="DEFAULT" title="하행역" onChange={handleDownStationId}>
+              <option disabled hidden value="DEFAULT">
                 역을 선택해주세요
               </option>
               {stations?.map((station) => (
@@ -102,12 +102,12 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             </SelectInput>
           </div>
           <Input
-            onChange={handleDistance}
-            value={Number.isNaN(distance) ? '' : distance}
-            type="number"
-            title="거리"
-            placeholder="거리를 입력해주세요"
             className="mb-8 w-full"
+            placeholder="거리를 입력해주세요"
+            title="거리"
+            type="number"
+            value={Number.isNaN(distance) ? '' : distance}
+            onChange={handleDistance}
           />
           <div className="flex justify-end">
             <Button text="확인" />

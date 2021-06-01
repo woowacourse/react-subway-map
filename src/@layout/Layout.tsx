@@ -27,7 +27,7 @@ const Layout = ({ children, isLogin }: BaseLayoutProps) => {
           <Link to={PATH.SECTION}>{isLogin && <Button className="mx-1" text="구간 관리" />}</Link>
           <Link to={PATH.LOGIN}>
             {isLogin ? (
-              <Button onClick={handleLogout} className="mx-1" text="로그아웃" />
+              <Button className="mx-1" text="로그아웃" onClick={handleLogout} />
             ) : (
               <Button className="mx-1" text="로그인" />
             )}

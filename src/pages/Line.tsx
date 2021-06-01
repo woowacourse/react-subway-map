@@ -68,17 +68,17 @@ const Line = () => {
       <Container className="">
         <div className="flex items-center justify-between mb-4 px-2">
           <Title text="🛤️ 지하철 노선 관리" />
-          <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
+          <ImageButton imgUrl={addImg} onClick={handleModalOpen} />
         </div>
         {lines?.map((line) => (
           <ListItem
-            onDelete={handleDelete}
             key={line.id}
             id={line.id}
+            itemColor={line.color}
             title={line.name}
             // TODO 수정 기능 구현시 주석 살릴 것.
             // editImg={editImg}
-            itemColor={line.color}
+            onDelete={handleDelete}
           />
         ))}
       </Container>

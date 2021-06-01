@@ -55,25 +55,25 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
         <form onSubmit={handleSubmit}>
           <div className="flex justify-end -mb-4">
             <ImageButton
-              onClick={onModalClose}
-              imgUrl={closeImg}
               bgColor="bg-gray-100"
-              size="w-8 h-8"
-              imgSize="w-4"
               hoverBgColor="bg-gray-200"
+              imgSize="w-4"
+              imgUrl={closeImg}
+              size="w-8 h-8"
+              onClick={onModalClose}
             />
           </div>
-          <Title text="🛤️ 노선 생성" className="mb-8 text-center" />
+          <Title className="mb-8 text-center" text="🛤️ 노선 생성" />
           <Input
-            onChange={handleName}
-            value={name}
-            title="노선 이름"
-            placeholder="노선 이름을 입력해주세요"
             className="mb-8 w-full"
+            placeholder="노선 이름을 입력해주세요"
+            title="노선 이름"
+            value={name}
+            onChange={handleName}
           />
           <div className="flex items-center mb-8">
-            <SelectInput defaultValue="DEFAULT" onChange={handleUpStationId} title="상행역" className="w-full">
-              <option value="DEFAULT" disabled hidden>
+            <SelectInput className="w-full" defaultValue="DEFAULT" title="상행역" onChange={handleUpStationId}>
+              <option disabled hidden value="DEFAULT">
                 역을 선택해주세요
               </option>
               {stations?.map((station) => (
@@ -82,9 +82,9 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
                 </option>
               ))}
             </SelectInput>
-            <img className="mx-2 w-8 h-8" src={arrowImg} alt="arrowImg" />
-            <SelectInput defaultValue="DEFAULT" onChange={handleDownStationId} title="하행역" className="w-full">
-              <option value="DEFAULT" disabled hidden>
+            <img alt="arrowImg" className="mx-2 w-8 h-8" src={arrowImg} />
+            <SelectInput className="w-full" defaultValue="DEFAULT" title="하행역" onChange={handleDownStationId}>
+              <option disabled hidden value="DEFAULT">
                 역을 선택해주세요
               </option>
               {stations?.map((station) => (
@@ -96,12 +96,12 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
           </div>
           <div className="flex items-center justify-between mb-8">
             <Input
-              onChange={handleDistance}
-              value={Number.isNaN(distance) ? '' : distance}
-              type="number"
-              title="거리"
-              placeholder="거리를 입력해주세요"
               className="w-10/12"
+              placeholder="거리를 입력해주세요"
+              title="거리"
+              type="number"
+              value={Number.isNaN(distance) ? '' : distance}
+              onChange={handleDistance}
             />
             <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${ringColor[color]}`} />
           </div>

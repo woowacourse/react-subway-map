@@ -62,21 +62,21 @@ const Station = () => {
   return (
     <Container className="mb-16">
       <Title className="mb-8" text="🚉 지하철 역 관리" />
-      <form onSubmit={handleSubmit} className="flex items-center mb-8">
+      <form className="flex items-center mb-8" onSubmit={handleSubmit}>
         <Input
-          onChange={handleName}
-          value={name}
           className="mr-4 w-full"
-          title="역 이름을 입력해주세요"
           imgUrl={subwayImg}
           placeholder="역 이름을 입력해주세요"
+          title="역 이름을 입력해주세요"
+          value={name}
+          onChange={handleName}
         />
         <Button className="shadow-md" text="추가" />
       </form>
       <hr />
       {/* TODO [백엔드] 백엔드 크루들에게 역 정렬 순서를 생성 순으로 해달라고 요청하기 */}
       {stations?.map((station) => (
-        <ListItem onDelete={handleDelete} key={station.id} id={station.id} title={station.name} />
+        <ListItem key={station.id} id={station.id} title={station.name} onDelete={handleDelete} />
       ))}
     </Container>
   );
