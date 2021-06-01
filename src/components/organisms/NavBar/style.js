@@ -26,16 +26,17 @@ export const Title = styled.div`
   align-items: flex-start;
   padding-left: 0.3rem;
   color: ${COLOR.TEXT.NAVBAR};
-`;
-
-export const MainTitle = styled.h1`
-  font-size: 1.6rem;
   font-family: 'BM_HANNA';
 `;
 
+export const MainTitle = styled.h1`
+  font-size: 1.3rem;
+  font-weight: 200;
+`;
+
 export const SubTitle = styled.span`
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const Menu = styled.div`
