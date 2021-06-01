@@ -16,7 +16,6 @@ import MESSAGE from 'constants/message';
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
   const [email, setEmail] = useState('');
   const [age, setAge] = useState(0);
   const [password, setPassword] = useState('');

@@ -6,22 +6,16 @@ import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
+import useData from 'hooks/useData';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
-import { RootState } from 'redux/store';
-import { StationInterface } from 'types';
 
 const Station = () => {
   useRedirect(PATH.LOGIN);
-
   const dispatch = useDispatch();
-
-  // TODO useAppSelector 추상화 하기
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
-
+  const { stations } = useData();
   const [name, setName] = useState('');
 
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +68,6 @@ const Station = () => {
         <Button className="shadow-md" text="추가" />
       </form>
       <hr />
-      {/* TODO [백엔드] 백엔드 크루들에게 역 정렬 순서를 생성 순으로 해달라고 요청하기 */}
       {stations?.map((station) => (
         <ListItem key={station.id} id={station.id} title={station.name} onDelete={handleDelete} />
       ))}

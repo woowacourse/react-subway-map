@@ -19,7 +19,6 @@ const Button = ({ setColor, type, disabled, text, size, className, bgColor, hove
 
   return (
     <button
-      // TODO Type Error 찾아보기
       className={`rounded focus:outline-none ${bgColor} hover:${hoverBgColor} ${className} ${size}`}
       color={bgColor}
       disabled={disabled}

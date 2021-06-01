@@ -6,25 +6,18 @@ import addImg from 'assets/images/add.png';
 import MESSAGE from 'constants/message';
 // import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
+import useData from 'hooks/useData';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
 import { getStationAsync } from 'redux/stationSlice';
-import { RootState } from 'redux/store';
-import { LineInterface, StationInterface } from 'types';
 import AddLineModal from './AddLineModal';
 
 const Line = () => {
   useRedirect(PATH.LOGIN);
-
   const dispatch = useDispatch();
-
-  // TODO useAppSelector 추상화 하기
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
-  const lines: LineInterface[] | null = useAppSelector((state) => state.line.lines);
-
+  const { stations, lines } = useData();
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
