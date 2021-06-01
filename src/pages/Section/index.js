@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'notistack';
 
+import { useCookie } from '../../hooks';
 import { getMap, addSection, removeSection, clearMapProgress } from '../../redux/mapSlice';
 import { getStations } from '../../redux/stationSlice';
 
@@ -19,17 +19,15 @@ import {
   LineSelectBox,
   InvalidMessage,
 } from './style';
-import { COLOR, ACCESS_TOKEN, SECTION } from '../../constants';
+import { COLOR, SECTION } from '../../constants';
 
 export const SectionPage = (props) => {
   const { endpoint } = props;
 
-  const [cookies] = useCookies([ACCESS_TOKEN]);
-  const accessToken = cookies[ACCESS_TOKEN];
-
   const dispatch = useDispatch();
   const { stations } = useSelector((store) => store.station);
   const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
+  const { accessTokenInCookie: accessToken } = useCookie();
 
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
   const [selectedLineId, setSelectedLineId] = useState(map[0]?.id);

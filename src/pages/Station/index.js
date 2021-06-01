@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { useCookies } from 'react-cookie';
 
+import { useCookie } from '../../hooks';
 import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
 import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
 import { Form, List } from './style';
-import { STATION, ACCESS_TOKEN } from '../../constants';
+import { STATION } from '../../constants';
 
 export const StationPage = (props) => {
   const { endpoint } = props;
@@ -16,8 +16,7 @@ export const StationPage = (props) => {
   const { stations, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.station);
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
   const ref = useRef();
-  const [cookies] = useCookies([ACCESS_TOKEN]);
-  const accessToken = cookies[ACCESS_TOKEN];
+  const { accessTokenInCookie: accessToken } = useCookie();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleStationNameInputChange = (e) => {

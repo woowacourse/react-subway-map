@@ -2,30 +2,28 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { useCookies } from 'react-cookie';
 
+import { useCookie } from '../../../hooks';
 import { logout, clearLogout } from '../../../redux/userSlice';
 import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
 import { Nav, TitleButton, Title, SubTitle, MainTitle, Menu, MenuList, MenuItem } from './style';
-import { ACCESS_TOKEN, ROUTE, SERVER_ID } from '../../../constants';
+import { ROUTE } from '../../../constants';
 
 const FE_CONTRIBUTORS = '티케 하루의';
 
 export const NavBar = (props) => {
   const { serverOwner } = props;
-
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLogin, isLogout } = useSelector((store) => store.user);
-  /* eslint-disable-next-line no-unused-vars */
-  const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID]);
+  const { removeAccessTokenFromCookie } = useCookie();
   const subTitle = serverOwner ? `${serverOwner} & ${FE_CONTRIBUTORS}` : `${FE_CONTRIBUTORS}`;
 
   const handleLogout = () => {
     dispatch(logout());
 
     if (isLogout) {
-      removeCookie(ACCESS_TOKEN);
+      removeAccessTokenFromCookie();
       dispatch(clearLogout());
     }
     history.push(ROUTE.LOGIN);

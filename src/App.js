@@ -2,37 +2,33 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useCookies } from 'react-cookie';
 
+import { useCookie } from './hooks';
 import { loginByToken } from './redux/userSlice';
 import { Page } from './components';
 import { LoginPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
-import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from './constants';
+import { ROUTE, SERVER_LIST } from './constants';
 
 function App() {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const [cookies, setCookie] = useCookies([SERVER_ID, ACCESS_TOKEN]);
-
-  const [serverId, setServerId] = useState(cookies[SERVER_ID] || '');
+  const { accessTokenInCookie, serverIdInCookie, setServerIdInCookie } = useCookie();
+  const [serverId, setServerId] = useState(serverIdInCookie || '');
   const endpoint = SERVER_LIST[serverId]?.endpoint || '';
 
   useEffect(() => {
-    if (!cookies[SERVER_ID]) {
+    if (!serverIdInCookie) {
       return;
     }
-
-    if (!cookies[ACCESS_TOKEN]) {
+    if (!accessTokenInCookie) {
       history.push(ROUTE.LOGIN);
       return;
     }
-
-    dispatch(loginByToken({ endpoint, accessToken: cookies[ACCESS_TOKEN] }));
+    dispatch(loginByToken({ endpoint, accessToken: accessTokenInCookie }));
 
     return () => {
       if (serverId) {
-        setCookie(SERVER_ID, serverId);
+        setServerIdInCookie(serverId);
       }
     };
   }, []);

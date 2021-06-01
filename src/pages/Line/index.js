@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'notistack';
 
+import { useCookie } from '../../hooks';
 import { getStations } from '../../redux/stationSlice';
 import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
 
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
-import { COLOR, ACCESS_TOKEN, LINE } from '../../constants';
+import { COLOR, LINE } from '../../constants';
 
 export const LinePage = (props) => {
   const { endpoint } = props;
@@ -19,8 +19,7 @@ export const LinePage = (props) => {
   const { stations } = useSelector((store) => store.station);
   const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
-  const [cookies] = useCookies([ACCESS_TOKEN]);
-  const accessToken = cookies[ACCESS_TOKEN];
+  const { accessTokenInCookie: accessToken } = useCookie();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsLineAddOpen(true);
