@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
-import Button from '../Button/Button';
-import FlexContainer from '../FlexContainer/FlexContainer';
+import Button from '../../@common/Button/Button';
+import FlexContainer from '../../@common/FlexContainer/FlexContainer';
 
 export const StyledListItem = styled.li`
   display: flex;

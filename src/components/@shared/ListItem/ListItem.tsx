@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import Pencil from '../Icon/Pencil';
-import TrashBin from '../Icon/TrashBin';
+import Pencil from '../../@common/Icon/Pencil';
+import TrashBin from '../../@common/Icon/TrashBin';
+
 import { ListContent, ListItemButton, StyledListItem } from './ListItem.styles';
 
 interface Props {

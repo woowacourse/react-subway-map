@@ -5,7 +5,7 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
 import Subway from '../../components/@common/Icon/Subway';
-import ListItem from '../../components/@common/ListItem/ListItem';
+import ListItem from '../../components/@shared/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
 import { API_INFO } from '../../constants/api';

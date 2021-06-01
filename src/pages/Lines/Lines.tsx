@@ -2,7 +2,7 @@ import React, { FC, MouseEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Add from '../../components/@common/Icon/Add';
-import ListItem from '../../components/@common/ListItem/ListItem';
+import ListItem from '../../components/@shared/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
