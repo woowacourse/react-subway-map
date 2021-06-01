@@ -16,7 +16,7 @@ export const Page = (props) => {
   const dispatch = useDispatch();
 
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
-  const { requestLogout } = useLogin();
+  const { isLogin, requestLogout, removeToken } = useLogin();
   const { setServerIdInCookie } = useCookie();
 
   const handleServerSubmit = (e) => {
@@ -31,13 +31,15 @@ export const Page = (props) => {
     }
     setServerId(selectedId);
     setServerIdInCookie(selectedId);
+    setIsServerSelectOpen(false);
 
-    requestLogout();
+    if (isLogin) {
+      requestLogout();
+    }
+    removeToken();
     dispatch(clearLine());
     dispatch(clearStation());
     dispatch(clearMap());
-
-    setIsServerSelectOpen(false);
   };
 
   const handleServerSelectButtonClick = () => {

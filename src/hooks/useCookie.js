@@ -14,7 +14,7 @@ export const useCookie = () => {
   const serverIdInCookie = cookies[SERVER_ID];
   const setServerIdInCookie = (id) => setCookie(SERVER_ID, id, options);
   const removeServerIdFromCookie = () => removeCookie(SERVER_ID, options);
-  const endpoint = SERVER_LIST[serverIdInCookie].endpoint;
+  const endpoint = SERVER_LIST[serverIdInCookie]?.endpoint;
 
   return {
     accessTokenInCookie,
