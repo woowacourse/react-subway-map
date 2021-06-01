@@ -24,18 +24,6 @@ const Lines: FC = () => {
   const lineAddModal = useModal();
   const lineModifyModal = useModal(null);
 
-  useEffect(() => {
-    dispatch(loadLines());
-  }, []);
-
-  useUpdateEffect(() => {
-    if (errorMessage === '') {
-      return;
-    }
-
-    alert(errorMessage);
-  }, [errorMessage]);
-
   const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
     lineAddModal.openModal();
   };
@@ -56,6 +44,18 @@ const Lines: FC = () => {
       dispatch(deleteLine(lineId));
     }
   };
+
+  useEffect(() => {
+    dispatch(loadLines());
+  }, []);
+
+  useUpdateEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  }, [errorMessage]);
 
   //aria-label 상수화
   return (

@@ -1,8 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC, FormEventHandler, useMemo, useState } from 'react';
+import React, {
+  ChangeEventHandler,
+  FC,
+  FormEventHandler,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useInput from '../../hooks/@shared/useInput/useInput';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import { modifyLine } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
@@ -23,19 +33,9 @@ interface Props {
   onClose: () => void;
 }
 
-interface FormValue {
-  name: string;
-  color: string;
-}
-
 const LineModifyModal: FC<Props> = ({ line, onClose }) => {
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-  const [formInput, setFormInput] = useState<FormValue>({
-    name: line.name,
-    color: line.color,
-  });
-  const [validationErrorMessage, setValidationErrorMessage] = useState<string>('');
   const usedLineColor = useMemo(
     () => lines.filter((ele) => ele.id !== line.id).map((ele) => ele.color),
     [lines]
@@ -43,52 +43,56 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
 
   const isUsedLineColor = (color: string) => usedLineColor.includes(color);
 
-  const onChangeName: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    if (value.length >= 2 && isKoreanAndNumber(value)) {
-      setValidationErrorMessage('');
-    } else {
-      setValidationErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
+  const [nameInput, nameErrorMessage, onChangeName, setNameInput] = useNotificationInput(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
+
+      if (targetValue.length >= 2 && isKoreanAndNumber(targetValue)) {
+        setErrorMessage('');
+      } else {
+        setErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
+      }
     }
+  );
 
-    setFormInput({
-      ...formInput,
-      name: value,
-    });
-  };
+  const [colorInput, onChangeColor, setColorInput] = useInput(({ setInput, targetValue }) => {
+    setInput(targetValue);
+  });
 
-  const onChangeLineColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    setFormInput({ ...formInput, color: value });
-  };
+  const isReadyToSubmit = useReadyToSubmit([nameInput, colorInput], [nameErrorMessage]);
 
   const onModifyLine: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    if (
-      Object.values(validationErrorMessage).some((message) => message !== '') ||
-      Object.values(formInput).some((value) => !value)
-    ) {
+    if (!isReadyToSubmit) {
       alert(ERROR_MESSAGE.INCOMPLETE_FORM);
 
       return;
     }
 
-    dispatch(
-      modifyLine({
-        lineId: line.id,
-        ...formInput,
-      })
-    );
+    const lineInfo = {
+      lineId: line.id,
+      name: nameInput,
+      color: colorInput,
+    };
+
+    dispatch(modifyLine(lineInfo));
 
     onClose();
   };
+
+  useEffect(() => {
+    setNameInput(line.name);
+    setColorInput(line.color);
+  }, []);
 
   return (
     <Modal titleText={LINE.MODIFY_MODAL_TITLE} onClose={onClose}>
       <LineForm onSubmit={onModifyLine}>
         <NotificationInput
+          value={nameInput}
           onChange={onChangeName}
-          value={formInput.name}
-          message={{ text: validationErrorMessage, isError: true }}
+          message={{ text: nameErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
           labelText={LINE.NAME_LABEL_TEXT}
@@ -100,11 +104,11 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
             <ColorRadio
               key={color}
               value={color}
-              checked={color === formInput.color}
+              onChange={onChangeColor}
+              checked={color === colorInput}
               radioColor={color}
               groupName={LINE.COLOR_SELECT_NAME}
               disabled={isUsedLineColor(color)}
-              onChange={onChangeLineColor}
               labelText={{
                 text: '노선 색상 선택 라디오버튼',
                 isVisible: false,
@@ -116,7 +120,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
           <Button type="button" isColored={false} onClick={onClose}>
             취소
           </Button>
-          <Button>확인</Button>
+          <Button disabled={!isReadyToSubmit}>확인</Button>
         </LineModalButtonContainer>
       </LineForm>
     </Modal>

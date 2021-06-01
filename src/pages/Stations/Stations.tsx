@@ -23,20 +23,6 @@ const Stations: FC = () => {
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
-  }, []);
-
-  useUpdateEffect(() => {
-    if (errorMessage === '') {
-      return;
-    }
-
-    alert(errorMessage);
-  }, [errorMessage]);
-
   const [
     stationInput,
     stationErrorMessage,
@@ -72,6 +58,20 @@ const Stations: FC = () => {
 
     dispatch(deleteStation(stationId));
   };
+
+  useEffect(() => {
+    if (stations.length === 0) {
+      dispatch(loadStations());
+    }
+  }, []);
+
+  useUpdateEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  }, [errorMessage]);
 
   return (
     <CardTemplate

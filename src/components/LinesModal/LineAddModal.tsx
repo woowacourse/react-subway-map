@@ -53,21 +53,6 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);
   const dispatch = useAppDispatch();
 
-  //TODO: 에러메세지 리팩터링
-  useEffect(() => {
-    if (errorMessage === '') {
-      return;
-    }
-
-    alert(errorMessage);
-  });
-
-  useEffect(() => {
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
-  }, []);
-
   const isUsedLineColor = (color: string): boolean => usedLineColors.includes(color);
 
   const [nameInput, nameErrorMessage, onChangeName] = useNotificationInput(
@@ -145,6 +130,21 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
 
     onClose();
   };
+
+  //TODO: 에러메세지 리팩터링
+  useEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  });
+
+  useEffect(() => {
+    if (stations.length === 0) {
+      dispatch(loadStations());
+    }
+  }, []);
 
   return (
     <Modal titleText={LINE.ADD_MODAL_TITLE} onClose={onClose}>
