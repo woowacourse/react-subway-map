@@ -1,11 +1,4 @@
-import {
-  render,
-  findByText,
-  waitFor,
-  fireEvent,
-  screen,
-  getByText,
-} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import SignUpForm from '../components/SignUp/SignUpForm/SignUpForm';
 import userEvent from '@testing-library/user-event';
 
