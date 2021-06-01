@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, FormEvent, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestSignup } from '../../api/member';
@@ -9,132 +9,119 @@ import Person from '../../components/@common/Icon/Person';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
 import { RootState } from '../../redux/store';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
 const Signup: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
-  const [formInput, setFormInput] = useState({
-    email: '',
-    age: '',
-    password: '',
-    passwordConfirm: '',
-  });
-  const [errorMessage, setErrorMessage] = useState({
-    email: '',
-    age: '',
-    password: '',
-    passwordConfirm: '',
-  });
-  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const history = useHistory();
 
-  const onChangeEmail: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    setFormInput({ ...formInput, email: value });
+  const [emailInput, emailErrorMessage, onChangeEmail] = useNotificationInput(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
 
-    if (!isEmail(value)) {
-      setErrorMessage({ ...errorMessage, email: ERROR_MESSAGE.INVALID_EMAIL });
+      if (!isEmail(targetValue)) {
+        setErrorMessage(ERROR_MESSAGE.INVALID_EMAIL);
+        return;
+      }
 
-      return;
+      // TODO: 이메일 중복 확인
+      setErrorMessage('');
     }
+  );
 
-    // TODO: 이메일 중복 확인
+  const [ageInput, ageErrorMessage, onChangeAge] = useNotificationInput(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
 
-    setErrorMessage({ ...errorMessage, email: '' });
-  };
+      const valueAsNumber = Number(targetValue);
 
-  const onChangeAge: ChangeEventHandler<HTMLInputElement> = ({ target: { valueAsNumber } }) => {
-    setFormInput({
-      ...formInput,
-      age: String(valueAsNumber),
-    });
+      if (valueAsNumber < SIGNUP.MIN_AGE || SIGNUP.MAX_AGE < valueAsNumber) {
+        setErrorMessage(ERROR_MESSAGE.INVALID_RANGE_OF_AGE);
 
-    if (valueAsNumber < SIGNUP.MIN_AGE || SIGNUP.MAX_AGE < valueAsNumber) {
-      setErrorMessage({
-        ...errorMessage,
-        age: ERROR_MESSAGE.INVALID_RANGE_OF_AGE,
-      });
+        return;
+      }
 
-      return;
+      setErrorMessage('');
     }
+  );
 
-    setErrorMessage({
-      ...errorMessage,
-      age: '',
-    });
-  };
+  const [passwordInput, passwordErrorMessage, onChangePassword] = useNotificationInput(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
+      setErrorMessage('');
 
-  const onChangePassword: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    setFormInput({
-      ...formInput,
-      password: value,
-    });
-    setErrorMessage({
-      ...errorMessage,
-      password: '',
-    });
+      if (
+        targetValue.length < SIGNUP.PASSWORD_MIN_LENGTH ||
+        SIGNUP.PASSWORD_MAX_LENGTH < targetValue.length
+      ) {
+        setErrorMessage(ERROR_MESSAGE.INVALID_RANGE_OF_PASSWORD);
+        return;
+      }
 
-    //TODO: SIGNUP -> SIGN_UP 일관된 네이밍 ....
-    if (value.length < SIGNUP.PASSWORD_MIN_LENGTH || SIGNUP.PASSWORD_MAX_LENGTH < value.length) {
-      setErrorMessage({
-        ...errorMessage,
-        password: ERROR_MESSAGE.INVALID_RANGE_OF_PASSWORD,
-      });
-      return;
+      if (!isEnglishAndNumber(targetValue)) {
+        setErrorMessage(ERROR_MESSAGE.INVALID_PASSWORD);
+      }
     }
+  );
 
-    if (!isEnglishAndNumber(value)) {
-      setErrorMessage({
-        ...errorMessage,
-        password: ERROR_MESSAGE.INVALID_PASSWORD,
-      });
-    }
-  };
+  const [
+    passwordConfirmInput,
+    passwordConfirmErrorMessage,
+    onChangePasswordConfirm,
+  ] = useNotificationInput(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
 
-  const onChangePasswordConfirm: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    setFormInput({
-      ...formInput,
-      passwordConfirm: value,
-    });
-  };
+      if (passwordInput !== targetValue) {
+        setErrorMessage(ERROR_MESSAGE.PASSWORD_CONFIRM_FAILURE);
+        return;
+      }
 
-  useEffect(() => {
-    if (formInput.password !== formInput.passwordConfirm) {
-      setErrorMessage({ ...errorMessage, passwordConfirm: ERROR_MESSAGE.PASSWORD_CONFIRM_FAILURE });
+      setErrorMessage('');
+    },
+    [passwordInput]
+  );
 
-      return;
-    }
-
-    setErrorMessage({
-      ...errorMessage,
-      passwordConfirm: '',
-    });
-  }, [formInput.password, formInput.passwordConfirm]);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+  const formInputs = useMemo(() => [emailInput, ageInput, passwordInput, passwordConfirmInput], [
+    emailInput,
+    ageInput,
+    passwordInput,
+    passwordConfirmInput,
+  ]);
+  const errorMessages = useMemo(
+    () => [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage],
+    [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage]
+  );
 
   useEffect(() => {
     if (
-      Object.values(formInput).every((input) => input !== '') &&
-      Object.values(errorMessage).every((errorMessage) => errorMessage === '')
+      formInputs.every((input) => input !== '') &&
+      errorMessages.every((errorMessage) => errorMessage === '')
     ) {
       setIsReadyToSubmit(true);
+      return;
     }
-  }, [formInput, errorMessage]);
+
+    setIsReadyToSubmit(false);
+  }, [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage]);
 
   const onSignup = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (Object.values(errorMessage).some((errorMessage) => errorMessage !== '')) {
+    if (errorMessages.some((errorMessage) => errorMessage !== '')) {
       alert(ERROR_MESSAGE.INVALID_SIGNUP_INPUT);
 
       return;
     }
 
-    // TODO : input태그 name vs id
     const memberInfo = {
-      email: formInput.email,
-      age: Number(formInput.age),
-      password: formInput.password,
+      email: emailInput,
+      age: Number(ageInput),
+      password: passwordInput,
     };
 
     try {
@@ -156,40 +143,40 @@ const Signup: FC = () => {
       <SignupForm onSubmit={onSignup}>
         <SignupNotificationInput
           type="email"
-          value={formInput.email}
+          value={emailInput}
           onChange={onChangeEmail}
           labelIcon={<Email />}
           placeholder="이메일을 입력해주세요."
-          message={{ text: errorMessage.email, isError: true }}
+          message={{ text: emailErrorMessage, isError: true }}
           required
         />
         <SignupNotificationInput
           type="number"
-          value={formInput.age}
+          value={ageInput}
           onChange={onChangeAge}
           labelIcon={<Person />}
           placeholder="나이를 입력해주세요."
           min={SIGNUP.MIN_AGE}
           max={SIGNUP.MAX_AGE}
-          message={{ text: errorMessage.age, isError: true }}
+          message={{ text: ageErrorMessage, isError: true }}
           required
         />
         <SignupNotificationInput
           type="password"
-          value={formInput.password}
+          value={passwordInput}
           onChange={onChangePassword}
           labelIcon={<Lock />}
           placeholder="비밀번호를 입력해주세요."
           minLength={SIGNUP.PASSWORD_MIN_LENGTH}
           maxLength={SIGNUP.PASSWORD_MAX_LENGTH}
-          message={{ text: errorMessage.password, isError: true }}
+          message={{ text: passwordErrorMessage, isError: true }}
           required
         />
         <SignupNotificationInput
           type="password"
-          value={formInput.passwordConfirm}
+          value={passwordConfirmInput}
           onChange={onChangePasswordConfirm}
-          message={{ text: errorMessage.passwordConfirm, isError: true }}
+          message={{ text: passwordConfirmErrorMessage, isError: true }}
           labelIcon={<Lock />}
           placeholder="비밀번호를 한번 더 입력해주세요."
           minLength={SIGNUP.PASSWORD_MIN_LENGTH}

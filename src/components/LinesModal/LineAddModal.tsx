@@ -10,7 +10,7 @@ import React, {
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addLine } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';

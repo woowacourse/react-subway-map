@@ -8,7 +8,7 @@ import ListItem from '../../components/@common/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
