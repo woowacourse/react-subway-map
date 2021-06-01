@@ -21,6 +21,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             </Styled.NavItem>
+
             <Styled.NavItem>
               <Link to={ROUTES.LINE}>
                 <Button variant="text" active={location.pathname === ROUTES.LINE}>
@@ -28,6 +29,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             </Styled.NavItem>
+
             <Styled.NavItem>
               <Link to={ROUTES.SECTION}>
                 <Button variant="text" active={location.pathname === ROUTES.SECTION}>
@@ -37,6 +39,22 @@ const Navbar = () => {
             </Styled.NavItem>
           </>
         )}
+
+        <Styled.NavItem>
+          <Link to={ROUTES.ROUTE_MAP}>
+            <Button variant="text" active={location.pathname === ROUTES.ROUTE_MAP}>
+              전체 보기
+            </Button>
+          </Link>
+        </Styled.NavItem>
+
+        <Styled.NavItem>
+          <Link to={ROUTES.SEARCH}>
+            <Button variant="text" active={location.pathname === ROUTES.SEARCH}>
+              경로 검색
+            </Button>
+          </Link>
+        </Styled.NavItem>
 
         <Styled.NavItem>
           {isLogin ? (

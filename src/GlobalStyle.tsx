@@ -23,6 +23,7 @@ export const theme = {
       primary: '#7E7E7E',
       secondary: '#cccccc',
       error: '#c0392b',
+      black: '#000000',
     },
   },
 };
