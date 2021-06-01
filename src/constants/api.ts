@@ -29,4 +29,4 @@ export const API_INFO: { [key: string]: APIInfo } = {
   },
 };
 
-export const DEFAULT_API_OWNER = 'FAFI';
+export const DEFAULT_API_OWNER = 'JAYON';
