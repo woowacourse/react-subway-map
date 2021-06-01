@@ -72,27 +72,23 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
             onChange={handleName}
           />
           <div className="flex items-center mb-8">
-            <SelectInput className="w-full" defaultValue="DEFAULT" title="상행역" onChange={handleUpStationId}>
-              <option disabled hidden value="DEFAULT">
-                역을 선택해주세요
-              </option>
-              {stations?.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
-            </SelectInput>
+            <SelectInput
+              className="w-full"
+              data={stations}
+              defaultSelect="역을 선택해주세요"
+              defaultValue="DEFAULT"
+              title="상행역"
+              onChange={handleUpStationId}
+            />
             <img alt="arrowImg" className="mx-2 w-8 h-8" src={arrowImg} />
-            <SelectInput className="w-full" defaultValue="DEFAULT" title="하행역" onChange={handleDownStationId}>
-              <option disabled hidden value="DEFAULT">
-                역을 선택해주세요
-              </option>
-              {stations?.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
-            </SelectInput>
+            <SelectInput
+              className="w-full"
+              data={stations}
+              defaultSelect="역을 선택해주세요"
+              defaultValue="DEFAULT"
+              title="하행역"
+              onChange={handleDownStationId}
+            />
           </div>
           <div className="flex items-center justify-between mb-8">
             <Input

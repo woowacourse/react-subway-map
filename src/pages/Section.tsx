@@ -98,19 +98,12 @@ const Section = () => {
 
         <SelectInput
           className="w-full"
+          data={lines}
+          defaultSelect="노선을 선택해주세요"
           defaultValue="DEFAULT"
           title="조회하실 노선을 선택해주세요."
           onChange={handleLineChange}
-        >
-          <option disabled hidden value="DEFAULT">
-            노선을 선택해주세요
-          </option>
-          {lines?.map((line) => (
-            <option key={line.id} value={String(line.id)}>
-              {line.name}
-            </option>
-          ))}
-        </SelectInput>
+        />
         {selectedLine && (
           <Container className={`mt-6 w-full ${borderColor[selectedLine.color]}`}>
             <div className={`flex justify-center items-center  rounded-2xl py-1 mb-3 ${selectedLine.color}`}>

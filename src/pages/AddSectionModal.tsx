@@ -67,39 +67,32 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
         </div>
         <Title className="mb-8 text-center" text="🔁  구간 추가" />
         <form onSubmit={handleSubmit}>
-          <SelectInput className="mb-8 w-full" defaultValue="DEFAULT" title="노선 이름" onChange={handleLineId}>
-            <option disabled hidden value="DEFAULT">
-              노선을 선택해주세요
-            </option>
-            {lines?.map((line) => (
-              <option key={line.id} value={line.id}>
-                {line.name}
-              </option>
-            ))}
-          </SelectInput>
+          <SelectInput
+            className="mb-8 w-full"
+            data={lines}
+            defaultSelect="노선을 선택해주세요"
+            defaultValue="DEFAULT"
+            title="노선 이름"
+            onChange={handleLineId}
+          />
           <div className="flex items-center mb-8">
-            <SelectInput className="w-full" defaultValue="DEFAULT" title="상행역" onChange={handleUpStationId}>
-              {/* TODO: option 부분을 컴포넌트로 분리해야 할까? 말까? */}
-              <option disabled hidden value="DEFAULT">
-                역을 선택해주세요
-              </option>
-              {stations?.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
-            </SelectInput>
+            <SelectInput
+              className="w-full"
+              data={stations}
+              defaultSelect="역을 선택해주세요"
+              defaultValue="DEFAULT"
+              title="상행역"
+              onChange={handleUpStationId}
+            />
             <img alt="arrowImg" className="mx-2 w-8 h-8" src={arrowImg} />
-            <SelectInput className="w-full" defaultValue="DEFAULT" title="하행역" onChange={handleDownStationId}>
-              <option disabled hidden value="DEFAULT">
-                역을 선택해주세요
-              </option>
-              {stations?.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
-            </SelectInput>
+            <SelectInput
+              className="w-full"
+              data={stations}
+              defaultSelect="역을 선택해주세요"
+              defaultValue="DEFAULT"
+              title="하행역"
+              onChange={handleDownStationId}
+            />
           </div>
           <Input
             className="mb-8 w-full"
