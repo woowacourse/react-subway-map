@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -38,9 +38,7 @@ const Stations: FC = () => {
     alert(errorMessage);
   }, [errorMessage]);
 
-  const onChangeStationInput = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-
+  const onChangeStationInput: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     if (value.length >= 2 && isKoreanAndNumber(value)) {
       setValidationErrorMessage('');
     } else {
@@ -54,7 +52,7 @@ const Stations: FC = () => {
     setStationInput(value);
   };
 
-  const onAddStation = (event: FormEvent<HTMLFormElement>) => {
+  const onAddStation: FormEventHandler = (event) => {
     event.preventDefault();
 
     dispatch(addStation(stationInput));

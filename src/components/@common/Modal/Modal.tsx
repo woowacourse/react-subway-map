@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, MouseEvent } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import ReactDOM from 'react-dom';
 import Close from '../Icon/Close';
 import { CloseButton, ModalContainer, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
@@ -13,7 +13,7 @@ export interface Props {
 }
 
 const Modal: FC<Props> = ({ children, titleText, onClose }) => {
-  const onClickDimmed = ({ target, currentTarget }: MouseEvent<HTMLDivElement>) => {
+  const onClickDimmed: MouseEventHandler<HTMLDivElement> = ({ target, currentTarget }) => {
     if (!onClose || target !== currentTarget) return;
 
     onClose();

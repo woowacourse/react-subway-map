@@ -1,12 +1,12 @@
-import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
 import Subway from '../../components/@common/Icon/Subway';
-import ListItem from '../../components/@shared/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
+import ListItem from '../../components/@shared/ListItem/ListItem';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SECTION } from '../../constants/appInfo';
@@ -60,7 +60,9 @@ const Sections: FC = () => {
     }
   }, [stationErrorMessage, lineErrorMessage]);
 
-  const onChangeTargetLine = ({ target: { value } }: ChangeEvent<HTMLSelectElement>): void => {
+  const onChangeTargetLine: ChangeEventHandler<HTMLSelectElement> = ({
+    target: { value },
+  }): void => {
     setTargetLineId(value);
   };
 

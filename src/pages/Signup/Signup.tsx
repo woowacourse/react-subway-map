@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FC, FocusEventHandler, FormEvent, useEffect, useState } from 'react';
+import React, {
+  ChangeEventHandler,
+  FC,
+  FocusEventHandler,
+  FormEventHandler,
+  useEffect,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestEmailCheck, requestSignup } from '../../api/member';
@@ -15,7 +22,6 @@ import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styl
 
 const Signup: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
-  //TODO: formInput으로 통일하기
   const [formInput, setFormInput] = useState({
     email: '',
     age: '',
@@ -31,7 +37,7 @@ const Signup: FC = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const history = useHistory();
 
-  const onChangeEmail = async ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail: ChangeEventHandler<HTMLInputElement> = async ({ target: { value } }) => {
     setFormInput({ ...formInput, email: value });
 
     if (!isEmail(value)) {
@@ -67,7 +73,7 @@ const Signup: FC = () => {
     setErrorMessage({ ...errorMessage, email: '' });
   };
 
-  const onChangeAge = ({ target: { valueAsNumber } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeAge: ChangeEventHandler<HTMLInputElement> = ({ target: { valueAsNumber } }) => {
     setFormInput({
       ...formInput,
       age: String(valueAsNumber),
@@ -88,7 +94,7 @@ const Signup: FC = () => {
     });
   };
 
-  const onChangePassword = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({
       ...formInput,
       password: value,
@@ -114,7 +120,7 @@ const Signup: FC = () => {
     }
   };
 
-  const onChangePasswordConfirm = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangePasswordConfirm: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     setFormInput({
       ...formInput,
       passwordConfirm: value,
@@ -143,7 +149,7 @@ const Signup: FC = () => {
     }
   }, [formInput, errorMessage]);
 
-  const onSignup = async (event: FormEvent<HTMLFormElement>) => {
+  const onSignup: FormEventHandler = async (event) => {
     event.preventDefault();
 
     if (Object.values(errorMessage).some((errorMessage) => errorMessage !== '')) {
@@ -174,7 +180,7 @@ const Signup: FC = () => {
       templateColor={API_INFO[apiOwner].themeColor[400]}
       titleText={PAGE_INFO.SIGN_UP.text}
     >
-      <SignupForm onSubmit={onSignup}>
+      <SignupForm onSubmit={onSignup} role="form">
         <SignupNotificationInput
           type="email"
           value={formInput.email}

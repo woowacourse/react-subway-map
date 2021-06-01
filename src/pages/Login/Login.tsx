@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useState } from 'react';
+import React, { FC, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestLogin } from '../../api/member';
@@ -19,23 +19,20 @@ import {
   SignupLink,
 } from './Login.styles';
 
-interface LoginFormTarget extends EventTarget {
-  email: HTMLInputElement;
-  password: HTMLInputElement;
-}
-
 const Login: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onLogin = async (event: FormEvent<HTMLFormElement>) => {
+  const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
+    const currentTarget = event.currentTarget;
+
     const loginInfo = {
-      email: (event.target as LoginFormTarget).email.value,
-      password: (event.target as LoginFormTarget).password.value,
+      email: currentTarget.email.value,
+      password: currentTarget.password.value,
     };
 
     try {
