@@ -9,6 +9,10 @@ export const mockStations = [
     id: 2,
     name: '지하철역그루밍',
   },
+  {
+    id: 3,
+    name: '지하철역로',
+  },
 ];
 
 export const mockLines = [

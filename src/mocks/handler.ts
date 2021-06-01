@@ -23,7 +23,11 @@ export const handlers = [
     return res(ctx.json(mockLines));
   }),
 
-  rest.post(`${URL.MUNGTO}/stations`, (req, res, ctx) => {
+  rest.post(`${URL.MUNGTO}/stations/`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(mockStations[0]));
+  }),
+
+  rest.delete(`${URL.MUNGTO}/stations/:id`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockStations[0]));
   }),
 ];

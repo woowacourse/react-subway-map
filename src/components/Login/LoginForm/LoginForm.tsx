@@ -25,6 +25,8 @@ const LoginForm: VFC<LoginFormProps> = () => {
     login();
   };
 
+  const hi = () => 'submit' as const;
+
   return (
     <AuthForm title="로그인" onSubmit={handleLogin}>
       <InputWithAlertText

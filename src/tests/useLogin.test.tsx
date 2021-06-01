@@ -30,13 +30,13 @@ describe('useLogin', () => {
     expect(result.current.accessToken).toBe(mockToken);
   });
 
-  // test('사용자는 로그아웃 할 수 있다.', () => {
-  //   const { result } = renderHook(() => useLogin(), { wrapper: Wrapper });
+  test('사용자는 로그아웃 할 수 있다.', () => {
+    const { result } = renderHook(() => useLogin(), { wrapper: Wrapper });
 
-  //   act(() => {
-  //     result.current.logout();
-  //   });
+    act(() => {
+      result.current.logout();
+    });
 
-  //   expect(result.current.accessToken).toBe('');
-  // });
+    expect(result.current.accessToken).toBe('');
+  });
 });
