@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import Block from "../../components/Block/Block";
@@ -9,7 +9,7 @@ import { PAGE_PATH } from "../../constants/route";
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
 import useAuth from "../../hooks/useAuth";
-import { useEffect } from "react";
+import TEST_ID from "../../@test/testId";
 
 const LoginPage = () => {
   const {
@@ -40,6 +40,10 @@ const LoginPage = () => {
     history.push(PAGE_PATH.HOME);
   };
 
+  const onMoveToSignupPage = () => {
+    history.push(PAGE_PATH.SIGN_UP);
+  };
+
   return (
     <FlexCenter>
       <form onSubmit={onSubmit}>
@@ -67,11 +71,14 @@ const LoginPage = () => {
               onBlur={onPasswordBlur}
               required
             />
-            <Button size="block" style={{ marginBottom: "15px" }}>
+            <Button data-testid={TEST_ID.LOGIN_BUTTON} size="block" style={{ marginBottom: "15px" }}>
               확인
             </Button>
             <p>
-              아직 회원이 아니신가요? <Link to={PAGE_PATH.SIGN_UP}>회원가입</Link>
+              아직 회원이 아니신가요?{" "}
+              <a data-testid={TEST_ID.MOVE_TO_SIGN_UP_BUTTON} href="#" onClick={onMoveToSignupPage}>
+                회원가입
+              </a>
             </p>
           </Flex>
         </Block>
