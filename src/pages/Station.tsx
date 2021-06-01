@@ -73,7 +73,6 @@ const Station = () => {
         <Button className="shadow-md" text="추가" />
       </form>
       <hr />
-      {/* TODO [백엔드] 백엔드 크루들에게 역 정렬 순서를 생성 순으로 해달라고 요청하기 */}
       {stations?.map((station) => (
         <ListItem onDelete={handleDelete} key={station.id} id={station.id} title={station.name} />
       ))}

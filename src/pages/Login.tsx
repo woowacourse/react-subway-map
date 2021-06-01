@@ -38,7 +38,6 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO: 추상화
     try {
       await dispatch(loginAsync({ email, password }));
       alert(MESSAGE.LOGIN.SUCCESS);
