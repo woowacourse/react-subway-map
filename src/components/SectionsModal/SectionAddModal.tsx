@@ -1,21 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC, FormEventHandler } from 'react';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import useInput from '../../hooks/@shared/useInput/useInput';
 import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
-import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import { loadLines } from '../../redux/lineSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import Button from '../@common/Button/Button';
 import Input from '../@common/Input/Input';
 import Modal from '../@common/Modal/Modal';
-import SectionSelectBox, {
-  OnChangeSectionSelectBoxHandler,
-} from '../@shared/SectionSelectBox/SectionSelectBox';
+import SectionSelectBox from '../@shared/SectionSelectBox/SectionSelectBox';
 import { SectionForm, SectionModalButtonContainer } from './SectionsModal.styles';
 
 interface Props {
@@ -24,26 +21,10 @@ interface Props {
 }
 
 const SectionAddModal: FC<Props> = ({ onClose, line }) => {
-  const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
-  const [formInput, setFormInput] = useState({
-    upStationId: '',
-    downStationId: '',
-    distance: SECTION.MIN_DISTANCE,
-  });
-  const [validationErrorMessage, setValidationErrorMessage] = useState({
-    section: '',
-  });
 
   const isStationInLine = (targetId: number) => {
     return line.stations.find((station) => station.id === targetId) ? true : false;
-  };
-
-  const onChangeStations: OnChangeSectionSelectBoxHandler = (type) => ({ target: { value } }) => {
-    setFormInput({
-      ...formInput,
-      [type]: value,
-    });
   };
 
   const [downStationIdInput, onChangeDownStationId] = useInput<HTMLSelectElement>(
@@ -58,6 +39,8 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     onChangeUpStationId,
   ] = useNotificationInput<HTMLSelectElement>(
     ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
+
       let numberOfStationAddedInLine = 0;
 
       if (isStationInLine(Number(targetValue))) {
@@ -83,24 +66,29 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     [downStationIdInput]
   );
 
-  const onChangeDistance: ChangeEventHandler<HTMLInputElement> = ({
-    target: { valueAsNumber },
-  }) => {
-    setFormInput({
-      ...formInput,
-      distance: valueAsNumber,
-    });
-  };
+  const [distanceInput, onChangeDistance] = useInput(({ setInput, targetValue }) => {
+    setInput(targetValue);
+  });
+
+  const isReadyToSubmit = useReadyToSubmit(
+    [upStationIdInput, downStationIdInput, distanceInput],
+    [sectionErrorMessage]
+  );
 
   const onAddSection: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
+    if (!isReadyToSubmit) {
+      alert(ERROR_MESSAGE.INCOMPLETE_FORM);
+      return;
+    }
+
     try {
       await requestAddSection({
         lineId: line.id,
-        upStationId: Number(formInput.upStationId),
-        downStationId: Number(formInput.downStationId),
-        distance: Number(formInput.distance),
+        upStationId: Number(upStationIdInput),
+        downStationId: Number(downStationIdInput),
+        distance: Number(distanceInput),
       });
 
       dispatch(loadLines());
@@ -118,10 +106,10 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
         <SectionSelectBox
           onChangeUpStation={onChangeUpStationId}
           onChangeDownStation={onChangeDownStationId}
-          errorMessage={validationErrorMessage.section}
+          errorMessage={sectionErrorMessage}
         />
         <Input
-          value={formInput.distance}
+          value={distanceInput}
           onChange={onChangeDistance}
           type="number"
           min={SECTION.MIN_DISTANCE}
@@ -131,7 +119,7 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           <Button onClick={onClose} type="button" isColored={false}>
             취소
           </Button>
-          <Button>확인</Button>
+          <Button disabled={!isReadyToSubmit}>확인</Button>
         </SectionModalButtonContainer>
       </SectionForm>
     </Modal>
