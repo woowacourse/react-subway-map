@@ -1,12 +1,14 @@
 import { Member } from './../types';
 import axios, { AxiosResponse } from 'axios';
-
-export const requestSignup = (memberInfo: Member): Promise<Response> =>
-  axios.post(`/members`, memberInfo);
-
 interface LoginResponse {
   accessToken: string;
 }
+
+export const requestSignup = (memberInfo: Member): Promise<AxiosResponse> =>
+  axios.post(`/members`, memberInfo);
+
+export const requestEmailCheck = (email: string): Promise<AxiosResponse> =>
+  axios.post('/members/email-check', { email });
 
 export const requestLogin = (loginInfo: Member): Promise<AxiosResponse<LoginResponse>> =>
   axios.post(`/login/token`, loginInfo);

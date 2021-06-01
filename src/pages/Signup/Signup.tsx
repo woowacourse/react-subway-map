@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, FocusEventHandler, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { requestSignup } from '../../api/member';
+import { requestEmailCheck, requestSignup } from '../../api/member';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
@@ -31,7 +31,7 @@ const Signup: FC = () => {
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const history = useHistory();
 
-  const onChangeEmail = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = async ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setFormInput({ ...formInput, email: value });
 
     if (!isEmail(value)) {
@@ -40,7 +40,29 @@ const Signup: FC = () => {
       return;
     }
 
-    // TODO: 이메일 중복 확인
+    setErrorMessage({ ...errorMessage, email: '' });
+  };
+
+  const isDuplicatedEmail = async (email: string) => {
+    try {
+      await requestEmailCheck(email);
+
+      return false;
+    } catch (e) {
+      return true;
+    }
+  };
+
+  const onBlurEmail: FocusEventHandler<HTMLInputElement> = async ({ target: { value } }) => {
+    if (errorMessage.email !== '') {
+      return;
+    }
+
+    if (await isDuplicatedEmail(value)) {
+      setErrorMessage({ ...errorMessage, email: ERROR_MESSAGE.DUPLICATED_EMAIL });
+
+      return;
+    }
 
     setErrorMessage({ ...errorMessage, email: '' });
   };
@@ -157,6 +179,7 @@ const Signup: FC = () => {
           type="email"
           value={formInput.email}
           onChange={onChangeEmail}
+          onBlur={onBlurEmail}
           labelIcon={<Email />}
           placeholder="이메일을 입력해주세요."
           message={{ text: errorMessage.email, isError: true }}
