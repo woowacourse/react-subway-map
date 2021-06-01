@@ -102,8 +102,8 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             </SelectInput>
           </div>
           <Input
-            value={distance}
             onChange={handleDistance}
+            value={Number.isNaN(distance) ? '' : distance}
             type="number"
             title="거리"
             placeholder="거리를 입력해주세요"

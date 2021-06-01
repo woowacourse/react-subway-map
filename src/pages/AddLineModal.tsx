@@ -97,7 +97,7 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
           <div className="flex items-center justify-between mb-8">
             <Input
               onChange={handleDistance}
-              value={distance}
+              value={Number.isNaN(distance) ? '' : distance}
               type="number"
               title="거리"
               placeholder="거리를 입력해주세요"
