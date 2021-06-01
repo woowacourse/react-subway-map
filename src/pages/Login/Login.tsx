@@ -9,7 +9,7 @@ import Input from '../../components/@common/Input/Input';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import { login } from '../../redux/loginSlice';
+import { login } from '../../redux/slice/loginSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import {
   LoginButton,

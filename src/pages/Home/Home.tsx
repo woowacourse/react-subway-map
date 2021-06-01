@@ -5,8 +5,8 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { API_INFO } from '../../constants/api';
 import useInput from '../../hooks/@shared/useInput/useInput';
-import { changeOwner } from '../../redux/apiOwnerSlice';
-import { logout } from '../../redux/loginSlice';
+import { changeOwner } from '../../redux/slice/apiOwnerSlice';
+import { logout } from '../../redux/slice/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 

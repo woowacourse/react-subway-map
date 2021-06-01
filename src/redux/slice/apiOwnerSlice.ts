@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SESSION_STORAGE_KEY } from '../constants/storage';
-import { setSessionStorageItem } from '../util/sessionStorage';
-import { getApiOwner } from './../storage/service';
+import { SESSION_STORAGE_KEY } from '../../constants/storage';
+import { setSessionStorageItem } from '../../util/sessionStorage';
+import { getApiOwner } from '../../storage/service';
 
 export const apiOwnerSlice = createSlice({
   name: 'api',

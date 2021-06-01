@@ -12,7 +12,7 @@ import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/@shared/useModal/useModal';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
-import { deleteLine, loadLines } from '../../redux/lineSlice';
+import { deleteLine, loadLines } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
 

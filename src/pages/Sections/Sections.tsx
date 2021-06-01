@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -15,8 +15,8 @@ import PALETTE from '../../constants/palette';
 import useInput from '../../hooks/@shared/useInput/useInput';
 import useModal from '../../hooks/@shared/useModal/useModal';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
-import { loadLines } from '../../redux/lineSlice';
-import { loadStations } from '../../redux/stationSlice';
+import { loadLines } from '../../redux/slice/lineSlice';
+import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import { StationName } from '../Stations/Stations.styles';
@@ -72,13 +72,8 @@ const Sections: FC = () => {
   };
 
   useEffect(() => {
-    if (lines.length === 0) {
-      dispatch(loadLines());
-    }
-
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
+    dispatch(loadLines());
+    dispatch(loadStations());
   }, []);
 
   useUpdateEffect(() => {

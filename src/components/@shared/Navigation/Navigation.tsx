@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { PAGE_INFO } from '../../../constants/appInfo';
-import { logout } from '../../../redux/loginSlice';
+import { logout } from '../../../redux/slice/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../../redux/store';
 import { Page } from '../../../types';
 import StyledLink from '../StyledLink/StyledLink';

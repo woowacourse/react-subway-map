@@ -6,7 +6,7 @@ import { ERROR_MESSAGE } from '../../constants/message';
 import useInput from '../../hooks/@shared/useInput/useInput';
 import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
-import { loadLines } from '../../redux/lineSlice';
+import { loadLines } from '../../redux/slice/lineSlice';
 import { useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import Button from '../@common/Button/Button';

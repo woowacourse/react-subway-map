@@ -6,7 +6,7 @@ import { ERROR_MESSAGE } from '../../constants/message';
 import useInput from '../../hooks/@shared/useInput/useInput';
 import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
-import { modifyLine } from '../../redux/lineSlice';
+import { modifyLine } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';

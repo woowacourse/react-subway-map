@@ -11,7 +11,7 @@ import { ERROR_MESSAGE } from '../../constants/message';
 import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
-import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
+import { addStation, deleteStation, loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
@@ -60,9 +60,7 @@ const Stations: FC = () => {
   };
 
   useEffect(() => {
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
+    dispatch(loadStations());
   }, []);
 
   useUpdateEffect(() => {

@@ -6,9 +6,9 @@ import {
   requestDeleteLine,
   requestGetLines,
   requestModifyLine,
-} from '../api/lines';
-import { Line } from '../types';
-import { ErrorMessageResponse } from './store';
+} from '../../api/lines';
+import { Line } from '../../types';
+import { ErrorMessageResponse } from '../store';
 
 export const loadLines = createAsyncThunk<Line[], undefined, { rejectValue: ErrorMessageResponse }>(
   'line/load',
