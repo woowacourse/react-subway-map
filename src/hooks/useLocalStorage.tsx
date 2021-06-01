@@ -1,0 +1,27 @@
+/* Note: 현재는 사용하지 않는 코드로, 추후 삭제할 예정입니다. */
+import { useState } from 'react';
+
+const useLocalStorage = (key: string, initialValue = '') => {
+  const [storageValue, setStorageValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: unknown) => {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+      setStorageValue(value);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+  return [storageValue, setValue] as const;
+};
+
+export default useLocalStorage;
