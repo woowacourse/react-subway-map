@@ -1,38 +1,27 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { FC } from 'react';
 import { act } from 'react-dom/test-utils';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
 import { mockToken } from '../mocks/mockData';
-import { store } from '../state/store';
+import { beforeEachFn } from './common';
+import { Wrapper } from './common';
 
-beforeEach(() => {
-  window.alert = jest.fn();
-  jest.mock('react-router-dom', () => ({
-    useHistory: () => ({ push: jest.fn() }),
-  }));
-});
-
-interface useLoginProps {
-  children: React.ReactNode;
-}
-
-const wrapper: FC<useLoginProps> = ({ children }) => (
-  <Provider store={store}>
-    <BrowserRouter>{children}</BrowserRouter>
-  </Provider>
-);
+beforeEach(beforeEachFn);
 
 describe('useLogin', () => {
   test('사용자는 로그인 할 수 있다.', async () => {
     const { result, waitForNextUpdate } = renderHook(() => useLogin(), {
-      wrapper,
+      wrapper: Wrapper,
     });
 
     act(() => {
       result.current.setEmail('test@test.test');
+    });
+
+    act(() => {
       result.current.setPassword('test@test.test');
+    });
+
+    act(() => {
       result.current.login();
     });
 
@@ -41,13 +30,13 @@ describe('useLogin', () => {
     expect(result.current.accessToken).toBe(mockToken);
   });
 
-  test('사용자는 로그아웃 할 수 있다.', () => {
-    const { result } = renderHook(() => useLogin(), { wrapper });
+  // test('사용자는 로그아웃 할 수 있다.', () => {
+  //   const { result } = renderHook(() => useLogin(), { wrapper: Wrapper });
 
-    act(() => {
-      result.current.logout();
-    });
+  //   act(() => {
+  //     result.current.logout();
+  //   });
 
-    expect(result.current.accessToken).toBe('');
-  });
+  //   expect(result.current.accessToken).toBe('');
+  // });
 });

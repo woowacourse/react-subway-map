@@ -13,8 +13,6 @@ const useSignUp = () => {
     passwordForValidation: '',
   });
 
-  const [isFormValid, setIsFormValid] = useState(false);
-
   const { email, age, password, passwordForValidation } = form;
 
   const login = useLogin();
@@ -27,14 +25,11 @@ const useSignUp = () => {
 
   const isValidPasswordForValidation = password === passwordForValidation;
 
-  useEffect(() => {
-    setIsFormValid(
-      isValidEmail &&
-        isValidAge &&
-        isValidPassword &&
-        isValidPasswordForValidation
-    );
-  }, [isValidEmail, isValidAge, isValidPassword, isValidPasswordForValidation]);
+  const isFormValid =
+    isValidEmail &&
+    isValidAge &&
+    isValidPassword &&
+    isValidPasswordForValidation;
 
   const setEmail = (email: string) => {
     setForm({ ...form, email });
