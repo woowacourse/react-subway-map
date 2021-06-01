@@ -1,12 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
