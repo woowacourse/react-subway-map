@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 
-import { useCookie } from '../../hooks';
+import { useCookie, useRouter } from '../../hooks';
 import { login, clearLoginFail } from '../../redux/userSlice';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
@@ -13,7 +12,7 @@ import { LOGIN, ROUTE } from '../../constants';
 export const LoginPage = (props) => {
   const { endpoint } = props;
 
-  const history = useHistory();
+  const { goToHome, goToLogin } = useRouter();
   const dispatch = useDispatch();
   const { setAccessTokenInCookie } = useCookie();
   const { isLogin, isLoginFail, accessToken } = useSelector((store) => store.user);
@@ -24,9 +23,9 @@ export const LoginPage = (props) => {
     if (isLogin) {
       enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: 1500 });
       setAccessTokenInCookie(accessToken);
-      history.push(ROUTE.STATION);
+      goToHome();
     } else {
-      history.push(ROUTE.LOGIN);
+      goToLogin();
     }
 
     if (isLoginFail) {

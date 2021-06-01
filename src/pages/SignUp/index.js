@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { useRouter } from '../../hooks';
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
@@ -10,8 +10,8 @@ import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 export const SignUpPage = (props) => {
   const { endpoint } = props;
 
+  const { goToLogin } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
 
   const [emailMessage, setEmailMessage] = useState('');
   const [ageMessage, setAgeMessage] = useState('');
@@ -41,7 +41,7 @@ export const SignUpPage = (props) => {
 
         if (response.status === 201) {
           enqueueSnackbar(SIGN_UP.SUCCEED);
-          history.push(ROUTE.LOGIN);
+          goToLogin();
         } else {
           throw new Error();
         }
