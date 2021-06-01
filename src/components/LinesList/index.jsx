@@ -1,19 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
-import LineItems from "../LineItems";
+import { useSelector } from "react-redux";
+import { selectLinesList } from "../../pages/Lines/slice";
+import LinesItems from "../LinesItems";
 
-const LinesList = ({ lineList }) =>
-  lineList.length > 0 && (
-    <ul className="mt-4">
-      {[...lineList].reverse().map(({ id, name, color }) => (
-        <LineItems key={id} id={id} name={name} color={color} />
-      ))}
-    </ul>
+const LinesList = () => {
+  const lineList = useSelector(selectLinesList);
+
+  return (
+    lineList.length > 0 && (
+      <ul className="mt-4">
+        {[...lineList].reverse().map(({ id, name, color }) => (
+          <LinesItems key={id} id={id} name={name} color={color} />
+        ))}
+      </ul>
+    )
   );
-
-LinesList.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  lineList: PropTypes.arrayOf(LineItems.propTypes).isRequired,
 };
 
 export default LinesList;

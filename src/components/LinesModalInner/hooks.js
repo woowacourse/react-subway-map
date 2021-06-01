@@ -1,5 +1,5 @@
-import { useInput } from "../../components/@shared/Input/hooks";
-import { isValidDistance, isValidLineName } from "./validator";
+import { useInput } from "../@shared/Input/hooks";
+import { isValidDistance, isValidLineName } from "../../pages/Lines/validator";
 
 export const useLineNameInput = () =>
   useInput(isValidLineName, /[^ㄱ-ㅎㅏ-ㅣ가-힣0-9]/g);
