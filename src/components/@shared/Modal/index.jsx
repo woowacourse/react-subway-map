@@ -3,6 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ModalPortal from "../../Portal/ModalPortal";
+import Dimmer from "../Dimmer";
 
 const Modal = ({ isOpen, children, onClose }) => {
   const handleClick = (event) => {
@@ -16,13 +17,9 @@ const Modal = ({ isOpen, children, onClose }) => {
   return (
     isOpen && (
       <ModalPortal>
-        <div
-          role="dialog"
-          className="absolute left-0 top-0 flex items-center justify-center w-screen h-screen bg-black bg-opacity-40"
-          onClick={handleClick}
-        >
+        <Dimmer onClick={handleClick}>
           <div>{children}</div>
-        </div>
+        </Dimmer>
       </ModalPortal>
     )
   );
