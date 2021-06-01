@@ -14,7 +14,7 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Person from '../../components/@common/Icon/Person';
 import { API_INFO } from '../../constants/api';
-import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
+import { PAGE_INFO, SIGN_UP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
 import { RootState } from '../../redux/store';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
@@ -49,13 +49,13 @@ const Signup: FC = () => {
     setErrorMessage({ ...errorMessage, email: '' });
   };
 
-  const isDuplicatedEmail = async (email: string) => {
+  const checkDuplicatedEmail = async (email: string) => {
     try {
       await requestEmailCheck(email);
 
-      return false;
+      return '';
     } catch (e) {
-      return true;
+      return e.response?.data.errorMessage || ERROR_MESSAGE.DUPLICATED_EMAIL;
     }
   };
 
@@ -64,13 +64,8 @@ const Signup: FC = () => {
       return;
     }
 
-    if (await isDuplicatedEmail(value)) {
-      setErrorMessage({ ...errorMessage, email: ERROR_MESSAGE.DUPLICATED_EMAIL });
-
-      return;
-    }
-
-    setErrorMessage({ ...errorMessage, email: '' });
+    const checkMessage = await checkDuplicatedEmail(value);
+    setErrorMessage({ ...errorMessage, email: checkMessage });
   };
 
   const onChangeAge: ChangeEventHandler<HTMLInputElement> = ({ target: { valueAsNumber } }) => {
@@ -79,7 +74,7 @@ const Signup: FC = () => {
       age: String(valueAsNumber),
     });
 
-    if (valueAsNumber < SIGNUP.MIN_AGE || SIGNUP.MAX_AGE < valueAsNumber) {
+    if (valueAsNumber < SIGN_UP.MIN_AGE || SIGN_UP.MAX_AGE < valueAsNumber) {
       setErrorMessage({
         ...errorMessage,
         age: ERROR_MESSAGE.INVALID_RANGE_OF_AGE,
@@ -99,12 +94,8 @@ const Signup: FC = () => {
       ...formInput,
       password: value,
     });
-    setErrorMessage({
-      ...errorMessage,
-      password: '',
-    });
 
-    if (value.length < SIGNUP.PASSWORD_MIN_LENGTH || SIGNUP.PASSWORD_MAX_LENGTH < value.length) {
+    if (value.length < SIGN_UP.PASSWORD_MIN_LENGTH || SIGN_UP.PASSWORD_MAX_LENGTH < value.length) {
       setErrorMessage({
         ...errorMessage,
         password: ERROR_MESSAGE.INVALID_RANGE_OF_PASSWORD,
@@ -117,7 +108,14 @@ const Signup: FC = () => {
         ...errorMessage,
         password: ERROR_MESSAGE.INVALID_PASSWORD,
       });
+
+      return;
     }
+
+    setErrorMessage({
+      ...errorMessage,
+      password: '',
+    });
   };
 
   const onChangePasswordConfirm: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -187,7 +185,7 @@ const Signup: FC = () => {
           onChange={onChangeEmail}
           onBlur={onBlurEmail}
           labelIcon={<Email />}
-          placeholder="이메일을 입력해주세요."
+          placeholder={SIGN_UP.EMAIL_PLACEHOLDER}
           message={{ text: errorMessage.email, isError: true }}
           required
         />
@@ -196,9 +194,9 @@ const Signup: FC = () => {
           value={formInput.age}
           onChange={onChangeAge}
           labelIcon={<Person />}
-          placeholder="나이를 입력해주세요."
-          min={SIGNUP.MIN_AGE}
-          max={SIGNUP.MAX_AGE}
+          placeholder={SIGN_UP.AGE_PLACEHOLDER}
+          min={SIGN_UP.MIN_AGE}
+          max={SIGN_UP.MAX_AGE}
           message={{ text: errorMessage.age, isError: true }}
           required
         />
@@ -207,9 +205,9 @@ const Signup: FC = () => {
           value={formInput.password}
           onChange={onChangePassword}
           labelIcon={<Lock />}
-          placeholder="비밀번호를 입력해주세요."
-          minLength={SIGNUP.PASSWORD_MIN_LENGTH}
-          maxLength={SIGNUP.PASSWORD_MAX_LENGTH}
+          placeholder={SIGN_UP.PASSWORD_PLACEHOLDER}
+          minLength={SIGN_UP.PASSWORD_MIN_LENGTH}
+          maxLength={SIGN_UP.PASSWORD_MAX_LENGTH}
           message={{ text: errorMessage.password, isError: true }}
           required
         />
@@ -219,9 +217,9 @@ const Signup: FC = () => {
           onChange={onChangePasswordConfirm}
           message={{ text: errorMessage.passwordConfirm, isError: true }}
           labelIcon={<Lock />}
-          placeholder="비밀번호를 한번 더 입력해주세요."
-          minLength={SIGNUP.PASSWORD_MIN_LENGTH}
-          maxLength={SIGNUP.PASSWORD_MAX_LENGTH}
+          placeholder={SIGN_UP.PASSWORD_CONFIRM_PLACEHOLDER}
+          minLength={SIGN_UP.PASSWORD_MIN_LENGTH}
+          maxLength={SIGN_UP.PASSWORD_MAX_LENGTH}
           required
         />
         <SignupButton isColored={true} disabled={!isReadyToSubmit}>

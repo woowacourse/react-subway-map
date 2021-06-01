@@ -1,10 +1,10 @@
-import { SIGNUP } from './appInfo';
+import { SIGN_UP } from './appInfo';
 
 export const ERROR_MESSAGE = {
   INVALID_EMAIL: '이메일 형식이 아닙니다.',
   DUPLICATED_EMAIL: '이미 존재하는 이메일입니다.',
-  INVALID_RANGE_OF_AGE: `나이는 ${SIGNUP.MIN_AGE}이상, ${SIGNUP.MAX_AGE}이하의 값만 가능합니다`,
-  INVALID_RANGE_OF_PASSWORD: `비밀번호의 길이는 ${SIGNUP.PASSWORD_MIN_LENGTH}자 이상, ${SIGNUP.PASSWORD_MAX_LENGTH}자 이하여야 합니다.`,
+  INVALID_RANGE_OF_AGE: `나이는 ${SIGN_UP.MIN_AGE}이상, ${SIGN_UP.MAX_AGE}이하의 값만 가능합니다`,
+  INVALID_RANGE_OF_PASSWORD: `비밀번호의 길이는 ${SIGN_UP.PASSWORD_MIN_LENGTH}자 이상, ${SIGN_UP.PASSWORD_MAX_LENGTH}자 이하여야 합니다.`,
   INVALID_PASSWORD: `비밀번호는 공백 없이 영어와 숫자만으로 구성되어야 합니다.`,
   INVALID_SIGNUP_INPUT: '유효하지 않은 입력값이 존재합니다. 입력값을 확인해주세요.',
   PASSWORD_CONFIRM_FAILURE: '비밀번호와 동일하지 않습니다. 비밀번호를 확인해주세요.',

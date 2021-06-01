@@ -34,6 +34,17 @@ export const COMMON_NAV_LIST = [PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.S
 
 export const THEME_COLOR: Color = PALETTE.YELLOW;
 
+export const SIGN_UP = {
+  MIN_AGE: 1,
+  MAX_AGE: 150,
+  PASSWORD_MIN_LENGTH: 4,
+  PASSWORD_MAX_LENGTH: 20,
+  EMAIL_PLACEHOLDER: '이메일을 입력해주세요.',
+  AGE_PLACEHOLDER: '나이를 입력해주세요.',
+  PASSWORD_PLACEHOLDER: '비밀번호를 입력해주세요.',
+  PASSWORD_CONFIRM_PLACEHOLDER: '비밀번호를 한번 더 입력해주세요.',
+};
+
 export const LINE_COLORS: string[] = [
   PALETTE.RED[400],
   PALETTE.ORANGE[400],
@@ -70,11 +81,4 @@ export const SECTION = {
   DISTANCE_LABEL_TEXT: '거리',
   LINE_SELECT_TEXT: '노선을 선택해주세요',
   ADD_MODAL_TITLE: '구간 추가',
-};
-
-export const SIGNUP = {
-  MIN_AGE: 1,
-  MAX_AGE: 150,
-  PASSWORD_MIN_LENGTH: 4,
-  PASSWORD_MAX_LENGTH: 20,
 };

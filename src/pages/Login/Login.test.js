@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { customRender } from '../../test-utils';
 
@@ -36,6 +36,6 @@ describe('Login', () => {
       });
     });
 
-    expect(requestLogin).toBeCalled();
+    await waitFor(() => expect(requestLogin).toBeCalled());
   });
 });
