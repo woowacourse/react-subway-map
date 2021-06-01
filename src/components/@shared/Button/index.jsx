@@ -50,9 +50,15 @@ Button.propTypes = {
   disabled: PropTypes.bool.isRequired,
   size: PropTypes.oneOf(Object.keys(SIZE_STYLE)).isRequired,
   theme: PropTypes.oneOf(Object.keys(THEME_STYLE)).isRequired,
-  onClick: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  name: PropTypes.string,
+  value: PropTypes.number,
+};
+
+Button.defaultProps = {
+  onClick: null,
+  name: null,
+  value: null,
 };
 
 export default Button;

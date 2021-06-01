@@ -54,9 +54,9 @@ const Stations = () => {
   };
 
   const handleDeleteClick = (event) => {
-    const { name: id, value } = event.target;
+    const { name, value: id } = event.target;
 
-    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
+    if (window.confirm(`${name}를 삭제하시겠습니까?`)) {
       dispatch(deleteStationById(id));
     }
   };
@@ -106,8 +106,8 @@ const Stations = () => {
                     size="auto"
                     theme="icon"
                     onClick={handleDeleteClick}
-                    name={id}
-                    value={name}
+                    name={name}
+                    value={id}
                   >
                     🗑
                   </Button>

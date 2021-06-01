@@ -11,7 +11,7 @@ import Select from "../../components/@shared/Select";
 import Button from "../../components/@shared/Button";
 import Loading from "../../components/@shared/Loading";
 import FloatingLabelInput from "../../components/@shared/FloatingLabelInput";
-import { useDistanceInput } from "../Lines/hooks";
+import { useDistanceInput } from "../../components/LinesModalInner/hooks";
 import {
   addSection,
   fetchLines,
@@ -101,9 +101,9 @@ const Sections = () => {
   };
 
   const handleDeleteClick = async (event) => {
-    const { name: stationId, value } = event.target;
+    const { name: stationName, value: stationId } = event.target;
 
-    if (window.confirm(`${value}를 삭제하시겠습니까?`)) {
+    if (window.confirm(`${stationName}를 삭제하시겠습니까?`)) {
       await dispatch(deleteSection({ lineId, stationId }));
       await dispatch(fetchLinesDetail());
     }
@@ -171,8 +171,8 @@ const Sections = () => {
                       size="auto"
                       theme="icon"
                       onClick={handleDeleteClick}
-                      name={id}
-                      value={name}
+                      name={name}
+                      value={id}
                     >
                       🗑
                     </Button>
