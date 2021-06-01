@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { useInput } from "../@shared/Input/hooks";
 import { addLine } from "../../pages/Lines/slice";
-import { selectStationsList } from "../../pages/Stations/slice";
+import { selectStationList } from "../../pages/Stations/slice";
 import FloatingLabelInput from "../@shared/FloatingLabelInput";
 import ColorSelect from "../ColorSelect";
 import Select from "../@shared/Select";
@@ -13,7 +13,7 @@ import { useDistanceInput, useLineNameInput } from "./hooks";
 
 const LinesModalInner = ({ onClose }) => {
   const dispatch = useDispatch();
-  const stationList = useSelector(selectStationsList);
+  const stationList = useSelector(selectStationList);
 
   const [lineName, handleLineNameChange, isValidLineName] = useLineNameInput();
   const [upStationId, handleUpStationIdChange] = useInput();

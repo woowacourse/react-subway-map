@@ -9,7 +9,7 @@ import { useStationName } from "./hooks";
 import {
   selectStationsStatus,
   selectStationsMessage,
-  selectStationsList,
+  selectStationList,
   addStation,
   fetchStations,
   deleteStationById,
@@ -20,7 +20,7 @@ const Stations = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectStationsStatus);
   const message = useSelector(selectStationsMessage);
-  const list = useSelector(selectStationsList);
+  const list = useSelector(selectStationList);
   const [
     stationName,
     handleStationNameChange,

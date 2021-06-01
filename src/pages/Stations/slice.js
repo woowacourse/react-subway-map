@@ -12,7 +12,7 @@ import { selectAccessToken } from "../Login/slice";
 
 export const selectStationsStatus = (state) => state.stations.status;
 export const selectStationsMessage = (state) => state.stations.message;
-export const selectStationsList = (state) => state.stations.list;
+export const selectStationList = (state) => state.stations.list;
 
 export const addStation = createAsyncThunk(
   "stations/addStation",
