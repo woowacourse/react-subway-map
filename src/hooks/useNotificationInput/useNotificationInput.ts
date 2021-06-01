@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, useState } from 'react';
-import { BaseInputElement, SetText } from '../../../types';
+import { BaseInputElement, SetText } from '../../types';
 import useUpdateEffect from '../useUpdateEffect/useUpdateEffect';
 
 interface OnChangeTool {

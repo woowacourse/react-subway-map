@@ -5,7 +5,7 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { API_INFO } from '../../constants/api';
 import { HOME } from '../../constants/appInfo';
-import useInput from '../../hooks/@shared/useInput/useInput';
+import useInput from '../../hooks/useInput/useInput';
 import { changeOwner } from '../../redux/slice/apiOwnerSlice';
 import { logout } from '../../redux/slice/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';

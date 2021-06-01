@@ -4,9 +4,9 @@ import { requestAddSection } from '../../api/lines';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useInput from '../../hooks/@shared/useInput/useInput';
-import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
-import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
+import useInput from '../../hooks/useInput/useInput';
+import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
 import { loadLines } from '../../redux/slice/lineSlice';
 import { useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
@@ -120,7 +120,7 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
           <Button onClick={onClose} type="button" isColored={false}>
             {LABEL_TEXT.CANCEL}
           </Button>
-          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.DISTANCE}</Button>
+          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.CONFIRM}</Button>
         </SectionModalButtonContainer>
       </SectionForm>
     </Modal>

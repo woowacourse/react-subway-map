@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useInput from '../../hooks/@shared/useInput/useInput';
-import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
-import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
+import useInput from '../../hooks/useInput/useInput';
+import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
 import { modifyLine } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
@@ -114,7 +114,7 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
           <Button type="button" isColored={false} onClick={onClose}>
             {LABEL_TEXT.CANCEL}
           </Button>
-          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.ADD_LINE}</Button>
+          <Button disabled={!isReadyToSubmit}>{LABEL_TEXT.CONFIRM}</Button>
         </LineModalButtonContainer>
       </LineForm>
     </Modal>
