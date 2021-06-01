@@ -74,7 +74,18 @@ export const MenuItem = styled.li`
     }
   }
 
-  &:hover ::after {
+  & > a::after {
+    content: '';
+    position: absolute;
+    left: 0.1rem;
+    bottom: 0;
+    width: 100%;
+    height: 0.3rem;
+
+    background-color: transparent;
+  }
+
+  &:hover > a::after {
     @keyframes lining {
       0% {
         width: 0%;
@@ -83,15 +94,11 @@ export const MenuItem = styled.li`
         width: 100%;
       }
     }
-
-    content: '';
-    position: absolute;
-    left: 0.1rem;
-    bottom: 0;
-    width: 100%;
-    height: 0.3rem;
-
     background-color: ${COLOR.TEXT.NAVBAR};
     animation: lining 0.1s ease-out;
+  }
+
+  & > a.selected::after {
+    background-color: ${COLOR.TEXT.NAVBAR};
   }
 `;

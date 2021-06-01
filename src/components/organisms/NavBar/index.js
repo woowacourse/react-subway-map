@@ -39,13 +39,13 @@ export const NavBar = (props) => {
         {/* TODO: 전체보기 기능, 경로탐색 기능 2단계에서 추가 */}
         <MenuList style={{ visibility: 'hidden' }}>
           <MenuItem>
-            <NavLink to={ROUTE.MAP}>
+            <NavLink activeClassName="selected" to={ROUTE.MAP}>
               <IconWindow />
               전체보기
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={ROUTE.SEARCH}>
+            <NavLink activeClassName="selected" to={ROUTE.SEARCH}>
               <IconSearch />
               경로탐색
             </NavLink>
@@ -55,19 +55,19 @@ export const NavBar = (props) => {
         {isLogin && (
           <MenuList>
             <MenuItem>
-              <NavLink to={ROUTE.STATION}>
+              <NavLink activeClassName="selected" to={ROUTE.STATION}>
                 <IconSetting />
                 역관리
               </NavLink>
             </MenuItem>
             <MenuItem>
-              <NavLink to={ROUTE.LINE}>
+              <NavLink activeClassName="selected" to={ROUTE.LINE}>
                 <IconSetting />
                 노선관리
               </NavLink>
             </MenuItem>
             <MenuItem>
-              <NavLink to={ROUTE.SECTION}>
+              <NavLink activeClassName="selected" to={ROUTE.SECTION}>
                 <IconSetting />
                 구간관리
               </NavLink>
@@ -83,7 +83,7 @@ export const NavBar = (props) => {
                 로그아웃
               </Button>
             ) : (
-              <NavLink to={ROUTE.LOGIN}>
+              <NavLink activeClassName="selected" to={ROUTE.LOGIN}>
                 <IconPerson />
                 로그인
               </NavLink>
