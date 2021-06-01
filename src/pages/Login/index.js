@@ -3,20 +3,19 @@ import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { useCookies } from 'react-cookie';
 
+import { useCookie } from '../../hooks';
 import { login, clearLoginFail } from '../../redux/userSlice';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
-import { LOGIN, ROUTE, ACCESS_TOKEN } from '../../constants';
+import { LOGIN, ROUTE } from '../../constants';
 
 export const LoginPage = (props) => {
   const { endpoint } = props;
 
   const history = useHistory();
   const dispatch = useDispatch();
-  /* eslint-disable-next-line no-unused-vars */
-  const [cookies, setCookie] = useCookies([ACCESS_TOKEN]);
+  const { setAccessTokenInCookie } = useCookie();
   const { isLogin, isLoginFail, accessToken } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -24,7 +23,7 @@ export const LoginPage = (props) => {
   useEffect(() => {
     if (isLogin) {
       enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: 1500 });
-      setCookie(ACCESS_TOKEN, accessToken);
+      setAccessTokenInCookie(accessToken);
       history.push(ROUTE.STATION);
     } else {
       history.push(ROUTE.LOGIN);
