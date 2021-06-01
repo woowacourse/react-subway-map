@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useInput from '../../hooks/@shared/useInput/useInput';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -37,43 +39,49 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
     return line.stations.find((station) => station.id === targetId) ? true : false;
   };
 
-  useUpdateEffect(() => {
-    let numberOfStationAddedInLine = 0;
-
-    if (isStationInLine(Number(formInput.upStationId))) {
-      numberOfStationAddedInLine++;
-    }
-
-    if (isStationInLine(Number(formInput.downStationId))) {
-      numberOfStationAddedInLine++;
-    }
-
-    if (numberOfStationAddedInLine !== 1) {
-      setValidationErrorMessage({
-        section: ERROR_MESSAGE.SHOULD_CONTAIN_ONE_STATION_IN_LINE,
-      });
-      return;
-    }
-
-    if (formInput.upStationId === '' || formInput.downStationId === '') {
-      setValidationErrorMessage({
-        ...validationErrorMessage,
-        section: ERROR_MESSAGE.NONE_OF_SELECTED_SECTION,
-      });
-      return;
-    }
-
-    setValidationErrorMessage({
-      section: '',
-    });
-  }, [formInput.upStationId, formInput.downStationId]);
-
   const onChangeStations: OnChangeSectionSelectBoxHandler = (type) => ({ target: { value } }) => {
     setFormInput({
       ...formInput,
       [type]: value,
     });
   };
+
+  const [downStationIdInput, onChangeDownStationId] = useInput<HTMLSelectElement>(
+    ({ setInput, targetValue }) => {
+      setInput(targetValue);
+    }
+  );
+
+  const [
+    upStationIdInput,
+    sectionErrorMessage,
+    onChangeUpStationId,
+  ] = useNotificationInput<HTMLSelectElement>(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      let numberOfStationAddedInLine = 0;
+
+      if (isStationInLine(Number(targetValue))) {
+        numberOfStationAddedInLine++;
+      }
+
+      if (isStationInLine(Number(downStationIdInput))) {
+        numberOfStationAddedInLine++;
+      }
+
+      if (numberOfStationAddedInLine !== 1) {
+        setErrorMessage(ERROR_MESSAGE.SHOULD_CONTAIN_ONE_STATION_IN_LINE);
+        return;
+      }
+
+      if (targetValue === '' || downStationIdInput === '') {
+        setErrorMessage(ERROR_MESSAGE.NONE_OF_SELECTED_SECTION);
+        return;
+      }
+
+      setErrorMessage('');
+    },
+    [downStationIdInput]
+  );
 
   const onChangeDistance: ChangeEventHandler<HTMLInputElement> = ({
     target: { valueAsNumber },
@@ -108,9 +116,8 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
       <SectionForm onSubmit={onAddSection}>
         <Input labelText="노선선택" value={line.name} disabled={true} />
         <SectionSelectBox
-          onChange={onChangeStations}
-          upStationOptions={stations}
-          downStationOptions={stations}
+          onChangeUpStation={onChangeUpStationId}
+          onChangeDownStation={onChangeDownStationId}
           errorMessage={validationErrorMessage.section}
         />
         <Input

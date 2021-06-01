@@ -27,3 +27,9 @@ export interface Member {
   age?: number;
   password: string;
 }
+
+export type SetText = (text: string) => void;
+
+export interface BaseInputElement {
+  value: string;
+}

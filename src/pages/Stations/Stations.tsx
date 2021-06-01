@@ -22,6 +22,21 @@ const Stations: FC = () => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (stations.length === 0) {
+      dispatch(loadStations());
+    }
+  }, []);
+
+  useUpdateEffect(() => {
+    if (errorMessage === '') {
+      return;
+    }
+
+    alert(errorMessage);
+  }, [errorMessage]);
+
   const [
     stationInput,
     stationErrorMessage,
@@ -40,21 +55,8 @@ const Stations: FC = () => {
 
     setInput(targetValue);
   });
+
   const isValidStationInput = useReadyToSubmit([stationInput], [stationErrorMessage]);
-
-  useEffect(() => {
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
-  }, []);
-
-  useUpdateEffect(() => {
-    if (errorMessage === '') {
-      return;
-    }
-
-    alert(errorMessage);
-  }, [errorMessage]);
 
   const onAddStation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

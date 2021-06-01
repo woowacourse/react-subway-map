@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {
+  ChangeEvent,
   ChangeEventHandler,
   FC,
   FormEventHandler,
@@ -10,6 +11,9 @@ import React, {
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useInput from '../../hooks/@shared/useInput/useInput';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addLine } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
@@ -49,6 +53,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);
   const dispatch = useAppDispatch();
 
+  //TODO: 에러메세지 리팩터링
   useEffect(() => {
     if (errorMessage === '') {
       return;
@@ -57,108 +62,86 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     alert(errorMessage);
   });
 
-  const [formInput, setFormInput] = useState<FormInput>({
-    name: '',
-    upStationId: '',
-    downStationId: '',
-    distance: SECTION.MIN_DISTANCE,
-    color: '',
-  });
-  const [validationErrorMessage, setValidationErrorMessage] = useState<ErrorMessage>({
-    name: '',
-    section: '',
-    distance: '',
-  });
-
   useEffect(() => {
     if (stations.length === 0) {
       dispatch(loadStations());
     }
   }, []);
 
-  useUpdateEffect(() => {
-    if (formInput.upStationId === '' || formInput.downStationId === '') {
-      setValidationErrorMessage({
-        ...validationErrorMessage,
-        section: ERROR_MESSAGE.NONE_OF_SELECTED_SECTION,
-      });
-      return;
-    }
-
-    if (formInput.upStationId === formInput.downStationId) {
-      setValidationErrorMessage({
-        ...validationErrorMessage,
-        section: ERROR_MESSAGE.DUPLICATED_SECTION,
-      });
-      return;
-    }
-
-    setValidationErrorMessage({
-      ...validationErrorMessage,
-      section: '',
-    });
-  }, [formInput.upStationId, formInput.downStationId]);
-
   const isUsedLineColor = (color: string): boolean => usedLineColors.includes(color);
 
-  const onChangeName: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    if (value.length >= 2 && isKoreanAndNumber(value)) {
-      setValidationErrorMessage({
-        ...validationErrorMessage,
-        name: '',
-      });
-    } else {
-      setValidationErrorMessage({
-        ...validationErrorMessage,
-        name: ERROR_MESSAGE.INVALID_LINE_NAME,
-      });
+  const [nameInput, nameErrorMessage, onChangeName] = useNotificationInput(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      if (targetValue.length >= 2 && isKoreanAndNumber(targetValue)) {
+        setErrorMessage('');
+      } else {
+        setErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
+      }
+
+      setInput(targetValue);
     }
+  );
 
-    setFormInput({
-      ...formInput,
-      name: value,
-    });
-  };
+  const [downStationIdInput, onChangeDownStationId] = useInput<HTMLSelectElement>(
+    ({ setInput, targetValue }) => {
+      setInput(targetValue);
+    }
+  );
 
-  const onChangeStations: OnChangeSectionSelectBoxHandler = (type) => ({ target: { value } }) => {
-    setFormInput({
-      ...formInput,
-      [type]: value,
-    });
-  };
+  const [
+    upStationIdInput,
+    sectionErrorMessage,
+    onChangeUpStationId,
+  ] = useNotificationInput<HTMLSelectElement>(
+    ({ setInput, setErrorMessage, targetValue }) => {
+      setInput(targetValue);
 
-  const onChangeDistance: ChangeEventHandler<HTMLInputElement> = ({
-    target: { valueAsNumber },
-  }) => {
-    setFormInput({
-      ...formInput,
-      distance: valueAsNumber,
-    });
-  };
+      if (targetValue === '' || downStationIdInput === '') {
+        setErrorMessage(ERROR_MESSAGE.NONE_OF_SELECTED_SECTION);
+        return;
+      }
 
-  const onChangeLineColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    setFormInput({ ...formInput, color: value });
-  };
+      if (targetValue === downStationIdInput) {
+        setErrorMessage(ERROR_MESSAGE.DUPLICATED_SECTION);
+        return;
+      }
+
+      setErrorMessage('');
+    },
+    [downStationIdInput]
+  );
+
+  const [distanceInput, onChangeDistance] = useInput(({ setInput, targetValue }) => {
+    setInput(targetValue);
+  });
+
+  const [colorInput, onChangeColor] = useInput(({ setInput, targetValue }) => {
+    setInput(targetValue);
+  });
+
+  const isReadyToSubmit = useReadyToSubmit(
+    [nameInput, upStationIdInput, downStationIdInput, distanceInput, colorInput],
+    [nameErrorMessage, sectionErrorMessage]
+  );
 
   const onAddLine: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    if (
-      Object.values(validationErrorMessage).some((message) => message !== '') ||
-      Object.values(formInput).some((value) => !value)
-    ) {
+    if (!isReadyToSubmit) {
       alert(ERROR_MESSAGE.INCOMPLETE_FORM);
 
       return;
     }
 
-    dispatch(
-      addLine({
-        ...formInput,
-        upStationId: Number(formInput.upStationId),
-        downStationId: Number(formInput.downStationId),
-      })
-    );
+    const line = {
+      name: nameInput,
+      upStationId: Number(upStationIdInput),
+      downStationId: Number(downStationIdInput),
+      distance: Number(distanceInput),
+      color: colorInput,
+    };
+
+    dispatch(addLine(line));
 
     onClose();
   };
@@ -167,9 +150,9 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     <Modal titleText={LINE.ADD_MODAL_TITLE} onClose={onClose}>
       <LineForm onSubmit={onAddLine}>
         <NotificationInput
+          value={nameInput}
           onChange={onChangeName}
-          value={formInput.name}
-          message={{ text: validationErrorMessage.name, isError: true }}
+          message={{ text: nameErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
           labelText={LINE.NAME_LABEL_TEXT}
@@ -177,13 +160,12 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           required
         />
         <SectionSelectBox
-          onChange={onChangeStations}
-          upStationOptions={stations}
-          downStationOptions={stations}
-          errorMessage={validationErrorMessage.section}
+          onChangeUpStation={onChangeUpStationId}
+          onChangeDownStation={onChangeDownStationId}
+          errorMessage={sectionErrorMessage}
         />
         <Input
-          value={formInput.distance}
+          value={distanceInput}
           onChange={onChangeDistance}
           type="number"
           min={SECTION.MIN_DISTANCE}
@@ -196,11 +178,11 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
             <ColorRadio
               key={color}
               value={color}
-              checked={color === formInput.color}
+              checked={color === colorInput}
+              onChange={onChangeColor}
               radioColor={color}
               groupName={LINE.COLOR_SELECT_NAME}
               disabled={isUsedLineColor(color)}
-              onChange={onChangeLineColor}
               labelText={{
                 text: '노선 색상 선택 라디오버튼',
                 isVisible: false,
@@ -213,7 +195,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
           <Button type="button" isColored={false} onClick={onClose}>
             취소
           </Button>
-          <Button>확인</Button>
+          <Button disabled={!isReadyToSubmit}>확인</Button>
         </LineModalButtonContainer>
       </LineForm>
     </Modal>

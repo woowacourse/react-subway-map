@@ -3,10 +3,10 @@ import { Line } from '../types';
 
 export interface AddLineRequestData {
   name: string;
-  color: string;
   upStationId: number;
   downStationId: number;
   distance: number;
+  color: string;
 }
 
 export interface ModifyLineRequestData {

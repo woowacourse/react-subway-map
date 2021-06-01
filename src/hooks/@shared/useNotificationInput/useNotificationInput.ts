@@ -1,44 +1,34 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-
-type SetMessage = (message: string) => void;
+import { BaseInputElement, SetText } from '../../../types';
+import useUpdateEffect from '../useUpdateEffect/useUpdateEffect';
 
 interface OnChangeTool {
-  setInput: SetMessage;
-  setErrorMessage: SetMessage;
+  setInput: SetText;
+  setErrorMessage: SetText;
   targetValue: string;
 }
 
 type CustomOnChange = (onChangeTool: OnChangeTool) => void;
 
-type UseNotificationInput = (
+const useNotificationInput = <T extends BaseInputElement = HTMLInputElement>(
   customOnChange: CustomOnChange,
   onChangeAdditionalDependencyList?: React.DependencyList | undefined
-) => [
-  string,
-  string,
-  ChangeEventHandler<HTMLInputElement>,
-  React.Dispatch<React.SetStateAction<string>>
-];
-
-const useNotificationInput: UseNotificationInput = (
-  customOnChange,
-  onChangeAdditionalDependencyList
-) => {
+): [string, string, ChangeEventHandler<T>, React.Dispatch<React.SetStateAction<string>>] => {
   const [input, setInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
+  const onChange: ChangeEventHandler<T> = ({ target }) => {
     const onChangeTool = {
       setInput,
       setErrorMessage,
-      targetValue: value,
+      targetValue: target.value,
     };
 
     const boundOnChange = customOnChange.bind(null, onChangeTool);
     boundOnChange();
   };
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (!onChangeAdditionalDependencyList) {
       return;
     }

@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, FC } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import { Station } from '../../../types';
 import Arrow from '../../@common/Icon/Arrow';
 import SelectBox from '../../@common/SelectBox/SelectBox';
@@ -15,37 +17,32 @@ export type OnChangeSectionSelectBoxHandler = (
 ) => (event: ChangeEvent<HTMLSelectElement>) => void;
 
 export interface Props {
-  onChange: OnChangeSectionSelectBoxHandler;
+  onChangeUpStation: ChangeEventHandler<HTMLSelectElement>;
+  onChangeDownStation: ChangeEventHandler<HTMLSelectElement>;
   errorMessage?: string;
-  upStationOptions: Station[];
-  downStationOptions: Station[];
 }
 
-const SectionSelectBox: FC<Props> = ({
-  onChange,
-  errorMessage,
-  upStationOptions,
-  downStationOptions,
-}) => {
+const SectionSelectBox: FC<Props> = ({ onChangeUpStation, onChangeDownStation, errorMessage }) => {
+  const { stations } = useSelector((state: RootState) => state.station);
+
   return (
     <SectionSelectBoxContainer direction="column">
       <StationsSelectContainer alignItems="center" justifyContent="space-between">
         <SectionHiddenLabel labelText="상행역 선택 콤보박스">
-          <SelectBox onChange={onChange('upStationId')}>
+          <SelectBox onChange={onChangeUpStation}>
             <option value="">역을 선택하세요</option>
-            {upStationOptions.map((station) => (
+            {stations.map((station) => (
               <option key={station.id} value={station.id}>
                 {station.name}
               </option>
             ))}
           </SelectBox>
         </SectionHiddenLabel>
-
         <Arrow />
         <SectionHiddenLabel labelText="하행역 선택 콤보박스">
-          <SelectBox onChange={onChange('downStationId')}>
+          <SelectBox onChange={onChangeDownStation}>
             <option value="">역을 선택하세요</option>
-            {downStationOptions.map((station) => (
+            {stations.map((station) => (
               <option key={station.id} value={station.id}>
                 {station.name}
               </option>
@@ -59,10 +56,9 @@ const SectionSelectBox: FC<Props> = ({
 };
 
 SectionSelectBox.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onChangeUpStation: PropTypes.func.isRequired,
+  onChangeDownStation: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
-  upStationOptions: PropTypes.array.isRequired,
-  downStationOptions: PropTypes.array.isRequired,
 };
 
 export default SectionSelectBox;

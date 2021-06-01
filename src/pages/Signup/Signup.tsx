@@ -18,6 +18,7 @@ import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styl
 const Signup: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const history = useHistory();
+
   const [emailInput, emailErrorMessage, onChangeEmail] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
@@ -31,6 +32,7 @@ const Signup: FC = () => {
       setErrorMessage('');
     }
   );
+
   const [ageInput, ageErrorMessage, onChangeAge] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
@@ -46,6 +48,7 @@ const Signup: FC = () => {
       setErrorMessage('');
     }
   );
+
   const [passwordInput, passwordErrorMessage, onChangePassword] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
@@ -64,6 +67,7 @@ const Signup: FC = () => {
       }
     }
   );
+
   const [
     passwordConfirmInput,
     passwordConfirmErrorMessage,
@@ -81,6 +85,7 @@ const Signup: FC = () => {
     },
     [passwordInput]
   );
+
   const isReadyToSubmit = useReadyToSubmit(
     [emailInput, ageInput, passwordInput, passwordConfirmInput],
     [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage]
