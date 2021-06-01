@@ -20,9 +20,9 @@ const Stations: FC = () => {
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
-  const [stationInput, setStationInput] = useState('');
+  const [formInput, setFormInput] = useState('');
   const [validationErrorMessage, setValidationErrorMessage] = useState('');
-  const isValidStationInput = stationInput !== '' && validationErrorMessage === '';
+  const isValidStationInput = formInput !== '' && validationErrorMessage === '';
 
   useEffect(() => {
     if (stations.length === 0) {
@@ -49,14 +49,14 @@ const Stations: FC = () => {
       setValidationErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
     }
 
-    setStationInput(value);
+    setFormInput(value);
   };
 
   const onAddStation: FormEventHandler = (event) => {
     event.preventDefault();
 
-    dispatch(addStation(stationInput));
-    setStationInput('');
+    dispatch(addStation(formInput));
+    setFormInput('');
   };
 
   const onDeleteStation = (stationId: number) => () => {
@@ -72,7 +72,7 @@ const Stations: FC = () => {
         <>
           <StationForm onSubmit={onAddStation}>
             <StationNameInput
-              value={stationInput}
+              value={formInput}
               onChange={onChangeStationInput}
               labelIcon={<Subway />}
               minLength={STATION.NAME_MIN_LENGTH}
