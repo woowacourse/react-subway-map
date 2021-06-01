@@ -13,7 +13,6 @@ interface Props {
   onDelete?: () => void;
 }
 
-// TODO: 컴포넌트 이름 변경 고려하기
 const ListItem: FC<Props> = ({ children, onModify, onDelete }) => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 
