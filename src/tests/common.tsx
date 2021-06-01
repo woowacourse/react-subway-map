@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from '../state/store';
@@ -7,10 +8,14 @@ interface WrapperProps {
   children: React.ReactNode;
 }
 
+const queryClient = new QueryClient();
+
 export const Wrapper: FC<WrapperProps> = ({ children }) => {
   return (
     <Provider store={store}>
-      <BrowserRouter>{children}</BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </QueryClientProvider>
     </Provider>
   );
 };

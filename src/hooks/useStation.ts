@@ -71,12 +71,15 @@ const useStation = () => {
 
   const isAddStationError = addMutation.error;
 
+  const isAddStationSuccess = addMutation.isSuccess;
+
   return {
     stations,
     name,
     setName,
     addStation,
     isAddStationError,
+    isAddStationSuccess,
     deleteStation,
     isValidName,
   };
