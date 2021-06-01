@@ -13,7 +13,12 @@ type CustomOnChange = (onChangeTool: OnChangeTool) => void;
 type UseNotificationInput = (
   customOnChange: CustomOnChange,
   onChangeAdditionalDependencyList?: React.DependencyList | undefined
-) => [string, string, ChangeEventHandler<HTMLInputElement>];
+) => [
+  string,
+  string,
+  ChangeEventHandler<HTMLInputElement>,
+  React.Dispatch<React.SetStateAction<string>>
+];
 
 const useNotificationInput: UseNotificationInput = (
   customOnChange,
@@ -47,7 +52,7 @@ const useNotificationInput: UseNotificationInput = (
     customOnChange(onChangeTool);
   }, onChangeAdditionalDependencyList);
 
-  return [input, errorMessage, onChange];
+  return [input, errorMessage, onChange, setInput];
 };
 
 export default useNotificationInput;

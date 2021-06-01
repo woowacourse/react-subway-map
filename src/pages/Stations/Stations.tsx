@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, FormEvent, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -8,6 +8,8 @@ import ListItem from '../../components/@common/ListItem/ListItem';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -19,9 +21,25 @@ const Stations: FC = () => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
-  const [stationInput, setStationInput] = useState('');
-  const [validationErrorMessage, setValidationErrorMessage] = useState('');
-  const isValidStationInput = stationInput !== '' && validationErrorMessage === '';
+  const [
+    stationInput,
+    stationErrorMessage,
+    onChangeStationInput,
+    setStationInput,
+  ] = useNotificationInput(({ setInput, setErrorMessage, targetValue }) => {
+    if (targetValue.length >= 2 && isKoreanAndNumber(targetValue)) {
+      setErrorMessage('');
+    } else {
+      setErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
+    }
+
+    if (stations?.some(({ name }) => name === targetValue)) {
+      setErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
+    }
+
+    setInput(targetValue);
+  });
+  const isValidStationInput = useReadyToSubmit([stationInput], [stationErrorMessage]);
 
   useEffect(() => {
     if (stations.length === 0) {
@@ -36,22 +54,6 @@ const Stations: FC = () => {
 
     alert(errorMessage);
   }, [errorMessage]);
-
-  const onChangeStationInput: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-
-    if (value.length >= 2 && isKoreanAndNumber(value)) {
-      setValidationErrorMessage('');
-    } else {
-      setValidationErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
-    }
-
-    if (stations?.some(({ name }) => name === value)) {
-      setValidationErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
-    }
-
-    setStationInput(value);
-  };
 
   const onAddStation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -79,7 +81,7 @@ const Stations: FC = () => {
               minLength={STATION.NAME_MIN_LENGTH}
               maxLength={STATION.NAME_MAX_LENGTH}
               labelText={STATION.NAME_LABEL_TEXT}
-              message={{ text: validationErrorMessage, isError: true }}
+              message={{ text: stationErrorMessage, isError: true }}
             />
             <Button disabled={!isValidStationInput}>추가</Button>
           </StationForm>

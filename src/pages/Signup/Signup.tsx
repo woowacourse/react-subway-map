@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useMemo, useState } from 'react';
+import React, { FC, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestSignup } from '../../api/member';
@@ -10,6 +10,7 @@ import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
 import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import { RootState } from '../../redux/store';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
@@ -17,7 +18,6 @@ import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styl
 const Signup: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const history = useHistory();
-
   const [emailInput, emailErrorMessage, onChangeEmail] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
@@ -31,7 +31,6 @@ const Signup: FC = () => {
       setErrorMessage('');
     }
   );
-
   const [ageInput, ageErrorMessage, onChangeAge] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
@@ -47,7 +46,6 @@ const Signup: FC = () => {
       setErrorMessage('');
     }
   );
-
   const [passwordInput, passwordErrorMessage, onChangePassword] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
@@ -66,7 +64,6 @@ const Signup: FC = () => {
       }
     }
   );
-
   const [
     passwordConfirmInput,
     passwordConfirmErrorMessage,
@@ -84,35 +81,15 @@ const Signup: FC = () => {
     },
     [passwordInput]
   );
-
-  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
-  const formInputs = useMemo(() => [emailInput, ageInput, passwordInput, passwordConfirmInput], [
-    emailInput,
-    ageInput,
-    passwordInput,
-    passwordConfirmInput,
-  ]);
-  const errorMessages = useMemo(
-    () => [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage],
+  const isReadyToSubmit = useReadyToSubmit(
+    [emailInput, ageInput, passwordInput, passwordConfirmInput],
     [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage]
   );
-
-  useEffect(() => {
-    if (
-      formInputs.every((input) => input !== '') &&
-      errorMessages.every((errorMessage) => errorMessage === '')
-    ) {
-      setIsReadyToSubmit(true);
-      return;
-    }
-
-    setIsReadyToSubmit(false);
-  }, [emailErrorMessage, ageErrorMessage, passwordErrorMessage, passwordConfirmErrorMessage]);
 
   const onSignup = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (errorMessages.some((errorMessage) => errorMessage !== '')) {
+    if (!isReadyToSubmit) {
       alert(ERROR_MESSAGE.INVALID_SIGNUP_INPUT);
 
       return;
