@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectLineList } from "../../pages/Lines/slice";
-import LinesItems from "../LinesItems";
+import LineItems from "../LineItems";
 
 const LineList = () => {
   const lineList = useSelector(selectLineList);
@@ -10,7 +10,7 @@ const LineList = () => {
     lineList.length > 0 && (
       <ul className="mt-4">
         {[...lineList].reverse().map(({ id, name, color }) => (
-          <LinesItems key={id} id={id} name={name} color={color} />
+          <LineItems key={id} id={id} name={name} color={color} />
         ))}
       </ul>
     )

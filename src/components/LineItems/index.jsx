@@ -5,7 +5,7 @@ import cx from "classnames";
 import Button from "../@shared/Button";
 import { deleteLinesById } from "../../pages/Lines/slice";
 
-const LinesItems = ({ id, name, color }) => {
+const LineItems = ({ id, name, color }) => {
   const dispatch = useDispatch();
 
   const handleDeleteClick = (event) => {
@@ -39,10 +39,10 @@ const LinesItems = ({ id, name, color }) => {
   );
 };
 
-LinesItems.propTypes = {
+LineItems.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
 };
 
-export default LinesItems;
+export default LineItems;
