@@ -36,6 +36,7 @@ export const SIZE = {
 };
 
 export const REG_EXP = {
+  ENG: /^[a-zA-Z]*$/,
   NUMBER: /^[0-9]*$/,
   EMAIL:
     /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/,

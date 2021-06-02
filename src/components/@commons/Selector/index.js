@@ -1,25 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from './style';
 import { PropTypes } from 'prop-types';
-import { SIZE } from '../../../constants';
+import { REG_EXP, SIZE } from '../../../constants';
 
-const Selector = ({ label, size, name, defaults, options, ...attrs }) => (
-  <Container size={size}>
-    {label && <label htmlFor={name}>{label}</label>}
-    <select id={name} name={name} {...attrs}>
-      {defaults && (
-        <option value={defaults.value} disabled={defaults.disabled}>
-          {defaults.option}
-        </option>
-      )}
-      {options.map(({ id, name }) => (
-        <option key={id} value={id}>
-          {name}
-        </option>
-      ))}
-    </select>
-  </Container>
-);
+const Selector = ({ label, size, name, defaults, options, ...attrs }) => {
+  useEffect(() => {
+    if (!REG_EXP.ENG.test(name)) {
+      console.warn('name should be written by english.');
+    }
+  });
+
+  return (
+    <Container size={size}>
+      {label && <label htmlFor={name}>{label}</label>}
+      <select id={name} name={name} {...attrs}>
+        {defaults && (
+          <option value={defaults.value} disabled={defaults.disabled}>
+            {defaults.option}
+          </option>
+        )}
+        {options.map(({ id, name }) => (
+          <option key={id} value={id}>
+            {name}
+          </option>
+        ))}
+      </select>
+    </Container>
+  );
+};
 
 Selector.propTypes = {
   label: PropTypes.string,
