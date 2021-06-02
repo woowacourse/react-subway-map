@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { PALETTE } from '../../../constants';
 
 const Dimmer = styled.div<{ isOpen: boolean }>`
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
@@ -16,7 +17,7 @@ const Dimmer = styled.div<{ isOpen: boolean }>`
 `;
 
 const Container = styled.div`
-  background-color: #fdfdfd;
+  background-color: ${PALETTE.DEFAULT_WHITE};
   border-radius: 5px;
   position: absolute;
   top: 50%;
@@ -28,36 +29,12 @@ const Container = styled.div`
   padding: 3.2rem 2.8rem;
   box-sizing: border-box;
   z-index: 1;
-  border: 1px solid #dddddd;
+  border: 1px solid ${PALETTE.DEFAULT_WHITE};
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const CloseButton = styled.div`
-  margin: 5px;
-  width: 30px;
-  position: absolute;
-  right: 3px;
-  top: 3px;
-  cursor: pointer;
-  background: none;
-  border: none;
-
-  svg {
-    display: block;
-    pointer-events: none;
-
-    path {
-      stroke: gray;
-      fill: transparent;
-      stroke-linecap: round;
-      stroke-width: 2;
-      pointer-events: none;
-    }
-  }
-`;
-
 const Title = styled.h2``;
 
-export default { Dimmer, Container, CloseButton, Title };
+export default { Dimmer, Container, Title };

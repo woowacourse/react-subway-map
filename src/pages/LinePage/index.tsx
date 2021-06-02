@@ -4,8 +4,9 @@ import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Button from 'components/shared/Button/Button';
 import Modal from 'components/shared/Modal/Modal';
-import LineModal from 'components/LineModal/LineModal';
 import Loading from 'components/shared/Loading/Loading';
+import LineModal from 'components/LineModal/LineModal';
+import CloseButton from 'components/shared/CloseButton/CloseButton';
 import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Line, Station, User } from 'types';
 import deleteIcon from 'assets/delete.png';
@@ -128,7 +129,12 @@ const LinePage = () => {
         </Styled.LinesContainer>
       </CardLayout>
 
-      <Modal isOpen={isModalOpen} title={modalTitle} onClose={closeModal}>
+      <Modal
+        isOpen={isModalOpen}
+        title={modalTitle}
+        closeButton={<CloseButton closeModal={closeModal} />}
+        onClose={closeModal}
+      >
         <LineModal
           selectedLine={selectedLine}
           stations={stations}

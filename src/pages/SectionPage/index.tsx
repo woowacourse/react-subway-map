@@ -4,6 +4,7 @@ import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Modal from 'components/shared/Modal/Modal';
+import CloseButton from 'components/shared/CloseButton/CloseButton';
 import SectionModal from 'components/SectionModal/SectionModal';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
@@ -151,7 +152,12 @@ const SectionPage = () => {
           </Styled.LineDetail>
         )}
       </CardLayout>
-      <Modal isOpen={isModalOpen} title="구간 추가" onClose={closeModal}>
+      <Modal
+        isOpen={isModalOpen}
+        title="구간 추가"
+        closeButton={<CloseButton closeModal={closeModal} />}
+        onClose={closeModal}
+      >
         <SectionModal
           targetLine={targetLine}
           selectTargetLine={selectTargetLine}
