@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 
 import { useSection, useStation } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
@@ -17,22 +18,12 @@ import { COLOR } from '../../constants';
 
 export const SectionPage = () => {
   const { stations, requestGetStations } = useStation();
-  const {
-    map,
-    requestGetMap,
-    isAddSuccess,
-    isAddFail,
-    requestAddSection,
-    notifyAddResult,
-    isDeleteSuccess,
-    isDeleteFail,
-    requestDeleteSection,
-    notifyDeleteResult,
-  } = useSection();
+  const { map, status, requestGetMap, requestAddSection, requestDeleteSection, clearStatus } = useSection();
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
   const [selectedLineId, setSelectedLineId] = useState(map[0]?.id);
   const selectedLine = map.find((line) => line.id === selectedLineId);
   const lineNames = map.map((section) => ({ id: section.id, name: section.name }));
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsSectionAddOpen(true);
   const handleCloseModal = () => setIsSectionAddOpen(false);
@@ -62,17 +53,15 @@ export const SectionPage = () => {
   }, []);
 
   useEffect(() => {
-    notifyAddResult();
-    requestGetMap();
-    if (isAddSuccess) {
+    if (status.message) {
+      enqueueSnackbar(status.message);
+    }
+    if (status.isAddSuccess) {
       setIsSectionAddOpen(false);
     }
-  }, [isAddSuccess, isAddFail]);
-
-  useEffect(() => {
-    notifyDeleteResult();
     requestGetMap();
-  }, [isDeleteSuccess, isDeleteFail]);
+    clearStatus();
+  }, [status]);
 
   return (
     <Section heading="구간 관리">

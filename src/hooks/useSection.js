@@ -1,15 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
 
 import { useCookie } from '../hooks';
-import { getMap, addSection, clearMapProgress, removeSection } from '../redux/mapSlice';
-import { SECTION } from '../constants';
+import { getMap, addSection, removeSection, clearMap, clearMapStatus } from '../redux/mapSlice';
 
 export const useSection = () => {
   const dispatch = useDispatch();
-  const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
+  const { map, status } = useSelector((store) => store.map);
   const { accessTokenInCookie: accessToken, endpoint } = useCookie();
-  const { enqueueSnackbar } = useSnackbar();
 
   const requestGetMap = () => {
     dispatch(getMap({ endpoint, accessToken }));
@@ -23,38 +20,21 @@ export const useSection = () => {
     dispatch(removeSection({ endpoint, accessToken, lineId, stationId }));
   };
 
-  const notifyAddResult = () => {
-    if (isAddSuccess) {
-      enqueueSnackbar(SECTION.ADD_SUCCEED);
-    }
-    if (isAddFail) {
-      enqueueSnackbar(SECTION.ADD_FAIL);
-    }
-    dispatch(clearMapProgress());
+  const clear = () => {
+    dispatch(clearMap());
   };
 
-  const notifyDeleteResult = () => {
-    if (isDeleteSuccess) {
-      enqueueSnackbar(SECTION.DELETE_SUCCEED);
-    }
-    if (isDeleteFail) {
-      enqueueSnackbar(SECTION.DELETE_FAIL);
-    }
-    dispatch(clearMapProgress());
+  const clearStatus = () => {
+    dispatch(clearMapStatus());
   };
 
   return {
     map,
+    status,
     requestGetMap,
-
-    isAddSuccess,
-    isAddFail,
     requestAddSection,
-    notifyAddResult,
-
-    isDeleteSuccess,
-    isDeleteFail,
     requestDeleteSection,
-    notifyDeleteResult,
+    clear,
+    clearStatus,
   };
 };

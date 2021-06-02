@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { SECTION } from '../constants';
+
 const getMap = createAsyncThunk('map/getMap', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/lines/map`, {
@@ -79,30 +81,26 @@ const removeSection = createAsyncThunk(
   },
 );
 
+const INITIAL_STATUS = {
+  isLoading: false,
+  isAddSuccess: false,
+  message: '',
+};
+
+const INITIAL_STATE = {
+  map: [],
+  status: { ...INITIAL_STATUS },
+};
+
 const mapSlice = createSlice({
   name: 'map',
-  initialState: {
-    map: [],
-    isLoading: false,
-    isAddSuccess: false,
-    isAddFail: false,
-    isDeleteSuccess: false,
-    isDeleteFail: false,
-  },
+  initialState: INITIAL_STATE,
   reducers: {
-    clearMapProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
-    },
     clearMap: (state) => {
-      state.map = [];
-      state.isLoading = false;
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
+      state = INITIAL_STATE;
+    },
+    clearMapStatus: (state) => {
+      state.status = INITIAL_STATUS;
     },
   },
   extraReducers: {
@@ -110,37 +108,44 @@ const mapSlice = createSlice({
       const { map } = action.payload;
 
       state.map = map;
+      state.status.isLoading = false;
     },
     [getMap.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [getMap.rejected]: (state) => {
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = SECTION.GET_FAIL;
     },
+
     [addSection.fulfilled]: (state) => {
-      state.isAddSuccess = true;
+      state.status.isLoading = false;
+      state.status.isAddSuccess = true;
+      state.status.message = SECTION.ADD_SUCCEED;
     },
     [addSection.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [addSection.rejected]: (state) => {
-      state.isAddFail = true;
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = SECTION.ADD_FAIL;
     },
+
     [removeSection.fulfilled]: (state) => {
-      state.isDeleteSuccess = true;
+      state.status.isLoading = false;
+      state.status.message = SECTION.DELETE_SUCCEED;
     },
     [removeSection.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [removeSection.rejected]: (state) => {
-      state.isDeleteFail = true;
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = SECTION.DELETE_FAIL;
     },
   },
 });
 
 export { getMap, addSection, removeSection };
-export const { clearMapProgress, clearMap } = mapSlice.actions;
+export const { clearMap, clearMapStatus } = mapSlice.actions;
 
 export default mapSlice.reducer;

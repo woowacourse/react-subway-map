@@ -94,7 +94,7 @@ const INITIAL_STATUS = {
 };
 
 const INITIAL_STATE = {
-  stations: [],
+  lines: [],
   status: { ...INITIAL_STATUS },
 };
 
@@ -114,6 +114,7 @@ const lineSlice = createSlice({
       const { lines } = action.payload;
 
       state.lines = lines;
+      state.status.isLoading = false;
     },
     [getLines.pending]: (state) => {
       state.status.isLoading = true;
@@ -122,6 +123,7 @@ const lineSlice = createSlice({
       state.status.isLoading = false;
       state.status.message = LINE.GET_FAIL;
     },
+
     [addLine.fulfilled]: (state, action) => {
       const line = action.payload;
 
@@ -136,6 +138,7 @@ const lineSlice = createSlice({
       state.status.isLoading = false;
       state.status.message = LINE.ADD_FAIL;
     },
+
     [removeLine.fulfilled]: (state, action) => {
       const { id } = action.payload;
 

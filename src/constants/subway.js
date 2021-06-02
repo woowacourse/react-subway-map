@@ -62,6 +62,7 @@ export const LINE = {
 };
 
 export const SECTION = {
+  GET_FAIL: '구간 목록 조회에 실패하였습니다.',
   ADD_SUCCEED: '구간 추가에 성공하였습니다.',
   ADD_FAIL: '구간 추가에 실패하였습니다.',
   DELETE_SUCCEED: '구간 삭제에 성공하였습니다.',
