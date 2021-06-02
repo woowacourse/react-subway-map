@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
-import TextButton from 'components/shared/TextButton/TextButton';
-import IconButton from 'components/shared/IconButton/IconButton';
+import Button from 'components/shared/Button/Button';
 import Modal from 'components/shared/Modal/Modal';
 import LineModal from 'components/LineModal/LineModal';
 import Loading from 'components/shared/Loading/Loading';
@@ -107,11 +106,9 @@ const LinePage = () => {
       <CardLayout title={'노선 관리'}>
         <Loading isLoading={isLoading} />
         <Styled.AddButtonWrapper>
-          <TextButton
-            text="노선 추가"
-            styleType={ButtonType.YELLOW}
-            onClick={openLineCreateModal}
-          />
+          <Button styleType={ButtonType.YELLOW} onClick={openLineCreateModal}>
+            노선 추가
+          </Button>
         </Styled.AddButtonWrapper>
         <Styled.LinesContainer>
           {lines?.map((line) => (
@@ -119,12 +116,12 @@ const LinePage = () => {
               <Styled.Color color={line.color}></Styled.Color>
               {line.name}
               <Styled.ButtonsContainer>
-                <IconButton onClick={() => openLineEditModal(line)}>
+                <Button styleType={ButtonType.TRANSPARENT} onClick={() => openLineEditModal(line)}>
                   <Styled.Icon src={editIcon} alt="edit" />
-                </IconButton>
-                <IconButton onClick={() => deleteLine(line.id)}>
+                </Button>
+                <Button styleType={ButtonType.TRANSPARENT} onClick={() => deleteLine(line.id)}>
                   <Styled.Icon src={deleteIcon} alt="delete" />
-                </IconButton>
+                </Button>
               </Styled.ButtonsContainer>
             </Styled.LineItem>
           ))}

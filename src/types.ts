@@ -2,6 +2,7 @@ export enum ButtonType {
   YELLOW = 'YELLOW',
   GREEN = 'GREEN',
   BLANK = 'BLANK',
+  TRANSPARENT = 'TRANSPARENT',
 }
 
 export enum ButtonSize {

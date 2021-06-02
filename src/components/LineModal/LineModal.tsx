@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
-import TextButton from 'components/shared/TextButton/TextButton';
+import Button from 'components/shared/Button/Button';
 import { ButtonType, Line, Station } from 'types';
 import useFetch from 'hooks/useFetch';
 import Styled from './LineModal.styles';
@@ -211,7 +211,7 @@ const LineModal = ({
       </Styled.PaletteContainer>
 
       <Styled.ButtonsContainer>
-        <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>
+        <Button styleType={ButtonType.YELLOW}>확인</Button>
       </Styled.ButtonsContainer>
     </Styled.Container>
   );

@@ -24,6 +24,15 @@ const buttonStyle = {
       background-color: #ededed;
     }
   `,
+  [ButtonType.TRANSPARENT]: css`
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  `,
 };
 
 const buttonSize = {
@@ -51,10 +60,8 @@ const Container = styled.button<ContainerProps>`
   ${({ styleType }) => buttonStyle[styleType]};
   ${({ sizeType }) => buttonSize[sizeType]};
 
-  /* &:focus { */
   background-color: ${({ isSelected }) => isSelected && PALETTE.SUBWAY_YELLOW};
   color: ${({ isSelected }) => isSelected && PALETTE.DEFAULT_BLACK};
-  /* } */
 `;
 
 export default { Container };

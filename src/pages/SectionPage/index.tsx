@@ -3,13 +3,12 @@ import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
-import IconButton from 'components/shared/IconButton/IconButton';
 import Modal from 'components/shared/Modal/Modal';
 import SectionModal from 'components/SectionModal/SectionModal';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import deleteIcon from 'assets/delete.png';
-import { Line, Station, User } from 'types';
+import { ButtonType, Line, Station, User } from 'types';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 import {
@@ -20,6 +19,7 @@ import {
   END_POINT,
   ROUTE,
 } from '../../constants';
+import Button from 'components/shared/Button/Button';
 
 const SectionPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
@@ -139,9 +139,12 @@ const SectionPage = () => {
               {targetLine.stations.map((station) => (
                 <Styled.SectionItem key={station.id}>
                   {station.name}
-                  <IconButton onClick={() => deleteStation(station.id)}>
+                  <Button
+                    styleType={ButtonType.TRANSPARENT}
+                    onClick={() => deleteStation(station.id)}
+                  >
                     <Styled.Icon src={deleteIcon} alt="delete" />
-                  </IconButton>
+                  </Button>
                 </Styled.SectionItem>
               ))}
             </Styled.SectionsContainer>

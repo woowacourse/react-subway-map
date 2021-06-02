@@ -5,6 +5,7 @@ import { configure, addDecorator } from '@storybook/react';
 import { Global } from '@emotion/react';
 import store from 'modules/store';
 import { globalStyle } from '../src/App.styles';
+import { SnackbarProvider } from 'notistack';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -18,8 +19,16 @@ export const parameters = {
 
 addDecorator((story) => (
   <Provider store={store}>
-    <Global styles={globalStyle} />
-    <Router>{story()}</Router>
+    <SnackbarProvider
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      maxSnack={3}
+    >
+      <Global styles={globalStyle} />
+      <Router>{story()}</Router>
+    </SnackbarProvider>
   </Provider>
 ));
 

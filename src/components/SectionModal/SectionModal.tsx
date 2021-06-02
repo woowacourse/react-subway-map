@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import Dropdown from 'components/shared/Dropdown/Dropdown';
 import Input from 'components/shared/Input/Input';
-import TextButton from 'components/shared/TextButton/TextButton';
+import Button from 'components/shared/Button/Button';
 import { ButtonType, Line, Station } from 'types';
 import useFetch from 'hooks/useFetch';
 import { API_STATUS, END_POINT, ALERT_MESSAGE, API_METHOD, INPUT } from '../../constants';
@@ -103,7 +103,7 @@ const SectionModal = ({
         extraArgs={{ min: INPUT.DISTANCE.MIN, max: INPUT.DISTANCE.MAX }}
       />
       <Styled.ButtonsContainer>
-        <TextButton text="확인" styleType={ButtonType.YELLOW}></TextButton>
+        <Button styleType={ButtonType.YELLOW}>확인</Button>
       </Styled.ButtonsContainer>
     </Styled.Container>
   );

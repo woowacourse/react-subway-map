@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
-import TextButton from 'components/shared/TextButton/TextButton';
+import Button from 'components/shared/Button/Button';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
@@ -167,11 +167,9 @@ const SignupPage = () => {
         </Styled.InputContainer>
 
         <Styled.ButtonWrapper>
-          <TextButton
-            text="회원가입하기"
-            styleType={ButtonType.YELLOW}
-            sizeType={ButtonSize.LARGE}
-          ></TextButton>
+          <Button styleType={ButtonType.YELLOW} sizeType={ButtonSize.LARGE}>
+            회원가입하기
+          </Button>
         </Styled.ButtonWrapper>
       </form>
     </CardLayout>

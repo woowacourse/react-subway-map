@@ -3,8 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
 import Input from 'components/shared/Input/Input';
-import TextButton from 'components/shared/TextButton/TextButton';
-import IconButton from 'components/shared/IconButton/IconButton';
+import Button from 'components/shared/Button/Button';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppSelector } from 'modules/hooks';
 import { ButtonType, Station, User } from 'types';
@@ -172,7 +171,7 @@ const StationPage = () => {
             />
             <StationNotification />
           </Styled.InputWrapper>
-          <TextButton text="추가" styleType={ButtonType.YELLOW} />
+          <Button styleType={ButtonType.YELLOW}>추가</Button>
         </Styled.InputContainer>
       </form>
 
@@ -188,20 +187,23 @@ const StationPage = () => {
                   minLength={INPUT.STATION_NAME.MIN_LENGTH}
                   maxLength={INPUT.STATION_NAME.MAX_LENGTH}
                 ></Styled.EditingStationInput>
-                <IconButton type="submit">
+                <Button styleType={ButtonType.TRANSPARENT} type="submit">
                   <Styled.Icon src={saveIcon} alt="save" />
-                </IconButton>
+                </Button>
               </Styled.EditingStationForm>
             ) : (
               <>
                 {station.name}
                 <Styled.ButtonsContainer>
-                  <IconButton onClick={() => editStation(station)}>
+                  <Button styleType={ButtonType.TRANSPARENT} onClick={() => editStation(station)}>
                     <Styled.Icon src={editIcon} alt="edit" />
-                  </IconButton>
-                  <IconButton onClick={() => deleteStation(station.id)}>
+                  </Button>
+                  <Button
+                    styleType={ButtonType.TRANSPARENT}
+                    onClick={() => deleteStation(station.id)}
+                  >
                     <Styled.Icon src={deleteIcon} alt="delete" />
-                  </IconButton>
+                  </Button>
                 </Styled.ButtonsContainer>
               </>
             )}
