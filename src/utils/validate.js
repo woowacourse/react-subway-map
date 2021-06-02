@@ -7,6 +7,8 @@ export const validateEmail = ({ email }) => {
   if (!REG_EXP.EMAIL.test(email)) {
     return ERROR.EMAIL.INVALID;
   }
+
+  return '';
 };
 
 export const validateAge = ({ age }) => {
@@ -19,6 +21,8 @@ export const validateAge = ({ age }) => {
   if (age <= RANGE.AGE.MIN || age >= RANGE.AGE.MAX) {
     return ERROR.AGE.INVALID;
   }
+
+  return '';
 };
 
 export const validatePassword = ({ password }) => {
@@ -28,6 +32,8 @@ export const validatePassword = ({ password }) => {
   if (!REG_EXP.PASSWORD.test(password)) {
     return ERROR.PASSWORD.INVALID;
   }
+
+  return '';
 };
 
 export const validatePasswordConfirm = ({ password, passwordConfirm }) => {
@@ -37,6 +43,8 @@ export const validatePasswordConfirm = ({ password, passwordConfirm }) => {
   if (password !== passwordConfirm) {
     return ERROR.PASSWORD_CONFIRM.INVALID;
   }
+
+  return '';
 };
 
 export const validateStationName = ({ stationName, stations }) => {
@@ -49,6 +57,8 @@ export const validateStationName = ({ stationName, stations }) => {
   if (stations.find(({ name }) => name === stationName)) {
     return ERROR.STATION_NAME.DUPLICATE;
   }
+
+  return '';
 };
 
 export const validateLineName = ({ lineName, lines }) => {
@@ -61,6 +71,8 @@ export const validateLineName = ({ lineName, lines }) => {
   if (lines.find(({ name }) => name === lineName)) {
     return ERROR.LINE_NAME.DUPLICATE;
   }
+
+  return '';
 };
 
 export const validateStationId = ({ upStationId, downStationId }) => {
@@ -70,6 +82,8 @@ export const validateStationId = ({ upStationId, downStationId }) => {
   if (upStationId === downStationId) {
     return ERROR.STATION_ID.DUPLICATE;
   }
+
+  return '';
 };
 
 export const validateDistance = ({ distance }) => {
@@ -82,4 +96,6 @@ export const validateDistance = ({ distance }) => {
   if (distance <= 0) {
     return ERROR.DISTANCE.INVALID;
   }
+
+  return '';
 };
