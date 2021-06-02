@@ -5,7 +5,7 @@ import Input from 'components/shared/Input/Input';
 import Button from 'components/shared/Button/Button';
 import { ButtonType, Line, Station } from 'types';
 import useFetch from 'hooks/useFetch';
-import { API_STATUS, END_POINT, ALERT_MESSAGE, API_METHOD, INPUT } from '../../constants';
+import { RESPONSE_STATE, END_POINT, ALERT_MESSAGE, API_METHOD, INPUT } from '../../constants';
 import Styled from './SectionModal.styles';
 
 interface Props {
@@ -49,9 +49,9 @@ const SectionModal = ({
 
     const res = await addSectionAsync(`${END_POINT.LINES}/${targetLine?.id}/sections`, newSection);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_SECTION);
       resetForm();
       closeModal();

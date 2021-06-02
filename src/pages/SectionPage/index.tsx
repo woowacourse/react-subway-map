@@ -15,7 +15,7 @@ import Styled from './styles';
 import {
   ALERT_MESSAGE,
   API_METHOD,
-  API_STATUS,
+  RESPONSE_STATE,
   CONFIRM_MESSAGE,
   END_POINT,
   ROUTE,
@@ -46,9 +46,9 @@ const SectionPage = () => {
   const getStations = async () => {
     const res = await getStationsAsync(END_POINT.STATIONS);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setStations(res.data);
     }
   };
@@ -56,9 +56,9 @@ const SectionPage = () => {
   const getLines = async () => {
     const res = await getLinesAsync(END_POINT.LINES);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setLines(res.data);
     }
   };
@@ -66,9 +66,9 @@ const SectionPage = () => {
   const getLine = async (targetLineId: Line['id']) => {
     const res = await getLineAsync(`${END_POINT.LINES}/${targetLineId}`);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setTargetLine(res.data);
     }
   };
@@ -87,9 +87,9 @@ const SectionPage = () => {
       `${END_POINT.LINES}/${targetLine?.id}/sections?stationId=${stationId}`,
     );
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_SECTION);
 
       await getLine(targetLine.id);

@@ -16,7 +16,7 @@ import {
   ROUTE,
   REGEX,
   END_POINT,
-  API_STATUS,
+  RESPONSE_STATE,
   ALERT_MESSAGE,
   CONFIRM_MESSAGE,
   NOTIFICATION,
@@ -54,9 +54,9 @@ const StationPage = () => {
   const getStations = async () => {
     const res = await getStationsAsync(END_POINT.STATIONS);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setStations(res.data.reverse());
     }
   };
@@ -80,9 +80,9 @@ const StationPage = () => {
       name: newStationName,
     });
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setNewStationName('');
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_STAION);
 
@@ -113,9 +113,9 @@ const StationPage = () => {
       name: editingStationName,
     });
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       await getStations();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_STATION);
     }
@@ -129,9 +129,9 @@ const StationPage = () => {
 
     const res = await deleteStationAsync(`${END_POINT.STATIONS}/${id}`);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       await getStations();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_STAION);
     }

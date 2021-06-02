@@ -17,7 +17,7 @@ import useFetch from 'hooks/useFetch';
 import {
   ALERT_MESSAGE,
   API_METHOD,
-  API_STATUS,
+  RESPONSE_STATE,
   END_POINT,
   INPUT,
   NOTIFICATION,
@@ -48,9 +48,9 @@ const SignupPage = () => {
 
     const res = await checkDuplicatedEmailAsync(`${END_POINT.AUTH}/exists/${email}`);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.SERVER_ERROR || ALERT_MESSAGE.SERVER_ERROR);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       if (res.data.exist) {
         setEmailNotification({
           message: NOTIFICATION.DUPLICATED_EMAIL,
@@ -98,9 +98,9 @@ const SignupPage = () => {
 
     const res = await signupAsync(`${END_POINT.AUTH}`, signupData);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message || ALERT_MESSAGE.SERVER_ERROR);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_SIGNUP);
       history.push(ROUTE.LOGIN);
     }

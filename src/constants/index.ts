@@ -1,4 +1,4 @@
-import { SERVER, KOREAN_SERVER, END_POINT, API_STATUS, API_METHOD } from 'constants/api';
+import { SERVER, KOREAN_SERVER, END_POINT, RESPONSE_STATE, API_METHOD } from 'constants/api';
 import LINE_COLORS from 'constants/lineColors';
 import { ALERT_MESSAGE, CONFIRM_MESSAGE, NOTIFICATION } from 'constants/messages';
 import PALETTE from 'constants/palette';
@@ -11,7 +11,7 @@ export {
   SERVER,
   KOREAN_SERVER,
   END_POINT,
-  API_STATUS,
+  RESPONSE_STATE,
   API_METHOD,
   LINE_COLORS,
   ALERT_MESSAGE,

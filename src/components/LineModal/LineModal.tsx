@@ -10,7 +10,7 @@ import {
   LINE_COLORS,
   REGEX,
   API_METHOD,
-  API_STATUS,
+  RESPONSE_STATE,
   END_POINT,
   ALERT_MESSAGE,
   NOTIFICATION,
@@ -85,9 +85,9 @@ const LineModal = ({
 
     const res = await addLineAsync(END_POINT.LINES, newLine);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_LINE);
       resetForm();
       closeModal();
@@ -105,9 +105,9 @@ const LineModal = ({
     const updatedLine = { name, color };
     const res = await editLineAsync(`${END_POINT.LINES}/${selectedLine.id}`, updatedLine);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
       closeModal();
 

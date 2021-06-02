@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useAppSelector } from 'modules/hooks';
-import { API_METHOD, API_STATUS } from '../constants';
+import { API_METHOD, RESPONSE_STATE } from '../constants';
 
 const useFetch = (method: API_METHOD) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
   const fetchData = async (endpoint: string, data?: unknown) => {
@@ -16,11 +16,11 @@ const useFetch = (method: API_METHOD) => {
         data,
       });
 
-      return { status: API_STATUS.FULFILLED, data: response.data };
+      return { state: RESPONSE_STATE.FULFILLED, data: response.data };
     } catch (error) {
       console.error(error);
 
-      return { status: API_STATUS.REJECTED, message: error.response.data.message };
+      return { state: RESPONSE_STATE.REJECTED, message: error.response.data.message };
     } finally {
       setLoading(false);
     }

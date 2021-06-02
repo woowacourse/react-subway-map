@@ -4,7 +4,7 @@ import { setupServer } from 'msw/node';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor, within } from 'test-util';
-import { API_STATUS } from '../../constants';
+import { RESPONSE_STATE } from '../../constants';
 import StationPage from '.';
 
 const stationsData = [
@@ -56,7 +56,7 @@ const user = {
 
 const mockStore = configureStore({
   reducer: {
-    authSlice: () => ({ data: user, status: API_STATUS.FULFILLED }),
+    authSlice: () => ({ data: user, state: RESPONSE_STATE.FULFILLED }),
     serverSlice: () => ({ server: '' }),
   },
 });

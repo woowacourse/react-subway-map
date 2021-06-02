@@ -15,7 +15,7 @@ import lockImg from 'assets/lock.png';
 import {
   ALERT_MESSAGE,
   API_METHOD,
-  API_STATUS,
+  RESPONSE_STATE,
   END_POINT,
   ROUTE,
   SESSION_STORAGE,
@@ -51,13 +51,13 @@ const LoginPage = () => {
 
     const res = await loginAsync(END_POINT.LOGIN, loginData);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       setLoginNotification({
         message: res.message || ALERT_MESSAGE.SERVER_ERROR,
         isValid: false,
         isVisible: true,
       });
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setLoginNotification({ message: '', isValid: true, isVisible: false });
       setLoginResponse(res.data);
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_LOGIN);

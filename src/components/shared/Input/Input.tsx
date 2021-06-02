@@ -26,6 +26,7 @@ const Input = ({
   onBlur,
   onChange,
   extraArgs,
+  ...props
 }: InputProps) => {
   return (
     <Styled.Label>
@@ -39,6 +40,7 @@ const Input = ({
         placeholder={placeholder}
         required
         {...extraArgs}
+        {...props}
       />
     </Styled.Label>
   );

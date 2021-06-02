@@ -15,7 +15,7 @@ import useFetch from 'hooks/useFetch';
 import {
   ALERT_MESSAGE,
   API_METHOD,
-  API_STATUS,
+  RESPONSE_STATE,
   CONFIRM_MESSAGE,
   END_POINT,
   ROUTE,
@@ -42,9 +42,9 @@ const LinePage = () => {
   const getLines = async () => {
     const res = await getLinesAsync(END_POINT.LINES);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_LINES);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setLines(res.data);
     }
   };
@@ -52,9 +52,9 @@ const LinePage = () => {
   const getStations = async () => {
     const res = await getStationsAsync(END_POINT.STATIONS);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.FAIL_TO_GET_STATIONS);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       setStations(res.data);
     }
   };
@@ -64,9 +64,9 @@ const LinePage = () => {
 
     const res = await deleteLineAsync(`${END_POINT.LINES}/${id}`);
 
-    if (res.status === API_STATUS.REJECTED) {
+    if (res.state === RESPONSE_STATE.REJECTED) {
       enqueueSnackbar(res.message);
-    } else if (res.status === API_STATUS.FULFILLED) {
+    } else if (res.state === RESPONSE_STATE.FULFILLED) {
       await getLines();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_LINE);
     }

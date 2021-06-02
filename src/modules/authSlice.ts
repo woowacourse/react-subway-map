@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API_STATUS, END_POINT } from '../constants';
+import { RESPONSE_STATE, END_POINT } from '../constants';
 import { User } from 'types';
 import { AppDispatch, RootState } from './hooks';
 
 export interface AuthState {
   data?: User;
-  status: API_STATUS;
+  state: RESPONSE_STATE;
 }
 
 const initialState: AuthState = {
   data: undefined,
-  status: API_STATUS.IDLE,
+  state: RESPONSE_STATE.IDLE,
 };
 
 export const requestGetUser = createAsyncThunk<
@@ -44,7 +44,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.data = undefined;
-      state.status = API_STATUS.IDLE;
+      state.state = RESPONSE_STATE.IDLE;
     },
   },
   extraReducers: (builder) => {
@@ -52,12 +52,12 @@ const authSlice = createSlice({
       requestGetUser.fulfilled.type,
       (state, action: PayloadAction<{ user: User }>) => {
         state.data = action.payload.user;
-        state.status = API_STATUS.FULFILLED;
+        state.state = RESPONSE_STATE.FULFILLED;
       },
     );
     builder.addCase(requestGetUser.rejected, (state) => {
       state.data = undefined;
-      state.status = API_STATUS.REJECTED;
+      state.state = RESPONSE_STATE.REJECTED;
     });
   },
 });
