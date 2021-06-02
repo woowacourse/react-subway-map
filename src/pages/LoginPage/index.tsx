@@ -114,9 +114,7 @@ const LoginPage = () => {
         </Styled.InputContainer>
 
         <Styled.ButtonWrapper>
-          <Button styleType={ButtonType.YELLOW} sizeType={ButtonSize.LARGE}>
-            로그인하기
-          </Button>
+          <Button styleType={ButtonType.YELLOW}>로그인하기</Button>
         </Styled.ButtonWrapper>
       </form>
       <Styled.SignupLink>

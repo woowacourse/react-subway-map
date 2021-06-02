@@ -16,6 +16,10 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 40px;
+
+  & > button {
+    width: 100%;
+  }
 `;
 
 const SignupLink = styled.div`

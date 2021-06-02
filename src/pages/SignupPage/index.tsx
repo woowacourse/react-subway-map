@@ -167,9 +167,7 @@ const SignupPage = () => {
         </Styled.InputContainer>
 
         <Styled.ButtonWrapper>
-          <Button styleType={ButtonType.YELLOW} sizeType={ButtonSize.LARGE}>
-            회원가입하기
-          </Button>
+          <Button styleType={ButtonType.YELLOW}>회원가입하기</Button>
         </Styled.ButtonWrapper>
       </form>
     </CardLayout>

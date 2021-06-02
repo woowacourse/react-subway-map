@@ -36,9 +36,6 @@ const buttonStyle = {
 };
 
 const buttonSize = {
-  [ButtonSize.LARGE]: css`
-    width: 100%;
-  `,
   [ButtonSize.SMALL]: css`
     width: auto;
   `,
