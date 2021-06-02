@@ -9,7 +9,6 @@ import Login from "../pages/Login";
 import Sections from "../pages/Sections";
 import Signup from "../pages/Signup";
 import Stations from "../pages/Stations";
-import Logout from "../pages/Logout";
 import Entry from "../pages/Entry";
 
 const App = () => (
@@ -22,9 +21,6 @@ const App = () => (
       <PublicRoute exact path={PATH.LOGIN} redirectTo={PATH.STATIONS}>
         <Login />
       </PublicRoute>
-      <PrivateRoute exact path={PATH.LOGOUT}>
-        <Logout />
-      </PrivateRoute>
       <Route exact path={PATH.SIGNUP}>
         <Signup />
       </Route>
