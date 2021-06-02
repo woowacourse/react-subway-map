@@ -65,7 +65,7 @@ const StationManager = () => {
         )}
       </Formik>
       {stations.length > 0 && (
-        <ManagementList items={stations} onDeleteItem={deleteStation} />
+        <ManagementList items={stations} deleteItem={deleteStation} />
       )}
     </PageTemplate>
   );

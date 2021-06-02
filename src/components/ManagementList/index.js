@@ -13,7 +13,7 @@ const Item = ({ name, onClickDeleteButton }) => (
   </li>
 );
 
-const ManagementList = ({ items, onDeleteItem }) => {
+const ManagementList = ({ items, deleteItem }) => {
   const [deleteId, setDeleteId] = useState(null);
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -35,7 +35,7 @@ const ManagementList = ({ items, onDeleteItem }) => {
         <ConfirmModal
           onCloseModal={closeModal}
           onConfirm={() => {
-            onDeleteItem({ id: deleteId });
+            deleteItem({ id: deleteId });
             setDeleteId(null);
           }}
         >

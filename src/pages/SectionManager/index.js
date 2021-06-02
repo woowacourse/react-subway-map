@@ -37,9 +37,7 @@ const SectionList = ({ line, openModal, deleteSection }) => (
     </ListHeader>
     <ManagementList
       items={line.stations}
-      onDeleteItem={({ id }) =>
-        deleteSection({ lineId: line.id, stationId: id })
-      }
+      deleteItem={({ id }) => deleteSection({ lineId: line.id, stationId: id })}
     ></ManagementList>
   </>
 );

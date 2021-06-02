@@ -23,7 +23,7 @@ const LineManager = () => {
           </Button>
         </ButtonWrapper>
         {lines.length > 0 && (
-          <ManagementList items={lines} onDeleteItem={deleteLine} />
+          <ManagementList items={lines} deleteItem={deleteLine} />
         )}
       </PageTemplate>
       {isModalOpen && (
