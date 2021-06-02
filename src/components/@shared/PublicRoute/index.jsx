@@ -8,7 +8,6 @@ const PublicRoute = ({ children, redirectTo, ...rest }) => {
   const isAuthenticated = useAuth();
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Route {...rest}>
       {isAuthenticated ? <Redirect to={redirectTo} /> : children}
     </Route>

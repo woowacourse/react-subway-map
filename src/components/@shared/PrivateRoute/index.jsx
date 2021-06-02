@@ -12,7 +12,6 @@ const PrivateRoute = ({ children, ...rest }) => {
   }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Route {...rest}>
       {isAuthenticated ? children : <Redirect to={PATH.LOGIN} />}
     </Route>
