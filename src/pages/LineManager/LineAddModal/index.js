@@ -7,7 +7,8 @@ import {
   Selector,
   ColorPicker,
 } from '../../../components';
-import { COLOR, INPUT_TEXT, LINE_COLOR, SIZE, TEST } from '../../../constants';
+import { COLOR, INPUT_TEXT, LINE_COLOR, SIZE } from '../../../constants';
+import { TEST } from '../../../constants/test';
 import { ButtonWrapper, Form, SelectorWrapper, Validator } from './style';
 import { Formik } from 'formik';
 import {

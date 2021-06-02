@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import LineAddModal from '.';
-import { ERROR, INPUT_TEXT, LINE_COLOR, TEST } from '../../../constants';
+import { ERROR, INPUT_TEXT, LINE_COLOR } from '../../../constants';
+import { TEST } from '../../../constants/test';
 
 const mockStation1 = { id: 0, name: '죽여줘' };
 const mockStation2 = { id: 1, name: '박신영' };

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { Form, Validator } from './style';
-import { COLOR, ERROR, INPUT_TEXT, ROUTE, TEST } from '../../constants';
+import { COLOR, ERROR, INPUT_TEXT, ROUTE } from '../../constants';
+import { TEST } from '../../constants/test';
 import { useSignIn } from '../../hooks';
 
 const initialValues = {

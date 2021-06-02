@@ -2,8 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import StationManager from '.';
-import { ERROR, INPUT_TEXT, TEST } from '../../constants';
+import { ERROR, INPUT_TEXT } from '../../constants';
 import { configureStore } from '@reduxjs/toolkit';
+import { TEST } from '../../constants/test';
 
 describe('<StationManager />', () => {
   const mockStation = {

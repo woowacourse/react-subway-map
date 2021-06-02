@@ -8,8 +8,9 @@ import {
 } from '.';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { MOCK_SERVER, TEST } from '../../constants';
+import { MOCK_SERVER } from '../../constants';
 import store from '..';
+import { TEST } from '../../constants/test';
 
 const mock = new MockAdapter(axios);
 

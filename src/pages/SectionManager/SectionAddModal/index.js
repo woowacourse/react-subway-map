@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ModalTemplate, Input, Selector } from '../../../components';
-import { COLOR, SIZE, TEST, INPUT_TEXT } from '../../../constants';
+import { COLOR, SIZE, INPUT_TEXT } from '../../../constants';
+import { TEST } from '../../../constants/test';
 import {
   ButtonWrapper,
   Form,
