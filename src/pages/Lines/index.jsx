@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useToggle } from "../../components/@shared/hooks";
 
 import Main from "../../components/@shared/Main";
-
 import Modal from "../../components/@shared/Modal";
 import Button from "../../components/@shared/Button";
 import LineList from "../../components/LineList";
@@ -19,6 +18,7 @@ import {
 
 const Lines = () => {
   const dispatch = useDispatch();
+
   const [isModalOpen, handleModalOpen, handleModalClose] = useToggle(false);
 
   const status = useSelector(selectLinesStatus);
