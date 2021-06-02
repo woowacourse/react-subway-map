@@ -2,7 +2,7 @@ import React from 'react';
 import Styled from './Button.styles';
 import { ButtonSize, ButtonType } from 'types';
 
-interface ButtonProps {
+interface Props {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   styleType: ButtonType;
@@ -21,7 +21,7 @@ const Button = ({
   sizeType = ButtonSize.SMALL,
   isSelected,
   onClick,
-}: ButtonProps) => {
+}: Props) => {
   return (
     <Styled.Container
       type={type}
