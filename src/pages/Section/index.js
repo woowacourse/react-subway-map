@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
 
-import { useCookie } from '../../hooks';
-import { getMap, addSection, removeSection, clearMapProgress } from '../../redux/mapSlice';
-import { getStations } from '../../redux/stationSlice';
-
+import { useSection, useStation } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
 import { SectionListItem } from './SectionListItem';
 import {
@@ -18,20 +13,26 @@ import {
   LineSelectBox,
   InvalidMessage,
 } from './style';
-import { COLOR, SECTION } from '../../constants';
+import { COLOR } from '../../constants';
 
 export const SectionPage = () => {
-  const dispatch = useDispatch();
-  const { stations } = useSelector((store) => store.station);
-  const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
-  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
-
+  const { stations, requestGetStations } = useStation();
+  const {
+    map,
+    requestGetMap,
+    isAddSuccess,
+    isAddFail,
+    requestAddSection,
+    notifyAddResult,
+    isDeleteSuccess,
+    isDeleteFail,
+    requestDeleteSection,
+    notifyDeleteResult,
+  } = useSection();
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
   const [selectedLineId, setSelectedLineId] = useState(map[0]?.id);
   const selectedLine = map.find((line) => line.id === selectedLineId);
-
   const lineNames = map.map((section) => ({ id: section.id, name: section.name }));
-  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsSectionAddOpen(true);
   const handleCloseModal = () => setIsSectionAddOpen(false);
@@ -42,43 +43,36 @@ export const SectionPage = () => {
 
   const handleAddSection = (e) => {
     e.preventDefault();
-
-    const lineId = e.target.line.value;
-    const upStationId = e.target.upStation.value;
-    const downStationId = e.target.downStation.value;
-    const distance = e.target.distance.value;
-
-    dispatch(addSection({ endpoint, accessToken, lineId, upStationId, downStationId, distance }));
+    requestAddSection({
+      lineId: e.target.line.value,
+      upStationId: e.target.upStation.value,
+      downStationId: e.target.downStation.value,
+      distance: e.target.distance.value,
+    });
   };
 
-  const handleDeleteSection = (e, stationId) => {
-    dispatch(removeSection({ endpoint, accessToken, lineId: selectedLineId, stationId }));
+  const handleDeleteSection = (_, stationId) => {
+    requestDeleteSection({ lineId: selectedLineId, stationId });
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getMap({ endpoint, accessToken }));
-    dispatch(getStations({ endpoint, accessToken }));
+    requestGetMap();
+    requestGetStations();
   }, []);
 
   useEffect(() => {
+    notifyAddResult();
+    requestGetMap();
     if (isAddSuccess) {
-      enqueueSnackbar(SECTION.ADD_SUCCEED);
-      dispatch(getMap({ endpoint, accessToken }));
-      handleCloseModal();
+      setIsSectionAddOpen(false);
     }
-    if (isAddFail) {
-      enqueueSnackbar(SECTION.ADD_FAIL);
-    }
-    if (isDeleteSuccess) {
-      enqueueSnackbar(SECTION.DELETE_SUCCEED);
-      dispatch(getMap({ endpoint, accessToken }));
-    }
-    if (isDeleteFail) {
-      enqueueSnackbar(SECTION.DELETE_FAIL);
-    }
-    dispatch(clearMapProgress());
-  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
+  }, [isAddSuccess, isAddFail]);
+
+  useEffect(() => {
+    notifyDeleteResult();
+    requestGetMap();
+  }, [isDeleteSuccess, isDeleteFail]);
 
   return (
     <Section heading="구간 관리">
@@ -109,7 +103,7 @@ export const SectionPage = () => {
                 <Select id="downStation" name="downStation" optionHead="하행역" options={stations} />
               </StationSelect>
               <Input type="number" name="distance" label="거리(km)" placeholder="거리를 입력해주세요." required />
-              <InvalidMessage>{}</InvalidMessage>
+              <InvalidMessage></InvalidMessage>
               <ButtonControl>
                 <CancelButton onClick={handleCloseModal}>취소</CancelButton>
                 <ButtonSquare>확인</ButtonSquare>
