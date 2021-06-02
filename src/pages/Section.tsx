@@ -8,6 +8,7 @@ import { borderColor } from 'constants/color';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useData from 'hooks/useData';
+import useModal from 'hooks/useModal';
 import useRedirect from 'hooks/useRedirect';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,21 +22,12 @@ const Section = () => {
   const dispatch = useDispatch();
   const { stations, lines, selectedLine } = useData();
   const [selectedLineId, setSelectedLineId] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
+  const { modalOpen, onModalOpen, onModalClose } = useModal();
 
   const handleLineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    // TODO as HTMLElement 를 사용하지 않고 event.target의 value를 얻는 방법
-    const target = event.target as HTMLSelectElement;
+    const { value } = event.target;
 
-    setSelectedLineId(Number(target.value));
+    setSelectedLineId(Number(value));
   };
 
   const handleDelete = async (stationId: number, station: string) => {
@@ -63,7 +55,7 @@ const Section = () => {
       }
 
       alert(MESSAGE.SECTION.ADD_SUCCESS);
-      setModalOpen(false);
+      onModalClose();
     } catch (error) {
       throw Error(error);
     }
@@ -86,7 +78,7 @@ const Section = () => {
       <Container>
         <div className="flex items-center justify-between mb-8">
           <Title text="🔁 지하철 구간 관리" />
-          <ImageButton imgUrl={addImg} onClick={handleModalOpen} />
+          <ImageButton imgUrl={addImg} onClick={onModalOpen} />
         </div>
 
         <SelectInput
@@ -115,7 +107,7 @@ const Section = () => {
         )}
       </Container>
       {modalOpen && (
-        <AddSectionModal lines={lines} stations={stations} onModalClose={handleModalClose} onSubmit={handleSubmit} />
+        <AddSectionModal lines={lines} stations={stations} onModalClose={onModalClose} onSubmit={handleSubmit} />
       )}
     </>
   );

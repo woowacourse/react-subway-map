@@ -7,8 +7,9 @@ import MESSAGE from 'constants/message';
 // import editImg from 'assets/images/edit.png';
 import PATH from 'constants/PATH';
 import useData from 'hooks/useData';
+import useModal from 'hooks/useModal';
 import useRedirect from 'hooks/useRedirect';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
 import { getStationAsync } from 'redux/stationSlice';
@@ -18,15 +19,7 @@ const Line = () => {
   useRedirect(PATH.LOGIN);
   const dispatch = useDispatch();
   const { stations, lines } = useData();
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
+  const { modalOpen, onModalOpen, onModalClose } = useModal();
 
   const handleDelete = async (id: number, line: string) => {
     if (!window.confirm(MESSAGE.COMMON.DELETE_CONFIRM(line))) {
@@ -45,7 +38,7 @@ const Line = () => {
       await dispatch(addLineAsync({ name, color, upStationId, downStationId, distance }));
 
       alert(MESSAGE.LINE.ADD_SUCCESS);
-      setModalOpen(false);
+      onModalClose();
     } catch (error) {
       throw Error(error);
     }
@@ -61,7 +54,7 @@ const Line = () => {
       <Container className="">
         <div className="flex items-center justify-between mb-4 px-2">
           <Title text="🛤️ 지하철 노선 관리" />
-          <ImageButton imgUrl={addImg} onClick={handleModalOpen} />
+          <ImageButton imgUrl={addImg} onClick={onModalOpen} />
         </div>
         {lines?.map((line) => (
           <ListItem
@@ -75,7 +68,7 @@ const Line = () => {
           />
         ))}
       </Container>
-      {modalOpen && <AddLineModal stations={stations} onModalClose={handleModalClose} onSubmit={handleSubmit} />}
+      {modalOpen && <AddLineModal stations={stations} onModalClose={onModalClose} onSubmit={handleSubmit} />}
     </>
   );
 };
