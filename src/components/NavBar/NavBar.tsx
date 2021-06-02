@@ -46,6 +46,9 @@ const NavBar = () => {
             <NavLink to={ROUTE.SECTIONS} activeStyle={selectedNavStyle}>
               <Styled.NavItem>구간 관리</Styled.NavItem>
             </NavLink>
+            <NavLink to={ROUTE.MAP} activeStyle={selectedNavStyle}>
+              <Styled.NavItem>전체보기</Styled.NavItem>
+            </NavLink>
             <Styled.NavItem onClick={logout}>로그아웃</Styled.NavItem>
           </>
         ) : (

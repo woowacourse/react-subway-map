@@ -5,7 +5,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Global } from '@emotion/react';
 import { SnackbarProvider } from 'notistack';
 import BaseLayout from 'components/BaseLayout/BaseLayout';
-import { LandingPage, StationPage, LinePage, SectionPage, LoginPage, SignupPage } from 'pages';
+import {
+  LandingPage,
+  StationPage,
+  LinePage,
+  SectionPage,
+  MapPage,
+  LoginPage,
+  SignupPage,
+} from 'pages';
 import { selectServer } from 'modules/serverSlice';
 import ROUTE from 'constants/routes';
 import { globalStyle } from 'App.styles';
@@ -40,6 +48,7 @@ const App = () => {
               <Route path={ROUTE.STATIONS} component={StationPage} />
               <Route path={ROUTE.LINES} component={LinePage} />
               <Route path={ROUTE.SECTIONS} component={SectionPage} />
+              <Route path={ROUTE.MAP} component={MapPage} />
               <Route path={ROUTE.LOGIN} component={LoginPage} />
               <Route path={ROUTE.SIGNUP} component={SignupPage} />
             </Switch>
