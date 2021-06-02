@@ -32,18 +32,24 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
   const [error, setError] = useState('');
 
   const history = useHistory();
+
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
+  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   if (isLoggedIn) {
     return <Redirect to={PATH.ROOT} />;
   }
 
+  const isUnauthorizedError = (value: string): boolean => {
+    return value === STATUS_CODE.UNAUTHORIZED;
+  };
+
   const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    if (email === '' || password === '') {
+    if (!email || !password) {
       setError(ERROR_MESSAGE.INCOMPLETE_LOGIN_FORM);
 
       return;
@@ -54,7 +60,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     try {
       const accessToken = await apiRequest.login({ email, password });
 
-      addMessage?.(SUCCESS_MESSAGE.LOGIN);
+      addSnackBar?.(SUCCESS_MESSAGE.LOGIN);
       setIsLoggedIn?.(true);
       localStorage.setItem('accessToken', accessToken);
 
@@ -62,12 +68,12 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
 
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+      if (isUnauthorizedError(error.message)) {
         setError(ERROR_MESSAGE.LOGIN);
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     } finally {
       clearTimeout(timer);
       setIsLoading(false);

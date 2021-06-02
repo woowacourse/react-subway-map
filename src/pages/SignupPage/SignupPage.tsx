@@ -25,13 +25,14 @@ import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
 import { Form } from './SignupPage.style';
+import { isValidRange } from '../../utils/validator';
 
 const DEBOUNCE_DELAY = 500;
 
 const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
   const [email, setEmail] = useState<string>('');
@@ -42,18 +43,27 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
   const isEmailFormatValid = !email || REGEX.EMAIL.test(email);
   const isAgeValid =
-    !age ||
-    (Number(age) >= SIGNUP_VALUE.AGE_MIN_VALUE && Number(age) <= SIGNUP_VALUE.AGE_MAX_VALUE);
+    !age || isValidRange(Number(age), SIGNUP_VALUE.AGE_MIN_VALUE, SIGNUP_VALUE.AGE_MAX_VALUE);
   const isPasswordValid = !password || REGEX.PASSWORD.test(password);
   const isPasswordMatched = !passwordConfirm || password === passwordConfirm;
 
-  const emailMessage = email
-    ? isEmailFormatValid
-      ? isEmailDuplicated
-        ? ERROR_MESSAGE.DUPLICATED_EMAIL
-        : SUCCESS_MESSAGE.AVAILABLE_EMAIL
-      : ERROR_MESSAGE.INVALID_EMAIL
-    : '';
+  const getEmailMessage = () => {
+    if (!email) {
+      return '';
+    }
+
+    if (!isEmailFormatValid) {
+      return ERROR_MESSAGE.INVALID_EMAIL;
+    }
+
+    if (isEmailDuplicated) {
+      return ERROR_MESSAGE.DUPLICATED_EMAIL;
+    }
+
+    return SUCCESS_MESSAGE.AVAILABLE_EMAIL;
+  };
+
+  const emailMessage = getEmailMessage();
   const ageErrorMessage = isAgeValid ? '' : ERROR_MESSAGE.INVALID_AGE;
   const passwordErrorMessage = isPasswordValid ? '' : ERROR_MESSAGE.INVALID_PASSWORD;
   const passwordMatchedErrorMessage = isPasswordMatched
@@ -79,7 +89,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
   }, DEBOUNCE_DELAY);
 
@@ -114,11 +124,11 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
     try {
       await apiRequest.signup({ email, password, age: Number(age) });
-      addMessage?.(SUCCESS_MESSAGE.SIGNUP);
+      addSnackBar?.(SUCCESS_MESSAGE.SIGNUP);
       history.push(PATH.LOGIN);
     } catch (error) {
       console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     } finally {
       clearTimeout(timer);
       setIsLoading(false);
