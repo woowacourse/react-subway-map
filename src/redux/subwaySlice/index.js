@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ERROR, RESPONSE } from '../../constants';
 import { request } from '../../utils';
+import { handleRejected } from '../util';
 
 export const getStationsThunk = createAsyncThunk(
   'subway/getStationsThunk',
@@ -164,62 +165,46 @@ const subwaySlice = createSlice({
     [getStationsThunk.fulfilled]: (state, { payload: { stations } }) => {
       state.stations = stations;
     },
-    [getStationsThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [getStationsThunk.rejected]: handleRejected,
 
     [addStationThunk.fulfilled]: (state, { payload: { station } }) => {
       state.stations.push(station);
     },
-    [addStationThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [addStationThunk.rejected]: handleRejected,
 
     [deleteStationThunk.fulfilled]: (state, { payload: { stationId } }) => {
       state.stations = state.stations.filter(({ id }) => id !== stationId);
     },
-    [deleteStationThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [deleteStationThunk.rejected]: handleRejected,
 
     [getLinesThunk.fulfilled]: (state, { payload: { lines } }) => {
       state.lines = lines;
     },
-    [getLinesThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [getLinesThunk.rejected]: handleRejected,
 
     [addLineThunk.fulfilled]: (state, { payload: { line } }) => {
       state.lines.push(line);
     },
-    [addLineThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [addLineThunk.rejected]: handleRejected,
 
     [deleteLineThunk.fulfilled]: (state, { payload: { lineId } }) => {
       state.lines = state.lines.filter(({ id }) => id !== lineId);
     },
-    [deleteLineThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [deleteLineThunk.rejected]: handleRejected,
 
     [addSectionThunk.fulfilled]: (state, { payload: { line } }) => {
       state.lines = state.lines.map((prevLine) => {
         return prevLine.id === line.id ? line : prevLine;
       });
     },
-    [addSectionThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [addSectionThunk.rejected]: handleRejected,
 
     [deleteSectionThunk.fulfilled]: (state, { payload: { line } }) => {
       state.lines = state.lines.map((prevLine) => {
         return prevLine.id === line.id ? line : prevLine;
       });
     },
-    [deleteSectionThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [deleteSectionThunk.rejected]: handleRejected,
   },
 });
 

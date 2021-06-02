@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ERROR, RESPONSE } from '../../constants';
 import { request } from '../../utils';
+import { handleRejected } from '../util';
 
 export const getUserTokenThunk = createAsyncThunk(
   'user/getUserTokenThunk',
@@ -42,9 +43,7 @@ const userSlice = createSlice({
       state.token = token;
       state.error = null;
     },
-    [getUserTokenThunk.rejected]: (state, { payload: { error } }) => {
-      state.error = error;
-    },
+    [getUserTokenThunk.rejected]: handleRejected,
   },
 });
 
