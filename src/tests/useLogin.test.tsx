@@ -13,17 +13,9 @@ describe('useLogin', () => {
       wrapper: Wrapper,
     });
 
-    act(() => {
-      result.current.setEmail('test@test.test');
-    });
-
-    act(() => {
-      result.current.setPassword('test@test.test');
-    });
-
-    act(() => {
-      result.current.login();
-    });
+    act(() => result.current.setEmail('test@test.test'));
+    act(() => result.current.setPassword('test@test.test'));
+    act(() => result.current.login());
 
     await waitForNextUpdate();
 
@@ -33,9 +25,7 @@ describe('useLogin', () => {
   test('사용자는 로그아웃 할 수 있다.', () => {
     const { result } = renderHook(() => useLogin(), { wrapper: Wrapper });
 
-    act(() => {
-      result.current.logout();
-    });
+    act(() => result.current.logout());
 
     expect(result.current.accessToken).toBe('');
   });

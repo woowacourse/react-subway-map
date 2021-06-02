@@ -12,25 +12,12 @@ describe('useSignup', () => {
       wrapper: Wrapper,
     });
 
-    act(() => {
-      result.current.setEmail('test@test.test');
-    });
+    act(() => result.current.setEmail('test@test.test'));
+    act(() => result.current.setAge(21));
+    act(() => result.current.setPassword('password'));
+    act(() => result.current.setPasswordForValidation('password'));
 
-    act(() => {
-      result.current.setAge(21);
-    });
-
-    act(() => {
-      result.current.setPassword('password');
-    });
-
-    act(() => {
-      result.current.setPasswordForValidation('password');
-    });
-
-    act(() => {
-      result.current.signUp();
-    });
+    act(() => result.current.signUp());
 
     await waitForNextUpdate();
 

@@ -19,13 +19,8 @@ describe('useStation', () => {
   test('사용자는 지하철 역을 추가할 수 있다.', async () => {
     const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
 
-    act(() => {
-      result.current.setName('멍청이파노');
-    });
-
-    act(() => {
-      result.current.addStation();
-    });
+    act(() => result.current.setName('멍청이파노'));
+    act(() => result.current.addStation());
 
     await waitFor(() =>
       expect(result.current.addMutation.isSuccess).toBeTruthy()
@@ -35,9 +30,7 @@ describe('useStation', () => {
   test('사용자는 지하철 역을 삭제할 수 있다.', async () => {
     const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
 
-    act(() => {
-      result.current.deleteStation(3);
-    });
+    act(() => result.current.deleteStation(3));
 
     await waitFor(() =>
       expect(result.current.deleteMutation.isSuccess).toBeTruthy()
