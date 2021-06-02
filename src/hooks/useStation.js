@@ -11,7 +11,7 @@ export const useStation = () => {
   const { accessTokenInCookie: accessToken, endpoint } = useCookie();
   const { enqueueSnackbar } = useSnackbar();
 
-  const requestGetStation = () => {
+  const requestGetStations = () => {
     dispatch(getStations({ endpoint, accessToken }));
   };
 
@@ -45,7 +45,7 @@ export const useStation = () => {
 
   return {
     stations,
-    requestGetStation,
+    requestGetStations,
 
     isAddSuccess,
     isAddFail,

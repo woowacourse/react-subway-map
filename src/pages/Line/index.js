@@ -1,69 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
+import { useSelector } from 'react-redux';
 
-import { useCookie } from '../../hooks';
-import { getStations } from '../../redux/stationSlice';
-import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
-
+import { useLine, useStation } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
-import { COLOR, LINE } from '../../constants';
+import { COLOR } from '../../constants';
 
 export const LinePage = () => {
-  const dispatch = useDispatch();
+  const {
+    lines,
+    requestGetLines,
+    isAddSuccess,
+    isAddFail,
+    requestAddLine,
+    notifyAddResult,
+    isDeleteSuccess,
+    isDeleteFail,
+    requestDeleteLine,
+    notifyDeleteResult,
+  } = useLine();
+  const { requestGetStations } = useStation();
   const { stations } = useSelector((store) => store.station);
-  const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
-  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
-  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsLineAddOpen(true);
   const handleCloseModal = () => setIsLineAddOpen(false);
 
   const handleAddLine = (e) => {
     e.preventDefault();
-
-    const name = e.target.name.value;
-    const upStationId = e.target.upStation.value;
-    const downStationId = e.target.downStation.value;
-    const distance = e.target.distance.value;
-    const color = e.target.color.value;
-
-    dispatch(addLine({ endpoint, accessToken, name, upStationId, downStationId, distance, color }));
+    requestAddLine({
+      name: e.target.name.value,
+      upStationId: e.target.upStation.value,
+      downStationId: e.target.downStation.value,
+      distance: e.target.distance.value,
+      color: e.target.color.value,
+    });
   };
 
-  const handleDeleteLine = (e, lineId) => {
-    dispatch(removeLine({ endpoint, accessToken, id: lineId }));
+  const handleDeleteLine = (_, id) => {
+    requestDeleteLine(id);
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getLines({ endpoint, accessToken }));
-    dispatch(getStations({ endpoint, accessToken }));
+    requestGetStations();
+    requestGetLines();
   }, []);
 
   useEffect(() => {
+    notifyAddResult();
     if (isAddSuccess) {
-      enqueueSnackbar(LINE.ADD_SUCCEED);
-      handleCloseModal();
+      setIsLineAddOpen(false);
     }
+  }, [isAddSuccess, isAddFail]);
 
-    if (isAddFail) {
-      enqueueSnackbar(LINE.ADD_FAIL);
-    }
-
-    if (isDeleteSuccess) {
-      enqueueSnackbar(LINE.DELETE_SUCCEED);
-    }
-
-    if (isDeleteFail) {
-      enqueueSnackbar(LINE.DELETE_FAIL);
-    }
-
-    dispatch(clearLineProgress());
-  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
+  useEffect(() => {
+    notifyDeleteResult();
+  }, [isDeleteSuccess, isDeleteFail]);
 
   return (
     <Section heading="노선 관리">

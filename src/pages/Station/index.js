@@ -8,7 +8,7 @@ import { STATION } from '../../constants';
 export const StationPage = () => {
   const {
     stations,
-    requestGetStation,
+    requestGetStations,
     isAddSuccess,
     isAddFail,
     requestAddStation,
@@ -36,12 +36,11 @@ export const StationPage = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    requestGetStation();
+    requestGetStations();
   }, []);
 
   useEffect(() => {
     notifyAddResult();
-
     if (isAddSuccess) {
       ref.current.focus();
       ref.current.value = '';
