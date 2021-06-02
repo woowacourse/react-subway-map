@@ -13,6 +13,7 @@ import Select from "../../../components/Select/Select";
 import useInput from "../../../hooks/@common/useInput";
 import useSelect from "../../../hooks/@common/useSelect";
 import { validateSectionDistance } from "../../../validations/section";
+import { isLineHasStation } from "../../../utils/line";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
@@ -23,23 +24,42 @@ interface Props {
 }
 
 const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
-  const [firstStation, secondStation] = stations;
+  const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect("");
+  const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect("");
 
-  const stationOptions = stations.map(({ id, name }) => ({
-    value: id,
-    text: name,
-    backgroundColor: line.stations.some((station) => station.id === id) ? CIRCLE_COLOR[line.color] : "#eee",
-  }));
-  const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect(String(firstStation.id));
-  const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect(
-    String(secondStation.id)
-  );
   const {
     inputValue: distance,
     errorMessage: distanceErrorMessage,
     setValueOnChange: setDistanceOnChange,
     validateOnBlur: validateDistanceOnBlur,
   } = useInput(validateSectionDistance);
+
+  const isStationExist = (stationId: Station["id"]) => {
+    return stations.some((station) => station.id === stationId);
+  };
+
+  const getProcessedStations = (line: Line, otherStationId: Station["id"]) => {
+    if (!isStationExist(otherStationId)) {
+      return stations;
+    }
+
+    if (isLineHasStation(line, otherStationId)) {
+      return stations.filter((station) => !line.stations.some((stationInLine) => stationInLine.id === station.id));
+    }
+
+    return line.stations;
+  };
+
+  const getStationOptions = (stations: Station[]) => {
+    return stations.map(({ id, name }) => ({
+      value: id,
+      text: name,
+      backgroundColor: line.stations.some((station) => station.id === id) ? CIRCLE_COLOR[line.color] : "#eee",
+    }));
+  };
+
+  const upStationOptions = getStationOptions(getProcessedStations(line, Number(downStationId)));
+  const downStationOptions = getStationOptions(getProcessedStations(line, Number(upStationId)));
 
   const onAddSection: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -69,7 +89,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
               value={upStationId}
               onChange={setUpStationIdOnChange}
               defaultOption="이전역"
-              options={stationOptions}
+              options={upStationOptions}
               required
               style={{ marginRight: "0.625rem" }}
             />
@@ -78,7 +98,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
               value={downStationId}
               onChange={setDownStationIdOnChange}
               defaultOption="다음역"
-              options={stationOptions}
+              options={downStationOptions}
               required
             />
           </Flex>
