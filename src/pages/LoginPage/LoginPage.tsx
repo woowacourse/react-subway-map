@@ -42,8 +42,8 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     return <Redirect to={PATH.ROOT} />;
   }
 
-  const isUnauthorizedError = (value: string): boolean => {
-    return value === STATUS_CODE.UNAUTHORIZED;
+  const isInvalidIdPassword = (value: string): boolean => {
+    return value === STATUS_CODE.INVALID_ID_PASSWORD;
   };
 
   const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -68,7 +68,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
 
-      if (isUnauthorizedError(error.message)) {
+      if (isInvalidIdPassword(error.message)) {
         setError(ERROR_MESSAGE.LOGIN);
         return;
       }
