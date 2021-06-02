@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useModal } from "../../components/@shared/Modal/hooks";
+import { useToggle } from "../../components/@shared/hooks";
+
 import Main from "../../components/@shared/Main";
 
 import Modal from "../../components/@shared/Modal";
@@ -18,7 +19,7 @@ import {
 
 const Lines = () => {
   const dispatch = useDispatch();
-  const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
+  const [isModalOpen, handleModalOpen, handleModalClose] = useToggle(false);
 
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);

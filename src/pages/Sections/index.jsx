@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import cx from "classnames";
 import STATUS from "../../constants/status";
-import { useModal } from "../../components/@shared/Modal/hooks";
+import { useToggle } from "../../components/@shared/hooks";
+
 import { useInput } from "../../components/@shared/Input/hooks";
 import Main from "../../components/@shared/Main";
 import Modal from "../../components/@shared/Modal";
@@ -31,7 +32,7 @@ const Sections = () => {
   const message = useSelector(selectLinesMessage);
   const lineList = useSelector(selectLineList);
   const stationList = useSelector(selectStationList);
-  const [isModalOpen, handleModalOpen, handleModalClose] = useModal(false);
+  const [isModalOpen, handleModalOpen, handleModalClose] = useToggle(false);
   const [lineId, handleLineIdChange] = useInput();
   const [upStationId, handleUpStationIdChange, , resetUpStationId] = useInput();
   const [downStationId, handleDownStationIdChange, , resetDownStationId] =
