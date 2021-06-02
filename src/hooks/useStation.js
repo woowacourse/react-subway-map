@@ -1,15 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
 
 import { useCookie } from '../hooks';
-import { getStations, addStation, clearStationProgress, removeStation } from '../redux/stationSlice';
-import { STATION } from '../constants';
+import { getStations, addStation, clearStationStatus, removeStation } from '../redux/stationSlice';
 
 export const useStation = () => {
   const dispatch = useDispatch();
-  const { stations, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.station);
+  const { stations, status } = useSelector((store) => store.station);
   const { accessTokenInCookie: accessToken, endpoint } = useCookie();
-  const { enqueueSnackbar } = useSnackbar();
 
   const requestGetStations = () => {
     dispatch(getStations({ endpoint, accessToken }));
@@ -23,38 +20,9 @@ export const useStation = () => {
     dispatch(removeStation({ endpoint, accessToken, id }));
   };
 
-  const notifyAddResult = () => {
-    if (isAddSuccess) {
-      enqueueSnackbar(STATION.ADD_SUCCEED);
-    }
-    if (isAddFail) {
-      enqueueSnackbar(STATION.ADD_FAIL);
-    }
-    dispatch(clearStationProgress());
+  const clearStatus = () => {
+    dispatch(clearStationStatus());
   };
 
-  const notifyDeleteResult = () => {
-    if (isDeleteSuccess) {
-      enqueueSnackbar(STATION.DELETE_SUCCEED);
-    }
-    if (isDeleteFail) {
-      enqueueSnackbar(STATION.DELETE_FAIL);
-    }
-    dispatch(clearStationProgress());
-  };
-
-  return {
-    stations,
-    requestGetStations,
-
-    isAddSuccess,
-    isAddFail,
-    requestAddStation,
-    notifyAddResult,
-
-    isDeleteSuccess,
-    isDeleteFail,
-    requestDeleteStation,
-    notifyDeleteResult,
-  };
+  return { stations, status, requestGetStations, requestAddStation, requestDeleteStation, clearStatus };
 };

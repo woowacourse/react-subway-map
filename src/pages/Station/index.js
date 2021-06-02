@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSnackbar } from 'notistack';
 
 import { useStation } from '../../hooks';
 import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
@@ -6,31 +7,21 @@ import { Form, List } from './style';
 import { STATION } from '../../constants';
 
 export const StationPage = () => {
-  const {
-    stations,
-    requestGetStations,
-    isAddSuccess,
-    isAddFail,
-    requestAddStation,
-    notifyAddResult,
-    isDeleteSuccess,
-    isDeleteFail,
-    requestDeleteStation,
-    notifyDeleteResult,
-  } = useStation();
+  const { stations, status, requestGetStations, requestAddStation, requestDeleteStation, clearStatus } = useStation();
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
+  const { enqueueSnackbar } = useSnackbar();
   const ref = useRef();
 
   const handleStationNameInputChange = (e) => {
     setInputStatus(getInputStatus(e.target.value));
   };
 
-  const handleAddStation = (e) => {
+  const handleStationAdd = (e) => {
     e.preventDefault();
     requestAddStation(e.target.name.value);
   };
 
-  const handleDeleteStation = (_, stationId) => {
+  const handleStationDelete = (_, stationId) => {
     requestDeleteStation(stationId);
   };
 
@@ -40,20 +31,19 @@ export const StationPage = () => {
   }, []);
 
   useEffect(() => {
-    notifyAddResult();
-    if (isAddSuccess) {
+    if (status.message) {
+      enqueueSnackbar(status.message);
+    }
+    if (status.isAddSuccess) {
       ref.current.focus();
       ref.current.value = '';
     }
-  }, [isAddSuccess, isAddFail]);
-
-  useEffect(() => {
-    notifyDeleteResult();
-  }, [isDeleteSuccess, isDeleteFail]);
+    clearStatus();
+  }, [status]);
 
   return (
     <Section heading="지하철 역 관리">
-      <Form onSubmit={handleAddStation}>
+      <Form onSubmit={handleStationAdd}>
         {/* eslint-disable jsx-a11y/no-autofocus */}
         <Input
           ref={ref}
@@ -72,7 +62,7 @@ export const StationPage = () => {
       </Form>
       <List>
         {stations?.map((station) => (
-          <StationListItem key={station.id} station={station} onClick={handleDeleteStation} />
+          <StationListItem key={station.id} station={station} onClick={handleStationDelete} />
         ))}
       </List>
     </Section>

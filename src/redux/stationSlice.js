@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { STATION } from '../constants';
+
 const getStations = createAsyncThunk('station/getStations', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/stations`, {
@@ -73,30 +75,26 @@ const removeStation = createAsyncThunk('station/removeStation', async ({ endpoin
   }
 });
 
+const INITIAL_STATUS = {
+  isLoading: false,
+  isAddSuccess: false,
+  message: '',
+};
+
+const INITIAL_STATE = {
+  stations: [],
+  status: { ...INITIAL_STATUS },
+};
+
 const stationSlice = createSlice({
   name: 'station',
-  initialState: {
-    stations: [],
-    isLoading: false,
-    isAddSuccess: false,
-    isAddFail: false,
-    isDeleteSuccess: false,
-    isDeleteFail: false,
-  },
+  initialState: INITIAL_STATE,
   reducers: {
-    clearStationProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
-    },
     clearStation: (state) => {
-      state.stations = [];
-      state.isLoading = false;
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
+      state = INITIAL_STATE;
+    },
+    clearStationStatus: (state) => {
+      state.status = INITIAL_STATUS;
     },
   },
   extraReducers: {
@@ -104,43 +102,50 @@ const stationSlice = createSlice({
       const { stations } = action.payload;
 
       state.stations = stations;
+      state.status.isLoading = false;
     },
     [getStations.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [getStations.rejected]: (state) => {
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = STATION.GET_FAIL;
     },
+
     [addStation.fulfilled]: (state, action) => {
       const { id, name } = action.payload;
 
       state.stations = [{ id, name }, ...state.stations];
-      state.isAddSuccess = true;
+      state.status.isAddSuccess = true;
+      state.status.message = STATION.ADD_SUCCEED;
+      state.status.isLoading = false;
     },
     [addStation.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [addStation.rejected]: (state) => {
-      state.isAddFail = true;
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = STATION.ADD_FAIL;
     },
+
     [removeStation.fulfilled]: (state, action) => {
       const { id } = action.payload;
 
       state.stations = state.stations.filter((station) => station.id !== id);
-      state.isDeleteSuccess = true;
+      state.status.message = STATION.DELETE_SUCCEED;
+      state.status.isLoading = false;
     },
     [removeStation.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [removeStation.rejected]: (state) => {
-      state.isDeleteFail = true;
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = STATION.DELETE_FAIL;
     },
   },
 });
 
 export { getStations, addStation, removeStation };
-export const { clearStationProgress, clearStation } = stationSlice.actions;
+export const { clearStation, clearStationStatus } = stationSlice.actions;
 
 export default stationSlice.reducer;

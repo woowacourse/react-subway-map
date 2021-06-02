@@ -43,9 +43,10 @@ export const STATION = {
   NAME_CANNOT_INCLUDE_ENGLISH: '역 이름은 영문 글자 없이 작성해주세요.',
   NAME_CANNOT_INCLUDE_SPECIAL_CHARACTER: '역 이름은 특수문자 없이 작성해주세요.',
 
-  ADD_SUCCEED: '역 추가에 성공하였습니다.',
+  GET_FAIL: '역 목록 조회에 실패하였습니다.',
+  ADD_SUCCEED: '역을 성공적으로 추가했습니다.',
   ADD_FAIL: '역 추가에 실패하였습니다.',
-  DELETE_SUCCEED: '역 삭제에 성공하였습니다.',
+  DELETE_SUCCEED: '역 성공적으로 삭제했습니다.',
   DELETE_FAIL: '역 삭제에 실패하였습니다.',
 };
 
