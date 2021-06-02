@@ -16,6 +16,8 @@ import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants
 import useInput from '../../hooks/useInput';
 import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
 
+import { isValidLength } from '../../utils/validator';
+
 import { Container, Form, Text, StationList } from './StationPage.style';
 import noStation from '../../assets/images/no_station.png';
 import { PageProps } from '../types';
@@ -28,10 +30,10 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const addSnackBar = useContext(SnackBarContext)?.addMessage;
 
   const fetchData = async () => {
     // 요청이 빠르게 끝나는 경우 로딩화면을 띄우지 않기 위함.
@@ -59,8 +61,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
   const formValidator = () => {
     const isStationInputValid =
-      stationInput.length >= STATION_VALUE.NAME_MIN_LENGTH &&
-      stationInput.length <= STATION_VALUE.NAME_MAX_LENGTH &&
+      isValidLength(stationInput, STATION_VALUE.NAME_MIN_LENGTH, STATION_VALUE.NAME_MAX_LENGTH) &&
       REGEX.KOREAN_DIGIT.test(stationInput);
     const isStationInputDuplicated = stations.some((item) => item.name === stationInput);
 
@@ -78,10 +79,19 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     return true;
   };
 
+  const isUnauthorizedError = (value: string): boolean => {
+    return value === STATUS_CODE.UNAUTHORIZED;
+  };
+
+  const isDuplicatedError = (value: string): boolean => {
+    return value === STATUS_CODE.STATION_DUPLICATED;
+  };
+
   const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     const isValidForm = formValidator();
+
     if (!isValidForm) {
       return;
     }
@@ -95,13 +105,13 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
 
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
+      if (isUnauthorizedError(error.message)) {
         addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
         return;
       }
 
-      if (error.message === STATUS_CODE.STATION_DUPLICATED) {
+      if (isDuplicatedError(error.message)) {
         setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
         await fetchData();
 
@@ -141,7 +151,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     <Container>
       <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
         <Heading1>지하철 역 관리</Heading1>
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <Form onSubmit={onStationNameSubmit}>
             <InputContainer
               labelText="지하철 역 이름을 입력하세요"
@@ -167,8 +177,9 @@ const StationPage = ({ setIsLoading }: PageProps) => {
               추가
             </Button>
           </Form>
+        ) : (
+          <Text>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</Text>
         )}
-        {!isLoggedIn && <Text>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</Text>}
       </Box>
       <Box backgroundColor={PALETTE.WHITE}>
         {stations.length === 0 ? (
@@ -185,7 +196,6 @@ const StationPage = ({ setIsLoading }: PageProps) => {
                     </Chip>
                   ))}
                 </p>
-
                 {isLoggedIn && (
                   <Button
                     type="button"

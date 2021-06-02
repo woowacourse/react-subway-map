@@ -24,7 +24,6 @@ const API = {
 
     return await response.json();
   },
-
   post: async (data: StationData, accessToken: string): Promise<void> => {
     await request(`${REQUEST_URL}/stations`, {
       method: 'POST',
