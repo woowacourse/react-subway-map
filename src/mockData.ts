@@ -2,22 +2,33 @@ const mockStationList = [
   {
     id: 1,
     name: '지하철역지하철역지하철역지하철역지하철역',
+    lines: [
+      {
+        id: 1,
+        name: '신분당선',
+        color: 'RED',
+      },
+    ],
   },
   {
     id: 2,
     name: '한티역',
+    lines: [],
   },
   {
     id: 3,
     name: '미역',
+    lines: [],
   },
   {
     id: 4,
     name: '지하철역지하철역지하철역지하철역지하철역',
+    lines: [],
   },
   {
     id: 5,
     name: '한티역',
+    lines: [],
   },
 ];
 
@@ -25,20 +36,20 @@ const mockLineList = [
   {
     id: 1,
     name: '신분당선',
-    color: 'red lighten-1',
+    color: 'RED',
     stations: [
-      { id: 1, name: '강남역' },
-      { id: 2, name: '판교역' },
+      { id: 1, name: '강남역', distance: 10 },
+      { id: 2, name: '판교역', distance: 10 },
       { id: 3, name: '정자역' },
     ],
   },
   {
     id: 2,
     name: '2호선',
-    color: 'green lighten-1',
+    color: 'GREEN',
     stations: [
-      { id: 1, name: '강남역' },
-      { id: 4, name: '역삼역' },
+      { id: 1, name: '강남역', distance: 10 },
+      { id: 4, name: '역삼역', distance: 10 },
       { id: 5, name: '잠실역' },
     ],
   },

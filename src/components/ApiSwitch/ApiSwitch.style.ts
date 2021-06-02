@@ -1,8 +1,5 @@
-import { Properties } from 'csstype';
 import styled from 'styled-components';
 import PALETTE from '../../constants/palette';
-import { MdCheck } from 'react-icons/md';
-
 interface ContainerProps {
   themeColor?: string;
 }
