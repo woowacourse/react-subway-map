@@ -5,6 +5,7 @@ import {
   useState,
   FormEventHandler,
   ChangeEventHandler,
+  useRef,
 } from 'react';
 import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
@@ -37,7 +38,7 @@ import useInput from '../../hooks/useInput';
 import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
 import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
 
-import apiRequest from '../../request';
+import { isValidLength, isValidRange } from '../../utils/validator';
 import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
 import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
@@ -62,8 +63,9 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
   const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
-  const [lineName, onlineNameChange, setLineName] = useInput('');
 
+  const formElement = useRef<HTMLFormElement>(null);
+  const [lineName, onlineNameChange, setLineName] = useInput('');
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');
@@ -78,19 +80,18 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   }, [lines]);
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
+  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   const isLineNameValid =
-    lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
-    lineName.length <= LINE_VALUE.NAME_MAX_LENGTH &&
+    isValidLength(lineName, LINE_VALUE.NAME_MIN_LENGTH, LINE_VALUE.NAME_MAX_LENGTH) &&
     REGEX.KOREAN_DIGIT.test(lineName);
   const isLineNameDuplicated = lines.some((item) => item.name === lineName);
   const isStationSelectDuplicated = upStationId === downStationId;
   const isDistanceValid =
     REGEX.ONLY_DIGIT.test(distance) &&
-    Number(distance) >= LINE_VALUE.DISTANCE_MIN_VALUE &&
-    Number(distance) <= LINE_VALUE.DISTANCE_MAX_VALUE;
+    isValidRange(Number(distance), LINE_VALUE.DISTANCE_MIN_VALUE, LINE_VALUE.DISTANCE_MAX_VALUE);
 
   const lineNameErrorMessage =
     lineName &&
@@ -119,6 +120,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     setUpStationId('');
     setDownStationId('');
     setDistance('');
+    formElement.current?.reset();
   };
 
   const fetchData = async () => {
@@ -129,7 +131,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
       setLines([]);
       setStations([]);
     } finally {
@@ -154,14 +156,17 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     setDownStationId(event.target.value);
   };
 
+  const isUnauthorizedError = (value: string): boolean => {
+    return value === STATUS_CODE.UNAUTHORIZED;
+  };
+
   const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const formElement = event.currentTarget;
-    const color = formElement['color'].value;
+    const color = formElement.current?.['color'].value;
 
     if (!isFormCompleted || !color) {
-      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
+      addSnackBar?.(ERROR_MESSAGE.INCOMPLETE_FORM);
       return;
     }
 
@@ -176,43 +181,45 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
       await addLine(newLine);
 
-      addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
+      addSnackBar?.(SUCCESS_MESSAGE.ADD_LINE);
       await fetchData();
 
       reset();
-      formElement.reset();
       setFormOpen(false);
     } catch (error) {
       console.error(error);
 
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+      if (isUnauthorizedError(error.message)) {
+        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
 
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
   };
 
   const onLineDelete = async (id: number, name: string) => {
-    if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
+    if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) {
+      return;
+    }
+
     try {
       await deleteLine(id);
       await fetchData();
-      addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
+      addSnackBar?.(SUCCESS_MESSAGE.DELETE_LINE);
     } catch (error) {
       console.error(error);
 
       if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
 
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
   };
 
@@ -239,7 +246,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
         )}
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
-        <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식">
+        <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식" ref={formElement}>
           <InputContainer
             labelText="노선 이름"
             validation={{ text: lineNameErrorMessage, isValid: false }}
