@@ -10,7 +10,7 @@ interface ButtonProps {
   isSelected?: boolean;
   children: React.ReactNode;
 
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({
