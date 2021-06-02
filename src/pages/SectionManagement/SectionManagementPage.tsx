@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
@@ -10,6 +10,8 @@ import useSelect from "../../hooks/@common/useSelect";
 import useLine from "../../hooks/useLine";
 import ListItem from "../../components/ListItem/ListItem";
 import { CIRCLE_COLOR } from "../../constants/color";
+import TEST_ID from "../../@test/testId";
+import { Distance, SectionListItemWrapper } from "./SectionManagementPage.styles";
 
 const SectionManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
@@ -22,15 +24,35 @@ const SectionManagementPage = () => {
 
   const targetLine = lines.find(({ id }) => id === Number(lineId));
 
+  const sectionList = targetLine?.stations.map((station, index) => {
+    return (
+      <SectionListItemWrapper>
+        <ListItem
+          circleColor={CIRCLE_COLOR[targetLine.color]}
+          key={station.id}
+          style={{ padding: "0.5625rem" }}
+          onUpdate={() => {}}
+          onDelete={async () => {
+            await deleteSection({ lineId: Number(lineId), stationId: station.id });
+          }}
+        >
+          {station.name}
+        </ListItem>
+        {index !== targetLine?.stations.length - 1 && <Distance>{targetLine?.sections[index].distance}km</Distance>}
+      </SectionListItemWrapper>
+    );
+  });
+
   return (
     <FlexCenter>
       <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
         <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
           <h2 style={{ marginBottom: "1rem" }}>🔁 구간 관리</h2>
           <Button
+            data-testid={TEST_ID.SECTION_MODAL_OPEN_BUTTON}
             type="button"
             onClick={() => {
-              setIsAddModalOpened(!isAddModalOpened);
+              setIsAddModalOpened(true);
             }}
           >
             구간 추가
@@ -44,20 +66,7 @@ const SectionManagementPage = () => {
             options={lines.map(({ id, name }) => ({ value: id, text: name }))}
           />
         </Flex>
-        <Flex style={{ width: "100%", flexDirection: "column" }}>
-          {targetLine?.stations.map(({ id, name }) => (
-            <ListItem
-              key={id}
-              style={{ padding: "0.5625rem" }}
-              onUpdate={() => {}}
-              onDelete={async () => {
-                await deleteSection({ lineId: Number(lineId), stationId: id });
-              }}
-            >
-              {name}
-            </ListItem>
-          ))}
-        </Flex>
+        <Flex style={{ width: "100%", flexDirection: "column" }}>{sectionList}</Flex>
       </Block>
       {isAddModalOpened && targetLine && (
         <SectionAddModal
