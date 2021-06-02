@@ -1,7 +1,7 @@
 import Button from '@shared/Button/Button';
 import Container from '@shared/Container/Container';
 import Input from '@shared/Input/Input';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import mailImg from 'assets/images/mail.png';
 import lockImg from 'assets/images/lock.png';
 import Title from '@shared/Title/Title';
@@ -13,30 +13,18 @@ import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import axios from 'axios';
 import MESSAGE from 'constants/message';
 import useData from 'hooks/useData';
+import useChangeEvent from 'hooks/useChangeEvent';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken } = useData();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setEmail(value);
-  };
-
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setPassword(value);
-  };
+  const { value: email, onChange: onEmailChange } = useChangeEvent('');
+  const { value: password, onChange: onPasswordChange } = useChangeEvent('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO: 추상화
     try {
       await dispatch(loginAsync({ email, password }));
       alert(MESSAGE.LOGIN.SUCCESS);
@@ -63,7 +51,7 @@ const Login = () => {
           placeholder="이메일을 입력해주세요"
           type="email"
           value={email}
-          onChange={handleEmail}
+          onChange={onEmailChange}
         />
         <Input
           className="mb-8"
@@ -71,7 +59,7 @@ const Login = () => {
           placeholder="비밀번호를 입력해주세요"
           type="password"
           value={password}
-          onChange={handlePassword}
+          onChange={onPasswordChange}
         />
         <ProfileSelector />
         <Button className="mb-4 p-2 shadow-md" size="w-full" text="로그인" />

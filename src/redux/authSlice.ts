@@ -2,10 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import MESSAGE from 'constants/message';
 
-interface SignupPayload {
+export interface SignupPayload {
   email: string;
   password: string;
-  age: number;
+  age: string;
 }
 
 interface LoginPayload {

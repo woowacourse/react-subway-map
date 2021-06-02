@@ -6,9 +6,10 @@ import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
+import useChangeEvent from 'hooks/useChangeEvent';
 import useData from 'hooks/useData';
 import useRedirect from 'hooks/useRedirect';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
 
@@ -16,13 +17,7 @@ const Station = () => {
   useRedirect(PATH.LOGIN);
   const dispatch = useDispatch();
   const { stations } = useData();
-  const [name, setName] = useState('');
-
-  const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setName(value);
-  };
+  const { value: name, setValue: setName, onChange: onNameChange } = useChangeEvent('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,7 +58,7 @@ const Station = () => {
           placeholder="역 이름을 입력해주세요"
           title="역 이름을 입력해주세요"
           value={name}
-          onChange={handleName}
+          onChange={onNameChange}
         />
         <Button className="shadow-md" text="추가" />
       </form>

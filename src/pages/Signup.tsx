@@ -1,7 +1,7 @@
 import Button from '@shared/Button/Button';
 import Container from '@shared/Container/Container';
 import Input from '@shared/Input/Input';
-import React, { useState } from 'react';
+import React from 'react';
 import mailImg from 'assets/images/mail.png';
 import lockImg from 'assets/images/lock.png';
 import personImg from 'assets/images/person.png';
@@ -12,38 +12,16 @@ import { useHistory } from 'react-router';
 import PATH from 'constants/PATH';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import MESSAGE from 'constants/message';
+import useChangeEvent from 'hooks/useChangeEvent';
 
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [age, setAge] = useState(0);
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setEmail(value);
-  };
-
-  const handleAge = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { valueAsNumber } = event.target;
-
-    setAge(valueAsNumber);
-  };
-
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setPassword(value);
-  };
-
-  const handlePasswordConfirmation = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setPasswordConfirmation(value);
-  };
+  const { value: email, onChange: onEmailChange } = useChangeEvent('');
+  const { value: age, onChange: onAgeChange } = useChangeEvent('');
+  const { value: password, onChange: onPasswordChange } = useChangeEvent('');
+  const { value: passwordConfirmation, onChange: onPasswordConfirmationChange } = useChangeEvent('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,8 +32,6 @@ const Signup = () => {
       return;
     }
 
-    // TODO: 추상화
-    // TODO: alert 변경
     try {
       await dispatch(signupAsync({ email, password, age }));
       alert(MESSAGE.SIGNUP.SUCCESS);
@@ -76,7 +52,7 @@ const Signup = () => {
           placeholder="이메일을 입력해주세요"
           type="email"
           value={email}
-          onChange={handleEmail}
+          onChange={onEmailChange}
         />
         <Input
           className="mb-4"
@@ -84,7 +60,7 @@ const Signup = () => {
           placeholder="나이를 입력해주세요"
           type="number"
           value={age}
-          onChange={handleAge}
+          onChange={onAgeChange}
         />
         <Input
           className="mb-4"
@@ -92,7 +68,7 @@ const Signup = () => {
           placeholder="비밀번호를 입력해주세요"
           type="password"
           value={password}
-          onChange={handlePassword}
+          onChange={onPasswordChange}
         />
         <Input
           className="mb-8"
@@ -100,7 +76,7 @@ const Signup = () => {
           placeholder="비밀번호를 한번 더 입력해주세요"
           type="password"
           value={passwordConfirmation}
-          onChange={handlePasswordConfirmation}
+          onChange={onPasswordConfirmationChange}
         />
         <ProfileSelector />
         <Button className="mb-4 p-2" size="w-full" text="회원가입" type="submit" />
