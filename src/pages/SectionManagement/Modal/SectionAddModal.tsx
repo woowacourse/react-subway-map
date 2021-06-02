@@ -1,6 +1,9 @@
 import React, { MouseEventHandler } from "react";
+import TEST_ID from "../../../@test/testId";
+import { INPUT_PLACEHOLDER } from "../../../constants/placeholder";
 import { Line, SectionAddRequestItem, Station } from "../../../@types/types";
 import { Flex } from "../../../components/@shared/FlexContainer/FlexContainer";
+import { CIRCLE_COLOR } from "../../../constants/color";
 
 import Block from "../../../components/Block/Block";
 import Button from "../../../components/Button/Button";
@@ -19,10 +22,14 @@ interface Props {
   deleteSection: ({ lineId, stationId }: { lineId: number; stationId: number }) => Promise<void>;
 }
 
-const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }: Props) => {
+const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
   const [firstStation, secondStation] = stations;
 
-  const stationOptions = stations.map(({ id, name }) => ({ value: id, text: name }));
+  const stationOptions = stations.map(({ id, name }) => ({
+    value: id,
+    text: name,
+    backgroundColor: line.stations.some((station) => station.id === id) ? CIRCLE_COLOR[line.color] : "#eee",
+  }));
   const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect(String(firstStation.id));
   const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect(
     String(secondStation.id)
@@ -58,6 +65,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
           <Input value={line.name} placeholder="노선 이름" style={{ marginBottom: "0.9375rem" }} disabled />
           <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
             <Select
+              data-testid={TEST_ID.SECTION_UP_STATION_SELECT}
               value={upStationId}
               onChange={setUpStationIdOnChange}
               defaultOption="이전역"
@@ -66,6 +74,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
               style={{ marginRight: "0.625rem" }}
             />
             <Select
+              data-testid={TEST_ID.SECTION_DOWN_STATION_SELECT}
               value={downStationId}
               onChange={setDownStationIdOnChange}
               defaultOption="다음역"
@@ -83,12 +92,12 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
               min="0.1"
               max="1000"
               step="0.1"
-              placeholder="상행 하행역 거리(km)"
+              placeholder={INPUT_PLACEHOLDER.SECTION_DISTANCE}
               required
             />
           </Flex>
           <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
-            <Button>구간 추가</Button>
+            <Button data-testid={TEST_ID.SECTION_ADD_BUTTON}>구간 추가</Button>
           </Flex>
         </Block>
       </form>

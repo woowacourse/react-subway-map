@@ -5,6 +5,7 @@ import { SelectBlock, SelectStylesProps } from "./Select.styles";
 interface Option {
   value: string | number;
   text: string;
+  backgroundColor?: string;
 }
 
 export interface Props extends SelectHTMLAttributes<HTMLSelectElement>, SelectStylesProps {
@@ -19,8 +20,8 @@ const Select = ({ defaultOption, options, ...props }: Props) => (
         {defaultOption}
       </option>
     )}
-    {options.map(({ value, text }) => (
-      <option key={value} value={value}>
+    {options.map(({ value, text, backgroundColor }) => (
+      <option key={value} value={value} style={{ backgroundColor: backgroundColor ? backgroundColor : "#eee" }}>
         {text}
       </option>
     ))}
