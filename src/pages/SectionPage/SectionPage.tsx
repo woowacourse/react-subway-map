@@ -33,19 +33,15 @@ import { PageProps } from '../types';
 import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
 import STATUS_CODE from '../../constants/statusCode';
-
-interface StationInLine extends APIReturnTypeStation {
-  distance?: number;
-}
+import { isValidRange } from '../../utils/validator';
 
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+const NO_SELECTED_LINE: number = -1;
 
 const SectionPage = ({ setIsLoading }: PageProps) => {
-  const [selectedLineId, setSelectedLineId] = useState<number>(-1);
-
   const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const [lines, setLines, fetchLines, fetchLine] = useLines(LINE_BEFORE_FETCH);
   const [addSection, deleteSection] = useSections();
 
   const [formOpen, setFormOpen] = useState<boolean>(false);
@@ -53,33 +49,44 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');
 
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
-
+  const [selectedLineId, setSelectedLineId] = useState<number>(NO_SELECTED_LINE);
   const currentLine = lines.find((line) => line.id === selectedLineId);
+
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   const isOnlyOneStationInCurrentLine = Boolean(
     Number(currentLine?.stations.some(({ id }) => id === Number(upStationId))) ^
       Number(currentLine?.stations.some(({ id }) => id === Number(downStationId)))
   );
   const isStationSelectDuplicated = upStationId === downStationId;
-
   const isDistanceValid =
     REGEX.ONLY_DIGIT.test(distance) &&
-    Number(distance) >= SECTION_VALUE.DISTANCE_MIN_VALUE &&
-    Number(distance) <= SECTION_VALUE.DISTANCE_MAX_VALUE;
+    isValidRange(
+      Number(distance),
+      SECTION_VALUE.DISTANCE_MIN_VALUE,
+      SECTION_VALUE.DISTANCE_MAX_VALUE
+    );
 
-  const stationSelectErrorMessage =
-    upStationId && downStationId
-      ? isStationSelectDuplicated
-        ? ERROR_MESSAGE.DUPLICATED_TERMINAL
-        : isOnlyOneStationInCurrentLine
-        ? ''
-        : ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED
-      : '';
+  const getStationSelectErrorMessage = () => {
+    if (!upStationId || !downStationId) {
+      return '';
+    }
 
+    if (isStationSelectDuplicated) {
+      return ERROR_MESSAGE.DUPLICATED_TERMINAL;
+    }
+
+    if (!isOnlyOneStationInCurrentLine) {
+      return ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED;
+    }
+  };
+
+  const stationSelectErrorMessage = getStationSelectErrorMessage();
   const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
+
   const isFormCompleted =
     upStationId &&
     downStationId &&
@@ -96,7 +103,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       clearTimeout(timer);
     } catch (error) {
       console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     } finally {
       setIsLoading(false);
     }
@@ -109,7 +116,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       await Promise.all([fetchStations(), fetchLines()]);
     } catch (error) {
       console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
       setLines([]);
       setStations([]);
     } finally {
@@ -144,16 +151,20 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     setDownStationId(event.target.value);
   };
 
+  const isUnauthorizedError = (value: string): boolean => {
+    return value === STATUS_CODE.UNAUTHORIZED;
+  };
+
   const onSectionSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     if (!currentLine) {
-      addMessage?.(ERROR_MESSAGE.NO_LINE_SELECTED);
+      addSnackBar?.(ERROR_MESSAGE.NO_LINE_SELECTED);
       return;
     }
 
     if (!isFormCompleted) {
-      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
+      addSnackBar?.(ERROR_MESSAGE.INCOMPLETE_FORM);
       return;
     }
 
@@ -166,7 +177,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
       await addSection(selectedLineId, newSection);
 
-      addMessage?.(SUCCESS_MESSAGE.ADD_SECTION);
+      addSnackBar?.(SUCCESS_MESSAGE.ADD_SECTION);
       await getLine(selectedLineId);
 
       reset();
@@ -174,21 +185,19 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     } catch (error) {
       console.error(error);
 
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+      if (isUnauthorizedError(error.message)) {
+        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
   };
 
   const onSectionDelete = async (stationId: number, stationName: string) => {
-    if (stationId === -1 || stationName === '') return;
-
     if (currentLine?.stations.length === 1) {
-      addMessage?.(ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE);
+      addSnackBar?.(ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE);
       return;
     }
 
@@ -198,30 +207,26 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
     try {
       await deleteSection(selectedLineId, stationId);
+      await getLine(selectedLineId);
 
-      addMessage?.(SUCCESS_MESSAGE.DELETE_SECTION);
+      addSnackBar?.(SUCCESS_MESSAGE.DELETE_SECTION);
     } catch (error) {
       console.error(error);
 
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
+      if (isUnauthorizedError(error.message)) {
+        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
         return;
       }
 
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
     }
-
-    await getLine(selectedLineId);
-
-    return stationId;
   };
 
   return (
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 구간 관리</Heading1>
-
         {isLoggedIn ? (
           <>
             <p>구간을 추가하시려면 '+' 버튼을 눌러주세요</p>
