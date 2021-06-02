@@ -6,14 +6,12 @@ import { ROUTE } from '../../constants';
 import { useModal } from '../../hooks';
 import { Container, Logo, List } from './style';
 
-const publicRoutes = [ROUTE.SIGN_IN];
-
-const privateRoutes = [
-  ROUTE.STATION_MANAGE,
-  ROUTE.LINE_MANAGE,
-  ROUTE.SECTION_MANAGE,
-  ROUTE.SIGN_OUT,
-];
+const privateRoutes = Object.values(ROUTE).filter(
+  ({ ACCESS }) => ACCESS === 'private' || ACCESS === 'all'
+);
+const publicRoutes = Object.values(ROUTE).filter(
+  ({ ACCESS }) => ACCESS === 'public' || ACCESS === 'all'
+);
 
 const Menu = ({ openModal }) => {
   const { token } = useSelector(({ user }) => user);
