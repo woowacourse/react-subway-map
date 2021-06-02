@@ -123,7 +123,7 @@ const SectionPage = () => {
           <Styled.DropdownWrapper>
             <Dropdown
               labelText="노선 선택"
-              defaultOption="노선 선택"
+              defaultValue="노선 선택"
               value={targetLine?.id || ''}
               options={lineOptions}
               onSelect={selectTargetLine}

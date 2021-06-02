@@ -156,7 +156,7 @@ const LineModal = ({
             <Styled.DropdownWrapper>
               <Dropdown
                 labelText="상행 종점"
-                defaultOption="상행 종점"
+                defaultValue="상행 종점"
                 value={upStationId}
                 options={stationOptions}
                 onSelect={(event) => setUpStationId(event.target.value)}
@@ -165,7 +165,7 @@ const LineModal = ({
             <Styled.DropdownWrapper>
               <Dropdown
                 labelText="하행 종점"
-                defaultOption="하행 종점"
+                defaultValue="하행 종점"
                 value={downStationId}
                 options={stationOptions}
                 onSelect={(event) => setDownStationId(event.target.value)}

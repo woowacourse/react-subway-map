@@ -70,7 +70,7 @@ const SectionModal = ({
     <Styled.Container onSubmit={addSection}>
       <Dropdown
         labelText="노선 선택"
-        defaultOption={targetLine?.name || '노선 선택'}
+        defaultValue={targetLine?.name || '노선 선택'}
         options={lineOptions}
         value={targetLine?.id || ''}
         onSelect={selectTargetLine}
@@ -79,7 +79,7 @@ const SectionModal = ({
         <Styled.DropdownWrapper>
           <Dropdown
             labelText="상행역"
-            defaultOption="상행역"
+            defaultValue="상행역"
             options={stationOptions}
             value={upStationId}
             onSelect={(event) => setUpStationId(event.target.value)}
@@ -88,7 +88,7 @@ const SectionModal = ({
         <Styled.DropdownWrapper>
           <Dropdown
             labelText="하행역"
-            defaultOption="하행역"
+            defaultValue="하행역"
             options={stationOptions}
             value={downStationId}
             onSelect={(event) => setDownStationId(event.target.value)}

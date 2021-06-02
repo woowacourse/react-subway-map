@@ -6,24 +6,26 @@ interface Option {
   value: string;
 }
 
-interface DropdownProps {
-  labelText: string;
-  defaultOption: string;
+interface Props {
+  labelText?: string;
+  defaultValue?: string;
   options: Option[];
   value: string | number;
   onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown = ({ labelText, defaultOption, options, value, onSelect }: DropdownProps) => {
+const Dropdown = ({ labelText, defaultValue, options, value, onSelect }: Props) => {
   return (
     <Styled.Label>
       {labelText}
       <Styled.Select value={value} onChange={onSelect} required>
-        <option value="" selected disabled hidden>
-          {defaultOption}
-        </option>
+        {defaultValue && (
+          <option value="" selected disabled hidden>
+            {defaultValue}
+          </option>
+        )}
         {options.map((option) => (
-          <option key={option.id} value={option.id} selected={option.value === defaultOption}>
+          <option key={option.id} value={option.id} selected={option.value === value}>
             {option.value}
           </option>
         ))}
