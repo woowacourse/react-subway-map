@@ -3,7 +3,7 @@ import Styled from './Button.styles';
 import { ButtonSize, ButtonType } from 'types';
 
 interface ButtonProps {
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   styleType: ButtonType;
   sizeType?: ButtonSize;

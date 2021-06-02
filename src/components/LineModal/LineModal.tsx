@@ -19,7 +19,7 @@ import {
 import useNotify from 'hooks/useNotify';
 
 interface Props {
-  stations: Station[] | undefined;
+  stations?: Station[];
   selectedLine?: Line;
   selectedColors: string[];
   closeModal: () => void;

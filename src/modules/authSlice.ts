@@ -5,7 +5,7 @@ import { User } from 'types';
 import { AppDispatch, RootState } from './hooks';
 
 export interface AuthState {
-  data: User | undefined;
+  data?: User;
   status: API_STATUS;
 }
 

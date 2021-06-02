@@ -11,7 +11,7 @@ import Styled from './SectionModal.styles';
 interface Props {
   targetLine?: Line;
   lines: Line[];
-  stations: Station[] | undefined;
+  stations?: Station[];
   selectTargetLine: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   closeModal: () => void;
   getLine: (targetLineId: Line['id']) => Promise<void>;
