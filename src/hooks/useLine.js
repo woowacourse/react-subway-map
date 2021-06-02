@@ -1,15 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
 
 import { useCookie } from '../hooks';
-import { getLines, addLine, clearLineProgress, removeLine } from '../redux/lineSlice';
-import { LINE } from '../constants';
+import { getLines, addLine, removeLine, clearLineStatus } from '../redux/lineSlice';
 
 export const useLine = () => {
   const dispatch = useDispatch();
-  const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
+  const { lines, status } = useSelector((store) => store.line);
   const { accessTokenInCookie: accessToken, endpoint } = useCookie();
-  const { enqueueSnackbar } = useSnackbar();
 
   const requestGetLines = () => {
     dispatch(getLines({ endpoint, accessToken }));
@@ -23,38 +20,16 @@ export const useLine = () => {
     dispatch(removeLine({ endpoint, accessToken, id }));
   };
 
-  const notifyAddResult = () => {
-    if (isAddSuccess) {
-      enqueueSnackbar(LINE.ADD_SUCCEED);
-    }
-    if (isAddFail) {
-      enqueueSnackbar(LINE.ADD_FAIL);
-    }
-    dispatch(clearLineProgress());
-  };
-
-  const notifyDeleteResult = () => {
-    if (isDeleteSuccess) {
-      enqueueSnackbar(LINE.DELETE_SUCCEED);
-    }
-    if (isDeleteFail) {
-      enqueueSnackbar(LINE.DELETE_FAIL);
-    }
-    dispatch(clearLineProgress());
+  const clearStatus = () => {
+    dispatch(clearLineStatus());
   };
 
   return {
     lines,
+    status,
     requestGetLines,
-
-    isAddSuccess,
-    isAddFail,
     requestAddLine,
-    notifyAddResult,
-
-    isDeleteSuccess,
-    isDeleteFail,
     requestDeleteLine,
-    notifyDeleteResult,
+    clearStatus,
   };
 };

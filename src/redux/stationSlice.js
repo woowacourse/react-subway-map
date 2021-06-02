@@ -116,9 +116,9 @@ const stationSlice = createSlice({
       const { id, name } = action.payload;
 
       state.stations = [{ id, name }, ...state.stations];
+      state.status.isLoading = false;
       state.status.isAddSuccess = true;
       state.status.message = STATION.ADD_SUCCEED;
-      state.status.isLoading = false;
     },
     [addStation.pending]: (state) => {
       state.status.isLoading = true;
@@ -132,8 +132,8 @@ const stationSlice = createSlice({
       const { id } = action.payload;
 
       state.stations = state.stations.filter((station) => station.id !== id);
-      state.status.message = STATION.DELETE_SUCCEED;
       state.status.isLoading = false;
+      state.status.message = STATION.DELETE_SUCCEED;
     },
     [removeStation.pending]: (state) => {
       state.status.isLoading = true;

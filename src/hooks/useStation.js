@@ -24,5 +24,12 @@ export const useStation = () => {
     dispatch(clearStationStatus());
   };
 
-  return { stations, status, requestGetStations, requestAddStation, requestDeleteStation, clearStatus };
+  return {
+    stations,
+    status,
+    requestGetStations,
+    requestAddStation,
+    requestDeleteStation,
+    clearStatus,
+  };
 };

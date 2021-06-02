@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { LINE } from '../constants';
+
 const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
     const response = await fetch(`${endpoint}/lines`, {
@@ -85,30 +87,26 @@ const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, access
   }
 });
 
+const INITIAL_STATUS = {
+  isLoading: false,
+  isAddSuccess: false,
+  message: '',
+};
+
+const INITIAL_STATE = {
+  stations: [],
+  status: { ...INITIAL_STATUS },
+};
+
 const lineSlice = createSlice({
   name: 'line',
-  initialState: {
-    lines: [],
-    isLoading: false,
-    isAddSuccess: false,
-    isAddFail: false,
-    isDeleteSuccess: false,
-    isDeleteFail: false,
-  },
+  initialState: INITIAL_STATE,
   reducers: {
-    clearLineProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
-    },
     clearLine: (state) => {
-      state.lines = [];
-      state.isLoading = false;
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
+      state = INITIAL_STATE;
+    },
+    clearLineStatus: (state) => {
+      state.status = INITIAL_STATUS;
     },
   },
   extraReducers: {
@@ -118,41 +116,43 @@ const lineSlice = createSlice({
       state.lines = lines;
     },
     [getLines.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [getLines.rejected]: (state) => {
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = LINE.GET_FAIL;
     },
     [addLine.fulfilled]: (state, action) => {
       const line = action.payload;
 
       state.lines = [line, ...state.lines];
-      state.isAddSuccess = true;
+      state.status.isAddSuccess = true;
+      state.status.message = LINE.ADD_SUCCEED;
     },
     [addLine.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [addLine.rejected]: (state) => {
-      state.isAddFail = true;
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = LINE.ADD_FAIL;
     },
     [removeLine.fulfilled]: (state, action) => {
       const { id } = action.payload;
 
       state.lines = state.lines.filter((line) => line.id !== id);
-      state.isDeleteSuccess = true;
+      state.status.message = LINE.DELETE_SUCCEED;
     },
     [removeLine.pending]: (state) => {
-      state.isLoading = true;
+      state.status.isLoading = true;
     },
     [removeLine.rejected]: (state) => {
-      state.isDeleteFail = true;
-      state.isLoading = false;
+      state.status.isLoading = false;
+      state.status.message = LINE.DELETE_FAIL;
     },
   },
 });
 
 export { getLines, addLine, removeLine };
-export const { clearLineProgress, clearLine } = lineSlice.actions;
+export const { clearLine, clearLineStatus } = lineSlice.actions;
 
 export default lineSlice.reducer;

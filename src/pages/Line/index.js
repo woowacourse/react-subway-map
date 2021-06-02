@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 import { useLine, useStation } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
@@ -8,21 +9,11 @@ import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, Inva
 import { COLOR } from '../../constants';
 
 export const LinePage = () => {
-  const {
-    lines,
-    requestGetLines,
-    isAddSuccess,
-    isAddFail,
-    requestAddLine,
-    notifyAddResult,
-    isDeleteSuccess,
-    isDeleteFail,
-    requestDeleteLine,
-    notifyDeleteResult,
-  } = useLine();
+  const { lines, status, requestGetLines, requestAddLine, requestDeleteLine, clearStatus } = useLine();
   const { requestGetStations } = useStation();
   const { stations } = useSelector((store) => store.station);
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenModal = () => setIsLineAddOpen(true);
   const handleCloseModal = () => setIsLineAddOpen(false);
@@ -49,15 +40,14 @@ export const LinePage = () => {
   }, []);
 
   useEffect(() => {
-    notifyAddResult();
-    if (isAddSuccess) {
+    if (status.message) {
+      enqueueSnackbar(status.message);
+    }
+    if (status.isAddSuccess) {
       setIsLineAddOpen(false);
     }
-  }, [isAddSuccess, isAddFail]);
-
-  useEffect(() => {
-    notifyDeleteResult();
-  }, [isDeleteSuccess, isDeleteFail]);
+    clearStatus();
+  }, [status]);
 
   return (
     <Section heading="노선 관리">

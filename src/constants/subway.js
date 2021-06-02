@@ -54,6 +54,7 @@ export const LINE = {
   NAME_LENGTH_MIN: 2,
   NAME_LENGTH_MAX: 10,
 
+  GET_FAIL: '노선 목록 조회에 실패하였습니다.',
   ADD_SUCCEED: '노선 추가에 성공하였습니다.',
   ADD_FAIL: '노선 추가에 실패하였습니다.',
   DELETE_SUCCEED: '노선 삭제에 성공하였습니다.',
