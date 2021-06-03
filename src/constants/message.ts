@@ -28,6 +28,7 @@ const MESSAGE = {
     LINE_NOT_EXISTS: '노선이 존재하지 않습니다',
     REQUIRE_CONNECT_STATION: '노선에 있는 지하철 역에서부터 연결되도록 선택해주세요',
     STATIONS_ALREADY_CONTAINS: '선택한 두 지하철 역이 이미 노선에 포함되어 있습니다',
+    ROUTE_NOT_EXISTS: '두 역이 연결되어 있지 않아 경로를 찾을 수 없었습니다',
   },
 };
 
