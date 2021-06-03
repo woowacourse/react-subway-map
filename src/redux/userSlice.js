@@ -10,10 +10,11 @@ const login = createAsyncThunk('user/login', async ({ endpoint, email, password 
     });
     const body = await response.json();
 
-    if (response.status === 200) {
-      return { ...body, email };
+    if (response.status !== 200) {
+      throw new Error(body.message);
     }
-    throw new Error(body.message);
+
+    return { ...body, email };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -28,10 +29,11 @@ const loginByToken = createAsyncThunk('user/loginByToken', async ({ endpoint, ac
     });
     const body = await response.json();
 
-    if (response.status === 200) {
-      return { email: body.email, accessToken };
+    if (response.status !== 200) {
+      throw new Error(body.message);
     }
-    throw new Error(body.message);
+
+    return { email: body.email, accessToken };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

@@ -12,11 +12,11 @@ const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToke
 
     const body = await response.json();
 
-    if (response.status === 200) {
-      return { lines: body };
+    if (response.status !== 200) {
+      throw new Error(body.message);
     }
 
-    throw new Error(body.message);
+    return { lines: body };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -41,18 +41,18 @@ const addLine = createAsyncThunk(
 
       const body = await response.json();
 
-      if (response.status === 201) {
-        return {
-          id: body.id,
-          startStation: body.stations[0],
-          endStation: body.stations[1],
-          name,
-          distance,
-          color,
-        };
+      if (response.status !== 201) {
+        throw new Error(body.message);
       }
 
-      throw new Error(body.message);
+      return {
+        id: body.id,
+        startStation: body.stations[0],
+        endStation: body.stations[1],
+        name,
+        distance,
+        color,
+      };
     } catch (e) {
       console.error(e);
       return thunkAPI.rejectWithValue(e);
@@ -67,13 +67,12 @@ const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, access
       accessToken,
     });
 
-    if (response.status === 204) {
-      return { id };
+    if (response.status !== 204) {
+      const { message } = await response.json();
+      throw new Error(message);
     }
 
-    const { message } = await response.json();
-
-    throw new Error(message);
+    return { id };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

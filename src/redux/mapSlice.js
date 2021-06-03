@@ -11,10 +11,11 @@ const getMap = createAsyncThunk('map/getMap', async ({ endpoint, accessToken }, 
     });
     const body = await response.json();
 
-    if (response.status === 200) {
-      return { map: body };
+    if (response.status !== 200) {
+      throw new Error(body.message);
     }
-    throw new Error(body.message);
+
+    return { map: body };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -35,13 +36,10 @@ const addSection = createAsyncThunk(
         accessToken,
       });
 
-      if (response.status === 201) {
-        return;
+      if (response.status !== 201) {
+        const body = await response.json();
+        throw new Error(body.message);
       }
-
-      const body = await response.json();
-
-      throw new Error(body.message);
     } catch (e) {
       console.error(e.response.data);
       return thunkAPI.rejectWithValue(e.response.data);
@@ -58,13 +56,10 @@ const removeSection = createAsyncThunk(
         accessToken,
       });
 
-      if (response.status === 204) {
-        return;
+      if (response.status !== 204) {
+        const { message } = await response.json();
+        throw new Error(message);
       }
-
-      const { message } = await response.json();
-
-      throw new Error(message);
     } catch (e) {
       console.error(e);
       return thunkAPI.rejectWithValue(e);

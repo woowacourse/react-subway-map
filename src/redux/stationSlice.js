@@ -11,11 +11,11 @@ const getStations = createAsyncThunk('station/getStations', async ({ endpoint, a
     });
     const body = await response.json();
 
-    if (response.status === 200) {
-      return { stations: body };
+    if (response.status !== 200) {
+      throw new Error(body.message);
     }
 
-    throw new Error(body.message);
+    return { stations: body };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -31,10 +31,11 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, acc
     });
     const body = await response.json();
 
-    if (response.status === 201) {
-      return body;
+    if (response.status !== 201) {
+      throw new Error(body.message);
     }
-    throw new Error(body.message);
+
+    return body;
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -48,13 +49,12 @@ const removeStation = createAsyncThunk('station/removeStation', async ({ endpoin
       accessToken,
     });
 
-    if (response.status === 204) {
-      return { id };
+    if (response.status !== 204) {
+      const { message } = await response.json();
+      throw new Error(message);
     }
 
-    const { message } = await response.json();
-
-    throw new Error(message);
+    return { id };
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

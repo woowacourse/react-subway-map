@@ -20,7 +20,7 @@ export const SignUpPage = () => {
     e.preventDefault();
     (async () => {
       try {
-        const response = requestPost({
+        const response = await requestPost({
           url: `${endpoint}/members`,
           body: JSON.stringify({
             email: e.target.email.value,
@@ -29,12 +29,12 @@ export const SignUpPage = () => {
           }),
         });
 
-        if (response.status === 201) {
-          enqueueSnackbar(SIGN_UP.SUCCEED);
-          goToLogin();
-        } else {
+        if (response.status !== 201) {
+          console.log(response.status);
           throw new Error();
         }
+        goToLogin();
+        enqueueSnackbar(SIGN_UP.SUCCEED);
       } catch (e) {
         console.error(e);
         enqueueSnackbar(SIGN_UP.FAIL);
