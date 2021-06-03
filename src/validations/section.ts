@@ -11,8 +11,6 @@ export const getSectionDistanceValidator = (maxDistance: number) => (distance: s
     throw Error("구간의 거리는 0.1km 이상, 1000km 이하여야 합니다");
   }
 
-  console.log(maxDistance);
-
   if (distanceAsNumber >= maxDistance) {
     throw Error("기존의 거리보다 긴 거리를 새로운 구간이 가질 수 없습니다");
   }
