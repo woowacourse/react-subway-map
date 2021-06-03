@@ -100,21 +100,24 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
         <StyledInput
           placeholder="거리"
           type="number"
+          min="0"
           value={distance}
           onChange={({ target }) => setDistance(target.valueAsNumber)}
         />
         <div>노선 색상</div>
-        <ColorPicker>
-          {lineColors.map((lineColor) => (
-            <ColorSelectButton
-              type="button"
-              selectedColor={color}
-              backgroundColor={lineColor}
-              onClick={() => setColor(lineColor)}
-              disabled={lines.data?.some((line) => line.color === lineColor)}
-            />
-          ))}
-        </ColorPicker>
+        <Suspense fallback={true}>
+          <ColorPicker>
+            {lineColors.map((lineColor) => (
+              <ColorSelectButton
+                type="button"
+                selectedColor={color}
+                backgroundColor={lineColor}
+                onClick={() => setColor(lineColor)}
+                disabled={lines.data?.some((line) => line.color === lineColor)}
+              />
+            ))}
+          </ColorPicker>
+        </Suspense>
         <Button disabled={!isValidForm}>노선 만들기</Button>
       </LineAddForm>
     </Modal>

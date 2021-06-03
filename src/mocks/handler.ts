@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { API_URL } from '../constants/API';
 import { mockLines, mockStations, mockToken } from './mockData';
 
-const loginHandlers = [
+export const loginHandlers = [
   rest.post(`${API_URL.MUNGTO}/login/token`, (req, res, ctx) => {
     return res(
       ctx.json({
@@ -12,13 +12,13 @@ const loginHandlers = [
   }),
 ];
 
-const signupHandlers = [
+export const signupHandlers = [
   rest.post(`${API_URL.MUNGTO}/members`, (req, res, ctx) => {
     return res(ctx.status(201), ctx.set('Location', '/members/2'));
   }),
 ];
 
-const stationHandlers = [
+export const stationHandlers = [
   rest.get(`${API_URL.MUNGTO}/stations`, (req, res, ctx) => {
     return res(ctx.json(mockStations));
   }),
@@ -32,7 +32,7 @@ const stationHandlers = [
   }),
 ];
 
-const lineHandlers = [
+export const lineHandlers = [
   rest.get(`${API_URL.MUNGTO}/lines`, (req, res, ctx) => {
     return res(ctx.json(mockLines));
   }),
@@ -53,7 +53,7 @@ const lineHandlers = [
   }),
 ];
 
-const sectionHandlers = [
+export const sectionHandlers = [
   rest.post(`${API_URL.MUNGTO}/lines/:lineId/sections`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
