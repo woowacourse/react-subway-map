@@ -14,29 +14,17 @@ import { validateEmail } from "../../validations/email";
 import { validatePassword, validatePasswordConfirm } from "../../validations/password";
 
 const SignupPage = () => {
-  const {
-    inputValue: email,
-    errorMessage: emailErrorMessage,
-    setValueOnChange: onEmailChange,
-    validateOnBlur: onEmailBlur,
-  } = useInput(validateEmail);
-  const {
-    inputValue: age,
-    errorMessage: ageErrorMessage,
-    setValueOnChange: onAgeChange,
-    validateOnBlur: onAgeBlur,
-  } = useInput(validateAge);
-  const {
-    inputValue: password,
-    errorMessage: passwordErrorMessage,
-    setValueOnChange: onPasswordChange,
-    validateOnBlur: onPasswordBlur,
-  } = useInput(validatePassword);
+  const { inputValue: email, errorMessage: emailErrorMessage, setValueOnChange: onEmailChange } = useInput(
+    validateEmail
+  );
+  const { inputValue: age, errorMessage: ageErrorMessage, setValueOnChange: onAgeChange } = useInput(validateAge);
+  const { inputValue: password, errorMessage: passwordErrorMessage, setValueOnChange: onPasswordChange } = useInput(
+    validatePassword
+  );
   const {
     inputValue: passwordConfirm,
     errorMessage: passwordConfirmErrorMessage,
     setValueOnChange: onPasswordConfirmChange,
-    validateOnBlur: onPasswordConfirmBlur,
   } = useInput((value: string) => {
     if (password && !passwordErrorMessage) {
       validatePasswordConfirm(password, value);
@@ -77,7 +65,6 @@ const SignupPage = () => {
               placeholder={INPUT_PLACEHOLDER.EMAIL}
               style={{ marginBottom: "15px" }}
               onChange={onEmailChange}
-              onBlur={onEmailBlur}
             />
             <Input
               type="number"
@@ -88,7 +75,6 @@ const SignupPage = () => {
               max="200"
               style={{ marginBottom: "15px" }}
               onChange={onAgeChange}
-              onBlur={onAgeBlur}
             />
             <Input
               type="password"
@@ -97,7 +83,6 @@ const SignupPage = () => {
               placeholder={INPUT_PLACEHOLDER.PASSWORD}
               style={{ marginBottom: "15px" }}
               onChange={onPasswordChange}
-              onBlur={onPasswordBlur}
             />
             <Input
               type="password"
@@ -106,7 +91,6 @@ const SignupPage = () => {
               placeholder={INPUT_PLACEHOLDER.PASSWORD_CONFIRM}
               style={{ marginBottom: "25px" }}
               onChange={onPasswordConfirmChange}
-              onBlur={onPasswordConfirmBlur}
             />
             <Button data-testid={TEST_ID.SIGNUP_BUTTON} size="block">
               확인

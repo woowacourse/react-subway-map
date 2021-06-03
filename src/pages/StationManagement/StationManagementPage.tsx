@@ -14,7 +14,6 @@ const StationManagementPage = () => {
     inputValue: stationName,
     errorMessage: stationNameErrorMessage,
     setValueOnChange: onStationNameChange,
-    validateOnBlur: onStationNameBlur,
     setInputValue: setStationName,
   } = useInput(validateStationName);
 
@@ -48,7 +47,6 @@ const StationManagementPage = () => {
                 errorMessage={stationNameErrorMessage}
                 placeholder="역 이름"
                 onChange={onStationNameChange}
-                onBlur={onStationNameBlur}
                 required
               ></Input>
             </Flex>

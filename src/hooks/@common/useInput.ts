@@ -26,11 +26,7 @@ const useInput = (validator: Validator) => {
     validate(value);
   };
 
-  const validateOnBlur: React.FocusEventHandler<HTMLInputElement> = ({ target }) => {
-    const { value } = target;
-  };
-
-  return { inputValue, errorMessage, setValueOnChange, validateOnBlur, setInputValue };
+  return { inputValue, errorMessage, setValueOnChange, setInputValue };
 };
 
 export default useInput;

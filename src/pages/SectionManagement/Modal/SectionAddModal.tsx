@@ -27,12 +27,9 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
   const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect("");
   const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect("");
 
-  const {
-    inputValue: distance,
-    errorMessage: distanceErrorMessage,
-    setValueOnChange: setDistanceOnChange,
-    validateOnBlur: validateDistanceOnBlur,
-  } = useInput(validateSectionDistance);
+  const { inputValue: distance, errorMessage: distanceErrorMessage, setValueOnChange: setDistanceOnChange } = useInput(
+    validateSectionDistance
+  );
 
   const isStationExist = (stationId: Station["id"]) => {
     return stations.some((station) => station.id === stationId);
@@ -106,7 +103,6 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
             <Input
               value={distance}
               onChange={setDistanceOnChange}
-              onBlur={validateDistanceOnBlur}
               errorMessage={distanceErrorMessage}
               type="number"
               min="0.1"

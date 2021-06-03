@@ -13,18 +13,12 @@ import TEST_ID from "../../@test/testId";
 import { MoveToSignupPageLink } from "./LoginPage.styles";
 
 const LoginPage = () => {
-  const {
-    inputValue: email,
-    errorMessage: emailErrorMessage,
-    setValueOnChange: onEmailChange,
-    validateOnBlur: onEmailBlur,
-  } = useInput(validateEmail);
-  const {
-    inputValue: password,
-    errorMessage: passwordErrorMessage,
-    setValueOnChange: onPasswordChange,
-    validateOnBlur: onPasswordBlur,
-  } = useInput(validatePassword);
+  const { inputValue: email, errorMessage: emailErrorMessage, setValueOnChange: onEmailChange } = useInput(
+    validateEmail
+  );
+  const { inputValue: password, errorMessage: passwordErrorMessage, setValueOnChange: onPasswordChange } = useInput(
+    validatePassword
+  );
 
   const { login } = useAuth();
   const history = useHistory();
@@ -59,7 +53,6 @@ const LoginPage = () => {
               placeholder="이메일"
               style={{ marginBottom: "15px" }}
               onChange={onEmailChange}
-              onBlur={onEmailBlur}
               required
             />
             <Input
@@ -69,7 +62,6 @@ const LoginPage = () => {
               placeholder="비밀번호"
               style={{ marginBottom: "15px" }}
               onChange={onPasswordChange}
-              onBlur={onPasswordBlur}
               required
             />
             <Button data-testid={TEST_ID.LOGIN_BUTTON} size="block" style={{ marginBottom: "15px" }}>

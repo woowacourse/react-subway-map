@@ -23,20 +23,14 @@ interface Props {
 const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
   const [firstStation, secondStation] = stations;
 
-  const {
-    inputValue: lineName,
-    errorMessage: lineNameErrorMessage,
-    setValueOnChange: setLineNameOnChange,
-    validateOnBlur: lineNameValidateOnBlur,
-  } = useInput(validateLineName);
+  const { inputValue: lineName, errorMessage: lineNameErrorMessage, setValueOnChange: setLineNameOnChange } = useInput(
+    validateLineName
+  );
   const { selectValue: upStationId, setValueOnChange: setUpStationOnChange } = useSelect(String(firstStation.id));
   const { selectValue: downStationId, setValueOnChange: setDownStationOnChange } = useSelect(String(secondStation.id));
-  const {
-    inputValue: distance,
-    errorMessage: disatanceErrorMessage,
-    setValueOnChange: setDistanceOnChange,
-    validateOnBlur: validateDistanceOnBlur,
-  } = useInput(validateSectionDistance);
+  const { inputValue: distance, errorMessage: disatanceErrorMessage, setValueOnChange: setDistanceOnChange } = useInput(
+    validateSectionDistance
+  );
 
   const DEFAULT_COLOR = "bg-cyan-500";
   const [color, setColor] = useState<keyof typeof CIRCLE_COLOR>(DEFAULT_COLOR);
@@ -69,7 +63,6 @@ const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
             value={lineName}
             errorMessage={lineNameErrorMessage}
             onChange={setLineNameOnChange}
-            onBlur={lineNameValidateOnBlur}
             placeholder="노선 이름"
             style={{ marginBottom: "0.9375rem" }}
             required
@@ -90,7 +83,6 @@ const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
               value={distance}
               errorMessage={disatanceErrorMessage}
               onChange={setDistanceOnChange}
-              onBlur={validateDistanceOnBlur}
               step="0.1"
               min="0.1"
               placeholder="상행 하행역 거리(km)"
