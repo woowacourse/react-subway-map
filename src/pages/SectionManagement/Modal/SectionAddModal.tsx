@@ -12,7 +12,7 @@ import Modal from "../../../components/Modal/Modal";
 import Select from "../../../components/Select/Select";
 import useInput from "../../../hooks/@common/useInput";
 import useSelect from "../../../hooks/@common/useSelect";
-import { validateSectionDistance } from "../../../validations/section";
+import { getSectionDistanceValidator } from "../../../validations/section";
 import { isLineHasStation } from "../../../utils/line";
 
 interface Props {
@@ -27,13 +27,33 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
   const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect("");
   const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect("");
 
-  const { inputValue: distance, errorMessage: distanceErrorMessage, setValueOnChange: setDistanceOnChange } = useInput(
-    validateSectionDistance
-  );
-
   const isStationExist = (stationId: Station["id"]) => {
     return stations.some((station) => station.id === stationId);
   };
+
+  const getExistingDistance = () => {
+    if (isStationExist(Number(upStationId))) {
+      const existingSection = line.sections.find((section) => section.upStation.id === Number(upStationId));
+
+      if (existingSection) {
+        return existingSection.distance;
+      }
+    }
+
+    if (isStationExist(Number(downStationId))) {
+      const existingSection = line.sections.find((section) => section.upStation.id === Number(downStationId));
+
+      if (existingSection) {
+        return existingSection.distance;
+      }
+    }
+
+    return 1000;
+  };
+
+  const { inputValue: distance, errorMessage: distanceErrorMessage, setValueOnChange: setDistanceOnChange } = useInput(
+    getSectionDistanceValidator(getExistingDistance())
+  );
 
   const getProcessedStations = (line: Line, otherStationId: Station["id"]) => {
     if (!isStationExist(otherStationId)) {
@@ -99,7 +119,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
               required
             />
           </Flex>
-          <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
+          <Flex style={{ width: "100%", flexDirection: "column", marginBottom: "0.9375rem" }}>
             <Input
               value={distance}
               onChange={setDistanceOnChange}

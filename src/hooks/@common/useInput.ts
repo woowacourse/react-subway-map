@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type Validator = (value: string) => void | never;
+type Validator = (value: any) => void | never;
 
 const useInput = (validator: Validator) => {
   const [inputValue, setInputValue] = useState("");
