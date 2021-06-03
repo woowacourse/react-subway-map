@@ -196,4 +196,18 @@ export const handlers = [
       })
     );
   }),
+
+  rest.get(`${BACKEND[CREWS.DANYEE].baseUrl}/paths`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        defaultFare: 1250,
+        distance: 10,
+        stations: [
+          { id: 5, name: '교대' },
+          { id: 11, name: '서대문' },
+        ],
+      })
+    );
+  }),
 ];

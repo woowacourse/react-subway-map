@@ -101,14 +101,16 @@ const SearchPage = () => {
                 <Styled.ResultItem>요금</Styled.ResultItem>
               </Styled.ResultRow>
               <Styled.ResultRow>
-                <Styled.ResultItem>{result.distance}km</Styled.ResultItem>
-                <Styled.ResultItem>{result.defaultFare.toLocaleString()}원</Styled.ResultItem>
+                <Styled.ResultItem role="cell">{result.distance}km</Styled.ResultItem>
+                <Styled.ResultItem role="cell">
+                  {result.defaultFare.toLocaleString()}원
+                </Styled.ResultItem>
               </Styled.ResultRow>
 
               <Styled.DetailRoute>
                 {result.stations.map((station, index) => (
                   <Styled.Station key={station.id}>
-                    <Styled.StationName>{station.name}</Styled.StationName>
+                    <Styled.StationName role="listitem">{station.name}</Styled.StationName>
                     {index < result.stations.length - 1 && (
                       <Styled.ArrowWrapper key={`${station.id}-arrow`}>
                         <RightArrowIcon />
