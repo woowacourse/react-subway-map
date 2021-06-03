@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack';
 
 import { useCookie, useRouter } from '../../hooks';
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
+import { requestPost } from '../../utils';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 
@@ -17,23 +18,14 @@ export const SignUpPage = () => {
 
   const handleSignUpFormSubmit = (e) => {
     e.preventDefault();
-
-    const email = e.target.email.value;
-    const age = e.target.age.value;
-    const password = e.target.password.value;
-
     (async () => {
       try {
-        const response = await fetch(`${endpoint}/members`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
+        const response = requestPost({
+          url: `${endpoint}/members`,
           body: JSON.stringify({
-            email,
-            age,
-            password,
+            email: e.target.email.value,
+            age: e.target.age.value,
+            password: e.target.password.value,
           }),
         });
 

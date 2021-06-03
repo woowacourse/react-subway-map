@@ -1,24 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { requestDelete, requestGet, requestPost } from '../utils';
 import { SECTION } from '../constants';
 
 const getMap = createAsyncThunk('map/getMap', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/lines/map`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
+    const response = await requestGet({
+      url: `${endpoint}/lines/map`,
+      accessToken,
     });
-
     const body = await response.json();
 
     if (response.status === 200) {
       return { map: body };
     }
-
     throw new Error(body.message);
   } catch (e) {
     console.error(e);
@@ -30,18 +25,14 @@ const addSection = createAsyncThunk(
   'map/addSection',
   async ({ endpoint, accessToken, lineId, upStationId, downStationId, distance }, thunkAPI) => {
     try {
-      const response = await fetch(`${endpoint}/lines/${lineId}/sections`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
+      const response = await requestPost({
+        url: `${endpoint}/lines/${lineId}/sections`,
         body: JSON.stringify({
           upStationId,
           downStationId,
           distance,
         }),
+        accessToken,
       });
 
       if (response.status === 201) {
@@ -62,9 +53,9 @@ const removeSection = createAsyncThunk(
   'map/removeSection',
   async ({ endpoint, accessToken, lineId, stationId }, thunkAPI) => {
     try {
-      const response = await fetch(`${endpoint}/lines/${lineId}/sections?stationId=${stationId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${accessToken}` },
+      const response = await requestDelete({
+        url: `${endpoint}/lines/${lineId}/sections?stationId=${stationId}`,
+        accessToken,
       });
 
       if (response.status === 204) {

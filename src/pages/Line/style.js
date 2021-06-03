@@ -48,6 +48,7 @@ export const StationsDetail = styled.div`
 
 export const StationName = styled.span`
   display: inline-block;
+  min-width: 6rem;
   max-width: 60%;
   padding: 0.5rem;
 

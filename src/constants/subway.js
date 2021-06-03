@@ -46,7 +46,7 @@ export const STATION = {
   GET_FAIL: '역 목록 조회에 실패하였습니다.',
   ADD_SUCCEED: '역을 성공적으로 추가했습니다.',
   ADD_FAIL: '역 추가에 실패하였습니다.',
-  DELETE_SUCCEED: '역 성공적으로 삭제했습니다.',
+  DELETE_SUCCEED: '역을 성공적으로 삭제했습니다.',
   DELETE_FAIL: '역 삭제에 실패하였습니다.',
 };
 

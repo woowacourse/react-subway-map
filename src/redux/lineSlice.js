@@ -1,16 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { requestDelete, requestGet, requestPost } from '../utils';
 import { LINE } from '../constants';
 
 const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/lines`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
+    const response = await requestGet({
+      url: `${endpoint}/lines`,
+      accessToken,
     });
 
     const body = await response.json();
@@ -30,13 +27,8 @@ const addLine = createAsyncThunk(
   'line/addLine',
   async ({ endpoint, accessToken, name, upStationId, downStationId, distance, color }, thunkAPI) => {
     try {
-      const response = await fetch(`${endpoint}/lines`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
+      const response = await requestPost({
+        url: `${endpoint}/lines`,
         body: JSON.stringify({
           name,
           upStationId,
@@ -44,6 +36,7 @@ const addLine = createAsyncThunk(
           distance,
           color,
         }),
+        accessToken,
       });
 
       const body = await response.json();
@@ -51,9 +44,9 @@ const addLine = createAsyncThunk(
       if (response.status === 201) {
         return {
           id: body.id,
-          name,
           startStation: body.stations[0],
           endStation: body.stations[1],
+          name,
           distance,
           color,
         };
@@ -69,9 +62,9 @@ const addLine = createAsyncThunk(
 
 const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, accessToken, id }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/lines/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${accessToken}` },
+    const response = await requestDelete({
+      url: `${endpoint}/lines/${id}`,
+      accessToken,
     });
 
     if (response.status === 204) {

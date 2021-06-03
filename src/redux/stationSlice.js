@@ -1,18 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { requestGet, requestPost, requestDelete } from '../utils/httpClient';
 import { STATION } from '../constants';
 
 const getStations = createAsyncThunk('station/getStations', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/stations`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
+    const response = await requestGet({
+      url: `${endpoint}/stations`,
+      accessToken,
     });
-
     const body = await response.json();
 
     if (response.status === 200) {
@@ -28,24 +24,16 @@ const getStations = createAsyncThunk('station/getStations', async ({ endpoint, a
 
 const addStation = createAsyncThunk('station/addStation', async ({ endpoint, accessToken, name }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/stations`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        name,
-      }),
+    const response = await requestPost({
+      url: `${endpoint}/stations`,
+      body: JSON.stringify({ name }),
+      accessToken,
     });
-
     const body = await response.json();
 
     if (response.status === 201) {
       return body;
     }
-
     throw new Error(body.message);
   } catch (e) {
     console.error(e);
@@ -55,11 +43,9 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, acc
 
 const removeStation = createAsyncThunk('station/removeStation', async ({ endpoint, accessToken, id }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/stations/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+    const response = await requestDelete({
+      url: `${endpoint}/stations/${id}`,
+      accessToken,
     });
 
     if (response.status === 204) {

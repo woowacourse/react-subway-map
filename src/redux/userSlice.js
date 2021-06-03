@@ -1,25 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { requestGet, requestPost } from '../utils';
+
 const login = createAsyncThunk('user/login', async ({ endpoint, email, password }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/login/token`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+    const response = await requestPost({
+      url: `${endpoint}/login/token`,
+      body: JSON.stringify({ email, password }),
     });
-
     const body = await response.json();
 
     if (response.status === 200) {
       return { ...body, email };
     }
-
     throw new Error(body.message);
   } catch (e) {
     console.error(e);
@@ -29,21 +22,15 @@ const login = createAsyncThunk('user/login', async ({ endpoint, email, password 
 
 const loginByToken = createAsyncThunk('user/loginByToken', async ({ endpoint, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/members/me`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
+    const response = await requestGet({
+      url: `${endpoint}/members/me`,
+      accessToken,
     });
-
     const body = await response.json();
 
     if (response.status === 200) {
       return { email: body.email, accessToken };
     }
-
     throw new Error(body.message);
   } catch (e) {
     console.error(e);
