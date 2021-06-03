@@ -59,6 +59,17 @@ const shapeStyles = {
       height: 18px;
     }
   `,
+
+  round: css`
+    border-radius: 100px;
+    padding: 0.7em 1.4em;
+
+    svg {
+      height: 18px;
+      margin-right: 3px;
+      vertical-align: middle;
+    }
+  `,
 };
 
 export const Button = styled.button<ButtonProps>`

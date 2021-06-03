@@ -12,3 +12,14 @@ export const FABWrapper = styled.div`
   bottom: 1rem;
   right: 1rem;
 `;
+
+export const ButtonWrapper = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+`;
+
+export const Form = styled.form`
+  margin: 1rem 0;
+`;

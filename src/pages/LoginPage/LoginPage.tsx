@@ -1,41 +1,36 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { Card, Input, Button, Select } from '../../components';
+import { Card, Input, Button } from '../../components';
 import * as Styled from './LoginPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
 import { ReactComponent as KeyIcon } from '../../assets/icons/key-solid.svg';
 import useInput from '../../hooks/useInput';
-import useSelect from '../../hooks/useSelect';
 import REGEX from '../../constants/regex';
 import ROUTES from '../../constants/routes';
-import BACKEND from '../../constants/backend';
-import { ApiStatus, CREWS } from '../../types';
+import { ApiStatus } from '../../types';
 import useAuth from '../../hooks/useAuth';
 import MESSAGE from '../../constants/message';
 
-interface ILocationState {
+interface LocationState {
   from: { pathname: string };
 }
 
 const LoginPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { onLogin, onResetError, server, isLogin, error } = useAuth();
+  const { onLogin, onResetError, isLogin, error } = useAuth();
 
-  const { value: selectedServer, onChange: onChangeSelectedServer } = useSelect(
-    server || CREWS.DANYEE
-  );
   const { value: email, onChange: onChangeEmail } = useInput('');
   const { value: password, onChange: onChangePassword } = useInput('');
 
   const history = useHistory();
-  const location = useLocation<ILocationState>();
+  const location = useLocation<LocationState>();
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await onLogin(selectedServer, { email, password });
+    const response = await onLogin({ email, password });
 
     if (response.meta.requestStatus === ApiStatus.REJECTED) return;
     enqueueSnackbar(MESSAGE.SUCCESS.LOGIN);
@@ -64,7 +59,7 @@ const LoginPage = () => {
         <Card>
           <Styled.Form onSubmit={handleLogin}>
             <Styled.HeaderText>로그인</Styled.HeaderText>
-            <Styled.FormItem>
+            {/* <Styled.FormItem>
               <Select
                 labelText="서버 선택"
                 value={selectedServer}
@@ -76,7 +71,7 @@ const LoginPage = () => {
                   </option>
                 ))}
               </Select>
-            </Styled.FormItem>
+            </Styled.FormItem> */}
             <Styled.FormItem>
               <Input
                 value={email}

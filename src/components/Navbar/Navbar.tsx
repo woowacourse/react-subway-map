@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Button from '../Button/Button';
 import ROUTES from '../../constants/routes';
 import * as Styled from './Navbar.styles';
 import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
+  const history = useHistory();
   const location = useLocation();
   const { isLogin, onLogout } = useAuth();
+
+  const handleLogout = () => {
+    onLogout();
+    history.push(ROUTES.ROOT);
+  };
 
   return (
     <Styled.Navbar>
@@ -58,7 +64,11 @@ const Navbar = () => {
 
         <Styled.NavItem>
           {isLogin ? (
-            <Button variant="text" active={location.pathname === ROUTES.ROOT} onClick={onLogout}>
+            <Button
+              variant="text"
+              active={location.pathname === ROUTES.ROOT}
+              onClick={handleLogout}
+            >
               로그아웃
             </Button>
           ) : (

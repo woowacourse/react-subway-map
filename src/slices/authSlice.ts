@@ -8,11 +8,9 @@ import { resetStation } from './stationSlice';
 
 interface LoginData {
   accessToken: string;
-  server: CREWS;
 }
 
 interface LoginAttributes {
-  server: CREWS;
   form: {
     email: string;
     password: string;
@@ -45,8 +43,7 @@ export const requestLogin = createAsyncThunk<
     rejectValue: Error;
   }
 >('auth/requestLogin', async (loginData: LoginAttributes, { rejectWithValue, dispatch }) => {
-  const { server, form } = loginData;
-  API.defaults.baseURL = BACKEND[server].baseUrl;
+  const { form } = loginData;
 
   try {
     const response = await API.post('/login', form);
@@ -57,12 +54,11 @@ export const requestLogin = createAsyncThunk<
     API.defaults.headers.delete.Authorization = `Bearer ${accessToken}`;
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
-    localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, server);
 
     dispatch(resetStation());
     dispatch(resetLine());
 
-    return { accessToken, server };
+    return { accessToken };
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
@@ -81,6 +77,12 @@ export const authSlice = createSlice({
     resetError: (state) => {
       state.error = null;
     },
+    setServer: (state, { payload }: { payload: CREWS }) => {
+      state.server = payload;
+      API.defaults.baseURL = BACKEND[payload].baseUrl;
+
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(requestLogin.pending, (state) => {
@@ -92,7 +94,6 @@ export const authSlice = createSlice({
     builder.addCase(requestLogin.fulfilled, (state, { payload }) => {
       state.status = ApiStatus.FULFILLED;
       state.accessToken = payload.accessToken;
-      state.server = payload.server;
       state.isLogin = true;
       state.error = null;
     });
@@ -105,6 +106,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout, resetError } = authSlice.actions;
+export const { logout, resetError, setServer } = authSlice.actions;
 
 export default authSlice.reducer;

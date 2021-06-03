@@ -2,25 +2,24 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { Card, Input, Button, Select } from '../../components';
+import { Card, Input, Button } from '../../components';
 import * as Styled from './SignUpPage.styles';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-solid.svg';
 import { ReactComponent as KeyIcon } from '../../assets/icons/key-solid.svg';
 import { ReactComponent as UserIcon } from '../../assets/icons/user-solid.svg';
-import BACKEND from '../../constants/backend';
 import useInput from '../../hooks/useInput';
-import useSelect from '../../hooks/useSelect';
+import useAuth from '../../hooks/useAuth';
+import BACKEND from '../../constants/backend';
 import ROUTES from '../../constants/routes';
 import MESSAGE from '../../constants/message';
 import REGEX from '../../constants/regex';
-import { CREWS } from '../../types';
 
 const SignUpPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const history = useHistory();
 
-  const { value: server, onChange: onChangeServer } = useSelect(CREWS.DANYEE);
+  const { server } = useAuth();
   const { value: email, onChange: onChangeEmail, ref: emailRef } = useInput('');
   const { value: age, onChange: onChangeAge } = useInput('');
   const { value: password, onChange: onChangePassword, ref: passwordRef } = useInput('');
@@ -110,7 +109,7 @@ const SignUpPage = () => {
         <Card>
           <Styled.Form onSubmit={handleSignUp}>
             <Styled.HeaderText>회원가입</Styled.HeaderText>
-            <Styled.FormItem>
+            {/* <Styled.FormItem>
               <Select labelText="서버 선택" value={server} onChange={onChangeServer} required>
                 {Object.entries(BACKEND).map(([crew, { name }]) => (
                   <option key={crew} value={crew}>
@@ -118,7 +117,7 @@ const SignUpPage = () => {
                   </option>
                 ))}
               </Select>
-            </Styled.FormItem>
+            </Styled.FormItem> */}
             <Styled.FormItem>
               <Input
                 ref={emailRef}
