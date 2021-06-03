@@ -30,7 +30,7 @@ export const BidirectionArrowIcon = styled.img.attrs({
 export const ColorPicker = styled(Container)`
   justify-content: space-evenly;
   width: 100%;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 `;
 
 const CheckedStyle = css`
@@ -41,11 +41,11 @@ const CheckedStyle = css`
   }
 `;
 
-interface ColorSelectButton {
+interface ColorSelectButtonProps {
   selectedColor: LineColor;
 }
 
-export const ColorSelectButton = styled(IconButton)<ColorSelectButton>`
+export const ColorSelectButton = styled(IconButton)<ColorSelectButtonProps>`
   border-radius: 50%;
   position: relative;
   width: 1.75rem;
@@ -54,12 +54,10 @@ export const ColorSelectButton = styled(IconButton)<ColorSelectButton>`
   ${({ selectedColor, backgroundColor }) =>
     backgroundColor === selectedColor && CheckedStyle}
 
-  &:disabled {
-    &::after {
-      background: none;
-      content: 'x';
-      font-size: 2rem;
-      color: white;
-    }
+  &:disabled::after {
+    background: none;
+    content: 'x';
+    font-size: 2rem;
+    color: white;
   }
 `;

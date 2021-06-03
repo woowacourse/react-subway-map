@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../state/store';
 import { lineAction } from '../state/slices/line';
 import useStation from './useStation';
 import { INVALID_VALUE } from '../constants/validate';
-import { SERVICE } from '../constants/service';
+import { lineColors, SERVICE } from '../constants/service';
 
 const useSection = () => {
   const { currentLineId, shouldUpdate } = useAppSelector(
@@ -26,7 +26,7 @@ const useSection = () => {
   const [currentLineDetail, setCurrentLineDetail] = useState<LineDetail>({
     id: INVALID_VALUE,
     name: '',
-    color: 'red',
+    color: lineColors[0],
     stations: [],
     sections: [],
   });
