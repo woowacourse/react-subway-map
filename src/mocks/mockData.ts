@@ -30,6 +30,19 @@ export const mockLines = [
         name: '광교역',
       },
     ],
+    sections: [
+      {
+        upStation: {
+          id: 1,
+          name: '강남역',
+        },
+        downStation: {
+          id: 2,
+          name: '광교역',
+        },
+        distance: 10,
+      },
+    ],
   },
   {
     id: 2,
@@ -43,6 +56,19 @@ export const mockLines = [
       {
         id: 2,
         name: '광교역',
+      },
+    ],
+    sections: [
+      {
+        upStation: {
+          id: 1,
+          name: '강남역',
+        },
+        downStation: {
+          id: 2,
+          name: '광교역',
+        },
+        distance: 10,
       },
     ],
   },

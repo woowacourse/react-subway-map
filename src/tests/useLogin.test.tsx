@@ -15,9 +15,8 @@ describe('useLogin', () => {
 
     act(() => result.current.setEmail('test@test.test'));
     act(() => result.current.setPassword('test@test.test'));
-    act(() => result.current.login());
 
-    await waitForNextUpdate();
+    await act(() => result.current.login());
 
     expect(result.current.accessToken).toBe(mockToken);
   });
