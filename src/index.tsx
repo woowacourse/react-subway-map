@@ -21,6 +21,9 @@ export const theme = {
 };
 
 const targets = Object.keys(BASE_URL).map((name) => ({ value: name, text: name }));
+
+const API = localStorage.getItem("API") as keyof typeof BASE_URL;
+
 const onChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
   changeBaseUrl(event.target.value as keyof typeof BASE_URL);
 };
@@ -32,6 +35,7 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <Flex style={{ width: "100%", padding: "0.9375rem", justifyContent: "flex-end" }}>
           <Select
+            defaultValue={API}
             options={targets}
             onChange={onChange}
             style={{ width: "9.375rem", backgroundColor: "skyblue" }}

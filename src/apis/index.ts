@@ -7,9 +7,9 @@ export enum BASE_URL {
   포모 = "https://subway-pomo.kro.kr",
 }
 
-export const changeBaseUrl = (범인: keyof typeof BASE_URL) => {
-  localStorage.setItem("범인", 범인);
-  axios.defaults.baseURL = BASE_URL[범인];
+export const changeBaseUrl = (API: keyof typeof BASE_URL) => {
+  localStorage.setItem("API", API);
+  axios.defaults.baseURL = BASE_URL[API];
 };
 
-changeBaseUrl((localStorage.getItem("범인") as keyof typeof BASE_URL) || "수리");
+changeBaseUrl((localStorage.getItem("API") as keyof typeof BASE_URL) || "수리");
