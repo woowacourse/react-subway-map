@@ -12,6 +12,7 @@ import ListItem from "../../components/ListItem/ListItem";
 import { CIRCLE_COLOR } from "../../constants/color";
 import TEST_ID from "../../@test/testId";
 import { Distance, SectionListItemWrapper } from "./SectionManagementPage.styles";
+import { Station } from "../../@types/types";
 
 const SectionManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
@@ -24,6 +25,18 @@ const SectionManagementPage = () => {
 
   const targetLine = lines.find(({ id }) => id === Number(lineId));
 
+  const onSectionAddModalOpen = () => {
+    setIsAddModalOpened(true);
+  };
+
+  const onSectionAddModalClose = () => {
+    setIsAddModalOpened(false);
+  };
+
+  const onDeleteSection = async (station: Station) => {
+    await deleteSection({ lineId: Number(lineId), stationId: station.id });
+  };
+
   const sectionList = targetLine?.stations.map((station, index) => {
     return (
       <SectionListItemWrapper key={station.id}>
@@ -32,9 +45,7 @@ const SectionManagementPage = () => {
           circleColor={CIRCLE_COLOR[targetLine.color]}
           style={{ padding: "0.5625rem" }}
           onUpdate={() => {}}
-          onDelete={async () => {
-            await deleteSection({ lineId: Number(lineId), stationId: station.id });
-          }}
+          onDelete={() => onDeleteSection(station)}
         >
           {station.name}
         </ListItem>
@@ -48,13 +59,7 @@ const SectionManagementPage = () => {
       <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
         <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
           <h2 style={{ marginBottom: "1rem" }}>🔁 구간 관리</h2>
-          <Button
-            data-testid={TEST_ID.SECTION_MODAL_OPEN_BUTTON}
-            type="button"
-            onClick={() => {
-              setIsAddModalOpened(true);
-            }}
-          >
+          <Button data-testid={TEST_ID.SECTION_MODAL_OPEN_BUTTON} type="button" onClick={onSectionAddModalOpen}>
             구간 추가
           </Button>
         </FlexBetween>
@@ -70,9 +75,7 @@ const SectionManagementPage = () => {
       </Block>
       {isAddModalOpened && targetLine && (
         <SectionAddModal
-          onClose={() => {
-            setIsAddModalOpened(false);
-          }}
+          onClose={onSectionAddModalClose}
           addSection={addSection}
           deleteSection={deleteSection}
           line={targetLine}
