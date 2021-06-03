@@ -31,10 +31,14 @@ const StationListWrapper = styled.ul`
   }
 `;
 
-const DistanceText = styled.p`
+const DistanceText = styled.div`
   font-size: 1.5rem;
   margin-left: 5rem;
-  ::after {
+  padding: 1rem 2rem;
+  &::before {
+    content: '거리: ';
+  }
+  &::after {
     content: ' km';
   }
 `;
