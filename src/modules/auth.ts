@@ -60,11 +60,17 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [checkAccessToken.pending.type]: (state) => {
+      state.error = null;
+    },
     [checkAccessToken.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
     },
     [checkAccessToken.rejected.type]: (state) => {
       state.isAuthenticated = false;
+    },
+    [login.pending.type]: (state) => {
+      state.error = null;
     },
     [login.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
@@ -72,6 +78,9 @@ export const authSlice = createSlice({
     [login.rejected.type]: (state, { payload }) => {
       state.isAuthenticated = false;
       state.error = payload;
+    },
+    [signup.pending.type]: (state) => {
+      state.error = null;
     },
     [signup.rejected.type]: (state, { payload }) => {
       state.error = payload;
