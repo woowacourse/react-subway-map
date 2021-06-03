@@ -9,6 +9,7 @@ const FlexCenterBox = styled.div`
 const FullVerticalCenterBox = styled(FlexCenterBox)`
   width: 100%;
   flex-direction: column;
+  position: relative;
 
   & > * {
     width: 100%;

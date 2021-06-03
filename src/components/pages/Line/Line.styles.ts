@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import { FlexCenter } from '../../../styles/css';
 import { ScrollBox } from '../../../styles/shared';
+import { Header } from '../../atoms';
 import { ListItem } from '../../molecules';
 
 const ListItemContainer = styled(ScrollBox)`
@@ -20,4 +22,12 @@ const LineItemWithCircle = styled(ListItem)`
   }
 `;
 
-export { LineItemWithCircle, ListItemContainer };
+const LookUpButtonWrapper = styled.div`
+  ${FlexCenter};
+`;
+
+const LineTitle = styled(Header)`
+  margin-bottom: 2rem;
+`;
+
+export { LineItemWithCircle, ListItemContainer, LookUpButtonWrapper, LineTitle };

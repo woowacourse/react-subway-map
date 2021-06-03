@@ -5,7 +5,7 @@ export interface IResMeta {
   message: string;
 }
 
-export type ModeType = 'ADD' | 'EDIT';
+export type ModeType = 'ADD' | 'EDIT' | 'LOOKUP';
 export interface ILoginReq {
   email: string;
   password: string;
@@ -60,8 +60,8 @@ export interface ISectionReq {
 }
 
 export interface ISectionRes {
-  upStation: IStation;
-  downStation: IStation;
+  upStation: IStationRes;
+  downStation: IStationRes;
   distance: number;
 }
 
