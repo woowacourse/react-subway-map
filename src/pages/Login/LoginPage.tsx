@@ -29,11 +29,11 @@ const LoginPage = () => {
   const { login } = useAuth();
   const history = useHistory();
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+  const onLogin: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     if (emailErrorMessage || passwordErrorMessage) {
-      alert("로그인 할 수 없습니다");
+      alert("입력이 잘못되어, 로그인 할 수 없습니다");
       return;
     }
 
@@ -47,7 +47,7 @@ const LoginPage = () => {
 
   return (
     <FlexCenter>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onLogin}>
         <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
           <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
             <h2 style={{ marginBottom: "1rem" }}>👋 로그인</h2>
