@@ -16,9 +16,9 @@ export const SectionListItem = (props) => {
             <ColorBox key={line.color} content={line.name[0]} bgColor={line.color}></ColorBox>
           ))}
         </Flex>
-        <Button onClick={(e) => onClick(e, section.id)}>
+        <button onClick={(e) => onClick(e, section.id)}>
           <IconTrashCan />
-        </Button>
+        </button>
       </Content>
       {section.distanceToNextStation > 0 && (
         <Detail>

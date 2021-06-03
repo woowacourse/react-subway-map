@@ -78,10 +78,10 @@ export const NavBar = (props) => {
         <MenuList>
           <MenuItem>
             {isLogin ? (
-              <Button onClick={handleLogoutRequest}>
+              <button onClick={handleLogoutRequest}>
                 <IconPerson />
                 로그아웃
-              </Button>
+              </button>
             ) : (
               <NavLink activeClassName="selected" to={ROUTE.LOGIN}>
                 <IconPerson />

@@ -21,9 +21,9 @@ export const LineListItem = (props) => {
         </Flex>
         <StationName>{line.endStation.name}</StationName>
       </StationsDetail>
-      <Button onClick={(e) => onClick(e, line.id)}>
+      <button onClick={(e) => onClick(e, line.id)}>
         <IconTrashCan />
-      </Button>
+      </button>
     </Item>
   );
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+
 import { COLOR, LAYOUT, Z_INDEX } from '../../../constants';
-import { Button } from '../..';
 import '../../../assets/fonts.css';
 
 export const Nav = styled.nav`
@@ -15,7 +15,7 @@ export const Nav = styled.nav`
   z-index: ${Z_INDEX.MODAL};
 `;
 
-export const TitleButton = styled(Button)`
+export const TitleButton = styled.button`
   display: flex;
   align-items: center;
 `;
