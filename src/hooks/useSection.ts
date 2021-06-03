@@ -75,7 +75,6 @@ const useSection = () => {
   }, [currentLineId, shouldUpdate]);
 
   const updateCurrentSection = async () => {
-    // TODO: magic number!
     if (currentLineId === INVALID_VALUE) return;
 
     const data = await requestSection(currentLineId, accessToken);
@@ -157,6 +156,9 @@ const useSection = () => {
     availableDownStations,
     selectedSectionDistance,
     isValidDistance,
+    setCurrentLineDetail,
+    addSectionMutation,
+    deleteSectionMutation,
   };
 };
 

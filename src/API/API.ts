@@ -1,9 +1,9 @@
-import { URL } from '../constants/API';
+import { API_URL } from '../constants/API';
 
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export const currentAPI = {
-  baseUrl: URL.MUNGTO,
+  baseUrl: API_URL.MUNGTO,
 };
 
 const fetchOption = (

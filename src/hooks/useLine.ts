@@ -6,16 +6,17 @@ import {
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import useLogin from './useLogin';
 import { useState } from 'react';
-import { LineColor, lineColors, LineForm, LineId, StationId } from '../types';
+import { LineColor, LineForm, LineId, StationId } from '../types';
 import useStation from './useStation';
+
 import { INVALID_VALUE, REGEX } from '../constants/validate';
 import { QUERY } from '../constants/API';
-import { SERVICE } from '../constants/service';
+import { lineColors, SERVICE } from '../constants/service';
 
 const useLine = () => {
   const [form, setForm] = useState<LineForm>({
     name: '',
-    color: '',
+    color: 'red',
     upStationId: INVALID_VALUE,
     downStationId: INVALID_VALUE,
     distance: SERVICE.MIN_DISTANCE,
@@ -55,7 +56,7 @@ const useLine = () => {
     setForm({ ...form, name });
   };
 
-  const setColor = (color: string) => {
+  const setColor = (color: LineColor) => {
     setForm({ ...form, color });
   };
 
@@ -118,6 +119,8 @@ const useLine = () => {
     isValidForm,
     isSelectedUpStation,
     availableDownStations,
+    addLineMutation,
+    deleteLineMutation,
   };
 };
 

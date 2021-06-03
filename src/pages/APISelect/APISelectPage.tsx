@@ -9,7 +9,8 @@ import { useAppDispatch } from '../../state/store';
 import { APIAction } from '../../state/slices/API';
 import { lineAction } from '../../state/slices/line';
 import { loginAction } from '../../state/slices/login';
-import { APIName, URL } from '../../constants/API';
+import { API_URL } from '../../constants/API';
+import { APIName } from '../../types';
 
 const APISelectPage: VFC<RouteComponentProps> = ({ history }) => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const APISelectPage: VFC<RouteComponentProps> = ({ history }) => {
   }, []);
 
   const selectAPI = (name: APIName) => {
-    currentAPI.baseUrl = URL[name];
+    currentAPI.baseUrl = API_URL[name];
     dispatch(APIAction.setName(name));
     history.push('/login');
   };

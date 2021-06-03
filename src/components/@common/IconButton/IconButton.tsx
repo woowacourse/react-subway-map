@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 export interface IconButtonProps {
-  iconUrl: string;
+  iconUrl?: string;
+  backgroundColor?: string;
 }
 
 const IconButton = styled.button<IconButtonProps>`
   background-image: url(${({ iconUrl }) => iconUrl});
+  background-color: ${({ backgroundColor }) => backgroundColor};
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

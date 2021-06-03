@@ -1,3 +1,6 @@
+import { API_URL } from './constants/API';
+import { lineColors } from './constants/service';
+
 export type FlexDirection = 'horizontal' | 'vertical';
 
 export type ModalSize = 'small' | 'medium' | 'large';
@@ -26,7 +29,7 @@ export interface Station extends StationForm {
 
 export interface LineForm {
   name: string;
-  color: string;
+  color: LineColor;
   upStationId: StationId;
   downStationId: StationId;
   distance: number;
@@ -44,19 +47,6 @@ export interface Section {
   distance: number;
 }
 
-export const lineColors = [
-  'red',
-  'purple',
-  'black',
-  'green',
-  'orange',
-  'blue',
-  'beige',
-  'deepskyblue',
-  'aqua',
-  'darksalmon',
-] as const;
-
 export type LineColor = typeof lineColors[number];
 
 export type LineId = number;
@@ -72,3 +62,5 @@ export interface LineDetail extends Line {
   stations: Station[];
   sections: Section[];
 }
+
+export type APIName = keyof typeof API_URL;

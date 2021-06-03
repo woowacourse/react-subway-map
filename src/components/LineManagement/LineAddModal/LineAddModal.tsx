@@ -1,9 +1,12 @@
 import { FormEvent, Suspense, VFC } from 'react';
+import { lineColors } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../hooks/useLine';
 import useStation from '../../../hooks/useStation';
 import { Station } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
+import Container from '../../@common/Container/Container.styles';
+import IconButton from '../../@common/IconButton/IconButton';
 import Modal from '../../@common/Modal/Modal';
 import SelectBox from '../../@common/SelectBox/SelectBox';
 import Title from '../../@common/Title/Title.styles';
@@ -13,6 +16,8 @@ import {
   BidirectionArrowIcon,
   LineAddForm,
   StyledInputWithAlertText,
+  ColorSelectButton,
+  ColorPicker,
 } from './LineAddModal.styles';
 
 export interface LineAddModalProps {
@@ -100,12 +105,22 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           onChange={({ target }) => setDistance(target.valueAsNumber)}
         />
 
-        <StyledInput
+        {/* <StyledInput
           placeholder="노선 색상"
           value={color}
           onChange={({ target: { value } }) => setColor(value)}
-        />
+        /> */}
 
+        <ColorPicker>
+          {lineColors.map((lineColor) => (
+            <ColorSelectButton
+              type="button"
+              selectedColor={color}
+              backgroundColor={lineColor}
+              onClick={() => setColor(lineColor)}
+            />
+          ))}
+        </ColorPicker>
         <Button disabled={!isValidForm}>노선 만들기</Button>
       </LineAddForm>
     </Modal>
