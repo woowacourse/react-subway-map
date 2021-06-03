@@ -1,7 +1,7 @@
 import Container from '@shared/Container/Container';
 import ImageButton from '@shared/ImageButton/ImageButton';
-import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
+import ItemSelector from '@units/ItemSelector/ItemSelector';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import { borderColor } from 'constants/color';
@@ -94,22 +94,7 @@ const Section = () => {
           <Title text="🔁 지하철 구간 관리" />
           <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
         </div>
-
-        <SelectInput
-          defaultValue="DEFAULT"
-          onChange={handleLineChange}
-          title="조회하실 노선을 선택해주세요."
-          className="w-full"
-        >
-          <option value="DEFAULT" disabled hidden>
-            노선을 선택해주세요
-          </option>
-          {lines?.map((line) => (
-            <option key={line.id} value={String(line.id)}>
-              {line.name}
-            </option>
-          ))}
-        </SelectInput>
+        <ItemSelector items={lines} defaultOption="조회하실 노선을 선택해주세요." onChange={handleLineChange} />
         {selectedLine && (
           <Container className={`mt-6 w-full ${borderColor[selectedLine.color]}`}>
             <div className={`flex justify-center items-center  rounded-2xl py-1 mb-3 ${selectedLine.color}`}>

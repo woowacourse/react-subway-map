@@ -1,6 +1,5 @@
 import Container from '@shared/Container/Container';
 import Input from '@shared/Input/Input';
-import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
 import React, { useState } from 'react';
 import arrowImg from 'assets/images/arrow.png';
@@ -11,6 +10,7 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 import { StationInterface } from 'types';
 import { AddLinePayload } from 'redux/lineSlice';
 import { ringColor } from 'constants/color';
+import ItemSelector from '@units/ItemSelector/ItemSelector';
 
 interface AddLineModalProps {
   onSubmit: ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => void;
@@ -72,27 +72,9 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
             className="mb-8 w-full"
           />
           <div className="flex items-center mb-8">
-            <SelectInput defaultValue="DEFAULT" onChange={handleUpStationId} title="상행역" className="w-full">
-              <option value="DEFAULT" disabled hidden>
-                역을 선택해주세요
-              </option>
-              {stations?.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
-            </SelectInput>
+            <ItemSelector items={stations} defaultOption="역을 선택해주세요" onChange={handleUpStationId} />
             <img className="mx-2 w-8 h-8" src={arrowImg} alt="arrowImg" />
-            <SelectInput defaultValue="DEFAULT" onChange={handleDownStationId} title="하행역" className="w-full">
-              <option value="DEFAULT" disabled hidden>
-                역을 선택해주세요
-              </option>
-              {stations?.map((station) => (
-                <option key={station.id} value={station.id}>
-                  {station.name}
-                </option>
-              ))}
-            </SelectInput>
+            <ItemSelector items={stations} defaultOption="역을 선택해주세요" onChange={handleDownStationId} />
           </div>
           <div className="flex items-center justify-between mb-8">
             <Input
