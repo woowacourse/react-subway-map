@@ -3,14 +3,14 @@ import { useSnackbar } from 'notistack';
 import { Button, Card, Select } from '../../components';
 import * as Styled from './SearchPage.styles';
 import { ReactComponent as RightArrowIcon } from '../../assets/icons/arrow-right-solid.svg';
-import useStation from '../../hooks/useStation';
 import useSelect from '../../hooks/useSelect';
 import API from '../../api';
-import { SearchResult } from '../../types';
+import { LineStation, SearchResult } from '../../types';
 import MESSAGE from '../../constants/message';
+import useLine from '../../hooks/useLine';
 
 const SearchPage = () => {
-  const { list: stationList } = useStation();
+  const { list: lineList } = useLine();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -22,7 +22,16 @@ const SearchPage = () => {
   } = useSelect('');
   const [result, setResult] = useState<SearchResult | null>(null);
 
-  const downStationList = stationList.filter((station) => station.id !== upStationId);
+  const searchableStationList = lineList
+    .flatMap((line) => line.stations)
+    .reduce((accumulator: LineStation[], currentValue) => {
+      if (accumulator.findIndex((item) => item.id === currentValue.id) >= 0) {
+        return accumulator;
+      }
+      return accumulator.concat(currentValue);
+    }, []);
+
+  const downStationList = searchableStationList.filter((station) => station.id !== upStationId);
 
   const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const selectedStationId = event.target.value;
@@ -47,22 +56,22 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    if (stationList.length > 1) {
-      const [firstStationId, secondStationId] = stationList.map((station) => station.id);
+    if (searchableStationList.length > 1 && !upStationId && !downStationId) {
+      const [firstStationId, secondStationId] = searchableStationList.map((station) => station.id);
       setUpStationId(`${firstStationId}`);
       setDownStationId(`${secondStationId}`);
     }
-  }, [setDownStationId, setUpStationId, stationList]);
+  }, [downStationId, searchableStationList, setDownStationId, setUpStationId, upStationId]);
 
   return (
     <Styled.SearchPage>
       <Styled.Container>
         <Card>
-          <Styled.HeaderText>경로 탐색</Styled.HeaderText>
+          <Styled.HeaderText>경로 검색</Styled.HeaderText>
           <Styled.Form onSubmit={handleSubmit}>
             <Styled.SelectWrapper>
               <Select labelText="출발역" value={upStationId} onChange={handleChangeUpStationId}>
-                {stationList.map((station) => (
+                {searchableStationList.map((station) => (
                   <option key={station.id} value={station.id}>
                     {station.name}
                   </option>
