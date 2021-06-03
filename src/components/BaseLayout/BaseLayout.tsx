@@ -63,7 +63,9 @@ const BaseLayout = ({ children }: Props) => {
             서버 변경 시, 로그인 된 상태라면 로그아웃됩니다
           </Styled.FormMessage>
           <Modal.Control>
-            <Button variant="text">취소</Button>
+            <Button type="button" variant="text">
+              취소
+            </Button>
             <Button>서버 변경</Button>
           </Modal.Control>
         </Styled.Form>
