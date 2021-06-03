@@ -53,4 +53,13 @@ export const ColorSelectButton = styled(IconButton)<ColorSelectButton>`
 
   ${({ selectedColor, backgroundColor }) =>
     backgroundColor === selectedColor && CheckedStyle}
+
+  &:disabled {
+    &::after {
+      background: none;
+      content: 'x';
+      font-size: 2rem;
+      color: white;
+    }
+  }
 `;

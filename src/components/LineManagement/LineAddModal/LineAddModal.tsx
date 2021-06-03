@@ -41,6 +41,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     isValidForm,
     isSelectedUpStation,
     availableDownStations,
+    lines,
   } = useLine();
   const { stations } = useStation();
 
@@ -104,13 +105,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           value={distance}
           onChange={({ target }) => setDistance(target.valueAsNumber)}
         />
-
-        {/* <StyledInput
-          placeholder="노선 색상"
-          value={color}
-          onChange={({ target: { value } }) => setColor(value)}
-        /> */}
-
+        <div>노선 색상</div>
         <ColorPicker>
           {lineColors.map((lineColor) => (
             <ColorSelectButton
@@ -118,6 +113,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
               selectedColor={color}
               backgroundColor={lineColor}
               onClick={() => setColor(lineColor)}
+              disabled={lines.data?.some((line) => line.color === lineColor)}
             />
           ))}
         </ColorPicker>

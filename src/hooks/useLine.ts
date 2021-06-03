@@ -16,7 +16,7 @@ import { lineColors, SERVICE } from '../constants/service';
 const useLine = () => {
   const [form, setForm] = useState<LineForm>({
     name: '',
-    color: 'red',
+    color: lineColors[0],
     upStationId: INVALID_VALUE,
     downStationId: INVALID_VALUE,
     distance: SERVICE.MIN_DISTANCE,
