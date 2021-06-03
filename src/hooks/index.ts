@@ -6,6 +6,7 @@ import useGetAllRequest from './useGetAllRequest';
 import usePostRequest from './usePostRequest';
 import usePutRequest from './usePutRequest';
 import useSignUpInput from './useSignUpInput';
+import useGetRequest from './useGetRequest';
 
 export {
   useSignUpInput,
@@ -16,4 +17,5 @@ export {
   usePostRequest,
   usePutRequest,
   useDeleteRequest,
+  useGetRequest,
 };

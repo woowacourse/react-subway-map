@@ -6,6 +6,7 @@ const ROUTE = {
   STATION: '/station',
   LINE: '/line',
   SECTION: '/section',
+  PATH: '/path',
 };
 
 export default ROUTE;

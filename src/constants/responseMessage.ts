@@ -1,6 +1,7 @@
 import { ResultMessage } from '../type';
 
 const GET_ALL_DATA_RESPONSE = 'GET_ALL_DATA_RESPONSE';
+const GET_DATA_RESPONSE = 'GET_DATA_RESPONSE';
 const POST_DATA_RESPONSE = 'POST_DATA_RESPONSE';
 const DELETE_RESPONSE = 'DELETE_RESPONSE';
 const PUT_RESPONSE = 'PUT_RESPONSE';
@@ -54,5 +55,12 @@ export const SECTION: ResultMessage = {
   [DELETE_RESPONSE]: {
     fail: '구간 삭제에 실패하셨습니다.',
     success: '구간 삭제에 성공하셨습니다.',
+  },
+};
+
+export const PATH: ResultMessage = {
+  [GET_DATA_RESPONSE]: {
+    fail: '경로 조회에 실패하였습니다',
+    success: '경로 조회에 성공하였습니다',
   },
 };

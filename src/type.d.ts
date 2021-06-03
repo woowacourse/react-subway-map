@@ -65,6 +65,11 @@ export interface ISectionRes {
   distance: number;
 }
 
+export interface IPathFindRes {
+  stations: IStationRes[];
+  distance: number;
+}
+
 export type REQUEST_TYPE = 'get' | 'post' | 'put' | 'delete';
 
 type ResultMessageKeyType =
