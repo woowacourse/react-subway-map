@@ -124,7 +124,7 @@ const StationPage = () => {
       </Styled.StationPage>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Styled.ModalTitle>역 이름 수정</Styled.ModalTitle>
+        <Modal.Title>역 이름 수정</Modal.Title>
         <Styled.EditForm onSubmit={handleEdit}>
           <Input
             labelText="역 이름"
@@ -136,12 +136,12 @@ const StationPage = () => {
             onChange={onChangeEditName}
             autoFocus
           />
-          <Styled.ButtonWrapper>
+          <Modal.Control>
             <Button type="button" variant="text" onClick={closeModal}>
               취소
             </Button>
             <Button>수정</Button>
-          </Styled.ButtonWrapper>
+          </Modal.Control>
         </Styled.EditForm>
       </Modal>
     </>

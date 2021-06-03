@@ -90,12 +90,6 @@ export const StationName = styled.span`
 
 export const OptionWrapper = styled.div``;
 
-export const ModalTitle = styled.h3`
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: 3rem;
-`;
-
 export const Form = styled.form`
   margin: 1rem 0;
 `;
@@ -116,13 +110,5 @@ export const SelectWrapper = styled.div`
 
   svg {
     height: 30px;
-  }
-`;
-
-export const ButtonWrapper = styled.div`
-  text-align: right;
-
-  & button {
-    margin: 0 0.7rem;
   }
 `;

@@ -81,12 +81,6 @@ export const Name = styled.span`
 
 export const OptionWrapper = styled.div``;
 
-export const ModalTitle = styled.h3`
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: 3rem;
-`;
-
 export const Form = styled.form`
   margin: 1rem 0;
 `;
@@ -114,12 +108,4 @@ export const ColorPaletteWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
-`;
-
-export const ButtonWrapper = styled.div`
-  text-align: right;
-
-  & button {
-    margin: 0 0.7rem;
-  }
 `;

@@ -8,6 +8,7 @@ import useSelect from '../../hooks/useSelect';
 import useAuth from '../../hooks/useAuth';
 import BACKEND from '../../constants/backend';
 import { CREWS } from '../../types';
+import ROUTES from '../../constants/routes';
 
 interface Props {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ const BaseLayout = ({ children }: Props) => {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const { server, onSetServer, onLogout } = useAuth();
+  const { server, isLogin, onSetServer, onLogout } = useAuth();
   const { value: selectedServer, onChange: onChangeSelectedServer } = useSelect(
     server || CREWS.DANYEE
   );
@@ -30,7 +31,9 @@ const BaseLayout = ({ children }: Props) => {
     onLogout();
     closeModal();
 
-    history.replace(history.location.pathname);
+    if (isLogin) {
+      history.replace(ROUTES.ROOT);
+    }
   };
 
   return (
