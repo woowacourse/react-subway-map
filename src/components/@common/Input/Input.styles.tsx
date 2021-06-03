@@ -32,6 +32,7 @@ export const StyledInput = styled.input<InputHTMLAttributes<HTMLInputElement>>`
   border-radius: 0.25rem;
   font-size: 1rem;
   width: 100%;
+  box-sizing: border-box;
 
   &:focus {
     border: 1px solid ${PALETTE.GRAY_700};
