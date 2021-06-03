@@ -8,7 +8,6 @@ import useLogin from './useLogin';
 import { useState } from 'react';
 import { LineColor, LineForm, LineId, StationId } from '../types';
 import useStation from './useStation';
-
 import { INVALID_VALUE, REGEX } from '../constants/validate';
 import { QUERY } from '../constants/API';
 import { lineColors, SERVICE } from '../constants/service';
