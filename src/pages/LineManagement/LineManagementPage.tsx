@@ -31,6 +31,7 @@ const LineManagementPage = () => {
         <Flex style={{ width: "100%", flexDirection: "column" }}>
           {lines.map(({ id, color, name }) => (
             <ListItem
+              data-testid={`line-${id}`}
               key={id}
               circleColor={CIRCLE_COLOR[color]}
               style={{ padding: "9px" }}

@@ -10,6 +10,7 @@ import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
 import useAuth from "../../hooks/useAuth";
 import TEST_ID from "../../@test/testId";
+import { MoveToSignupPageLink } from "./LoginPage.styles";
 
 const LoginPage = () => {
   const {
@@ -76,9 +77,9 @@ const LoginPage = () => {
             </Button>
             <p>
               아직 회원이 아니신가요?{" "}
-              <a data-testid={TEST_ID.MOVE_TO_SIGN_UP_BUTTON} href="#" onClick={onMoveToSignupPage}>
+              <MoveToSignupPageLink data-testid={TEST_ID.MOVE_TO_SIGN_UP_BUTTON} onClick={onMoveToSignupPage}>
                 회원가입
-              </a>
+              </MoveToSignupPageLink>
             </p>
           </Flex>
         </Block>

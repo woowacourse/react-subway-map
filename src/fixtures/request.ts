@@ -1,7 +1,6 @@
-import { CIRCLE_COLOR } from "../constants/color";
-import { Line, Station, Section } from "../@types/types";
+import { Line, Station } from "../@types/types";
 
-export const stations = [
+export const stations: Station[] = [
   {
     id: 1,
     name: "지하철역 1",

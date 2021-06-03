@@ -1,4 +1,4 @@
-import { stations, lines } from "./data";
+import { stations, lines } from "./request";
 
 const initialState = {
   auth: {

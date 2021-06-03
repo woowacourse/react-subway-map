@@ -1,17 +1,17 @@
 import { useHistory } from "react-router-dom";
+import TEST_ID from "../../@test/testId";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import { INPUT_PLACEHOLDER } from "../../constants/placeholder";
 import { PAGE_PATH } from "../../constants/route";
 import useInput from "../../hooks/@common/useInput";
 import useAuth from "../../hooks/useAuth";
 import { validateAge } from "../../validations/age";
 import { validateEmail } from "../../validations/email";
 import { validatePassword, validatePasswordConfirm } from "../../validations/password";
-
-// TODO : 포커스 자체가 걸려 있지 않을 때 넘어가지 못하도록 수정
 
 const SignupPage = () => {
   const {
@@ -70,7 +70,7 @@ const SignupPage = () => {
             <Input
               value={email}
               errorMessage={emailErrorMessage}
-              placeholder="이메일"
+              placeholder={INPUT_PLACEHOLDER.EMAIL}
               style={{ marginBottom: "15px" }}
               onChange={onEmailChange}
               onBlur={onEmailBlur}
@@ -79,7 +79,7 @@ const SignupPage = () => {
               type="number"
               value={age}
               errorMessage={ageErrorMessage}
-              placeholder="나이"
+              placeholder={INPUT_PLACEHOLDER.AGE}
               min="1"
               max="200"
               style={{ marginBottom: "15px" }}
@@ -90,7 +90,7 @@ const SignupPage = () => {
               type="password"
               value={password}
               errorMessage={passwordErrorMessage}
-              placeholder="비밀번호"
+              placeholder={INPUT_PLACEHOLDER.PASSWORD}
               style={{ marginBottom: "15px" }}
               onChange={onPasswordChange}
               onBlur={onPasswordBlur}
@@ -99,12 +99,14 @@ const SignupPage = () => {
               type="password"
               value={passwordConfirm}
               errorMessage={passwordConfirmErrorMessage}
-              placeholder="비밀번호 확인"
+              placeholder={INPUT_PLACEHOLDER.PASSWORD_CONFIRM}
               style={{ marginBottom: "25px" }}
               onChange={onPasswordConfirmChange}
               onBlur={onPasswordConfirmBlur}
             />
-            <Button size="block">확인</Button>
+            <Button data-testid={TEST_ID.SIGNUP_BUTTON} size="block">
+              확인
+            </Button>
           </Flex>
         </Block>
       </form>

@@ -6,15 +6,7 @@ const useInput = (validator: Validator) => {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const setValueOnChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    const { value } = target;
-
-    setInputValue(value);
-  };
-
-  const validateOnBlur: React.FocusEventHandler<HTMLInputElement> = ({ target }) => {
-    const { value } = target;
-
+  const validate = (value: string) => {
     if (!validator) return;
 
     try {
@@ -24,6 +16,18 @@ const useInput = (validator: Validator) => {
     } catch (error) {
       setErrorMessage(error.message);
     }
+  };
+
+  const setValueOnChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    const { value } = target;
+
+    setInputValue(value);
+
+    validate(value);
+  };
+
+  const validateOnBlur: React.FocusEventHandler<HTMLInputElement> = ({ target }) => {
+    const { value } = target;
   };
 
   return { inputValue, errorMessage, setValueOnChange, validateOnBlur, setInputValue };

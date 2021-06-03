@@ -70,6 +70,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
     "@types/jest": "^26.0.23",
+    "@types/moxios": "^0.4.11",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
@@ -77,6 +78,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-mock-store": "^1.0.2",
     "@types/styled-components": "^5.1.9",
+    "moxios": "^0.4.0",
     "redux-mock-store": "^1.5.4",
     "typescript": "~4.1.5"
   }

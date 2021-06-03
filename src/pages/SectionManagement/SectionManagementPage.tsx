@@ -26,10 +26,10 @@ const SectionManagementPage = () => {
 
   const sectionList = targetLine?.stations.map((station, index) => {
     return (
-      <SectionListItemWrapper>
+      <SectionListItemWrapper key={station.id}>
         <ListItem
+          data-testid={`section-${station.id}`}
           circleColor={CIRCLE_COLOR[targetLine.color]}
-          key={station.id}
           style={{ padding: "0.5625rem" }}
           onUpdate={() => {}}
           onDelete={async () => {
