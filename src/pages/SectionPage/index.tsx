@@ -111,7 +111,7 @@ const SectionPage = () => {
     <>
       <CardLayout title="구간 관리">
         <Loading isLoading={isLoading} />
-        <Styled.TopContaier>
+        <Styled.TopContainer>
           <Styled.DropdownWrapper>
             <Dropdown
               labelText="노선 선택"
@@ -124,7 +124,7 @@ const SectionPage = () => {
           <Styled.AddButtonWrapper>
             <Styled.AddButton onClick={openSectionModal}>+</Styled.AddButton>
           </Styled.AddButtonWrapper>
-        </Styled.TopContaier>
+        </Styled.TopContainer>
         {targetLine && (
           <Styled.LineDetail>
             <Styled.LineName color={targetLine.color}>{targetLine.name}</Styled.LineName>

@@ -11,6 +11,7 @@ import {
   LinePage,
   SectionPage,
   MapPage,
+  SearchPage,
   LoginPage,
   SignupPage,
 } from 'pages';
@@ -48,6 +49,7 @@ const App = () => {
               <Route path={ROUTE.STATIONS} component={StationPage} />
               <Route path={ROUTE.LINES} component={LinePage} />
               <Route path={ROUTE.SECTIONS} component={SectionPage} />
+              <Route path={ROUTE.SEARCH} component={SearchPage} />
               <Route path={ROUTE.MAP} component={MapPage} />
               <Route path={ROUTE.LOGIN} component={LoginPage} />
               <Route path={ROUTE.SIGNUP} component={SignupPage} />

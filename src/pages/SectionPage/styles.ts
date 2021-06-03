@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import PALETTE from 'constants/palette';
 
-const TopContaier = styled.div`
+const TopContainer = styled.div`
   display: flex;
   align-items: flex-end;
 `;
@@ -67,7 +67,7 @@ const Icon = styled.img`
 `;
 
 export default {
-  TopContaier,
+  TopContainer,
   DropdownWrapper,
   AddButtonWrapper,
   AddButton,

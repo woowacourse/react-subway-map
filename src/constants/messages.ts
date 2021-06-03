@@ -21,6 +21,7 @@ const ALERT_MESSAGE = {
   SUCCESS_TO_DELETE_SECTION: '구간을 삭제했습니다.',
 
   SERVER_ERROR: '서버에서 데이터를 불러오는 데 실패했습니다.',
+  NO_PATH_AVAILABLE: '가능한 경로가 존재하지 않습니다.',
 };
 
 const CONFIRM_MESSAGE = {

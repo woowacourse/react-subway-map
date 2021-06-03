@@ -4,6 +4,7 @@ const ROUTE = {
   LINES: '/lines',
   SECTIONS: '/sections',
   MAP: '/map',
+  SEARCH: '/search',
   LOGIN: '/login',
   SIGNUP: '/signup',
 };

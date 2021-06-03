@@ -42,6 +42,7 @@ const StationName = styled.div`
   text-align: center;
   margin-bottom: 12px;
   transform: rotate(-30deg);
+  transition: all 0.3s;
 `;
 
 const StationDot = styled.div`
@@ -50,6 +51,7 @@ const StationDot = styled.div`
   background-color: ${PALETTE.DEFAULT_WHITE};
   border: 2px solid ${PALETTE.DEFAULT_BLACK};
   border-radius: 50%;
+  transition: all 0.3s;
 `;
 
 const StationItem = styled.div<{ isTransfer: boolean; isFocused: boolean; color: string }>`

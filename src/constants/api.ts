@@ -17,6 +17,7 @@ const KOREAN_SERVER: { [key: string]: string } = {
 const END_POINT = {
   STATIONS: 'stations',
   LINES: 'lines',
+  PATHS: 'paths',
   AUTH: 'members',
   LOGIN: 'login/token',
 };
