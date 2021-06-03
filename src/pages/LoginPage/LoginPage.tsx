@@ -59,19 +59,6 @@ const LoginPage = () => {
         <Card>
           <Styled.Form onSubmit={handleLogin}>
             <Styled.HeaderText>로그인</Styled.HeaderText>
-            {/* <Styled.FormItem>
-              <Select
-                labelText="서버 선택"
-                value={selectedServer}
-                onChange={onChangeSelectedServer}
-              >
-                {Object.entries(BACKEND).map(([crew, { name }]) => (
-                  <option key={crew} value={crew}>
-                    {name}
-                  </option>
-                ))}
-              </Select>
-            </Styled.FormItem> */}
             <Styled.FormItem>
               <Input
                 value={email}

@@ -109,15 +109,6 @@ const SignUpPage = () => {
         <Card>
           <Styled.Form onSubmit={handleSignUp}>
             <Styled.HeaderText>회원가입</Styled.HeaderText>
-            {/* <Styled.FormItem>
-              <Select labelText="서버 선택" value={server} onChange={onChangeServer} required>
-                {Object.entries(BACKEND).map(([crew, { name }]) => (
-                  <option key={crew} value={crew}>
-                    {name}
-                  </option>
-                ))}
-              </Select>
-            </Styled.FormItem> */}
             <Styled.FormItem>
               <Input
                 ref={emailRef}
