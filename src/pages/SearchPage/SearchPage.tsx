@@ -1,4 +1,10 @@
-import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
+import React, {
+  ChangeEventHandler,
+  FormEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useSnackbar } from 'notistack';
 import { Button, Card, Select } from '../../components';
 import * as Styled from './SearchPage.styles';
@@ -8,9 +14,11 @@ import API from '../../api';
 import { LineStation, SearchResult } from '../../types';
 import MESSAGE from '../../constants/message';
 import useLine from '../../hooks/useLine';
+import useAuth from '../../hooks/useAuth';
 
 const SearchPage = () => {
-  const { list: lineList } = useLine();
+  const { server } = useAuth();
+  const { list: lineList, get: getLineList } = useLine();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -33,17 +41,6 @@ const SearchPage = () => {
 
   const downStationList = searchableStationList.filter((station) => station.id !== upStationId);
 
-  const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const selectedStationId = event.target.value;
-    setUpStationId(selectedStationId);
-
-    if (downStationId !== Number(selectedStationId)) return;
-
-    const [firstDownStationId] = downStationList.map((station) => station.id);
-
-    setDownStationId(`${firstDownStationId}`);
-  };
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
@@ -55,13 +52,58 @@ const SearchPage = () => {
     }
   };
 
-  useEffect(() => {
+  const handleChangeUpStationId: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    const selectedStationId = event.target.value;
+    setUpStationId(selectedStationId);
+
+    if (downStationId !== Number(selectedStationId)) return;
+
+    const [firstDownStationId] = downStationList.map((station) => station.id);
+
+    setDownStationId(`${firstDownStationId}`);
+  };
+
+  const initializeSelectState = useCallback(() => {
     if (searchableStationList.length > 1 && !upStationId && !downStationId) {
       const [firstStationId, secondStationId] = searchableStationList.map((station) => station.id);
       setUpStationId(`${firstStationId}`);
       setDownStationId(`${secondStationId}`);
     }
   }, [downStationId, searchableStationList, setDownStationId, setUpStationId, upStationId]);
+
+  const updateUpStationId = useCallback(() => {
+    const upStationIds = searchableStationList.map((station) => station.id);
+    const [firstUpStationId] = upStationIds;
+
+    if (upStationId && downStationId && !upStationIds.includes(upStationId)) {
+      setUpStationId(`${firstUpStationId}`);
+    }
+  }, [downStationId, searchableStationList, setUpStationId, upStationId]);
+
+  const updateDownStationId = useCallback(() => {
+    const downStationIds = downStationList.map((station) => station.id);
+    const [firstDownStationId] = downStationIds;
+
+    if (upStationId && downStationId && !downStationIds.includes(downStationId)) {
+      setDownStationId(`${firstDownStationId}`);
+    }
+  }, [downStationId, downStationList, setDownStationId, upStationId]);
+
+  useEffect(() => {
+    initializeSelectState();
+  }, [initializeSelectState]);
+
+  useEffect(() => {
+    updateUpStationId();
+  }, [updateUpStationId]);
+
+  useEffect(() => {
+    updateDownStationId();
+  }, [updateDownStationId]);
+
+  useEffect(() => {
+    getLineList();
+  }, [getLineList, server]);
 
   return (
     <Styled.SearchPage>

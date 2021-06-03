@@ -16,12 +16,13 @@ import MESSAGE from '../constants/message';
 
 const useLine = () => {
   const { enqueueSnackbar } = useSnackbar();
+
   const line = useAppSelector((state) => state.line);
   const dispatch = useAppDispatch();
 
   const { list, error, status } = line;
 
-  const onGetLine = useCallback(() => dispatch(getLineList()), [dispatch]);
+  const get = useCallback(() => dispatch(getLineList()), [dispatch]);
 
   const add = ({ name, color, upStationId, downStationId, distance }: LineAttribute) =>
     dispatch(addLine({ name, color, upStationId, downStationId, distance }));
@@ -32,8 +33,8 @@ const useLine = () => {
   const remove = (id: Line['id']) => dispatch(deleteLine(id));
 
   useEffect(() => {
-    onGetLine();
-  }, [onGetLine]);
+    get();
+  }, [get]);
 
   useEffect(() => {
     if (error) {
@@ -50,7 +51,7 @@ const useLine = () => {
   }, [error, dispatch, enqueueSnackbar]);
 
   return {
-    onGetLine,
+    get,
     add,
     edit,
     remove,

@@ -4,9 +4,11 @@ import * as Styled from './RouteMapPage.styles';
 import useSelect from '../../hooks/useSelect';
 import useLine from '../../hooks/useLine';
 import { Line, Station } from '../../types';
+import useAuth from '../../hooks/useAuth';
 
 const RouteMapPage = () => {
-  const { list: lineList } = useLine();
+  const { server } = useAuth();
+  const { list: lineList, get: getLineList } = useLine();
   const [highlightStationId, setHighlightStationId] = useState<Station['id']>();
 
   const {
@@ -23,10 +25,16 @@ const RouteMapPage = () => {
   };
 
   useEffect(() => {
+    const [firstLine] = lineList;
+
     if (lineList.length > 0 && !selectedLineId) {
-      setSelectedLineId(`${lineList[0].id}`);
+      setSelectedLineId(`${firstLine.id}`);
     }
   }, [lineList, selectedLineId, setSelectedLineId]);
+
+  useEffect(() => {
+    getLineList();
+  }, [getLineList, server]);
 
   return (
     <Styled.RouteMapPage>
