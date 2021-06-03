@@ -23,3 +23,14 @@ export const ButtonWrapper = styled.div`
 export const Form = styled.form`
   margin: 1rem 0;
 `;
+
+export const FormMessage = styled.p`
+  font-size: 14px;
+  line-height: 1em;
+
+  svg {
+    height: 1.2em;
+    vertical-align: middle;
+    margin-right: 0.2em;
+  }
+`;

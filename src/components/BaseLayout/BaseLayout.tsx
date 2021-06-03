@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import * as Styled from './BaseLayout.styles';
 import { Button, Header, Modal, Navbar, Select } from '..';
 import { ReactComponent as ChangeIcon } from '../../assets/icons/exchange-alt-solid.svg';
+import { ReactComponent as WarningIcon } from '../../assets/icons/exclamation-circle-solid.svg';
 import useModal from '../../hooks/useModal';
 import useSelect from '../../hooks/useSelect';
 import useAuth from '../../hooks/useAuth';
@@ -57,7 +58,10 @@ const BaseLayout = ({ children }: Props) => {
               </option>
             ))}
           </Select>
-          <p>서버 변경 시, 로그인 된 상태라면 로그아웃됩니다</p>
+          <Styled.FormMessage>
+            <WarningIcon />
+            서버 변경 시, 로그인 된 상태라면 로그아웃됩니다
+          </Styled.FormMessage>
           <Modal.Control>
             <Button variant="text">취소</Button>
             <Button>서버 변경</Button>
