@@ -8,4 +8,3 @@ export { default as Modal } from './Modal/Modal';
 export { default as Select } from './Select/Select';
 export { default as ColorPalette } from './ColorPalette/ColorPalette';
 export { default as MessageBox } from './MessageBox/MessageBox';
-export { default as ServerSelector } from './ServerSelector/ServerSelector';
