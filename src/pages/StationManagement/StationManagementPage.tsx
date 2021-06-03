@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
@@ -8,6 +6,7 @@ import ListItem from "../../components/ListItem/ListItem";
 import useStation from "../../hooks/useStation";
 import useInput from "../../hooks/@common/useInput";
 import { validateStationName } from "../../validations/station";
+import { Station } from "../../@types/types";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();
@@ -23,13 +22,17 @@ const StationManagementPage = () => {
     event.preventDefault();
 
     if (stationNameErrorMessage) {
-      alert("역을 추가할 수 없습니다");
+      alert("입력이 잘못되어, 역을 추가할 수 없습니다");
       return;
     }
 
     await addStation(stationName);
 
     setStationName("");
+  };
+
+  const onDeleteStation = async (id: Station["id"]) => {
+    await deleteStation(id);
   };
 
   return (
@@ -54,13 +57,7 @@ const StationManagementPage = () => {
         </form>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
           {stations.map(({ id, name }) => (
-            <ListItem
-              key={id}
-              style={{ padding: "0.5625rem" }}
-              onDelete={async () => {
-                await deleteStation(id);
-              }}
-            >
+            <ListItem key={id} style={{ padding: "0.5625rem" }} onDelete={() => onDeleteStation(id)}>
               {name}
             </ListItem>
           ))}
