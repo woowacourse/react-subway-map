@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, RefObject } from 'react';
+import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
 

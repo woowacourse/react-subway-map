@@ -8,7 +8,7 @@ const CurrentAPIName = () => {
 
   return (
     <StyledCurrentAPIName onClick={() => history.push('/')}>
-      {hasAPI ? `${APIName}'` : '_____'}s API
+      {hasAPI ? APIName : '_____'}'s API
     </StyledCurrentAPIName>
   );
 };

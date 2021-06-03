@@ -1,6 +1,6 @@
 import { REGEX } from './../constants/validate';
 import { requestSignUp } from './../service/auth';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SignUpForm } from '../types';
 import useLogin from './useLogin';
 import { SERVICE } from '../constants/service';

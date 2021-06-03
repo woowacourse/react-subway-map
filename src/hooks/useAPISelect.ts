@@ -15,7 +15,7 @@ const useAPISelect = () => {
   useEffect(() => {
     dispatch(lineAction.initLineId());
     dispatch(loginAction.logout());
-  }, []);
+  }, [dispatch]);
 
   const selectAPI = (name: APIName) => {
     currentAPI.baseUrl = API_URL[name];
