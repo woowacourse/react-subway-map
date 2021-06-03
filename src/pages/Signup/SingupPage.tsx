@@ -47,21 +47,25 @@ const SignupPage = () => {
 
   const history = useHistory();
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+  const onSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     if (emailErrorMessage || ageErrorMessage || passwordErrorMessage || passwordConfirmErrorMessage) {
-      alert("회원가입할 수 없습니다");
+      alert("입력이 잘못되었습니다.");
       return;
     }
 
-    await signup({ email, age: Number(age), password });
-    history.push(PAGE_PATH.HOME);
+    try {
+      await signup({ email, age: Number(age), password });
+      error ?? history.push(PAGE_PATH.HOME);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
     <FlexCenter>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSignup}>
         <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
           <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
             <h2 style={{ marginBottom: "1rem" }}>📝 회원가입</h2>
