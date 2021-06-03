@@ -1,3 +1,4 @@
+import React from 'react';
 import { ILineRes, ISectionRes } from '../../../type';
 import { LineWrapper, LineName, StationListWrapper, DistanceText } from './LineLookUp.styles';
 
@@ -32,13 +33,13 @@ const LineLookUp = ({ lines }: ILineLoopUpProp) => {
             <StationListWrapper key={line.id}>
               {getConsecutiveSections(line.sections).map((section, index, self) => {
                 return (
-                  <>
+                  <React.Fragment key={index}>
                     <li key={section.upStation.id}>{section.upStation.name}</li>
                     <DistanceText>{section.distance}</DistanceText>
                     {index === self.length - 1 && (
                       <li key={section.downStation.id}>{section.downStation.name}</li>
                     )}
-                  </>
+                  </React.Fragment>
                 );
               })}
             </StationListWrapper>
