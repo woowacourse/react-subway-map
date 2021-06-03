@@ -6,7 +6,7 @@ import { getLines, addLine, removeLine, clearLineStatus } from '../redux/lineSli
 export const useLine = () => {
   const dispatch = useDispatch();
   const { lines, status } = useSelector((store) => store.line);
-  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
+  const { accessToken, endpoint } = useCookie();
 
   const requestGetLines = () => {
     dispatch(getLines({ endpoint, accessToken }));

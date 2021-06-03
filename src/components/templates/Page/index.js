@@ -17,7 +17,7 @@ export const Page = (props) => {
 
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
   const { isLogin, requestLogout, removeToken, goToAllowedPage } = useLogin();
-  const { setServerIdInCookie } = useCookie();
+  const { setServerId: setServerIdInCookie } = useCookie();
 
   const handleServerSubmit = (e) => {
     e.preventDefault();

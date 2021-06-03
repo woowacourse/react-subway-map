@@ -6,7 +6,7 @@ import { getMap, addSection, removeSection, clearMap, clearMapStatus } from '../
 export const useSection = () => {
   const dispatch = useDispatch();
   const { map, status } = useSelector((store) => store.map);
-  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
+  const { accessToken, endpoint } = useCookie();
 
   const requestGetMap = () => {
     dispatch(getMap({ endpoint, accessToken }));

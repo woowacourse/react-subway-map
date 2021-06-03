@@ -11,7 +11,7 @@ import { ROUTE, SERVER_LIST } from './constants';
 function App() {
   const dispatch = useDispatch();
   const { goToLogin } = useRouter();
-  const { accessTokenInCookie, serverIdInCookie, setServerIdInCookie } = useCookie();
+  const { accessToken, serverId: serverIdInCookie, setServerId: setServerIdInCookie } = useCookie();
   const [serverId, setServerId] = useState(serverIdInCookie || '');
   const endpoint = SERVER_LIST[serverId]?.endpoint || '';
 
@@ -20,11 +20,11 @@ function App() {
     if (!serverIdInCookie) {
       return;
     }
-    if (!accessTokenInCookie) {
+    if (!accessToken) {
       goToLogin();
       return;
     }
-    dispatch(loginByToken({ endpoint, accessToken: accessTokenInCookie }));
+    dispatch(loginByToken({ endpoint, accessToken }));
 
     return () => {
       if (serverId) {

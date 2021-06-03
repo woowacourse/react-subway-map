@@ -7,7 +7,7 @@ import { LOGIN, LOGOUT } from './../constants';
 
 export const useLogin = () => {
   const { goToHome, goToLogin } = useRouter();
-  const { setAccessTokenInCookie, removeAccessTokenFromCookie, endpoint } = useCookie();
+  const { setAccessToken, removeAccessToken, endpoint } = useCookie();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const { isLogin, isLoginFail, accessToken, isLogout } = useSelector((store) => store.user);
@@ -25,7 +25,7 @@ export const useLogin = () => {
   const goToAllowedPage = () => {
     if (isLogin) {
       goToHome();
-      setAccessTokenInCookie(accessToken);
+      setAccessToken(accessToken);
     } else {
       goToLogin();
       dispatch(clearLoginFail());
@@ -53,7 +53,7 @@ export const useLogin = () => {
   };
 
   const removeToken = () => {
-    removeAccessTokenFromCookie();
+    removeAccessToken();
   };
 
   return {

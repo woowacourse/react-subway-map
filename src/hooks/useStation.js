@@ -6,7 +6,7 @@ import { getStations, addStation, clearStationStatus, removeStation } from '../r
 export const useStation = () => {
   const dispatch = useDispatch();
   const { stations, status } = useSelector((store) => store.station);
-  const { accessTokenInCookie: accessToken, endpoint } = useCookie();
+  const { accessToken, endpoint } = useCookie();
 
   const requestGetStations = () => {
     dispatch(getStations({ endpoint, accessToken }));

@@ -7,22 +7,22 @@ const options = { path: '/' };
 export const useCookie = () => {
   const [cookies, setCookie, removeCookie] = useCookies([ACCESS_TOKEN, SERVER_ID]);
 
-  const accessTokenInCookie = cookies[ACCESS_TOKEN];
-  const setAccessTokenInCookie = (token) => setCookie(ACCESS_TOKEN, token, options);
-  const removeAccessTokenFromCookie = () => removeCookie(ACCESS_TOKEN, options);
+  const accessToken = cookies[ACCESS_TOKEN];
+  const setAccessToken = (token) => setCookie(ACCESS_TOKEN, token, options);
+  const removeAccessToken = () => removeCookie(ACCESS_TOKEN, options);
 
-  const serverIdInCookie = cookies[SERVER_ID];
-  const setServerIdInCookie = (id) => setCookie(SERVER_ID, id, options);
-  const removeServerIdFromCookie = () => removeCookie(SERVER_ID, options);
-  const endpoint = SERVER_LIST[serverIdInCookie]?.endpoint;
+  const serverId = cookies[SERVER_ID];
+  const setServerId = (id) => setCookie(SERVER_ID, id, options);
+  const removeServerId = () => removeCookie(SERVER_ID, options);
+  const endpoint = SERVER_LIST[serverId]?.endpoint;
 
   return {
-    accessTokenInCookie,
-    setAccessTokenInCookie,
-    removeAccessTokenFromCookie,
-    serverIdInCookie,
-    setServerIdInCookie,
-    removeServerIdFromCookie,
+    accessToken,
+    setAccessToken,
+    removeAccessToken,
+    serverId,
+    setServerId,
+    removeServerId,
     endpoint,
   };
 };
