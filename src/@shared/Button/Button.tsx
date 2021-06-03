@@ -19,7 +19,6 @@ const Button = ({ setColor, type, disabled, text, size, className, bgColor, hove
 
   return (
     <button
-      // TODO Type Error 찾아보기
       // eslint-disable-next-line react/button-has-type
       type={type}
       disabled={disabled}

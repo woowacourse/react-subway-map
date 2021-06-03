@@ -38,7 +38,6 @@ const Section = () => {
   };
 
   const handleLineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    // TODO as HTMLElement 를 사용하지 않고 event.target의 value를 얻는 방법
     const target = event.target as HTMLSelectElement;
 
     setSelectedLineId(Number(target.value));
