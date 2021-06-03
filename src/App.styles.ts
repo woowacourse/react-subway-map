@@ -6,9 +6,3 @@ export const PageContainer = styled.section`
   max-width: 1280px;
   margin: 0 auto;
 `;
-
-export const FABWrapper = styled.div`
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-`;
