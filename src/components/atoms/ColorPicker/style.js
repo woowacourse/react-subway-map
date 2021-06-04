@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { IconCheck } from '../IconCheck';
+import { IconCheck } from '../Icons/IconCheck';
 import { COLOR } from '../../../constants';
 
 export const Container = styled.div`
