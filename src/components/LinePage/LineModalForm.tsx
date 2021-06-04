@@ -1,7 +1,7 @@
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import { PALETTE } from '../../constants/styleConstant';
+import { LINE_COLOR } from '../../constants/styleConstant';
 import { Line, Station } from '../../interfaces';
 import {
   getLineColorErrorMessage,
@@ -76,7 +76,7 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onCloseM
       <S.PaletteContainer>
         <S.PaletteTitle>노선 색상 선택</S.PaletteTitle>
         <S.PaletteWrapper>
-          {Object.values(PALETTE).map(color => (
+          {Object.values(LINE_COLOR).map(color => (
             <S.Palette type='button' key={color} color={color} name='color' value={color} onClick={onChange} />
           ))}
           <S.SelectedPalette color={lineInfo.color}>{lineColorErrorMessage}</S.SelectedPalette>

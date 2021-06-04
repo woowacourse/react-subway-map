@@ -16,12 +16,14 @@ const combinedReducer = combineReducers({
   line: lineReducer,
   section: sectionReducer,
 });
+
 type CombinedState = ReturnType<typeof combinedReducer> | undefined;
 
 export const rootReducer = (state: CombinedState, action: PayloadAction) => {
   if (action.type === 'LOG_OUT') {
     state = undefined;
   }
+
   return combinedReducer(state, action);
 };
 
