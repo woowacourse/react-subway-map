@@ -1,5 +1,6 @@
 import LoginPage from './LoginPage';
 import { Story } from '@storybook/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { PageProps } from '../types';
 
 export default {
@@ -7,7 +8,11 @@ export default {
   component: LoginPage,
 };
 
-const Template: Story<PageProps> = (args) => <LoginPage {...args} />;
+const Template: Story<PageProps> = (args) => (
+  <Router>
+    <LoginPage {...args} />
+  </Router>
+);
 
 export const Default = Template.bind({});
 
