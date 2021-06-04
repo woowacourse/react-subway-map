@@ -13,6 +13,15 @@ import { useEffect } from 'react';
 import Home from './pages/Home/Home';
 import useUser from './hook/useUser';
 
+const routes = [
+  { path: ROUTE.HOME, component: Home },
+  { path: ROUTE.SIGN_IN, component: SignIn },
+  { path: ROUTE.SIGN_UP, component: SignUp },
+  { path: ROUTE.STATION, component: Station },
+  { path: ROUTE.LINE, component: Line },
+  { path: ROUTE.SECTION, component: Section },
+];
+
 const App = () => {
   const { accessToken } = useUser();
   const history = useHistory();
@@ -30,12 +39,9 @@ const App = () => {
       <Navigation />
       <S.Container>
         <Switch>
-          <Route exact path={ROUTE.HOME} component={Home} />
-          <Route exact path={ROUTE.SIGN_IN} component={SignIn} />
-          <Route exact path={ROUTE.SIGN_UP} component={SignUp} />
-          <Route exact path={ROUTE.STATION} component={Station} />
-          <Route exact path={ROUTE.LINE} component={Line} />
-          <Route exact path={ROUTE.SECTION} component={Section} />
+          {routes.map(({ path, component }) => (
+            <Route exact path={path} component={component} />
+          ))}
         </Switch>
       </S.Container>
     </S.App>
