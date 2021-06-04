@@ -1,10 +1,12 @@
-import { SERVER } from './constant';
+import { store } from '..';
 
 export const API = {
-  SIGN_IN: () => `${SERVER.URL}/login/token`,
-  GET_STATIONS: () => `${SERVER.URL}/stations`,
-  LINES: () => `${SERVER.URL}/lines`,
-  SECTION: (id: number) => `${SERVER.URL}/lines/${id}/sections`,
+  SIGN_IN: () => {
+    return `${store.getState().user.baseURL}/login/token`;
+  },
+  GET_STATIONS: () => `${store.getState().user.baseURL}/stations`,
+  LINES: () => `${store.getState().user.baseURL}/lines`,
+  SECTION: (id: number) => `${store.getState().user.baseURL}/lines/${id}/sections`,
 };
 
 export const RESPONSE = {

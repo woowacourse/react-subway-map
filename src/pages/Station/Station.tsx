@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddStationForm from '../../components/StationPage/AddStationForm';
 import StationListItem from '../../components/StationPage/StationListItem';
-import { ROUTE } from '../../constants/constant';
+import { ROUTE } from '../../constants/route';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
 import * as S from './Station.styles';

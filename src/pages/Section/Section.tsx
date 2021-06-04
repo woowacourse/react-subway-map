@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddSectionForm from '../../components/SectionPage/AddSectionForm';
 import SectionListItem from '../../components/SectionPage/SectionListItem';
-import { ROUTE } from '../../constants/constant';
+import { ROUTE } from '../../constants/route';
 import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
 import useStation from '../../hook/useStation';

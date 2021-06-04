@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp/SignUp';
 import Station from './pages/Station/Station';
 import Line from './pages/Line/Line';
 import Section from './pages/Section/Section';
-import { ROUTE } from './constants/constant';
+import { ROUTE } from './constants/route';
 import useUser from './hook/useUser';
 import * as S from './App.styles';
 

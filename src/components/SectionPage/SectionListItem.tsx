@@ -2,7 +2,7 @@ import * as S from './SectionListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
 import { DeleteSectionRequest, LineSection } from '../../interfaces';
-import { VALIDATION } from '../../constants/constant';
+import { VALIDATION } from '../../constants/validation';
 
 export interface Props {
   name: string;

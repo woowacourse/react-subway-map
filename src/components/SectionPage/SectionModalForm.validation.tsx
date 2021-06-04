@@ -1,4 +1,4 @@
-import { VALIDATION } from '../../constants/constant';
+import { VALIDATION } from '../../constants/validation';
 import { LineSection } from '../../interfaces';
 
 export const getLineErrorMessage = (lineId: string) => {

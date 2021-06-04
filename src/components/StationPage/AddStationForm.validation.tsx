@@ -1,5 +1,5 @@
-import { VALIDATION } from '../../constants/constant';
 import { REGEXP } from '../../constants/regularExpression';
+import { VALIDATION } from '../../constants/validation';
 import { Station } from '../../interfaces';
 
 export const getStationNameErrorMessage = (name: string, stations: Station[]) => {

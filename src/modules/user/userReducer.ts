@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SignInRequest } from '../../interfaces';
+import { SignInRequest, ServerInfo } from '../../interfaces';
 
-export interface SelectServerPayload {
-  serverName: string;
-  baseURL: string;
-}
+export type SelectServerPayload = ServerInfo;
 export interface LoginPayload {
   email: SignInRequest['email'];
   accessToken: string;

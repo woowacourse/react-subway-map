@@ -5,9 +5,9 @@ import Modal from '../@commons/Modal/Modal';
 import LineModalForm from './LineModalForm';
 import { AddLineRequest, Line, Station } from '../../interfaces';
 import { getLineNameErrorMessage } from './LineModalForm.validation';
-import { VALIDATION } from '../../constants/constant';
 import subwaySVG from '../../assets/svg/subway.svg';
 import * as S from './AddLineForm.styles';
+import { VALIDATION } from '../../constants/validation';
 
 interface Props {
   lines: Line[];

@@ -1,5 +1,5 @@
-import { VALIDATION } from '../../constants/constant';
 import { REGEXP } from '../../constants/regularExpression';
+import { VALIDATION } from '../../constants/validation';
 
 export const getEmailErrorMessage = (email: string) => {
   if (!REGEXP.EMAIL.test(email)) {

@@ -1,5 +1,5 @@
-import { VALIDATION } from '../../constants/constant';
 import { REGEXP } from '../../constants/regularExpression';
+import { VALIDATION } from '../../constants/validation';
 import { Line } from '../../interfaces';
 
 export const getLineNameErrorMessage = (name: string, lines: Line[]) => {

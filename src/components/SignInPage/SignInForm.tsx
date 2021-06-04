@@ -1,32 +1,31 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Input from '../@commons/Input/Input';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
-import { loginAsync, selectServer } from '../../modules/user/userReducer';
-import { RootState } from '../../modules';
 import { getEmailErrorMessage, getPasswordErrorMessage } from './SignInForm.validation';
 import mailSVG from '../../assets/svg/mail.svg';
 import lockSVG from '../../assets/svg/lock.svg';
 import * as S from './SignInForm.styles';
+import { BASE_URL, ROUTE } from '../../constants/route';
+import useUser from '../../hook/useUser';
 
 const SignInForm = () => {
-  const { serverName } = useSelector((state: RootState) => state.user);
+  const { selectServer, serverName, login } = useUser();
   const [serverURL, setServerURL] = useState('');
   const isServerSelected = Boolean(serverName);
-  const dispatch = useDispatch();
-
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
 
+  const emailErrorMessage = getEmailErrorMessage(loginInfo.email);
+  const passwordErrorMessage = getPasswordErrorMessage(loginInfo.password);
+  const isValidForm = !(emailErrorMessage || passwordErrorMessage) && isServerSelected;
+
   const handleSelectServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    SERVER.URL = e.target.value;
     setServerURL(e.target.value);
-    dispatch(selectServer({ serverName: e.target[e.target.selectedIndex].innerText, baseURL: e.target.value }));
+    selectServer({ serverName: e.target[e.target.selectedIndex]?.innerText ?? '', baseURL: e.target.value });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,13 +36,8 @@ const SignInForm = () => {
     e.preventDefault();
     if (!isValidForm) return;
 
-    const { email, password } = loginInfo;
-    dispatch(loginAsync({ email, password }));
+    login(loginInfo);
   };
-
-  const emailErrorMessage = getEmailErrorMessage(loginInfo.email);
-  const passwordErrorMessage = getPasswordErrorMessage(loginInfo.password);
-  const isValidForm = !(emailErrorMessage || passwordErrorMessage) && isServerSelected;
 
   return (
     <S.SignInForm onSubmit={handleLogIn}>
@@ -81,7 +75,7 @@ const SignInForm = () => {
         <S.Message></S.Message>
       </S.InputWrapper>
       <S.ButtonWrapper>
-        <Button isDisabled={isValidForm ? false : true}>로그인</Button>
+        <Button isDisabled={!isValidForm}>로그인</Button>
       </S.ButtonWrapper>
       <S.SignUpLinkWrapper>
         <Link to={ROUTE.SIGN_UP}>아직 회원이 아니신가요?</Link>

@@ -9,3 +9,8 @@ export interface SignInRequest {
   email: string;
   password: string;
 }
+
+export interface ServerInfo {
+  serverName: string;
+  baseURL: string;
+}

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddLineForm from '../../components/LinePage/AddLineForm';
 import LineListItem from '../../components/LinePage/LineListItem';
-import { ROUTE } from '../../constants/constant';
+import { ROUTE } from '../../constants/route';
 import useLine from '../../hook/useLine';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
