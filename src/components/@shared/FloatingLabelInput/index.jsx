@@ -10,14 +10,6 @@ const FloatingLabelInput = ({ id, type, label, value, onChange, isValid }) => {
 
   return (
     <div className="relative flex items-center w-full isolate">
-      <Input
-        id={id}
-        type={type}
-        onFocus={handleInputFocus}
-        value={value}
-        onChange={onChange}
-        isValid={isValid}
-      />
       <label
         htmlFor={id}
         className={cx(
@@ -27,6 +19,14 @@ const FloatingLabelInput = ({ id, type, label, value, onChange, isValid }) => {
       >
         {label}
       </label>
+      <Input
+        id={id}
+        type={type}
+        onFocus={handleInputFocus}
+        value={value}
+        onChange={onChange}
+        isValid={isValid}
+      />
     </div>
   );
 };
