@@ -38,7 +38,7 @@ const Header = () => {
             <NavLink to={PATH.SECTIONS}>구간 관리</NavLink>
           </li>
           <li>
-            <NavLink to={PATH.OVERVIEW}>경로 검색</NavLink>
+            <NavLink to={PATH.OVERVIEW}>전체 보기</NavLink>
           </li>
           <li>
             {isAuthenticated ? (
