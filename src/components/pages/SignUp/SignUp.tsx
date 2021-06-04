@@ -20,7 +20,7 @@ const SignUp = () => {
 
   const { postData: signUpRequest, dataResponse: signUpResponse } = usePostRequest(
     BASE_URL.SIGNUP(host),
-    RESPONSE_MESSAGE.SIGNUP,
+    RESPONSE_MESSAGE.SIGNUP.POST_DATA_RESPONSE,
   );
 
   const {

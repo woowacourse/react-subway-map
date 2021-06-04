@@ -26,21 +26,21 @@ const Section = () => {
 
   const { allData: lines, getAllData: getAllLines } = useGetAllRequest<ILineRes>(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.GET_ALL_DATA_RESPONSE,
   );
   const { postData: addSection, dataResponse: addSectionResponse } = usePostRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.POST_DATA_RESPONSE,
   );
 
   const { deleteData: deleteSection, dataResponse: deleteSectionResponse } = useDeleteRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.DELETE_RESPONSE,
   );
 
   const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.SECTION,
+    RESPONSE_MESSAGE.STATION.GET_ALL_DATA_RESPONSE,
   );
 
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);

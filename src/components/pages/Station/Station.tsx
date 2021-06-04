@@ -24,15 +24,15 @@ const Station = () => {
 
   const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.STATION.GET_ALL_DATA_RESPONSE,
   );
   const { postData: addStation, dataResponse: postStationResponse } = usePostRequest(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.STATION.POST_DATA_RESPONSE,
   );
   const { deleteData: deleteStation, dataResponse: deleteStationResponse } = useDeleteRequest(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.STATION.DELETE_RESPONSE,
   );
 
   const onSubmitStationInfo: React.FormEventHandler<HTMLFormElement> = event => {

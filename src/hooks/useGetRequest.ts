@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { IResMeta, ResultMessage } from '../type';
+import { IResMeta } from '../type';
 import { request } from '../utils';
 
 const defaultHeader = {
@@ -7,7 +7,10 @@ const defaultHeader = {
 };
 
 const useGetRequest = <T>(
-  resultMessage: ResultMessage,
+  resultMessage: {
+    success: string;
+    fail: string;
+  },
   messageCallBack = (msg: string) => window.alert(msg),
 ) => {
   const [data, setData] = useState<T | null>();
@@ -41,14 +44,13 @@ const useGetRequest = <T>(
   );
 
   useEffect(() => {
-    if (dataResponse?.isError === true) {
-      dataResponse.message
-        ? messageCallBack(dataResponse.message)
-        : resultMessage?.GET_DATA_RESPONSE?.fail &&
-          messageCallBack(resultMessage.GET_DATA_RESPONSE.fail);
-    } else if (dataResponse?.isError === false) {
-      resultMessage.GET_DATA_RESPONSE?.success &&
-        messageCallBack(resultMessage.GET_DATA_RESPONSE.success);
+    const isErrorResponse = dataResponse?.isError;
+    const responseErrorMessage = dataResponse?.message;
+
+    if (isErrorResponse === true) {
+      messageCallBack(responseErrorMessage ? responseErrorMessage : resultMessage.fail);
+    } else if (isErrorResponse === false && resultMessage.success.length > 0) {
+      messageCallBack(resultMessage.success);
     }
   }, [dataResponse]);
 

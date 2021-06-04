@@ -18,10 +18,12 @@ const PathFind = () => {
 
   const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.STATION.GET_ALL_DATA_RESPONSE,
   );
 
-  const { data: pathInfo, getData: findPath } = useGetRequest<IPathFindRes>(RESPONSE_MESSAGE.PATH);
+  const { data: pathInfo, getData: findPath } = useGetRequest<IPathFindRes>(
+    RESPONSE_MESSAGE.PATH.GET_DATA_RESPONSE,
+  );
 
   const doPathFind = (departmentStationId: number, destStationId: number) => {
     findPath(BASE_URL.PATH(host, departmentStationId, destStationId));

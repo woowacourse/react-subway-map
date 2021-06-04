@@ -35,23 +35,23 @@ const Line = () => {
 
   const { allData: lines, getAllData: getAllLines } = useGetAllRequest<ILineRes>(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.GET_ALL_DATA_RESPONSE,
   );
   const { postData: addLine, dataResponse: addLineResponse } = usePostRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.GET_ALL_DATA_RESPONSE,
   );
   const { putData: editLine, dataResponse: editLineResponse } = usePutRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.LINE.PUT_RESPONSE,
   );
   const { deleteData: deleteLine, dataResponse: deleteLineResponse } = useDeleteRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.DELETE_RESPONSE,
   );
   const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.STATION.GET_ALL_DATA_RESPONSE,
   );
 
   const { isModalOpen, open: openModal, onClickClose, close: closeModal } = useModal(false);
