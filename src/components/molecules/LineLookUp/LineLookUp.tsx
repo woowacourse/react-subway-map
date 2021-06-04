@@ -23,31 +23,25 @@ const getConsecutiveSections = (sections: ISectionRes[]) => {
   return result.reverse();
 };
 
-const LineLookUp = ({ lines }: ILineLoopUpProp) => {
-  return (
-    <div>
-      {lines?.map(line => {
-        return (
-          <LineWrapper key={line.id}>
-            <LineName color={line.color}>{line.name}</LineName>
-            <StationListWrapper key={line.id}>
-              {getConsecutiveSections(line.sections).map((section, index, self) => {
-                return (
-                  <React.Fragment key={index}>
-                    <li key={section.upStation.id}>{section.upStation.name}</li>
-                    <DistanceText>{section.distance}</DistanceText>
-                    {index === self.length - 1 && (
-                      <li key={section.downStation.id}>{section.downStation.name}</li>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </StationListWrapper>
-          </LineWrapper>
-        );
-      })}
-    </div>
-  );
-};
+const LineLookUp = ({ lines }: ILineLoopUpProp) => (
+  <div>
+    {lines?.map(line => (
+      <LineWrapper key={line.id}>
+        <LineName color={line.color}>{line.name}</LineName>
+        <StationListWrapper key={line.id}>
+          {getConsecutiveSections(line.sections).map((section, index, self) => (
+            <React.Fragment key={index}>
+              <li key={section.upStation.id}>{section.upStation.name}</li>
+              <DistanceText>{section.distance}</DistanceText>
+              {index === self.length - 1 && (
+                <li key={section.downStation.id}>{section.downStation.name}</li>
+              )}
+            </React.Fragment>
+          ))}
+        </StationListWrapper>
+      </LineWrapper>
+    ))}
+  </div>
+);
 
 export default LineLookUp;
