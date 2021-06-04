@@ -10,7 +10,7 @@ import Button from '@shared/Button/Button';
 import ImageButton from '@shared/ImageButton/ImageButton';
 import { StationInterface } from 'types';
 import { AddLinePayload } from 'redux/lineSlice';
-import { ringColor } from 'constants/color';
+import COLORS from 'constants/color';
 import useChangeEvent from 'hooks/useChangeEvent';
 
 interface AddLineModalProps {
@@ -92,7 +92,7 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
               value={Number.isNaN(distance) ? '' : distance}
               onChange={onDistanceChange}
             />
-            <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${ringColor[color]}`} />
+            <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${COLORS[color]?.ringColor}`} />
           </div>
           <Palette setColor={setColor} />
           <div className="flex justify-end mt-8">

@@ -4,7 +4,7 @@ import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
-import { borderColor } from 'constants/color';
+import COLORS from 'constants/color';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useChangeEvent from 'hooks/useChangeEvent';
@@ -86,7 +86,7 @@ const Section = () => {
           onChange={onSelectedLineIdChange}
         />
         {selectedLine && (
-          <Container className={`mt-6 w-full ${borderColor[selectedLine.color]}`}>
+          <Container className={`mt-6 w-full ${COLORS[selectedLine.color].borderColor}`}>
             <div className={`flex justify-center items-center  rounded-2xl py-1 mb-3 ${selectedLine.color}`}>
               <Title className="text-center" text={selectedLine.name} textSize="text-xl" />
             </div>
