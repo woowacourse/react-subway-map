@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { PALETTE } from '../../constants';
 
 const Container = styled.div``;
 
@@ -27,19 +28,27 @@ const Station = styled.div<{ lineColor: string }>`
   }
 `;
 
-const StationName = styled.div`
+const TransferInfo = styled.div`
+  position: absolute;
+  border: 1px solid #000;
+`;
+
+const StationName = styled.div<{ isMouseOver: boolean }>`
+  font-weight: ${({ isMouseOver }) => isMouseOver && '700'};
   margin: 12px 24px 18px 0;
   transform: rotate(-45deg);
 `;
 
-const Circle = styled.div<{ lineColor: string }>`
+const Circle = styled.div<{ lineColor: string; isTransferStation: boolean }>`
   position: absolute;
   bottom: -12px;
   left: -8px;
-  width: 16px;
-  height: 16px;
-  background-color: ${({ lineColor }) => lineColor};
+  width: ${({ isTransferStation }) => (isTransferStation ? '20px' : '16px')};
+  height: ${({ isTransferStation }) => (isTransferStation ? '20px' : '16px')};
+  border: 2px solid
+    ${({ lineColor, isTransferStation }) => (isTransferStation ? PALETTE.DEFAULT_BLACK : lineColor)};
+  background-color: ${PALETTE.DEFAULT_WHITE};
   border-radius: 50%;
 `;
 
-export default { Container, Line, LineName, Station, StationName, Circle };
+export default { Container, Line, LineName, Station, TransferInfo, StationName, Circle };

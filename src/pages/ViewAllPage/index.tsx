@@ -1,35 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import CardLayout from 'components/CardLayout/CardLayout';
-import Input from 'components/shared/Input/Input';
-import Button from 'components/shared/Button/Button';
 import { useAppSelector } from 'modules/hooks';
-import { ButtonType, Line, Station, User } from 'types';
-import deleteIcon from 'assets/delete.png';
-import editIcon from 'assets/edit.png';
-import saveIcon from 'assets/enter.png';
+import { Line, User } from 'types';
 import useFetch from 'hooks/useFetch';
 import Styled from './styles';
-import {
-  ROUTE,
-  REGEX,
-  END_POINT,
-  RESPONSE_STATE,
-  ALERT_MESSAGE,
-  CONFIRM_MESSAGE,
-  NOTIFICATION,
-  API_METHOD,
-  INPUT,
-} from '../../constants';
-import useNotify from 'hooks/useNotify';
+import { ROUTE, END_POINT, RESPONSE_STATE, ALERT_MESSAGE, API_METHOD } from '../../constants';
 import Loading from 'components/shared/Loading/Loading';
 import LineMap from 'components/LineMap/LineMap';
 
 const ViewAllPage = () => {
   const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+
   if (!user) return <Redirect to={ROUTE.HOME} />;
+
   const [lines, setLines] = useState<Line[]>([]);
+  const [mouseOverStationId, setMouseOverStationId] = useState(0);
 
   const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch(API_METHOD.GET);
   const { enqueueSnackbar } = useSnackbar();
@@ -45,6 +32,7 @@ const ViewAllPage = () => {
       setLines(res.data);
     }
   };
+
   useEffect(() => {
     const fetchLines = async () => {
       await getLines();
@@ -57,7 +45,12 @@ const ViewAllPage = () => {
       <Loading isLoading={isLoading} />
       <Styled.LinesMap>
         {lines.map((line) => (
-          <LineMap key={line.id} line={line} />
+          <LineMap
+            key={line.id}
+            line={line}
+            mouseOverStationId={mouseOverStationId}
+            setMouseOverStationId={setMouseOverStationId}
+          />
         ))}
       </Styled.LinesMap>
     </CardLayout>
