@@ -12,7 +12,7 @@ const globalStyles = css`
   body {
     padding: 0;
     margin: 0;
-    background: white;
+    background: ${COLOR.WHITE};
     min-height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
     color: ${COLOR.TEXT_COLOR};

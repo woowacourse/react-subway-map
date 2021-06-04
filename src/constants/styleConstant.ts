@@ -35,6 +35,11 @@ export const SIZE = {
   PAGE_MIN_WIDTH: '40rem',
 };
 
+export const Z_INDEX = {
+  MODAL_WRAPPER: 200,
+  NAVIGATION: 100,
+};
+
 export const SERVER_COLOR = {
   default: { PRIMARY: COLOR.MINT_500, SECONDARY: COLOR.MINT_700 },
   [BASE_URL.ROOT.name]: { PRIMARY: '#1DA1F2', SECONDARY: '#1087cc' },

@@ -27,10 +27,10 @@ interface Props {
   stations: Station[];
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | React.MouseEvent<HTMLElement>) => void;
   onSubmit: (isValidForm: boolean, e: React.FormEvent<HTMLFormElement>) => void;
-  onModalClose: () => void;
+  onCloseModal: () => void;
 }
 
-const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalClose }: Props) => {
+const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onCloseModal }: Props) => {
   const lineNameErrorMessage = getLineNameErrorMessage(lineInfo.name, lines);
   const lineStationErrorMessage = getLineStationErrorMessage(
     Number(lineInfo.upStationId),
@@ -87,7 +87,7 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalC
       </S.PaletteContainer>
       <S.ButtonContainer>
         <S.ButtonWrapper>
-          <Button type='button' bgColor='TRANSPARENT' fontColor='BLACK' onClick={onModalClose}>
+          <Button type='button' bgColor='TRANSPARENT' fontColor='BLACK' onClick={onCloseModal}>
             취소
           </Button>
         </S.ButtonWrapper>

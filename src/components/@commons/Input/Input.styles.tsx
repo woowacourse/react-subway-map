@@ -14,7 +14,7 @@ export const Label = styled.div`
   position: absolute;
   left: 0.5rem;
   top: -0.75rem;
-  background-color: white;
+  background-color: ${COLOR.WHITE};
   padding: 0 0.5rem;
   color: ${COLOR.GRAY_400};
 `;

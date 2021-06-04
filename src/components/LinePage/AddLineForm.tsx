@@ -9,6 +9,7 @@ import LineModalForm from './LineModalForm';
 import Modal from '../@commons/Modal/Modal';
 import { AddLineRequest, Line, Station } from '../../interfaces';
 import { getLineNameErrorMessage } from './LineModalForm.validation';
+import { VALIDATION } from '../../constants/constant';
 
 interface Props {
   lines: Line[];
@@ -33,14 +34,12 @@ const AddLineForm = ({ lines, stations, addLine }: Props) => {
 
   useEffect(() => {
     if (lines.length === 0) return;
-    handleModalClose();
+    handleCloseModal();
   }, [lines.length]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | React.MouseEvent<HTMLElement>) => {
     const { name, value } = e.target as HTMLInputElement;
-    if (value.slice(-1)[0] === ' ') {
-      return;
-    }
+    if (value.slice(-1)[0] === VALIDATION.EMPTY_INPUT) return;
     setLineInfo({ ...lineInfo, [name]: value });
   };
 
@@ -51,7 +50,7 @@ const AddLineForm = ({ lines, stations, addLine }: Props) => {
     setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleCloseModal = () => {
     setLineInfo(initLineInfo);
     setIsModalOpen(false);
   };
@@ -82,14 +81,14 @@ const AddLineForm = ({ lines, stations, addLine }: Props) => {
       </S.InputWrapper>
       <S.Message>{lineInfo.name && lineNameErrorMessage}</S.Message>
       {isModalOpen && (
-        <Modal onCloseModal={handleModalClose}>
+        <Modal onClose={handleCloseModal}>
           <LineModalForm
             lines={lines}
             lineInfo={lineInfo}
             onChange={handleChange}
             onSubmit={handleAddLine}
             stations={stations}
-            onModalClose={handleModalClose}
+            onCloseModal={handleCloseModal}
           />
         </Modal>
       )}

@@ -2,17 +2,17 @@ import * as S from './Modal.styles';
 import ReactDOM from 'react-dom';
 
 export interface Props {
-  onCloseModal: () => void;
+  onClose: () => void;
   children: React.ReactNode;
 }
 
 const $modal = document.querySelector('#modal');
 
-const Modal = ({ onCloseModal, children }: Props) => {
+const Modal = ({ onClose, children }: Props) => {
   const onClickModalDimmed = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target !== e.currentTarget) return;
 
-    onCloseModal();
+    onClose();
   };
 
   if (!$modal) return null;

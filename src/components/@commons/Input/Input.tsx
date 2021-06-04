@@ -9,7 +9,7 @@ export interface Props {
   placeholder?: string;
   borderColor?: Color;
   name?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   value?: string;
 }

@@ -17,7 +17,7 @@ const Template = () => (
     }}
     onChange={() => {}}
     onSubmit={() => {}}
-    onModalClose={() => {}}
+    onCloseModal={() => {}}
     stations={[]}
   />
 );

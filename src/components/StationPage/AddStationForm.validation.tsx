@@ -1,9 +1,10 @@
+import { VALIDATION } from '../../constants/constant';
 import { REGEXP } from '../../constants/regularExpression';
 import { Station } from '../../interfaces';
 
 export const getStationNameErrorMessage = (name: string, stations: Station[]) => {
-  if (!(2 <= name.length && name.length <= 20)) {
-    return '역 이름은 최소 2글자 이상 20글자 이하여야 합니다.';
+  if (!(VALIDATION.MIN_STATION_NAME_LENGTH <= name.length && name.length <= VALIDATION.MAX_STATION_NAME_LENGTH)) {
+    return `역 이름은 최소 ${VALIDATION.MIN_STATION_NAME_LENGTH}글자 이상 ${VALIDATION.MAX_STATION_NAME_LENGTH}글자 이하여야 합니다.`;
   }
 
   if (!(REGEXP.KOR.test(name) || REGEXP.NUMBER.test(name))) {
@@ -14,5 +15,5 @@ export const getStationNameErrorMessage = (name: string, stations: Station[]) =>
     return '이미 존재하는 역 이름입니다.';
   }
 
-  return '';
+  return null;
 };

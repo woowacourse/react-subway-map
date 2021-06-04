@@ -7,11 +7,11 @@ export default {
 
 const Template = () => (
   <SectionModalForm
-    onLineChange={() => {}}
+    onSelectLine={() => {}}
     lines={[]}
     stations={[]}
     lineSection={{ id: 1, color: '', name: '', stations: [], sections: [] }}
-    onModalClose={() => {}}
+    onCloseModal={() => {}}
     addSection={() => {}}
   />
 );

@@ -11,8 +11,8 @@ interface Props {
   lineSection: LineSection;
   lines: Line[];
   stations: Station[];
-  onLineChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  onModalClose: () => void;
+  onSelectLine: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onCloseModal: () => void;
   addSection: (payload: AddSectionRequest) => void;
 }
 
@@ -23,11 +23,11 @@ const initSectionInfo = {
   distance: '',
 };
 
-const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalClose, addSection }: Props) => {
+const SectionModalForm = ({ lineSection, lines, stations, onSelectLine, onCloseModal, addSection }: Props) => {
   const [sectionInfo, setSectionInfo] = useState(initSectionInfo);
 
   const handleLineChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onLineChange(e);
+    onSelectLine(e);
     handleChange(e);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -39,7 +39,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
     if (!isValidForm) return;
 
     addSection(sectionInfo);
-    onModalClose();
+    onCloseModal();
   };
 
   useEffect(() => {
@@ -117,7 +117,7 @@ const SectionModalForm = ({ lineSection, lines, stations, onLineChange, onModalC
       </S.InputWrapper>
       <S.ButtonContainer>
         <S.ButtonWrapper>
-          <Button type='button' bgColor='TRANSPARENT' fontColor='BLACK' onClick={onModalClose}>
+          <Button type='button' bgColor='TRANSPARENT' fontColor='BLACK' onClick={onCloseModal}>
             취소
           </Button>
         </S.ButtonWrapper>

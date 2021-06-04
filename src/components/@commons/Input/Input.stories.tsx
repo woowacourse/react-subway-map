@@ -1,4 +1,3 @@
-import React from 'react';
 import Input from './Input';
 
 import Lock from '../../../assets/svg/lock.svg';
@@ -8,14 +7,14 @@ export default {
   component: Input,
 };
 
-export const Default = () => <Input />;
+export const Default = () => <Input onChange={() => {}} />;
 
-export const Emoji = () => <Input emoji={Lock} />;
+export const Emoji = () => <Input onChange={() => {}} emoji={Lock} />;
 
-export const Label = () => <Input label='라벨텍스트' />;
+export const Label = () => <Input onChange={() => {}} label='라벨텍스트' />;
 
-export const EmojiAndLabel = () => <Input emoji={Lock} label='라벨텍스트' />;
+export const EmojiAndLabel = () => <Input onChange={() => {}} emoji={Lock} label='라벨텍스트' />;
 
-export const PlaceHolder = () => <Input placeholder='placeholder 텍스트' />;
+export const PlaceHolder = () => <Input onChange={() => {}} placeholder='placeholder 텍스트' />;
 
-export const BorderColor = () => <Input borderColor='WHITE' />;
+export const BorderColor = () => <Input onChange={() => {}} borderColor='WHITE' />;

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { COLOR, SIZE } from '../../../constants/styleConstant';
+import { COLOR, SIZE, Z_INDEX } from '../../../constants/styleConstant';
 
 export const Navigation = styled.nav`
-  z-index: 100;
+  z-index: ${Z_INDEX.NAVIGATION};
   width: 100%;
   height: 5rem;
   display: flex;

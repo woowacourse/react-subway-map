@@ -22,11 +22,11 @@ const AddSectionForm = ({ lineSection, lines, stations, getLineSection, addSecti
     getLineSection(Number(e.target.value));
   };
 
-  const handleModalClose = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleModalOpen = () => {
+  const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
@@ -43,18 +43,18 @@ const AddSectionForm = ({ lineSection, lines, stations, getLineSection, addSecti
         </SelectInput>
       </S.InputWrapper>
       <S.ButtonWrapper>
-        <Button shape='CIRCLE' type='button' onClick={handleModalOpen}>
+        <Button shape='CIRCLE' type='button' onClick={handleOpenModal}>
           +
         </Button>
       </S.ButtonWrapper>
       {isModalOpen && (
-        <Modal onCloseModal={handleModalClose}>
+        <Modal onClose={handleCloseModal}>
           <SectionModalForm
             lineSection={lineSection}
             lines={lines}
             stations={stations}
-            onLineChange={handleSelectLine}
-            onModalClose={handleModalClose}
+            onSelectLine={handleSelectLine}
+            onCloseModal={handleCloseModal}
             addSection={addSection}
           />
         </Modal>

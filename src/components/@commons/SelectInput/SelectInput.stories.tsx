@@ -6,7 +6,7 @@ export default {
 };
 
 export const Default = () => (
-  <SelectInput>
+  <SelectInput name='' value='' onChange={() => {}}>
     <option>A</option>
     <option>B</option>
     <option>C</option>
@@ -14,7 +14,7 @@ export const Default = () => (
 );
 
 export const InitialText = () => (
-  <SelectInput initialText='선택'>
+  <SelectInput name='' value='' onChange={() => {}} initialText='선택'>
     <option>A</option>
     <option>B</option>
     <option>C</option>
@@ -22,7 +22,7 @@ export const InitialText = () => (
 );
 
 export const BorderColor = () => (
-  <SelectInput borderColor='WHITE'>
+  <SelectInput name='' value='' onChange={() => {}} borderColor='WHITE'>
     <option>A</option>
     <option>B</option>
     <option>C</option>
