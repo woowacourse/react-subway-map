@@ -16,25 +16,45 @@ interface Props {
   line: Line;
   stations: Station[];
   addSection: (sectionAddRequestItem: SectionAddRequestItem) => Promise<void>;
-  deleteSection: ({ lineId, stationId }: { lineId: number; stationId: number }) => Promise<void>;
+  deleteSection: ({
+    lineId,
+    stationId,
+  }: {
+    lineId: number;
+    stationId: number;
+  }) => Promise<void>;
 }
 
-const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }: Props) => {
+const SectionAddModal = ({
+  onClose,
+  line,
+  stations,
+  addSection,
+  deleteSection,
+}: Props) => {
   const [firstStation, secondStation] = stations;
 
-  const stationOptions = stations.map(({ id, name }) => ({ value: id, text: name }));
-  const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect(String(firstStation.id));
-  const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect(
-    String(secondStation.id)
-  );
+  const stationOptions = stations.map(({ id, name }) => ({
+    value: id,
+    text: name,
+  }));
+  const {
+    selectValue: upStationId,
+    setValueOnChange: setUpStationIdOnChange,
+  } = useSelect(String(firstStation.id));
+  const {
+    selectValue: downStationId,
+    setValueOnChange: setDownStationIdOnChange,
+  } = useSelect(String(secondStation.id));
   const {
     inputValue: distance,
     errorMessage: distanceErrorMessage,
     setValueOnChange: setDistanceOnChange,
-    validateOnBlur: validateDistanceOnBlur,
   } = useInput(validateSectionDistance);
 
-  const onAddSection: React.FormEventHandler<HTMLFormElement> = async (event) => {
+  const onAddSection: React.FormEventHandler<HTMLFormElement> = async (
+    event
+  ) => {
     event.preventDefault();
 
     if (distanceErrorMessage) {
@@ -54,8 +74,15 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
     <Modal onClose={onClose}>
       <form onSubmit={onAddSection}>
         <Block style={{ flexDirection: "column", maxWidth: "40.625rem" }}>
-          <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>🔁 구간 추가</h3>
-          <Input value={line.name} placeholder="노선 이름" style={{ marginBottom: "0.9375rem" }} disabled />
+          <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
+            🔁 구간 추가
+          </h3>
+          <Input
+            value={line.name}
+            placeholder="노선 이름"
+            style={{ marginBottom: "0.9375rem" }}
+            disabled
+          />
           <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
             <Select
               value={upStationId}
@@ -77,7 +104,6 @@ const SectionAddModal = ({ onClose, line, stations, addSection, deleteSection }:
             <Input
               value={distance}
               onChange={setDistanceOnChange}
-              onBlur={validateDistanceOnBlur}
               errorMessage={distanceErrorMessage}
               type="number"
               min="0.1"
