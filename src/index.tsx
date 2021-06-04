@@ -8,7 +8,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import GlobalStyle from './Global.styles';
 import { store } from './state/store';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: { suspense: true },
   },
@@ -21,7 +21,7 @@ ReactDOM.render(
       <Provider store={store}>
         <BrowserRouter>
           <ErrorBoundary>
-            <Suspense fallback={false}>
+            <Suspense fallback={true}>
               <App />
             </Suspense>
           </ErrorBoundary>

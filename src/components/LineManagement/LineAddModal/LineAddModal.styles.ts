@@ -30,7 +30,7 @@ export const BidirectionArrowIcon = styled.img.attrs({
 export const ColorPicker = styled(Container)`
   justify-content: space-evenly;
   width: 100%;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 `;
 
 const CheckedStyle = css`

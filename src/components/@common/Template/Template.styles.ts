@@ -7,11 +7,11 @@ export const StyledTemplate = styled.main`
   justify-content: center;
   align-items: center;
   position: relative;
+  height: calc(100vh - 5.125rem);
 `;
 
 export const InnerTemplate = styled.div<TemplateProps>`
   width: 100%;
-  min-height: calc(100vh - 5.125rem);
   padding: 3rem 0;
   max-width: 50rem;
   display: flex;
