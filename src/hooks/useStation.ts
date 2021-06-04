@@ -54,12 +54,15 @@ const useStation = () => {
     deleteMutation.mutate(stationId);
   };
 
+  const isAddStationSuccess = addMutation.isSuccess;
+  const isDeleteStationSuccess = deleteMutation.isSuccess;
+
   return {
     stations,
     addStation,
-    addMutation,
-    deleteMutation,
     deleteStation,
+    isAddStationSuccess,
+    isDeleteStationSuccess,
   };
 };
 

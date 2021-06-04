@@ -39,12 +39,15 @@ const useLine = () => {
     deleteLineMutation.mutate(lineId);
   };
 
+  const isAddLineSuccess = addLineMutation.isSuccess;
+  const isDeleteLineSuccess = deleteLineMutation.isSuccess;
+
   return {
     lines,
     addLine,
-    addLineMutation,
     deleteLine,
-    deleteLineMutation,
+    isAddLineSuccess,
+    isDeleteLineSuccess,
   };
 };
 

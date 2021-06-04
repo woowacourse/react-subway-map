@@ -4,6 +4,7 @@ import { Wrapper, beforeEachFn } from './common';
 import useStation from '../hooks/useStation';
 import { mockStations } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
+import { StationForm } from '../types';
 
 beforeEach(beforeEachFn);
 
@@ -19,11 +20,14 @@ describe('useStation', () => {
   test('사용자는 지하철 역을 추가할 수 있다.', async () => {
     const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
 
-    act(() => result.current.setName('멍청이파노'));
-    act(() => result.current.addStation());
+    const testData: StationForm = {
+      name: '광교역',
+    };
+
+    act(() => result.current.addStation(testData));
 
     await waitFor(() =>
-      expect(result.current.addMutation.isSuccess).toBeTruthy()
+      expect(result.current.isAddStationSuccess).toBeTruthy()
     );
   });
 
@@ -33,7 +37,7 @@ describe('useStation', () => {
     act(() => result.current.deleteStation(3));
 
     await waitFor(() =>
-      expect(result.current.deleteMutation.isSuccess).toBeTruthy()
+      expect(result.current.isDeleteStationSuccess).toBeTruthy()
     );
   });
 });

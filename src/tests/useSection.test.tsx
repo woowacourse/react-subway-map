@@ -4,6 +4,7 @@ import { Wrapper, beforeEachFn } from './common';
 import { mockLines } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
 import useSection from '../hooks/useSection';
+import { SectionForm } from '../types';
 
 beforeEach(beforeEachFn);
 
@@ -35,14 +36,16 @@ describe('useSection', () => {
 
     await waitForNextUpdate();
 
-    act(() => result.current.setDistance(1));
-    act(() => result.current.setUpStationId(1));
-    act(() => result.current.setDownStationId(2));
+    const testData: SectionForm = {
+      distance: 2,
+      downStationId: 1,
+      upStationId: 2,
+    };
 
-    act(() => result.current.addSection());
+    act(() => result.current.addSection(testData));
 
     await waitFor(() =>
-      expect(result.current.addSectionMutation.isSuccess).toBeTruthy()
+      expect(result.current.isAddSectionSuccess).toBeTruthy()
     );
   });
 
@@ -52,7 +55,7 @@ describe('useSection', () => {
     act(() => result.current.deleteSection(1));
 
     await waitFor(() =>
-      expect(result.current.deleteSectionMutation.isSuccess).toBeTruthy()
+      expect(result.current.isDeleteSectionSuccess).toBeTruthy()
     );
   });
 });

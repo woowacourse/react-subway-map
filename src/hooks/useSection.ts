@@ -79,6 +79,9 @@ const useSection = () => {
     deleteSectionMutation.mutate(stationId);
   };
 
+  const isAddSectionSuccess = addSectionMutation.isSuccess;
+  const isDeleteSectionSuccess = deleteSectionMutation.isSuccess;
+
   return {
     currentLineId,
     setCurrentLineId,
@@ -86,6 +89,8 @@ const useSection = () => {
     addSection,
     deleteSection,
     updateCurrentSection,
+    isAddSectionSuccess,
+    isDeleteSectionSuccess,
   };
 };
 
