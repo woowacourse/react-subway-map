@@ -1,18 +1,18 @@
 export const isValidEmail = (value) => {
-  const rEmail =
+  const emailPattern =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-  return rEmail.test(value);
+  return emailPattern.test(value);
 };
 
 export const isValidAge = (value) => {
-  const rAge = /^[1-9][0-9]*$/;
+  const agePattern = /^[1-9][0-9]*$/;
 
-  return rAge.test(value) && Number(value) <= 200;
+  return agePattern.test(value) && Number(value) <= 200;
 };
 
 export const isValidPassword = (value) => {
-  const rPassword = /^.+$/;
+  const passwordPattern = /^.+$/;
 
-  return rPassword.test(value);
+  return passwordPattern.test(value);
 };
