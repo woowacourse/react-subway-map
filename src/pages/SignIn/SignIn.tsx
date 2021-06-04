@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
+import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import SignInForm from '../../components/SignInPage/SignInForm';
 import { ROUTE } from '../../constants/constant';
 import useUser from '../../hook/useUser';

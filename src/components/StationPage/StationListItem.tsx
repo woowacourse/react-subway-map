@@ -1,7 +1,7 @@
-import * as S from './StationListItem.styles';
+import { Station } from '../../interfaces';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
-import { Station } from '../../interfaces';
+import * as S from './StationListItem.styles';
 
 export interface Props {
   name: String;

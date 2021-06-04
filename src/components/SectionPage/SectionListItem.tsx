@@ -2,6 +2,7 @@ import * as S from './SectionListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
 import { DeleteSectionRequest, LineSection } from '../../interfaces';
+import { VALIDATION } from '../../constants/constant';
 
 export interface Props {
   name: string;
@@ -14,7 +15,7 @@ export interface Props {
 
 const SectionListItem = ({ id, name, distance, lineColor, lineSection, deleteSection }: Props) => {
   const handleDeleteSection = () => {
-    if (lineSection.stations.length <= 2) {
+    if (lineSection.stations.length <= VALIDATION.MIN_NUM_OF_STATIONS_IN_LINE) {
       window.alert('노선에는 상행역과 하행역이 필수로 존재해야합니다...!');
       return;
     }

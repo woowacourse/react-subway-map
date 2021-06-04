@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API, RESPONSE } from '../constants/api';
-import { AddSectionRequest, DeleteSectionRequest, LineSection } from '../interfaces/section';
+import { AddSectionRequest, DeleteSectionRequest, LineSection } from '../interfaces';
 
 interface GetSectionResponse {
   status: number;

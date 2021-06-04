@@ -1,18 +1,15 @@
-import React from 'react';
-import { PALETTE } from '../../constants/styleConstant';
-import { Line, Station } from '../../interfaces';
-
 import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-
-import * as S from './LineModalForm.styles';
+import { PALETTE } from '../../constants/styleConstant';
+import { Line, Station } from '../../interfaces';
 import {
   getLineColorErrorMessage,
   getLineDistanceErrorMessage,
   getLineNameErrorMessage,
   getLineStationErrorMessage,
 } from './LineModalForm.validation';
+import * as S from './LineModalForm.styles';
 
 export interface LineInfo {
   name: string;

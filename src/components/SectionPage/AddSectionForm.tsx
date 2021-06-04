@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import Button from '../@commons/Button/Button';
+import SelectInput from '../@commons/SelectInput/SelectInput';
+import Modal from '../@commons/Modal/Modal';
+import SectionModalForm from './SectionModalForm';
 import { Line, Station } from '../../interfaces';
 import { AddSectionRequest, LineSection } from '../../interfaces/section';
-import Button from '../@commons/Button/Button';
-import Modal from '../@commons/Modal/Modal';
-import SelectInput from '../@commons/SelectInput/SelectInput';
 import * as S from './AddSectionForm.styles';
-import SectionModalForm from './SectionModalForm';
 
 interface Props {
   lineSection: LineSection;

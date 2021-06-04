@@ -1,5 +1,5 @@
-import * as S from './Modal.styles';
 import ReactDOM from 'react-dom';
+import * as S from './Modal.styles';
 
 export interface Props {
   onClose: () => void;

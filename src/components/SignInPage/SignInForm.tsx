@@ -1,17 +1,16 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Input from '../@commons/Input/Input';
-import * as S from './SignInForm.styles';
-import mailSVG from '../../assets/svg/mail.svg';
-import lockSVG from '../../assets/svg/lock.svg';
 import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import { Link } from 'react-router-dom';
 import { BASE_URL, ROUTE, SERVER } from '../../constants/constant';
-import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync, selectServer } from '../../modules/user/userReducer';
-import React, { useState } from 'react';
-
 import { RootState } from '../../modules';
 import { getEmailErrorMessage, getPasswordErrorMessage } from './SignInForm.validation';
+import mailSVG from '../../assets/svg/mail.svg';
+import lockSVG from '../../assets/svg/lock.svg';
+import * as S from './SignInForm.styles';
 
 const SignInForm = () => {
   const { serverName } = useSelector((state: RootState) => state.user);

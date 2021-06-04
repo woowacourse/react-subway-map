@@ -1,20 +1,20 @@
-import Input from '../@commons/Input/Input';
-import * as S from './SignUpForm.styles';
-import mailSVG from '../../assets/svg/mail.svg';
-import userSVG from '../../assets/svg/user.svg';
-import lockSVG from '../../assets/svg/lock.svg';
-import Button from '../@commons/Button/Button';
-import React, { useState } from 'react';
-import { BASE_URL, ROUTE } from '../../constants/constant';
-import { authAPI } from '../../api/auth';
-import { RESPONSE } from '../../constants/api';
+import { useState } from 'react';
 import { useHistory } from 'react-router';
+import Input from '../@commons/Input/Input';
+import Button from '../@commons/Button/Button';
+import { BASE_URL, ROUTE } from '../../constants/constant';
+import { RESPONSE } from '../../constants/api';
+import { authAPI } from '../../api/auth';
 import {
   getAgeErrorMessage,
   getConfirmPasswordErrorMessage,
   getEmailErrorMessage,
   getPasswordErrorMessage,
 } from './SignUpForm.validation';
+import mailSVG from '../../assets/svg/mail.svg';
+import userSVG from '../../assets/svg/user.svg';
+import lockSVG from '../../assets/svg/lock.svg';
+import * as S from './SignUpForm.styles';
 
 const SignUpForm = () => {
   const history = useHistory();

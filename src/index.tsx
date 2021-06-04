@@ -1,12 +1,12 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
 import React from 'react';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { BrowserRouter } from 'react-router-dom';
+import createSagaMiddleware from 'redux-saga';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import App from './App';
 import { rootReducer, rootSaga } from './modules';
-import axios from 'axios';
-import { BrowserRouter } from 'react-router-dom';
 import Theme from './Theme';
 import GlobalStyles from './Global.styles';
 

@@ -1,17 +1,15 @@
-import Navigation from './components/@commons/Navigation/Navigation';
-
-import * as S from './App.styles';
+import { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-
-import { ROUTE } from './constants/constant';
+import Navigation from './components/@commons/Navigation/Navigation';
+import Home from './pages/Home/Home';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Station from './pages/Station/Station';
 import Line from './pages/Line/Line';
 import Section from './pages/Section/Section';
-import { useEffect } from 'react';
-import Home from './pages/Home/Home';
+import { ROUTE } from './constants/constant';
 import useUser from './hook/useUser';
+import * as S from './App.styles';
 
 const routes = [
   { path: ROUTE.HOME, component: Home },

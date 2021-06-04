@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
+import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddSectionForm from '../../components/SectionPage/AddSectionForm';
 import SectionListItem from '../../components/SectionPage/SectionListItem';
 import { ROUTE } from '../../constants/constant';

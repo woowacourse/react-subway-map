@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ROUTE } from '../../../constants/constant';
 import useUser from '../../../hook/useUser';
+import { ROUTE } from '../../../constants/constant';
 import * as S from './Navigation.styles';
 
 const Navigation = () => {

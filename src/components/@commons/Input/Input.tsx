@@ -11,7 +11,7 @@ export interface Props {
   name?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
-  value?: string;
+  value?: string | number;
 }
 
 const Input = ({ type = 'text', emoji, label, placeholder, borderColor, name, onChange, required, value }: Props) => {

@@ -7,7 +7,6 @@ import { ROUTE } from '../../constants/constant';
 import useLine from '../../hook/useLine';
 import useStation from '../../hook/useStation';
 import useUser from '../../hook/useUser';
-
 import * as S from './Line.styles';
 
 const Line = () => {

@@ -1,10 +1,10 @@
-import Input from '../@commons/Input/Input';
-import * as S from './AddStationForm.styles';
-import subwaySVG from '../../assets/svg/subway.svg';
-import Button from '../@commons/Button/Button';
 import { useState } from 'react';
+import Input from '../@commons/Input/Input';
+import Button from '../@commons/Button/Button';
 import { getStationNameErrorMessage } from './AddStationForm.validation';
 import { Station } from '../../interfaces';
+import subwaySVG from '../../assets/svg/subway.svg';
+import * as S from './AddStationForm.styles';
 
 interface Props {
   stations: Station[];

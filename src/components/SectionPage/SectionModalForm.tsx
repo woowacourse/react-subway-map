@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Line, Station } from '../../interfaces';
-import { AddSectionRequest, LineSection } from '../../interfaces/section';
-import Button from '../@commons/Button/Button';
 import Input from '../@commons/Input/Input';
+import Button from '../@commons/Button/Button';
 import SelectInput from '../@commons/SelectInput/SelectInput';
-import * as S from './SectionModalForm.styles';
+import { Line, Station, AddSectionRequest, LineSection } from '../../interfaces';
 import { getDistanceErrorMessage, getLineErrorMessage, getStationsErrorMessage } from './SectionModalForm.validation';
+import * as S from './SectionModalForm.styles';
 
 interface Props {
   lineSection: LineSection;

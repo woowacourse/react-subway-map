@@ -1,6 +1,6 @@
-import * as S from './LineListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
 import editSVG from '../../assets/svg/edit.svg';
+import * as S from './LineListItem.styles';
 
 export interface Props {
   name: string;

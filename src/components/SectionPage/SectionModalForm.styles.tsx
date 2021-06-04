@@ -15,7 +15,6 @@ export const Title = styled.h2`
 
 export const InputWrapper = styled.div`
   width: 100%;
-
   margin-bottom: 1.5rem;
 `;
 
@@ -49,6 +48,7 @@ export const ButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
 `;
+
 export const ButtonWrapper = styled.div`
   padding-left: 1.5rem;
   width: 12rem;

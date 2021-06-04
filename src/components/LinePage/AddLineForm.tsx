@@ -1,15 +1,13 @@
-import Input from '../@commons/Input/Input';
-import * as S from './AddLineForm.styles';
-import subwaySVG from '../../assets/svg/subway.svg';
+import { useEffect, useState } from 'react';
 import Button from '../@commons/Button/Button';
-
-import React, { useEffect, useState } from 'react';
-
-import LineModalForm from './LineModalForm';
+import Input from '../@commons/Input/Input';
 import Modal from '../@commons/Modal/Modal';
+import LineModalForm from './LineModalForm';
 import { AddLineRequest, Line, Station } from '../../interfaces';
 import { getLineNameErrorMessage } from './LineModalForm.validation';
 import { VALIDATION } from '../../constants/constant';
+import subwaySVG from '../../assets/svg/subway.svg';
+import * as S from './AddLineForm.styles';
 
 interface Props {
   lines: Line[];
