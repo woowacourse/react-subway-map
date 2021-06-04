@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import {
@@ -9,12 +10,12 @@ import {
   selectLinesStatus,
   reset,
 } from "../../pages/Lines/slice";
+import STATUS from "../../constants/status";
 import Loading from "../@shared/Loading";
 import Main from "../@shared/Main";
+import Button from "../@shared/Button";
 import ListSelect from "../ListSelect";
-import SectionsAddButton from "../SectionsAddButton";
 import SectionsDetail from "../SectionsDetail";
-import STATUS from "../../constants/status";
 
 const SectionsMain = ({ lineId, openModal, onLineChange }) => {
   const dispatch = useDispatch();
@@ -66,7 +67,16 @@ const SectionsMain = ({ lineId, openModal, onLineChange }) => {
           />
           <div className="relative">
             <hr className="-mx-4 my-12" />
-            <SectionsAddButton onClick={openModal} disabled={!lineId} />
+            <Button
+              type="button"
+              className={cx(
+                "absolute -top-7 right-0 flex items-center justify-center w-12 h-12 text-3xl rounded-full focus:outline-none shadow-md",
+                !lineId ? "bg-gray-300" : "bg-yellow-300 hover:bg-yellow-400 "
+              )}
+              onClick={openModal}
+            >
+              +
+            </Button>
           </div>
           <SectionsDetail lineId={lineId} />
         </section>
