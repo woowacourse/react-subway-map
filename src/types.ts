@@ -91,6 +91,13 @@ export type SectionAttribute = {
   };
 };
 
+export type SearchResult = {
+  stations: Station[];
+  distance: number;
+  defaultFare: number;
+  fare: Record<string, number>;
+};
+
 export type Error = {
   message: string;
   status?: number;

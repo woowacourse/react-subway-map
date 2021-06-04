@@ -1,2 +1,2 @@
 export type ButtonVariant = 'primary' | 'text' | 'link';
-export type ButtonShape = 'default' | 'circle';
+export type ButtonShape = 'default' | 'circle' | 'round';

@@ -205,7 +205,7 @@ const LinePage = () => {
       </Styled.LinePage>
 
       <Modal isOpen={isAddModalOpen} onClose={closeAddModal}>
-        <Styled.ModalTitle>노선 생성</Styled.ModalTitle>
+        <Modal.Title>노선 생성</Modal.Title>
         <Styled.Form onSubmit={handleAddLine}>
           <Styled.InputWrapper>
             <Input
@@ -251,17 +251,17 @@ const LinePage = () => {
           <Styled.ColorPaletteWrapper>
             <ColorPalette onClick={onChangeColor} disabledColors={unableAddColors} />
           </Styled.ColorPaletteWrapper>
-          <Styled.ButtonWrapper>
+          <Modal.Control>
             <Button variant="text" type="button" onClick={closeAddModal}>
               취소
             </Button>
             <Button>추가</Button>
-          </Styled.ButtonWrapper>
+          </Modal.Control>
         </Styled.Form>
       </Modal>
 
       <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
-        <Styled.ModalTitle>노선 수정</Styled.ModalTitle>
+        <Modal.Title>노선 수정</Modal.Title>
         <Styled.Form onSubmit={handleEditLine}>
           <Styled.InputWrapper>
             <Input
@@ -279,12 +279,12 @@ const LinePage = () => {
           <Styled.ColorPaletteWrapper>
             <ColorPalette onClick={onChangeEditColor} disabledColors={unableEditColors} />
           </Styled.ColorPaletteWrapper>
-          <Styled.ButtonWrapper>
+          <Modal.Control>
             <Button variant="text" type="button" onClick={closeEditModal}>
               취소
             </Button>
             <Button>수정</Button>
-          </Styled.ButtonWrapper>
+          </Modal.Control>
         </Styled.Form>
       </Modal>
     </>

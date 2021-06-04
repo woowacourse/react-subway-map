@@ -4,6 +4,8 @@ import ROUTES from './constants/routes';
 import useAuth from './hooks/useAuth';
 import LinePage from './pages/LinePage/LinePage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import RouteMapPage from './pages/RouteMapPage/RouteMapPage';
+import SearchPage from './pages/SearchPage/SearchPage';
 import SectionPage from './pages/SectionPage/SectionPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import StationPage from './pages/StationPage/StationPage';
@@ -43,6 +45,12 @@ const Routes = (): React.ReactElement => {
       <PrivateRoute exact path={ROUTES.SECTION}>
         <SectionPage />
       </PrivateRoute>
+      <Route exact path={ROUTES.ROUTE_MAP}>
+        <RouteMapPage />
+      </Route>
+      <Route exact path={ROUTES.SEARCH}>
+        <SearchPage />
+      </Route>
     </Switch>
   );
 };

@@ -68,18 +68,3 @@ export const OptionWrapper = styled.div``;
 export const EditForm = styled.form`
   margin-bottom: 1rem;
 `;
-
-export const ModalTitle = styled.h3`
-  font-size: 28px;
-  text-align: center;
-  margin-bottom: 3rem;
-`;
-
-export const ButtonWrapper = styled.div`
-  text-align: right;
-  margin-top: 2rem;
-
-  & button {
-    margin: 0 0.7rem;
-  }
-`;

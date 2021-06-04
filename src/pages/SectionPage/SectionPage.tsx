@@ -173,7 +173,7 @@ const SectionPage = () => {
       </Styled.SectionPage>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <Styled.ModalTitle>구간 생성</Styled.ModalTitle>
+        <Modal.Title>구간 생성</Modal.Title>
         <Styled.Form onSubmit={handleAdd}>
           <Styled.SelectWrapper>
             <Select
@@ -228,12 +228,12 @@ const SectionPage = () => {
               required
             />
           </Styled.InputWrapper>
-          <Styled.ButtonWrapper>
+          <Modal.Control>
             <Button variant="text" type="button" onClick={closeModal}>
               취소
             </Button>
             <Button>추가</Button>
-          </Styled.ButtonWrapper>
+          </Modal.Control>
         </Styled.Form>
       </Modal>
     </>

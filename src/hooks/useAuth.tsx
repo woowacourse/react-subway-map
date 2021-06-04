@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from './useStore';
-import { requestLogin, logout, resetError } from '../slices/authSlice';
+import { requestLogin, logout, resetError, setServer } from '../slices/authSlice';
 import { CREWS } from '../types';
 
 const useAuth = () => {
@@ -8,8 +8,7 @@ const useAuth = () => {
 
   const { accessToken, isLogin, server, error } = auth;
 
-  const onLogin = (currentServer: CREWS, form: { email: string; password: string }) =>
-    dispatch(requestLogin({ server: currentServer, form }));
+  const onLogin = (form: { email: string; password: string }) => dispatch(requestLogin({ form }));
 
   const onLogout = () => {
     dispatch(logout());
@@ -17,10 +16,13 @@ const useAuth = () => {
 
   const onResetError = () => dispatch(resetError());
 
+  const onSetServer = (selectedServer: CREWS) => dispatch(setServer(selectedServer));
+
   return {
     onLogin,
     onLogout,
     onResetError,
+    onSetServer,
     isLogin,
     accessToken,
     server,
