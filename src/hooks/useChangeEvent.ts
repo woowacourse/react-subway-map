@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 
-const useChangeEvent = (defaultValue: string) => {
-  const [value, setValue] = useState(defaultValue);
+const useChangeEvent = <T>(defaultValue: T) => {
+  const [value, setValue] = useState<T>(defaultValue);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { value } = event.target;
+  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const newValue = event.target.value as unknown as T;
 
-    setValue(value);
+    setValue(newValue);
   };
 
   return { value, setValue, onChange };

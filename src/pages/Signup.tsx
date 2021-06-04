@@ -19,7 +19,7 @@ const Signup = () => {
   const history = useHistory();
 
   const { value: email, onChange: onEmailChange } = useChangeEvent('');
-  const { value: age, onChange: onAgeChange } = useChangeEvent('');
+  const { value: age, onChange: onAgeChange } = useChangeEvent(0);
   const { value: password, onChange: onPasswordChange } = useChangeEvent('');
   const { value: passwordConfirmation, onChange: onPasswordConfirmationChange } = useChangeEvent('');
 

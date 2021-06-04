@@ -7,10 +7,11 @@ import addImg from 'assets/images/add.png';
 import { borderColor } from 'constants/color';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
+import useChangeEvent from 'hooks/useChangeEvent';
 import useData from 'hooks/useData';
 import useModal from 'hooks/useModal';
 import useRedirect from 'hooks/useRedirect';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearSelectedLIne, getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
 import { addSectionAsync, AddSectionPayload, deleteSectionAsync } from 'redux/sectionSlice';
@@ -21,14 +22,9 @@ const Section = () => {
   useRedirect(PATH.LOGIN);
   const dispatch = useDispatch();
   const { stations, lines, selectedLine } = useData();
-  const [selectedLineId, setSelectedLineId] = useState(0);
   const { modalOpen, onModalOpen, onModalClose } = useModal();
 
-  const handleLineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.target;
-
-    setSelectedLineId(Number(value));
-  };
+  const { value: selectedLineId, onChange: onSelectedLineIdChange } = useChangeEvent(0);
 
   const handleDelete = async (stationId: number, station: string) => {
     if (!window.confirm(MESSAGE.COMMON.DELETE_CONFIRM(station))) {
@@ -87,7 +83,7 @@ const Section = () => {
           defaultSelect="노선을 선택해주세요"
           defaultValue="DEFAULT"
           title="조회하실 노선을 선택해주세요."
-          onChange={handleLineChange}
+          onChange={onSelectedLineIdChange}
         />
         {selectedLine && (
           <Container className={`mt-6 w-full ${borderColor[selectedLine.color]}`}>

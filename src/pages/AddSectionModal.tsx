@@ -2,13 +2,14 @@ import Container from '@shared/Container/Container';
 import Input from '@shared/Input/Input';
 import SelectInput from '@shared/SelectInput/SelectInput';
 import Title from '@shared/Title/Title';
-import React, { useState } from 'react';
+import React from 'react';
 import arrowImg from 'assets/images/arrow.png';
 import closeImg from 'assets/images/close.png';
 import Button from '@shared/Button/Button';
 import ImageButton from '@shared/ImageButton/ImageButton';
 import { LineInterface, StationInterface } from 'types';
 import { AddSectionPayload } from 'redux/sectionSlice';
+import useChangeEvent from 'hooks/useChangeEvent';
 
 interface AddSectionModalProps {
   onModalClose: () => void;
@@ -18,38 +19,24 @@ interface AddSectionModalProps {
 }
 
 const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSectionModalProps) => {
-  const [lineId, setLineId] = useState('');
-  const [upStationId, setUpStationId] = useState('');
-  const [downStationId, setDownStationId] = useState('');
-  const [distance, setDistance] = useState(0);
-
-  const handleDistance = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDistance(event.target.valueAsNumber);
-  };
+  const { value: lineId, onChange: onLineIdChange } = useChangeEvent(0);
+  const { value: upStationId, onChange: onUpStationIdChange } = useChangeEvent(0);
+  const { value: downStationId, onChange: onDownStationIdChange } = useChangeEvent(0);
+  const { value: distance, onChange: onDistanceChange } = useChangeEvent(0);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       await onSubmit({
-        id: Number(lineId),
-        upStationId: Number(upStationId),
-        downStationId: Number(downStationId),
+        id: lineId,
+        upStationId,
+        downStationId,
         distance,
       });
     } catch (error) {
       alert(error.message);
     }
-  };
-
-  const handleLineId = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setLineId(event.target.value);
-  };
-  const handleUpStationId = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setUpStationId(event.target.value);
-  };
-  const handleDownStationId = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setDownStationId(event.target.value);
   };
 
   return (
@@ -73,7 +60,7 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             defaultSelect="노선을 선택해주세요"
             defaultValue="DEFAULT"
             title="노선 이름"
-            onChange={handleLineId}
+            onChange={onLineIdChange}
           />
           <div className="flex items-center mb-8">
             <SelectInput
@@ -82,7 +69,7 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
               defaultSelect="역을 선택해주세요"
               defaultValue="DEFAULT"
               title="상행역"
-              onChange={handleUpStationId}
+              onChange={onUpStationIdChange}
             />
             <img alt="arrowImg" className="mx-2 w-8 h-8" src={arrowImg} />
             <SelectInput
@@ -91,7 +78,7 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
               defaultSelect="역을 선택해주세요"
               defaultValue="DEFAULT"
               title="하행역"
-              onChange={handleDownStationId}
+              onChange={onDownStationIdChange}
             />
           </div>
           <Input
@@ -100,7 +87,7 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             title="거리"
             type="number"
             value={Number.isNaN(distance) ? '' : distance}
-            onChange={handleDistance}
+            onChange={onDistanceChange}
           />
           <div className="flex justify-end">
             <Button text="확인" />

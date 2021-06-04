@@ -5,7 +5,7 @@ import MESSAGE from 'constants/message';
 export interface SignupPayload {
   email: string;
   password: string;
-  age: string;
+  age: number;
 }
 
 interface LoginPayload {
@@ -13,7 +13,6 @@ interface LoginPayload {
   password: string;
 }
 
-// TODO: 추상화
 export const signupAsync = createAsyncThunk('auth/signupAsync', async ({ email, password, age }: SignupPayload) => {
   try {
     await axios.post(`/members`, {
