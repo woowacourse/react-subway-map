@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
-import {
-  ENDPOINT,
-  STATIONS_ADD_SUCCEED,
-  STATIONS_GET_SUCCEED,
-  STATIONS_DELETE_SUCCEED,
-  UNKNOWN_ERROR_MESSAGE,
-} from "../../api/constants";
+import { ENDPOINT, MESSAGE, RESPONSE_CODE } from "../../api/constants";
 import http from "../../api/http";
 import { selectAccessToken } from "../Login/slice";
 
@@ -27,7 +21,7 @@ export const addStation = createAsyncThunk(
 
       const { id, name, message } = await response.json();
 
-      if (response.status === STATIONS_ADD_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.CREATE) {
         return { id, name };
       }
 
@@ -35,7 +29,7 @@ export const addStation = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -50,7 +44,7 @@ export const fetchStations = createAsyncThunk(
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      if (response.status === STATIONS_GET_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.READ) {
         const list = await response.json();
         return list;
       }
@@ -60,7 +54,7 @@ export const fetchStations = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -75,7 +69,7 @@ export const deleteStationById = createAsyncThunk(
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      if (response.status === STATIONS_DELETE_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.DELETE) {
         return id;
       }
 
@@ -85,7 +79,7 @@ export const deleteStationById = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -109,7 +103,7 @@ const stationsSlice = createSlice({
     },
     [addStation.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
-      state.message = STATIONS_ADD_SUCCEED;
+      state.message = MESSAGE.STATIONS_ADD_SUCCEED;
       state.list.push(action.payload);
     },
     [addStation.rejected]: (state, action) => {

@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
-import {
-  ENDPOINT,
-  SIGNUP_SUCCEED,
-  UNKNOWN_ERROR_MESSAGE,
-} from "../../api/constants";
+import { ENDPOINT, MESSAGE, RESPONSE_CODE } from "../../api/constants";
 import http from "../../api/http";
 
 export const signup = createAsyncThunk(
@@ -15,7 +11,7 @@ export const signup = createAsyncThunk(
         body: { email, password, age },
       });
 
-      if (response.status === SIGNUP_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.CREATE) {
         return;
       }
 
@@ -27,7 +23,7 @@ export const signup = createAsyncThunk(
       console.error(error);
 
       // eslint-disable-next-line consistent-return
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -50,7 +46,7 @@ const signupSlice = createSlice({
     },
     [signup.fulfilled]: (state) => {
       state.status = STATUS.SUCCEED;
-      state.message = SIGNUP_SUCCEED.MESSAGE;
+      state.message = MESSAGE.SIGNUP_SUCCEED;
     },
     [signup.rejected]: (state, action) => {
       state.status = STATUS.FAILED;

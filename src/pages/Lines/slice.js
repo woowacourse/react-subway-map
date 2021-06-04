@@ -1,15 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
-import {
-  ENDPOINT,
-  LINES_ADD_SUCCEED,
-  LINES_GET_SUCCEED,
-  LINES_DELETE_SUCCEED,
-  SECTIONS_ADD_SUCCEED,
-  UNKNOWN_ERROR_MESSAGE,
-  SECTIONS_DELETE_SUCCEED,
-} from "../../api/constants";
+import { ENDPOINT, MESSAGE, RESPONSE_CODE } from "../../api/constants";
 import http from "../../api/http";
 import { selectAccessToken } from "../Login/slice";
 
@@ -35,7 +27,7 @@ export const addLine = createAsyncThunk(
 
       const body = await response.json();
 
-      if (response.status === LINES_ADD_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.CREATE) {
         return body;
       }
 
@@ -43,7 +35,7 @@ export const addLine = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -58,7 +50,7 @@ export const fetchLines = createAsyncThunk(
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      if (response.status === LINES_GET_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.READ) {
         return response.json();
       }
 
@@ -67,7 +59,7 @@ export const fetchLines = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -82,7 +74,7 @@ export const deleteLinesById = createAsyncThunk(
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      if (response.status === LINES_DELETE_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.DELETE) {
         return id;
       }
 
@@ -92,7 +84,7 @@ export const deleteLinesById = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -111,7 +103,7 @@ export const addSection = createAsyncThunk(
         body: { upStationId, downStationId, distance },
       });
 
-      if (response.status === SECTIONS_ADD_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.CREATE) {
         return response.json();
       }
 
@@ -121,7 +113,7 @@ export const addSection = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -139,7 +131,7 @@ export const deleteSection = createAsyncThunk(
         }
       );
 
-      if (response.status === SECTIONS_DELETE_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.DELETE) {
         return { lineId, stationId };
       }
 
@@ -149,7 +141,7 @@ export const deleteSection = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -178,7 +170,7 @@ const linesSlice = createSlice({
     },
     [addLine.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
-      state.message = LINES_ADD_SUCCEED.MESSAGE;
+      state.message = MESSAGE.LINES_ADD_SUCCEED;
       state.list.push(action.payload);
     },
     [addLine.rejected]: (state, action) => {
@@ -215,7 +207,7 @@ const linesSlice = createSlice({
     },
     [addSection.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
-      state.message = SECTIONS_ADD_SUCCEED.MESSAGE;
+      state.message = MESSAGE.SECTIONS_ADD_SUCCEED;
 
       const newLineInfo = action.payload;
 

@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
-import {
-  ENDPOINT,
-  LOGIN_SUCCEED,
-  UNKNOWN_ERROR_MESSAGE,
-} from "../../api/constants";
+import { ENDPOINT, MESSAGE, RESPONSE_CODE } from "../../api/constants";
 import http from "../../api/http";
 import {
   getSavedAccessToken,
@@ -26,7 +22,7 @@ export const login = createAsyncThunk(
 
       const { accessToken, message } = await response.json();
 
-      if (response.status === LOGIN_SUCCEED.CODE) {
+      if (response.status === RESPONSE_CODE.LOGIN) {
         saveAccessToken(accessToken);
 
         return accessToken;
@@ -36,7 +32,7 @@ export const login = createAsyncThunk(
     } catch (error) {
       console.error(error);
 
-      return rejectWithValue(UNKNOWN_ERROR_MESSAGE);
+      return rejectWithValue(MESSAGE.UNKNOWN_ERROR);
     }
   }
 );
@@ -71,7 +67,7 @@ const loginSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
-      state.message = LOGIN_SUCCEED.MESSAGE;
+      state.message = MESSAGE.LOGIN_SUCCEED;
       state.accessToken = action.payload;
     },
     [login.rejected]: (state, action) => {
