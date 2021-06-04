@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import cx from "classnames";
+import { twCascade } from "@mariusmarais/tailwind-cascade";
 
 const SIZE_STYLE = {
   large: "w-36",
@@ -26,15 +26,17 @@ const Button = ({
   onClick,
   name,
   value,
+  className,
 }) => (
   <button
     type={type === "submit" ? "submit" : "button"}
     disabled={disabled}
     name={name}
-    className={cx(
+    className={twCascade(
       " disabled:text-gray-400 text-gray-700 text-base font-medium disabled:bg-gray-200 rounded focus:outline-none",
       SIZE_STYLE[size],
-      THEME_STYLE[theme]
+      THEME_STYLE[theme],
+      className
     )}
     onClick={onClick}
     value={value}
@@ -52,6 +54,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -61,6 +64,7 @@ Button.defaultProps = {
   onClick: null,
   name: null,
   value: null,
+  className: null,
 };
 
 export default Button;
