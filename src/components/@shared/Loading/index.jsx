@@ -1,7 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
 import PropTypes from "prop-types";
 import { PulseSpinner } from "react-spinners-kit";
 import cx from "classnames";
+import { yellow } from "tailwindcss/colors";
 
 const BG_OPACITY_STYLE = {
   0: "bg-opacity-0",
@@ -29,7 +31,7 @@ const Loading = ({ isLoading, bgOpacity }) =>
         BG_OPACITY_STYLE[bgOpacity]
       )}
     >
-      <PulseSpinner color="#fbbf24" loading />
+      <PulseSpinner color={yellow[300]} loading />
     </div>
   );
 
