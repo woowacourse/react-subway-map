@@ -9,10 +9,10 @@ import Title from '@shared/Title/Title';
 import { useDispatch } from 'react-redux';
 import { signupAsync } from 'redux/authSlice';
 import { useHistory } from 'react-router';
-import PATH from 'constants/path';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import MESSAGE from 'constants/message';
 import useChangeEvent from 'hooks/useChangeEvent';
+import PATH from 'constants/path';
 
 const Signup = () => {
   const dispatch = useDispatch();

@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import mailImg from 'assets/images/mail.png';
 import lockImg from 'assets/images/lock.png';
 import Title from '@shared/Title/Title';
-import PATH from 'constants/path';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginAsync } from 'redux/authSlice';
@@ -14,6 +13,7 @@ import axios from 'axios';
 import MESSAGE from 'constants/message';
 import useData from 'hooks/useData';
 import useChangeEvent from 'hooks/useChangeEvent';
+import PATH from 'constants/path';
 
 const Login = () => {
   const dispatch = useDispatch();

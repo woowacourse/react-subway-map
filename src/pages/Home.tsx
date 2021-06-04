@@ -1,7 +1,7 @@
 import React from 'react';
 import metroImg from 'assets/images/metro.png';
-import PATH from 'constants/path';
 import useRedirect from 'hooks/useRedirect';
+import PATH from 'constants/path';
 
 const Home = () => {
   useRedirect(PATH.LOGIN);

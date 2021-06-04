@@ -1,12 +1,12 @@
 import ProfileButton from '@units/ProfileButton/ProfileButton';
 import axios from 'axios';
-import URL from 'constants/url';
 import React, { useEffect, useState } from 'react';
 
 import kodaImg from 'assets/images/koda.png';
 import pkImg from 'assets/images/pk.png';
 import rokiImg from 'assets/images/roki.png';
 import wedgeImg from 'assets/images/wedge.png';
+import URL from 'constants/url';
 
 const serverTable: { [key: string]: string } = {
   [URL.WEDGE]: '웨지',
