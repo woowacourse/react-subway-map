@@ -21,16 +21,13 @@ const SignupForm = () => {
     isPasswordConfirmValid,
   ].every(Boolean);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(signup({ email, password, age }));
   };
 
   return (
     <form className="flex flex-col px-8 space-y-8" onSubmit={handleSubmit}>
-      <label className="sr-only" htmlFor="email">
-        이메일 입력란
-      </label>
       <Input
         id="email"
         type="email"
@@ -38,10 +35,9 @@ const SignupForm = () => {
         value={email}
         isValid={isEmailValid}
         onChange={handleEmailChange}
+        label="이메일 입력란"
+        autoComplete="email"
       />
-      <label className="sr-only" htmlFor="age">
-        나이 입력란
-      </label>
       <Input
         id="age"
         type="text"
@@ -49,10 +45,9 @@ const SignupForm = () => {
         value={age}
         isValid={isAgeValid}
         onChange={handleAgeChange}
+        label="나이 입력란"
+        autoComplete="off"
       />
-      <label className="sr-only" htmlFor="password">
-        비밀번호 입력란
-      </label>
       <Input
         id="password"
         type="password"
@@ -60,10 +55,9 @@ const SignupForm = () => {
         value={password}
         isValid={isPasswordValid}
         onChange={handlePasswordChange}
+        label="비밀번호 입력란"
+        autoComplete="new-password"
       />
-      <label className="sr-only" htmlFor="password-confirm">
-        비밀번호 확인 입력란
-      </label>
       <Input
         id="password-confirm"
         type="password"
@@ -71,6 +65,8 @@ const SignupForm = () => {
         value={passwordConfirm}
         isValid={isPasswordConfirmValid}
         onChange={handlePasswordConfirmChange}
+        label="비밀번호 확인 입력란"
+        autoComplete="new-password"
       />
       <Button type="submit" disabled={!isSubmitEnabled}>
         회원가입

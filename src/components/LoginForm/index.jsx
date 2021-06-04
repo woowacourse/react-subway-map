@@ -20,27 +20,25 @@ const LoginForm = () => {
 
   return (
     <form className="flex flex-col px-8 space-y-8" onSubmit={handleSubmit}>
-      <label className="sr-only" htmlFor="email">
-        이메일 입력란
-      </label>
       <Input
         id="email"
         type="email"
         placeholder="✉️ 이메일을 입력해주세요"
         value={email}
         onChange={handleEmailChange}
+        label="이메일 입력란"
         isValid
+        autoComplete="email"
       />
-      <label className="sr-only" htmlFor="password">
-        비밀번호 입력란
-      </label>
       <Input
         id="password"
         type="password"
         placeholder="🔒 비밀번호를 입력해주세요"
         value={password}
         onChange={handlePasswordChange}
+        label="비밀번호 입력란"
         isValid
+        autoComplete="current-password"
       />
       <Button type="submit" disabled={false}>
         로그인
