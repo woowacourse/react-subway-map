@@ -7,7 +7,9 @@ interface Option {
   text: string;
 }
 
-export interface Props extends SelectHTMLAttributes<HTMLSelectElement>, SelectStylesProps {
+export interface Props
+  extends SelectHTMLAttributes<HTMLSelectElement>,
+    SelectStylesProps {
   defaultOption?: string;
   options: Option[];
 }
