@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants/constant';
-import { RootState } from '../../../modules';
+import useUser from '../../../hook/useUser';
 import * as S from './Navigation.styles';
 
 const Navigation = () => {
-  const { accessToken } = useSelector((state: RootState) => state.user);
+  const { accessToken } = useUser();
   const dispatch = useDispatch();
 
   return (

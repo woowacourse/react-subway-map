@@ -9,14 +9,12 @@ import SignUp from './pages/SignUp/SignUp';
 import Station from './pages/Station/Station';
 import Line from './pages/Line/Line';
 import Section from './pages/Section/Section';
-
-import { useSelector } from 'react-redux';
-import { RootState } from './modules';
 import { useEffect } from 'react';
 import Home from './pages/Home/Home';
+import useUser from './hook/useUser';
 
 const App = () => {
-  const { accessToken } = useSelector((state: RootState) => state.user);
+  const { accessToken } = useUser();
   const history = useHistory();
 
   useEffect(() => {
