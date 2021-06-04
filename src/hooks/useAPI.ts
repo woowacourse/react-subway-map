@@ -5,10 +5,7 @@ const useAPI = () => {
 
   const hasAPI = !!APIName;
 
-  return {
-    APIName,
-    hasAPI,
-  };
+  return { APIName, hasAPI };
 };
 
 export default useAPI;

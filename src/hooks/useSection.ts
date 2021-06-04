@@ -4,23 +4,15 @@ import {
   requestSection,
 } from './../service/section';
 import { useEffect, useState } from 'react';
-import { LineDetail, LineId, Section, SectionForm, StationId } from '../types';
+import { LineDetail, LineId, SectionForm, StationId } from '../types';
 import useLogin from './useLogin';
 import { useMutation } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { lineAction } from '../state/slices/line';
-import useStation from './useStation';
 import { INVALID_VALUE } from '../constants/validate';
-import { lineColors, SERVICE } from '../constants/service';
+import { lineColors } from '../constants/service';
 
 const useSection = () => {
-  const { currentLineId, shouldUpdate } = useAppSelector(
-    ({ line: { currentLineId, shouldUpdate } }) => ({
-      currentLineId,
-      shouldUpdate,
-    })
-  );
-
   const dispatch = useAppDispatch();
 
   const [currentLineDetail, setCurrentLineDetail] = useState<LineDetail>({
@@ -31,18 +23,21 @@ const useSection = () => {
     sections: [],
   });
 
-  const [form, setForm] = useState<SectionForm>({
-    distance: SERVICE.MIN_DISTANCE,
-    downStationId: INVALID_VALUE,
-    upStationId: INVALID_VALUE,
-  });
+  const { currentLineId, shouldUpdate } = useAppSelector(
+    ({ line: { currentLineId, shouldUpdate } }) => ({
+      currentLineId,
+      shouldUpdate,
+    })
+  );
 
-  const { distance, downStationId, upStationId } = form;
-
-  const { stations } = useStation();
   const { accessToken } = useLogin();
+
+  const setCurrentLineId = (currentLineId: LineId) => {
+    dispatch(lineAction.setLineId(currentLineId));
+  };
+
   const addSectionMutation = useMutation(
-    () => requestAddSection(currentLineId, form, accessToken),
+    (form: SectionForm) => requestAddSection(currentLineId, form, accessToken),
     {
       onSuccess: () => {
         dispatch(lineAction.setShouldUpdate());
@@ -53,18 +48,12 @@ const useSection = () => {
     }
   );
 
-  const setCurrentLineId = (currentLineId: LineId) => {
-    dispatch(lineAction.setLineId(currentLineId));
-  };
-
   const deleteSectionMutation = useMutation(
     (stationId: StationId) =>
       requestDeleteSection(currentLineId, stationId, accessToken),
     {
       onSuccess: () => updateCurrentSection(),
-      onError: () => {
-        alert('구간을 삭제하지 못했습니다!');
-      },
+      onError: () => alert('구간을 삭제하지 못했습니다!'),
     }
   );
 
@@ -82,83 +71,21 @@ const useSection = () => {
     setCurrentLineDetail(data);
   };
 
+  const addSection = (form: SectionForm) => {
+    return addSectionMutation.mutate(form);
+  };
+
   const deleteSection = (stationId: StationId) => {
     deleteSectionMutation.mutate(stationId);
   };
 
-  const addSection = () => {
-    return addSectionMutation.mutate();
-  };
-
-  const setDistance = (distance: number) => {
-    if (distance === 0) return;
-
-    setForm({ ...form, distance });
-  };
-
-  const setUpStationId = (upStationId: StationId) => {
-    setForm({ ...form, upStationId });
-  };
-
-  const setDownStationId = (downStationId: StationId) => {
-    setForm({ ...form, downStationId });
-  };
-
-  const availableUpStations = currentLineDetail.stations;
-
-  const availableDownStations = stations.isSuccess
-    ? stations.data.filter(
-        (station) =>
-          !currentLineDetail.stations.some(
-            (listedStation) => listedStation.id === station.id
-          )
-      )
-    : [];
-
-  const isSelectedLine = currentLineDetail.id !== INVALID_VALUE;
-
-  const selectedSectionDistance =
-    (
-      currentLineDetail.sections.find(
-        (section) => section.upStation.id === upStationId
-      ) as Section
-    )?.distance ?? 0;
-
-  const isValidDistance = distance < selectedSectionDistance;
-
-  const isSelectedUpStation = upStationId !== INVALID_VALUE;
-
-  const isSelectedDownStation = downStationId !== INVALID_VALUE;
-
-  const isValidForm =
-    isSelectedLine &&
-    isValidDistance &&
-    isSelectedUpStation &&
-    isSelectedDownStation;
-
   return {
-    distance,
-    upStationId,
-    downStationId,
     currentLineId,
     setCurrentLineId,
     currentLineDetail,
     addSection,
     deleteSection,
-    setDistance,
-    setUpStationId,
-    setDownStationId,
     updateCurrentSection,
-    isValidForm,
-    isSelectedLine,
-    isSelectedUpStation,
-    availableUpStations,
-    availableDownStations,
-    selectedSectionDistance,
-    isValidDistance,
-    setCurrentLineDetail,
-    addSectionMutation,
-    deleteSectionMutation,
   };
 };
 

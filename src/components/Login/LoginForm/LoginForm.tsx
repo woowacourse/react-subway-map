@@ -1,5 +1,6 @@
 import { FormEvent, VFC } from 'react';
 import useLogin from '../../../hooks/useLogin';
+import useLoginForm from '../../../hooks/useLoginForm';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
 import AuthForm from '../../@mixins/Auth/AuthForm';
@@ -9,20 +10,21 @@ import { SignUpLink } from './LoginForm.styles';
 export interface LoginFormProps {}
 
 const LoginForm: VFC<LoginFormProps> = () => {
+  const { login } = useLogin();
   const {
+    form,
     email,
     password,
     setEmail,
     setPassword,
-    login,
     isValidEmail,
-    isValidPassword,
     isValidForm,
-  } = useLogin();
+    isValidPassword,
+  } = useLoginForm();
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    login();
+    login(form);
   };
 
   return (

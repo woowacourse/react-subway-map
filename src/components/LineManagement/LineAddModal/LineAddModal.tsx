@@ -2,6 +2,7 @@ import { FormEvent, Suspense, VFC } from 'react';
 import { lineColors } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../hooks/useLine';
+import useLineAddForm from '../../../hooks/useLineAddForm';
 import useStation from '../../../hooks/useStation';
 import { Station } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
@@ -24,6 +25,7 @@ export interface LineAddModalProps {
 
 const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
   const {
+    form,
     name,
     color,
     upStationId,
@@ -34,19 +36,18 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     setUpStationId,
     setDownStationId,
     setColor,
-    addLine,
     isValidName,
     isValidForm,
     isSelectedUpStation,
     availableDownStations,
-    lines,
-  } = useLine();
+  } = useLineAddForm();
+  const { addLine, lines } = useLine();
   const { stations } = useStation();
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    addLine();
+    addLine(form);
     closeModal();
   };
 

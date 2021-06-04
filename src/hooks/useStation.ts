@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { QUERY } from '../constants/API';
-import { REGEX } from '../constants/validate';
 import { requestLines } from '../service/line';
 import {
   requestAddStation,
@@ -12,45 +10,32 @@ import { Line, StationForm, StationId } from '../types';
 import useLogin from './useLogin';
 
 const useStation = () => {
-  const [form, setForm] = useState<StationForm>({ name: '' });
-  const { name } = form;
   const { accessToken } = useLogin();
   const queryClient = useQueryClient();
   const lines = useQuery('requestLines', () => requestLines(accessToken));
-
-  const addMutation = useMutation(() => requestAddStation(form, accessToken), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(QUERY.REQUEST_STATIONS);
-    },
-    onError: () => {
-      alert('역을 추가하지 못했습니다!');
-    },
-  });
-
-  const deleteMutation = useMutation(
-    (stationId: StationId) => requestDeleteStation(stationId, accessToken),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(QUERY.REQUEST_STATIONS);
-      },
-      onError: () => {
-        alert('역을 삭제하지 못했습니다!');
-      },
-    }
-  );
 
   const stations = useQuery(QUERY.REQUEST_STATIONS, () =>
     requestStations(accessToken)
   );
 
-  const isValidName = REGEX.STATION_NAME.test(name);
+  const addMutation = useMutation(
+    (form: StationForm) => requestAddStation(form, accessToken),
+    {
+      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_STATIONS),
+      onError: () => alert('역을 추가하지 못했습니다!'),
+    }
+  );
 
-  const setName = (name: string) => {
-    setForm({ ...form, name });
-  };
+  const deleteMutation = useMutation(
+    (stationId: StationId) => requestDeleteStation(stationId, accessToken),
+    {
+      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_STATIONS),
+      onError: () => alert('역을 삭제하지 못했습니다!'),
+    }
+  );
 
-  const addStation = () => {
-    addMutation.mutate();
+  const addStation = (form: StationForm) => {
+    addMutation.mutate(form);
   };
 
   const isStationInLine = (lines: Line[], stationId: number) =>
@@ -71,13 +56,10 @@ const useStation = () => {
 
   return {
     stations,
-    name,
-    setName,
     addStation,
     addMutation,
     deleteMutation,
     deleteStation,
-    isValidName,
   };
 };
 
