@@ -137,7 +137,8 @@ const SignupPage = () => {
               value={age}
               icon={userImg}
               onChange={(event) => setAge(event.target.value)}
-              extraArgs={{ min: INPUT.AGE.MIN, max: INPUT.AGE.MAX }}
+              min={INPUT.AGE.MIN}
+              max={INPUT.AGE.MAX}
             />
           </Styled.InputWrapper>
           <Styled.InputWrapper>
@@ -148,7 +149,7 @@ const SignupPage = () => {
               value={password}
               icon={lockImg}
               onChange={(event) => setPassword(event.target.value)}
-              extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
+              minLength={INPUT.PASSWORD.MIN_LENGTH}
             />
           </Styled.InputWrapper>
           <Styled.InputWrapper>
@@ -160,7 +161,7 @@ const SignupPage = () => {
               icon={lockImg}
               onChange={(event) => setConfirmPassword(event.target.value)}
               onBlur={checkPasswordMatch}
-              extraArgs={{ minLength: INPUT.PASSWORD.MIN_LENGTH }}
+              minLength={INPUT.PASSWORD.MIN_LENGTH}
             />
             <Passwordnotification />
           </Styled.InputWrapper>

@@ -100,7 +100,8 @@ const SectionModal = ({
         labelText="거리"
         value={distance}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDistance(event.target.value)}
-        extraArgs={{ min: INPUT.DISTANCE.MIN, max: INPUT.DISTANCE.MAX }}
+        min={INPUT.DISTANCE.MIN}
+        max={INPUT.DISTANCE.MAX}
       />
       <Styled.ButtonsContainer>
         <Button styleType={ButtonType.YELLOW}>확인</Button>

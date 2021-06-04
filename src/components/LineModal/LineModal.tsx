@@ -143,10 +143,8 @@ const LineModal = ({
           value={name}
           onBlur={validateLineName}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
-          extraArgs={{
-            minLength: INPUT.LINE_NAME.MIN_LENGTH,
-            maxLength: INPUT.LINE_NAME.MAX_LENGTH,
-          }}
+          minLength={INPUT.LINE_NAME.MIN_LENGTH}
+          maxLength={INPUT.LINE_NAME.MAX_LENGTH}
         />
         <LineNameNotification />
       </div>
@@ -179,7 +177,8 @@ const LineModal = ({
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setDistance(event.target.value)
             }
-            extraArgs={{ min: INPUT.DISTANCE.MIN, max: INPUT.DISTANCE.MAX }}
+            min={INPUT.DISTANCE.MIN}
+            max={INPUT.DISTANCE.MAX}
           />
           <Input
             type="number"
@@ -188,7 +187,8 @@ const LineModal = ({
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setExtraFare(event.target.value)
             }
-            extraArgs={{ min: INPUT.EXTRA_FARE.MIN, max: INPUT.EXTRA_FARE.MAX }}
+            min={INPUT.EXTRA_FARE.MIN}
+            max={INPUT.EXTRA_FARE.MAX}
           />
         </>
       )}

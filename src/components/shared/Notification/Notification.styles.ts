@@ -9,6 +9,7 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   color: ${({ isValid }) => (isValid ? PALETTE.GREEN : PALETTE.RED)};
+  height: 16px;
   font-size: 0.75rem;
 `;
 
