@@ -3,8 +3,10 @@ import { API_HOST, ApiHostList } from '../../request';
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { CONFIRM_MESSAGE } from '../../constants/messages';
+import { UserContext } from '../../contexts/UserContextProvider';
 
 const ApiSwitch = () => {
+  const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const themeColor = useContext(ThemeContext)?.themeColor;
 
   return (
@@ -16,7 +18,7 @@ const ApiSwitch = () => {
             type="radio"
             name="api-host"
             onChange={() => {
-              if (!confirm(CONFIRM_MESSAGE.CHANGE_SERVER)) return;
+              if (isLoggedIn && !confirm(CONFIRM_MESSAGE.CHANGE_SERVER)) return;
               localStorage.setItem('hostName', host);
               localStorage.setItem('accessToken', '');
               location.reload();
