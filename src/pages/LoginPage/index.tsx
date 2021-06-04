@@ -6,7 +6,7 @@ import Input from 'components/shared/Input/Input';
 import Button from 'components/shared/Button/Button';
 import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
-import { ButtonSize, ButtonType } from 'types';
+import { ButtonType, ButtonWidth } from 'types';
 import { requestGetUser } from 'modules/authSlice';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
@@ -114,7 +114,9 @@ const LoginPage = () => {
         </Styled.InputContainer>
 
         <Styled.ButtonWrapper>
-          <Button styleType={ButtonType.YELLOW}>로그인하기</Button>
+          <Button widthType={ButtonWidth.FULL} styleType={ButtonType.YELLOW}>
+            로그인하기
+          </Button>
         </Styled.ButtonWrapper>
       </form>
       <Styled.SignupLink>

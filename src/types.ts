@@ -5,8 +5,9 @@ export enum ButtonType {
   TRANSPARENT = 'TRANSPARENT',
 }
 
-export enum ButtonSize {
-  SMALL = 'SMALL',
+export enum ButtonWidth {
+  AUTO = 'AUTO',
+  FULL = 'FULL',
 }
 
 export interface User {

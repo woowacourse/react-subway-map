@@ -8,7 +8,7 @@ import ServerSelector from 'components/ServerSelector/ServerSelector';
 import Loading from 'components/shared/Loading/Loading';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { selectServer } from 'modules/serverSlice';
-import { ButtonSize, ButtonType } from 'types';
+import { ButtonWidth, ButtonType } from 'types';
 import emailImg from 'assets/email.png';
 import lockImg from 'assets/lock.png';
 import userImg from 'assets/user.png';
@@ -167,7 +167,9 @@ const SignupPage = () => {
         </Styled.InputContainer>
 
         <Styled.ButtonWrapper>
-          <Button styleType={ButtonType.YELLOW}>회원가입하기</Button>
+          <Button widthType={ButtonWidth.FULL} styleType={ButtonType.YELLOW}>
+            회원가입하기
+          </Button>
         </Styled.ButtonWrapper>
       </form>
     </CardLayout>

@@ -1,12 +1,12 @@
 import React from 'react';
 import Styled from './Button.styles';
-import { ButtonSize, ButtonType } from 'types';
+import { ButtonWidth, ButtonType } from 'types';
 
 interface Props {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   styleType: ButtonType;
-  sizeType?: ButtonSize;
+  widthType?: ButtonWidth;
   isSelected?: boolean;
   children: React.ReactNode;
 
@@ -18,7 +18,7 @@ const Button = ({
   disabled,
   children,
   styleType,
-  sizeType = ButtonSize.SMALL,
+  widthType = ButtonWidth.AUTO,
   isSelected,
   onClick,
 }: Props) => {
@@ -27,7 +27,7 @@ const Button = ({
       type={type}
       disabled={disabled}
       styleType={styleType}
-      sizeType={sizeType}
+      widthType={widthType}
       isSelected={isSelected}
       onClick={onClick}
     >
