@@ -20,8 +20,14 @@ const lineColors = [
 
 const ColorSelect = ({ value, onChange }) => (
   <>
-    <span className="m-6 text-gray-400">노선 색상을 선택해주세요.</span>
-    <div className="grid gap-4 grid-cols-5 mb-4">
+    <span id="color-select-label" className="m-6 text-gray-400">
+      노선 색상을 선택해주세요.
+    </span>
+    <div
+      className="grid gap-4 grid-cols-5 mb-4"
+      role="listbox"
+      aria-labelledby="color-select-label"
+    >
       {lineColors.map(([name, color]) => (
         <button
           key={name}
@@ -33,18 +39,21 @@ const ColorSelect = ({ value, onChange }) => (
             color
           )}
           aria-label={`${name}-color-button`}
+          role="option"
+          aria-selected={value === color}
         />
       ))}
     </div>
     <div className="flex items-center">
-      <span className="m-6 text-gray-400">선택된 색상: </span>
-      <button
-        type="button"
+      <span id="selected-color-label" className="m-6 text-gray-400">
+        선택된 색상:
+      </span>
+      <span
         className={cx(
           "w-6 h-6 bg-gray-300 rounded-full focus:outline-none",
           value
         )}
-        aria-label="selected-color-button"
+        aria-labelledby="selected-color-label"
       />
     </div>
   </>
