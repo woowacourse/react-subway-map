@@ -58,8 +58,8 @@ export const SectionPage = () => {
     }
     if (status.isAddSuccess) {
       setIsSectionAddOpen(false);
+      requestGetMap();
     }
-    requestGetMap();
     clearStatus();
   }, [status]);
 
