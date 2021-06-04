@@ -117,12 +117,12 @@ const SignUpPage = () => {
             <Styled.FormItem>
               <Input
                 ref={ageRef}
-                value={age}
+                value={age === -1 ? '' : age}
                 onChange={onChangeAge}
                 icon={<UserIcon />}
                 labelText="나이"
                 placeholder="나이를 입력해주세요"
-                errorMessage={age && !isValidAge(age) ? MESSAGE.ERROR.INVALID_AGE : null}
+                errorMessage={age !== -1 && !isValidAge(age) ? MESSAGE.ERROR.INVALID_AGE : null}
                 type="number"
                 min="1"
                 max="150"
