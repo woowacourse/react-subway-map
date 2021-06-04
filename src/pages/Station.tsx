@@ -5,7 +5,7 @@ import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
-import PATH from 'constants/PATH';
+import PATH from 'constants/path';
 import useChangeEvent from 'hooks/useChangeEvent';
 import useData from 'hooks/useData';
 import useRedirect from 'hooks/useRedirect';

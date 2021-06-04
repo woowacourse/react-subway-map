@@ -1,6 +1,6 @@
 import ProfileButton from '@units/ProfileButton/ProfileButton';
 import axios from 'axios';
-import URL from 'constants/URL';
+import URL from 'constants/url';
 import React, { useEffect, useState } from 'react';
 
 import kodaImg from 'assets/images/koda.png';

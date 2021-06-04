@@ -1,5 +1,5 @@
 import BaseLayout from '@layout/Layout';
-import PATH from 'constants/PATH';
+import PATH from 'constants/path';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
 import Login from 'pages/Login';

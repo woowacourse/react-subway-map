@@ -1,6 +1,6 @@
 import Button from '@shared/Button/Button';
 import Header from '@units/Header/Header';
-import PATH from 'constants/PATH';
+import PATH from 'constants/path';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';

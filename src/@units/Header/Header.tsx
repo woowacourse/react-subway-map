@@ -1,7 +1,7 @@
 import React from 'react';
 import headerImg from 'assets/images/nanny.png';
 import { Link } from 'react-router-dom';
-import PATH from 'constants/PATH';
+import PATH from 'constants/path';
 
 interface HeaderProps {
   children: React.ReactNode;

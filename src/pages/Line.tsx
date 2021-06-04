@@ -5,7 +5,7 @@ import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import MESSAGE from 'constants/message';
 // import editImg from 'assets/images/edit.png';
-import PATH from 'constants/PATH';
+import PATH from 'constants/path';
 import useData from 'hooks/useData';
 import useModal from 'hooks/useModal';
 import useRedirect from 'hooks/useRedirect';
