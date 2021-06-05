@@ -1,10 +1,10 @@
 import React from 'react';
 import metroImg from 'assets/images/metro.png';
 import PATH from 'constants/PATH';
-import useRedirect from 'hooks/useRedirect';
+import useCheckAuth from 'hooks/useCheckAuth';
 
 const Home = () => {
-  useRedirect(PATH.LOGIN);
+  useCheckAuth(PATH.LOGIN);
 
   return (
     <div className="flex items-center justify-center">

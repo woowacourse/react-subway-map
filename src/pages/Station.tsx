@@ -6,7 +6,7 @@ import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
-import useRedirect from 'hooks/useRedirect';
+import useCheckAuth from 'hooks/useCheckAuth';
 import React, { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
@@ -14,7 +14,7 @@ import { RootState } from 'redux/store';
 import { StationInterface } from 'types';
 
 const Station = () => {
-  useRedirect(PATH.LOGIN);
+  useCheckAuth(PATH.LOGIN);
 
   const dispatch = useDispatch();
 

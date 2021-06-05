@@ -8,7 +8,7 @@ interface State {
   };
 }
 
-const useRedirect = (url: string) => {
+const useCheckAuth = (url: string) => {
   const history = useHistory();
   const accessToken = useSelector<State>((state) => state.auth.accessToken);
 
@@ -19,4 +19,4 @@ const useRedirect = (url: string) => {
   }, [accessToken]);
 };
 
-export default useRedirect;
+export default useCheckAuth;

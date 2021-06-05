@@ -7,7 +7,7 @@ import addImg from 'assets/images/add.png';
 import { borderColor } from 'constants/color';
 import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
-import useRedirect from 'hooks/useRedirect';
+import useCheckAuth from 'hooks/useCheckAuth';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearSelectedLIne, getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
@@ -18,7 +18,7 @@ import { LineInterface, SelectedLineInterface, StationInterface } from 'types';
 import AddSectionModal from './AddSectionModal';
 
 const Section = () => {
-  useRedirect(PATH.LOGIN);
+  useCheckAuth(PATH.LOGIN);
 
   const dispatch = useDispatch();
 
