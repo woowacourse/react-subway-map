@@ -58,14 +58,15 @@ const userSlice = createSlice({
     email: null,
     accessToken: null,
     isLogin: false,
-    isLoginFail: false,
     isLoading: false,
+    isLoginFail: false,
   },
   reducers: {
     logout: (state) => {
       state.email = null;
       state.accessToken = null;
       state.isLogin = false;
+      state.isLoginFail = false;
     },
     clearLoginFail: (state) => {
       state.isLoginFail = false;
@@ -84,8 +85,8 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [login.rejected]: (state) => {
-      state.isLoginFail = true;
       state.isLoading = false;
+      state.isLoginFail = true;
     },
     [loginByToken.fulfilled]: (state, action) => {
       const { email, accessToken } = action.payload;
@@ -99,13 +100,13 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [loginByToken.rejected]: (state) => {
-      state.isLoginFail = true;
       state.isLoading = false;
+      state.isLoginFail = true;
     },
   },
 });
 
 export { login, loginByToken };
-export const { logout, clearLoginFail, clearLogout } = userSlice.actions;
+export const { logout, clearLoginFail } = userSlice.actions;
 
 export default userSlice.reducer;

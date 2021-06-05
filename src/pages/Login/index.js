@@ -1,39 +1,38 @@
 import React, { useEffect } from 'react';
-import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
 import { useCookies } from 'react-cookie';
 
 import { login, clearLoginFail } from '../../redux/userSlice';
+
+import { useSnackbar } from 'notistack';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
-import { LOGIN, ROUTE, ACCESS_TOKEN } from '../../constants';
+import { LOGIN, ROUTE, ACCESS_TOKEN, SERVER_ID, SERVER_LIST, SHOWING_MESSAGE_TIME } from '../../constants';
 
-export const LoginPage = (props) => {
-  const { endpoint } = props;
-
+export const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  /* eslint-disable-next-line no-unused-vars */
-  const [cookies, setCookie] = useCookies([ACCESS_TOKEN]);
+
+  const [cookies, setCookie] = useCookies();
   const { isLogin, isLoginFail, accessToken } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
 
-  /* eslint-disable react-hooks/exhaustive-deps */
+  const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
+
   useEffect(() => {
     if (isLogin) {
-      enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: 1500 });
+      enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
       setCookie(ACCESS_TOKEN, accessToken);
       history.push(ROUTE.STATION);
-    } else {
-      history.push(ROUTE.LOGIN);
     }
 
     if (isLoginFail) {
-      enqueueSnackbar(LOGIN.FAIL, { variant: 'error', autoHideDuration: 1500 });
+      enqueueSnackbar(LOGIN.FAIL, { variant: 'error', autoHideDuration: SHOWING_MESSAGE_TIME });
       dispatch(clearLoginFail());
     }
+
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [isLogin, isLoginFail]);
 
   const handleLogin = (e) => {
@@ -41,7 +40,7 @@ export const LoginPage = (props) => {
 
     dispatch(
       login({
-        endpoint,
+        baseUrl,
         email: e.target.email.value,
         password: e.target.password.value,
       }),
@@ -58,8 +57,4 @@ export const LoginPage = (props) => {
       </Form>
     </Section>
   );
-};
-
-LoginPage.propTypes = {
-  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 };

@@ -17,7 +17,7 @@ export const Page = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID, ACCESS_TOKEN]);
+  const [cookies, setCookie] = useCookies([SERVER_ID, ACCESS_TOKEN]);
   const serverId = cookies[SERVER_ID];
   const accessToken = cookies[ACCESS_TOKEN];
 
@@ -55,7 +55,6 @@ export const Page = (props) => {
     }
 
     setNewServer(selectedId);
-    removeCookie(ACCESS_TOKEN);
     setIsServerSelectOpen(false);
     history.push(ROUTE.LOGOUT);
   };

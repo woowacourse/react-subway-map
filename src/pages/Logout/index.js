@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { useCookies } from 'react-cookie';
 
 import { logout } from '../../redux/userSlice';
 import { clearLine } from '../../redux/lineSlice';
 import { clearMap } from '../../redux/mapSlice';
 import { clearStation } from '../../redux/stationSlice';
 
-import { ROUTE } from '../../constants';
+import { ACCESS_TOKEN, ROUTE } from '../../constants';
 
 export const LogoutPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const removeCookies = useCookies()[2];
 
   const clearStore = () => {
     dispatch(clearLine());
@@ -23,6 +25,7 @@ export const LogoutPage = () => {
   useEffect(() => {
     dispatch(logout());
     clearStore();
+    removeCookies(ACCESS_TOKEN);
     history.push(ROUTE.LOGIN);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

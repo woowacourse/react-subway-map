@@ -61,3 +61,5 @@ export const SECTION = {
   DELETE_SUCCEED: '구간 삭제에 성공하였습니다.',
   DELETE_FAIL: '구간 삭제에 실패하였습니다.',
 };
+
+export const SHOWING_MESSAGE_TIME = 1500;
