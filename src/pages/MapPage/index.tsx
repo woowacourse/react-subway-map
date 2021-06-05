@@ -15,7 +15,7 @@ const MapPage = () => {
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
-  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch('GET');
+  const [getLinesAsync, getLinesLoading] = useFetch('GET');
   const [lines, setLines] = useState<Line[]>([]);
   const [focusedStation, setFocusedStation] = useState<Station>();
 

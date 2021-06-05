@@ -26,8 +26,8 @@ const SearchPage = () => {
   const [paths, setPaths] = useState<Station[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
-  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
-  const { fetchData: getPathAsync, loading: getPathLoading } = useFetch('GET');
+  const [getStationsAsync, getStationsLoading] = useFetch('GET');
+  const [getPathAsync, getPathLoading] = useFetch('GET');
 
   const getStations = async () => {
     console.log('fetching...');
