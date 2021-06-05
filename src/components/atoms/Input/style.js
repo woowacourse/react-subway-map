@@ -50,11 +50,3 @@ export const Icon = styled.span`
   top: 0.5rem;
   left: 1.25rem;
 `;
-
-export const Message = styled.span`
-  padding: 0.5rem 0 0 3.5rem;
-  height: 1rem;
-
-  color: ${COLOR.ERROR};
-  font-size: 0.75rem;
-`;
