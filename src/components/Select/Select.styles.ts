@@ -36,7 +36,7 @@ export const SelectBlock = styled.select<SelectBlockProps>`
     linear-gradient(135deg, gray 50%, transparent 50%),
     radial-gradient(#fff 0%, transparent 0%);
   background-position: calc(100% - 30px) calc(1rem + 4px),
-    calc(100% - 25px) calc(1rem + 4px), calc(100% - 0.5em) 0.5em;
+    calc(100% - 25px) calc(1rem + 4px), calc(100% - 0.5rem) 0.5rem;
   background-size: 5px 5px, 5px 5px, 1.5rem 1.5rem;
   background-repeat: no-repeat;
 `;

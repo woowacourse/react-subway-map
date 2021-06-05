@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
-import { Flex, FlexCenter, FlexBetween } from "../../components/@shared/FlexContainer/FlexContainer";
+import {
+  Flex,
+  FlexCenter,
+  FlexBetween,
+} from "../../components/@shared/FlexContainer/FlexContainer";
 import Select from "../../components/Select/Select";
+import ListItem from "../../components/ListItem/ListItem";
 import SectionAddModal from "./Modal/SectionAddModal";
+
 import useStation from "../../hooks/useStation";
 import useSelect from "../../hooks/@common/useSelect";
 import useLine from "../../hooks/useLine";
-import ListItem from "../../components/ListItem/ListItem";
-import { CIRCLE_COLOR } from "../../constants/color";
+
+import { SIZE } from "../../constants/size";
 
 const SectionManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
@@ -18,13 +24,23 @@ const SectionManagementPage = () => {
   const { lines, addSection, deleteSection } = useLine();
 
   const [defaultLine] = lines;
-  const { selectValue: lineId, setValueOnChange: setLineIdOnChange } = useSelect(String(defaultLine?.id));
+  const {
+    selectValue: lineId,
+    setValueOnChange: setLineIdOnChange,
+  } = useSelect(String(defaultLine?.id));
 
   const targetLine = lines.find(({ id }) => id === Number(lineId));
 
   return (
     <FlexCenter>
-      <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
+      <Block
+        style={{
+          marginTop: "2.5rem",
+          width: SIZE.PAGE_CONTAINER_WIDTH,
+          flexDirection: "column",
+          alignItems: "flex-start",
+        }}
+      >
         <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
           <h2 style={{ marginBottom: "1rem" }}>🔁 구간 관리</h2>
           <Button
@@ -36,7 +52,13 @@ const SectionManagementPage = () => {
             구간 추가
           </Button>
         </FlexBetween>
-        <Flex style={{ width: "100%", flexDirection: "column", marginBottom: "0.9375rem" }}>
+        <Flex
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            marginBottom: "0.9375rem",
+          }}
+        >
           <Select
             value={lineId}
             onChange={setLineIdOnChange}

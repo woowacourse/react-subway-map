@@ -1,16 +1,18 @@
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
+import ListItem from "../../components/ListItem/ListItem";
 import {
   Flex,
   FlexCenter,
 } from "../../components/@shared/FlexContainer/FlexContainer";
-import ListItem from "../../components/ListItem/ListItem";
 
 import useStation from "../../hooks/useStation";
 import useInput from "../../hooks/@common/useInput";
 
 import { validateStationName } from "../../validations/station";
+
+import { SIZE } from "../../constants/size";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();
@@ -41,7 +43,7 @@ const StationManagementPage = () => {
       <Block
         style={{
           marginTop: "2.5rem",
-          width: "540px",
+          width: SIZE.PAGE_CONTAINER_WIDTH,
           flexDirection: "column",
           alignItems: "flex-start",
         }}

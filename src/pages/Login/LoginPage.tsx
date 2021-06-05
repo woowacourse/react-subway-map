@@ -8,11 +8,15 @@ import {
 import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+
 import useInput from "../../hooks/@common/useInput";
-import { PAGE_PATH } from "../../constants/route";
+import useAuth from "../../hooks/useAuth";
+
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
-import useAuth from "../../hooks/useAuth";
+
+import { SIZE } from "../../constants/size";
+import { PAGE_PATH } from "../../constants/route";
 
 const LoginPage = () => {
   const {
@@ -47,7 +51,7 @@ const LoginPage = () => {
         <Block
           style={{
             marginTop: "2.5rem",
-            width: "540px",
+            width: SIZE.PAGE_CONTAINER_WIDTH,
             flexDirection: "column",
             alignItems: "flex-start",
           }}
@@ -60,7 +64,7 @@ const LoginPage = () => {
               value={email}
               errorMessage={emailErrorMessage}
               placeholder="이메일"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "0.9375rem" }}
               onChange={onEmailChange}
               required
             />
@@ -69,15 +73,15 @@ const LoginPage = () => {
               value={password}
               errorMessage={passwordErrorMessage}
               placeholder="비밀번호"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "0.9375rem" }}
               onChange={onPasswordChange}
               required
             />
-            <Button size="block" style={{ marginBottom: "15px" }}>
+            <Button size="block" style={{ marginBottom: "0.9375rem" }}>
               확인
             </Button>
             <p>
-              아직 회원이 아니신가요?{" "}
+              아직 회원이 아니신가요?
               <Link to={PAGE_PATH.SIGN_UP}>회원가입</Link>
             </p>
           </Flex>

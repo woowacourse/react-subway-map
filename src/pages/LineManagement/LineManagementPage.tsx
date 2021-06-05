@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
-import { Flex, FlexCenter, FlexBetween } from "../../components/@shared/FlexContainer/FlexContainer";
+import {
+  Flex,
+  FlexCenter,
+  FlexBetween,
+} from "../../components/@shared/FlexContainer/FlexContainer";
 import ListItem from "../../components/ListItem/ListItem";
-import { CIRCLE_COLOR } from "../../constants/color";
 import LineAddModal from "./Modal/LineAddModal";
+
 import useLine from "../../hooks/useLine";
 import useStation from "../../hooks/useStation";
+
+import { CIRCLE_COLOR } from "../../constants/color";
+import { SIZE } from "../../constants/size";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
@@ -16,8 +23,17 @@ const LineManagementPage = () => {
 
   return (
     <FlexCenter>
-      <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
-        <FlexBetween style={{ width: "100%", marginBottom: "1rem", alignItems: "center" }}>
+      <Block
+        style={{
+          marginTop: "2.5rem",
+          width: SIZE.PAGE_CONTAINER_WIDTH,
+          flexDirection: "column",
+          alignItems: "flex-start",
+        }}
+      >
+        <FlexBetween
+          style={{ width: "100%", marginBottom: "1rem", alignItems: "center" }}
+        >
           <h2>🛤️ 노선 관리</h2>
           <Button
             type="button"
@@ -33,7 +49,7 @@ const LineManagementPage = () => {
             <ListItem
               key={id}
               circleColor={CIRCLE_COLOR[color]}
-              style={{ padding: "9px" }}
+              style={{ padding: "0.5625rem" }}
               onUpdate={() => {}}
               onDelete={async () => {
                 await deleteLine(id);

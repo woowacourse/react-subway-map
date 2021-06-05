@@ -8,15 +8,19 @@ import {
 import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import { PAGE_PATH } from "../../constants/route";
+
 import useInput from "../../hooks/@common/useInput";
 import useAuth from "../../hooks/useAuth";
+
 import { validateAge } from "../../validations/age";
 import { validateEmail } from "../../validations/email";
 import {
   validatePassword,
   validatePasswordConfirm,
 } from "../../validations/password";
+
+import { PAGE_PATH } from "../../constants/route";
+import { SIZE } from "../../constants/size";
 
 const SignupPage = () => {
   const {
@@ -71,7 +75,7 @@ const SignupPage = () => {
         <Block
           style={{
             marginTop: "2.5rem",
-            width: "540px",
+            width: SIZE.PAGE_CONTAINER_WIDTH,
             flexDirection: "column",
             alignItems: "flex-start",
           }}
@@ -84,7 +88,7 @@ const SignupPage = () => {
               value={email}
               errorMessage={emailErrorMessage}
               placeholder="이메일"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "0.9375rem" }}
               onChange={onEmailChange}
             />
             <Input
@@ -94,7 +98,7 @@ const SignupPage = () => {
               placeholder="나이"
               min="1"
               max="200"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "0.9375rem" }}
               onChange={onAgeChange}
             />
             <Input
@@ -102,7 +106,7 @@ const SignupPage = () => {
               value={password}
               errorMessage={passwordErrorMessage}
               placeholder="비밀번호"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "0.9375rem" }}
               onChange={onPasswordChange}
             />
             <Input
@@ -110,7 +114,7 @@ const SignupPage = () => {
               value={passwordConfirm}
               errorMessage={passwordConfirmErrorMessage}
               placeholder="비밀번호 확인"
-              style={{ marginBottom: "25px" }}
+              style={{ marginBottom: "1.5625rem" }}
               onChange={onPasswordConfirmChange}
             />
             <Button size="block">확인</Button>

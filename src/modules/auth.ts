@@ -18,27 +18,36 @@ const logout = () => async (dispatch: Dispatch) => {
   });
 };
 
-const checkAccessToken = createAsyncThunk("[AUTH] CHECK_ACCESS_TOKEN", async (_, { rejectWithValue }) => {
-  const accessToken = localStorage.getItem("accessToken") || "";
-  try {
-    await requestAuth.getUserInfo(accessToken);
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+const checkAccessToken = createAsyncThunk(
+  "[AUTH] CHECK_ACCESS_TOKEN",
+  async (_, { rejectWithValue }) => {
+    const accessToken = localStorage.getItem("accessToken") || "";
+    try {
+      await requestAuth.getUserInfo(accessToken);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
-const login = createAsyncThunk("[AUTH] LOGIN", async ({ email, password }: LoginInfo, { rejectWithValue }) => {
-  try {
-    const accessToken = await requestAuth.login(email, password);
-    localStorage.setItem("accessToken", accessToken);
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+const login = createAsyncThunk(
+  "[AUTH] LOGIN",
+  async ({ email, password }: LoginInfo, { rejectWithValue }) => {
+    try {
+      const accessToken = await requestAuth.login(email, password);
+      localStorage.setItem("accessToken", accessToken);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 const signup = createAsyncThunk(
   "[AUTH] SIGNUP",
-  async ({ email, password, age }: SignupInfo, { rejectWithValue, dispatch }) => {
+  async (
+    { email, password, age }: SignupInfo,
+    { rejectWithValue, dispatch }
+  ) => {
     try {
       await requestAuth.signup(email, password, age);
       dispatch(login({ email, password }));
