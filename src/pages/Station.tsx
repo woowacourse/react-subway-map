@@ -67,9 +67,10 @@ const Station = () => {
           value={name}
           className="mr-4 w-full"
           title="역 이름을 입력해주세요"
-          imgUrl={subwayImg}
           placeholder="역 이름을 입력해주세요"
-        />
+        >
+          <img className="w-6 h-6" src={subwayImg} />
+        </Input>
         <Button className="shadow-md">
           <span>추가</span>
         </Button>
