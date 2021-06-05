@@ -1,14 +1,11 @@
 import React from 'react';
-import { MemoryRouter, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { Global } from '@emotion/react';
-import { SnackbarProvider } from 'notistack';
 import { render } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import ROUTE from 'constants/routes';
+import { SnackbarProvider } from 'notistack';
 import { API_STATUS } from 'constants/api';
-import store from 'modules/store';
 import { globalStyle } from 'App.styles';
 
 const user = {
@@ -20,7 +17,7 @@ const user = {
 const mockStore = configureStore({
   reducer: {
     authSlice: () => ({ data: user, status: API_STATUS.FULFILLED }),
-    serverSlice: () => ({ server: '' }), // BACKEND_CORGI
+    serverSlice: () => ({ server: '' }),
   },
 });
 
