@@ -15,7 +15,9 @@ export const parameters = {
   },
 };
 
-addDecorator((story) => <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>);
+addDecorator((story) => (
+  <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+));
 
 addDecorator((style) => <ThemeProvider theme={theme}>{style()}</ThemeProvider>);
 

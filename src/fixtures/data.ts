@@ -1,5 +1,4 @@
-import { CIRCLE_COLOR } from "../constants/color";
-import { Line, Station, Section } from "../@types/types";
+import { Line } from "../@types/types";
 
 export const stations = [
   {
