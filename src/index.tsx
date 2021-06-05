@@ -1,16 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { ThemeProvider } from "styled-components";
 import { Provider } from "react-redux";
+import ReactDOM from "react-dom";
+import { ThemeProvider } from "styled-components";
+
+import store from "./modules";
+
+import App from "./App";
+import Select from "./components/Select/Select";
+import { Flex } from "./components/@shared/FlexContainer/FlexContainer";
+import GlobalStyle from "./Global.styles";
 
 import { COLOR } from "./constants/color";
-import GlobalStyle from "./Global.styles";
-import store from "./modules";
-import Select from "./components/Select/Select";
-
 import { BASE_URL, changeBaseUrl } from "./apis/index";
-import { Flex } from "./components/@shared/FlexContainer/FlexContainer";
 
 export const theme = {
   PRIMARY: COLOR.CYAN_300,
@@ -24,6 +25,7 @@ const targets = Object.keys(BASE_URL).map((name) => ({
   value: name,
   text: name,
 }));
+
 const onChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
   changeBaseUrl(event.target.value as keyof typeof BASE_URL);
 };

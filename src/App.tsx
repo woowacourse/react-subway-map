@@ -22,14 +22,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
+        <Link to={PAGE_PATH.HOME}>🚇 지하철 노선도</Link>
+      </Header>
       {(authError?.message || stationError?.message || lineError?.message) && (
         <p>
           {authError?.message || stationError?.message || lineError?.message}
         </p>
       )}
-      <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
-        <Link to={PAGE_PATH.HOME}>🚇 지하철 노선도</Link>
-      </Header>
       <Navigation routes={ROUTES} isAuthenticated={isAuthenticated} />
       <Switch>
         <Routes isAuthenticated={isAuthenticated} />
