@@ -84,8 +84,8 @@ function MenuGroup(props) {
 
   return (
     <MenuList {...rest}>
-      {menuList.map((item) => (
-        <MenuItem>
+      {menuList.map((item, index) => (
+        <MenuItem key={index}>
           <NavLink activeClassName="selected" to={item.route}>
             {item.icon}
             {item.content}
