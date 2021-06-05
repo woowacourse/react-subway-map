@@ -44,7 +44,7 @@ it('지하철 구간 목록을 성공적으로 불러온다.', async () => {
   return expectSaga(getSectionSaga, { type: getLineSectionAsync.type, payload: lineSection.id })
     .withReducer(sectionReducer)
     .put(pending())
-    .provide([[call(sectionAPI.getSection, lineSection.id), { lineSection: lineSection }]])
+    .provide([[call(sectionAPI.getSection, lineSection.id), { data: lineSection }]])
     .put(setLineSection(lineSection))
     .hasFinalState({ lineSection: lineSection, error: '' })
     .run();

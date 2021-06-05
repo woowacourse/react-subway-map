@@ -40,7 +40,7 @@ it('지하철 노선 목록을 성공적으로 불러온다.', async () => {
   return expectSaga(getLinesSaga)
     .withReducer(lineReducer)
     .put(pending())
-    .provide([[call(lineAPI.getLines), { lines: lineList }]])
+    .provide([[call(lineAPI.getLines), { data: lineList }]])
     .put(setLines(lineList))
     .hasFinalState({ lines: lineList, error: '' })
     .run();
@@ -61,7 +61,7 @@ it('지하철 노선 목록을 성공적으로 추가한다.', async () => {
     .withReducer(lineReducer)
     .put(pending())
     .provide([
-      [call(lineAPI.addLine, newLine), { line: newLineResult }],
+      [call(lineAPI.addLine, newLine), { data: newLineResult }],
       [select(selectLines), lineList],
     ])
     .put(setLines([newLineResult, ...lineList]))

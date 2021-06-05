@@ -36,7 +36,7 @@ it('지하철 역 목록을 성공적으로 불러온다.', async () => {
   return expectSaga(getStationsSaga)
     .withReducer(stationReducer)
     .put(pending())
-    .provide([[call(stationAPI.getStations), { stations: stationList }]])
+    .provide([[call(stationAPI.getStations), { data: stationList }]])
     .put(setStations(stationList))
     .hasFinalState({ stations: stationList, error: '' })
     .run();
@@ -57,7 +57,7 @@ it('지하철 역 목록을 성공적으로 추가한다.', async () => {
     .withReducer(stationReducer)
     .put(pending())
     .provide([
-      [call(stationAPI.addStation, newStation.name), { station: newStation }],
+      [call(stationAPI.addStation, newStation.name), { data: newStation }],
       [select(selectStations), stationList],
     ])
     .put(setStations([Object.assign(newStation, { lines: [] }), ...stationList]))

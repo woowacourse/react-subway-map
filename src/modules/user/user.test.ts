@@ -11,7 +11,7 @@ it('로그인에 성공한다', () => {
   return expectSaga(loginSaga, { type: loginAsync.type, payload: userInfo })
     .withReducer(userReducer)
     .put(pending())
-    .provide([[call(authAPI.signIn, userInfo), { accessToken: userAccessToken }]])
+    .provide([[call(authAPI.signIn, userInfo), { data: userAccessToken }]])
     .put(login({ email: userInfo.email, accessToken: userAccessToken }))
     .hasFinalState({
       serverName: '',
