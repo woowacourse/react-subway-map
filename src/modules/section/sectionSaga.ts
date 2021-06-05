@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { sectionAPI } from '../../api/section';
+import { HTTPResponse } from '../../interfaces';
 import {
   GetSectionAction,
   AddSectionAction,
@@ -13,22 +14,22 @@ import { addSectionAsync, deleteSectionAsync, error, getSectionAsync, pending, s
 
 export function* getSectionSaga(action: GetSectionAction) {
   yield put(pending());
-  const result: GetSectionResult = yield call(sectionAPI.getSection, action.payload.id);
+  const result: HTTPResponse<GetSectionResult> = yield call(sectionAPI.getSection, action.payload.id);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 
-  yield put(setSection({ lineSection: result.lineSection }));
+  yield put(setSection({ lineSection: result.data.lineSection }));
 }
 
 export function* addSectionSaga(action: AddSectionAction) {
   yield put(pending());
-  const result: AddSectionResult = yield call(sectionAPI.addSection, action.payload);
+  const result: HTTPResponse<AddSectionResult> = yield call(sectionAPI.addSection, action.payload);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 
@@ -37,10 +38,10 @@ export function* addSectionSaga(action: AddSectionAction) {
 
 export function* deleteSectionSaga(action: DeleteSectionAction) {
   yield put(pending());
-  const result: DeleteSectionResult = yield call(sectionAPI.deleteSection, action.payload);
+  const result: HTTPResponse<DeleteSectionResult> = yield call(sectionAPI.deleteSection, action.payload);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 

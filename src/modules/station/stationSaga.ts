@@ -10,40 +10,41 @@ import {
   GetStationResult,
   StationState,
 } from '../../interfaces/station';
+import { HTTPResponse } from '../../interfaces';
 
 export const selectStations = (state: RootState) => state.station.stations;
 
 export function* getStationsSaga() {
   yield put(pending());
-  const result: GetStationResult = yield call(stationAPI.getStations);
+  const result: HTTPResponse<GetStationResult> = yield call(stationAPI.getStations);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 
-  yield put(setStations({ stations: result.stations }));
+  yield put(setStations({ stations: result.data.stations }));
 }
 
 export function* addStationSaga(action: AddStationAction) {
   yield put(pending());
-  const result: AddStationResult = yield call(stationAPI.addStation, action.payload.name);
+  const result: HTTPResponse<AddStationResult> = yield call(stationAPI.addStation, action.payload.name);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 
   const stations: StationState['stations'] = yield select(selectStations);
-  yield put(setStations({ stations: [Object.assign(result.station, { lines: [] }), ...stations] }));
+  yield put(setStations({ stations: [Object.assign(result.data.station, { lines: [] }), ...stations] }));
 }
 
 export function* deleteStationSaga(action: DeleteStationAction) {
   yield put(pending());
-  const result: DeleteStationResult = yield call(stationAPI.deleteStation, action.payload.id);
+  const result: HTTPResponse<DeleteStationResult> = yield call(stationAPI.deleteStation, action.payload.id);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 

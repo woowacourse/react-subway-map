@@ -22,9 +22,9 @@ export const stationAPI = {
         throw new Error(MESSAGE.ERROR.STATION.LOAD_FAILED);
       }
 
-      return { stations: response.data };
+      return { success: true, data: { stations: response.data }, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 
@@ -37,9 +37,9 @@ export const stationAPI = {
         throw new Error(MESSAGE.ERROR.STATION.ADD_FAILED);
       }
 
-      return { station: response.data };
+      return { success: true, data: { station: response.data }, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 
@@ -55,9 +55,9 @@ export const stationAPI = {
         throw new Error(MESSAGE.ERROR.STATION.DELETE_FAILED);
       }
 
-      return {};
+      return { success: true, data: {}, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 };

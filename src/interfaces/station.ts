@@ -1,3 +1,4 @@
+import { HTTPResponse } from '.';
 import { addStationAsync, deleteStationAsync, error, setStations } from '../modules/station/stationReducer';
 
 // state
@@ -12,7 +13,7 @@ export interface StationState {
     name: string;
     lines: StationLineState[];
   }[];
-  error: string;
+  error: HTTPResponse<null>['message'];
 }
 
 // action
@@ -40,24 +41,20 @@ export interface DeleteStationAction {
 export interface ErrorAction {
   type: typeof error;
   payload: {
-    error: string;
+    error: HTTPResponse<null>['message'];
   };
 }
 
 // responseResult
 export interface GetStationResult {
-  error: StationState['error'];
   stations: StationState['stations'];
 }
 
 export interface AddStationResult {
-  error: StationState['error'];
   station: {
     id: number;
     name: string;
   };
 }
 
-export interface DeleteStationResult {
-  error: StationState['error'];
-}
+export interface DeleteStationResult {}

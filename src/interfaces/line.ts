@@ -1,3 +1,4 @@
+import { HTTPResponse } from '.';
 import { addLineAsync, deleteLineAsync, error, setLines } from '../modules/line/lineReducer';
 
 // state
@@ -16,7 +17,7 @@ export interface LineInfoState {
 }
 export interface LineState {
   lines: LineLinesState[];
-  error: string;
+  error: HTTPResponse<null>['message'];
 }
 
 // action
@@ -44,21 +45,17 @@ export interface DeleteLineAction {
 export interface ErrorAction {
   type: typeof error;
   payload: {
-    error: string;
+    error: HTTPResponse<null>['message'];
   };
 }
 
 // result
 export interface GetLineResult {
-  error: string;
   lines: LineLinesState[];
 }
 
 export interface AddLineResult {
-  error: string;
   line: LineLinesState;
 }
 
-export interface DeleteLineResult {
-  error: string;
-}
+export interface DeleteLineResult {}

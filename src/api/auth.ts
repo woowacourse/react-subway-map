@@ -35,9 +35,9 @@ export const authAPI = {
         throw new Error(MESSAGE.ERROR.REGISTER_FAILED);
       }
 
-      return MESSAGE.SUCCESS.RESPONSE;
+      return { success: true, data: null, message: MESSAGE.SUCCESS.RESPONSE };
     } catch (error) {
-      return error.message ?? MESSAGE.ERROR.RESPONSE;
+      return { success: false, data: null, message: error.message };
     }
   },
 
@@ -49,9 +49,9 @@ export const authAPI = {
         throw new Error(MESSAGE.ERROR.LOGIN_FAILED);
       }
 
-      return { accessToken: response.data.accessToken };
+      return { success: true, data: { accessToken: response.data.accessToken }, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 };

@@ -10,40 +10,41 @@ import {
   GetLineResult,
   LineState,
 } from '../../interfaces/line';
+import { HTTPResponse } from '../../interfaces';
 
 export const selectLines = (state: RootState) => state.line.lines;
 
 export function* getLinesSaga() {
   yield put(pending());
-  const result: GetLineResult = yield call(lineAPI.getLines);
+  const result: HTTPResponse<GetLineResult> = yield call(lineAPI.getLines);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 
-  yield put(setLines({ lines: result.lines }));
+  yield put(setLines({ lines: result.data.lines }));
 }
 
 export function* addLineSaga(action: AddLineAction) {
   yield put(pending());
-  const result: AddLineResult = yield call(lineAPI.addLine, action.payload.line);
+  const result: HTTPResponse<AddLineResult> = yield call(lineAPI.addLine, action.payload.line);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 
   const lines: LineState['lines'] = yield select(selectLines);
-  yield put(setLines({ lines: [...lines, result.line] }));
+  yield put(setLines({ lines: [...lines, result.data.line] }));
 }
 
 export function* deleteLineSaga(action: DeleteLineAction) {
   yield put(pending());
-  const result: DeleteLineResult = yield call(lineAPI.deleteLine, action.payload.id);
+  const result: HTTPResponse<DeleteLineResult> = yield call(lineAPI.deleteLine, action.payload.id);
 
-  if (result.error) {
-    yield put(error({ error: result.error }));
+  if (!result.success) {
+    yield put(error({ error: result.message }));
     return;
   }
 

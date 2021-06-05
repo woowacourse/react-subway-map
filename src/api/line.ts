@@ -26,9 +26,9 @@ export const lineAPI = {
         throw new Error(MESSAGE.ERROR.LINE.LOAD_FAILED);
       }
 
-      return { lines: response.data };
+      return { success: true, data: { lines: response.data }, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 
@@ -40,9 +40,9 @@ export const lineAPI = {
         throw new Error(MESSAGE.ERROR.LINE.ADD_FAILED);
       }
 
-      return { line: response.data };
+      return { success: true, data: { line: response.data }, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 
@@ -54,9 +54,9 @@ export const lineAPI = {
         throw new Error(MESSAGE.ERROR.LINE.DELETE_FAILED);
       }
 
-      return {};
+      return { success: true, data: {}, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 };

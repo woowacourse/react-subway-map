@@ -17,9 +17,9 @@ export const sectionAPI = {
         throw new Error(MESSAGE.ERROR.SECTION.LOAD_FAILED);
       }
 
-      return { lineSection: response.data };
+      return { success: true, data: { lineSection: response.data }, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 
@@ -31,9 +31,9 @@ export const sectionAPI = {
         throw new Error(MESSAGE.ERROR.SECTION.ADD_FAILED);
       }
 
-      return {};
+      return { success: true, data: {}, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 
@@ -45,9 +45,9 @@ export const sectionAPI = {
         throw new Error(MESSAGE.ERROR.SECTION.DELETE_FAILED);
       }
 
-      return {};
+      return { success: true, data: {}, message: '' };
     } catch (error) {
-      return { error: error.message ?? MESSAGE.ERROR.RESPONSE };
+      return { success: false, data: {}, message: error.message };
     }
   },
 };

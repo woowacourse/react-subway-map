@@ -16,6 +16,7 @@ import {
   getEmailErrorMessage,
   getPasswordErrorMessage,
 } from '../../SignInPage/authValidation';
+import { HTTPResponse } from '../../../interfaces';
 
 const SignUpForm = () => {
   const history = useHistory();
@@ -42,11 +43,11 @@ const SignUpForm = () => {
     if (!isValidForm) return;
 
     const { email, age, password } = userInfo;
-    const results = await Promise.all(
+    const results: HTTPResponse<null>[] = await Promise.all(
       Object.values(BASE_URL).map(({ URL }) => authAPI.signUp({ url: URL, email, password, age }))
     );
 
-    const errorMessage = results.find(result => result !== MESSAGE.SUCCESS.RESPONSE);
+    const errorMessage = results.find(({ message }) => message !== MESSAGE.SUCCESS.RESPONSE);
     if (errorMessage) {
       alert(errorMessage);
       return;

@@ -1,3 +1,4 @@
+import { HTTPResponse } from '.';
 import {
   addSectionAsync,
   deleteSectionAsync,
@@ -33,7 +34,7 @@ export interface SectionState {
     stations: SectionStationState[];
     sections: SectionSectionState[];
   };
-  error: string;
+  error: HTTPResponse<null>['message'];
 }
 
 // saga
@@ -69,19 +70,14 @@ export interface DeleteSectionAction {
 export interface ErrorAction {
   type: typeof error;
   payload: {
-    error: string;
+    error: HTTPResponse<null>['message'];
   };
 }
 
 export interface GetSectionResult {
-  error: SectionState['error'];
   lineSection: SectionState['lineSection'];
 }
 
-export interface AddSectionResult {
-  error: SectionState['error'];
-}
+export interface AddSectionResult {}
 
-export interface DeleteSectionResult {
-  error: SectionState['error'];
-}
+export interface DeleteSectionResult {}
