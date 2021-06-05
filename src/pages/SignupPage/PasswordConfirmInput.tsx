@@ -1,6 +1,8 @@
 import { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import { MdLock } from 'react-icons/md';
+
 import { Icon, Input, InputContainer } from '../../components/shared';
+
 import {
   isPasswordMatched,
   passwordMatchedErrorMessage,

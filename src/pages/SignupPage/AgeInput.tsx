@@ -1,7 +1,10 @@
 import { ChangeEventHandler } from 'react';
 import { MdPerson } from 'react-icons/md';
+
 import { Icon, Input, InputContainer } from '../../components/shared';
+
 import { SIGNUP_VALUE } from '../../constants/values';
+
 import { ageErrorMessage, isAgeValid } from '../../utils/validations/signupValidation';
 
 interface AgeInputProps {

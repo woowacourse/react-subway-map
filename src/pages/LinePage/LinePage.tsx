@@ -1,24 +1,14 @@
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  FormEventHandler,
-  ChangeEventHandler,
-} from 'react';
-import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
+import { useContext, useEffect, useMemo, useState, FormEventHandler } from 'react';
+import { MdAdd, MdDelete } from 'react-icons/md';
 
 import Palette from '../../components/Palette/Palette';
 import {
   Box,
-  Select,
   Button,
   Input,
   RoundButton,
   InputContainer,
   Heading1,
-  Icon,
-  ErrorText,
   List,
   ColorDot,
 } from '../../components/shared';
@@ -37,10 +27,9 @@ import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
 
 import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
-import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
+import { Container, TitleBox, FormBox, Form } from './LinePage.style';
 import {
   lineNameErrorMessage,
-  stationSelectErrorMessage,
   distanceErrorMessage,
   isFormCompleted,
 } from '../../utils/validations/lineValidation';
@@ -84,11 +73,16 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
-  const reset = () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const resetLineForm = () => {
     setLineName('');
     setUpStationId('');
     setDownStationId('');
     setDistance('');
+    setFormOpen(false);
   };
 
   const fetchData = async () => {
@@ -108,27 +102,15 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
     return <></>;
   }
 
-  const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setUpStationId(event.target.value);
-  };
-
-  const onDownStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setDownStationId(event.target.value);
-  };
-
   const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const formElement = event.currentTarget;
-    const color = formElement['color'].value;
+    const lineForm = event.currentTarget;
+    const color = lineForm['color'].value;
 
     if (!isFormCompleted(lines, { lineName, upStationId, downStationId, distance }) || !color) {
       addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
@@ -147,18 +129,16 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       await addLine(newLine);
 
       addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
-      await fetchData();
+      lineForm.reset(); // for color reset
+      resetLineForm();
 
-      reset();
-      formElement.reset();
-      setFormOpen(false);
+      await fetchData();
     } catch (error) {
       console.error(error);
 
       if (error.message === STATUS_CODE.UNAUTHORIZED) {
         addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
         setIsLoggedIn?.(false);
-
         return;
       }
 
@@ -219,46 +199,6 @@ const LinePage = ({ setIsLoading }: PageProps) => {
               aria-label="지하철 노선 이름 입력"
             />
           </InputContainer>
-          <StationSelects>
-            <div>
-              <InputContainer labelText="상행 종점">
-                <Select
-                  value={upStationId}
-                  onChange={onUpStationIdChange}
-                  aria-label="상행종점 선택"
-                >
-                  <option value="/" hidden>
-                    역 선택
-                  </option>
-                  {stations.map((station) => (
-                    <option key={station.id} value={station.id}>
-                      {station.name}
-                    </option>
-                  ))}
-                </Select>
-              </InputContainer>
-              <Icon>
-                <MdArrowForward size="1.5rem" />
-              </Icon>
-              <InputContainer labelText="하행 종점">
-                <Select
-                  value={downStationId}
-                  onChange={onDownStationIdChange}
-                  aria-label="하행종점 선택"
-                >
-                  <option value="/" hidden>
-                    역 선택
-                  </option>
-                  {stations.map((station) => (
-                    <option key={station.id} value={station.id}>
-                      {station.name}
-                    </option>
-                  ))}
-                </Select>
-              </InputContainer>
-            </div>
-            <ErrorText>{stationSelectErrorMessage(upStationId, downStationId)}</ErrorText>
-          </StationSelects>
           <InputContainer
             labelText="거리 (단위:km)"
             validation={{ text: distanceErrorMessage(distance), isValid: false }}

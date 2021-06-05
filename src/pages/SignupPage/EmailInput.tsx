@@ -9,8 +9,11 @@ import {
   useState,
 } from 'react';
 import { MdEmail } from 'react-icons/md';
+
 import { Icon, Input, InputContainer } from '../../components/shared';
+
 import { ERROR_MESSAGE } from '../../constants/messages';
+
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import apiRequest from '../../request';
 import { emailMessage, isEmailFormatValid } from '../../utils/validations/signupValidation';

@@ -55,18 +55,4 @@ const Form = styled.form`
   }
 `;
 
-const StationSelects = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  div {
-    display: flex;
-  }
-
-  span {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-export { Container, TitleBox, FormBox, Form, StationSelects };
+export { Container, TitleBox, FormBox, Form };
