@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
@@ -8,8 +6,10 @@ import {
   FlexCenter,
 } from "../../components/@shared/FlexContainer/FlexContainer";
 import ListItem from "../../components/ListItem/ListItem";
+
 import useStation from "../../hooks/useStation";
 import useInput from "../../hooks/@common/useInput";
+
 import { validateStationName } from "../../validations/station";
 
 const StationManagementPage = () => {

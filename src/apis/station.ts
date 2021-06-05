@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { Station } from "../@types/types";
-// TODO : axios 가 실패했을 때 response 에는 무엇이 담기는지 확인하기
 
 export const requestStation = {
   async getAllStation() {

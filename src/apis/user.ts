@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// TODO : axios 가 실패했을 때 response 에는 무엇이 담기는지 확인하기
-
 export const requestAuth = {
   getUserInfo: async (token: string) => {
     const response = await axios.get("/members/me", {

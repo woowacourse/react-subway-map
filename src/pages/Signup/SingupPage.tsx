@@ -18,8 +18,6 @@ import {
   validatePasswordConfirm,
 } from "../../validations/password";
 
-// TODO : 포커스 자체가 걸려 있지 않을 때 넘어가지 못하도록 수정
-
 const SignupPage = () => {
   const {
     inputValue: email,

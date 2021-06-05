@@ -20,17 +20,30 @@ export const theme = {
   DANGER_TEXT_COLOR: COLOR.RED_500,
 };
 
-const targets = Object.keys(BASE_URL).map((name) => ({ value: name, text: name }));
+const targets = Object.keys(BASE_URL).map((name) => ({
+  value: name,
+  text: name,
+}));
 const onChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
   changeBaseUrl(event.target.value as keyof typeof BASE_URL);
 };
+
+changeBaseUrl(
+  (localStorage.getItem("범인") as keyof typeof BASE_URL) || "수리"
+);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Flex style={{ width: "100%", padding: "0.9375rem", justifyContent: "flex-end" }}>
+        <Flex
+          style={{
+            width: "100%",
+            padding: "0.9375rem",
+            justifyContent: "flex-end",
+          }}
+        >
           <Select
             options={targets}
             onChange={onChange}
