@@ -1,9 +1,9 @@
-import ColorSelector from '../ColorSelector/ColorSelector';
-import { Container, Wrapper } from './LineEditForm.styles';
+import { LineColor } from '../../../constants';
+import { IStationRes } from '../../../type.d';
 import { Button, Input, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
-import { IStationRes } from '../../../type.d';
-import { LineColor } from '../../../constants';
+import ColorSelector from '../ColorSelector/ColorSelector';
+import { Container, Wrapper } from './LineEditForm.styles';
 
 export interface LineAddFormProps {
   stations: IStationRes[];

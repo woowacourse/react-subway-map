@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BASE_URL, LineColor, RESPONSE_MESSAGE } from '../../../constants';
 import {
@@ -14,8 +14,13 @@ import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
 import { isValidUpDownStation } from '../../../utils';
 import { Button, Header } from '../../atoms';
-import { LineEditForm, Modal } from '../../molecules';
-import { LineItemWithCircle, ListItemContainer } from './Line.styles';
+import { LineEditForm, Modal, LineLookUp } from '../../molecules';
+import {
+  LineItemWithCircle,
+  LineTitle,
+  ListItemContainer,
+  LookUpButtonWrapper,
+} from './Line.styles';
 
 const isValidLineName = (lineName: string) => {
   return /^[가-힣0-9]{2,10}$/.test(lineName);
@@ -30,23 +35,23 @@ const Line = () => {
 
   const { allData: lines, getAllData: getAllLines } = useGetAllRequest<ILineRes>(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.GET_ALL_DATA_RESPONSE,
   );
   const { postData: addLine, dataResponse: addLineResponse } = usePostRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.GET_ALL_DATA_RESPONSE,
   );
   const { putData: editLine, dataResponse: editLineResponse } = usePutRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.LINE.PUT_RESPONSE,
   );
   const { deleteData: deleteLine, dataResponse: deleteLineResponse } = useDeleteRequest(
     BASE_URL.LINE(host),
-    RESPONSE_MESSAGE.LINE,
+    RESPONSE_MESSAGE.LINE.DELETE_RESPONSE,
   );
   const { allData: stations, getAllData: getAllStations } = useGetAllRequest<IStationRes>(
     BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.STATION,
+    RESPONSE_MESSAGE.STATION.GET_ALL_DATA_RESPONSE,
   );
 
   const { isModalOpen, open: openModal, onClickClose, close: closeModal } = useModal(false);
@@ -143,6 +148,15 @@ const Line = () => {
     closeModal();
   };
 
+  const onClickLookUpButton = () => {
+    if (mode === 'LOOKUP') {
+      setMode('ADD');
+      return;
+    }
+
+    setMode('LOOKUP');
+  };
+
   useEffect(() => {
     getAllLines();
   }, [addLineResponse, editLineResponse, deleteLineResponse]);
@@ -154,29 +168,40 @@ const Line = () => {
 
   return (
     <FullVerticalCenterBox>
-      <Header hasExtra>
-        <h3>🚉 노선 관리</h3>
-        <Button onClick={openAddModal}>노선 추가</Button>
-      </Header>
+      <LookUpButtonWrapper>
+        <Button type="button" buttonTheme="menu" onClick={() => onClickLookUpButton()}>
+          {mode === 'LOOKUP' ? '노선 관리 보기' : '노선 전체 보기'}
+        </Button>
+      </LookUpButtonWrapper>
 
       <ListItemContainer>
-        {lines?.map(({ id, name, color }) => {
-          return (
-            <LineItemWithCircle
-              key={id}
-              content={name}
-              onClickModify={() => {
-                setSelectedLineId(id);
-                openEditModal(name);
-              }}
-              onClickDelete={() => {
-                onDeleteLine(id);
-              }}
-              option={{ color }}
-            />
-          );
-        })}
+        {mode === 'LOOKUP' ? (
+          <LineLookUp lines={lines} />
+        ) : (
+          <>
+            <LineTitle hasExtra>
+              <h3>🚉 노선 관리</h3>
+              <Button onClick={openAddModal}>노선 추가</Button>
+            </LineTitle>
+
+            {lines?.map(({ id, name, color }) => (
+              <LineItemWithCircle
+                key={id}
+                content={name}
+                onClickModify={() => {
+                  setSelectedLineId(id);
+                  openEditModal(name);
+                }}
+                onClickDelete={() => {
+                  onDeleteLine(id);
+                }}
+                option={{ color }}
+              />
+            ))}
+          </>
+        )}
       </ListItemContainer>
+
       {isModalOpen && (
         <Modal onClickClose={onClickClose}>
           <Header>

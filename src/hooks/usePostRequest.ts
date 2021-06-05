@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IResMeta, ResultMessage } from '../type';
+import { IResMeta } from '../type';
 import { request } from '../utils';
 
 const defaultHeader = {
@@ -8,7 +8,10 @@ const defaultHeader = {
 
 const usePostRequest = (
   url: string,
-  resultMessage: ResultMessage,
+  resultMessage: {
+    success: string;
+    fail: string;
+  },
   messageCallBack = (msg: string) => window.alert(msg),
 ) => {
   const [dataResponse, setDataResponse] = useState<IResMeta | null>(null);
@@ -39,14 +42,13 @@ const usePostRequest = (
   );
 
   useEffect(() => {
-    if (dataResponse?.isError === true) {
-      dataResponse.message
-        ? messageCallBack(dataResponse.message)
-        : resultMessage?.POST_DATA_RESPONSE?.fail &&
-          messageCallBack(resultMessage.POST_DATA_RESPONSE.fail);
-    } else if (dataResponse?.isError === false) {
-      resultMessage.POST_DATA_RESPONSE?.success &&
-        messageCallBack(resultMessage.POST_DATA_RESPONSE.success);
+    const isErrorResponse = dataResponse?.isError;
+    const responseErrorMessage = dataResponse?.message;
+
+    if (isErrorResponse === true) {
+      messageCallBack(responseErrorMessage ? responseErrorMessage : resultMessage.fail);
+    } else if (isErrorResponse === false && resultMessage.success.length > 0) {
+      messageCallBack(resultMessage.success);
     }
   }, [dataResponse]);
 

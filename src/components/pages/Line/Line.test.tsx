@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import lineList from '../../../fixtures/lineList';
@@ -9,7 +9,7 @@ import {
   validSignedUser,
 } from '../../../fixtures/useSelectorState';
 
-import { ILineRes } from '../../../type.d';
+import { ILineReq, ILineRes } from '../../../type.d';
 import Line from './Line';
 import usePostRequest from '../../../hooks/usePostRequest';
 import useDeleteRequest from '../../../hooks/useDeleteRequest';
@@ -39,14 +39,6 @@ describe('Line', () => {
     });
 
     newLineList = [...lineList];
-    const newLine: ILineRes = {
-      id: 3,
-      name: '테스트노선',
-      color: '#ccc',
-      extraFare: 0,
-      stations: [],
-      sections: [],
-    };
 
     (useGetAllRequest as jest.Mock).mockImplementation(() => {
       return {
@@ -57,6 +49,8 @@ describe('Line', () => {
     });
     (usePostRequest as jest.Mock).mockImplementation(() => {
       return {
+        postData: (body: ILineReq) =>
+          newLineList.push({ id: 9, ...body, stations: [], sections: [] }),
         postDataResponse: null,
       };
     });
@@ -168,7 +162,7 @@ describe('Line', () => {
     expect(line.container).toHaveTextContent('수정된역');
   });
 
-  it.only('노선 목록에서 특정 노선의 삭제 버튼을 클릭하면 해당 노선이 노선 리스트에서 삭제된다.', () => {
+  it('노선 목록에서 특정 노선의 삭제 버튼을 클릭하면 해당 노선이 노선 리스트에서 삭제된다.', () => {
     jest.spyOn(window, 'confirm').mockImplementation(jest.fn(() => true));
     const line = render(
       <BrowserRouter>
@@ -185,5 +179,24 @@ describe('Line', () => {
     fireEvent.click(deleteButton);
 
     expect(newLineList.length).toEqual(prevLineItemLength - 1);
+  });
+
+  it('노선 관리의 전체 보기 버튼을 클릭하면, 전체 노선에 대한 정보들이 보여진다.', () => {
+    const line = render(
+      <BrowserRouter>
+        <Line />
+        <div id="modal"></div>
+      </BrowserRouter>,
+    );
+
+    const lineLookUpButton = line.getByRole('button', {
+      name: /노선 전체 보기/i,
+    });
+
+    fireEvent.click(lineLookUpButton);
+
+    lineList.forEach(({ name }) => {
+      expect(line.container).toHaveTextContent(name);
+    });
   });
 });

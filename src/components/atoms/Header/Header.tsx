@@ -5,8 +5,12 @@ export interface HeaderProps {
   hasExtra?: boolean;
 }
 
-const Header = ({ hasExtra = false, children }: HeaderProps) => {
-  return <Container hasExtra={hasExtra}>{children}</Container>;
+const Header = ({ hasExtra = false, children, ...props }: HeaderProps) => {
+  return (
+    <Container hasExtra={hasExtra} {...props}>
+      {children}
+    </Container>
+  );
 };
 
 export default Header;

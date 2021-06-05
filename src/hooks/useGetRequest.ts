@@ -6,26 +6,28 @@ const defaultHeader = {
   'Content-Type': 'application/json; charset=UTF-8',
 };
 
-const useDeleteRequest = (
-  url: string,
+const useGetRequest = <T>(
   resultMessage: {
     success: string;
     fail: string;
   },
   messageCallBack = (msg: string) => window.alert(msg),
 ) => {
+  const [data, setData] = useState<T | null>();
   const [dataResponse, setDataResponse] = useState<IResMeta | null>(null);
 
-  const deleteData = async (param: string, headers = defaultHeader) => {
+  const getData = async (url: string, headers = defaultHeader) => {
     try {
-      await request.delete(`${url}/${param}`, headers);
+      const response = await request.get(url, headers);
+      const _data: T = response.data;
 
+      setData(_data);
       setDataResponse({
         isError: false,
         message: '',
       });
     } catch (error) {
-      console.error(error.response);
+      console.error(error);
 
       setDataResponse({
         isError: true,
@@ -53,9 +55,10 @@ const useDeleteRequest = (
   }, [dataResponse]);
 
   return {
-    deleteData,
+    data,
+    getData,
     dataResponse,
   };
 };
 
-export default useDeleteRequest;
+export default useGetRequest;

@@ -4,7 +4,7 @@ import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import subwayVideo from './assets/video/subwayBackground.mp4';
 import { Button, Main, Menu, RootContainer, Title, Video } from './components/atoms';
 import { HostSelect } from './components/molecules';
-import { Home, Line, Login, Logout, Section, SignUp, Station } from './components/pages';
+import { Home, Line, Login, Logout, PathFind, Section, SignUp, Station } from './components/pages';
 import { ROUTE } from './constants';
 import { initialState as initialAccessToken, setAccessToken } from './features/accessTokenSlice';
 import { getSignedUserAsync } from './features/signedUserSlice';
@@ -53,6 +53,15 @@ const LoginedMenu = () => {
       >
         🚇 구간 관리
       </Button>
+
+      <Button
+        type="button"
+        buttonTheme="menu"
+        onClick={() => history.push({ pathname: ROUTE.PATH })}
+      >
+        🚇 경로 조회
+      </Button>
+
       <Button
         type="button"
         buttonTheme="menu"
@@ -138,6 +147,12 @@ const App = () => {
             exact
             path={ROUTE.LOGOUT}
             Component={Logout}
+            condition={!!signedUserState.id}
+          />
+          <ConditionalRoute
+            exact
+            path={ROUTE.PATH}
+            Component={PathFind}
             condition={!!signedUserState.id}
           />
 
