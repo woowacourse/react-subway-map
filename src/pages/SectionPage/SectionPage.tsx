@@ -1,16 +1,13 @@
-import { ChangeEventHandler, useContext, useEffect, useState, FormEventHandler } from 'react';
-import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
+import { useContext, useEffect, useState, FormEventHandler } from 'react';
+import { MdAdd, MdDelete } from 'react-icons/md';
 
 import {
   Box,
   Button,
   Input,
-  Select,
   InputContainer,
   RoundButton,
   Heading1,
-  Icon,
-  ErrorText,
   List,
   ColorDot,
 } from '../../components/shared';
@@ -28,14 +25,12 @@ import useSections from '../../hooks/useSections';
 import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
 
 import { PageProps } from '../types';
-import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
+import { Container, TitleBox, Form, FormBox, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
 import STATUS_CODE from '../../constants/statusCode';
-import {
-  distanceErrorMessage,
-  isFormCompleted,
-  stationSelectErrorMessage,
-} from '../../utils/validations/sectionValidation';
+import { distanceErrorMessage, isFormCompleted } from '../../utils/validations/sectionValidation';
+import StationSelects from './StationSelects';
+import LineSelect from './LineSelect';
 
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
@@ -96,22 +91,11 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     return <></>;
   }
 
-  const reset = () => {
+  const resetSectionForm = () => {
     setUpStationId('');
     setDownStationId('');
     setDistance('');
-  };
-
-  const onLineSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setSelectedLineId(Number(event.target.value));
-  };
-
-  const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setUpStationId(event.target.value);
-  };
-
-  const onDownStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setDownStationId(event.target.value);
+    setFormOpen(false);
   };
 
   const onSectionSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -138,8 +122,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
       addMessage?.(SUCCESS_MESSAGE.ADD_SECTION);
 
-      reset();
-      setFormOpen(false);
+      resetSectionForm();
 
       await fetchData();
       await getLine(selectedLineId);
@@ -208,60 +191,18 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
         ) : (
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
-        <InputContainer labelText="노선 선택">
-          <ColorDot size="s" backgroundColor={currentLine?.color} />
-          <Select onChange={onLineSelect} aria-label="노선 선택">
-            <option value="/" hidden>
-              노선 선택
-            </option>
-            {lines?.map((line) => (
-              <option key={line.id} value={line.id}>
-                {line.name}
-              </option>
-            ))}
-          </Select>
-        </InputContainer>
+        <LineSelect lines={lines} currentLine={currentLine} setSelectedLineId={setSelectedLineId} />
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Form onSubmit={onSectionSubmit}>
-          <StationSelects>
-            <div>
-              <InputContainer labelText="상행역">
-                <Select value={upStationId} onChange={onUpStationIdChange} aria-label="상행역 선택">
-                  <option value="/" hidden>
-                    역 선택
-                  </option>
-                  {stations?.map((station) => (
-                    <option key={station.id} value={station.id}>
-                      {station.name}
-                    </option>
-                  ))}
-                </Select>
-              </InputContainer>
-              <Icon>
-                <MdArrowForward size="1.5rem" />
-              </Icon>
-              <InputContainer labelText="하행역">
-                <Select
-                  value={downStationId}
-                  onChange={onDownStationIdChange}
-                  aria-label="하행역 선택"
-                >
-                  <option value="/" hidden>
-                    역 선택
-                  </option>
-                  {stations?.map((station) => (
-                    <option key={station.id} value={station.id}>
-                      {station.name}
-                    </option>
-                  ))}
-                </Select>
-              </InputContainer>
-            </div>
-            <ErrorText>
-              {currentLine && stationSelectErrorMessage(currentLine, upStationId, downStationId)}
-            </ErrorText>
-          </StationSelects>
+          <StationSelects
+            stations={stations}
+            currentLine={currentLine}
+            upStationId={upStationId}
+            setUpStationId={setUpStationId}
+            downStationId={downStationId}
+            setDownStationId={setDownStationId}
+          />
           <InputContainer
             labelText="거리 (단위:km)"
             validation={{ text: distanceErrorMessage(distance), isValid: false }}

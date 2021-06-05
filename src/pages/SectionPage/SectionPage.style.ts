@@ -71,18 +71,4 @@ const Distance = styled.span`
   padding: 0 0.25rem;
 `;
 
-const StationSelects = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  div {
-    display: flex;
-  }
-
-  span {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-export { Container, Form, StationSelects, TitleBox, FormBox, Distance };
+export { Container, Form, TitleBox, FormBox, Distance };

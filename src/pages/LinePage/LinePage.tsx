@@ -33,6 +33,7 @@ import {
   distanceErrorMessage,
   isFormCompleted,
 } from '../../utils/validations/lineValidation';
+import StationSelects from './StationSelects';
 
 const lineColors = [
   'PINK',
@@ -199,6 +200,13 @@ const LinePage = ({ setIsLoading }: PageProps) => {
               aria-label="지하철 노선 이름 입력"
             />
           </InputContainer>
+          <StationSelects
+            stations={stations}
+            upStationId={upStationId}
+            setUpStationId={setUpStationId}
+            downStationId={downStationId}
+            setDownStationId={setDownStationId}
+          />
           <InputContainer
             labelText="거리 (단위:km)"
             validation={{ text: distanceErrorMessage(distance), isValid: false }}
