@@ -29,13 +29,13 @@ const addLine = createAsyncThunk(
     try {
       const response = await requestPost({
         url: `${endpoint}/lines`,
-        body: JSON.stringify({
+        body: {
           name,
           upStationId,
           downStationId,
           distance,
           color,
-        }),
+        },
         accessToken,
       });
 

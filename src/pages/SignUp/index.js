@@ -17,30 +17,31 @@ export const SignUpPage = () => {
   const [ageMessage, setAgeMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
 
-  const handleSignUpFormSubmit = (e) => {
+  const handleSignUpFormSubmit = async (e) => {
     e.preventDefault();
-    (async () => {
-      try {
-        const response = await requestPost({
-          url: `${endpoint}/members`,
-          body: JSON.stringify({
-            email: e.target.email.value,
-            age: e.target.age.value,
-            password: e.target.password.value,
-          }),
-        });
 
-        if (response.status !== 201) {
-          console.log(response.status);
-          throw new Error();
-        }
-        history.push(ROUTE.LOGIN);
-        enqueueSnackbar(SIGN_UP.SUCCEED);
-      } catch (e) {
-        console.error(e);
-        enqueueSnackbar(SIGN_UP.FAIL);
+    const { email, age, password } = e.target;
+
+    try {
+      const response = await requestPost({
+        url: `${endpoint}/members`,
+        body: {
+          email: email.value,
+          age: age.value,
+          password: password.value,
+        },
+      });
+
+      if (response.status !== 201) {
+        console.log(response.status);
+        throw new Error();
       }
-    })();
+      history.push(ROUTE.LOGIN);
+      enqueueSnackbar(SIGN_UP.SUCCEED);
+    } catch (e) {
+      console.error(e);
+      enqueueSnackbar(SIGN_UP.FAIL);
+    }
   };
 
   const handleEmailInputChange = (e) => {

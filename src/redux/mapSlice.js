@@ -28,11 +28,11 @@ const addSection = createAsyncThunk(
     try {
       const response = await requestPost({
         url: `${endpoint}/lines/${lineId}/sections`,
-        body: JSON.stringify({
+        body: {
           upStationId,
           downStationId,
           distance,
-        }),
+        },
         accessToken,
       });
 

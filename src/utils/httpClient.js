@@ -25,10 +25,11 @@ export const requestGet = async ({ url, accessToken }) => {
 
 export const requestPost = async ({ url, body, accessToken }) => {
   const headers = getHeadersWithAccessToken(accessToken);
+  const serializedBody = typeof body === 'object' ? JSON.stringify(body) : body;
   const response = await fetch(url, {
     method: 'POST',
     headers,
-    body,
+    body: serializedBody,
   });
 
   return response;

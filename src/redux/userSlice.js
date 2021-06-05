@@ -6,7 +6,10 @@ const login = createAsyncThunk('user/login', async ({ endpoint, email, password 
   try {
     const response = await requestPost({
       url: `${endpoint}/login/token`,
-      body: JSON.stringify({ email, password }),
+      body: {
+        email,
+        password,
+      },
     });
     const body = await response.json();
 

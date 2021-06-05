@@ -26,7 +26,7 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, acc
   try {
     const response = await requestPost({
       url: `${endpoint}/stations`,
-      body: JSON.stringify({ name }),
+      body: { name },
       accessToken,
     });
     const body = await response.json();
