@@ -21,13 +21,16 @@ const isPasswordMatched = (password: string, passwordConfirm: string): boolean =
 };
 
 const emailMessage = (email: string, isEmailDuplicated: boolean): string => {
-  return email
-    ? isEmailFormatValid(email)
-      ? isEmailDuplicated
-        ? ERROR_MESSAGE.DUPLICATED_EMAIL
-        : SUCCESS_MESSAGE.AVAILABLE_EMAIL
-      : ERROR_MESSAGE.INVALID_EMAIL
-    : '';
+  if (!email) return '';
+
+  if (isEmailFormatValid(email)) {
+    if (isEmailDuplicated) {
+      return ERROR_MESSAGE.DUPLICATED_EMAIL;
+    }
+    return SUCCESS_MESSAGE.AVAILABLE_EMAIL;
+  }
+
+  return ERROR_MESSAGE.INVALID_EMAIL;
 };
 
 const ageErrorMessage = (age: string): string => {

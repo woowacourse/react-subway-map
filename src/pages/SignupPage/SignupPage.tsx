@@ -1,9 +1,11 @@
 import {
   FormEventHandler,
-  ChangeEventHandler,
   useState,
   useContext,
   KeyboardEventHandler,
+  FocusEventHandler,
+  useRef,
+  useEffect,
 } from 'react';
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -19,7 +21,6 @@ import PATH from '../../constants/path';
 import PALETTE from '../../constants/palette';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
-import useDebounce from '../../hooks/useDebounce';
 import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
@@ -36,21 +37,21 @@ import {
   isFormCompleted,
 } from '../../utils/validations/signupValidation';
 
-const DEBOUNCE_DELAY = 500;
-
 const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
-  const [email, setEmail] = useState<string>('');
   const [isEmailDuplicated, setIsEmailDuplicated] = useState<boolean>(false);
+  const [isEmailInputCompleted, setIsEmailInputCompleted] = useState(false);
   const [age, onAgeChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const [passwordConfirm, onPasswordConfirmChange] = useInput('');
 
-  const checkEmailDuplicated = useDebounce(async (value: string) => {
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const checkEmailDuplicated = async (value: string) => {
     try {
       const response = await apiRequest.checkEmailDuplicated(value);
 
@@ -60,15 +61,15 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
       addMessage?.(ERROR_MESSAGE.DEFAULT);
     }
-  }, DEBOUNCE_DELAY);
+  };
 
   if (isLoggedIn) {
     return <Redirect to={PATH.ROOT} />;
   }
 
-  const onEmailChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setEmail(event.target.value);
+  const onEmailBlur: FocusEventHandler<HTMLInputElement> = (event) => {
     checkEmailDuplicated(event.target.value);
+    setIsEmailInputCompleted(true);
   };
 
   const onPasswordKeydown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -85,14 +86,25 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const onSignup: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    if (!isFormCompleted(isEmailDuplicated, { email, age, password, passwordConfirm })) {
+    if (
+      !isFormCompleted(isEmailDuplicated, {
+        email: emailRef?.current?.value ?? '',
+        age,
+        password,
+        passwordConfirm,
+      })
+    ) {
       return;
     }
 
     const timer = setTimeout(() => setIsLoading(true), 500);
 
     try {
-      await apiRequest.signup({ email, password, age: Number(age) });
+      await apiRequest.signup({
+        email: emailRef?.current?.value ?? '',
+        password,
+        age: Number(age),
+      });
       addMessage?.(SUCCESS_MESSAGE.SIGNUP);
       history.push(PATH.LOGIN);
     } catch (error) {
@@ -110,8 +122,8 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
       <Form onSubmit={onSignup}>
         <InputContainer
           validation={{
-            text: emailMessage(email, isEmailDuplicated),
-            isValid: isEmailFormatValid(email) && !isEmailDuplicated,
+            text: emailMessage(emailRef?.current?.value ?? '', isEmailDuplicated),
+            isValid: isEmailFormatValid(emailRef?.current?.value ?? '') && !isEmailDuplicated,
           }}
         >
           <Icon>
@@ -120,8 +132,8 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
           <Input
             type="email"
             placeholder="이메일을 입력하세요"
-            value={email}
-            onChange={onEmailChange}
+            ref={emailRef}
+            onBlur={onEmailBlur}
             autoComplete="off"
             aria-label="이메일 입력"
           />
@@ -180,7 +192,14 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
           width="100%"
           backgroundColor={themeColor}
           color={PALETTE.WHITE}
-          disabled={!isFormCompleted(isEmailDuplicated, { email, age, password, passwordConfirm })}
+          disabled={
+            !isFormCompleted(isEmailDuplicated, {
+              email: emailRef?.current?.value ?? '',
+              age,
+              password,
+              passwordConfirm,
+            })
+          }
         >
           회원가입
         </Button>
