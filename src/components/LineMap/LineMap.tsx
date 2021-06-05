@@ -11,8 +11,8 @@ interface Props {
 const LineMap = ({ line, mouseOverStationId, setMouseOverStationId }: Props) => {
   return (
     <Styled.Container>
-      <Styled.LineName lineColor={line.color}>{line.name}</Styled.LineName>
       <Styled.Line>
+        <Styled.LineName lineColor={line.color}>{line.name} </Styled.LineName>
         {line.stations.map((station) => (
           <Styled.Station lineColor={line.color} key={station.id}>
             <Styled.StationName
@@ -27,6 +27,7 @@ const LineMap = ({ line, mouseOverStationId, setMouseOverStationId }: Props) => 
             ></Styled.Circle>
           </Styled.Station>
         ))}
+        <Styled.LineName lineColor={line.color}>{line.name} </Styled.LineName>
       </Styled.Line>
     </Styled.Container>
   );

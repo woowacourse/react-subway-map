@@ -43,6 +43,13 @@ const ViewAllPage = () => {
   return (
     <CardLayout title={'전체 보기'}>
       <Loading isLoading={isLoading} />
+      <Styled.LineNames>
+        {lines.map((line) => (
+          <Styled.LineName key={line.id} lineColor={line.color}>
+            <span>{line.name}</span>
+          </Styled.LineName>
+        ))}
+      </Styled.LineNames>
       <Styled.LinesMap>
         {lines.map((line) => (
           <LineMap
