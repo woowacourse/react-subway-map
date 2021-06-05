@@ -35,7 +35,7 @@ const SignupPage = () => {
 
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
-  const [checkDuplicatedEmailAsync] = useFetch('GET');
+  const [checkDuplicatedEmailAsync] = useFetch();
   const [signupAsync, signupLoading] = useFetch('POST');
 
   const checkDuplicatedEmail = async () => {

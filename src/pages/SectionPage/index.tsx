@@ -26,9 +26,9 @@ const SectionPage = () => {
   const [stations, setStations] = useState<Station[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const [getStationsAsync, getStationsLoading] = useFetch('GET');
-  const [getLinesAsync, getLinesLoading] = useFetch('GET');
-  const [getLineAsync, getLineLoading] = useFetch('GET');
+  const [getStationsAsync, getStationsLoading] = useFetch();
+  const [getLinesAsync, getLinesLoading] = useFetch();
+  const [getLineAsync, getLineLoading] = useFetch();
   const [deleteSectionAsync, deleteSectionLoading] = useFetch('DELETE');
 
   const { enqueueSnackbar } = useSnackbar();

@@ -6,7 +6,7 @@ import { ALERT_MESSAGE } from 'constants/messages';
 
 type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-const useFetch = (method: HTTP_METHOD) => {
+const useFetch = (method: HTTP_METHOD = 'GET') => {
   const [loading, setLoading] = useState<boolean>(false);
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
 
