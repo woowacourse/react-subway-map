@@ -1,44 +1,89 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# react-subway-map
+    
+# 🚇 지하철 노선도 - 레벨2 종합세트 & 테스트
 
-## Available Scripts
+# 미션 목표
 
-In the project directory, you can run:
+- 레벨 2에서 학습한 컴포넌트 기반 개발, 상태 관리 방법에 대한 내용을 전반적으로 복습하며 적용하는 연습을 합니다.
+    - React에 관한 개념을 전반적으로 복습하며 적용해봅니다. 
+    이번 미션에서 React와 관련한 추가 개념은 다루지 않습니다.
+- 테스트를 고려하며 개발하는 연습을 합니다.
+- 백엔드 개발자와 협업하기 위한 커뮤니케이션 경험을 쌓습니다.
 
-### `yarn start`
+# 미션 진행 방식
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- 프론트엔드 페어 운영 방식 및 프론트엔드 리뷰 프로세스는 동일합니다.
+    - step1은 페어로 진행, step2는 개별로 진행
+    - 각 step당 1번씩 리뷰어에게 PR로 리뷰 요청 
+- 백엔드 개발자와의 협업 경험을 위해 백엔드 크루들이 협업 페어로 매칭됩니다.    
+    - 프론트엔드 1 페어당 백엔드 2 페어가 매칭됩니다. (프론트 크루 2명 + 백엔드 크루 4명)    
+    - 매칭된 백엔드 크루들과 배포 일정, API 설계 논의 일정 등을 자율적으로 논의해 진행해주세요.    
+    - 백엔드 크루들의 API가 배포 완료되기 전까지는 [API명세 문서](https://woowacourse.github.io/atdd-subway-fare/)를 확인하여 개발을 먼저 진행합니다.    
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+--- 
 
-### `yarn test`
+## 🌱 기본 요구사항
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 회원 기능
 
-### `yarn build`
+- [x] 사용자는 회원 가입을 할 수 있다.
+  - 필요 정보: 이메일, 나이, 비밀번호, 비밀번호 확인 정보
+  - 이메일 유효성 검사
+    - 이메일 형식이 맞는지 확인
+    - 이메일 전체 글자 수는 30글자를 넘을 수 없다.
+    - 이미 가입한 이메일인지 중복 확인
+  - 비밀번호 유효성 검사
+    - 비밀번호와 비밀번호 확인이 일치하는지 확인
+    - 비밀번호는 4글자 이상 20글자 이하이어야 한다.
+  - 나이 유효성 검사
+    - 나이는 음수일 수 없으며 200살을 넘을 수 없다.
+- [ ] 사용자는 가입한 계정으로 로그인을 할 수 있다.
+  - 로그인에 실패한 경우 실패한 이유를 확인할 수 있어야 한다.
+  - 로그인 하지 않았다면 로그인 페이지, 회원가입 페이지 외에는 접근할 수 없다.
+- [x] 사용자는 로그인하여 지하철 노선도 관리 페이지에 접근할 수 있다.
+  - 사용자의 로그인 여부를 토큰을 통해 확인한다.
+- [ ] 로그인 여부는 일정 시간(1시간)이 지나면 만료된다.
+  - 로그인이 만료된 상태에서 서비스를 이용하려고 하면 로그인이 만료되었음을 이용자에게 알려준다.
+  - 만료되었다면 로그인 페이지로 다시 이동시킨다
+  - snackbar 를 통해 로그인이 만료되었음을 알려준다
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 지하철 역 관리 기능
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- [ ] 사용자는 등록되어 있는 전체 지하철 역 목록을 조회할 수 있다.
+- [ ] 사용자는 지하철 역을 추가할 수 있다.
+  - 역 이름: 2자 이상 20자 이하의 한글 또는 숫자 (공백 허용 X)
+  - 중복된 역 이름이 있는 경우 해당 역을 등록할 수 없다.
+- [ ] 사용자는 지하철 역을 삭제할 수 있다.
+  - 노선에 등록되어 있는 역인 경우 삭제할 수 없어야 한다.
+  - 삭제 수행 전 이용자로부터 confirm을 받는다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 지하철 노선 관리 기능
 
-### `yarn eject`
+- [ ] 사용자는 지하철 노선을 추가할 수 있다.
+  - 필요 정보: 노선 이름, 상행역, 하행역, (최초 상행역과 하행역 구간의)거리, 색상
+  - 노선 이름: 2자 이상 10자 이하의 한글 (숫자 포함. 공백 허용 X)
+  - 중복된 노선 이름을 등록할 수 없다.
+  - 상행역, 하행역: 기존에 등록되어 있는 지하철 역 목록 중에서 선택
+  - 색상: 미리 지정되어 있는 100가지 색상 중 한 색상 선택. 다른 노선에서 사용하는 색은 선택 불가능
+- [ ] 사용자는 등록되어 있는 지하철 노선을 삭제할 수 있다.
+- [ ] 사용자는 등록되어 있는 전체 지하철 노선 목록을 조회할 수 있다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 지하철 구간 관리 기능(노선에 상행역,하행역 외에 중간역 추가 기능)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [ ] 사용자는 특정 노선의 전체 구간 목록을 확인할 수 있다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  - 역간의 거리는 0.1km 이상, 1000km 이하이다.
+  - 사용자는 특정 지하철 노선에 구간을 추가할 수 있다.
+    - 이미 등록된 구간은 등록할 수 없다
+    - 순환 노선을 이룰 수 있는 구간은 추가할 수 없다. (셀렉트 바에서 제외)
+  - 하나의 역은 여러 개 노선에 중복되어 포함될 수 있음
+  - 역과 역 사이에 새로운 역 추가 가능
+  - 하나의 노선에서 갈래길은 생길 수 없음
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [ ] 사용자는 노선에 등록되어 있는 구간을 삭제할 수 있다.
 
-## Learn More
+### 선택 요구사항
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [ ] 사용자는 등록되어 있는 지하철 역의 이름을 수정할 수 있다.
+- [ ] 사용자는 지하철 노선의 정보를 수정할 수 있다.
+- [ ] 사용자는 노선에 등록되어 있는 구간을 수정할 수 있다.
