@@ -14,28 +14,20 @@ interface LoginPayload {
 }
 
 export const signupAsync = createAsyncThunk('auth/signupAsync', async ({ email, password, age }: SignupPayload) => {
-  try {
-    await axios.post(`/members`, {
-      email,
-      password,
-      age,
-    });
-  } catch (error) {
-    throw new Error(error);
-  }
+  await axios.post(`/members`, {
+    email,
+    password,
+    age,
+  });
 });
 
 export const loginAsync = createAsyncThunk('auth/loginAsync', async ({ email, password }: LoginPayload) => {
-  try {
-    const response = await axios.post(`/login/token`, {
-      email,
-      password,
-    });
+  const response = await axios.post(`/login/token`, {
+    email,
+    password,
+  });
 
-    return response.data.accessToken;
-  } catch (error) {
-    throw new Error(error);
-  }
+  return response.data.accessToken;
 });
 
 const initialState: { accessToken: string | null } = {

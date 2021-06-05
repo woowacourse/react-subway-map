@@ -17,30 +17,22 @@ interface DeleteSectionPayload {
 export const addSectionAsync = createAsyncThunk(
   'section/addSectionAsync',
   async ({ id, upStationId, downStationId, distance }: AddSectionPayload) => {
-    try {
-      const response = await axios.post(`/lines/${id}/sections`, {
-        upStationId,
-        downStationId,
-        distance,
-      });
+    const response = await axios.post(`/lines/${id}/sections`, {
+      upStationId,
+      downStationId,
+      distance,
+    });
 
-      return response.data;
-    } catch (error) {
-      throw new Error(error);
-    }
+    return response.data;
   }
 );
 
 export const deleteSectionAsync = createAsyncThunk(
   'section/deleteSectionAsync',
   async ({ lineId, stationId }: DeleteSectionPayload) => {
-    try {
-      await axios.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
+    await axios.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
 
-      return stationId;
-    } catch (error) {
-      throw new Error(error);
-    }
+    return stationId;
   }
 );
 
