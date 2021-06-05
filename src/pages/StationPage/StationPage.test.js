@@ -1,41 +1,32 @@
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
 import { setupServer } from 'msw/node';
-import { render, fireEvent, waitFor, within } from 'test/test-util';
-import { stationHandlers } from 'test/server';
-import { stations as stationsData } from 'test/mock';
-import { API_STATUS } from 'constants/api';
+import { rest } from 'msw';
+import { render, fireEvent, waitFor, within, getByTestId } from 'test/test-util';
+import { stations as stationsData } from 'test/mock-old';
+import { stationHandlers } from 'test/handlers';
 import StationPage from '.';
-
-const user = {
-  id: 1,
-  email: 'zig1@email.com',
-  age: 20,
-};
-
-const mockStore = configureStore({
-  reducer: {
-    authSlice: () => ({ data: user, status: API_STATUS.FULFILLED }),
-    serverSlice: () => ({ server: '' }),
-  },
-});
 
 const server = setupServer(...stationHandlers);
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 describe('StationPage 테스트', () => {
+  beforeAll(() => {
+    jest.spyOn(window, 'alert').mockImplementation(() => true);
+    server.listen();
+  });
+
+  beforeEach(() => {
+    jest.spyOn(window, 'confirm').mockImplementation(() => true);
+    window.confirm = jest.fn(() => true);
+  });
+
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
   const setup = () => {
-    const utils = render(
-      <Provider store={mockStore}>
-        <StationPage />,
-      </Provider>,
-    );
+    const utils = render(<StationPage />);
     const { getByTestId } = utils;
     const stationList = getByTestId('station-list');
+
     return {
       ...utils,
       stationList,
@@ -45,8 +36,9 @@ describe('StationPage 테스트', () => {
   it('지하철역 목록을 불러온다.', async () => {
     const { stationList, getAllByTestId } = setup();
     expect(stationList).toBeInTheDocument();
+
     const stations = await waitFor(() => getAllByTestId('station-item'));
-    expect(stations).toHaveLength(5);
+    expect(stations).toHaveLength(stationsData.length);
   });
 
   it('새로운 지하철역을 추가할 수 있다.', async () => {
@@ -56,29 +48,45 @@ describe('StationPage 테스트', () => {
     });
     const addButton = getByRole('button', { name: /추가/i });
 
-    stationsData.push({ id: 6, name: '신반포역' });
     fireEvent.change(newStationInput, { target: { value: '신반포역' } });
     fireEvent.click(addButton);
 
-    const newStation = await waitFor(() => getByText(/신반포역/i));
+    const newStation = await waitFor(() => getByText('신반포역'));
     expect(newStation).toBeInTheDocument();
   });
 
-  it('지하철역을 수정할 수 있다.', async () => {
-    const { getByText } = setup();
+  it.only('지하철역을 수정할 수 있다.', async () => {
+    const { getByText, getByRole, stationList, getByTestId } = setup();
     const targetStation = await waitFor(() => getByText(/구반포역/i));
-    const editButton = within(targetStation).getAllByRole('button')[0];
+    // const editButton = within(targetStation).getAllByRole('button')[0];
+    const editButton = within(targetStation).getByRole('button', { name: /edit/i });
     fireEvent.click(editButton);
 
     const editInput = await waitFor(() => within(targetStation).getByRole('textbox'));
-    fireEvent.change(editInput, { target: { value: '잠실역' } });
+    fireEvent.change(editInput, { target: { value: '잠실역' } }); // 여기
+    // fireEvent.submit(editInput);
+    // fireEvent.keyDown(editInput, { key: 'Enter', charCode: 13 });
 
+    // const confirmButton = getByRole('button', { name: /save/i });
+    // const confirmButton = within(targetStation).getAllByRole('button')[0];
+
+    // const confirmButton = getByRole('button', { name: /save/i });
     const confirmButton = within(targetStation).getAllByRole('button')[0];
+    // console.log(confirmButton);
     fireEvent.click(confirmButton);
-
-    stationsData.find((station) => station.name === '구반포역').name = '잠실역';
 
     const updatedStation = await waitFor(() => getByText(/잠실역/i));
     expect(updatedStation).toBeInTheDocument();
   });
+
+  // it.only('지하철역을 삭제할 수 있다.', async () => {
+  //   const { getByText, getByRole, stationList, getByTestId, container } = setup();
+  //   const targetStation = await waitFor(() => getByText(/구반포역/i));
+  //   const deleteButton = within(targetStation).getAllByRole('button')[1];
+  //   fireEvent.click(deleteButton);
+  //   // window.confirm = jest.fn(() => true);
+
+  //   expect(targetStation).not.toBeInTheDocument();
+  //   // expect(container).not.toHaveTextContent('구반포역');
+  // });
 });

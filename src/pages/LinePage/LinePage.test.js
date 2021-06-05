@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from 'test/test-util';
-import { stationHandlers, lineHandlers } from 'test/server';
+import { stationHandlers, lineHandlers } from 'test/handlers';
 import { API_STATUS } from 'constants/api';
 import { lines as linesData } from 'test/mock';
 import LinePage from '.';
