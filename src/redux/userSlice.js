@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const login = createAsyncThunk('user/login', async ({ endpoint, email, password }, thunkAPI) => {
+//TODO : AccessToken을 바로 Cookie에서 가져다 쓰는 방법을 생각해보기.
+const login = createAsyncThunk('user/login', async ({ baseUrl, email, password }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/login/token`, {
+    const response = await fetch(`${baseUrl}/login/token`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -27,9 +28,9 @@ const login = createAsyncThunk('user/login', async ({ endpoint, email, password 
   }
 });
 
-const loginByToken = createAsyncThunk('user/loginByToken', async ({ endpoint, accessToken }, thunkAPI) => {
+const loginByToken = createAsyncThunk('user/loginByToken', async ({ baseUrl, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/members/me`, {
+    const response = await fetch(`${baseUrl}/members/me`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -65,13 +66,9 @@ const userSlice = createSlice({
       state.email = null;
       state.accessToken = null;
       state.isLogin = false;
-      state.isLogout = true;
     },
     clearLoginFail: (state) => {
       state.isLoginFail = false;
-    },
-    clearLogout: (state) => {
-      state.isLogout = false;
     },
   },
   extraReducers: {

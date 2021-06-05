@@ -1,26 +1,47 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { loginByToken } from '../../../redux/userSlice';
+
 import { useCookies } from 'react-cookie';
 
-import { logout } from '../../../redux/userSlice';
-import { clearStation } from '../../../redux/stationSlice';
-import { clearLine } from '../../../redux/lineSlice';
-import { clearMap } from '../../../redux/mapSlice';
 import { NavBar, ServerSelect } from '../..';
+
 import { Header, ServerSelectButton, Main } from './style';
 import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from '../../../constants';
 
 export const Page = (props) => {
-  const { serverId, setServerId, children, ...rest } = props;
+  const { children } = props;
 
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID, ACCESS_TOKEN]);
+  const serverId = cookies[SERVER_ID];
+  const accessToken = cookies[ACCESS_TOKEN];
 
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
-  const history = useHistory();
-  /* eslint-disable-next-line no-unused-vars */
-  const [cookies, setCookie, removeCookie] = useCookies([SERVER_ID]);
+
+  useEffect(() => {
+    if (!serverId) {
+      return;
+    }
+    const { baseUrl } = SERVER_LIST[serverId];
+
+    if (!accessToken) {
+      history.push(ROUTE.LOGIN);
+      return;
+    }
+
+    dispatch(loginByToken({ baseUrl, accessToken }));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleServerSelectButtonClick = () => setIsServerSelectOpen(true);
+
+  const setNewServer = (serverId) => setCookie(SERVER_ID, serverId);
 
   const handleServerSubmit = (e) => {
     e.preventDefault();
@@ -32,21 +53,11 @@ export const Page = (props) => {
       setIsServerSelectOpen(false);
       return;
     }
-    setServerId(selectedId);
-    setCookie(SERVER_ID, selectedId);
 
-    dispatch(logout());
+    setNewServer(selectedId);
     removeCookie(ACCESS_TOKEN);
-    dispatch(clearLine());
-    dispatch(clearStation());
-    dispatch(clearMap());
-
     setIsServerSelectOpen(false);
-    history.push(ROUTE.LOGIN);
-  };
-
-  const handleServerSelectButtonClick = () => {
-    setIsServerSelectOpen(true);
+    history.push(ROUTE.LOGOUT);
   };
 
   return (
@@ -55,7 +66,7 @@ export const Page = (props) => {
         <NavBar serverOwner={SERVER_LIST[serverId]?.nickname} />
       </Header>
 
-      <Main {...rest}>{children}</Main>
+      <Main>{children}</Main>
 
       <ServerSelectButton onClick={handleServerSelectButtonClick}>서버선택</ServerSelectButton>
       {isServerSelectOpen && <ServerSelect serverId={serverId} onSubmit={handleServerSubmit} />}
@@ -64,7 +75,5 @@ export const Page = (props) => {
 };
 
 Page.propTypes = {
-  serverId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  setServerId: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
