@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAppSelector } from 'modules/hooks';
 import { API_STATUS } from 'constants/api';
+import { ALERT_MESSAGE } from 'constants/messages';
 
 type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -22,13 +23,16 @@ const useFetch = (method: HTTP_METHOD) => {
     } catch (error) {
       console.error(error);
 
-      return { status: API_STATUS.REJECTED, message: error.response.data.message };
+      return {
+        status: API_STATUS.REJECTED,
+        message: error.response?.data.message || ALERT_MESSAGE.SERVER_ERROR,
+      };
     } finally {
       setLoading(false);
     }
   };
 
-  return { fetchData, loading };
+  return [fetchData, loading] as const;
 };
 
 export default useFetch;

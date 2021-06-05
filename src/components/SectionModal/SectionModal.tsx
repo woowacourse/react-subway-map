@@ -30,7 +30,7 @@ const SectionModal = ({
   const [downStationId, setDownStationId] = useState<string>('');
   const [distance, setDistance] = useState<string>('');
 
-  const { fetchData: addSectionAsync } = useFetch('POST');
+  const [addSectionAsync] = useFetch('POST');
 
   const { enqueueSnackbar } = useSnackbar();
 

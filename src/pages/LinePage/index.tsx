@@ -28,9 +28,9 @@ const LinePage = () => {
   const [selectedLine, setSelectedLine] = useState<Line>();
   const [modalTitle, setModalTitle] = useState<string>('');
 
-  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
-  const { fetchData: getLinesAsync, loading: getLinesLoading } = useFetch('GET');
-  const { fetchData: deleteLineAsync, loading: deleteLineLoading } = useFetch('DELETE');
+  const [getStationsAsync, getStationsLoading] = useFetch('GET');
+  const [getLinesAsync, getLinesLoading] = useFetch('GET');
+  const [deleteLineAsync, deleteLineLoading] = useFetch('DELETE');
 
   const { enqueueSnackbar } = useSnackbar();
 

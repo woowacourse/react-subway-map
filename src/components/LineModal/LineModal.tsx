@@ -36,8 +36,8 @@ const LineModal = ({
 
   const { NotiMessage, showNotiMessage } = useNotify();
 
-  const { fetchData: addLineAsync } = useFetch('POST');
-  const { fetchData: editLineAsync } = useFetch('PUT');
+  const [addLineAsync] = useFetch('POST');
+  const [editLineAsync] = useFetch('PUT');
 
   const { enqueueSnackbar } = useSnackbar();
 

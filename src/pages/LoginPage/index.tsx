@@ -32,7 +32,7 @@ const LoginPage = () => {
   const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
 
   const { NotiMessage, showNotiMessage } = useNotify();
-  const { fetchData: loginAsync, loading: loginLoading } = useFetch('POST');
+  const [loginAsync, loginLoading] = useFetch('POST');
 
   const login = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

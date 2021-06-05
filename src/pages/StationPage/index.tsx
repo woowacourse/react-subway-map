@@ -30,10 +30,10 @@ const StationPage = () => {
   const [editingStationName, setEditingStationName] = useState<string>('');
   const { NotiMessage, showNotiMessage } = useNotify();
 
-  const { fetchData: getStationsAsync, loading: getStationsLoading } = useFetch('GET');
-  const { fetchData: addStationAsync, loading: addStationLoading } = useFetch('POST');
-  const { fetchData: deleteStationAsync, loading: deleteStationLoading } = useFetch('DELETE');
-  const { fetchData: editStationAsync, loading: editStationLoading } = useFetch('PUT');
+  const [getStationsAsync, getStationsLoading] = useFetch('GET');
+  const [addStationAsync, addStationLoading] = useFetch('POST');
+  const [deleteStationAsync, deleteStationLoading] = useFetch('DELETE');
+  const [editStationAsync, editStationLoading] = useFetch('PUT');
 
   const inputRef = useRef<HTMLInputElement>(null);
 
