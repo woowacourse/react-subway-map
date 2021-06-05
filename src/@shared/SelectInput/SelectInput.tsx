@@ -15,7 +15,7 @@ const SelectInput = ({ onChange, defaultValue, title, children, className }: Sel
         <div className="absolute bottom-9 left-3 px-1 text-black text-opacity-30 text-sm bg-white">{title}</div>
       )}
       <select defaultValue={defaultValue} onChange={onChange} className="ml-1 w-full focus:outline-none">
-        {children && children}
+        {children}
       </select>
     </div>
   );
