@@ -7,7 +7,7 @@ interface TitleProps {
 }
 
 const Title = ({ text, textSize, className }: TitleProps) => {
-  return <div className={`${textSize || 'text-3xl'} font-semibold ${className}`}>{text}</div>;
+  return <h2 className={`${textSize || 'text-3xl'} font-semibold ${className}`}>{text}</h2>;
 };
 
 Title.defaultProps = {
