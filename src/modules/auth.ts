@@ -22,6 +22,7 @@ const checkAccessToken = createAsyncThunk(
   "[AUTH] CHECK_ACCESS_TOKEN",
   async (_, { rejectWithValue }) => {
     const accessToken = localStorage.getItem("accessToken") || "";
+
     try {
       await requestAuth.getUserInfo(accessToken);
     } catch (error) {
@@ -35,8 +36,10 @@ const login = createAsyncThunk(
   async ({ email, password }: LoginInfo, { rejectWithValue }) => {
     try {
       const accessToken = await requestAuth.login(email, password);
+
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }

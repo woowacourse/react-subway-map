@@ -15,35 +15,44 @@ const initialState: StationState = {
   error: null,
 };
 
-const getStations = createAsyncThunk("[STATION] LOAD", async (_, { rejectWithValue }) => {
-  try {
-    const stations = await requestStation.getAllStation();
+const getStations = createAsyncThunk(
+  "[STATION] LOAD",
+  async (_, { rejectWithValue }) => {
+    try {
+      const stations = await requestStation.getAllStation();
 
-    return stations;
-  } catch (err) {
-    return rejectWithValue(err.response.data);
+      return stations;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
-});
+);
 
-const addStation = createAsyncThunk("[STATION] ADD", async (name: string, { rejectWithValue }) => {
-  try {
-    const station = await requestStation.addStation(name);
+const addStation = createAsyncThunk(
+  "[STATION] ADD",
+  async (name: string, { rejectWithValue }) => {
+    try {
+      const station = await requestStation.addStation(name);
 
-    return station;
-  } catch (err) {
-    return rejectWithValue(err.response.data);
+      return station;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
-});
+);
 
-const deleteStation = createAsyncThunk("[STATION] DELETE", async (id: number, { rejectWithValue }) => {
-  try {
-    await requestStation.deleteStation(id);
+const deleteStation = createAsyncThunk(
+  "[STATION] DELETE",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await requestStation.deleteStation(id);
 
-    return id;
-  } catch (err) {
-    return rejectWithValue(err.response.data);
+      return id;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
-});
+);
 
 export const action = {
   getStations,

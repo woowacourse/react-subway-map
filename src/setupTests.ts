@@ -19,10 +19,18 @@ const axiosMock = () => {
     typeof axios.delete
   >;
 
-  mockedAxiosGet.mockImplementation(async () => ({}));
-  mockedAxiosPost.mockImplementation(async () => ({}));
-  mockedAxiosPut.mockImplementation(async () => ({}));
-  mockedAxiosDelete.mockImplementation(async () => ({}));
+  mockedAxiosGet.mockImplementation(async () => ({
+    data: { stations: [], lines: [] },
+  }));
+  mockedAxiosPost.mockImplementation(async () => ({
+    data: { stations: [], lines: [], accessToken: "" },
+  }));
+  mockedAxiosPut.mockImplementation(async () => ({
+    data: { stations: [], lines: [] },
+  }));
+  mockedAxiosDelete.mockImplementation(async () => ({
+    data: { stations: [], lines: [] },
+  }));
 };
 
 const useSelectorMock = () => {
