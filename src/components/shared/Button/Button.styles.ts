@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { ButtonType, ButtonSize } from 'types';
+import { ButtonType, ButtonWidth } from 'types';
 import PALETTE from 'constants/palette';
 
 const buttonStyle = {
@@ -35,15 +35,18 @@ const buttonStyle = {
   `,
 };
 
-const buttonSize = {
-  [ButtonSize.SMALL]: css`
+const buttonWidth = {
+  [ButtonWidth.AUTO]: css`
     width: auto;
+  `,
+  [ButtonWidth.FULL]: css`
+    width: 100%;
   `,
 };
 
 interface ContainerProps {
   styleType: ButtonType;
-  sizeType: ButtonSize;
+  widthType: ButtonWidth;
   isSelected?: boolean;
 }
 
@@ -55,7 +58,7 @@ const Container = styled.button<ContainerProps>`
   line-height: 44px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   ${({ styleType }) => buttonStyle[styleType]};
-  ${({ sizeType }) => buttonSize[sizeType]};
+  ${({ widthType }) => buttonWidth[widthType]};
 
   background-color: ${({ isSelected }) => isSelected && PALETTE.SUBWAY_YELLOW};
   color: ${({ isSelected }) => isSelected && PALETTE.DEFAULT_BLACK};

@@ -5,6 +5,7 @@ const ROUTE = {
   SECTIONS: '/sections',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  VIEW_All: '/view-all',
 };
 
 export default ROUTE;

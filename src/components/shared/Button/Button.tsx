@@ -1,35 +1,27 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import Styled from './Button.styles';
-import { ButtonSize, ButtonType } from 'types';
+import { ButtonWidth, ButtonType } from 'types';
 
-interface Props {
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   styleType: ButtonType;
-  sizeType?: ButtonSize;
+  widthType?: ButtonWidth;
   isSelected?: boolean;
   children: React.ReactNode;
-
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({
-  type,
-  disabled,
   children,
   styleType,
-  sizeType = ButtonSize.SMALL,
+  widthType = ButtonWidth.AUTO,
   isSelected,
-  onClick,
+  ...props
 }: Props) => {
   return (
     <Styled.Container
-      type={type}
-      disabled={disabled}
       styleType={styleType}
-      sizeType={sizeType}
+      widthType={widthType}
       isSelected={isSelected}
-      onClick={onClick}
+      {...props}
     >
       {children}
     </Styled.Container>

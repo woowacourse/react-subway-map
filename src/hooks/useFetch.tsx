@@ -20,7 +20,7 @@ const useFetch = (method: API_METHOD) => {
     } catch (error) {
       console.error(error);
 
-      return { state: RESPONSE_STATE.REJECTED, message: error.response.data.message };
+      return { state: RESPONSE_STATE.REJECTED, message: error.response?.data?.message };
     } finally {
       setLoading(false);
     }

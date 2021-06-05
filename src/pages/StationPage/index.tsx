@@ -164,10 +164,8 @@ const StationPage = () => {
               labelText="지하철 역 이름을 입력해주세요."
               value={newStationName}
               onChange={(event) => setNewStationName(event.target.value)}
-              extraArgs={{
-                minLength: INPUT.STATION_NAME.MIN_LENGTH,
-                maxLength: INPUT.STATION_NAME.MAX_LENGTH,
-              }}
+              minLength={INPUT.STATION_NAME.MIN_LENGTH}
+              maxLength={INPUT.STATION_NAME.MAX_LENGTH}
             />
             <StationNotification />
           </Styled.InputWrapper>
