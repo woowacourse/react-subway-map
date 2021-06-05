@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { API, API_RESULT } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
-import { AddLineAction, DeleteLineAction, LineState } from '../interfaces/line';
+import { LineInfoState, LineState } from '../interfaces/line';
 
 interface GetLinesResponse extends AxiosResponse {
   lines: LineState['lines'];
@@ -26,7 +26,7 @@ export const lineAPI = {
     }
   },
 
-  addLine: async (line: AddLineAction['payload']['line']) => {
+  addLine: async (line: LineInfoState) => {
     try {
       const response = await axios.post<AddLineResponse>(API.LINES(), line);
 
@@ -40,7 +40,7 @@ export const lineAPI = {
     }
   },
 
-  deleteLine: async (id: DeleteLineAction['payload']['id']) => {
+  deleteLine: async (id: number) => {
     try {
       const response = await axios.delete<AxiosResponse>(`${API.LINES()}/${id}`);
 
