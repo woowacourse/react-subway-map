@@ -1,3 +1,4 @@
+import Button from '@shared/Button/Button';
 import React from 'react';
 
 interface ImageButtonProps {
@@ -12,13 +13,16 @@ interface ImageButtonProps {
 
 const ImageButton = ({ onClick, imgUrl, size, imgSize, bgColor, hoverBgColor, className }: ImageButtonProps) => {
   return (
-    <button
+    <Button
       onClick={onClick}
       type="button"
-      className={`flex justify-center items-center shadow-md rounded-full focus:outline-none ${size} ${bgColor} hover:${hoverBgColor} ${className}`}
+      size={size}
+      bgColor={bgColor}
+      hoverBgColor={hoverBgColor}
+      className={`flex justify-center items-center shadow-md rounded-full ${className}`}
     >
       <img className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} alt="" />
-    </button>
+    </Button>
   );
 };
 
