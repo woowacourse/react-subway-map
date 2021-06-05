@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 
-import { useCookie, useRouter } from '../../hooks';
+import { useRouter, useServer } from '../../hooks';
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { requestPost } from '../../utils';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 
 export const SignUpPage = () => {
-  const { endpoint } = useCookie();
+  const { endpoint } = useServer();
   const { goToLogin } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 

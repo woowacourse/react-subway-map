@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCookie } from '../hooks';
+import { useAccessToken, useServer } from '../hooks';
 import { getMap, addSection, removeSection, clearMap, clearMapStatus } from '../redux/mapSlice';
 
 export const useSection = () => {
   const dispatch = useDispatch();
   const { map, status } = useSelector((store) => store.map);
-  const { accessToken, endpoint } = useCookie();
+  const { accessToken } = useAccessToken();
+  const { endpoint } = useServer();
 
   const requestGetMap = () => {
     dispatch(getMap({ endpoint, accessToken }));

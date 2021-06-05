@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { useCookie, useRouter } from './hooks';
+import { useAccessToken, useServer, useRouter } from './hooks';
 import { loginByToken } from './redux/userSlice';
 import { Template, LoginPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
-import { ROUTE, SERVER_LIST } from './constants';
+import { ROUTE } from './constants';
 
 function App() {
   const dispatch = useDispatch();
   const { goToLogin } = useRouter();
-  const { accessToken, serverId } = useCookie();
-  const endpoint = SERVER_LIST[serverId]?.endpoint || '';
+  const { serverId, endpoint } = useServer();
+  const { accessToken } = useAccessToken();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {

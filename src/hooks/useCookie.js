@@ -1,28 +1,20 @@
-import { useCookies } from 'react-cookie';
+import { useCallback, useState } from 'react';
+import Cookies from 'js-cookie';
 
-import { ACCESS_TOKEN, SERVER_ID, SERVER_LIST } from '../constants';
+export const useCookie = (cookieName) => {
+  const [value, setValue] = useState(Cookies.get(cookieName) || null);
 
-const options = { path: '/' };
+  const updateCookie = useCallback(
+    (newValue, options = { path: '/' }) => {
+      Cookies.set(cookieName, newValue, options);
+      setValue(newValue);
+    },
+    [cookieName],
+  );
 
-export const useCookie = () => {
-  const [cookies, setCookie, removeCookie] = useCookies([ACCESS_TOKEN, SERVER_ID]);
+  const deleteCookie = useCallback(() => {
+    Cookies.remove(cookieName);
+  }, [cookieName]);
 
-  const accessToken = cookies[ACCESS_TOKEN];
-  const setAccessToken = (token) => setCookie(ACCESS_TOKEN, token, options);
-  const removeAccessToken = () => removeCookie(ACCESS_TOKEN, options);
-
-  const serverId = cookies[SERVER_ID];
-  const setServerId = (id) => setCookie(SERVER_ID, id, options);
-  const removeServerId = () => removeCookie(SERVER_ID, options);
-  const endpoint = SERVER_LIST[serverId]?.endpoint;
-
-  return {
-    accessToken,
-    setAccessToken,
-    removeAccessToken,
-    serverId,
-    setServerId,
-    removeServerId,
-    endpoint,
-  };
+  return [value, updateCookie, deleteCookie];
 };

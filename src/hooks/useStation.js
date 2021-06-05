@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCookie } from '../hooks';
+import { useAccessToken, useServer } from '../hooks';
 import { getStations, addStation, clearStationStatus, removeStation } from '../redux/stationSlice';
 
 export const useStation = () => {
   const dispatch = useDispatch();
   const { stations, status } = useSelector((store) => store.station);
-  const { accessToken, endpoint } = useCookie();
+  const { accessToken } = useAccessToken();
+  const { endpoint } = useServer();
 
   const requestGetStations = () => {
     dispatch(getStations({ endpoint, accessToken }));
