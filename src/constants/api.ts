@@ -24,3 +24,8 @@ export const BASE_URL = {
 export const SERVER = {
   URL: '',
 };
+
+export const API_RESULT = {
+  SUCCESS: { success: true, data: {}, message: '' },
+  FAILURE: { success: false, data: {}, message: '' },
+};

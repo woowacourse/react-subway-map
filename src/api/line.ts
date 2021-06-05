@@ -1,62 +1,56 @@
-import axios from 'axios';
-import { API } from '../constants/api';
+import axios, { AxiosResponse } from 'axios';
+import { API, API_RESULT } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 import { AddLineAction, DeleteLineAction, LineState } from '../interfaces/line';
 
-interface GetLinesResponse {
-  status: number;
-  data: LineState['lines'];
+interface GetLinesResponse extends AxiosResponse {
+  lines: LineState['lines'];
 }
 
-interface AddLineResponse {
-  status: number;
-  data: LineState['lines'];
-}
-
-interface DeleteLineResponse {
-  status: number;
+interface AddLineResponse extends AxiosResponse {
+  line: LineState['lines'];
 }
 
 export const lineAPI = {
   getLines: async () => {
     try {
-      const response: GetLinesResponse = await axios.get(API.LINES());
+      const response = await axios.get<GetLinesResponse>(API.LINES());
 
       if (response.status >= 400) {
         throw new Error(MESSAGE.ERROR.LINE.LOAD_FAILED);
       }
 
-      return { success: true, data: { lines: response.data }, message: '' };
+      return Object.assign(API_RESULT.SUCCESS, { data: { lines: response.data.lines } });
     } catch (error) {
-      return { success: false, data: {}, message: error.message };
+      return Object.assign(API_RESULT.FAILURE, { message: error.message });
     }
   },
 
   addLine: async (line: AddLineAction['payload']['line']) => {
     try {
-      const response: AddLineResponse = await axios.post(API.LINES(), line);
+      const response = await axios.post<AddLineResponse>(API.LINES(), line);
 
       if (response.status >= 400) {
         throw new Error(MESSAGE.ERROR.LINE.ADD_FAILED);
       }
 
-      return { success: true, data: { line: response.data }, message: '' };
+      return Object.assign(API_RESULT.SUCCESS, { data: { line: response.data.line } });
     } catch (error) {
-      return { success: false, data: {}, message: error.message };
+      return Object.assign(API_RESULT.FAILURE, { message: error.message });
     }
   },
 
   deleteLine: async (id: DeleteLineAction['payload']['id']) => {
     try {
-      const response: DeleteLineResponse = await axios.delete(`${API.LINES()}/${id}`);
+      const response = await axios.delete<AxiosResponse>(`${API.LINES()}/${id}`);
 
       if (response.status >= 400) {
         throw new Error(MESSAGE.ERROR.LINE.DELETE_FAILED);
       }
 
-      return { success: true, data: {}, message: '' };
+      return API_RESULT.SUCCESS;
     } catch (error) {
-      return { success: false, data: {}, message: error.message };
+      return Object.assign(API_RESULT.FAILURE, { message: error.message });
     }
   },
 };
