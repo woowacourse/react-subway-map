@@ -31,13 +31,16 @@ const stationSelectErrorMessage = (
   upStationId: string,
   downStationId: string
 ): string => {
-  return Boolean(upStationId) && Boolean(downStationId)
-    ? isStationSelectDuplicated(upStationId, downStationId)
-      ? ERROR_MESSAGE.DUPLICATED_TERMINAL
-      : isOnlyOneStationInCurrentLine(currentLine, upStationId, downStationId)
-      ? ''
-      : ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED
-    : '';
+  if (!Boolean(upStationId) || !Boolean(downStationId)) return '';
+
+  if (!isStationSelectDuplicated(upStationId, downStationId)) {
+    if (isOnlyOneStationInCurrentLine(currentLine, upStationId, downStationId)) {
+      return '';
+    }
+    return ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED;
+  }
+
+  return ERROR_MESSAGE.DUPLICATED_TERMINAL;
 };
 
 const distanceErrorMessage = (distance: string): string => {

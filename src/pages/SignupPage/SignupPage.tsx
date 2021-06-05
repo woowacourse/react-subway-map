@@ -5,7 +5,6 @@ import {
   KeyboardEventHandler,
   FocusEventHandler,
   useRef,
-  useEffect,
 } from 'react';
 import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 import { Redirect, useHistory } from 'react-router-dom';

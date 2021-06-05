@@ -28,14 +28,16 @@ const isDistanceValid = (distance: string): boolean => {
 };
 
 const lineNameErrorMessage = (lines: APIReturnTypeLine[], lineName: string): string => {
-  return (
-    lineName &&
-    (!isLineNameValid(lineName)
-      ? ERROR_MESSAGE.INVALID_LINE_INPUT
-      : isLineNameDuplicated(lines, lineName)
-      ? ERROR_MESSAGE.DUPLICATED_LINE_NAME
-      : '')
-  );
+  if (!lineName) return '';
+
+  if (isLineNameValid(lineName)) {
+    if (isLineNameDuplicated(lines, lineName)) {
+      return ERROR_MESSAGE.DUPLICATED_LINE_NAME;
+    }
+    return '';
+  }
+
+  return ERROR_MESSAGE.INVALID_LINE_INPUT;
 };
 
 const stationSelectErrorMessage = (upStationId: string, downStationId: string): string => {
