@@ -10,7 +10,7 @@ export const StationListItem = (props) => {
   return (
     <Item>
       <Name>{station.name}</Name>
-      <Button onClick={(e) => onClick(e, station.id)}>
+      <Button onClick={() => onClick(station.id)}>
         <IconTrashCan />
       </Button>
     </Item>

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const getStations = createAsyncThunk('station/getStations', async ({ endpoint, accessToken }, thunkAPI) => {
+const getStations = createAsyncThunk('station/getStations', async ({ baseUrl, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/stations`, {
+    const response = await fetch(`${baseUrl}/stations`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -24,9 +24,9 @@ const getStations = createAsyncThunk('station/getStations', async ({ endpoint, a
   }
 });
 
-const addStation = createAsyncThunk('station/addStation', async ({ endpoint, accessToken, name }, thunkAPI) => {
+const addStation = createAsyncThunk('station/addStation', async ({ baseUrl, accessToken, name }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/stations`, {
+    const response = await fetch(`${baseUrl}/stations`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -51,9 +51,9 @@ const addStation = createAsyncThunk('station/addStation', async ({ endpoint, acc
   }
 });
 
-const removeStation = createAsyncThunk('station/removeStation', async ({ endpoint, accessToken, id }, thunkAPI) => {
+const removeStation = createAsyncThunk('station/removeStation', async ({ baseUrl, accessToken, id }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/stations/${id}`, {
+    const response = await fetch(`${baseUrl}/stations/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -64,9 +64,9 @@ const removeStation = createAsyncThunk('station/removeStation', async ({ endpoin
       return { id };
     }
 
-    const { message } = await response.json();
+    const body = await response.json();
 
-    throw new Error(message);
+    throw new Error(body.message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -84,15 +84,10 @@ const stationSlice = createSlice({
     isDeleteFail: false,
   },
   reducers: {
-    clearStationProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
-    },
     clearStation: (state) => {
       state.stations = [];
-      state.isLoading = false;
+    },
+    clearStationProgress: (state) => {
       state.isAddSuccess = false;
       state.isAddFail = false;
       state.isDeleteSuccess = false;
@@ -111,6 +106,7 @@ const stationSlice = createSlice({
     [getStations.rejected]: (state) => {
       state.isLoading = false;
     },
+
     [addStation.fulfilled]: (state, action) => {
       const { id, name } = action.payload;
 
@@ -124,6 +120,7 @@ const stationSlice = createSlice({
       state.isAddFail = true;
       state.isLoading = false;
     },
+
     [removeStation.fulfilled]: (state, action) => {
       const { id } = action.payload;
 

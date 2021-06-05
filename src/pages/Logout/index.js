@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { logout } from '../../redux/userSlice';
 import { clearLine } from '../../redux/lineSlice';
 import { clearMap } from '../../redux/mapSlice';
-import { clearStation } from '../../redux/stationSlice';
+import { clearStation, clearStationProgress } from '../../redux/stationSlice';
 
 import { ACCESS_TOKEN, ROUTE } from '../../constants';
 
@@ -16,8 +16,9 @@ export const LogoutPage = () => {
   const removeCookies = useCookies()[2];
 
   const clearStore = () => {
-    dispatch(clearLine());
     dispatch(clearStation());
+    dispatch(clearStationProgress());
+    dispatch(clearLine());
     dispatch(clearMap());
   };
 

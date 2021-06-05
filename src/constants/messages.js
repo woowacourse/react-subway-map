@@ -63,3 +63,7 @@ export const SECTION = {
 };
 
 export const SHOWING_MESSAGE_TIME = 1500;
+
+export const MESSAGE_TYPE = {
+  ERROR: 'error',
+};

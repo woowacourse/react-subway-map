@@ -8,7 +8,15 @@ import { login, clearLoginFail } from '../../redux/userSlice';
 import { useSnackbar } from 'notistack';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
-import { LOGIN, ROUTE, ACCESS_TOKEN, SERVER_ID, SERVER_LIST, SHOWING_MESSAGE_TIME } from '../../constants';
+import {
+  LOGIN,
+  ROUTE,
+  ACCESS_TOKEN,
+  SERVER_ID,
+  SERVER_LIST,
+  SHOWING_MESSAGE_TIME,
+  MESSAGE_TYPE,
+} from '../../constants';
 
 export const LoginPage = () => {
   const history = useHistory();
@@ -28,7 +36,7 @@ export const LoginPage = () => {
     }
 
     if (isLoginFail) {
-      enqueueSnackbar(LOGIN.FAIL, { variant: 'error', autoHideDuration: SHOWING_MESSAGE_TIME });
+      enqueueSnackbar(LOGIN.FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
       dispatch(clearLoginFail());
     }
 
