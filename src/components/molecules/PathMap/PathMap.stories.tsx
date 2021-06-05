@@ -1,5 +1,5 @@
 import { Story } from '@storybook/react';
-import PathMap, { PathMapProps } from './PathMap';
+import PathMap, { IPathMapProp } from './PathMap';
 
 export default {
   title: 'molecule/PathMap',
@@ -7,8 +7,6 @@ export default {
   argTypes: { children: { control: 'text' } },
 };
 
-const Template: Story<PathMapProps> = args => <PathMap {...args} />;
+const Template: Story<IPathMapProp> = args => <PathMap {...args} />;
 
 export const Basic = Template.bind({});
-
-Basic.args = {};

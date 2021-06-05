@@ -47,10 +47,10 @@ const PathFind = () => {
             <DistanceText>
               거리: <span>{pathInfo.distance} km</span>
             </DistanceText>
-
-            <PathMap stations={pathInfo?.stations} />
           </>
         )}
+
+        <PathMap orderedStations={pathInfo?.stations} />
       </PathResultWrapper>
     </FullVerticalCenterBox>
   );

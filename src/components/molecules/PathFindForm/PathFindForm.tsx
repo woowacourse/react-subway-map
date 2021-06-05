@@ -4,12 +4,12 @@ import { Button, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { PathFindFormWrapper, SelectWrapper } from './PathFindForm.styles';
 
-interface iPathFindFormProp {
+interface IPathFindFormProp {
   stations: IStationRes[] | undefined | null;
   doPathFind: (departmentStationId: number, destStationId: number) => void;
 }
 
-const PathFindForm = ({ stations, doPathFind }: iPathFindFormProp) => {
+const PathFindForm = ({ stations, doPathFind }: IPathFindFormProp) => {
   const { value: departmentStationId, onChange: onChangeDepartmentStation } = useChangeEvent('');
   const { value: destStationId, onChange: onChangeDestStation } = useChangeEvent('');
 
