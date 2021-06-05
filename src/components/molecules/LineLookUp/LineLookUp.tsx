@@ -28,7 +28,7 @@ const LineLookUp = ({ lines }: ILineLoopUpProp) => (
     {lines?.map(line => (
       <LineWrapper key={line.id}>
         <LineName color={line.color}>{line.name}</LineName>
-        <StationListWrapper key={line.id}>
+        <StationListWrapper key={line.id} color={line.color}>
           {getConsecutiveSections(line.sections).map((section, index, self) => (
             <React.Fragment key={index}>
               <li key={section.upStation.id}>{section.upStation.name}</li>

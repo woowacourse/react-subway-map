@@ -26,14 +26,34 @@ const LineName = styled.span<{ color: string }>`
 `;
 
 const StationListWrapper = styled.ul`
+  position: relative;
+  margin-left: 3rem;
+
+  &:before {
+    position: absolute;
+    content: '';
+    border-left: 6px solid ${({ color }) => color};
+    height: 100%;
+    left: -3rem;
+  }
+
   & > li {
     margin: 2rem auto;
+    &:before {
+      position: absolute;
+      content: '';
+      border: 6px solid ${({ color }) => color};
+      background-color: ${({ color }) => color};
+      border-radius: 50%;
+      left: -4rem;
+      z-index: 1;
+      padding: 1rem;
+    }
   }
 `;
 
 const DistanceText = styled.div`
   font-size: 1.5rem;
-  margin-left: 5rem;
   padding: 1rem 2rem;
   &::before {
     content: '거리: ';
