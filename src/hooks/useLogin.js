@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { useAccessToken, useServer, useRouter } from '.';
+import { useAccessToken, useServer } from '.';
 import { login, clearLoginFail, logout, clearLogout } from './../redux/userSlice';
-import { LOGIN, LOGOUT } from './../constants';
+import { ROUTE, LOGIN, LOGOUT } from './../constants';
 
 export const useLogin = () => {
-  const { goToHome, goToLogin } = useRouter();
+  const history = useHistory();
   const { setAccessToken, removeAccessToken } = useAccessToken();
   const { endpoint } = useServer();
   const { enqueueSnackbar } = useSnackbar();
@@ -25,10 +26,10 @@ export const useLogin = () => {
 
   const goToAllowedPage = () => {
     if (isLogin) {
-      goToHome();
+      history.push(ROUTE.HOME);
       setAccessToken(accessToken);
     } else {
-      goToLogin();
+      history.push(ROUTE.LOGIN);
       dispatch(clearLoginFail());
       dispatch(clearLogout());
     }

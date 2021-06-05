@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { useRouter, useServer } from '../../hooks';
+import { useServer } from '../../hooks';
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { requestPost } from '../../utils';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 
 export const SignUpPage = () => {
-  const { endpoint } = useServer();
-  const { goToLogin } = useRouter();
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
+  const { endpoint } = useServer();
 
   const [emailMessage, setEmailMessage] = useState('');
   const [ageMessage, setAgeMessage] = useState('');
@@ -33,7 +34,7 @@ export const SignUpPage = () => {
           console.log(response.status);
           throw new Error();
         }
-        goToLogin();
+        history.push(ROUTE.LOGIN);
         enqueueSnackbar(SIGN_UP.SUCCEED);
       } catch (e) {
         console.error(e);

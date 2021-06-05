@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { useAccessToken, useServer, useRouter } from './hooks';
+import { useAccessToken, useServer } from './hooks';
 import { loginByToken } from './redux/userSlice';
 import { Template, LoginPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
 import { ROUTE } from './constants';
 
 function App() {
   const dispatch = useDispatch();
-  const { goToLogin } = useRouter();
+  const history = useHistory();
   const { serverId, endpoint } = useServer();
   const { accessToken } = useAccessToken();
 
@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     if (!serverId) return;
     if (!accessToken) {
-      goToLogin();
+      history.push(ROUTE.LOGIN);
       return;
     }
     dispatch(loginByToken({ endpoint, accessToken }));
