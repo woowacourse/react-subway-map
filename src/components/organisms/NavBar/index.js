@@ -37,42 +37,22 @@ export const NavBar = (props) => {
 
       <Menu>
         {/* TODO: 전체보기 기능, 경로탐색 기능 2단계에서 추가 */}
-        <MenuList style={{ visibility: 'hidden' }}>
-          <MenuItem>
-            <NavLink activeClassName="selected" to={ROUTE.MAP}>
-              <IconWindow />
-              전체보기
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink activeClassName="selected" to={ROUTE.SEARCH}>
-              <IconSearch />
-              경로탐색
-            </NavLink>
-          </MenuItem>
-        </MenuList>
+        <MenuGroup
+          style={{ visibility: 'hidden' }}
+          menuList={[
+            { content: '전체보기', icon: <IconWindow />, route: ROUTE.MAP },
+            { content: '경로탐색', icon: <IconSearch />, route: ROUTE.SEARCH },
+          ]}
+        />
 
         {isLogin && (
-          <MenuList>
-            <MenuItem>
-              <NavLink activeClassName="selected" to={ROUTE.STATION}>
-                <IconSetting />
-                역관리
-              </NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink activeClassName="selected" to={ROUTE.LINE}>
-                <IconSetting />
-                노선관리
-              </NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink activeClassName="selected" to={ROUTE.SECTION}>
-                <IconSetting />
-                구간관리
-              </NavLink>
-            </MenuItem>
-          </MenuList>
+          <MenuGroup
+            menuList={[
+              { content: '역관리', icon: <IconSetting />, route: ROUTE.STATION },
+              { content: '노선관리', icon: <IconSetting />, route: ROUTE.LINE },
+              { content: '구간관리', icon: <IconSetting />, route: ROUTE.SECTION },
+            ]}
+          />
         )}
 
         <MenuList>
@@ -97,4 +77,25 @@ export const NavBar = (props) => {
 
 NavBar.propTypes = {
   serverOwner: PropTypes.string,
+};
+
+function MenuGroup(props) {
+  const { menuList, ...rest } = props;
+
+  return (
+    <MenuList {...rest}>
+      {menuList.map((item) => (
+        <MenuItem>
+          <NavLink activeClassName="selected" to={item.route}>
+            {item.icon}
+            {item.content}
+          </NavLink>
+        </MenuItem>
+      ))}
+    </MenuList>
+  );
+}
+
+MenuGroup.propTypes = {
+  menuList: PropTypes.array.isRequired,
 };
