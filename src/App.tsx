@@ -1,5 +1,12 @@
 import { useEffect } from "react";
-import { BrowserRouter, Switch, Route, Link, Redirect, RouteProps } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  RouteProps,
+} from "react-router-dom";
 
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SingupPage";
@@ -8,15 +15,15 @@ import SectionManagementPage from "./pages/SectionManagement/SectionManagementPa
 import StationManagementPage from "./pages/StationManagement/StationManagementPage";
 import SubwayMapPage from "./pages/SubwayMap/SubwayMapPage";
 import Header from "./components/Header/Header";
-import Button from "./components/Button/Button";
-import { Navigation } from "./App.styles";
-import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./constants/route";
+import { PAGE_PATH, ROUTES } from "./constants/route";
 import useAuth from "./hooks/useAuth";
 import useStation from "./hooks/useStation";
 import useLine from "./hooks/useLine";
+import Navigation from "./components/Navigation/Navigation";
+import Logout from "./pages/Logout";
 
 const App = () => {
-  const { isAuthenticated, checkAccessToken, logout, error: authError } = useAuth();
+  const { isAuthenticated, checkAccessToken, error: authError } = useAuth();
   const { getStations, error: stationError } = useStation();
   const { getLines, error: lineError } = useLine();
 
@@ -38,22 +45,16 @@ const App = () => {
     if (lineError) alert(lineError.message);
   }, [lineError]);
 
-  const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
-
-  const navigationLinkList = navigationLinks.map((navigationLink) => (
-    <Link to={navigationLink.link} key={navigationLink.link}>
-      <Button type="button" buttonTheme="white" kind="rect">
-        {navigationLink.title}
-      </Button>
-    </Link>
-  ));
-
   const PublicRoute = ({ children, ...props }: RouteProps) => (
-    <Route {...props}>{isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};</Route>
+    <Route {...props}>
+      {isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};
+    </Route>
   );
 
   const PrivateRoute = ({ children, ...props }: RouteProps) => (
-    <Route {...props}>{isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />};</Route>
+    <Route {...props}>
+      {isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />};
+    </Route>
   );
 
   return (
@@ -61,16 +62,7 @@ const App = () => {
       <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
         <Link to={PAGE_PATH.HOME}>🚇 지하철 노선도</Link>
       </Header>
-      <Navigation>
-        {navigationLinkList}
-        {isAuthenticated && (
-          <Link to={PAGE_PATH.LOGIN}>
-            <Button type="button" onClick={logout} buttonTheme="white" kind="rect">
-              ❌ 로그아웃
-            </Button>
-          </Link>
-        )}
-      </Navigation>
+      <Navigation routes={ROUTES} isAuthenticated={isAuthenticated} />
       <Switch>
         <PublicRoute exact path={PAGE_PATH.LOGIN}>
           <LoginPage />
@@ -78,7 +70,13 @@ const App = () => {
         <PublicRoute exact path={PAGE_PATH.SIGN_UP}>
           <SignupPage />
         </PublicRoute>
-        <PrivateRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
+        <PrivateRoute exact path={PAGE_PATH.LOGOUT}>
+          <Logout />
+        </PrivateRoute>
+        <PrivateRoute
+          exact
+          path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}
+        >
           <StationManagementPage />
         </PrivateRoute>
         <PrivateRoute exact path={PAGE_PATH.LINE_MANAGEMENT}>

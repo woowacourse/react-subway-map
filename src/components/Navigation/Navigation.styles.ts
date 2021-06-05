@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Navigation = styled.nav`
+export const NavigationBlock = styled.nav`
   display: flex;
   justify-content: center;
 

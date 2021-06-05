@@ -1,6 +1,7 @@
 export enum PAGE_PATH {
   HOME = "/",
   LOGIN = "/login",
+  LOGOUT = "/logout",
   SIGN_UP = "/signup",
   STATION_MANAGEMENT = "/station",
   LINE_MANAGEMENT = "/line",
@@ -8,28 +9,35 @@ export enum PAGE_PATH {
   SUBWAY_MANAGEMENT = "/subway",
 }
 
-export const publicNavigationLinks = [
+export const ROUTES = [
   {
+    isPrivate: true,
+    to: PAGE_PATH.STATION_MANAGEMENT,
     title: "🚉 역 관리",
-    link: PAGE_PATH.STATION_MANAGEMENT,
   },
   {
+    isPrivate: true,
+    to: PAGE_PATH.LINE_MANAGEMENT,
     title: "🛤️ 노선 관리",
-    link: PAGE_PATH.LINE_MANAGEMENT,
   },
   {
+    isPrivate: true,
+    to: PAGE_PATH.SECTION_MANAGEMENT,
     title: "🔁 구간 관리",
-    link: PAGE_PATH.SECTION_MANAGEMENT,
   },
   {
+    isPrivate: true,
+    to: PAGE_PATH.SUBWAY_MANAGEMENT,
     title: "🗺️ 전체 보기",
-    link: PAGE_PATH.SUBWAY_MANAGEMENT,
   },
-];
-
-export const privateNavigationLinks = [
   {
+    isPrivate: false,
+    to: PAGE_PATH.LOGIN,
     title: "👤 로그인",
-    link: PAGE_PATH.LOGIN,
+  },
+  {
+    isPrivate: true,
+    to: PAGE_PATH.LOGOUT,
+    title: "👤 로그아웃",
   },
 ];
