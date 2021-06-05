@@ -83,15 +83,16 @@ export const MenuItem = styled.li`
     height: 0.3rem;
 
     background-color: transparent;
+    transform-origin: left;
   }
 
   &:hover > a::after {
     @keyframes lining {
       0% {
-        width: 0%;
+        transform: scaleX(0);
       }
       100% {
-        width: 100%;
+        transform: scaleX(100%);
       }
     }
     background-color: ${COLOR.TEXT.NAVBAR};
