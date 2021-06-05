@@ -3,21 +3,17 @@ import { loginAsync, login, error, pending } from './userReducer';
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SignInRequest } from '../../interfaces/auth';
-
-interface LoginResult {
-  error: string;
-  accessToken: string;
-}
+import { HttpResponse } from './../../interfaces/request';
 
 export function* loginSaga(action: PayloadAction<SignInRequest>) {
   yield put(pending());
-  const result: LoginResult = yield call(authAPI.signIn, action.payload);
+  const response: HttpResponse<string> = yield call(authAPI.signIn, action.payload);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
-  yield put(login({ email: action.payload.email, accessToken: result.accessToken }));
+  yield put(login({ email: action.payload.email, accessToken: response.data }));
 }
 
 export function* userSaga() {

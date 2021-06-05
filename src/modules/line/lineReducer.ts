@@ -11,12 +11,12 @@ export type ErrorPayload = string;
 
 export interface LineState {
   lines: Line[];
-  error: string;
+  error: string | null;
 }
 
 const initialState = {
   lines: [],
-  error: '',
+  error: null,
 } as LineState;
 
 export const lineSlice = createSlice({

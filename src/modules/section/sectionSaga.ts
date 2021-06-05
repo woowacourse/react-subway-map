@@ -1,3 +1,4 @@
+import { HttpResponse } from './../../interfaces/request';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { sectionAPI } from '../../api/section';
 
@@ -15,36 +16,23 @@ import {
 import { PayloadAction } from '@reduxjs/toolkit';
 import { LineSection } from '../../interfaces/section';
 
-interface GetLineSectionResult {
-  error: string;
-  lineSection: LineSection;
-}
-
-interface AddSectionResult {
-  error: string;
-}
-
-interface DeleteSectionResult {
-  error: string;
-}
-
 export function* getSectionSaga(action: PayloadAction<GetLineSectionPayload>) {
   yield put(pending());
-  const result: GetLineSectionResult = yield call(sectionAPI.getSection, action.payload);
+  const response: HttpResponse<LineSection> = yield call(sectionAPI.getSection, action.payload);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
-  yield put(setLineSection(result.lineSection));
+  yield put(setLineSection(response.data));
 }
 
 export function* addSectionSaga(action: PayloadAction<AddSectionPayload>) {
   yield put(pending());
-  const result: AddSectionResult = yield call(sectionAPI.addSection, action.payload);
+  const response: HttpResponse = yield call(sectionAPI.addSection, action.payload);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
   yield put(getLineSectionAsync(Number(action.payload.lineId)));
@@ -52,10 +40,10 @@ export function* addSectionSaga(action: PayloadAction<AddSectionPayload>) {
 
 export function* deleteSectionSaga(action: PayloadAction<DeleteSectionPayload>) {
   yield put(pending());
-  const result: DeleteSectionResult = yield call(sectionAPI.deleteSection, action.payload);
+  const response: HttpResponse = yield call(sectionAPI.deleteSection, action.payload);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
   yield put(getLineSectionAsync(Number(action.payload.lineId)));

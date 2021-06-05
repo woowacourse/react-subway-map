@@ -44,7 +44,7 @@ const SignUpForm = () => {
       Object.values(BASE_URL).map(({ URL }) => authAPI.signUp({ url: URL, email, password, age }))
     );
 
-    const errorMessage = results.find(result => result !== RESPONSE.SUCCESS);
+    const errorMessage = results.find(result => result.data !== RESPONSE.SUCCESS);
     if (errorMessage) {
       alert(errorMessage);
       return;

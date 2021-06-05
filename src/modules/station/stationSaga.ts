@@ -1,3 +1,4 @@
+import { HttpResponse } from './../../interfaces/request';
 import {
   setStations,
   getStationsAsync,
@@ -14,55 +15,39 @@ import { Station } from '../../interfaces';
 import { RootState } from '..';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-interface GetStationResult {
-  error: string;
-  stations: Station[];
-}
-interface AddStationResult {
-  error: string;
-  station: {
-    id: number;
-    name: string;
-  };
-}
-
-interface DeleteStationResult {
-  error: string;
-}
-
 export const selectStations = (state: RootState) => state.station.stations;
 
 export function* getStationsSaga() {
   yield put(pending());
-  const result: GetStationResult = yield call(stationAPI.getStations);
+  const response: HttpResponse<Station[]> = yield call(stationAPI.getStations);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
-  yield put(setStations(result.stations));
+  yield put(setStations(response.data));
 }
 
 export function* addStationSaga(action: PayloadAction<AddStationPayload>) {
   yield put(pending());
-  const result: AddStationResult = yield call(stationAPI.addStation, action.payload);
+  const response: HttpResponse<Station> = yield call(stationAPI.addStation, action.payload);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
 
   const stations: Station[] = yield select(selectStations);
 
-  yield put(setStations([Object.assign(result.station, { lines: [] }), ...stations]));
+  yield put(setStations([Object.assign(response.data, { lines: [] }), ...stations]));
 }
 
 export function* deleteStationSaga(action: PayloadAction<DeleteStationPayload>) {
   yield put(pending());
-  const result: DeleteStationResult = yield call(stationAPI.deleteStation, action.payload);
+  const response: HttpResponse = yield call(stationAPI.deleteStation, action.payload);
 
-  if (result.error) {
-    yield put(error(result.error));
+  if (response.error) {
+    yield put(error(response.error));
     return;
   }
   const stations: Station[] = yield select(selectStations);
