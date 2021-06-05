@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Button, IconTrashCan } from '../../components';
+import { IconTrashCan } from '../../components';
 import { Item, Name } from './style';
 
 export const StationListItem = (props) => {

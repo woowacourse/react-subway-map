@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { useCookie, useLogin } from '../../../hooks';
-import { clearStation } from '../../../redux/stationSlice';
-import { clearLine } from '../../../redux/lineSlice';
-import { clearMap } from '../../../redux/mapSlice';
-import { NavBar, ServerSelect } from '../..';
+import { useCookie, useLogin } from '../../hooks';
+import { clearStation } from '../../redux/stationSlice';
+import { clearLine } from '../../redux/lineSlice';
+import { clearMap } from '../../redux/mapSlice';
+import { NavBar, ServerSelect } from '../../components';
 import { Header, ServerSelectButton, Main } from './style';
-import { SERVER_LIST } from '../../../constants';
+import { SERVER_LIST } from '../../constants';
 
-export const Page = (props) => {
-  const { serverId, setServerId, children, ...rest } = props;
+export const Template = (props) => {
+  const { children, ...rest } = props;
 
   const dispatch = useDispatch();
-
-  const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
   const { isLogin, requestLogout, removeToken, goToAllowedPage } = useLogin();
-  const { setServerId: setServerIdInCookie } = useCookie();
+  const { serverId, setServerId } = useCookie();
+  const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
 
   const handleServerSubmit = (e) => {
     e.preventDefault();
@@ -29,13 +28,12 @@ export const Page = (props) => {
       setIsServerSelectOpen(false);
       return;
     }
-    setServerId(selectedId);
-    setServerIdInCookie(selectedId);
-    setIsServerSelectOpen(false);
-
     if (isLogin) {
       requestLogout();
     }
+    setServerId(selectedId);
+    setIsServerSelectOpen(false);
+
     removeToken();
     goToAllowedPage();
     dispatch(clearLine());
@@ -61,8 +59,6 @@ export const Page = (props) => {
   );
 };
 
-Page.propTypes = {
-  serverId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  setServerId: PropTypes.func.isRequired,
+Template.propTypes = {
   children: PropTypes.node.isRequired,
 };

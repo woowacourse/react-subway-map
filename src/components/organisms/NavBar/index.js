@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import { useLogin } from '../../../hooks';
-import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
+import { IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
 import { Nav, TitleButton, Title, SubTitle, MainTitle, Menu, MenuList, MenuItem } from './style';
 import { ROUTE } from '../../../constants';
 

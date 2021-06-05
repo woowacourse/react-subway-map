@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Button, IconPath, IconTrashCan } from '../../components';
+import { IconPath, IconTrashCan } from '../../components';
 import { Item, Content, Detail, Flex, Name, ColorBox, Distance } from './style';
 
 export const SectionListItem = (props) => {

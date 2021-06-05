@@ -1,40 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { useCookie, useRouter } from './hooks';
 import { loginByToken } from './redux/userSlice';
-import { Page } from './components';
-import { LoginPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
+import { Template, LoginPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
 import { ROUTE, SERVER_LIST } from './constants';
 
 function App() {
   const dispatch = useDispatch();
   const { goToLogin } = useRouter();
-  const { accessToken, serverId: serverIdInCookie, setServerId: setServerIdInCookie } = useCookie();
-  const [serverId, setServerId] = useState(serverIdInCookie || '');
+  const { accessToken, serverId } = useCookie();
   const endpoint = SERVER_LIST[serverId]?.endpoint || '';
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (!serverIdInCookie) {
-      return;
-    }
+    if (!serverId) return;
     if (!accessToken) {
       goToLogin();
       return;
     }
     dispatch(loginByToken({ endpoint, accessToken }));
-
-    return () => {
-      if (serverId) {
-        setServerIdInCookie(serverId);
-      }
-    };
   }, []);
 
   return (
-    <Page serverId={serverId} setServerId={setServerId}>
+    <Template>
       <Switch>
         <Route exact path={ROUTE.LOGIN}>
           <LoginPage />
@@ -52,7 +42,7 @@ function App() {
           <SectionPage />
         </Route>
       </Switch>
-    </Page>
+    </Template>
   );
 }
 

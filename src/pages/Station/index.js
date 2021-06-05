@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { useStation } from '../../hooks';
-import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
+import { ButtonSquare, IconSubway, Input, Section } from '../../components';
+import { StationListItem } from './StationListItem';
 import { Form, List } from './style';
 import { STATION } from '../../constants';
 

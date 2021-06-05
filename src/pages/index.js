@@ -4,3 +4,5 @@ export { SignUpPage } from './SignUp';
 export { StationPage } from './Station';
 export { LinePage } from './Line';
 export { SectionPage } from './Section';
+
+export { Template } from './Template';
