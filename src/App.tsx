@@ -15,7 +15,7 @@ import PATH from './constants/path';
 import PALETTE from './constants/palette';
 
 import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
-import LogoutButton from './components/shared/Button/LogoutButton';
+import LogoutButton from './components/NavBar/LogoutButton';
 
 const App = () => {
   const userContext = useContext(UserContext);

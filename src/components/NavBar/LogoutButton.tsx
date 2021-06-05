@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router';
 
-import { SUCCESS_MESSAGE } from '../../../constants/messages';
-import PATH from '../../../constants/path';
+import { SUCCESS_MESSAGE } from '../../constants/messages';
+import PATH from '../../constants/path';
 
-import { SnackBarContext } from '../../../contexts/SnackBarProvider';
-import { UserContext } from '../../../contexts/UserContextProvider';
+import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { UserContext } from '../../contexts/UserContextProvider';
 
 const LogoutButton = () => {
   const history = useHistory();
