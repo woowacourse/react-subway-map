@@ -4,9 +4,9 @@ import { useHistory } from 'react-router';
 import { useCookies } from 'react-cookie';
 
 import { logout } from '../../redux/userSlice';
-import { clearLine } from '../../redux/lineSlice';
-import { clearMap } from '../../redux/mapSlice';
 import { clearStation, clearStationProgress } from '../../redux/stationSlice';
+import { clearLine, clearLineProgress } from '../../redux/lineSlice';
+import { clearMap } from '../../redux/mapSlice';
 
 import { ACCESS_TOKEN, ROUTE } from '../../constants';
 
@@ -19,6 +19,7 @@ export const LogoutPage = () => {
     dispatch(clearStation());
     dispatch(clearStationProgress());
     dispatch(clearLine());
+    dispatch(clearLineProgress());
     dispatch(clearMap());
   };
 

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToken }, thunkAPI) => {
+const getLines = createAsyncThunk('line/getLines', async ({ baseUrl, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/lines`, {
+    const response = await fetch(`${baseUrl}/lines`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -26,9 +26,9 @@ const getLines = createAsyncThunk('line/getLines', async ({ endpoint, accessToke
 
 const addLine = createAsyncThunk(
   'line/addLine',
-  async ({ endpoint, accessToken, name, upStationId, downStationId, distance, color }, thunkAPI) => {
+  async ({ baseUrl, accessToken, name, upStationId, downStationId, distance, color }, thunkAPI) => {
     try {
-      const response = await fetch(`${endpoint}/lines`, {
+      const response = await fetch(`${baseUrl}/lines`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -65,9 +65,9 @@ const addLine = createAsyncThunk(
   },
 );
 
-const removeLine = createAsyncThunk('line/removeLine', async ({ endpoint, accessToken, id }, thunkAPI) => {
+const removeLine = createAsyncThunk('line/removeLine', async ({ baseUrl, accessToken, id }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/lines/${id}`, {
+    const response = await fetch(`${baseUrl}/lines/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${accessToken}` },
     });
@@ -104,11 +104,6 @@ const lineSlice = createSlice({
     },
     clearLine: (state) => {
       state.lines = [];
-      state.isLoading = false;
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
     },
   },
   extraReducers: {
@@ -123,6 +118,7 @@ const lineSlice = createSlice({
     [getLines.rejected]: (state) => {
       state.isLoading = false;
     },
+
     [addLine.fulfilled]: (state, action) => {
       const line = action.payload;
 
@@ -136,6 +132,7 @@ const lineSlice = createSlice({
       state.isAddFail = true;
       state.isLoading = false;
     },
+
     [removeLine.fulfilled]: (state, action) => {
       const { id } = action.payload;
 

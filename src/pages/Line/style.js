@@ -101,7 +101,7 @@ export const CancelButton = styled(ButtonSquare)`
   }
 `;
 
-export const InvalidMessage = styled.div`
+export const Message = styled.div`
   padding: 1rem 0;
   height: 1.5rem;
 

@@ -4,8 +4,9 @@ import { COLOR } from '../../../constants';
 export const Selector = styled.select`
   position: relative;
   height: auto;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem;
   margin: 0.25rem 0;
+  width: 8.5rem;
   min-width: 5rem;
 
   line-height: inherit;

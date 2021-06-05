@@ -8,7 +8,7 @@ export const Select = (props) => {
 
   return (
     <label htmlFor={id} {...rest}>
-      <Selector id={id} name={name} required {...selectProps}>
+      <Selector id={id} name={name} required>
         <Option value="" defaultValue hidden>
           {optionHead}
         </Option>

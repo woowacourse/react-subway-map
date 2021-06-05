@@ -25,7 +25,7 @@ export const LabelText = styled.span`
 `;
 
 export const InputField = styled.input`
-  padding: 0 1.5rem;
+  padding: 0 0.5rem;
   padding-left: ${(props) => (props.icon ? '3.5rem' : '1.25rem')};
   width: 20rem;
   height: 2.5rem;
@@ -48,5 +48,5 @@ export const InputField = styled.input`
 export const Icon = styled.span`
   position: absolute;
   top: 0.5rem;
-  left: 1.25rem;
+  left: 1rem;
 `;
