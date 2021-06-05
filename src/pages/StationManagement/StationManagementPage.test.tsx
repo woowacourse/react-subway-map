@@ -3,9 +3,10 @@ import axios from "axios";
 
 import { useAppDispatch } from "../../hooks";
 
+import StationManagementPage from "./StationManagementPage";
+
 import initialState from "../../fixtures/redux";
 import mockStore from "../../utils/mockStore";
-import StationManagementPage from "./StationManagementPage";
 
 const mockedUseAppDispatch = useAppDispatch as jest.MockedFunction<
   typeof useAppDispatch
@@ -35,7 +36,7 @@ describe("지하철 역페이지 테스트", () => {
   });
 
   describe("지하철 역 추가 기능", () => {
-    describe("역 이름이 2자 이상 20자 이하의 한글 또는 숫자를 포함하는 경우", () => {
+    describe.only("역 이름이 2자 이상 20자 이하의 한글 또는 숫자를 포함하는 경우", () => {
       it("사용자는 지하철 역을 추가할 수 있다", async () => {
         const { getByRole } = render(<StationManagementPage />);
 
@@ -58,7 +59,7 @@ describe("지하철 역페이지 테스트", () => {
         const { getByRole } = render(<StationManagementPage />);
 
         fireEvent.change(getByRole("textbox"), {
-          target: { value: "테" },
+          target: { value: "역".repeat(1) },
         });
 
         fireEvent.click(getByRole("button", { name: /확인/i }));
@@ -76,7 +77,7 @@ describe("지하철 역페이지 테스트", () => {
 
         fireEvent.change(getByRole("textbox"), {
           target: {
-            value: "테스트테스트테스트테스트테스트테스트테스트테스트테스트",
+            value: "역".repeat(21),
           },
         });
 
