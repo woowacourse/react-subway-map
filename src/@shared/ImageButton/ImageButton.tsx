@@ -21,7 +21,7 @@ const ImageButton = ({ onClick, imgUrl, size, imgSize, bgColor, hoverBgColor, cl
       hoverBgColor={hoverBgColor}
       className={`flex justify-center items-center shadow-md rounded-full ${className}`}
     >
-      <img className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} alt="" />
+      <img className={`opacity-70 rounded-full ${imgSize}`} src={imgUrl} />
     </Button>
   );
 };
