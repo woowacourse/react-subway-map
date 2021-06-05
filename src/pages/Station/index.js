@@ -32,7 +32,7 @@ export const StationPage = () => {
     if (isLogin) {
       requestGetStations();
     }
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     if (status.message) {
