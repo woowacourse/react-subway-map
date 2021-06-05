@@ -4,7 +4,10 @@ import { useSnackbar } from 'notistack';
 import { useCookies } from 'react-cookie';
 
 import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
-import { ButtonSquare, IconSubway, Input, Section, StationListItem } from '../../components';
+
+import { ButtonSquare, IconSubway, Input, Section } from '../../components';
+import { StationListItem } from './StationListItem';
+
 import { Form, List, InputWrapper, Message } from './style';
 import { STATION, ACCESS_TOKEN, SERVER_ID, SERVER_LIST, SHOWING_MESSAGE_TIME, MESSAGE_TYPE } from '../../constants';
 
@@ -31,6 +34,7 @@ export const StationPage = () => {
       enqueueSnackbar(STATION.ADD_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
       ref.current.focus();
       ref.current.value = '';
+      inputStatus.isValid = false;
     }
 
     if (isAddFail) {
