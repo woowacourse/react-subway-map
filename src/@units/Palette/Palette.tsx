@@ -24,7 +24,7 @@ const Palette = ({ setColor }: PaletteProps) => {
       {colors.map((color) => (
         <Button
           key={color.bgColor}
-          setColor={setColor}
+          onClick={() => setColor(color.bgColor)}
           type="button"
           bgColor={color.bgColor}
           hoverBgColor={color.hoverBgColor}

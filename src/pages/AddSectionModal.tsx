@@ -82,7 +82,9 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
             className="mb-8 w-full"
           />
           <div className="flex justify-end">
-            <Button text="확인" />
+            <Button>
+              <span>확인</span>
+            </Button>
           </div>
         </form>
       </Container>

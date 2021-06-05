@@ -89,7 +89,9 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
           </div>
           <Palette setColor={setColor} />
           <div className="flex justify-end mt-8">
-            <Button text="확인" />
+            <Button>
+              <span>확인</span>
+            </Button>
           </div>
         </form>
       </Container>

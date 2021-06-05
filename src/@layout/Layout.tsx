@@ -21,14 +21,36 @@ const Layout = ({ children, isLogin }: BaseLayoutProps) => {
   return (
     <div>
       <Header>
-        <Link to={PATH.STATION}>{isLogin && <Button className="mx-1" text="역 관리" />}</Link>
-        <Link to={PATH.LINE}>{isLogin && <Button className="mx-1" text="노선 관리" />}</Link>
-        <Link to={PATH.SECTION}>{isLogin && <Button className="mx-1" text="구간 관리" />}</Link>
+        <Link to={PATH.STATION}>
+          {isLogin && (
+            <Button className="mx-1">
+              <span>역 관리</span>
+            </Button>
+          )}
+        </Link>
+        <Link to={PATH.LINE}>
+          {isLogin && (
+            <Button className="mx-1">
+              <span>노선 관리</span>
+            </Button>
+          )}
+        </Link>
+        <Link to={PATH.SECTION}>
+          {isLogin && (
+            <Button className="mx-1">
+              <span>구간 관리</span>
+            </Button>
+          )}
+        </Link>
         <Link to={PATH.LOGIN}>
           {isLogin ? (
-            <Button onClick={handleLogout} className="mx-1" text="로그아웃" />
+            <Button onClick={handleLogout} className="mx-1">
+              <span>로그아웃</span>
+            </Button>
           ) : (
-            <Button className="mx-1" text="로그인" />
+            <Button onClick={handleLogout} className="mx-1">
+              <span>로그인</span>
+            </Button>
           )}
         </Link>
       </Header>

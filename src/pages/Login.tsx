@@ -75,7 +75,9 @@ const Login = () => {
           placeholder="비밀번호를 입력해주세요"
         />
         <ProfileSelector />
-        <Button className="mb-4 p-2 shadow-md" text="로그인" size="w-full" />
+        <Button className="mb-4 p-2 shadow-md" size="w-full">
+          <span>로그인</span>
+        </Button>
       </form>
       <Link to={PATH.SIGN_UP}>
         <div className="text-l text-center text-black text-opacity-50">아직 회원이 아니신가요?</div>

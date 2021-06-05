@@ -70,7 +70,9 @@ const Station = () => {
           imgUrl={subwayImg}
           placeholder="역 이름을 입력해주세요"
         />
-        <Button className="shadow-md" text="추가" />
+        <Button className="shadow-md">
+          <span>추가</span>
+        </Button>
       </form>
       <hr />
       {stations?.map((station) => (

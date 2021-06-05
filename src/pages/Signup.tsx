@@ -102,7 +102,9 @@ const Signup = () => {
           placeholder="비밀번호를 한번 더 입력해주세요"
         />
         <ProfileSelector />
-        <Button type="submit" className="mb-4 p-2" text="회원가입" size="w-full" />
+        <Button type="submit" className="mb-4 p-2" size="w-full">
+          <span>회원가입</span>
+        </Button>
       </form>
     </Container>
   );

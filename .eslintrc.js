@@ -16,6 +16,7 @@ module.exports = {
     ],
     'react/jsx-props-no-spreading': 0,
     'react/no-unescaped-entities': 0,
+    'react/button-has-type': 0,
     'import/no-unresolved': 0,
     'no-param-reassign': 0,
     'no-alert': 0,

@@ -1,46 +1,29 @@
 import React from 'react';
 
-interface ButtonProps {
-  type?: 'submit' | 'button' | 'reset';
-  text?: string;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode | null;
   size?: string;
   bgColor?: string;
   hoverBgColor?: string;
   className?: string;
-  disabled?: boolean;
-  onClick?: () => void | null;
-  setColor?: (color: string) => void | null;
+  type?: 'submit' | 'button';
 }
 
-const Button = ({ setColor, type, disabled, text, size, className, bgColor, hoverBgColor, onClick }: ButtonProps) => {
-  const handleColor = () => {
-    return setColor?.(bgColor ?? '');
-  };
-
+const Button = ({ children, type, size, bgColor, hoverBgColor, className, ...props }: ButtonProps) => {
   return (
-    <button
-      // eslint-disable-next-line react/button-has-type
-      type={type}
-      disabled={disabled}
-      onClick={() => handleColor() ?? onClick}
-      color={bgColor}
-      className={`rounded focus:outline-none ${bgColor} hover:${hoverBgColor} ${className} ${size}`}
-    >
-      {text}
+    <button className={`rounded focus:outline-none ${bgColor} hover:${hoverBgColor} ${className} ${size}`} {...props}>
+      {children}
     </button>
   );
 };
 
 Button.defaultProps = {
+  children: null,
   type: 'submit',
-  disabled: false,
-  text: '',
   size: 'w-24 h-12',
   bgColor: 'bg-red-300',
   hoverBgColor: 'bg-red-400',
   className: '',
-  onClick: null,
-  setColor: null,
 };
 
 export default Button;
