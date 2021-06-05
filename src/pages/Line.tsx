@@ -1,5 +1,5 @@
+import Button from '@shared/Button/Button';
 import Container from '@shared/Container/Container';
-import ImageButton from '@shared/ImageButton/ImageButton';
 import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
@@ -65,7 +65,14 @@ const Line = () => {
       <Container className="">
         <div className="flex items-center justify-between mb-4 px-2">
           <Title text="🛤️ 지하철 노선 관리" />
-          <ImageButton onClick={handleModalOpen} imgUrl={addImg} />
+          <Button
+            onClick={handleModalOpen}
+            type="button"
+            size="w-10 h-10"
+            className="flex justify-center items-center shadow-md rounded-full"
+          >
+            <img className="opacity-70 w-5" src={addImg} />
+          </Button>
         </div>
         {lines?.map((line) => (
           <ListItem onDelete={handleDelete} key={line.id} id={line.id} title={line.name} itemColor={line.color} />

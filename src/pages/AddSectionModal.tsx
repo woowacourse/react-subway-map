@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import arrowImg from 'assets/images/arrow.png';
 import closeImg from 'assets/images/close.png';
 import Button from '@shared/Button/Button';
-import ImageButton from '@shared/ImageButton/ImageButton';
 import { LineInterface, StationInterface } from 'types';
 import { AddSectionPayload } from 'redux/sectionSlice';
 import ItemSelector from '@units/ItemSelector/ItemSelector';
@@ -56,14 +55,15 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
     <div className="fixed left-0 top-0 flex items-center justify-center w-full h-full bg-black bg-opacity-20">
       <Container className="w-1/2 bg-white">
         <div className="flex justify-end -mb-4">
-          <ImageButton
+          <Button
             onClick={onModalClose}
-            imgUrl={closeImg}
-            bgColor="bg-gray-100"
             size="w-8 h-8"
-            imgSize="w-4"
+            bgColor="bg-gray-100"
             hoverBgColor="bg-gray-200"
-          />
+            className="flex justify-center items-center shadow-md rounded-full"
+          >
+            <img className="opacity-70 w-4" src={closeImg} />
+          </Button>
         </div>
         <Title text="🔁  구간 추가" className="mb-8 text-center" />
         <form onSubmit={handleSubmit}>

@@ -6,7 +6,6 @@ import arrowImg from 'assets/images/arrow.png';
 import closeImg from 'assets/images/close.png';
 import Palette from '@units/Palette/Palette';
 import Button from '@shared/Button/Button';
-import ImageButton from '@shared/ImageButton/ImageButton';
 import { StationInterface } from 'types';
 import { AddLinePayload } from 'redux/lineSlice';
 import { ringColor } from 'constants/color';
@@ -54,14 +53,16 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
       <Container className="w-1/2 bg-white">
         <form onSubmit={handleSubmit}>
           <div className="flex justify-end -mb-4">
-            <ImageButton
+            <Button
               onClick={onModalClose}
-              imgUrl={closeImg}
-              bgColor="bg-gray-100"
+              type="button"
               size="w-8 h-8"
-              imgSize="w-4"
+              bgColor="bg-gray-100"
               hoverBgColor="bg-gray-200"
-            />
+              className="flex justify-center items-center shadow-md rounded-full"
+            >
+              <img className="opacity-70 w-4" src={closeImg} />
+            </Button>
           </div>
           <Title text="🛤️ 노선 생성" className="mb-8 text-center" />
           <Input
