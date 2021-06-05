@@ -59,7 +59,6 @@ const StationManagementPage = () => {
               }}
             >
               <Input
-                data-testid="station-name-input"
                 value={stationName}
                 errorMessage={stationNameErrorMessage}
                 placeholder="역 이름"
@@ -67,7 +66,7 @@ const StationManagementPage = () => {
                 required
               ></Input>
             </Flex>
-            <Button data-testid="station-add-button">확인</Button>
+            <Button>확인</Button>
           </Flex>
         </form>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
