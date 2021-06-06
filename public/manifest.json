@@ -1,0 +1,8 @@
+{
+  "short_name": "곤이인치의 지하철 맵",
+  "name": "곤이인치의 지하철 맵",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
