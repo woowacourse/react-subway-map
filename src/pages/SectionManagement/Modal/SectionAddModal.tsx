@@ -14,6 +14,7 @@ import useInput from "../../../hooks/@common/useInput";
 import useSelect from "../../../hooks/@common/useSelect";
 import { getSectionDistanceValidator } from "../../../validations/section";
 import { isLineHasStation } from "../../../utils/line";
+import { MAX_SECTION_DISTANCE } from "../../../constants/config";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
@@ -48,7 +49,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
       }
     }
 
-    return 1000;
+    return MAX_SECTION_DISTANCE;
   };
 
   const { inputValue: distance, errorMessage: distanceErrorMessage, setValueOnChange: setDistanceOnChange } = useInput(
