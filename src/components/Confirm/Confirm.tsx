@@ -19,7 +19,7 @@ const Confirm = ({ title, onConfirm, onReject }: Props) => (
         <button type="button" onClick={onReject}>
           <p>취소</p>
         </button>
-        <button type="button" onClick={onConfirm}>
+        <button type="button" onClick={onConfirm} data-testid="confirm-button">
           <p>확인</p>
         </button>
       </ButtonControls>

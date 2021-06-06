@@ -110,10 +110,12 @@ describe("지하철 역페이지 테스트", () => {
   describe("지하철 역 삭제 기능", () => {
     describe("삭제하려는 역이 노선에 등록되어 있는 역이 아닌 경우", () => {
       it("사용자는 지하철 역을 삭제할 수 있다", async () => {
-        const { getAllByText } = render(<StationManagementPage />);
+        const { getAllByText, getByTestId } = render(<StationManagementPage />);
 
         const [firstDeleteButton] = getAllByText("삭제");
         fireEvent.click(firstDeleteButton);
+
+        fireEvent.click(getByTestId("confirm-button"));
 
         await waitFor(() => {
           const [action1, action2] = store.getActions();
@@ -133,10 +135,12 @@ describe("지하철 역페이지 테스트", () => {
           throw Error("에러!");
         });
 
-        const { getAllByText } = render(<StationManagementPage />);
+        const { getAllByText, getByTestId } = render(<StationManagementPage />);
 
         const [firstDeleteButton] = getAllByText("삭제");
         fireEvent.click(firstDeleteButton);
+
+        fireEvent.click(getByTestId("confirm-button"));
 
         await waitFor(() => {
           const [action1, action2] = store.getActions();

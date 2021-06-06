@@ -1,4 +1,9 @@
-import React, { MouseEventHandler, useState, useEffect, ReactNode } from "react";
+import React, {
+  MouseEventHandler,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { createPortal } from "react-dom";
 
 import { ModalBlock, Dimmed, Contents } from "./Modal.styles";
@@ -10,7 +15,13 @@ export interface Props {
 
 const ModalPortal = (child: React.ReactNode) => {
   const $modal = document.getElementById("modal");
-  if (!$modal) throw Error("cannot find modal");
+  if (!$modal) {
+    const $modal = document.createElement("div");
+    $modal.setAttribute("id", "modal");
+    document.body.appendChild($modal);
+
+    return createPortal(child, $modal);
+  }
 
   return createPortal(child, $modal);
 };
