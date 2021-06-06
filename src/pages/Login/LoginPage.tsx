@@ -31,8 +31,12 @@ const LoginPage = () => {
       return;
     }
 
-    await login({ email, password });
-    history.push(PAGE_PATH.HOME);
+    try {
+      await login({ email, password });
+      history.push(PAGE_PATH.HOME);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const onMoveToSignupPage = () => {

@@ -87,12 +87,16 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
       return;
     }
 
-    await addSection({
-      lineId: line.id,
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      distance: Number(distance),
-    });
+    try {
+      await addSection({
+        lineId: line.id,
+        upStationId: Number(upStationId),
+        downStationId: Number(downStationId),
+        distance: Number(distance),
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (

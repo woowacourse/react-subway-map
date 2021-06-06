@@ -36,17 +36,15 @@ const login = createAsyncThunk("[AUTH] LOGIN", async ({ email, password }: Login
   }
 });
 
-const signup = createAsyncThunk(
-  "[AUTH] SIGNUP",
-  async ({ email, password, age }: SignupInfo, { rejectWithValue, dispatch }) => {
-    try {
-      await requestAuth.signup(email, password, age);
-      dispatch(login({ email, password }));
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
+const signup = createAsyncThunk("[AUTH] SIGNUP", async ({ email, password, age }: SignupInfo, { rejectWithValue }) => {
+  try {
+    const response = await requestAuth.signup(email, password, age);
+
+    return response;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 export const action = {
   checkAccessToken,

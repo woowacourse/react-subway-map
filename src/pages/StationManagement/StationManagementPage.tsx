@@ -25,13 +25,20 @@ const StationManagementPage = () => {
       return;
     }
 
-    await addStation(stationName);
-
-    setStationName("");
+    try {
+      await addStation(stationName);
+      setStationName("");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const onDeleteStation = async (id: Station["id"]) => {
-    await deleteStation(id);
+    try {
+      await deleteStation(id);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (

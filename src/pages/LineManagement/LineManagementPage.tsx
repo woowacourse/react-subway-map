@@ -8,11 +8,20 @@ import { CIRCLE_COLOR } from "../../constants/color";
 import LineAddModal from "./Modal/LineAddModal";
 import useLine from "../../hooks/useLine";
 import useStation from "../../hooks/useStation";
+import { Line } from "../../@types/types";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
   const { lines, addLine, deleteLine } = useLine();
   const { stations } = useStation();
+
+  const onDeleteLine = async (id: Line["id"]) => {
+    try {
+      await deleteLine(id);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <FlexCenter>
@@ -36,9 +45,7 @@ const LineManagementPage = () => {
               circleColor={CIRCLE_COLOR[color]}
               style={{ padding: "9px" }}
               onUpdate={() => {}}
-              onDelete={async () => {
-                await deleteLine(id);
-              }}
+              onDelete={() => onDeleteLine(id)}
             >
               {name}
             </ListItem>
@@ -51,7 +58,7 @@ const LineManagementPage = () => {
           onClose={() => {
             setIsAddModalOpened(false);
           }}
-          onAddLine={addLine}
+          addLine={addLine}
         />
       )}
     </FlexCenter>

@@ -17,10 +17,10 @@ import { CIRCLE_COLOR } from "../../../constants/color";
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
   stations: Station[];
-  onAddLine: (lineRequestItem: LineAddRequestItem) => void;
+  addLine: (lineRequestItem: LineAddRequestItem) => void;
 }
 
-const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
+const LineAddModal = ({ onClose, stations, addLine }: Props) => {
   const [firstStation, secondStation] = stations;
 
   const { inputValue: lineName, errorMessage: lineNameErrorMessage, setValueOnChange: setLineNameOnChange } = useInput(
@@ -35,7 +35,7 @@ const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
   const DEFAULT_COLOR = "bg-cyan-500";
   const [color, setColor] = useState<keyof typeof CIRCLE_COLOR>(DEFAULT_COLOR);
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     if (lineNameErrorMessage || disatanceErrorMessage) {
@@ -43,13 +43,17 @@ const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
       return;
     }
 
-    onAddLine({
-      color,
-      distance: Number(distance),
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      name: lineName,
-    });
+    try {
+      await addLine({
+        color,
+        distance: Number(distance),
+        upStationId: Number(upStationId),
+        downStationId: Number(downStationId),
+        name: lineName,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const stationOptions = stations.map(({ id, name }) => ({ value: id, text: name }));

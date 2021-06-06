@@ -34,7 +34,11 @@ const SectionManagementPage = () => {
   };
 
   const onDeleteSection = async (station: Station) => {
-    await deleteSection({ lineId: Number(lineId), stationId: station.id });
+    try {
+      await deleteSection({ lineId: Number(lineId), stationId: station.id });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const sectionList = targetLine?.stations.map((station, index) => {

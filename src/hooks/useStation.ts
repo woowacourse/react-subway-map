@@ -1,3 +1,4 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from ".";
 import { action } from "../modules/station";
 
@@ -9,17 +10,22 @@ const useStation = () => {
   const dispatch = useAppDispatch();
 
   const getStations = async () => {
-    await dispatch(action.getStations());
+    const getStationResult = await dispatch(action.getStations());
+    await unwrapResult(getStationResult);
   };
 
   const addStation = async (stationName: string) => {
-    await dispatch(action.addStation(stationName));
-    await dispatch(action.getStations());
+    const addStationResult = await dispatch(action.addStation(stationName));
+    await unwrapResult(addStationResult);
+
+    getStations();
   };
 
   const deleteStation = async (id: number) => {
-    await dispatch(action.deleteStation(id));
-    await dispatch(action.getStations());
+    const deleteStationResult = await dispatch(action.deleteStation(id));
+    await unwrapResult(deleteStationResult);
+
+    getStations();
   };
 
   return { stations, getStations, addStation: addStation, deleteStation, error };

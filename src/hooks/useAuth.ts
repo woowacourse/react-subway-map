@@ -1,3 +1,4 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from ".";
 import { LoginInfo, SignupInfo } from "../@types/types";
 import { action } from "../modules/auth";
@@ -15,11 +16,13 @@ const useAuth = () => {
   };
 
   const login = async (loginInfo: LoginInfo) => {
-    await dispatch(action.login(loginInfo));
+    const loginResult = await dispatch(action.login(loginInfo));
+    await unwrapResult(loginResult);
   };
 
   const signup = async (signupInfo: SignupInfo) => {
-    await dispatch(action.signup(signupInfo));
+    const signupResult = await dispatch(action.signup(signupInfo));
+    await unwrapResult(signupResult);
   };
 
   const logout = () => {
