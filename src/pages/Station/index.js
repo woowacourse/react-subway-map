@@ -1,24 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { useSnackbar } from 'notistack';
 import { useCookies } from 'react-cookie';
 
 import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
 
+import { useAuthorization } from '../../hooks';
+
 import { ButtonSquare, IconSubway, Input, Section } from '../../components';
 import { StationListItem } from './StationListItem';
 
 import { Form, List, InputWrapper, Message } from './style';
-import { STATION, ACCESS_TOKEN, SERVER_ID, SERVER_LIST, SHOWING_MESSAGE_TIME, MESSAGE_TYPE } from '../../constants';
+import {
+  STATION,
+  ACCESS_TOKEN,
+  SERVER_ID,
+  SERVER_LIST,
+  SHOWING_MESSAGE_TIME,
+  MESSAGE_TYPE,
+  ROUTE,
+} from '../../constants';
 
 export const StationPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const ref = useRef();
 
   const [cookies] = useCookies([ACCESS_TOKEN]);
   const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
   const accessToken = cookies[ACCESS_TOKEN];
 
+  const { checkIsLogin } = useAuthorization();
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
 
   const { stations, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.station);
@@ -26,7 +40,11 @@ export const StationPage = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getStations({ baseUrl, accessToken }));
+    if (checkIsLogin) {
+      dispatch(getStations({ baseUrl, accessToken }));
+    } else {
+      history.push(ROUTE.LOGIN);
+    }
   }, []);
 
   useEffect(() => {
@@ -36,15 +54,12 @@ export const StationPage = () => {
       ref.current.value = '';
       inputStatus.isValid = false;
     }
-
     if (isAddFail) {
       enqueueSnackbar(STATION.ADD_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
     }
-
     if (isDeleteSuccess) {
       enqueueSnackbar(STATION.DELETE_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
     }
-
     if (isDeleteFail) {
       enqueueSnackbar(STATION.DELETE_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
     }

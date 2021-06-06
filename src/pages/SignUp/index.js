@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
-import { PropTypes } from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { Form, Anchor } from './style';
-import { COLOR, ROUTE, SIGN_UP } from '../../constants';
+import { COLOR, ROUTE, SERVER_ID, SIGN_UP } from '../../constants';
+import { useCookies } from 'react-cookie';
+import { useAuthorization } from '../../hooks';
 
-export const SignUpPage = (props) => {
-  const { endpoint } = props;
+export const SignUpPage = () => {
+  const history = useHistory();
 
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
+  const { checkIsLogin } = useAuthorization();
+  const [cookies] = useCookies([SERVER_ID]);
+  const endpoint = cookies[SERVER_ID];
 
   const [emailMessage, setEmailMessage] = useState('');
   const [ageMessage, setAgeMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+
+  useEffect(() => {
+    if (checkIsLogin) {
+      history.push(ROUTE.STATION);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSignUpFormSubmit = (e) => {
     e.preventDefault();
@@ -111,10 +122,6 @@ export const SignUpPage = (props) => {
       </Form>
     </Section>
   );
-};
-
-SignUpPage.propTypes = {
-  endpoint: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 };
 
 function getEmailValidationMessage(email) {

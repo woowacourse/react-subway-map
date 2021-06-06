@@ -1,22 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'notistack';
 
 import { getStations } from '../../redux/stationSlice';
 import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
 
+import { useAuthorization } from '../../hooks';
+
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, Message } from './style';
-import { COLOR, ACCESS_TOKEN, LINE, SERVER_ID, SERVER_LIST, MESSAGE_TYPE, SHOWING_MESSAGE_TIME } from '../../constants';
+import {
+  COLOR,
+  ACCESS_TOKEN,
+  LINE,
+  SERVER_ID,
+  SERVER_LIST,
+  MESSAGE_TYPE,
+  SHOWING_MESSAGE_TIME,
+  ROUTE,
+} from '../../constants';
 
 export const LinePage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const { stations } = useSelector((store) => store.station);
   const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
 
+  const { checkIsLogin } = useAuthorization();
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
   const [cookies] = useCookies();
   const accessToken = cookies[ACCESS_TOKEN];
@@ -26,8 +42,12 @@ export const LinePage = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getLines({ baseUrl, accessToken }));
-    dispatch(getStations({ baseUrl, accessToken }));
+    if (checkIsLogin()) {
+      dispatch(getLines({ baseUrl, accessToken }));
+      dispatch(getStations({ baseUrl, accessToken }));
+    } else {
+      history.push(ROUTE.LOGIN);
+    }
   }, []);
 
   useEffect(() => {

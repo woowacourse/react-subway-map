@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'notistack';
 
 import { getMap, addSection, removeSection, clearMapProgress } from '../../redux/mapSlice';
 import { getStations } from '../../redux/stationSlice';
+
+import { useAuthorization } from '../../hooks';
 
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
 import { SectionListItem } from './SectionListItem';
@@ -17,6 +21,7 @@ import {
   SERVER_LIST,
   MESSAGE_TYPE,
   SHOWING_MESSAGE_TIME,
+  ROUTE,
 } from '../../constants';
 
 // serverAPI 연결이 안될 때
@@ -24,6 +29,7 @@ import { mockMap } from './mockMap';
 
 export const SectionPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { stations } = useSelector((store) => store.station);
   const { isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
@@ -32,6 +38,7 @@ export const SectionPage = () => {
   const accessToken = cookies[ACCESS_TOKEN];
   const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
 
+  const { checkIsLogin } = useAuthorization();
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
   const [selectedLine, setSelectedLine] = useState({
     id: null,
@@ -46,8 +53,12 @@ export const SectionPage = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    dispatch(getMap({ baseUrl, accessToken }));
-    dispatch(getStations({ baseUrl, accessToken }));
+    if (checkIsLogin()) {
+      dispatch(getMap({ baseUrl, accessToken }));
+      dispatch(getStations({ baseUrl, accessToken }));
+    } else {
+      history.push(ROUTE.LOGIN);
+    }
   }, []);
 
   useEffect(() => {
