@@ -1,7 +1,8 @@
 import styled, { keyframes } from "styled-components";
-import { FlexAlignCenter } from "../@shared/FlexContainer/FlexContainer";
 
-export const loadingAnimation = keyframes`
+import { FlexCenter } from "../@shared/FlexContainer/FlexContainer";
+
+const loadingAnimation = keyframes`
   from {
     transform:scale(1,1)
   }
@@ -12,13 +13,12 @@ export const loadingAnimation = keyframes`
     transform:scale(1,1)
   }
 `;
+
 export interface LoadingBlockProps {
   bgColor: string;
 }
 
-export const LoadingBlock = styled(FlexAlignCenter)<LoadingBlockProps>`
-  width: 100%;
-
+export const LoadingBlock = styled(FlexCenter)<LoadingBlockProps>`
   div {
     width: 10px;
     height: 40px;

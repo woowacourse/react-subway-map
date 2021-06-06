@@ -23,7 +23,7 @@ const Routes = ({ isAuthenticated }: Props) => {
 
   const PrivateRoute = ({ children, ...props }: RouteProps) => (
     <Route {...props}>
-      {isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />};
+      {isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />}
     </Route>
   );
 

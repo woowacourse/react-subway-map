@@ -1,5 +1,3 @@
-import React from "react";
-
 import { LoadingBlock, Left, Center, Right } from "./Loading.style";
 import { LoadingBlockProps } from "./Loading.style";
 

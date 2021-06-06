@@ -1,4 +1,3 @@
-import React from "react";
 import { Story, Meta } from "@storybook/react";
 
 import Loading, { Props } from "./Loading";
@@ -12,4 +11,6 @@ const Template: Story<Props> = (args) => <Loading {...args} />;
 
 export const Basic = Template.bind({});
 
-Basic.args = {};
+Basic.args = {
+  bgColor: "#6b2525",
+};
