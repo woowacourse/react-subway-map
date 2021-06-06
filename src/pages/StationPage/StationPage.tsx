@@ -9,6 +9,7 @@ import useInput from '../../hooks/useInput';
 import useStation from '../../hooks/useStation';
 import { Station } from '../../types';
 import MessageBox from '../../components/MessageBox/MessageBox';
+import { STATION } from '../../constants/data';
 
 const StationPage = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -67,8 +68,8 @@ const StationPage = () => {
                   <Input
                     labelText="지하철 역 이름을 입력해주세요"
                     icon={<SubwayIcon />}
-                    minLength={2}
-                    maxLength={20}
+                    minLength={STATION.NAME_MIN_LENGTH}
+                    maxLength={STATION.NAME_MAX_LENGTH}
                     value={name}
                     onChange={onChangeName}
                     autoFocus
@@ -122,8 +123,8 @@ const StationPage = () => {
             labelText="역 이름"
             icon={<SubwayIcon />}
             placeholder="역 이름"
-            minLength={2}
-            maxLength={20}
+            minLength={STATION.NAME_MIN_LENGTH}
+            maxLength={STATION.NAME_MAX_LENGTH}
             value={editName}
             onChange={onChangeEditName}
             autoFocus

@@ -12,6 +12,7 @@ import {
 } from '../slices/stationSlice';
 import { logout } from '../slices/authSlice';
 import MESSAGE from '../constants/message';
+import { STATION } from '../constants/data';
 
 const useStation = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,7 +23,7 @@ const useStation = () => {
   const { list: stationList, status, error } = station;
 
   const requestAddStation = async (name: Station['name']) => {
-    if (!(name.length > 1 && name.length < 21)) {
+    if (!(name.length >= STATION.NAME_MIN_LENGTH && name.length <= STATION.NAME_MAX_LENGTH)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH);
 
       return;
@@ -48,7 +49,7 @@ const useStation = () => {
   };
 
   const requestEditStation = async ({ id, name }: Station) => {
-    if (!(name.length > 1 && name.length < 21)) {
+    if (!(name.length >= STATION.NAME_MIN_LENGTH && name.length <= STATION.NAME_MAX_LENGTH)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_NAME_LENGTH);
 
       return;

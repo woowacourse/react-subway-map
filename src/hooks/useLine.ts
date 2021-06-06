@@ -6,6 +6,7 @@ import { ApiStatus, Line, LineAttribute } from '../types';
 import { addLine, deleteLine, editLine, getLineList, resetError } from '../slices/lineSlice';
 import { logout } from '../slices/authSlice';
 import MESSAGE from '../constants/message';
+import { LINE } from '../constants/data';
 
 const useLine = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -21,7 +22,7 @@ const useLine = () => {
     downStationId,
     distance,
   }: LineAttribute) => {
-    if (!(name.length > 1 && name.length < 11)) {
+    if (!(name.length >= LINE.NAME_MIN_LENGTH && name.length <= LINE.NAME_MAX_LENGTH)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH);
 
       return;
@@ -49,7 +50,7 @@ const useLine = () => {
   };
 
   const requestEditLine = async ({ id, name, color }: Pick<Line, 'id' | 'name' | 'color'>) => {
-    if (!(name.length > 1 && name.length < 11)) {
+    if (!(name.length >= LINE.NAME_MIN_LENGTH && name.length <= LINE.NAME_MAX_LENGTH)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_LINE_NAME_LENGTH);
 
       return;

@@ -11,6 +11,7 @@ import useInput from '../../hooks/useInput';
 import { Station } from '../../types';
 import MESSAGE from '../../constants/message';
 import useSection from '../../hooks/useSection';
+import { SECTION } from '../../constants/data';
 
 const SectionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -71,7 +72,7 @@ const SectionPage = () => {
   };
 
   const handleDelete = (stationId: Station['id']) => {
-    if (selectedLine?.stations.length <= 2) {
+    if (selectedLine?.stations.length < SECTION.MIN_QUANTITY_STATION_TO_DELETE_SECTION) {
       enqueueSnackbar(MESSAGE.ERROR.REQUIRE_MINIMUM_STATION, {
         variant: 'warning',
       });

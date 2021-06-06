@@ -23,6 +23,7 @@ import useLine from '../../hooks/useLine';
 import useStation from '../../hooks/useStation';
 import useColorPalette from '../../hooks/useColorPalette';
 import MESSAGE from '../../constants/message';
+import { LINE } from '../../constants/data';
 
 const LinePage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -121,7 +122,7 @@ const LinePage = () => {
   };
 
   const handleOpenAddModal = () => {
-    if (stationList.length < 2) {
+    if (stationList.length < LINE.MIN_QUANTITY_STATION_TO_ADD_LINE) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_STATION_LENGTH, {
         variant: 'warning',
       });
@@ -267,8 +268,8 @@ const LinePage = () => {
               placeholder="노선 이름"
               icon={<ColorDot color={editColor} />}
               autoFocus
-              minLength={2}
-              maxLength={10}
+              minLength={LINE.NAME_MIN_LENGTH}
+              maxLength={LINE.NAME_MAX_LENGTH}
               required
             />
           </Styled.InputWrapper>
