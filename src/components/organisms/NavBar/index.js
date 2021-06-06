@@ -36,40 +36,37 @@ export const NavBar = (props) => {
       </TitleButton>
 
       <Menu>
-        {/* TODO: 전체보기 기능, 경로탐색 기능 2단계에서 추가 */}
         <MenuGroup
-          style={{ visibility: 'hidden' }}
+          isVisible={isLogin}
           menuList={[
             { content: '전체보기', icon: <IconWindow />, route: ROUTE.MAP },
             { content: '경로탐색', icon: <IconSearch />, route: ROUTE.SEARCH },
           ]}
         />
+        <MenuGroup
+          isVisible={isLogin}
+          menuList={[
+            { content: '역관리', icon: <IconSetting />, route: ROUTE.STATION },
+            { content: '노선관리', icon: <IconSetting />, route: ROUTE.LINE },
+            { content: '구간관리', icon: <IconSetting />, route: ROUTE.SECTION },
+          ]}
+        />
 
-        {isLogin && (
-          <MenuGroup
-            menuList={[
-              { content: '역관리', icon: <IconSetting />, route: ROUTE.STATION },
-              { content: '노선관리', icon: <IconSetting />, route: ROUTE.LINE },
-              { content: '구간관리', icon: <IconSetting />, route: ROUTE.SECTION },
-            ]}
-          />
-        )}
-
-        <MenuList>
-          <MenuItem>
-            {isLogin ? (
+        {isLogin ? (
+          <MenuList isVisible={isLogin}>
+            <MenuItem>
               <button onClick={handleLogoutRequest}>
                 <IconPerson />
                 로그아웃
               </button>
-            ) : (
-              <NavLink activeClassName="selected" to={ROUTE.LOGIN}>
-                <IconPerson />
-                로그인
-              </NavLink>
-            )}
-          </MenuItem>
-        </MenuList>
+            </MenuItem>
+          </MenuList>
+        ) : (
+          <MenuGroup
+            isVisible={!isLogin}
+            menuList={[{ content: '로그인', icon: <IconPerson />, route: ROUTE.LOGIN }]}
+          />
+        )}
       </Menu>
     </Nav>
   );
