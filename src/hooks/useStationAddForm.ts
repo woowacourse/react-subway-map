@@ -4,9 +4,8 @@ import { REGEX } from '../constants/validate';
 
 const useStationAddForm = () => {
   const [form, setForm] = useState<StationForm>({ name: '' });
-  const { name } = form;
 
-  const isValidName = REGEX.STATION_NAME.test(name);
+  const isValidName = REGEX.STATION_NAME.test(form.name);
 
   const setName = (name: string) => {
     setForm({ ...form, name });
@@ -14,8 +13,9 @@ const useStationAddForm = () => {
 
   return {
     form,
-    name,
+
     setName,
+
     isValidName,
   };
 };

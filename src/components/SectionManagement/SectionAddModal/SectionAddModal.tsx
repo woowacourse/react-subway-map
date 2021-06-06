@@ -24,9 +24,6 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
   const { currentLineId, setCurrentLineId, addSection } = useSection();
   const {
     form,
-    distance,
-    upStationId,
-    downStationId,
     setDistance,
     setUpStationId,
     setDownStationId,
@@ -69,7 +66,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
         <Container>
           <SectionSelectBox
             placeholder="상행역"
-            value={upStationId}
+            value={form.upStationId}
             defaultValue={INVALID_VALUE}
             onChange={({ target }) => setUpStationId(Number(target.value))}
             disabled={!isSelectedLine}
@@ -84,7 +81,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           </SectionSelectBox>
           <SectionSelectBox
             placeholder="하행역"
-            value={downStationId}
+            value={form.downStationId}
             defaultValue={INVALID_VALUE}
             onChange={({ target }) => setDownStationId(Number(target.value))}
             disabled={!isSelectedUpStation}
@@ -108,7 +105,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
               ? `거리 (${selectedSectionDistance}까지)`
               : '거리'
           }
-          value={distance}
+          value={form.distance}
           onChange={({ target }) => setDistance(target.valueAsNumber)}
           isValid={isValidDistance}
           disabled={!selectedSectionDistance}

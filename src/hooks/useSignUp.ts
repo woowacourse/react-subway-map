@@ -13,18 +13,13 @@ const useSignUp = () => {
     passwordForValidation: '',
   });
 
-  const { email, age, password, passwordForValidation } = form;
-
   const login = useLogin();
 
-  const isValidEmail = REGEX.EMAIL.test(email);
-
-  const isValidAge = age > SERVICE.MIN_AGE;
-
-  const isValidPassword = password.length >= SERVICE.MIN_PASSWORD_LENGTH;
-
-  const isValidPasswordForValidation = password === passwordForValidation;
-
+  const isValidEmail = REGEX.EMAIL.test(form.email);
+  const isValidAge = form.age > SERVICE.MIN_AGE;
+  const isValidPassword = form.password.length >= SERVICE.MIN_PASSWORD_LENGTH;
+  const isValidPasswordForValidation =
+    form.password === form.passwordForValidation;
   const isFormValid =
     isValidEmail &&
     isValidAge &&
@@ -50,6 +45,8 @@ const useSignUp = () => {
   const signUp = async () => {
     if (!isFormValid) return;
 
+    const { email, password } = form;
+
     try {
       await requestSignUp(form);
     } catch (error) {
@@ -62,16 +59,13 @@ const useSignUp = () => {
   };
 
   return {
-    email,
-    age,
-    password,
-    passwordForValidation,
-    isFormValid,
+    form,
     setEmail,
     setAge,
     setPassword,
     setPasswordForValidation,
     signUp,
+    isFormValid,
     isValidEmail,
     isValidAge,
     isValidPassword,

@@ -26,11 +26,6 @@ export interface LineAddModalProps {
 const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
   const {
     form,
-    name,
-    color,
-    upStationId,
-    downStationId,
-    distance,
     setName,
     setDistance,
     setUpStationId,
@@ -59,14 +54,14 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           isValid={isValidName}
           invalidText="노선 이름은 2글자 이상 10글자 이하의 한글이어야 합니다."
           placeholder="노선 이름 (2-10글자의 한글)"
-          value={name}
+          value={form.name}
           onChange={({ target: { value } }) => setName(value)}
         />
 
         <StyledContainer>
           <SelectBox
             placeholder="상행역"
-            value={upStationId}
+            value={form.upStationId}
             defaultValue={INVALID_VALUE}
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
@@ -83,7 +78,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
 
           <SelectBox
             placeholder="하행역"
-            value={downStationId}
+            value={form.downStationId}
             defaultValue={INVALID_VALUE}
             onChange={({ target }) => setDownStationId(Number(target.value))}
             disabled={!isSelectedUpStation}
@@ -102,7 +97,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
           placeholder="거리"
           type="number"
           min="0"
-          value={distance}
+          value={form.distance}
           onChange={({ target }) => setDistance(target.valueAsNumber)}
         />
         <div>노선 색상</div>
@@ -111,7 +106,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             {lineColors.map((lineColor) => (
               <ColorSelectButton
                 type="button"
-                selectedColor={color}
+                selectedColor={form.color}
                 backgroundColor={lineColor}
                 onClick={() => setColor(lineColor)}
                 disabled={lines.data?.some((line) => line.color === lineColor)}

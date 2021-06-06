@@ -6,10 +6,7 @@ import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertT
 
 const SignUpForm: VFC = () => {
   const {
-    email,
-    age,
-    password,
-    passwordForValidation,
+    form,
     setEmail,
     setAge,
     setPassword,
@@ -31,7 +28,7 @@ const SignUpForm: VFC = () => {
   return (
     <AuthForm title="회원가입" onSubmit={handleSignUp}>
       <InputWithAlertText
-        value={email}
+        value={form.email}
         onChange={({ target: { value } }) => setEmail(value)}
         placeholder="이메일을 입력해주세요."
         isValid={isValidEmail}
@@ -40,7 +37,7 @@ const SignUpForm: VFC = () => {
       />
       <InputWithAlertText
         type="number"
-        value={age}
+        value={form.age}
         min={1}
         onChange={({ target: { valueAsNumber } }) => setAge(valueAsNumber)}
         placeholder="나이를 입력해주세요."
@@ -51,7 +48,7 @@ const SignUpForm: VFC = () => {
 
       <InputWithAlertText
         type="password"
-        value={password}
+        value={form.password}
         onChange={({ target: { value } }) => setPassword(value)}
         placeholder="비밀번호를 입력해주세요."
         isValid={isValidPassword}
@@ -60,7 +57,7 @@ const SignUpForm: VFC = () => {
       />
       <InputWithAlertText
         type="password"
-        value={passwordForValidation}
+        value={form.passwordForValidation}
         onChange={({ target: { value } }) => setPasswordForValidation(value)}
         placeholder="비밀번호를 한번 더 입력해주세요."
         isValid={isValidPasswordForValidation}

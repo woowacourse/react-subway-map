@@ -8,10 +8,9 @@ const useLoginForm = () => {
     email: '',
     password: '',
   });
-  const { email, password } = form;
 
-  const isValidEmail = REGEX.EMAIL.test(email);
-  const isValidPassword = password.length >= SERVICE.MIN_PASSWORD_LENGTH;
+  const isValidEmail = REGEX.EMAIL.test(form.email);
+  const isValidPassword = form.password.length >= SERVICE.MIN_PASSWORD_LENGTH;
   const isValidForm = isValidEmail && isValidPassword;
 
   const setEmail = (email: string) => {
@@ -24,9 +23,6 @@ const useLoginForm = () => {
 
   return {
     form,
-
-    email,
-    password,
 
     setEmail,
     setPassword,

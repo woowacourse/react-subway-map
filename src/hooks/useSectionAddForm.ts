@@ -11,7 +11,6 @@ const useSectionForm = () => {
     downStationId: INVALID_VALUE,
     upStationId: INVALID_VALUE,
   });
-  const { distance, downStationId, upStationId } = form;
 
   const { stations } = useStation();
   const { currentLineDetail } = useSection();
@@ -46,15 +45,15 @@ const useSectionForm = () => {
   const selectedSectionDistance =
     (
       currentLineDetail.sections.find(
-        (section) => section.upStation.id === upStationId
+        (section) => section.upStation.id === form.upStationId
       ) as Section
     )?.distance ?? 0;
 
-  const isValidDistance = distance < selectedSectionDistance;
+  const isValidDistance = form.distance < selectedSectionDistance;
 
-  const isSelectedUpStation = upStationId !== INVALID_VALUE;
+  const isSelectedUpStation = form.upStationId !== INVALID_VALUE;
 
-  const isSelectedDownStation = downStationId !== INVALID_VALUE;
+  const isSelectedDownStation = form.downStationId !== INVALID_VALUE;
 
   const isValidForm =
     isSelectedLine &&
@@ -65,16 +64,13 @@ const useSectionForm = () => {
   return {
     form,
 
-    distance,
-    upStationId,
-    downStationId,
-    availableUpStations,
-    availableDownStations,
-    selectedSectionDistance,
-
     setDistance,
     setUpStationId,
     setDownStationId,
+
+    availableUpStations,
+    availableDownStations,
+    selectedSectionDistance,
 
     isValidForm,
     isSelectedLine,

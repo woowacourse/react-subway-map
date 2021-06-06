@@ -13,8 +13,6 @@ const LoginForm: VFC<LoginFormProps> = () => {
   const { login } = useLogin();
   const {
     form,
-    email,
-    password,
     setEmail,
     setPassword,
     isValidEmail,
@@ -30,7 +28,7 @@ const LoginForm: VFC<LoginFormProps> = () => {
   return (
     <AuthForm title="로그인" onSubmit={handleLogin}>
       <InputWithAlertText
-        value={email}
+        value={form.email}
         onChange={({ target: { value } }) => setEmail(value)}
         placeholder="이메일을 입력해주세요."
         isValid={isValidEmail}
@@ -38,7 +36,7 @@ const LoginForm: VFC<LoginFormProps> = () => {
       />
       <InputWithAlertText
         type="password"
-        value={password}
+        value={form.password}
         onChange={({ target: { value } }) => setPassword(value)}
         placeholder="비밀번호를 입력해주세요."
         isValid={isValidPassword}

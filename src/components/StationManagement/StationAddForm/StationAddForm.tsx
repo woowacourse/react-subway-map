@@ -10,7 +10,7 @@ import {
 } from './StationAddForm.styles';
 
 const StationAddForm: VFC = () => {
-  const { form, setName, name, isValidName } = useStationAddForm();
+  const { form, setName, isValidName } = useStationAddForm();
   const { addStation } = useStation();
 
   const handleAddStation = (event: FormEvent<HTMLFormElement>) => {
@@ -24,7 +24,7 @@ const StationAddForm: VFC = () => {
       <Title>지하철 역 관리</Title>
       <InputContainer>
         <InputWithAlertText
-          value={name}
+          value={form.name}
           isValid={isValidName}
           invalidText={
             '2글자 이상 20글자 이하의 한글로 된 역 이름을 입력해주세요.'
