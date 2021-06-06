@@ -3,6 +3,7 @@ export const API = {
   GET_STATIONS: () => `${SERVER.URL}/stations`,
   LINES: () => `${SERVER.URL}/lines`,
   SECTION: (id: number) => `${SERVER.URL}/lines/${id}/sections`,
+  MAP: () => `${SERVER.URL}/map`,
 };
 
 export const ROUTE = {
@@ -12,6 +13,7 @@ export const ROUTE = {
   STATION: '/station',
   LINE: '/line',
   SECTION: '/section',
+  MAP: '/map',
 };
 
 export const BASE_URL = {

@@ -68,6 +68,9 @@ export const MESSAGE = {
       INVALID_AGE_LENGTH: `나이는 ${AUTH.AGE_MIN}살 이상 ${AUTH.AGE_MAX}살 이하여야 합니다.`,
       NOT_SAME_PASSWORD: '동일한 비밀번호를 입력해주세요.',
     },
+    MAP: {
+      LOAD_FAILED: '전체 노선 정보를 불러오는데 실패했습니다.',
+    },
   },
   SUCCESS: {
     RESPONSE: '요청에 성공했습니다.',

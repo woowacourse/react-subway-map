@@ -24,10 +24,9 @@ const Navigation = () => {
           <S.MenuItem>
             <Link to={ROUTE.SECTION}>구간 관리</Link>
           </S.MenuItem>
-          {/* TODO: 2단계 요구사항 */}
-          {/* <S.MenuItem>
-            <Link to={ROUTE.HOME}>경로 검색</Link>
-          </S.MenuItem> */}
+          <S.MenuItem>
+            <Link to={ROUTE.MAP}>전체 보기</Link>
+          </S.MenuItem>
           <S.MenuItem>
             {accessToken ? (
               <Link to={ROUTE.SIGN_IN} onClick={() => dispatch({ type: 'LOG_OUT' })}>
