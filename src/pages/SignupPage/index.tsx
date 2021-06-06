@@ -25,15 +25,15 @@ const SignupPage = () => {
   const BASE_URL = useAppSelector((state) => state.serverSlice.server);
   const { enqueueSnackbar } = useSnackbar();
 
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState('');
   const [age, setAge] = useState<number>();
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const { NotiMessage: PasswordNoti, showNotiMessage: showPasswordNoti } = useNotify();
   const { NotiMessage: EmailNoti, showNotiMessage: showEmailNoti } = useNotify();
 
-  const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
+  const [isServerMessageVisible, setServerMessageVisible] = useState(false);
 
   const [checkDuplicatedEmailAsync] = useFetch();
   const [signupAsync, signupLoading] = useFetch('POST');

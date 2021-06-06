@@ -26,8 +26,8 @@ const StationPage = () => {
 
   const [stations, setStations] = useState<Station[]>([]);
   const [newStationName, setNewStationName] = useState('');
-  const [editingStationId, setEditingStationId] = useState<number>(0);
-  const [editingStationName, setEditingStationName] = useState<string>('');
+  const [editingStationId, setEditingStationId] = useState(0);
+  const [editingStationName, setEditingStationName] = useState('');
   const { NotiMessage, showNotiMessage } = useNotify();
 
   const [getStationsAsync, getStationsLoading] = useFetch();

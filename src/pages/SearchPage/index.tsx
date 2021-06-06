@@ -19,10 +19,10 @@ const SearchPage = () => {
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
   const [stations, setStations] = useState<Station[]>([]);
-  const [sourceStationId, setSourceStationId] = useState<string>('');
-  const [targetStationId, setTargerStationId] = useState<string>('');
-  const [distance, setDistance] = useState<string>('0');
-  const [extraFare, setExtraFare] = useState<string>('0');
+  const [sourceStationId, setSourceStationId] = useState('');
+  const [targetStationId, setTargerStationId] = useState('');
+  const [distance, setDistance] = useState('0');
+  const [extraFare, setExtraFare] = useState('0');
   const [paths, setPaths] = useState<Station[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 

@@ -24,9 +24,9 @@ const LinePage = () => {
 
   const [lines, setLines] = useState<Line[]>([]);
   const [stations, setStations] = useState<Station[]>([]);
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState(false);
   const [selectedLine, setSelectedLine] = useState<Line>();
-  const [modalTitle, setModalTitle] = useState<string>('');
+  const [modalTitle, setModalTitle] = useState('');
 
   const [getStationsAsync, getStationsLoading] = useFetch();
   const [getLinesAsync, getLinesLoading] = useFetch();

@@ -27,12 +27,12 @@ const LineModal = ({
   closeModal,
   fetchLines,
 }: Props) => {
-  const [color, setColor] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [upStationId, setUpStationId] = useState<string>('');
-  const [downStationId, setDownStationId] = useState<string>('');
-  const [distance, setDistance] = useState<string>('');
-  const [extraFare, setExtraFare] = useState<string>('');
+  const [color, setColor] = useState('');
+  const [name, setName] = useState('');
+  const [upStationId, setUpStationId] = useState('');
+  const [downStationId, setDownStationId] = useState('');
+  const [distance, setDistance] = useState('');
+  const [extraFare, setExtraFare] = useState('');
 
   const { NotiMessage, showNotiMessage } = useNotify();
 

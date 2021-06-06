@@ -26,9 +26,9 @@ const SectionModal = ({
   selectTargetLine,
   getLine,
 }: Props) => {
-  const [upStationId, setUpStationId] = useState<string>('');
-  const [downStationId, setDownStationId] = useState<string>('');
-  const [distance, setDistance] = useState<string>('');
+  const [upStationId, setUpStationId] = useState('');
+  const [downStationId, setDownStationId] = useState('');
+  const [distance, setDistance] = useState('');
 
   const [addSectionAsync] = useFetch('POST');
 

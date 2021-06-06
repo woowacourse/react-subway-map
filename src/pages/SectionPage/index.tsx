@@ -24,7 +24,7 @@ const SectionPage = () => {
   const [lines, setLines] = useState<Line[]>([]);
   const [targetLine, setTargetLine] = useState<Line | undefined>();
   const [stations, setStations] = useState<Station[]>([]);
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const [getStationsAsync, getStationsLoading] = useFetch();
   const [getLinesAsync, getLinesLoading] = useFetch();
