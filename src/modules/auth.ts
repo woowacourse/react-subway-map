@@ -46,7 +46,6 @@ const login = createAsyncThunk(
 
       localStorage.setItem("accessToken", accessToken);
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }

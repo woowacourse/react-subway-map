@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { Line, LineAddRequestItem, SectionAddRequestItem } from "../@types/types";
+import {
+  Line,
+  LineAddRequestItem,
+  SectionAddRequestItem,
+} from "../@types/types";
 import { requestLine } from "../apis/line";
 import { requestSection } from "../apis/section";
 
@@ -16,35 +20,44 @@ const initialState: LineState = {
   error: null,
 };
 
-const getLines = createAsyncThunk("[LINE] LOAD", async (_, { rejectWithValue }) => {
-  try {
-    const line = await requestLine.getAllLines();
+const getLines = createAsyncThunk(
+  "[LINE] LOAD",
+  async (_, { rejectWithValue }) => {
+    try {
+      const line = await requestLine.getAllLines();
 
-    return line;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+      return line;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
-const addLine = createAsyncThunk("[LINE] ADD", async (lineRequestItem: LineAddRequestItem, { rejectWithValue }) => {
-  try {
-    const line = await requestLine.addLine(lineRequestItem);
+const addLine = createAsyncThunk(
+  "[LINE] ADD",
+  async (lineRequestItem: LineAddRequestItem, { rejectWithValue }) => {
+    try {
+      const line = await requestLine.addLine(lineRequestItem);
 
-    return line;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+      return line;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
-const deleteLine = createAsyncThunk("[LINE] DELETE", async (id: number, { rejectWithValue }) => {
-  try {
-    await requestLine.deleteLine(id);
+const deleteLine = createAsyncThunk(
+  "[LINE] DELETE",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await requestLine.deleteLine(id);
 
-    return id;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 const addSection = createAsyncThunk(
   "[LINE] SECTION_ADD",
@@ -61,7 +74,10 @@ const addSection = createAsyncThunk(
 
 const deleteSection = createAsyncThunk(
   "[LINE] SECTION_DELETE",
-  async ({ lineId, stationId }: { lineId: number; stationId: number }, { rejectWithValue }) => {
+  async (
+    { lineId, stationId }: { lineId: number; stationId: number },
+    { rejectWithValue }
+  ) => {
     try {
       await requestSection.deleteSection({ lineId, stationId });
 

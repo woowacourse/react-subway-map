@@ -78,7 +78,6 @@ const SectionManagementPage = () => {
             <ListItem
               key={id}
               style={{ padding: "0.5625rem" }}
-              onUpdate={() => {}}
               onDelete={async () => {
                 await deleteSection({ lineId: Number(lineId), stationId: id });
               }}
