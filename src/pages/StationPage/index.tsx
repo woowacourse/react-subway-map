@@ -20,7 +20,7 @@ import Styled from './styles';
 import useNotify from 'hooks/useNotify';
 
 const StationPage = () => {
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 

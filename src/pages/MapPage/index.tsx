@@ -11,7 +11,7 @@ import { Line, Station, User } from 'types';
 import Styled from './styles';
 
 const MapPage = () => {
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 

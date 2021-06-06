@@ -14,7 +14,7 @@ import Styled from './styles';
 import Loading from 'components/shared/Loading/Loading';
 
 const SearchPage = () => {
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 

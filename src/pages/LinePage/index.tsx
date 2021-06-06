@@ -18,7 +18,7 @@ import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 
 const LinePage = () => {
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 

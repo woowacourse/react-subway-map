@@ -11,7 +11,7 @@ import { User } from 'types';
 
 const NavBar = () => {
   const history = useHistory();
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
   const dispatch = useAppDispatch();
 
   const selectedNavStyle = {
