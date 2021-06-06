@@ -213,7 +213,7 @@ const SectionPage = () => {
               placeholder="거리"
               value={distance === -1 ? '' : distance}
               onChange={onChangeDistance}
-              min={1}
+              min={SECTION.MIN_DISTANCE}
               max={
                 selectedUpStation?.distance === -1 || !selectedUpStation?.distance
                   ? ''

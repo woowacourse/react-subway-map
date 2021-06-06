@@ -241,7 +241,7 @@ const LinePage = () => {
               onChange={onChangeDistance}
               labelText="거리"
               placeholder="거리"
-              min={1}
+              min={LINE.MIN_DISTANCE}
               required
             />
           </Styled.InputWrapper>
