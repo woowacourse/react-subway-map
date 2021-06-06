@@ -21,7 +21,7 @@ const MapPage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const getLines = async () => {
+  const fetchLines = async () => {
     const res = await getLinesAsync(END_POINT.LINES);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -40,10 +40,6 @@ const MapPage = () => {
   };
 
   useEffect(() => {
-    const fetchLines = async () => {
-      await getLines();
-    };
-
     fetchLines();
   }, []);
 

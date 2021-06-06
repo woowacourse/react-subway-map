@@ -45,7 +45,7 @@ const SectionPage = () => {
     }
   };
 
-  const getLines = async () => {
+  const fetchLines = async () => {
     const res = await getLinesAsync(END_POINT.LINES);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -100,10 +100,6 @@ const SectionPage = () => {
   const isLoading = getStationsLoading || getLinesLoading || getLineLoading || deleteSectionLoading;
 
   useEffect(() => {
-    const fetchLines = async () => {
-      getLines();
-    };
-
     fetchLines();
   }, []);
 

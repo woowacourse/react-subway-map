@@ -34,7 +34,7 @@ const LinePage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const getLines = async () => {
+  const fetchLines = async () => {
     const res = await getLinesAsync(END_POINT.LINES);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -62,7 +62,7 @@ const LinePage = () => {
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      await getLines();
+      await fetchLines();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_LINE);
     }
   };
@@ -90,10 +90,6 @@ const LinePage = () => {
   const isLoading = getStationsLoading || getLinesLoading || deleteLineLoading;
 
   useEffect(() => {
-    const fetchLines = async () => {
-      await getLines();
-    };
-
     fetchLines();
   }, []);
 
@@ -131,7 +127,7 @@ const LinePage = () => {
           selectedLine={selectedLine}
           stations={stations}
           closeModal={closeModal}
-          getLines={getLines}
+          fetchLines={fetchLines}
           selectedColors={selectedColors}
         />
       </Modal>

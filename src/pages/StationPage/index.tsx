@@ -41,7 +41,7 @@ const StationPage = () => {
 
   const isValidStationName = (stationName: string) => regex.koreanAndNumber.test(stationName);
 
-  const getStations = async () => {
+  const fetchStations = async () => {
     const res = await getStationsAsync(END_POINT.STATIONS);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -72,7 +72,7 @@ const StationPage = () => {
       setNewStationName('');
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_ADD_STAION);
 
-      await getStations();
+      await fetchStations();
     }
   };
 
@@ -99,7 +99,7 @@ const StationPage = () => {
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      await getStations();
+      await fetchStations();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_STATION);
     }
 
@@ -115,7 +115,7 @@ const StationPage = () => {
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {
-      await getStations();
+      await fetchStations();
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_DELETE_STAION);
     }
   };
@@ -129,10 +129,6 @@ const StationPage = () => {
   }, [inputRef.current]);
 
   useEffect(() => {
-    const fetchStations = async () => {
-      await getStations();
-    };
-
     fetchStations();
   }, []);
 

@@ -29,8 +29,7 @@ const SearchPage = () => {
   const [getStationsAsync, getStationsLoading] = useFetch('GET');
   const [getPathAsync, getPathLoading] = useFetch('GET');
 
-  const getStations = async () => {
-    console.log('fetching...');
+  const fetchStations = async () => {
     const res = await getStationsAsync(END_POINT.STATIONS);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -62,10 +61,6 @@ const SearchPage = () => {
   const isLoading = getStationsLoading || getPathLoading;
 
   useEffect(() => {
-    const fetchStations = async () => {
-      await getStations();
-    };
-
     fetchStations();
   }, []);
 

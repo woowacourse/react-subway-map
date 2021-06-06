@@ -28,7 +28,7 @@ CreateLine.args = {
   ],
   selectedColors: ['#fbbf24', '#818cf8'],
   closeModal: () => console.log('close Modal'),
-  getLines: () => console.log('getLines'),
+  fetchLines: () => console.log('fetch Lines'),
 };
 
 export const EditLine = Template.bind({});
@@ -74,5 +74,5 @@ EditLine.args = {
   },
   selectedColors: ['#fbbf24', '#818cf8'],
   closeModal: () => console.log('close Modal'),
-  getLines: () => console.log('get Lines'),
+  fetchLines: () => console.log('fetch Lines'),
 };
