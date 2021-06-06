@@ -5,21 +5,28 @@ import { Button, IconPath, IconTrashCan } from '../../components';
 import { Item, Content, Detail, Flex, Name, ColorBox, Distance } from './style';
 
 export const SectionListItem = (props) => {
-  const { section, onClick } = props;
+  const { currentLineName, color, section, onClick } = props;
 
   return (
     <Item>
       <Content>
         <Flex>
           <Name>{section.name}</Name>
+          <ColorBox bgColor={color}>
+            <span>{currentLineName[0]}</span>
+          </ColorBox>
           {section.transferLines?.map((line) => (
-            <ColorBox key={line.color} content={line.name[0]} bgColor={line.color}></ColorBox>
+            <ColorBox key={line.color} bgColor={line.color}>
+              <span>{line.name[0]}</span>
+            </ColorBox>
           ))}
         </Flex>
-        <Button onClick={(e) => onClick(e, section.id)}>
+
+        <Button onClick={() => onClick(section.id)}>
           <IconTrashCan />
         </Button>
       </Content>
+
       {section.distanceToNextStation > 0 && (
         <Detail>
           <IconPath />
@@ -34,6 +41,8 @@ export const SectionListItem = (props) => {
 };
 
 SectionListItem.propTypes = {
+  currentLineName: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
   section: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

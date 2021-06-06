@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { logout } from '../../redux/userSlice';
 import { clearStation, clearStationProgress } from '../../redux/stationSlice';
 import { clearLine, clearLineProgress } from '../../redux/lineSlice';
-import { clearMap } from '../../redux/mapSlice';
+import { clearMap, clearMapProgress } from '../../redux/mapSlice';
 
 import { ACCESS_TOKEN, ROUTE } from '../../constants';
 
@@ -21,6 +21,7 @@ export const LogoutPage = () => {
     dispatch(clearLine());
     dispatch(clearLineProgress());
     dispatch(clearMap());
+    dispatch(clearMapProgress());
   };
 
   // TODO : 로그아웃이 안되는 경우(store의 state가 변하지 않는 경우도 우리가 예외처리를 해줘야하는걸까요?)

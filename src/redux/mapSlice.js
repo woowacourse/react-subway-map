@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const getMap = createAsyncThunk('map/getMap', async ({ endpoint, accessToken }, thunkAPI) => {
+const getMap = createAsyncThunk('map/getMap', async ({ baseUrl, accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${endpoint}/lines/map`, {
+    const response = await fetch(`${baseUrl}/lines/map`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -26,9 +26,9 @@ const getMap = createAsyncThunk('map/getMap', async ({ endpoint, accessToken }, 
 
 const addSection = createAsyncThunk(
   'map/addSection',
-  async ({ endpoint, accessToken, lineId, upStationId, downStationId, distance }, thunkAPI) => {
+  async ({ baseUrl, accessToken, lineId, upStationId, downStationId, distance }, thunkAPI) => {
     try {
-      const response = await fetch(`${endpoint}/lines/${lineId}/sections`, {
+      const response = await fetch(`${baseUrl}/lines/${lineId}/sections`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -58,9 +58,9 @@ const addSection = createAsyncThunk(
 
 const removeSection = createAsyncThunk(
   'map/removeSection',
-  async ({ endpoint, accessToken, lineId, stationId }, thunkAPI) => {
+  async ({ baseUrl, accessToken, lineId, stationId }, thunkAPI) => {
     try {
-      const response = await fetch(`${endpoint}/lines/${lineId}/sections?stationId=${stationId}`, {
+      const response = await fetch(`${baseUrl}/lines/${lineId}/sections?stationId=${stationId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -98,11 +98,6 @@ const mapSlice = createSlice({
     },
     clearMap: (state) => {
       state.map = [];
-      state.isLoading = false;
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
     },
   },
   extraReducers: {
@@ -117,6 +112,7 @@ const mapSlice = createSlice({
     [getMap.rejected]: (state) => {
       state.isLoading = false;
     },
+
     [addSection.fulfilled]: (state) => {
       state.isAddSuccess = true;
     },
@@ -127,6 +123,7 @@ const mapSlice = createSlice({
       state.isAddFail = true;
       state.isLoading = false;
     },
+
     [removeSection.fulfilled]: (state) => {
       state.isDeleteSuccess = true;
     },

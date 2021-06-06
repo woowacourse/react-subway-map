@@ -37,27 +37,22 @@ export const Name = styled.span`
   letter-spacing: -0.01rem;
 `;
 
-export const ColorBox = styled.span`
-  position: relative;
-  margin-left: 1rem;
-  margin-bottom: 0.2rem;
-  width: 1.2rem;
-  height: 1.2rem;
+export const ColorBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
+
+  width: 1rem;
+  height: 1rem;
 
   border-radius: 50%;
   background-color: ${(props) => props.bgColor};
-  border: 0.1rem solid ${COLOR.BORDER_DEFAULT};
 
-  &::before {
-    position: absolute;
-    content: attr(content);
-    top: -0.5rem;
-    left: 0.25rem;
-    width: 0.5rem;
+  & span {
+    font-weight: 700;
+    font-size: 0.6rem;
     text-align: center;
-
-    color: #fff;
-    font-size: 0.5rem;
   }
 `;
 
@@ -99,7 +94,6 @@ export const ButtonControl = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  /* margin-top: 1rem; */
   width: 100%;
 `;
 
@@ -119,10 +113,11 @@ export const LineSelectBox = styled(Select)`
 
   & select {
     width: 100%;
+    background-color: ${(props) => props.color};
   }
 `;
 
-export const InvalidMessage = styled.div`
+export const Message = styled.div`
   height: 1.5rem;
 
   color: ${COLOR.ERROR};

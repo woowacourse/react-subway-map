@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { Selector, Option } from './style';
 
 export const Select = (props) => {
-  const { id, name, optionHead, options, selectProps, ...rest } = props;
+  const { id, name, optionHead, options, onChange, ...rest } = props;
 
   return (
     <label htmlFor={id} {...rest}>
-      <Selector id={id} name={name} required>
+      <Selector id={id} name={name} onChange={onChange} required>
         <Option value="" defaultValue hidden>
           {optionHead}
         </Option>
@@ -27,5 +27,5 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   optionHead: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  selectProps: PropTypes.object,
+  onChange: PropTypes.func,
 };
