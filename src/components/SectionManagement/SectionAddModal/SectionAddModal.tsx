@@ -3,6 +3,7 @@ import { SERVICE } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../hooks/useLine';
 import useSection from '../../../hooks/useSection';
+import useSectionAddForm from '../../../hooks/useSectionAddForm';
 import { Line } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
@@ -20,16 +21,16 @@ export interface SectionAddModalProps {
 }
 
 const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
+  const { currentLineId, setCurrentLineId, addSection } = useSection();
+  const { lines } = useLine();
   const {
+    form,
     distance,
     upStationId,
     downStationId,
     setDistance,
     setUpStationId,
     setDownStationId,
-    currentLineId,
-    setCurrentLineId,
-    addSection,
     isValidForm,
     isSelectedLine,
     isSelectedUpStation,
@@ -37,12 +38,11 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     availableDownStations,
     selectedSectionDistance,
     isValidDistance,
-  } = useSection();
-  const { lines } = useLine();
+  } = useSectionAddForm();
 
   const onAddSection = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    addSection();
+    addSection(form);
 
     closeModal();
   };

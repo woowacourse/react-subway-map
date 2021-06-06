@@ -1,5 +1,6 @@
 import { FormEvent, VFC } from 'react';
 import useStation from '../../../hooks/useStation';
+import useStationAddForm from '../../../hooks/useStationAddForm';
 import Title from '../../@common/Title/Title.styles';
 import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
 import {
@@ -9,12 +10,12 @@ import {
 } from './StationAddForm.styles';
 
 const StationAddForm: VFC = () => {
-  const { addStation, setName, name, isValidName } = useStation();
-
+  const { addStation } = useStation();
+  const { form, setName, name, isValidName } = useStationAddForm();
   const handleAddStation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    addStation();
+    addStation(form);
   };
 
   return (
