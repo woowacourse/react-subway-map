@@ -24,7 +24,7 @@ afterEach(() => {
 
 describe("로그인 페이지 테스트", () => {
   describe("사용자가 유효한 비밀번호(4글자 이상 20글자 이하의 길이)를 입력한 상황에서", () => {
-    describe.only("사용자가 입력한 이메일이 30글자이하의 유효한 형식인 경우", () => {
+    describe("사용자가 입력한 이메일이 30글자이하의 유효한 형식인 경우", () => {
       it("로그인 버튼 클릭시 로그인 요청이 발생한다.", async () => {
         const { getByPlaceholderText, getByRole } = render(
           <MemoryRouter>

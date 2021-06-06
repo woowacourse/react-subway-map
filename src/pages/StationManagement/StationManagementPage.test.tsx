@@ -36,7 +36,7 @@ describe("지하철 역페이지 테스트", () => {
   });
 
   describe("지하철 역 추가 기능", () => {
-    describe.only("역 이름이 2자 이상 20자 이하의 한글 또는 숫자를 포함하는 경우", () => {
+    describe("역 이름이 2자 이상 20자 이하의 한글 또는 숫자를 포함하는 경우", () => {
       it("사용자는 지하철 역을 추가할 수 있다", async () => {
         const { getByRole } = render(<StationManagementPage />);
 

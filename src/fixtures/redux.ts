@@ -2,17 +2,18 @@ import { stations, lines } from "./data";
 
 const initialState = {
   auth: {
-    error: null,
+    loading: false,
     isAuthenticated: false,
+    error: null,
   },
   line: {
-    loading: false,
     items: lines,
+    loading: false,
     error: null,
   },
   station: {
-    loading: false,
     items: stations,
+    loading: false,
     error: null,
   },
 };
