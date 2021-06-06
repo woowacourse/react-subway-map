@@ -83,6 +83,7 @@ export const authSlice = createSlice({
       state.error = null;
     },
     [signup.rejected.type]: (state, { payload }) => {
+      console.log("redux signup : ", payload);
       state.error = payload;
     },
     [LOGOUT]: (state) => {

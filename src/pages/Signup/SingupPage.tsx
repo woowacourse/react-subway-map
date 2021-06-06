@@ -43,12 +43,9 @@ const SignupPage = () => {
       return;
     }
 
-    try {
-      await signup({ email, age: Number(age), password });
-      error ?? history.push(PAGE_PATH.HOME);
-    } catch (error) {
-      alert(error.message);
-    }
+    await signup({ email, age: Number(age), password });
+    console.log("signup : ", error);
+    error ?? history.push(PAGE_PATH.HOME);
   };
 
   return (

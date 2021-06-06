@@ -26,18 +26,6 @@ const App = () => {
     getLines();
   }, []);
 
-  useEffect(() => {
-    if (authError) alert(authError.message);
-  }, [authError]);
-
-  useEffect(() => {
-    if (stationError) alert(stationError.message);
-  }, [stationError]);
-
-  useEffect(() => {
-    if (lineError) alert(lineError.message);
-  }, [lineError]);
-
   const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
   const navigationLinkList = navigationLinks.map((navigationLink) => (
