@@ -66,7 +66,14 @@ const SectionManagementPage = () => {
             options={lines.map(({ id, name }) => ({ value: id, text: name }))}
           />
         </Flex>
-        <Flex style={{ width: "100%", flexDirection: "column" }}>
+        <Flex
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            height: SIZE.PAGE_CONTAINER_HEIGHT,
+            overflow: "auto",
+          }}
+        >
           {targetLine?.stations.map(({ id, name }) => (
             <ListItem
               key={id}

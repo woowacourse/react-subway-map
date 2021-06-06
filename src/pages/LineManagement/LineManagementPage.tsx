@@ -44,7 +44,14 @@ const LineManagementPage = () => {
             노선 추가
           </Button>
         </FlexBetween>
-        <Flex style={{ width: "100%", flexDirection: "column" }}>
+        <Flex
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            height: SIZE.PAGE_CONTAINER_HEIGHT,
+            overflow: "auto",
+          }}
+        >
           {lines.map(({ id, color, name }) => (
             <ListItem
               key={id}

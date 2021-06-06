@@ -69,7 +69,14 @@ const StationManagementPage = () => {
             <Button>확인</Button>
           </Flex>
         </form>
-        <Flex style={{ width: "100%", flexDirection: "column" }}>
+        <Flex
+          style={{
+            width: "100%",
+            flexDirection: "column",
+            height: SIZE.PAGE_CONTAINER_HEIGHT,
+            overflow: "auto",
+          }}
+        >
           {stations.map(({ id, name }) => (
             <ListItem
               key={id}
