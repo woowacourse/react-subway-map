@@ -11,7 +11,6 @@ export const requestAuth = {
 
   login: async (email: string, password: string) => {
     const response = await axios.post("/login/token", { email, password });
-
     const { accessToken } = response.data;
 
     return accessToken;

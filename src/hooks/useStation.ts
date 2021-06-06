@@ -2,10 +2,13 @@ import { useAppDispatch, useAppSelector } from ".";
 import { action } from "../modules/station";
 
 const useStation = () => {
-  const { items: stations, error } = useAppSelector(({ station: { items, error } }) => ({
-    items,
-    error,
-  }));
+  const { items: stations, loading, error } = useAppSelector(
+    ({ station: { items, loading, error } }) => ({
+      items,
+      loading,
+      error,
+    })
+  );
   const dispatch = useAppDispatch();
 
   const getStations = async () => {
@@ -22,7 +25,14 @@ const useStation = () => {
     await dispatch(action.getStations());
   };
 
-  return { stations, getStations, addStation: addStation, deleteStation, error };
+  return {
+    stations,
+    loading,
+    error,
+    getStations,
+    addStation,
+    deleteStation,
+  };
 };
 
 export default useStation;

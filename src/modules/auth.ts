@@ -1,10 +1,17 @@
 import { createSlice, createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
-import { AuthState, LoginInfo, SignupInfo } from "../@types/types";
+import { LoginInfo, SignupInfo } from "../@types/types";
 
 import { requestAuth } from "../apis/user";
 
+interface AuthState {
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: Error | null;
+}
+
 const initialState: AuthState = {
   isAuthenticated: false,
+  loading: false,
   error: null,
 };
 
@@ -74,19 +81,24 @@ export const authSlice = createSlice({
   extraReducers: {
     [checkAccessToken.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
+      state.loading = false;
     },
     [checkAccessToken.rejected.type]: (state) => {
       state.isAuthenticated = false;
+      state.loading = false;
     },
     [login.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
+      state.loading = false;
     },
     [login.rejected.type]: (state, { payload }) => {
       state.isAuthenticated = false;
       state.error = payload;
+      state.loading = false;
     },
     [signup.rejected.type]: (state, { payload }) => {
       state.error = payload;
+      state.loading = false;
     },
     [LOGOUT]: (state) => {
       state.isAuthenticated = false;
