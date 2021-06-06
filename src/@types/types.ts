@@ -50,8 +50,3 @@ export interface SignupInfo {
   password: string;
   age: number;
 }
-
-export interface AuthState {
-  isAuthenticated: boolean;
-  error: null | Error;
-}
