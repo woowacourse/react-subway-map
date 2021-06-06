@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
 import { useMap } from '../../hooks';
@@ -51,3 +52,10 @@ function Station(props) {
     </>
   );
 }
+
+Station.propTypes = {
+  station: PropTypes.shape({
+    name: PropTypes.string,
+    transferLines: PropTypes.array,
+  }).isRequired,
+};
