@@ -1,0 +1,106 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { requestGet, requestPost } from '../utils';
+
+const login = createAsyncThunk('user/login', async ({ endpoint, email, password }, thunkAPI) => {
+  try {
+    const response = await requestPost({
+      url: `${endpoint}/login/token`,
+      body: {
+        email,
+        password,
+      },
+    });
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw new Error(body.message);
+    }
+
+    return { ...body, email };
+  } catch (e) {
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
+  }
+});
+
+const loginByToken = createAsyncThunk('user/loginByToken', async ({ endpoint, accessToken }, thunkAPI) => {
+  try {
+    const response = await requestGet({
+      url: `${endpoint}/members/me`,
+      accessToken,
+    });
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw new Error(body.message);
+    }
+
+    return { email: body.email, accessToken };
+  } catch (e) {
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
+  }
+});
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    email: null,
+    accessToken: null,
+    isLogin: false,
+    isLoginFail: false,
+    isLoading: false,
+  },
+  reducers: {
+    logout: (state) => {
+      state.email = null;
+      state.accessToken = null;
+      state.isLogin = false;
+      state.isLogout = true;
+    },
+    clearLoginFail: (state) => {
+      state.isLoginFail = false;
+    },
+    clearLogout: (state) => {
+      state.isLogout = false;
+    },
+  },
+  extraReducers: {
+    [login.fulfilled]: (state, action) => {
+      const { email, accessToken } = action.payload;
+
+      state.email = email;
+      state.accessToken = accessToken;
+      state.isLogin = true;
+      state.isLoading = false;
+    },
+    [login.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [login.rejected]: (state) => {
+      state.isLoginFail = true;
+      state.isLoading = false;
+    },
+    [loginByToken.fulfilled]: (state, action) => {
+      const { email, accessToken } = action.payload;
+
+      state.email = email;
+      state.accessToken = accessToken;
+      state.isLogin = true;
+      state.isLoading = false;
+    },
+    [loginByToken.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginByToken.rejected]: (state) => {
+      state.isLoginFail = true;
+      state.isLoading = false;
+    },
+  },
+});
+
+export { login, loginByToken };
+export const { logout, clearLoginFail, clearLogout } = userSlice.actions;
+
+export default userSlice.reducer;
