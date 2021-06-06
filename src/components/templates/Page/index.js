@@ -39,7 +39,8 @@ export const Page = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleServerSelectButtonClick = () => setIsServerSelectOpen(true);
+  const handleOpenModal = () => setIsServerSelectOpen(true);
+  const handleCloseModal = () => setIsServerSelectOpen(false);
 
   const setNewServer = (serverId) => setCookie(SERVER_ID, serverId);
 
@@ -50,12 +51,12 @@ export const Page = (props) => {
 
     if (!selectedId) return;
     if (selectedId === serverId) {
-      setIsServerSelectOpen(false);
+      handleCloseModal();
       return;
     }
 
     setNewServer(selectedId);
-    setIsServerSelectOpen(false);
+    handleCloseModal();
     history.push(ROUTE.LOGOUT);
   };
 
@@ -67,7 +68,7 @@ export const Page = (props) => {
 
       <Main>{children}</Main>
 
-      <ServerSelectButton onClick={handleServerSelectButtonClick}>서버선택</ServerSelectButton>
+      <ServerSelectButton onClick={handleOpenModal}>서버선택</ServerSelectButton>
       {isServerSelectOpen && <ServerSelect serverId={serverId} onSubmit={handleServerSubmit} />}
     </>
   );
