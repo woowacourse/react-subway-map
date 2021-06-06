@@ -10,7 +10,7 @@ export const handlers = [
     return res(ctx.status(204));
   }),
   rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/members/exists`, (req, res, ctx) => {
-    return res(ctx.status(400), ctx.json({ status: 400, message: MESSAGE.ERROR.DUPLICATED_EMAIL }));
+    return res(ctx.status(404), ctx.json({ status: 404, message: MESSAGE.ERROR.DUPLICATED_EMAIL }));
   }),
 
   rest.post(`${BACKEND[CREWS.DANYEE].baseUrl}/login`, (req, res, ctx) => {
@@ -83,14 +83,14 @@ export const handlers = [
 
     if (upStation && downStation) {
       return res(
-        ctx.status(400),
+        ctx.status(404),
         ctx.json({ status: 404, message: MESSAGE.ERROR.STATIONS_ALREADY_CONTAINS })
       );
     }
 
     if (!upStation && !downStation) {
       return res(
-        ctx.status(400),
+        ctx.status(404),
         ctx.json({
           status: 404,
           message: MESSAGE.ERROR.REQUIRE_CONNECT_STATION,
