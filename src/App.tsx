@@ -2,12 +2,15 @@ import { useEffect } from "react";
 import { BrowserRouter, Switch, Link } from "react-router-dom";
 
 import Header from "./components/Header/Header";
-import { PAGE_PATH, ROUTES } from "./constants/route";
+import Navigation from "./components/Navigation/Navigation";
+import Loading from "./components/Loading/Loading";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+
 import useAuth from "./hooks/useAuth";
 import useStation from "./hooks/useStation";
 import useLine from "./hooks/useLine";
-import Navigation from "./components/Navigation/Navigation";
-import Loading from "./components/Loading/Loading";
+
+import { PAGE_PATH, ROUTES } from "./constants/route";
 import Routes from "./Routes";
 
 const App = () => {
@@ -44,7 +47,7 @@ const App = () => {
       <Switch>
         <Routes isAuthenticated={isAuthenticated} />
       </Switch>
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {loading && <Loading />}
     </BrowserRouter>
   );

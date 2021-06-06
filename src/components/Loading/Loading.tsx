@@ -5,7 +5,7 @@ import { COLOR } from "../../constants/color";
 
 export type Props = Partial<LoadingBlockProps>;
 
-const Loading = ({ bgColor = COLOR.PURPLE_300 }: Props) => (
+const Loading = ({ bgColor = COLOR.CYAN_400 }: Props) => (
   <LoadingBlock bgColor={bgColor}>
     <Left />
     <Center />

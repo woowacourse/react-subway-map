@@ -19,6 +19,12 @@ export interface LoadingBlockProps {
 }
 
 export const LoadingBlock = styled(FlexCenter)<LoadingBlockProps>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   div {
     width: 10px;
     height: 40px;
