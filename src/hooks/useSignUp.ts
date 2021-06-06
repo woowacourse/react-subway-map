@@ -13,7 +13,7 @@ import {
 const useSignUp = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const onSignUp = async ({ server, email, age, password, passwordConfirm }: SignUp) => {
+  const requestSignUp = async ({ server, email, age, password, passwordConfirm }: SignUp) => {
     if (!isValidEmail(email)) {
       enqueueSnackbar(MESSAGE.ERROR.INVALID_EMAIL);
 
@@ -58,13 +58,13 @@ const useSignUp = () => {
     return false;
   };
 
-  const onCheckDuplicateEmail = async ({ server, email }: Pick<SignUp, 'server' | 'email'>) => {
+  const checkDuplicateEmail = async ({ server, email }: Pick<SignUp, 'server' | 'email'>) => {
     await axios.post(`${BACKEND[server].baseUrl}/members/exists`, { email });
   };
 
   return {
-    onSignUp,
-    onCheckDuplicateEmail,
+    requestSignUp,
+    checkDuplicateEmail,
   };
 };
 

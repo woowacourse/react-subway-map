@@ -22,7 +22,7 @@ import {
 import ROUTES from '../../constants/routes';
 
 const SignUpPage = () => {
-  const { onSignUp, onCheckDuplicateEmail } = useSignUp();
+  const { requestSignUp, checkDuplicateEmail } = useSignUp();
 
   const history = useHistory();
 
@@ -58,7 +58,7 @@ const SignUpPage = () => {
 
   const handleCheckDuplicateEmail = async () => {
     try {
-      await onCheckDuplicateEmail({ server, email });
+      await checkDuplicateEmail({ server, email });
       setDuplicatedEmail(false);
     } catch (error) {
       setDuplicatedEmail(true);
@@ -70,7 +70,7 @@ const SignUpPage = () => {
 
     const invalidFormRef = getInvalidFormRef();
 
-    const isSuccess = await onSignUp({
+    const isSuccess = await requestSignUp({
       server,
       email,
       age,
@@ -79,7 +79,7 @@ const SignUpPage = () => {
     });
     invalidFormRef?.current?.focus();
 
-    if (!isSuccess) return;
+    if (!isSuccess || invalidFormRef) return;
 
     history.replace(ROUTES.ROOT);
   };
