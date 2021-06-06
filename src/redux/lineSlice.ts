@@ -2,6 +2,7 @@ import { LineInterface, SelectedLineInterface } from 'types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import MESSAGE from 'constants/message';
+import URL from 'constants/URL';
 
 export interface AddLinePayload {
   name: string;
@@ -26,6 +27,16 @@ export const getSelectedLineAsync = createAsyncThunk('line/getSelectedLineAsync'
 
 export const getLinesAsync = createAsyncThunk('line/getLinesAsync', async () => {
   const response = await axios.get('/lines');
+
+  return response.data;
+});
+
+export const getAllLinesAsync = createAsyncThunk('line/getAllLinesAsync', async () => {
+  if (!axios.defaults.baseURL) {
+    axios.defaults.baseURL = URL.ROKI;
+  }
+
+  const response = await axios.get('/lines/all');
 
   return response.data;
 });
@@ -73,6 +84,12 @@ const lineSlice = createSlice({
     });
     builder.addCase(getLinesAsync.rejected, () => {
       throw Error(MESSAGE.LINE.GET_LIST_FAIL);
+    });
+    builder.addCase(getAllLinesAsync.fulfilled, (state, action) => {
+      state.lines = action.payload;
+    });
+    builder.addCase(getAllLinesAsync.rejected, () => {
+      throw Error(MESSAGE.MAP.GET_FAIL);
     });
     builder.addCase(addLineAsync.fulfilled, (state, action) => {
       state.lines = state.lines ? state.lines.concat(action.payload) : [action.payload];
