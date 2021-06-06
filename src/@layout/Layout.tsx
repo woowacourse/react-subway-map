@@ -42,6 +42,11 @@ const Layout = ({ children, isLogin }: BaseLayoutProps) => {
             </Button>
           )}
         </Link>
+        <Link to={PATH.MAP}>
+          <Button className="mx-1">
+            <span>전체 보기</span>
+          </Button>
+        </Link>
         <Link to={PATH.LOGIN}>
           {isLogin ? (
             <Button onClick={handleLogout} className="mx-1">
