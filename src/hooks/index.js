@@ -3,5 +3,5 @@ export { useCookies } from './useCookies';
 
 export { useLine } from './useLine';
 export { useLogin } from './useLogin';
-export { useSection } from './useSection';
+export { useMap } from './useMap';
 export { useStation } from './useStation';

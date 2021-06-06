@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 
-import { useSection, useStation } from '../../hooks';
+import { useMap, useStation } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
 import { SectionListItem } from './SectionListItem';
 import {
@@ -18,7 +18,7 @@ import { COLOR } from '../../constants';
 
 export const SectionPage = () => {
   const { stations, requestGetStations } = useStation();
-  const { map, status, requestGetMap, requestAddSection, requestDeleteSection, clearStatus } = useSection();
+  const { map, status, requestGetMap, requestAddSection, requestDeleteSection, clearStatus } = useMap();
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
   const [selectedLineId, setSelectedLineId] = useState(map[0]?.id);
   const selectedLine = map.find((line) => line.id === selectedLineId);
