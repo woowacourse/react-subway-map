@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { useLogin, useServer } from '../../hooks';
+import { useLogin, useCookies } from '../../hooks';
 import { clearStation } from '../../redux/stationSlice';
 import { clearLine } from '../../redux/lineSlice';
 import { clearMap } from '../../redux/mapSlice';
@@ -15,7 +15,7 @@ export const Template = (props) => {
 
   const dispatch = useDispatch();
   const { isLogin, requestLogout, removeToken, goToAllowedPage } = useLogin();
-  const { serverId, setServerId } = useServer();
+  const { serverId, setServerId } = useCookies();
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
 
   const handleServerSubmit = (e) => {

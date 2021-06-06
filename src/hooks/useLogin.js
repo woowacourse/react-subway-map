@@ -2,16 +2,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { useAccessToken, useServer } from '.';
+import { useCookies } from '.';
 import { login, clearLoginFail, logout, clearLogout } from './../redux/userSlice';
 import { ROUTE, LOGIN, LOGOUT } from './../constants';
 
 export const useLogin = () => {
   const history = useHistory();
-  const { setAccessToken, removeAccessToken } = useAccessToken();
-  const { endpoint } = useServer();
-  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const { endpoint, setAccessToken, removeAccessToken } = useCookies();
   const { isLogin, isLoginFail, accessToken, isLogout } = useSelector((store) => store.user);
 
   const requestLogin = ({ email, password }) => {

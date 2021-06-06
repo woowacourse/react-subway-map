@@ -1,6 +1,5 @@
 export { useCookie } from './useCookie';
-export { useAccessToken } from './useAccessToken';
-export { useServer } from './useServer';
+export { useCookies } from './useCookies';
 
 export { useLine } from './useLine';
 export { useLogin } from './useLogin';

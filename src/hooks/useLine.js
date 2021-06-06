@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAccessToken, useServer } from '../hooks';
+import { useCookies } from '../hooks';
 import { getLines, addLine, removeLine, clearLineStatus } from '../redux/lineSlice';
 
 export const useLine = () => {
   const dispatch = useDispatch();
   const { lines, status } = useSelector((store) => store.line);
-  const { accessToken } = useAccessToken();
-  const { endpoint } = useServer();
+  const { accessToken, endpoint } = useCookies();
 
   const requestGetLines = () => {
     dispatch(getLines({ endpoint, accessToken }));
