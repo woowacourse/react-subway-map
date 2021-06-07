@@ -77,6 +77,6 @@ describe('StationPage 테스트', () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => expect(container).toHaveTextContent('지하철역을 삭제했습니다.'));
-    // expect(targetStation).not.toBeInTheDocument();
+    expect(targetStation).not.toBeInTheDocument();
   });
 });

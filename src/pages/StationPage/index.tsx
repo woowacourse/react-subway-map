@@ -96,8 +96,6 @@ const StationPage = () => {
       name: editingStationName,
     });
 
-    console.log('real save!!!', res); // ㅜㅜ
-
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(res.message);
     } else if (res.status === API_STATUS.FULFILLED) {

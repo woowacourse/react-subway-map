@@ -1,17 +1,26 @@
 import React from 'react';
 import { setupServer } from 'msw/node';
-import { render, fireEvent, waitFor } from 'test/test-util';
+import { render, fireEvent, waitFor, within } from 'test/test-util';
 import { stationHandlers, lineHandlers } from 'test/handlers';
 import { lines as linesData } from 'test/mockData';
 import LinePage from '.';
 
 const server = setupServer(...lineHandlers, ...stationHandlers);
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 describe('LinePage 테스트', () => {
+  beforeAll(() => {
+    jest.spyOn(window, 'alert').mockImplementation(() => true);
+    server.listen();
+  });
+
+  beforeEach(() => {
+    jest.spyOn(window, 'confirm').mockImplementation(() => true);
+    window.confirm = jest.fn(() => true);
+  });
+
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
   const setup = () => {
     const utils = render(<LinePage />);
     const { getByTestId } = utils;
@@ -27,11 +36,11 @@ describe('LinePage 테스트', () => {
     const { lineList, getAllByTestId } = setup();
     expect(lineList).toBeInTheDocument();
 
-    const lines = await waitFor(() => getAllByTestId('line-item'));
+    const lines = getAllByTestId('line-item');
     expect(lines).toHaveLength(linesData.length);
   });
 
-  it.only('새로운 노선을 추가할 수 있다.', async () => {
+  it('새로운 노선을 추가할 수 있다.', async () => {
     const { getAllByTestId, getByRole, getByText } = setup();
 
     const addLineButton = getByRole('button', { name: /노선 추가/i });
@@ -58,7 +67,17 @@ describe('LinePage 테스트', () => {
     const submitButton = getByRole('button', { name: /확인/i });
     fireEvent.click(submitButton);
 
-    // const newLine = await waitFor(() => getByText(/2호선/i));
-    // expect(newLine).toBeInTheDocument();
+    const newLine = await waitFor(() => getByText(/2호선/i));
+    expect(newLine).toBeInTheDocument();
+  });
+
+  it('노선을 삭제할 수 있다.', async () => {
+    const { getByText, container } = setup();
+    const targetLine = await waitFor(() => getByText(/2호선/i));
+    const deleteButton = within(targetLine).getByRole('button', { name: /delete/i });
+    fireEvent.click(deleteButton);
+
+    await waitFor(() => expect(container).toHaveTextContent('노선을 삭제했습니다.'));
+    expect(targetLine).not.toBeInTheDocument();
   });
 });

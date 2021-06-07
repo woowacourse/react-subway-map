@@ -49,7 +49,6 @@ const SearchPage = () => {
     if (res.status === API_STATUS.REJECTED) {
       enqueueSnackbar(ALERT_MESSAGE.NO_PATH_AVAILABLE);
     } else if (res.status === API_STATUS.FULFILLED) {
-      console.log(res.data);
       setPaths(res.data.stations);
       setDistance(res.data.distance);
       setExtraFare(res.data.fare);
