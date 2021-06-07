@@ -3,10 +3,15 @@ import styled, { css } from 'styled-components';
 import PALETTE from '../../../constants/palette';
 
 interface ChipProps extends Omit<Properties, 'translate'> {
-  size: 's' | 'm' | 'l';
+  size: 'xs' | 's' | 'm' | 'l';
 }
 
 const chipSize = {
+  xs: css`
+    font-size: 0.4rem;
+    padding: 0.1rem 0.2rem;
+    border-radius: 1rem;
+  `,
   s: css`
     font-size: 0.5rem;
     padding: 0.1rem 0.4rem;
