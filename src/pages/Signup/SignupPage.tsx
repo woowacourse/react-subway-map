@@ -4,16 +4,14 @@ import { Flex, FlexBetween, FlexCenter } from "../../components";
 import { Block, Button, Input } from "../../components";
 
 import { useInput, useAuth } from "../../hooks";
-
-import { validateAge } from "../../validations/age";
-import { validateEmail } from "../../validations/email";
 import {
+  validateAge,
+  validateEmail,
   validatePassword,
   validatePasswordConfirm,
-} from "../../validations/password";
-
-import { PAGE_PATH } from "../../constants/route";
-import { SIZE } from "../../constants/size";
+} from "../../validations";
+import { PAGE_PATH } from "../../constants";
+import { SIZE } from "../../constants";
 
 const SignupPage = () => {
   const {
@@ -41,7 +39,7 @@ const SignupPage = () => {
     }
   });
 
-  const { signup, error } = useAuth();
+  const { signup } = useAuth();
 
   const history = useHistory();
 

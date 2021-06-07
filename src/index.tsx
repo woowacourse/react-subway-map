@@ -1,18 +1,17 @@
 import React from "react";
-import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
 import store from "./modules";
 import { BASE_URL, changeBaseUrl } from "./apis/index";
 
 import App from "./App";
-
 import { Select } from "./components";
 import { Flex } from "./components";
 
 import GlobalStyle from "./Global.styles";
-import { COLOR } from "./constants/color";
+import { COLOR } from "./constants";
 
 export const theme = {
   PRIMARY: COLOR.CYAN_300,
@@ -32,7 +31,7 @@ const onChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
 };
 
 changeBaseUrl(
-  (localStorage.getItem("범인") as keyof typeof BASE_URL) || "수리"
+  (localStorage.getItem("범인") as keyof typeof BASE_URL) || "에드"
 );
 
 ReactDOM.render(
@@ -51,7 +50,7 @@ ReactDOM.render(
             options={targets}
             onChange={onChange}
             style={{ width: "9.375rem", backgroundColor: "skyblue" }}
-          ></Select>
+          />
         </Flex>
         <App />
       </ThemeProvider>

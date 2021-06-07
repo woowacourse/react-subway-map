@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { COLOR } from "../../constants/color";
+
+import { COLOR } from "../../constants";
 
 interface SelectBlockProps {
   selectSize?: "md" | "block";

@@ -20,7 +20,7 @@ import {
   LineAddRequestItem,
   SectionAddRequestItem,
 } from "../@types/types";
-import { ERROR_DURATION } from "../constants/time";
+import { ERROR_DURATION } from "../constants";
 
 interface LineState {
   items: Line[];

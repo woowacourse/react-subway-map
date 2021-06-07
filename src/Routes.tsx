@@ -1,14 +1,16 @@
 import { Route, RouteProps, Redirect } from "react-router";
 
-import LoginPage from "./pages/Login/LoginPage";
-import Logout from "./pages/Logout";
-import SignupPage from "./pages/Signup/SingupPage";
-import StationManagementPage from "./pages/StationManagement/StationManagementPage";
-import LineManagementPage from "./pages/LineManagement/LineManagementPage";
-import SectionManagementPage from "./pages/SectionManagement/SectionManagementPage";
-import SubwayMapPage from "./pages/SubwayMap/SubwayMapPage";
+import {
+  Login,
+  Logout,
+  Signup,
+  StationManagement,
+  LineManagement,
+  SectionManagement,
+  SubwayMap,
+} from "./pages";
 
-import { PAGE_PATH } from "./constants/route";
+import { PAGE_PATH } from "./constants";
 
 interface Props {
   isAuthenticated: boolean;
@@ -30,25 +32,25 @@ const Routes = ({ isAuthenticated }: Props) => {
   return (
     <>
       <PublicRoute exact path={PAGE_PATH.LOGIN}>
-        <LoginPage />
+        <Login />
       </PublicRoute>
       <PrivateRoute exact path={PAGE_PATH.LOGOUT}>
         <Logout />
       </PrivateRoute>
       <PublicRoute exact path={PAGE_PATH.SIGN_UP}>
-        <SignupPage />
+        <Signup />
       </PublicRoute>
       <PrivateRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
-        <StationManagementPage />
+        <StationManagement />
       </PrivateRoute>
       <PrivateRoute exact path={PAGE_PATH.LINE_MANAGEMENT}>
-        <LineManagementPage />
+        <LineManagement />
       </PrivateRoute>
       <PrivateRoute exact path={PAGE_PATH.SECTION_MANAGEMENT}>
-        <SectionManagementPage />
+        <SectionManagement />
       </PrivateRoute>
       <PrivateRoute exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
-        <SubwayMapPage />
+        <SubwayMap />
       </PrivateRoute>
     </>
   );

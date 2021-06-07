@@ -1,7 +1,12 @@
 import { InputHTMLAttributes, Dispatch, SetStateAction } from "react";
 
-import { CIRCLE_COLOR } from "../../constants/color";
-import { ColorPickerBlock, ColorBlockGrid, ColorBlock, ColorPreview } from "./ColorPicker.styles";
+import { CIRCLE_COLOR } from "../../constants";
+import {
+  ColorPickerBlock,
+  ColorBlockGrid,
+  ColorBlock,
+  ColorPreview,
+} from "./ColorPicker.styles";
 
 const colors = Object.keys(CIRCLE_COLOR) as (keyof typeof CIRCLE_COLOR)[];
 

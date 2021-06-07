@@ -1,14 +1,13 @@
 import { useState } from "react";
 
 import LineAddModal from "./Modal/LineAddModal";
-
 import { Button, Block, ListItem } from "../../components";
 import { Flex, FlexCenter, FlexBetween } from "../../components";
 
 import { useStation, useLine } from "../../hooks";
 
-import { CIRCLE_COLOR } from "../../constants/color";
-import { SIZE } from "../../constants/size";
+import { CIRCLE_COLOR } from "../../constants";
+import { SIZE } from "../../constants";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);

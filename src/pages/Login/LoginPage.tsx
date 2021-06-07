@@ -5,11 +5,9 @@ import { Flex, FlexBetween, FlexCenter } from "../../components";
 
 import { useInput, useAuth } from "../../hooks";
 
-import { validateEmail } from "../../validations/email";
-import { validatePassword } from "../../validations/password";
-
-import { SIZE } from "../../constants/size";
-import { PAGE_PATH } from "../../constants/route";
+import { validateEmail, validatePassword } from "../../validations";
+import { SIZE } from "../../constants";
+import { PAGE_PATH } from "../../constants";
 
 const LoginPage = () => {
   const {

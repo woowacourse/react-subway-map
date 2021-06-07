@@ -14,7 +14,7 @@ import {
   isRejectedAction,
 } from "./@shared/checkThunkActionStatus";
 import { LoginInfo, SignupInfo } from "../@types/types";
-import { ERROR_DURATION } from "../constants/time";
+import { ERROR_DURATION } from "../constants";
 
 interface AuthState {
   isAuthenticated: boolean;

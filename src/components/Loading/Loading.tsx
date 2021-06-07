@@ -1,7 +1,7 @@
 import { LoadingBlock, Left, Center, Right } from "./Loading.style";
 import { LoadingBlockProps } from "./Loading.style";
 
-import { COLOR } from "../../constants/color";
+import { COLOR } from "../../constants";
 
 export type Props = Partial<LoadingBlockProps>;
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export enum BASE_URL {
+  에드 = "https://subway-app.kro.kr",
   수리 = "https://suri-subway.kro.kr",
   와일더 = "https://wilder-subway.kro.kr",
-  에드 = "https://subway-app.kro.kr",
   포모 = "https://subway-pomo.kro.kr",
 }
 

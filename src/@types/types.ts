@@ -1,4 +1,4 @@
-import { CIRCLE_COLOR } from "../constants/color";
+import { CIRCLE_COLOR } from "../constants";
 
 export interface Line {
   id: number;

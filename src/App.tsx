@@ -5,7 +5,7 @@ import { Header, Navigation, Loading, ErrorMessage } from "./components";
 
 import { useAuth, useStation, useLine } from "./hooks";
 
-import { PAGE_PATH, ROUTES } from "./constants/route";
+import { PAGE_PATH, ROUTES } from "./constants";
 import Routes from "./Routes";
 
 const App = () => {

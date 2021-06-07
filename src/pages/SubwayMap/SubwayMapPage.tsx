@@ -1,7 +1,7 @@
 import { Block } from "../../components";
 import { FlexCenter } from "../../components";
 
-import { SIZE } from "../../constants/size";
+import { SIZE } from "../../constants";
 
 const SubwayMapPage = () => (
   <FlexCenter>

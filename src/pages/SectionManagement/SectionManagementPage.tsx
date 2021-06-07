@@ -1,13 +1,12 @@
 import { useState } from "react";
 
 import SectionAddModal from "./Modal/SectionAddModal";
-
 import { Button, Block, Select, ListItem } from "../../components";
 import { Flex, FlexCenter, FlexBetween } from "../../components";
 
 import { useStation, useLine, useSelect } from "../../hooks";
 
-import { SIZE } from "../../constants/size";
+import { SIZE } from "../../constants";
 
 const SectionManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);

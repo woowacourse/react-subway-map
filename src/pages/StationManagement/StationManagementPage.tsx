@@ -3,9 +3,8 @@ import { Flex, FlexCenter } from "../../components";
 
 import { useStation, useInput } from "../../hooks";
 
-import { validateStationName } from "../../validations/station";
-
-import { SIZE } from "../../constants/size";
+import { validateStationName } from "../../validations";
+import { SIZE } from "../../constants";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();

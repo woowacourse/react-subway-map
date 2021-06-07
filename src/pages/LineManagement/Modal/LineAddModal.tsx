@@ -12,9 +12,11 @@ import { Flex } from "../../../components";
 
 import { useInput, useSelect } from "../../../hooks";
 
-import { validateLineName } from "../../../validations/line";
-import { validateSectionDistance } from "../../../validations/section";
-import { CIRCLE_COLOR } from "../../../constants/color";
+import {
+  validateLineName,
+  validateSectionDistance,
+} from "../../../validations";
+import { CIRCLE_COLOR } from "../../../constants";
 import { LineAddRequestItem, Station } from "../../../@types/types";
 
 interface Props {

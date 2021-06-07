@@ -2,9 +2,9 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
 
-import { useAppDispatch } from "../../hooks";
-
 import LoginPage from "./LoginPage";
+
+import { useAppDispatch } from "../../hooks";
 
 import initialState from "../../fixtures/redux";
 import mockStore from "../../utils/mockStore";
