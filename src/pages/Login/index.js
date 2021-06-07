@@ -19,6 +19,11 @@ export const LoginPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
+    if (!Cookies.get(ACCESS_TOKEN)) {
+      history.push(ROUTE.LOGIN);
+      return;
+    }
+
     if (isLogin) {
       enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
       history.push(ROUTE.STATION);
