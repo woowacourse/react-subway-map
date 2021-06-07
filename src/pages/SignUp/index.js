@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
+import { useAuthorization } from '../../hooks';
+
+import { requestPostWithoutAccessToken } from '../../services/httpRequest';
+import {
+  getAgeValidationMessage,
+  getEmailValidationMessage,
+  getEmailValidationMessageAfterBlurred,
+  getPasswordValidationMessage,
+} from '../../services/SingUpValidator';
+
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
-import { useAuthorization } from '../../hooks';
-import { requestPostWithoutAccessToken } from '../../services/httpRequest';
 
 export const SignUpPage = () => {
   const history = useHistory();
@@ -50,25 +58,20 @@ export const SignUpPage = () => {
     })();
   };
 
-  const handleEmailInputChange = (e) => {
-    const email = e.target.value;
-
-    setEmailMessage(getEmailValidationMessage(email));
+  const handleEmailInputChange = ({ target: { value } }) => {
+    setEmailMessage(getEmailValidationMessage(value));
   };
-  const handleEmailInputBlur = (e) => {
-    const email = e.target.value;
 
-    setEmailMessage(getEmailValidationMessageAfterBlurred(email));
+  const handleEmailInputBlur = ({ target: { value } }) => {
+    setEmailMessage(getEmailValidationMessageAfterBlurred(value));
   };
-  const handleAgeInputChange = (e) => {
-    const age = e.target.value;
 
-    setAgeMessage(getAgeValidationMessage(age));
+  const handleAgeInputChange = ({ target: { value } }) => {
+    setAgeMessage(getAgeValidationMessage(value));
   };
-  const handlePasswordInputChange = (e) => {
-    const password = e.target.value;
 
-    setPasswordMessage(getPasswordValidationMessage(password));
+  const handlePasswordInputChange = ({ target: { value } }) => {
+    setPasswordMessage(getPasswordValidationMessage(value));
   };
 
   return (
@@ -110,47 +113,3 @@ export const SignUpPage = () => {
     </Section>
   );
 };
-
-function getEmailValidationMessage(email) {
-  if (email[0] === '@') {
-    return SIGN_UP.EMAIL_SHOULD_INCLUDE_ID;
-  } else if (email.includes(' ')) {
-    return SIGN_UP.EMAIL_CANNOT_INCLUDE_BLANK;
-  } else if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(email)) {
-    return SIGN_UP.EMAIL_CANNOT_INCLUDE_KOREAN;
-  }
-  return '';
-}
-
-function getEmailValidationMessageAfterBlurred(email) {
-  if (!/^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/.test(email)) {
-    return SIGN_UP.EMAIL_SHOULD_BE_IN_VALID_FORMAT;
-  }
-  return '';
-}
-
-function getAgeValidationMessage(age) {
-  if (age < SIGN_UP.MIN_AGE || age > SIGN_UP.MAX_AGE) {
-    return SIGN_UP.AGE_SHOULD_BE_IN_RANGE;
-  } else if (age.includes(' ')) {
-    return SIGN_UP.AGE_CANNOT_INCLUDE_BLANK;
-  } else if (!/^[0-9]*$/.test(age)) {
-    return SIGN_UP.AGE_SHOULD_BE_IN_NUMBER;
-  }
-  return '';
-}
-
-function getPasswordValidationMessage(password) {
-  if (password.length < SIGN_UP.PASSWORD_LENGTH_MIN || password.length > SIGN_UP.PASSWORD_LENGTH_MAX) {
-    return SIGN_UP.PASSWORD_SHOULD_BE_IN_RANGE;
-  } else if (password.includes(' ')) {
-    return SIGN_UP.PASSWORD_CANNOT_INCLUDE_BLANK;
-  } else if (!/[a-zA-Z]/.test(password)) {
-    return SIGN_UP.PASSWORD_SHOULD_INCLUDE_ENGLISH;
-  } else if (!/[0-9]/.test(password)) {
-    return SIGN_UP.PASSWORD_SHOULD_INCLUDE_NUMBER;
-  } else if (!/^[a-zA-Z0-9]*$/.test(password)) {
-    return SIGN_UP.PASSWORD_SHOULD_BE_ONLY_ENGLISH_AND_NUMBER;
-  }
-  return '';
-}

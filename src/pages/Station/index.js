@@ -8,9 +8,10 @@ import { getStations, addStation, clearStationProgress, removeStation } from '..
 
 import { useAuthorization } from '../../hooks';
 
-import { ButtonSquare, IconSubway, Input, Section } from '../../components';
-import { StationListItem } from './StationListItem';
+import getInputStatus from '../../services/stationNameValidator';
 
+import { StationListItem } from './StationListItem';
+import { ButtonSquare, IconSubway, Input, Section } from '../../components';
 import { Form, List, InputWrapper, Message } from './style';
 import { STATION, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ROUTE } from '../../constants';
 
@@ -93,37 +94,3 @@ export const StationPage = () => {
     </Section>
   );
 };
-
-//TODO : Util 함수로 빼기, 정교한 Validation 구현하기, 한글 자음만 입력했을 때 입력되는 문제 삭제하기
-function getInputStatus(name) {
-  if (name.length > STATION.NAME_LENGTH_MAX) {
-    return {
-      message: STATION.NAME_IS_TOO_LONG,
-      isValid: false,
-    };
-  } else if (name.length < STATION.NAME_LENGTH_MIN) {
-    return {
-      message: STATION.NAME_IS_TOO_SHORT,
-      isValid: false,
-    };
-  } else if (name.includes(' ')) {
-    return {
-      message: STATION.NAME_CANNOT_INCLUDE_BLANK,
-      isValid: false,
-    };
-  } else if (name.match(/[a-zA-Z]/)) {
-    return {
-      message: STATION.NAME_CANNOT_INCLUDE_ENGLISH,
-      isValid: false,
-    };
-  } else if (name.match(/[!@#$%^&*(),.?":{}|<>]/)) {
-    return {
-      message: STATION.NAME_CANNOT_INCLUDE_SPECIAL_CHARACTER,
-      isValid: false,
-    };
-  }
-  return {
-    message: '',
-    isValid: true,
-  };
-}
