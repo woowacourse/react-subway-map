@@ -12,35 +12,23 @@ interface DeleteStationPayload {
 }
 
 export const getStationAsync = createAsyncThunk('station/getStationAsync', async () => {
-  try {
-    const response = await axios.get('/stations');
+  const response = await axios.get('/stations');
 
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
-  }
+  return response.data;
 });
 
 export const addStationAsync = createAsyncThunk('station/addStationAsync', async ({ name }: AddStationPayload) => {
-  try {
-    const response = await axios.post('/stations', { name });
+  const response = await axios.post('/stations', { name });
 
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
-  }
+  return response.data;
 });
 
 export const deleteStationAsync = createAsyncThunk(
   'station/deleteStationAsync',
   async ({ id }: DeleteStationPayload) => {
-    try {
-      await axios.delete(`/stations/${id}`);
+    await axios.delete(`/stations/${id}`);
 
-      return id;
-    } catch (error) {
-      throw new Error(error);
-    }
+    return id;
   }
 );
 

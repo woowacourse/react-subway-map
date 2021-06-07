@@ -19,46 +19,30 @@ interface DeleteLinePayload {
 }
 
 export const getSelectedLineAsync = createAsyncThunk('line/getSelectedLineAsync', async ({ id }: GetLinePayload) => {
-  try {
-    const response = await axios.get(`/lines/${id}`);
+  const response = await axios.get(`/lines/${id}`);
 
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
-  }
+  return response.data;
 });
 
 export const getLinesAsync = createAsyncThunk('line/getLinesAsync', async () => {
-  try {
-    const response = await axios.get('/lines');
+  const response = await axios.get('/lines');
 
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
-  }
+  return response.data;
 });
 
 export const addLineAsync = createAsyncThunk(
   'line/addLineAsync',
   async ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => {
-    try {
-      const response = await axios.post('/lines', { name, color, upStationId, downStationId, distance });
+    const response = await axios.post('/lines', { name, color, upStationId, downStationId, distance });
 
-      return response.data;
-    } catch (error) {
-      throw new Error(error);
-    }
+    return response.data;
   }
 );
 
 export const deleteLineAsync = createAsyncThunk('line/deleteLineAsync', async ({ id }: DeleteLinePayload) => {
-  try {
-    await axios.delete(`/lines/${id}`);
+  await axios.delete(`/lines/${id}`);
 
-    return id;
-  } catch (error) {
-    throw new Error(error);
-  }
+  return id;
 });
 
 const initialState: {
