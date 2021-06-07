@@ -4,9 +4,9 @@ import {
   PayloadAction,
   AnyAction,
   isAllOf,
+  createAction,
 } from "@reduxjs/toolkit";
 
-import { Station } from "../@types/types";
 import { requestStation } from "../apis/station";
 
 import {
@@ -14,6 +14,8 @@ import {
   isPendingAction,
   isRejectedAction,
 } from "./@shared/checkThunkActionStatus";
+import { Station } from "../@types/types";
+import { ERROR_DURATION } from "../constants/time";
 
 interface StationState {
   items: Station[];
@@ -27,18 +29,24 @@ const initialState: StationState = {
   error: null,
 };
 
+const resetError = createAction("[STATION] RESET_ERROR");
+
 const isStationAction = (action: AnyAction): action is AnyAction => {
   return action.type.startsWith("[STATION]");
 };
 
 const getStations = createAsyncThunk(
   "[STATION] LOAD",
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const stations = await requestStation.getAllStation();
 
       return stations;
     } catch (err) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(err.response.data);
     }
   }
@@ -46,12 +54,16 @@ const getStations = createAsyncThunk(
 
 const addStation = createAsyncThunk(
   "[STATION] ADD",
-  async (name: string, { rejectWithValue }) => {
+  async (name: string, { dispatch, rejectWithValue }) => {
     try {
       const station = await requestStation.addStation(name);
 
       return station;
     } catch (err) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(err.response.data);
     }
   }
@@ -59,12 +71,16 @@ const addStation = createAsyncThunk(
 
 const deleteStation = createAsyncThunk(
   "[STATION] DELETE",
-  async (id: number, { rejectWithValue }) => {
+  async (id: number, { dispatch, rejectWithValue }) => {
     try {
       await requestStation.deleteStation(id);
 
       return id;
     } catch (err) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(err.response.data);
     }
   }
@@ -85,6 +101,9 @@ export const stationSlice = createSlice({
       .addCase(getStations.fulfilled, (state, { payload }) => {
         state.items = payload;
         state.loading = false;
+      })
+      .addCase(resetError, (state) => {
+        state.error = null;
       })
       .addMatcher(isAllOf(isStationAction, isFulfilledAction), (state) => {
         state.loading = false;

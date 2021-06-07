@@ -4,13 +4,9 @@ import {
   PayloadAction,
   AnyAction,
   isAllOf,
+  createAction,
 } from "@reduxjs/toolkit";
 
-import {
-  Line,
-  LineAddRequestItem,
-  SectionAddRequestItem,
-} from "../@types/types";
 import { requestLine } from "../apis/line";
 import { requestSection } from "../apis/section";
 
@@ -19,6 +15,12 @@ import {
   isFulfilledAction,
   isRejectedAction,
 } from "./@shared/checkThunkActionStatus";
+import {
+  Line,
+  LineAddRequestItem,
+  SectionAddRequestItem,
+} from "../@types/types";
+import { ERROR_DURATION } from "../constants/time";
 
 interface LineState {
   items: Line[];
@@ -32,18 +34,24 @@ const initialState: LineState = {
   error: null,
 };
 
+const resetError = createAction("[LINE] RESET_ERROR");
+
 const isLineAction = (action: AnyAction): action is AnyAction => {
   return action.type.startsWith("[LINE]");
 };
 
 const getLines = createAsyncThunk(
   "[LINE] LOAD",
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const line = await requestLine.getAllLines();
 
       return line;
     } catch (error) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -51,12 +59,19 @@ const getLines = createAsyncThunk(
 
 const addLine = createAsyncThunk(
   "[LINE] ADD",
-  async (lineRequestItem: LineAddRequestItem, { rejectWithValue }) => {
+  async (
+    lineRequestItem: LineAddRequestItem,
+    { dispatch, rejectWithValue }
+  ) => {
     try {
       const line = await requestLine.addLine(lineRequestItem);
 
       return line;
     } catch (error) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -64,12 +79,16 @@ const addLine = createAsyncThunk(
 
 const deleteLine = createAsyncThunk(
   "[LINE] DELETE",
-  async (id: number, { rejectWithValue }) => {
+  async (id: number, { dispatch, rejectWithValue }) => {
     try {
       await requestLine.deleteLine(id);
 
       return id;
     } catch (error) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -77,12 +96,19 @@ const deleteLine = createAsyncThunk(
 
 const addSection = createAsyncThunk(
   "[LINE] SECTION_ADD",
-  async (sectionAddRequestItem: SectionAddRequestItem, { rejectWithValue }) => {
+  async (
+    sectionAddRequestItem: SectionAddRequestItem,
+    { dispatch, rejectWithValue }
+  ) => {
     try {
       const response = await requestSection.addSection(sectionAddRequestItem);
 
       return response.data;
     } catch (error) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -92,7 +118,7 @@ const deleteSection = createAsyncThunk(
   "[LINE] SECTION_DELETE",
   async (
     { lineId, stationId }: { lineId: number; stationId: number },
-    { rejectWithValue }
+    { dispatch, rejectWithValue }
   ) => {
     try {
       await requestSection.deleteSection({ lineId, stationId });
@@ -102,6 +128,10 @@ const deleteSection = createAsyncThunk(
         stationId,
       };
     } catch (error) {
+      setTimeout(() => {
+        dispatch(resetError());
+      }, ERROR_DURATION);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -124,6 +154,9 @@ export const lineSlice = createSlice({
       .addCase(getLines.fulfilled, (state, { payload }) => {
         state.items = payload;
         state.loading = false;
+      })
+      .addCase(resetError, (state) => {
+        state.error = null;
       })
       .addMatcher(isAllOf(isLineAction, isFulfilledAction), (state) => {
         state.loading = false;
