@@ -1,5 +1,4 @@
 import trashCanSVG from '../../assets/svg/trash-can.svg';
-import editSVG from '../../assets/svg/edit.svg';
 import * as S from './LineListItem.styles';
 
 export interface Props {
@@ -17,11 +16,11 @@ const LineListItem = ({ name, id, color, deleteLine }: Props) => {
 
   return (
     <S.LineListItem>
+      <S.LineColorCircleContainer>
+        <S.LineColorCircle color={color} />
+      </S.LineColorCircleContainer>
       <S.Name>{name}</S.Name>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <S.Button src={editSVG} />
-        </S.ButtonWrapper>
         <S.ButtonWrapper>
           <S.Button src={trashCanSVG} onClick={handleDeleteLine} />
         </S.ButtonWrapper>
