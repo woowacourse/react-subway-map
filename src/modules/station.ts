@@ -1,4 +1,10 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  AnyAction,
+  isAllOf,
+} from "@reduxjs/toolkit";
 
 import { Station } from "../@types/types";
 import { requestStation } from "../apis/station";
@@ -19,6 +25,10 @@ const initialState: StationState = {
   items: [],
   loading: false,
   error: null,
+};
+
+const isStationAction = (action: AnyAction): action is AnyAction => {
+  return action.type.startsWith("[STATION]");
 };
 
 const getStations = createAsyncThunk(
@@ -76,14 +86,14 @@ export const stationSlice = createSlice({
         state.items = payload;
         state.loading = false;
       })
-      .addMatcher(isFulfilledAction, (state) => {
-        state.loading = true;
+      .addMatcher(isAllOf(isStationAction, isFulfilledAction), (state) => {
+        state.loading = false;
       })
-      .addMatcher(isPendingAction, (state) => {
+      .addMatcher(isAllOf(isStationAction, isPendingAction), (state) => {
         state.loading = true;
       })
       .addMatcher(
-        isRejectedAction,
+        isAllOf(isStationAction, isRejectedAction),
         (state, { payload }: PayloadAction<Error>) => {
           state.loading = false;
           state.error = payload;

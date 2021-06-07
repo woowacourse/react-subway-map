@@ -3,6 +3,8 @@ import {
   createAsyncThunk,
   Dispatch,
   PayloadAction,
+  isAllOf,
+  AnyAction,
 } from "@reduxjs/toolkit";
 
 import { requestAuth } from "../apis/user";
@@ -23,6 +25,10 @@ const initialState: AuthState = {
   isAuthenticated: false,
   loading: false,
   error: null,
+};
+
+const isAuthAction = (action: AnyAction): action is AnyAction => {
+  return action.type.startsWith("[AUTH]");
 };
 
 const LOGOUT = "[AUTH] LOGOUT";
@@ -103,11 +109,11 @@ export const authSlice = createSlice({
         state.isAuthenticated = true;
         state.loading = false;
       })
-      .addMatcher(isPendingAction, (state) => {
+      .addMatcher(isAllOf(isAuthAction, isPendingAction), (state) => {
         state.loading = true;
       })
       .addMatcher(
-        isRejectedAction,
+        isAllOf(isAuthAction, isRejectedAction),
         (state, { payload }: PayloadAction<Error>) => {
           state.loading = false;
           state.error = payload;

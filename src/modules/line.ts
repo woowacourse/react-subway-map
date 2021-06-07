@@ -1,4 +1,10 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  AnyAction,
+  isAllOf,
+} from "@reduxjs/toolkit";
 
 import {
   Line,
@@ -24,6 +30,10 @@ const initialState: LineState = {
   items: [],
   loading: false,
   error: null,
+};
+
+const isLineAction = (action: AnyAction): action is AnyAction => {
+  return action.type.startsWith("[LINE]");
 };
 
 const getLines = createAsyncThunk(
@@ -115,14 +125,14 @@ export const lineSlice = createSlice({
         state.items = payload;
         state.loading = false;
       })
-      .addMatcher(isFulfilledAction, (state) => {
-        state.loading = true;
+      .addMatcher(isAllOf(isLineAction, isFulfilledAction), (state) => {
+        state.loading = false;
       })
-      .addMatcher(isPendingAction, (state) => {
+      .addMatcher(isAllOf(isLineAction, isPendingAction), (state) => {
         state.loading = true;
       })
       .addMatcher(
-        isRejectedAction,
+        isAllOf(isLineAction, isRejectedAction),
         (state, { payload }: PayloadAction<Error>) => {
           state.loading = false;
           state.error = payload;
