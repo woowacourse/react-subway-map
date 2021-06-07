@@ -1,8 +1,8 @@
 import { LiHTMLAttributes, MouseEventHandler, useState } from "react";
 
-import { FlexAlignCenter } from "../@shared/FlexContainer/FlexContainer";
-import Button from "../Button/Button";
-import Confirm from "../Confirm/Confirm";
+import { Button, Confirm } from "../";
+import { FlexAlignCenter } from "../Layout/";
+
 import {
   ListItemBlock,
   ListItemStylesProps,

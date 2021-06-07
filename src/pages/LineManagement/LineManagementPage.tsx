@@ -1,14 +1,9 @@
 import { useState } from "react";
 
-import Button from "../../components/Button/Button";
-import Block from "../../components/Block/Block";
-import {
-  Flex,
-  FlexCenter,
-  FlexBetween,
-} from "../../components/@shared/FlexContainer/FlexContainer";
-import ListItem from "../../components/ListItem/ListItem";
 import LineAddModal from "./Modal/LineAddModal";
+
+import { Button, Block, ListItem } from "../../components/";
+import { Flex, FlexCenter, FlexBetween } from "../../components/";
 
 import useLine from "../../hooks/useLine";
 import useStation from "../../hooks/useStation";

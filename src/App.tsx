@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Switch, Link } from "react-router-dom";
 
-import Header from "./components/Header/Header";
-import Navigation from "./components/Navigation/Navigation";
-import Loading from "./components/Loading/Loading";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import { Header, Navigation, Loading, ErrorMessage } from "./components";
 
 import useAuth from "./hooks/useAuth";
 import useStation from "./hooks/useStation";

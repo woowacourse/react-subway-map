@@ -1,14 +1,8 @@
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
-import Block from "../../components/Block/Block";
-import ListItem from "../../components/ListItem/ListItem";
-import {
-  Flex,
-  FlexCenter,
-} from "../../components/@shared/FlexContainer/FlexContainer";
+import { Input, Button, Block, ListItem } from "../../components";
+import { Flex, FlexCenter } from "../../components";
 
 import useStation from "../../hooks/useStation";
-import useInput from "../../hooks/@common/useInput";
+import useInput from "../../hooks/useInput";
 
 import { validateStationName } from "../../validations/station";
 

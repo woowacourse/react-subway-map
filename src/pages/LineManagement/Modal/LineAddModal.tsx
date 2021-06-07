@@ -1,18 +1,22 @@
 import { MouseEventHandler, useState } from "react";
-import { LineAddRequestItem, Station } from "../../../@types/types";
-import { Flex } from "../../../components/@shared/FlexContainer/FlexContainer";
 
-import Block from "../../../components/Block/Block";
-import Button from "../../../components/Button/Button";
-import ColorPicker from "../../../components/ColorPicker/ColorPicker";
-import Input from "../../../components/Input/Input";
-import Modal from "../../../components/Modal/Modal";
-import Select from "../../../components/Select/Select";
-import useInput from "../../../hooks/@common/useInput";
-import useSelect from "../../../hooks/@common/useSelect";
+import {
+  Block,
+  Button,
+  ColorPicker,
+  Input,
+  Modal,
+  Select,
+} from "../../../components/";
+import { Flex } from "../../../components/";
+
+import useInput from "../../../hooks/useInput";
+import useSelect from "../../../hooks/useSelect";
+
 import { validateLineName } from "../../../validations/line";
 import { validateSectionDistance } from "../../../validations/section";
 import { CIRCLE_COLOR } from "../../../constants/color";
+import { LineAddRequestItem, Station } from "../../../@types/types";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;

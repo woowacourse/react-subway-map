@@ -1,5 +1,5 @@
-import Block from "../../components/Block/Block";
-import { FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
+import { Block } from "../../components/";
+import { FlexCenter } from "../../components/";
 
 import { SIZE } from "../../constants/size";
 

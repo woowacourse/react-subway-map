@@ -4,14 +4,15 @@ import ReactDOM from "react-dom";
 import { ThemeProvider } from "styled-components";
 
 import store from "./modules";
+import { BASE_URL, changeBaseUrl } from "./apis/index";
 
 import App from "./App";
-import Select from "./components/Select/Select";
-import { Flex } from "./components/@shared/FlexContainer/FlexContainer";
-import GlobalStyle from "./Global.styles";
 
+import { Select } from "./components/";
+import { Flex } from "./components/";
+
+import GlobalStyle from "./Global.styles";
 import { COLOR } from "./constants/color";
-import { BASE_URL, changeBaseUrl } from "./apis/index";
 
 export const theme = {
   PRIMARY: COLOR.CYAN_300,

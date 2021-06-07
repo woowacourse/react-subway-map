@@ -1,15 +1,9 @@
 import { useHistory } from "react-router-dom";
 
-import {
-  Flex,
-  FlexBetween,
-  FlexCenter,
-} from "../../components/@shared/FlexContainer/FlexContainer";
-import Block from "../../components/Block/Block";
-import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
+import { Flex, FlexBetween, FlexCenter } from "../../components/";
+import { Block, Button, Input } from "../../components/";
 
-import useInput from "../../hooks/@common/useInput";
+import useInput from "../../hooks/useInput";
 import useAuth from "../../hooks/useAuth";
 
 import { validateAge } from "../../validations/age";

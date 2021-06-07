@@ -1,14 +1,12 @@
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import { Line, SectionAddRequestItem, Station } from "../../../@types/types";
-import { Flex } from "../../../components/@shared/FlexContainer/FlexContainer";
 
-import Block from "../../../components/Block/Block";
-import Button from "../../../components/Button/Button";
-import Input from "../../../components/Input/Input";
-import Modal from "../../../components/Modal/Modal";
-import Select from "../../../components/Select/Select";
-import useInput from "../../../hooks/@common/useInput";
-import useSelect from "../../../hooks/@common/useSelect";
+import { Block, Button, Input, Modal, Select } from "../../../components/";
+import { Flex } from "../../../components/";
+
+import useInput from "../../../hooks/useInput";
+import useSelect from "../../../hooks/useSelect";
+
 import { validateSectionDistance } from "../../../validations/section";
 
 interface Props {

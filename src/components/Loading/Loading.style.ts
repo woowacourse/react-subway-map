@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-import { FlexCenter } from "../@shared/FlexContainer/FlexContainer";
+import { FlexCenter } from "../Layout";
 
 const loadingAnimation = keyframes`
   from {
