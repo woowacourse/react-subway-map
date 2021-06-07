@@ -1,6 +1,5 @@
 import * as S from './SectionListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
-import editSVG from '../../assets/svg/edit.svg';
 import { DeleteSectionRequest, LineSection } from '../../interfaces';
 import { VALIDATION } from '../../constants/validation';
 
@@ -37,9 +36,6 @@ const SectionListItem = ({ id, name, distance, lineColor, lineSection, deleteSec
         )}
       </S.NameWrapper>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <S.Button src={editSVG} />
-        </S.ButtonWrapper>
         <S.ButtonWrapper>
           <S.Button src={trashCanSVG} onClick={handleDeleteSection} />
         </S.ButtonWrapper>
