@@ -18,11 +18,14 @@ export const theme = {
       label: '#7E7E7E',
       link: '#2980b9',
       error: '#c0392b',
+      white: '#ffffff',
     },
     border: {
       primary: '#7E7E7E',
       secondary: '#cccccc',
       error: '#c0392b',
+      map: '#FCCB00',
+      dark: '#111111',
     },
   },
 };
