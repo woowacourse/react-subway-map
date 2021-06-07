@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { useCookies } from './hooks';
 import { loginByToken } from './redux/userSlice';
-import { Template, LoginPage, SignUpPage, StationPage, LinePage, SectionPage, MapPage } from './pages';
+import { Template, LoginPage, SignUpPage, StationPage, LinePage, SectionPage, MapPage, SearchPage } from './pages';
 import { ROUTE } from './constants';
 
 function App() {
@@ -29,10 +29,7 @@ function App() {
           <MapPage />
         </Route>
         <Route exact path={ROUTE.SEARCH}>
-          {
-            // TODO: 경로탐색 구현
-            /* <SearchPage /> */
-          }
+          <SearchPage />
         </Route>
 
         <Route exact path={ROUTE.STATION}>
