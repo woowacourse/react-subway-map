@@ -68,3 +68,7 @@ export const SECTION = {
   DELETE_SUCCEED: '구간 삭제에 성공하였습니다.',
   DELETE_FAIL: '구간 삭제에 실패하였습니다.',
 };
+
+export const SEARCH = {
+  GET_FAIL: '경로조회에 실패하였습니다.',
+};

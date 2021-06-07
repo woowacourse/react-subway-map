@@ -6,7 +6,7 @@ import { useStation, useCookies } from '../../hooks';
 import { Section, Select, IconArrowLTR } from '../../components';
 import { SearchButton, Form, StationSelect, Path, PathTitle, PathItem, Table, Tbody, Td, Tr, Th, Thead } from './style';
 import { requestGet, getFormattedNumber } from '../../utils';
-import { COLOR } from '../../constants';
+import { COLOR, SEARCH } from '../../constants';
 
 export const SearchPage = () => {
   const { endpoint, accessToken } = useCookies();
@@ -34,7 +34,7 @@ export const SearchPage = () => {
       setResult(body);
     } catch (e) {
       console.error(e);
-      enqueueSnackbar('경로조회에 실패하였습니다.');
+      enqueueSnackbar(SEARCH.GET_FAIL);
     }
   };
 
