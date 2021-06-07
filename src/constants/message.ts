@@ -30,6 +30,9 @@ const MESSAGE = {
     REQUIRE_CONNECT_STATION: '노선에 있는 지하철 역에서부터 연결되도록 선택해주세요',
     STATIONS_ALREADY_CONTAINS: '선택한 두 지하철 역이 이미 노선에 포함되어 있습니다',
   },
+  ALERT: {
+    CHANGE_SERVER: '서버 변경 시, 로그아웃 됩니다. 진행하시겠습니까?',
+  },
 };
 
 export default MESSAGE;

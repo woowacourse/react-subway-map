@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+type ArrowDirection = 'up' | 'down';
+
+interface ArrowProps {
+  arrowDirection: ArrowDirection;
+}
+
 export const Select = styled.select`
   border: 1px solid ${({ theme }) => theme.color.border.primary};
   border-radius: 5px;
@@ -38,7 +44,7 @@ export const Label = styled.label`
   display: block;
 `;
 
-export const Arrow = styled.div`
+export const Arrow = styled.div<ArrowProps>`
   position: absolute;
   right: 0;
   height: 100%;
@@ -49,5 +55,6 @@ export const Arrow = styled.div`
   svg {
     height: 20px;
     padding: 0 1em;
+    transform: ${({ arrowDirection }) => (arrowDirection === 'down' ? null : 'rotate(180deg)')};
   }
 `;
