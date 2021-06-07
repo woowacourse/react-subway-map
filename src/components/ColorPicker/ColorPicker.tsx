@@ -3,7 +3,7 @@ import { InputHTMLAttributes, Dispatch, SetStateAction } from "react";
 import { CIRCLE_COLOR, CIRCLE_COLOR_CODE } from "../../constants/color";
 import { ColorPickerBlock, ColorBlockGrid, ColorBlock, ColorPreview } from "./ColorPicker.styles";
 
-const colors = Object.keys(CIRCLE_COLOR) as CIRCLE_COLOR_CODE[];
+const colors = Object.keys(CIRCLE_COLOR);
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   color: CIRCLE_COLOR_CODE;
