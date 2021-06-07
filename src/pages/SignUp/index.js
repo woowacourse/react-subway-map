@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-import { useCookies } from '../../hooks';
+import { useSignUp } from '../../hooks';
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
-import { requestPost } from '../../utils';
 import { Form, Anchor } from './style';
 import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 
 export const SignUpPage = () => {
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-  const { endpoint } = useCookies();
 
   const [emailMessage, setEmailMessage] = useState('');
   const [ageMessage, setAgeMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+
+  const {
+    requestSignUp,
+    getEmailFormatPartialValidationMessage,
+    getEmailFormatFullValidationMessage,
+    getEmailDuplicationValidationMessage,
+    getAgeValidationMessage,
+    getPasswordValidationMessage,
+  } = useSignUp();
 
   const handleSignUpFormSubmit = async (e) => {
     e.preventDefault();
@@ -23,19 +30,11 @@ export const SignUpPage = () => {
     const { email, age, password } = e.target;
 
     try {
-      const response = await requestPost({
-        url: `${endpoint}/members`,
-        body: {
-          email: email.value,
-          age: age.value,
-          password: password.value,
-        },
-      });
+      const response = await requestSignUp(email, age, password);
 
       if (response.status !== 201) {
         throw new Error();
       }
-
       history.push(ROUTE.LOGIN);
       enqueueSnackbar(SIGN_UP.SUCCEED);
     } catch (e) {
@@ -44,16 +43,20 @@ export const SignUpPage = () => {
     }
   };
 
-  const handleEmailInputChange = (e) => {
+  const handleEmailInputChange = async (e) => {
     const email = e.target.value;
 
-    setEmailMessage(getEmailValidationMessage(email));
+    setEmailMessage(getEmailFormatPartialValidationMessage(email));
   };
-  const handleEmailInputBlur = (e) => {
-    const email = e.target.value;
 
-    setEmailMessage(getEmailValidationMessageAfterBlurred(email));
+  const handleEmailInputBlur = async (e) => {
+    const email = e.target.value;
+    const formatMessage = getEmailFormatFullValidationMessage(email);
+    const duplicationMessage = await getEmailDuplicationValidationMessage(email);
+
+    setEmailMessage(formatMessage || duplicationMessage);
   };
+
   const handleAgeInputChange = (e) => {
     const age = e.target.value;
 
@@ -104,47 +107,3 @@ export const SignUpPage = () => {
     </Section>
   );
 };
-
-function getEmailValidationMessage(email) {
-  if (email[0] === '@') {
-    return SIGN_UP.EMAIL_SHOULD_INCLUDE_ID;
-  } else if (email.includes(' ')) {
-    return SIGN_UP.EMAIL_CANNOT_INCLUDE_BLANK;
-  } else if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(email)) {
-    return SIGN_UP.EMAIL_CANNOT_INCLUDE_KOREAN;
-  }
-  return '';
-}
-
-function getEmailValidationMessageAfterBlurred(email) {
-  if (!/^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/.test(email)) {
-    return SIGN_UP.EMAIL_SHOULD_BE_IN_VALID_FORMAT;
-  }
-  return '';
-}
-
-function getAgeValidationMessage(age) {
-  if (age < SIGN_UP.MIN_AGE || age > SIGN_UP.MAX_AGE) {
-    return SIGN_UP.AGE_SHOULD_BE_IN_RANGE;
-  } else if (age.includes(' ')) {
-    return SIGN_UP.AGE_CANNOT_INCLUDE_BLANK;
-  } else if (!/^[0-9]*$/.test(age)) {
-    return SIGN_UP.AGE_SHOULD_BE_IN_NUMBER;
-  }
-  return '';
-}
-
-function getPasswordValidationMessage(password) {
-  if (password.length < SIGN_UP.PASSWORD_LENGTH_MIN || password.length > SIGN_UP.PASSWORD_LENGTH_MAX) {
-    return SIGN_UP.PASSWORD_SHOULD_BE_IN_RANGE;
-  } else if (password.includes(' ')) {
-    return SIGN_UP.PASSWORD_CANNOT_INCLUDE_BLANK;
-  } else if (!/[a-zA-Z]/.test(password)) {
-    return SIGN_UP.PASSWORD_SHOULD_INCLUDE_ENGLISH;
-  } else if (!/[0-9]/.test(password)) {
-    return SIGN_UP.PASSWORD_SHOULD_INCLUDE_NUMBER;
-  } else if (!/^[a-zA-Z0-9]*$/.test(password)) {
-    return SIGN_UP.PASSWORD_SHOULD_BE_ONLY_ENGLISH_AND_NUMBER;
-  }
-  return '';
-}
