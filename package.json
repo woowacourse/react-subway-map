@@ -1,0 +1,79 @@
+{
+  "name": "react-subway-map",
+  "contributors": [
+    {
+      "name": "Danny Kim",
+      "email": "likepeppermint@gmail.com",
+      "url": "https://velog.io/@bigsaigon333"
+    },
+    {
+      "name": "shinsehantan",
+      "email": "1219ssm@gmail.com"
+    }
+  ],
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.1.2",
+    "@mariusmarais/tailwind-cascade": "^0.0.4",
+    "@reduxjs/toolkit": "^1.5.1",
+    "autoprefixer": "^9.8.6",
+    "classnames": "^2.3.1",
+    "postcss": "^7.0.35",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-spinners-kit": "^1.9.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "lint": "eslint --fix .",
+    "format": "prettier --write .",
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d build",
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.2.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "2.3.0",
+    "prettier-plugin-tailwind": "^2.2.10"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint --fix",
+    "*.{js,jsx,json,html,css,md}": "prettier --write"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test.{js,jsx}"
+    ]
+  },
+  "homepage": "https://bigsaigon333.github.io/react-subway-map"
+}
