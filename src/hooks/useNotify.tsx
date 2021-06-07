@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import NotificationComponent from 'components/shared/Notification/Notification';
 
 const useNotify = () => {
-  const [message, setMessage] = useState<string>('');
-  const [isValid, setValid] = useState<boolean>(false);
-  const [isVisible, setVisible] = useState<boolean>(false);
+  const [message, setMessage] = useState('');
+  const [isValid, setValid] = useState(false);
+  const [isVisible, setVisible] = useState(false);
 
   const showNotiMessage = ({
     message = '',

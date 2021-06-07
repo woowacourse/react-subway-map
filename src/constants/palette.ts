@@ -6,6 +6,7 @@ const PALETTE = {
   SUBWAY_GREEN: '#009743',
   DARK_GRAY: '#808080',
   LIGHT_GRAY: '#bfbfbf',
+  SOFT_GRAY: '#e3e3e3',
 
   GREEN: '#27AE60',
   RED: '#FF0000',

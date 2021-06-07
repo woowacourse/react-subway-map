@@ -6,7 +6,7 @@ import sandwich from 'assets/sandwich.png';
 import cookie from 'assets/cookie.png';
 
 const LandingPage = () => {
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
   const userName = user?.email.slice(0, user.email.lastIndexOf('@'));
 
   return (

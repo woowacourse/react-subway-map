@@ -26,10 +26,10 @@ const LoginPage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loginResponse, setLoginResponse] = useState<{ accessToken: string }>();
-  const [isServerMessageVisible, setServerMessageVisible] = useState<boolean>(false);
+  const [isServerMessageVisible, setServerMessageVisible] = useState(false);
 
   const { NotiMessage, showNotiMessage } = useNotify();
   const [loginAsync, loginLoading] = useFetch('POST');

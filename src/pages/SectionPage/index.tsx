@@ -17,14 +17,14 @@ import useFetch from 'hooks/useFetch';
 import Styled from './styles';
 
 const SectionPage = () => {
-  const user: User | undefined = useAppSelector((state) => state.authSlice.data);
+  const user = useAppSelector<User | undefined>((state) => state.authSlice.data);
 
   if (!user) return <Redirect to={ROUTE.HOME} />;
 
   const [lines, setLines] = useState<Line[]>([]);
   const [targetLine, setTargetLine] = useState<Line | undefined>();
   const [stations, setStations] = useState<Station[]>([]);
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const [getStationsAsync, getStationsLoading] = useFetch();
   const [getLinesAsync, getLinesLoading] = useFetch();
@@ -45,7 +45,7 @@ const SectionPage = () => {
     }
   };
 
-  const getLines = async () => {
+  const fetchLines = async () => {
     const res = await getLinesAsync(END_POINT.LINES);
 
     if (res.status === API_STATUS.REJECTED) {
@@ -100,10 +100,6 @@ const SectionPage = () => {
   const isLoading = getStationsLoading || getLinesLoading || getLineLoading || deleteSectionLoading;
 
   useEffect(() => {
-    const fetchLines = async () => {
-      getLines();
-    };
-
     fetchLines();
   }, []);
 
@@ -111,7 +107,7 @@ const SectionPage = () => {
     <>
       <CardLayout title="구간 관리">
         <Loading isLoading={isLoading} />
-        <Styled.TopContaier>
+        <Styled.TopContainer>
           <Styled.DropdownWrapper>
             <Dropdown
               labelText="노선 선택"
@@ -124,7 +120,7 @@ const SectionPage = () => {
           <Styled.AddButtonWrapper>
             <Styled.AddButton onClick={openSectionModal}>+</Styled.AddButton>
           </Styled.AddButtonWrapper>
-        </Styled.TopContaier>
+        </Styled.TopContainer>
         {targetLine && (
           <Styled.LineDetail>
             <Styled.LineName color={targetLine.color}>{targetLine.name}</Styled.LineName>

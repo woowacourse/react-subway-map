@@ -17,7 +17,7 @@ interface Props {
   selectedLine?: Line;
   selectedColors: string[];
   closeModal: () => void;
-  getLines: () => Promise<void>;
+  fetchLines: () => Promise<void>;
 }
 
 const LineModal = ({
@@ -25,14 +25,14 @@ const LineModal = ({
   selectedLine,
   selectedColors,
   closeModal,
-  getLines,
+  fetchLines,
 }: Props) => {
-  const [color, setColor] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [upStationId, setUpStationId] = useState<string>('');
-  const [downStationId, setDownStationId] = useState<string>('');
-  const [distance, setDistance] = useState<string>('');
-  const [extraFare, setExtraFare] = useState<string>('');
+  const [color, setColor] = useState('');
+  const [name, setName] = useState('');
+  const [upStationId, setUpStationId] = useState('');
+  const [downStationId, setDownStationId] = useState('');
+  const [distance, setDistance] = useState('');
+  const [extraFare, setExtraFare] = useState('');
 
   const { NotiMessage, showNotiMessage } = useNotify();
 
@@ -82,7 +82,7 @@ const LineModal = ({
       resetForm();
       closeModal();
 
-      await getLines();
+      await fetchLines();
     }
   };
 
@@ -101,7 +101,7 @@ const LineModal = ({
       enqueueSnackbar(ALERT_MESSAGE.SUCCESS_TO_EDIT_LINE);
       closeModal();
 
-      await getLines();
+      await fetchLines();
     }
   };
 
