@@ -33,9 +33,9 @@ export const SignUpPage = () => {
       });
 
       if (response.status !== 201) {
-        console.log(response.status);
         throw new Error();
       }
+
       history.push(ROUTE.LOGIN);
       enqueueSnackbar(SIGN_UP.SUCCEED);
     } catch (e) {
