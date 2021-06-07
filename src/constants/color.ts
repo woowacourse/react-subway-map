@@ -1,4 +1,4 @@
-export enum COLOR {
+enum COLOR {
   BLACK = "rgb(0, 0, 0)",
   WHITE = "rgb(255, 255, 255)",
   GRAY_50 = "rgb(249, 250, 251)",
@@ -111,7 +111,7 @@ export enum COLOR {
   PINK_900 = "rgb(131, 24, 67)",
 }
 
-export enum CIRCLE_COLOR {
+enum CIRCLE_COLOR {
   "bg-gray-100" = "rgb(243, 244, 246)",
   "bg-gray-200" = "rgb(229, 231, 235)",
   "bg-gray-300" = "rgb(209, 213, 219)",
@@ -212,3 +212,5 @@ export enum CIRCLE_COLOR {
   "bg-pink-800" = "rgb(157, 23, 77)",
   "bg-pink-900" = "rgb(131, 24, 67)",
 }
+
+export { COLOR, CIRCLE_COLOR };

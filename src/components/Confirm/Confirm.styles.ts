@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Inner = styled.div`
+const Inner = styled.div`
   width: 300px;
   height: 180px;
   flex-wrap: wrap;
@@ -9,7 +9,7 @@ export const Inner = styled.div`
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.5);
 `;
 
-export const Title = styled.section`
+const Title = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@ export const Title = styled.section`
   border-bottom: 1px solid #e7e7e7;
 `;
 
-export const ButtonControls = styled.section`
+const ButtonControls = styled.section`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -38,3 +38,5 @@ export const ButtonControls = styled.section`
     border-left: 1px solid #e7e7e7;
   }
 `;
+
+export { Inner, Title, ButtonControls };

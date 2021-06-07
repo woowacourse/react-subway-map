@@ -88,14 +88,14 @@ const signup = createAsyncThunk(
   }
 );
 
-export const action = {
+const action = {
   checkAccessToken,
   login,
   signup,
   logout,
 };
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
@@ -134,3 +134,4 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export { action, authSlice };

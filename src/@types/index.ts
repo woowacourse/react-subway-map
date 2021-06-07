@@ -1,6 +1,6 @@
 import { CIRCLE_COLOR } from "../constants";
 
-export interface Line {
+interface Line {
   id: number;
   name: string;
   color: keyof typeof CIRCLE_COLOR;
@@ -8,7 +8,7 @@ export interface Line {
   sections: Section[];
 }
 
-export interface LineAddRequestItem {
+interface LineAddRequestItem {
   name: string;
   color: keyof typeof CIRCLE_COLOR;
   upStationId: number;
@@ -16,12 +16,12 @@ export interface LineAddRequestItem {
   distance: number;
 }
 
-export interface Station {
+interface Station {
   id: number;
   name: string;
 }
 
-export interface Section {
+interface Section {
   upStation: {
     id: number;
     name: string;
@@ -33,20 +33,30 @@ export interface Section {
   distance: number;
 }
 
-export interface SectionAddRequestItem {
+interface SectionAddRequestItem {
   lineId: number;
   upStationId: number;
   downStationId: number;
   distance: number;
 }
 
-export interface LoginInfo {
+interface LoginInfo {
   email: string;
   password: string;
 }
 
-export interface SignupInfo {
+interface SignupInfo {
   email: string;
   password: string;
   age: number;
 }
+
+export type {
+  Line,
+  LineAddRequestItem,
+  Station,
+  Section,
+  SectionAddRequestItem,
+  LoginInfo,
+  SignupInfo,
+};

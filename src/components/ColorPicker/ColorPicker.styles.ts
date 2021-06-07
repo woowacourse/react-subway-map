@@ -2,18 +2,18 @@ import styled from "styled-components";
 
 import { Flex, Grid } from "../Layout/";
 
-export const ColorPickerBlock = styled(Flex)`
+const ColorPickerBlock = styled(Flex)`
   width: 100%;
 `;
 
-export const ColorBlockGrid = styled(Grid)`
+const ColorBlockGrid = styled(Grid)`
   grid-template-columns: repeat(9, 1fr);
   column-gap: 2px;
   row-gap: 2px;
   margin-right: 10px;
 `;
 
-export const ColorBlock = styled.div<{ backgroundColor: string }>`
+const ColorBlock = styled.div<{ backgroundColor: string }>`
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -27,8 +27,10 @@ export const ColorBlock = styled.div<{ backgroundColor: string }>`
   }
 `;
 
-export const ColorPreview = styled.div<{ backgroundColor: string }>`
+const ColorPreview = styled.div<{ backgroundColor: string }>`
   flex: 1;
   background-color: ${({ backgroundColor }) => backgroundColor};
   border-radius: 8px;
 `;
+
+export { ColorPickerBlock, ColorBlockGrid, ColorBlock, ColorPreview };

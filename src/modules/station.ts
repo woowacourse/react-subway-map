@@ -86,13 +86,13 @@ const deleteStation = createAsyncThunk(
   }
 );
 
-export const action = {
+const action = {
   getStations,
   addStation,
   deleteStation,
 };
 
-export const stationSlice = createSlice({
+const stationSlice = createSlice({
   name: "station",
   initialState,
   reducers: {},
@@ -122,3 +122,4 @@ export const stationSlice = createSlice({
 });
 
 export default stationSlice.reducer;
+export { action, stationSlice };

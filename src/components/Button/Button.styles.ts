@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { COLOR } from "../../constants";
 
 interface ButtonBlockProps {
@@ -7,7 +8,7 @@ interface ButtonBlockProps {
   buttonTheme?: "primary" | "gray" | "white";
 }
 
-export type ButtonStylesProps = ButtonBlockProps;
+type ButtonStylesProps = ButtonBlockProps;
 
 const BUTTON_KIND = {
   rect: {
@@ -49,7 +50,7 @@ const BUTTON_THEME = {
   },
 };
 
-export const ButtonBlock = styled.button<ButtonBlockProps>(
+const ButtonBlock = styled.button<ButtonBlockProps>(
   ({ kind = "eclipse", size = "md", buttonTheme = "primary" }) => ({
     ...BUTTON_KIND[kind],
     ...BUTTON_SIZE[size],
@@ -59,3 +60,6 @@ export const ButtonBlock = styled.button<ButtonBlockProps>(
     alignItems: "center",
   })
 );
+
+export type { ButtonStylesProps };
+export { ButtonBlock };

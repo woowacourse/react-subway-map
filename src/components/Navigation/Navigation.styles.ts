@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const NavigationBlock = styled.nav`
+const NavigationBlock = styled.nav`
   display: flex;
   justify-content: center;
 
@@ -8,3 +8,5 @@ export const NavigationBlock = styled.nav`
     margin-right: 0.5rem;
   }
 `;
+
+export { NavigationBlock };

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
-export const Grid = styled.div`
+const Grid = styled.div`
   display: grid;
 `;
+
+export { Grid };

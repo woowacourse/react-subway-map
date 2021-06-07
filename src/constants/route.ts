@@ -1,4 +1,4 @@
-export enum PAGE_PATH {
+enum PAGE_PATH {
   HOME = "/",
   LOGIN = "/login",
   LOGOUT = "/logout",
@@ -9,7 +9,7 @@ export enum PAGE_PATH {
   SUBWAY_MANAGEMENT = "/subway",
 }
 
-export const ROUTES = [
+const ROUTES = [
   {
     isPrivate: true,
     to: PAGE_PATH.STATION_MANAGEMENT,
@@ -41,3 +41,5 @@ export const ROUTES = [
     title: "👤 로그아웃",
   },
 ];
+
+export { PAGE_PATH, ROUTES };

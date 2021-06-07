@@ -1,1 +1,3 @@
-export const ERROR_DURATION = 2000;
+const ERROR_DURATION = 2000;
+
+export { ERROR_DURATION };

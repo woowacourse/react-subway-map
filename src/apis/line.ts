@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { Line, LineAddRequestItem } from "../@types";
 
-export const requestLine = {
+const requestLine = {
   async getAllLines() {
     const response = await axios.get<Line[]>("/lines");
 
@@ -19,3 +19,5 @@ export const requestLine = {
     return response;
   },
 };
+
+export { requestLine };

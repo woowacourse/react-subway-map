@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const requestAuth = {
+const requestAuth = {
   getUserInfo: async (token: string) => {
     const response = await axios.get("/members/me", {
       headers: { Authorization: `Bearer ${token}` },
@@ -29,3 +29,5 @@ export const requestAuth = {
     return message;
   },
 };
+
+export { requestAuth };

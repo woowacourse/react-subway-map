@@ -4,6 +4,8 @@ import { FlexCenter } from "../Layout/";
 
 import { COLOR } from "../../constants";
 
-export const ErrorMessageBlock = styled(FlexCenter)`
+const ErrorMessageBlock = styled(FlexCenter)`
   color: ${COLOR.RED_500};
 `;
+
+export { ErrorMessageBlock };

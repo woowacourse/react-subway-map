@@ -2,6 +2,9 @@ import styled, { keyframes } from "styled-components";
 
 import { FlexCenter } from "../Layout";
 
+interface LoadingBlockProps {
+  bgColor: string;
+}
 const loadingAnimation = keyframes`
   from {
     transform:scale(1,1)
@@ -14,11 +17,7 @@ const loadingAnimation = keyframes`
   }
 `;
 
-export interface LoadingBlockProps {
-  bgColor: string;
-}
-
-export const LoadingBlock = styled(FlexCenter)<LoadingBlockProps>`
+const LoadingBlock = styled(FlexCenter)<LoadingBlockProps>`
   position: fixed;
   top: 0;
   left: 0;
@@ -36,16 +35,19 @@ export const LoadingBlock = styled(FlexCenter)<LoadingBlockProps>`
   }
 `;
 
-export const Left = styled.div`
+const Left = styled.div`
   animation: ${loadingAnimation} 1s infinite ease-in-out;
   animation-delay: -0.16s;
 `;
 
-export const Center = styled.div`
+const Center = styled.div`
   animation: ${loadingAnimation} 1s infinite ease-in-out;
 `;
 
-export const Right = styled.div`
+const Right = styled.div`
   animation: ${loadingAnimation} 1s infinite ease-in-out;
   animation-delay: 0.16s;
 `;
+
+export type { LoadingBlockProps };
+export { LoadingBlock, Left, Center, Right };

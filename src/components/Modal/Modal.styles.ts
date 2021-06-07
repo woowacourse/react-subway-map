@@ -4,7 +4,7 @@ interface ContainerProps {
   opacity: number;
 }
 
-export const ModalBlock = styled.div`
+const ModalBlock = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -15,7 +15,7 @@ export const ModalBlock = styled.div`
   align-items: center;
 `;
 
-export const Dimmed = styled.div<ContainerProps>`
+const Dimmed = styled.div<ContainerProps>`
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -26,6 +26,8 @@ export const Dimmed = styled.div<ContainerProps>`
   transition: opacity 0.5s;
 `;
 
-export const Contents = styled.div`
+const Contents = styled.div`
   z-index: 1004;
 `;
+
+export { ModalBlock, Dimmed, Contents };

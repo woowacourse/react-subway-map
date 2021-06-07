@@ -7,7 +7,7 @@ interface SelectBlockProps {
   backgroundColor?: string;
 }
 
-export type SelectStylesProps = SelectBlockProps;
+type SelectStylesProps = SelectBlockProps;
 
 const SELECT_SIZE = {
   md: {
@@ -21,7 +21,7 @@ const SELECT_SIZE = {
 // TODO : selectSize 네이밍 수정
 // TODO : 스토리북 상에서 undefined 선택 못하게 만들기
 
-export const SelectBlock = styled.select<SelectBlockProps>`
+const SelectBlock = styled.select<SelectBlockProps>`
   font-size: 1rem;
   font-weight: 400;
   ${({ selectSize = "md", backgroundColor = COLOR.GRAY_200 }) => `
@@ -41,3 +41,6 @@ export const SelectBlock = styled.select<SelectBlockProps>`
   background-size: 5px 5px, 5px 5px, 1.5rem 1.5rem;
   background-repeat: no-repeat;
 `;
+
+export type { SelectStylesProps };
+export { SelectBlock };

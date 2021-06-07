@@ -1,6 +1,6 @@
 import { Line } from "../@types";
 
-export const stations = [
+const stations = [
   {
     id: 1,
     name: "지하철역 1",
@@ -31,7 +31,7 @@ export const stations = [
   },
 ];
 
-export const lines: Line[] = [
+const lines: Line[] = [
   {
     id: 1,
     name: "신분당선",
@@ -89,3 +89,5 @@ export const lines: Line[] = [
     ],
   },
 ];
+
+export { stations, lines };

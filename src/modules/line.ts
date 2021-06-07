@@ -133,7 +133,7 @@ const deleteSection = createAsyncThunk(
   }
 );
 
-export const action = {
+const action = {
   getLines,
   addLine,
   deleteLine,
@@ -141,7 +141,7 @@ export const action = {
   deleteSection,
 };
 
-export const lineSlice = createSlice({
+const lineSlice = createSlice({
   name: "line",
   initialState,
   reducers: {},
@@ -171,3 +171,4 @@ export const lineSlice = createSlice({
 });
 
 export default lineSlice.reducer;
+export { action, lineSlice };

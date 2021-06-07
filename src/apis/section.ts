@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { SectionAddRequestItem } from "../@types";
 
-export const requestSection = {
+const requestSection = {
   async addSection({
     lineId,
     upStationId,
@@ -31,3 +31,5 @@ export const requestSection = {
     return response;
   },
 };
+
+export { requestSection };

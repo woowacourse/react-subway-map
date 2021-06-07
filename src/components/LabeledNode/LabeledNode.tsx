@@ -1,5 +1,4 @@
 import {
-  LabeledNodeStylesProps,
   LabeledNodeBlock,
   Node,
   NodeContent,
@@ -9,7 +8,7 @@ import {
   NodeWrapper,
 } from "./LabeledNode.styles";
 
-export interface Props extends LabeledNodeStylesProps {
+export interface Props {
   title: string;
   content?: React.ReactNode;
   vertextIncluded?: boolean;

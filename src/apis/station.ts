@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { Station } from "../@types";
 
-export const requestStation = {
+const requestStation = {
   async getAllStation() {
     const response = await axios.get<Station[]>("/stations");
 
@@ -21,3 +21,5 @@ export const requestStation = {
     return response;
   },
 };
+
+export { requestStation };

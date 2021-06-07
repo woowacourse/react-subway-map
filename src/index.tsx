@@ -1,25 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "styled-components";
 
 import store from "./modules";
-import { BASE_URL, changeBaseUrl } from "./apis/index";
+import { BASE_URL, changeBaseUrl } from "./apis";
 
 import App from "./App";
 import { Select } from "./components";
 import { Flex } from "./components";
 
 import GlobalStyle from "./Global.styles";
-import { COLOR } from "./constants";
-
-export const theme = {
-  PRIMARY: COLOR.CYAN_300,
-  MAIN_TEXT_COLOR: COLOR.GRAY_900,
-  SUB_TEXT_COLOR: COLOR.GRAY_500,
-  BACKGROUND_COLOR: COLOR.GRAY_200,
-  DANGER_TEXT_COLOR: COLOR.RED_500,
-};
 
 const targets = Object.keys(BASE_URL).map((name) => ({
   value: name,
@@ -38,22 +28,20 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Flex
-          style={{
-            width: "100%",
-            padding: "0.9375rem",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Select
-            options={targets}
-            onChange={onChange}
-            style={{ width: "9.375rem", backgroundColor: "skyblue" }}
-          />
-        </Flex>
-        <App />
-      </ThemeProvider>
+      <Flex
+        style={{
+          width: "100%",
+          padding: "0.9375rem",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Select
+          options={targets}
+          onChange={onChange}
+          style={{ width: "9.375rem", backgroundColor: "skyblue" }}
+        />
+      </Flex>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
