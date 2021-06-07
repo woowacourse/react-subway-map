@@ -212,3 +212,5 @@ export const CIRCLE_COLOR = {
   "bg-pink-800": "rgb(157, 23, 77)",
   "bg-pink-900": "rgb(131, 24, 67)",
 } as const;
+
+export type CIRCLE_COLOR_CODE = keyof typeof CIRCLE_COLOR;

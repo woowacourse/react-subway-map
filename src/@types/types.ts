@@ -1,16 +1,16 @@
-import { CIRCLE_COLOR } from "../constants/color";
+import { CIRCLE_COLOR, CIRCLE_COLOR_CODE } from "../constants/color";
 
 export interface Line {
   id: number;
   name: string;
-  color: keyof typeof CIRCLE_COLOR;
+  color: CIRCLE_COLOR_CODE;
   stations: Station[];
   sections: Section[];
 }
 
 export interface LineAddRequestItem {
   name: string;
-  color: keyof typeof CIRCLE_COLOR;
+  color: CIRCLE_COLOR_CODE;
   upStationId: number;
   downStationId: number;
   distance: number;

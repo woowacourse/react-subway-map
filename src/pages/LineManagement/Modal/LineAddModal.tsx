@@ -12,7 +12,7 @@ import useInput from "../../../hooks/@common/useInput";
 import useSelect from "../../../hooks/@common/useSelect";
 import { validateLineName } from "../../../validations/line";
 import { validateSectionDistance } from "../../../validations/section";
-import { CIRCLE_COLOR } from "../../../constants/color";
+import { CIRCLE_COLOR_CODE } from "../../../constants/color";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
@@ -33,7 +33,7 @@ const LineAddModal = ({ onClose, stations, addLine }: Props) => {
   );
 
   const DEFAULT_COLOR = "bg-cyan-500";
-  const [color, setColor] = useState<keyof typeof CIRCLE_COLOR>(DEFAULT_COLOR);
+  const [color, setColor] = useState<CIRCLE_COLOR_CODE>(DEFAULT_COLOR);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();

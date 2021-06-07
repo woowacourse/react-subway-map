@@ -1,13 +1,13 @@
 import { InputHTMLAttributes, Dispatch, SetStateAction } from "react";
 
-import { CIRCLE_COLOR } from "../../constants/color";
+import { CIRCLE_COLOR, CIRCLE_COLOR_CODE } from "../../constants/color";
 import { ColorPickerBlock, ColorBlockGrid, ColorBlock, ColorPreview } from "./ColorPicker.styles";
 
-const colors = Object.keys(CIRCLE_COLOR) as (keyof typeof CIRCLE_COLOR)[];
+const colors = Object.keys(CIRCLE_COLOR) as CIRCLE_COLOR_CODE[];
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  color: keyof typeof CIRCLE_COLOR;
-  onSetColor: Dispatch<SetStateAction<keyof typeof CIRCLE_COLOR>>;
+  color: CIRCLE_COLOR_CODE;
+  onSetColor: Dispatch<SetStateAction<CIRCLE_COLOR_CODE>>;
 }
 
 const ColorPicker = ({ color, onSetColor, ...props }: Props) => (
