@@ -4,11 +4,11 @@ import { PropTypes } from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { loginByToken } from '../../../redux/userSlice';
 
-import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 
 import { NavBar, ServerSelect } from '../..';
-
 import { Header, ServerSelectButton, Main } from './style';
+
 import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from '../../../constants';
 
 export const Page = (props) => {
@@ -17,9 +17,8 @@ export const Page = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [cookies, setCookie] = useCookies([SERVER_ID, ACCESS_TOKEN]);
-  const serverId = cookies[SERVER_ID];
-  const accessToken = cookies[ACCESS_TOKEN];
+  const serverId = Cookies.get(SERVER_ID);
+  const accessToken = Cookies.get(ACCESS_TOKEN);
 
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
 
@@ -27,14 +26,13 @@ export const Page = (props) => {
     if (!serverId) {
       return;
     }
-    const { baseUrl } = SERVER_LIST[serverId];
 
     if (!accessToken) {
       history.push(ROUTE.LOGIN);
       return;
     }
 
-    dispatch(loginByToken({ baseUrl, accessToken }));
+    dispatch(loginByToken({ accessToken }));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,7 +40,7 @@ export const Page = (props) => {
   const handleOpenModal = () => setIsServerSelectOpen(true);
   const handleCloseModal = () => setIsServerSelectOpen(false);
 
-  const setNewServer = (serverId) => setCookie(SERVER_ID, serverId);
+  const setNewServer = (serverId) => Cookies.set(SERVER_ID, serverId);
 
   const handleServerSubmit = (e) => {
     e.preventDefault();

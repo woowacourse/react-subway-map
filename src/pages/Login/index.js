@@ -1,42 +1,32 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from 'react-cookie';
+
+import { useSnackbar } from 'notistack';
+import Cookies from 'js-cookie';
 
 import { login, clearLoginFail } from '../../redux/userSlice';
 
-import { useSnackbar } from 'notistack';
 import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
 import { Form, Anchor } from './style';
-import {
-  LOGIN,
-  ROUTE,
-  ACCESS_TOKEN,
-  SERVER_ID,
-  SERVER_LIST,
-  SHOWING_MESSAGE_TIME,
-  MESSAGE_TYPE,
-} from '../../constants';
+import { LOGIN, ROUTE, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ACCESS_TOKEN } from '../../constants';
 
 export const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [cookies, setCookie] = useCookies();
-  const { isLogin, isLoginFail, accessToken } = useSelector((store) => store.user);
+  const { isLogin, isLoginFail } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
-
-  const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
 
   useEffect(() => {
     if (isLogin) {
       enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      setCookie(ACCESS_TOKEN, accessToken);
       history.push(ROUTE.STATION);
     }
 
     if (isLoginFail) {
       enqueueSnackbar(LOGIN.FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
+      Cookies.remove(ACCESS_TOKEN);
       dispatch(clearLoginFail());
     }
 
@@ -48,7 +38,6 @@ export const LoginPage = () => {
 
     dispatch(
       login({
-        baseUrl,
         email: e.target.email.value,
         password: e.target.password.value,
       }),

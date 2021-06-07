@@ -3,7 +3,6 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useSnackbar } from 'notistack';
-import { useCookies } from 'react-cookie';
 
 import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
 
@@ -13,24 +12,12 @@ import { ButtonSquare, IconSubway, Input, Section } from '../../components';
 import { StationListItem } from './StationListItem';
 
 import { Form, List, InputWrapper, Message } from './style';
-import {
-  STATION,
-  ACCESS_TOKEN,
-  SERVER_ID,
-  SERVER_LIST,
-  SHOWING_MESSAGE_TIME,
-  MESSAGE_TYPE,
-  ROUTE,
-} from '../../constants';
+import { STATION, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ROUTE } from '../../constants';
 
 export const StationPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const ref = useRef();
-
-  const [cookies] = useCookies([ACCESS_TOKEN]);
-  const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
-  const accessToken = cookies[ACCESS_TOKEN];
 
   const { checkIsLogin } = useAuthorization();
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
@@ -41,7 +28,7 @@ export const StationPage = () => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (checkIsLogin) {
-      dispatch(getStations({ baseUrl, accessToken }));
+      dispatch(getStations({}));
     } else {
       history.push(ROUTE.LOGIN);
     }
@@ -72,10 +59,10 @@ export const StationPage = () => {
   const handleAddStation = (e) => {
     e.preventDefault();
 
-    dispatch(addStation({ baseUrl, accessToken, name: e.target.name.value }));
+    dispatch(addStation({ name: e.target.name.value }));
   };
 
-  const handleDeleteStation = (stationId) => dispatch(removeStation({ baseUrl, accessToken, id: stationId }));
+  const handleDeleteStation = (stationId) => dispatch(removeStation({ id: stationId }));
 
   return (
     <Section heading="지하철 역 관리">

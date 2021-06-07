@@ -4,17 +4,15 @@ import { useSnackbar } from 'notistack';
 
 import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
 import { Form, Anchor } from './style';
-import { COLOR, ROUTE, SERVER_ID, SIGN_UP } from '../../constants';
-import { useCookies } from 'react-cookie';
+import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 import { useAuthorization } from '../../hooks';
+import { requestPostWithoutAccessToken } from '../../services/httpRequest';
 
 export const SignUpPage = () => {
   const history = useHistory();
 
   const { enqueueSnackbar } = useSnackbar();
   const { checkIsLogin } = useAuthorization();
-  const [cookies] = useCookies([SERVER_ID]);
-  const endpoint = cookies[SERVER_ID];
 
   const [emailMessage, setEmailMessage] = useState('');
   const [ageMessage, setAgeMessage] = useState('');
@@ -37,18 +35,7 @@ export const SignUpPage = () => {
 
     (async () => {
       try {
-        const response = await fetch(`${endpoint}/members`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            age,
-            password,
-          }),
-        });
+        const response = await requestPostWithoutAccessToken('/members', { email, age, password });
 
         if (response.status === 201) {
           enqueueSnackbar(SIGN_UP.SUCCEED);

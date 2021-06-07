@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'notistack';
 
 import { getStations } from '../../redux/stationSlice';
@@ -14,16 +13,7 @@ import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, Ico
 import { LineListItem } from './LineListItem';
 
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, Message } from './style';
-import {
-  COLOR,
-  ACCESS_TOKEN,
-  LINE,
-  SERVER_ID,
-  SERVER_LIST,
-  MESSAGE_TYPE,
-  SHOWING_MESSAGE_TIME,
-  ROUTE,
-} from '../../constants';
+import { COLOR, LINE, MESSAGE_TYPE, SHOWING_MESSAGE_TIME, ROUTE } from '../../constants';
 
 export const LinePage = () => {
   const dispatch = useDispatch();
@@ -34,17 +24,14 @@ export const LinePage = () => {
 
   const { checkIsLogin } = useAuthorization();
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
-  const [cookies] = useCookies();
-  const accessToken = cookies[ACCESS_TOKEN];
 
-  const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
   const { enqueueSnackbar } = useSnackbar();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (checkIsLogin()) {
-      dispatch(getLines({ baseUrl, accessToken }));
-      dispatch(getStations({ baseUrl, accessToken }));
+      dispatch(getLines());
+      dispatch(getStations());
     } else {
       history.push(ROUTE.LOGIN);
     }
@@ -83,11 +70,11 @@ export const LinePage = () => {
     const distance = e.target.distance.value;
     const color = e.target.color.value;
 
-    dispatch(addLine({ baseUrl, accessToken, name, upStationId, downStationId, distance, color }));
+    dispatch(addLine({ name, upStationId, downStationId, distance, color }));
   };
 
-  const handleDeleteLine = (lineId) => {
-    dispatch(removeLine({ baseUrl, accessToken, id: lineId }));
+  const handleDeleteLine = (id) => {
+    dispatch(removeLine({ id }));
   };
 
   return (

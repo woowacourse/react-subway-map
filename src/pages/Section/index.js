@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCookies } from 'react-cookie';
 import { useSnackbar } from 'notistack';
 
 import { getMap, addSection, removeSection, clearMapProgress } from '../../redux/mapSlice';
@@ -13,30 +12,14 @@ import { useAuthorization } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
 import { SectionListItem } from './SectionListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, LineSelectBox, Message } from './style';
-import {
-  COLOR,
-  ACCESS_TOKEN,
-  SECTION,
-  SERVER_ID,
-  SERVER_LIST,
-  MESSAGE_TYPE,
-  SHOWING_MESSAGE_TIME,
-  ROUTE,
-} from '../../constants';
-
-// serverAPI 연결이 안될 때
-import { mockMap } from './mockMap';
+import { COLOR, SECTION, MESSAGE_TYPE, SHOWING_MESSAGE_TIME, ROUTE } from '../../constants';
 
 export const SectionPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const { stations } = useSelector((store) => store.station);
-  const { isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
-
-  const [cookies] = useCookies([ACCESS_TOKEN]);
-  const accessToken = cookies[ACCESS_TOKEN];
-  const { baseUrl } = SERVER_LIST[cookies[SERVER_ID]];
+  const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
 
   const { checkIsLogin } = useAuthorization();
   const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
@@ -47,24 +30,26 @@ export const SectionPage = () => {
     distance: null,
     sections: null,
   });
+  const selectedLineSections = map.find((line) => line.id === selectedLine.id);
 
-  const lines = mockMap.map((section) => ({ id: section.id, name: section.name, color: section.color }));
+  const lines = map.map((section) => ({ id: section.id, name: section.name, color: section.color }));
   const { enqueueSnackbar } = useSnackbar();
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (checkIsLogin()) {
-      dispatch(getMap({ baseUrl, accessToken }));
-      dispatch(getStations({ baseUrl, accessToken }));
+      dispatch(getMap());
+      dispatch(getStations());
     } else {
       history.push(ROUTE.LOGIN);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (isAddSuccess) {
       enqueueSnackbar(SECTION.ADD_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      dispatch(getMap({ baseUrl, accessToken }));
+      dispatch(getMap());
       handleCloseModal();
     }
     if (isAddFail) {
@@ -72,20 +57,22 @@ export const SectionPage = () => {
     }
     if (isDeleteSuccess) {
       enqueueSnackbar(SECTION.DELETE_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      dispatch(getMap({ baseUrl, accessToken }));
+      dispatch(getMap());
     }
     if (isDeleteFail) {
       enqueueSnackbar(SECTION.DELETE_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
     }
 
     dispatch(clearMapProgress());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
 
   const handleOpenModal = () => setIsSectionAddOpen(true);
   const handleCloseModal = () => setIsSectionAddOpen(false);
 
   const handleSelectLine = ({ target: { value } }) => {
-    const currentSelectedLine = mockMap.find((line) => line.id === Number(value));
+    const currentSelectedLine = map.find((line) => line.id === Number(value));
 
     setSelectedLine({
       id: currentSelectedLine.id,
@@ -104,11 +91,10 @@ export const SectionPage = () => {
     const downStationId = e.target.downStation.value;
     const distance = e.target.distance.value;
 
-    dispatch(addSection({ baseUrl, accessToken, lineId, upStationId, downStationId, distance }));
+    dispatch(addSection({ lineId, upStationId, downStationId, distance }));
   };
 
-  const handleDeleteSection = (stationId) =>
-    dispatch(removeSection({ baseUrl, accessToken, lineId: selectedLine.id, stationId }));
+  const handleDeleteSection = (stationId) => dispatch(removeSection({ lineId: selectedLine.id, stationId }));
 
   return (
     <Section heading="구간 관리">
@@ -125,7 +111,7 @@ export const SectionPage = () => {
       </AddButton>
 
       <List>
-        {selectedLine.sections?.map((section) => (
+        {selectedLineSections?.sections.map((section) => (
           <SectionListItem
             key={section.id}
             currentLineName={selectedLine.name}

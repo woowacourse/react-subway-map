@@ -1,16 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { requestDelete, requestGet, requestPost } from '../services/httpRequest';
 
-const getStations = createAsyncThunk('station/getStations', async ({ baseUrl, accessToken }, thunkAPI) => {
+const getStations = createAsyncThunk('/station/getStations', async (_, thunkAPI) => {
   try {
-    const response = await fetch(`${baseUrl}/stations`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
+    const response = await requestGet('/stations');
     const body = await response.json();
 
     if (response.status === 200) {
@@ -24,20 +17,9 @@ const getStations = createAsyncThunk('station/getStations', async ({ baseUrl, ac
   }
 });
 
-const addStation = createAsyncThunk('station/addStation', async ({ baseUrl, accessToken, name }, thunkAPI) => {
+const addStation = createAsyncThunk('station/addStation', async ({ name }, thunkAPI) => {
   try {
-    const response = await fetch(`${baseUrl}/stations`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        name,
-      }),
-    });
-
+    const response = await requestPost('/stations', { name });
     const body = await response.json();
 
     if (response.status === 201) {
@@ -51,22 +33,17 @@ const addStation = createAsyncThunk('station/addStation', async ({ baseUrl, acce
   }
 });
 
-const removeStation = createAsyncThunk('station/removeStation', async ({ baseUrl, accessToken, id }, thunkAPI) => {
+const removeStation = createAsyncThunk('station/removeStation', async ({ id }, thunkAPI) => {
   try {
-    const response = await fetch(`${baseUrl}/stations/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await requestDelete(`/stations/${id}`);
 
     if (response.status === 204) {
       return { id };
     }
 
-    const body = await response.json();
+    const { message } = await response.json();
 
-    throw new Error(body.message);
+    throw new Error(message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

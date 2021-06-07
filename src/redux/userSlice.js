@@ -1,48 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 
-//TODO : AccessToken을 바로 Cookie에서 가져다 쓰는 방법을 생각해보기.
-const login = createAsyncThunk('user/login', async ({ baseUrl, email, password }, thunkAPI) => {
+import { requestGet, requestPostWithoutAccessToken } from '../services/httpRequest';
+import { ACCESS_TOKEN } from '../constants';
+
+const login = createAsyncThunk('user/login', async ({ email, password }, thunkAPI) => {
   try {
-    const response = await fetch(`${baseUrl}/login/token`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    const body = await response.json();
+    const response = await requestPostWithoutAccessToken('/login/token', { email, password });
+    const { accessToken, message } = await response.json();
 
     if (response.status === 200) {
-      return { ...body, email };
+      Cookies.set(ACCESS_TOKEN, accessToken);
+      return { email };
     }
 
-    throw new Error(body.message);
+    throw new Error(message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
   }
 });
 
-const loginByToken = createAsyncThunk('user/loginByToken', async ({ baseUrl, accessToken }, thunkAPI) => {
+const loginByToken = createAsyncThunk('user/loginByToken', async ({ accessToken }, thunkAPI) => {
   try {
-    const response = await fetch(`${baseUrl}/members/me`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
+    const response = await requestGet('/members/me');
     const body = await response.json();
 
     if (response.status === 200) {
-      return { email: body.email, accessToken };
+      return { email: body.email };
     }
 
     throw new Error(body.message);
@@ -56,7 +41,6 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     email: null,
-    accessToken: null,
     isLogin: false,
     isLoading: false,
     isLoginFail: false,
@@ -64,7 +48,6 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.email = null;
-      state.accessToken = null;
       state.isLogin = false;
       state.isLoginFail = false;
     },
@@ -74,10 +57,9 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [login.fulfilled]: (state, action) => {
-      const { email, accessToken } = action.payload;
+      const { email } = action.payload;
 
       state.email = email;
-      state.accessToken = accessToken;
       state.isLogin = true;
       state.isLoading = false;
     },
@@ -89,10 +71,9 @@ const userSlice = createSlice({
       state.isLoginFail = true;
     },
     [loginByToken.fulfilled]: (state, action) => {
-      const { email, accessToken } = action.payload;
+      const { email } = action.payload;
 
       state.email = email;
-      state.accessToken = accessToken;
       state.isLogin = true;
       state.isLoading = false;
     },

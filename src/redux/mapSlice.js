@@ -1,16 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { requestDelete, requestGet, requestPost } from '../services/httpRequest';
 
-const getMap = createAsyncThunk('map/getMap', async ({ baseUrl, accessToken }, thunkAPI) => {
+const getMap = createAsyncThunk('map/getMap', async (_, thunkAPI) => {
   try {
-    const response = await fetch(`${baseUrl}/lines/map`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
+    const response = await requestGet('/lines/map');
     const body = await response.json();
 
     if (response.status === 200) {
@@ -26,46 +19,11 @@ const getMap = createAsyncThunk('map/getMap', async ({ baseUrl, accessToken }, t
 
 const addSection = createAsyncThunk(
   'map/addSection',
-  async ({ baseUrl, accessToken, lineId, upStationId, downStationId, distance }, thunkAPI) => {
+  async ({ lineId, upStationId, downStationId, distance }, thunkAPI) => {
     try {
-      const response = await fetch(`${baseUrl}/lines/${lineId}/sections`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          upStationId,
-          downStationId,
-          distance,
-        }),
-      });
+      const response = await requestPost(`/lines/${lineId}/sections`, { upStationId, downStationId, distance });
 
       if (response.status === 201) {
-        return;
-      }
-
-      const body = await response.json();
-
-      throw new Error(body.message);
-    } catch (e) {
-      console.error(e.response.data);
-      return thunkAPI.rejectWithValue(e.response.data);
-    }
-  },
-);
-
-const removeSection = createAsyncThunk(
-  'map/removeSection',
-  async ({ baseUrl, accessToken, lineId, stationId }, thunkAPI) => {
-    try {
-      const response = await fetch(`${baseUrl}/lines/${lineId}/sections?stationId=${stationId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      if (response.status === 204) {
         return;
       }
 
@@ -73,11 +31,27 @@ const removeSection = createAsyncThunk(
 
       throw new Error(message);
     } catch (e) {
-      console.error(e);
-      return thunkAPI.rejectWithValue(e);
+      console.error(e.response.data);
+      return thunkAPI.rejectWithValue(e.response.data);
     }
   },
 );
+
+const removeSection = createAsyncThunk('map/removeSection', async ({ lineId, stationId }, thunkAPI) => {
+  try {
+    const response = await requestDelete(`/lines/${lineId}/sections?stationId=${stationId}`);
+    if (response.status === 204) {
+      return;
+    }
+
+    const { message } = await response.json();
+
+    throw new Error(message);
+  } catch (e) {
+    console.error(e);
+    return thunkAPI.rejectWithValue(e);
+  }
+});
 
 const mapSlice = createSlice({
   name: 'map',
