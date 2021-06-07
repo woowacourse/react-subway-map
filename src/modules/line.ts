@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import {
   Line,
@@ -7,6 +7,12 @@ import {
 } from "../@types/types";
 import { requestLine } from "../apis/line";
 import { requestSection } from "../apis/section";
+
+import {
+  isPendingAction,
+  isFulfilledAction,
+  isRejectedAction,
+} from "./@shared/checkThunkActionStatus";
 
 interface LineState {
   items: Line[];
@@ -99,64 +105,29 @@ export const action = {
   deleteSection,
 };
 
-// Builder 를 통해 payload 타입 추론이 가능하도록 고치기
-
 export const lineSlice = createSlice({
   name: "line",
   initialState,
   reducers: {},
-  extraReducers: {
-    [getLines.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [getLines.fulfilled.type]: (state, { payload }) => {
-      state.items = payload;
-      state.loading = false;
-    },
-    [getLines.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [addLine.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [addLine.fulfilled.type]: (state) => {
-      state.loading = false;
-    },
-    [addLine.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [deleteLine.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [deleteLine.fulfilled.type]: (state) => {
-      state.loading = false;
-    },
-    [deleteLine.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [addSection.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [addSection.fulfilled.type]: (state) => {
-      state.loading = false;
-    },
-    [addSection.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [deleteSection.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [deleteSection.fulfilled.type]: (state) => {
-      state.loading = false;
-    },
-    [deleteSection.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getLines.fulfilled, (state, { payload }) => {
+        state.items = payload;
+        state.loading = false;
+      })
+      .addMatcher(isFulfilledAction, (state) => {
+        state.loading = true;
+      })
+      .addMatcher(isPendingAction, (state) => {
+        state.loading = true;
+      })
+      .addMatcher(
+        isRejectedAction,
+        (state, { payload }: PayloadAction<Error>) => {
+          state.loading = false;
+          state.error = payload;
+        }
+      );
   },
 });
 

@@ -1,7 +1,17 @@
-import { createSlice, createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
-import { LoginInfo, SignupInfo } from "../@types/types";
+import {
+  createSlice,
+  createAsyncThunk,
+  Dispatch,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 import { requestAuth } from "../apis/user";
+import { LoginInfo, SignupInfo } from "../@types/types";
+
+import {
+  isPendingAction,
+  isRejectedAction,
+} from "./@shared/checkThunkActionStatus";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -17,7 +27,7 @@ const initialState: AuthState = {
 
 const LOGOUT = "[AUTH] LOGOUT";
 
-const logout = () => async (dispatch: Dispatch) => {
+const logout = () => (dispatch: Dispatch) => {
   localStorage.removeItem("accessToken");
 
   dispatch({
@@ -77,31 +87,32 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
-  extraReducers: {
-    [checkAccessToken.fulfilled.type]: (state) => {
-      state.isAuthenticated = true;
-      state.loading = false;
-    },
-    [checkAccessToken.rejected.type]: (state) => {
-      state.isAuthenticated = false;
-      state.loading = false;
-    },
-    [login.fulfilled.type]: (state) => {
-      state.isAuthenticated = true;
-      state.loading = false;
-    },
-    [login.rejected.type]: (state, { payload }) => {
-      state.isAuthenticated = false;
-      state.error = payload;
-      state.loading = false;
-    },
-    [signup.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [LOGOUT]: (state) => {
-      state.isAuthenticated = false;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(LOGOUT, (state) => {
+        state.isAuthenticated = false;
+      })
+      .addCase(signup.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(checkAccessToken.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.loading = false;
+      })
+      .addCase(login.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.loading = false;
+      })
+      .addMatcher(isPendingAction, (state) => {
+        state.loading = true;
+      })
+      .addMatcher(
+        isRejectedAction,
+        (state, { payload }: PayloadAction<Error>) => {
+          state.loading = false;
+          state.error = payload;
+        }
+      );
   },
 });
 

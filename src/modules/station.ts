@@ -1,7 +1,13 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { Station } from "../@types/types";
 import { requestStation } from "../apis/station";
+
+import {
+  isFulfilledAction,
+  isPendingAction,
+  isRejectedAction,
+} from "./@shared/checkThunkActionStatus";
 
 interface StationState {
   items: Station[];
@@ -64,38 +70,25 @@ export const stationSlice = createSlice({
   name: "station",
   initialState,
   reducers: {},
-  extraReducers: {
-    [getStations.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [getStations.fulfilled.type]: (state, { payload }) => {
-      state.items = payload;
-      state.loading = false;
-    },
-    [getStations.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [addStation.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [addStation.fulfilled.type]: (state) => {
-      state.loading = false;
-    },
-    [addStation.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
-    [deleteStation.pending.type]: (state) => {
-      state.loading = true;
-    },
-    [deleteStation.fulfilled.type]: (state) => {
-      state.loading = false;
-    },
-    [deleteStation.rejected.type]: (state, { payload }) => {
-      state.error = payload;
-      state.loading = false;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getStations.fulfilled, (state, { payload }) => {
+        state.items = payload;
+        state.loading = false;
+      })
+      .addMatcher(isFulfilledAction, (state) => {
+        state.loading = true;
+      })
+      .addMatcher(isPendingAction, (state) => {
+        state.loading = true;
+      })
+      .addMatcher(
+        isRejectedAction,
+        (state, { payload }: PayloadAction<Error>) => {
+          state.loading = false;
+          state.error = payload;
+        }
+      );
   },
 });
 
