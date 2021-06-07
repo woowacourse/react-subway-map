@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 
 import { useLine, useStation } from '../../hooks';
@@ -10,8 +9,7 @@ import { COLOR } from '../../constants';
 
 export const LinePage = () => {
   const { lines, status, requestGetLines, requestAddLine, requestDeleteLine, clearStatus } = useLine();
-  const { requestGetStations } = useStation();
-  const { stations } = useSelector((store) => store.station);
+  const { stations, requestGetStations } = useStation();
   const [isLineAddOpen, setIsLineAddOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
