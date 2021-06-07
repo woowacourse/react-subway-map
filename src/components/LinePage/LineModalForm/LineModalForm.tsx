@@ -1,0 +1,123 @@
+import React from 'react';
+import * as S from './LineModalForm.styles';
+import { PALETTE } from '../../../constants/style';
+import { LineInfoState, LineState } from '../../../interfaces/line';
+import { StationState } from '../../../interfaces/station';
+
+import Button from '../../@commons/Button/Button';
+import Input from '../../@commons/Input/Input';
+import SelectInput from '../../@commons/SelectInput/SelectInput';
+
+import {
+  getLineNameErrorMessage,
+  getLineColorErrorMessage,
+  getLineDistanceErrorMessage,
+  getLineStationErrorMessage,
+} from '../lineFormValidation';
+
+interface Props {
+  lines: LineState['lines'];
+  lineInfo: LineInfoState;
+  stations: StationState['stations'];
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | React.MouseEvent<HTMLElement>) => void;
+  onSubmit: (isValidForm: boolean, e: React.FormEvent<HTMLFormElement>) => void;
+  onModalClose: () => void;
+}
+
+const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onModalClose }: Props) => {
+  const lineNameErrorMessage = getLineNameErrorMessage(lineInfo.name, lines);
+  const lineStationErrorMessage = getLineStationErrorMessage(
+    Number(lineInfo.upStationId),
+    Number(lineInfo.downStationId)
+  );
+  const lineDistanceErrorMessage = getLineDistanceErrorMessage(Number(lineInfo.distance));
+  const lineColorErrorMessage = getLineColorErrorMessage(lineInfo.color, lines);
+  const isValidForm = !(
+    lineNameErrorMessage ||
+    lineStationErrorMessage ||
+    lineDistanceErrorMessage ||
+    lineColorErrorMessage
+  );
+
+  return (
+    <S.LineModalForm onSubmit={e => onSubmit(isValidForm, e)}>
+      <S.Title>노선 생성</S.Title>
+      <S.InputWrapper>
+        <Input
+          value={lineInfo.name}
+          label='노선 이름'
+          name='name'
+          onChange={onChange}
+          error={lineInfo.name && lineNameErrorMessage ? true : false}
+          required
+        />
+        <S.Message>{lineInfo.name && lineNameErrorMessage}</S.Message>
+      </S.InputWrapper>
+      <S.InputWrapper>
+        <S.SelectInputWrapper>
+          <SelectInput
+            initialText='상행 종점'
+            name='upStationId'
+            value={lineInfo.upStationId}
+            onChange={onChange}
+            error={lineInfo.upStationId && lineStationErrorMessage ? true : false}
+          >
+            {stations.map(station => (
+              <option key={station.id} value={station.id}>
+                {station.name}
+              </option>
+            ))}
+          </SelectInput>
+          <S.Arrow>↔</S.Arrow>
+          <SelectInput
+            initialText='하행 종점'
+            name='downStationId'
+            value={lineInfo.downStationId}
+            onChange={onChange}
+            error={lineInfo.upStationId && lineStationErrorMessage ? true : false}
+          >
+            {stations.map(station => (
+              <option key={station.id} value={station.id}>
+                {station.name}
+              </option>
+            ))}
+          </SelectInput>
+        </S.SelectInputWrapper>
+        <S.Message textAlign='center'>{lineInfo.upStationId && lineStationErrorMessage}</S.Message>
+      </S.InputWrapper>
+      <S.InputWrapper>
+        <Input
+          type='number'
+          value={lineInfo.distance}
+          label='거리(km)'
+          name='distance'
+          onChange={onChange}
+          required
+          error={lineInfo.distance && lineDistanceErrorMessage ? true : false}
+        />
+        <S.Message>{lineInfo.distance && lineDistanceErrorMessage}</S.Message>
+      </S.InputWrapper>
+      <S.PaletteContainer>
+        <S.PaletteTitle>노선 색상 선택</S.PaletteTitle>
+        <S.PaletteWrapper>
+          {Object.values(PALETTE).map(color => (
+            <S.Palette type='button' key={color} color={color} name='color' value={color} onClick={onChange} />
+          ))}
+          <S.SelectedPalette color={lineInfo.color}>{lineColorErrorMessage}</S.SelectedPalette>
+        </S.PaletteWrapper>
+      </S.PaletteContainer>
+      <S.ButtonContainer>
+        <S.ButtonWrapper>
+          <Button type='button' bgColor='TRANSPARENT' fontColor='BLACK' onClick={onModalClose}>
+            취소
+          </Button>
+        </S.ButtonWrapper>
+        <S.ButtonWrapper>
+          <Button isDisabled={!isValidForm}>노선 추가하기</Button>
+        </S.ButtonWrapper>
+      </S.ButtonContainer>
+    </S.LineModalForm>
+  );
+};
+
+export default LineModalForm;
