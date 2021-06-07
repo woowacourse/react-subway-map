@@ -6,7 +6,7 @@ interface LineSectionStation {
   transferLines: Line[];
 }
 
-interface Section {
+export interface Section {
   upStation: {
     id: number;
     name: string;
