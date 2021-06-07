@@ -102,7 +102,6 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(logout, (state) => {
-        console.log("!!!!!!!!!!!!");
         localStorage.removeItem("accessToken");
         state.isAuthenticated = false;
       })

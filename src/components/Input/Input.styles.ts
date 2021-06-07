@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { COLOR } from "../../constants";
+
 const InputBlock = styled.input`
   font-size: 1rem;
   font-weight: 400;
@@ -15,7 +17,7 @@ const InputBlock = styled.input`
 
 const ErrorMessage = styled.span`
   font-size: 0.75rem;
-  color: ${({ theme }) => theme.DANGER_TEXT_COLOR};
+  color: ${COLOR.RED_500};
   padding-left: 1rem;
 `;
 

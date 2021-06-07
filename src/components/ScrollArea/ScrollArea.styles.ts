@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { COLOR } from "../../constants";
+
 interface ScrollAreaBlockProps {
   imageUrl?: string;
 }
@@ -17,8 +19,9 @@ const ScrollAreaBlock = styled.div<ScrollAreaBlockProps>`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${({ imageUrl, theme }) =>
-      imageUrl ? `url(${imageUrl})` : theme.PRIMARY};
+    background: ${({ imageUrl }) => {
+      return imageUrl ? `url(${imageUrl})` : COLOR.CYAN_300;
+    }};
     border-radius: 12px;
     background-repeat: no-repeat;
     background-position-x: center;
