@@ -15,11 +15,7 @@ import {
   isFulfilledAction,
   isRejectedAction,
 } from "./@shared/checkThunkActionStatus";
-import {
-  Line,
-  LineAddRequestItem,
-  SectionAddRequestItem,
-} from "../@types/types";
+import { Line, LineAddRequestItem, SectionAddRequestItem } from "../@types";
 import { ERROR_DURATION } from "../constants";
 
 interface LineState {

@@ -13,7 +13,7 @@ import {
   isPendingAction,
   isRejectedAction,
 } from "./@shared/checkThunkActionStatus";
-import { LoginInfo, SignupInfo } from "../@types/types";
+import { LoginInfo, SignupInfo } from "../@types";
 import { ERROR_DURATION } from "../constants";
 
 interface AuthState {

@@ -14,7 +14,7 @@ import {
   isPendingAction,
   isRejectedAction,
 } from "./@shared/checkThunkActionStatus";
-import { Station } from "../@types/types";
+import { Station } from "../@types";
 import { ERROR_DURATION } from "../constants";
 
 interface StationState {

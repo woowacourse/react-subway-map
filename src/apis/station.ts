@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Station } from "../@types/types";
+import { Station } from "../@types";
 
 export const requestStation = {
   async getAllStation() {

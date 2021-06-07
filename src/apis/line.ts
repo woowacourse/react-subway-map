@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Line, LineAddRequestItem } from "../@types/types";
+import { Line, LineAddRequestItem } from "../@types";
 
 export const requestLine = {
   async getAllLines() {

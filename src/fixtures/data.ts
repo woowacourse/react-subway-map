@@ -1,4 +1,4 @@
-import { Line } from "../@types/types";
+import { Line } from "../@types";
 
 export const stations = [
   {

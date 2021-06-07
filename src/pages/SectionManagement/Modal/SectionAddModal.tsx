@@ -6,7 +6,7 @@ import { Flex } from "../../../components";
 import { useInput, useSelect } from "../../../hooks";
 
 import { validateSectionDistance } from "../../../validations";
-import { Line, SectionAddRequestItem, Station } from "../../../@types/types";
+import { Line, SectionAddRequestItem, Station } from "../../../@types";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;

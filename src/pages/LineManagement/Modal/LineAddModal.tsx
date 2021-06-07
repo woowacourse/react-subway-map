@@ -17,7 +17,7 @@ import {
   validateSectionDistance,
 } from "../../../validations";
 import { CIRCLE_COLOR } from "../../../constants";
-import { LineAddRequestItem, Station } from "../../../@types/types";
+import { LineAddRequestItem, Station } from "../../../@types";
 
 interface Props {
   onClose: MouseEventHandler<HTMLDivElement>;
