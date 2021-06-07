@@ -1,6 +1,6 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
-import TEST_ID from "../../@test/testId";
+import { TEST_ID } from "../../@test/testId";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import Block from "../../components/Block/Block";

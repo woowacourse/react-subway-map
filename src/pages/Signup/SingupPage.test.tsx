@@ -8,7 +8,7 @@ import initialState from "../../fixtures/redux";
 import mockStore from "../../@test/mockStore";
 import { INPUT_PLACEHOLDER } from "../../constants/placeholder";
 import { TEST_USER } from "../../fixtures/user";
-import TEST_ID from "../../@test/testId";
+import { TEST_ID } from "../../@test/testId";
 import { action } from "../../modules/auth";
 
 type UserInfo = {

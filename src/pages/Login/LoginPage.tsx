@@ -9,7 +9,7 @@ import { PAGE_PATH } from "../../constants/route";
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";
 import useAuth from "../../hooks/useAuth";
-import TEST_ID from "../../@test/testId";
+import { TEST_ID } from "../../@test/testId";
 import { MoveToSignupPageLink } from "./LoginPage.styles";
 
 const LoginPage = () => {

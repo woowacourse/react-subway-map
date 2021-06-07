@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import SectionManagementPage from "./SectionManagementPage";
 import initialState from "../../fixtures/redux";
 import mockStore from "../../@test/mockStore";
-import TEST_ID from "../../@test/testId";
+import { TEST_ID } from "../../@test/testId";
 import { TEST_SECTION } from "../../fixtures/section";
 import { Station } from "../../@types/types";
 

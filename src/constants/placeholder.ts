@@ -1,4 +1,4 @@
-export enum INPUT_PLACEHOLDER {
+export const enum INPUT_PLACEHOLDER {
   EMAIL = "이메일",
   AGE = "나이",
   PASSWORD = "비밀번호",

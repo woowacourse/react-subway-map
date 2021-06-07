@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import TEST_ID from "../../../@test/testId";
+import { TEST_ID } from "../../../@test/testId";
 import { INPUT_PLACEHOLDER } from "../../../constants/placeholder";
 import { Line, SectionAddRequestItem, Station } from "../../../@types/types";
 import { Flex } from "../../../components/@shared/FlexContainer/FlexContainer";

@@ -10,7 +10,7 @@ import useSelect from "../../hooks/@common/useSelect";
 import useLine from "../../hooks/useLine";
 import ListItem from "../../components/ListItem/ListItem";
 import { CIRCLE_COLOR } from "../../constants/color";
-import TEST_ID from "../../@test/testId";
+import { TEST_ID } from "../../@test/testId";
 import { Distance, SectionListItemWrapper } from "./SectionManagementPage.styles";
 import { Station } from "../../@types/types";
 

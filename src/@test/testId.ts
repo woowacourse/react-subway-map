@@ -1,4 +1,4 @@
-enum TEST_ID {
+export const enum TEST_ID {
   LOGIN_BUTTON = "login-button",
   SIGNUP_BUTTON = "signup-button",
   MOVE_TO_SIGN_UP_BUTTON = "move-to-signup-button",
@@ -14,5 +14,3 @@ enum TEST_ID {
   SECTION_DOWN_STATION_SELECT = "section-down-station-select",
   SECTION_DISTANCE_INPUT = "section-distance-input",
 }
-
-export default TEST_ID;
