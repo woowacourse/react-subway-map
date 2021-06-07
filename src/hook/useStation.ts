@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Station } from '../interfaces';
 import { RootState } from '../modules';
 import {
   addStationAsync,
   deleteStationAsync,
+  editStationAsync,
   getStationsAsync,
   resetError as _resetError,
 } from '../modules/station/stationReducer';
@@ -18,19 +20,23 @@ const useStation = () => {
     dispatch(getStationsAsync());
   }, [dispatch, stations.length, accessToken]);
 
-  const addStation = (name: string) => {
+  const addStation = (name: Station['name']) => {
     dispatch(addStationAsync(name));
   };
 
-  const deleteStation = (id: number) => {
+  const deleteStation = (id: Station['id']) => {
     dispatch(deleteStationAsync(id));
+  };
+
+  const editStation = (id: Station['id'], name: Station['name']) => {
+    dispatch(editStationAsync({ id, name }));
   };
 
   const resetError = () => {
     dispatch(_resetError());
   };
 
-  return { stations, error, addStation, deleteStation, resetError };
+  return { stations, error, addStation, deleteStation, editStation, resetError };
 };
 
 export default useStation;

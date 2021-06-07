@@ -1,8 +1,16 @@
 import { call, select } from '@redux-saga/core/effects';
 import { expectSaga } from 'redux-saga-test-plan';
 import { stationAPI } from '../../api/station';
-import { addStationAsync, deleteStationAsync, error, pending, setStations } from './stationReducer';
-import { getStationsSaga, addStationSaga, selectStations, deleteStationSaga } from './stationSaga';
+import {
+  addStationAsync,
+  deleteStationAsync,
+  editStationAsync,
+  error,
+  getStationsAsync,
+  pending,
+  setStations,
+} from './stationReducer';
+import { getStationsSaga, addStationSaga, selectStations, deleteStationSaga, editStationSaga } from './stationSaga';
 import stationReducer from './stationReducer';
 import { Station } from '../../interfaces';
 
@@ -31,6 +39,8 @@ const newStation = {
   id: 3,
   name: '포코역',
 };
+
+const newStationName = '새로운역이름';
 
 it('지하철 역 목록을 성공적으로 불러온다.', async () => {
   return expectSaga(getStationsSaga)
@@ -93,6 +103,34 @@ it('지하철 역 목록을 삭제하는데 실패한다.', async () => {
     .withReducer(stationReducer)
     .put(pending())
     .provide([[call(stationAPI.deleteStation, newStation.id), { error: errorMessage }]])
+    .put(error(errorMessage))
+    .hasFinalState({ stations: [], error: errorMessage })
+    .run();
+});
+
+it('지하철 역 이름을 성공적으로 수정한다.', async () => {
+  return expectSaga(editStationSaga, {
+    type: editStationAsync.type,
+    payload: { id: stationList[0].id, name: newStationName },
+  })
+    .withReducer(stationReducer)
+    .put(pending())
+    .provide([
+      [call(stationAPI.editStation, stationList[0].id, newStationName), {}],
+      [select(selectStations), stationList],
+    ])
+    .put(getStationsAsync())
+    .run();
+});
+
+it('지하철 역 목록을 수정하는데 실패한다.', async () => {
+  return expectSaga(editStationSaga, {
+    type: editStationAsync.type,
+    payload: { id: stationList[0].id, name: newStationName },
+  })
+    .withReducer(stationReducer)
+    .put(pending())
+    .provide([[call(stationAPI.editStation, stationList[0].id, newStationName), { error: errorMessage }]])
     .put(error(errorMessage))
     .hasFinalState({ stations: [], error: errorMessage })
     .run();

@@ -14,23 +14,26 @@ export interface Props {
   value?: string | number;
 }
 
-const Input = ({ type = 'text', emoji, label, placeholder, borderColor, name, onChange, required, value }: Props) => {
-  return (
-    <S.InputContainer>
-      {label && <S.Label>{label}</S.Label>}
-      {emoji && <S.Emoji src={emoji} />}
-      <S.Input
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        borderColor={borderColor}
-        emoji={emoji}
-        name={name}
-        onChange={onChange}
-        required={required}
-      />
-    </S.InputContainer>
-  );
-};
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  ({ type = 'text', emoji, label, placeholder, borderColor, name, onChange, required, value }, ref) => {
+    return (
+      <S.InputContainer>
+        {label && <S.Label>{label}</S.Label>}
+        {emoji && <S.Emoji src={emoji} />}
+        <S.Input
+          ref={ref}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          borderColor={borderColor}
+          emoji={emoji}
+          name={name}
+          onChange={onChange}
+          required={required}
+        />
+      </S.InputContainer>
+    );
+  }
+);
 
 export default Input;

@@ -24,16 +24,16 @@ axios.interceptors.response.use(
   error => error.response
 );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Theme>
-          <GlobalStyles />
-          <App />
-        </Theme>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Provider store={store}>
+//       <BrowserRouter>
+//         <Theme>
+//           <GlobalStyles />
+//           <App />
+//         </Theme>
+//       </BrowserRouter>
+//     </Provider>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
