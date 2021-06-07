@@ -18,6 +18,10 @@ export const Nav = styled.nav`
 export const TitleButton = styled.button`
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.div`
