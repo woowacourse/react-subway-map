@@ -1,4 +1,4 @@
-export const enum TEST_ID {
+export enum TEST_ID {
   LOGIN_BUTTON = "login-button",
   SIGNUP_BUTTON = "signup-button",
   MOVE_TO_SIGN_UP_BUTTON = "move-to-signup-button",

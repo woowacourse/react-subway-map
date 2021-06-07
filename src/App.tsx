@@ -14,17 +14,28 @@ import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./cons
 import useAuth from "./hooks/useAuth";
 import useStation from "./hooks/useStation";
 import useLine from "./hooks/useLine";
+import { Flex } from "./components/@shared/FlexContainer/FlexContainer";
+import Select from "./components/Select/Select";
+import { BASE_URL, API_PROVIDER, DEFAULT_API_PROVIDER, API_LOCAL_STORAGE_KEY } from "./apis";
+import useLocalStorage from "./hooks/@common/useLocalStorage";
+import axios from "axios";
 
 const App = () => {
-  const { isAuthenticated, checkAccessToken, logout, error: authError } = useAuth();
-  const { getStations, error: stationError } = useStation();
-  const { getLines, error: lineError } = useLine();
+  const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
+
+  const { isAuthenticated, checkAccessToken, logout } = useAuth();
+  const { getStations } = useStation();
+  const { getLines } = useLine();
 
   useEffect(() => {
     checkAccessToken();
     getStations();
     getLines();
   }, []);
+
+  useEffect(() => {
+    axios.defaults.baseURL = BASE_URL[appLocalStorage.item];
+  }, [appLocalStorage.item]);
 
   const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
@@ -44,8 +55,31 @@ const App = () => {
     <Route {...props}>{isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />};</Route>
   );
 
+  const apiProviders = Object.keys(BASE_URL).map((name) => ({ value: name, text: name }));
+
+  const apiProviderName = appLocalStorage.item;
+
+  const onApiProviderChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    const apiProvider = event.currentTarget.value;
+
+    if (!(apiProvider in BASE_URL)) {
+      return;
+    }
+
+    appLocalStorage.set(apiProvider as API_PROVIDER);
+  };
+
   return (
     <BrowserRouter>
+      <Flex style={{ width: "100%", padding: "0.9375rem", justifyContent: "flex-end" }}>
+        <Select
+          defaultValue={apiProviderName}
+          options={apiProviders}
+          onChange={onApiProviderChange}
+          style={{ width: "9.375rem", backgroundColor: "skyblue" }}
+        ></Select>
+      </Flex>
+
       <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
         <Link to={PAGE_PATH.HOME}>🚇 지하철 노선도</Link>
       </Header>

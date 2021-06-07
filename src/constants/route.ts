@@ -1,4 +1,4 @@
-export const enum PAGE_PATH {
+export enum PAGE_PATH {
   HOME = "/",
   LOGIN = "/login",
   SIGN_UP = "/signup",
