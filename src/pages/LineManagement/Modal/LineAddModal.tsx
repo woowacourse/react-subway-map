@@ -7,11 +7,10 @@ import {
   Input,
   Modal,
   Select,
-} from "../../../components/";
-import { Flex } from "../../../components/";
+} from "../../../components";
+import { Flex } from "../../../components";
 
-import useInput from "../../../hooks/useInput";
-import useSelect from "../../../hooks/useSelect";
+import { useInput, useSelect } from "../../../hooks";
 
 import { validateLineName } from "../../../validations/line";
 import { validateSectionDistance } from "../../../validations/section";

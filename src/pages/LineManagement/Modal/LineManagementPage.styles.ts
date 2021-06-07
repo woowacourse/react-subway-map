@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { FlexCenter } from "../../../components/";
+import { FlexCenter } from "../../../components";
 
 import { SIZE } from "../../../constants/size";
 

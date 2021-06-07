@@ -3,8 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Block, Button, Input } from "../../components";
 import { Flex, FlexBetween, FlexCenter } from "../../components";
 
-import useInput from "../../hooks/useInput";
-import useAuth from "../../hooks/useAuth";
+import { useInput, useAuth } from "../../hooks";
 
 import { validateEmail } from "../../validations/email";
 import { validatePassword } from "../../validations/password";

@@ -2,12 +2,10 @@ import { useState } from "react";
 
 import SectionAddModal from "./Modal/SectionAddModal";
 
-import { Button, Block, Select, ListItem } from "../../components/";
-import { Flex, FlexCenter, FlexBetween } from "../../components/";
+import { Button, Block, Select, ListItem } from "../../components";
+import { Flex, FlexCenter, FlexBetween } from "../../components";
 
-import useStation from "../../hooks/useStation";
-import useSelect from "../../hooks/useSelect";
-import useLine from "../../hooks/useLine";
+import { useStation, useLine, useSelect } from "../../hooks";
 
 import { SIZE } from "../../constants/size";
 

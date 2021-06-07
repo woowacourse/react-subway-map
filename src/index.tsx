@@ -8,8 +8,8 @@ import { BASE_URL, changeBaseUrl } from "./apis/index";
 
 import App from "./App";
 
-import { Select } from "./components/";
-import { Flex } from "./components/";
+import { Select } from "./components";
+import { Flex } from "./components";
 
 import GlobalStyle from "./Global.styles";
 import { COLOR } from "./constants/color";

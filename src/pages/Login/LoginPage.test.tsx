@@ -1,4 +1,5 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
+import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
 
 import { useAppDispatch } from "../../hooks";
@@ -27,9 +28,11 @@ describe("로그인 페이지 테스트", () => {
     describe("사용자가 입력한 이메일이 30글자이하의 유효한 형식인 경우", () => {
       it("로그인 버튼 클릭시 로그인 요청이 발생한다.", async () => {
         const { getByPlaceholderText, getByRole } = render(
-          <MemoryRouter>
-            <LoginPage />
-          </MemoryRouter>
+          <Provider store={store}>
+            <MemoryRouter>
+              <LoginPage />
+            </MemoryRouter>
+          </Provider>
         );
 
         fireEvent.change(getByPlaceholderText(/이메일/i), {
@@ -57,9 +60,11 @@ describe("로그인 페이지 테스트", () => {
     describe("사용자가 입력한 이메일이 유효하지 않은 형식인 경우", () => {
       it("로그인 버튼 클릭시 로그인 요청이 발생하지 않는다.", async () => {
         const { getByPlaceholderText, getByRole } = render(
-          <MemoryRouter>
-            <LoginPage />
-          </MemoryRouter>
+          <Provider store={store}>
+            <MemoryRouter>
+              <LoginPage />
+            </MemoryRouter>
+          </Provider>
         );
 
         fireEvent.change(getByPlaceholderText(/이메일/i), {
@@ -86,9 +91,11 @@ describe("로그인 페이지 테스트", () => {
     describe("사용자가 입력한 이메일이 30글자를 초과한 경우", () => {
       it("로그인 버튼 클릭시 로그인 요청이 발생하지 않는다.", async () => {
         const { getByPlaceholderText, getByRole } = render(
-          <MemoryRouter>
-            <LoginPage />
-          </MemoryRouter>
+          <Provider store={store}>
+            <MemoryRouter>
+              <LoginPage />
+            </MemoryRouter>
+          </Provider>
         );
 
         fireEvent.change(getByPlaceholderText(/이메일/i), {
@@ -117,9 +124,11 @@ describe("로그인 페이지 테스트", () => {
     describe("사용자가 입력한 비밀번호가 4글자 미만인 경우 ", () => {
       it("로그인 버튼 클릭시 로그인 요청이 발생하지 않는다.", async () => {
         const { getByPlaceholderText, getByRole } = render(
-          <MemoryRouter>
-            <LoginPage />
-          </MemoryRouter>
+          <Provider store={store}>
+            <MemoryRouter>
+              <LoginPage />
+            </MemoryRouter>
+          </Provider>
         );
 
         fireEvent.change(getByPlaceholderText(/이메일/i), {
@@ -146,9 +155,11 @@ describe("로그인 페이지 테스트", () => {
     describe("사용자가 입력한 비밀번호가 20글자 초과인 경우 ", () => {
       it("로그인 버튼 클릭시 로그인 요청이 발생하지 않는다.", async () => {
         const { getByPlaceholderText, getByRole } = render(
-          <MemoryRouter>
-            <LoginPage />
-          </MemoryRouter>
+          <Provider store={store}>
+            <MemoryRouter>
+              <LoginPage />
+            </MemoryRouter>
+          </Provider>
         );
 
         fireEvent.change(getByPlaceholderText(/이메일/i), {

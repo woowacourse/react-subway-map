@@ -1,11 +1,10 @@
 import { MouseEventHandler } from "react";
 import { Line, SectionAddRequestItem, Station } from "../../../@types/types";
 
-import { Block, Button, Input, Modal, Select } from "../../../components/";
-import { Flex } from "../../../components/";
+import { Block, Button, Input, Modal, Select } from "../../../components";
+import { Flex } from "../../../components";
 
-import useInput from "../../../hooks/useInput";
-import useSelect from "../../../hooks/useSelect";
+import { useInput, useSelect } from "../../../hooks";
 
 import { validateSectionDistance } from "../../../validations/section";
 

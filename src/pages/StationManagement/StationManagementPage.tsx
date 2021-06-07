@@ -1,8 +1,7 @@
 import { Input, Button, Block, ListItem } from "../../components";
 import { Flex, FlexCenter } from "../../components";
 
-import useStation from "../../hooks/useStation";
-import useInput from "../../hooks/useInput";
+import { useStation, useInput } from "../../hooks";
 
 import { validateStationName } from "../../validations/station";
 

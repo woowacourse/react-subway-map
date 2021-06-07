@@ -1,6 +1,6 @@
 import { Redirect } from "react-router";
 
-import useAuth from "../../hooks/useAuth";
+import { useAuth } from "../../hooks";
 
 import { PAGE_PATH } from "../../constants/route";
 

@@ -3,9 +3,7 @@ import { BrowserRouter, Switch, Link } from "react-router-dom";
 
 import { Header, Navigation, Loading, ErrorMessage } from "./components";
 
-import useAuth from "./hooks/useAuth";
-import useStation from "./hooks/useStation";
-import useLine from "./hooks/useLine";
+import { useAuth, useStation, useLine } from "./hooks";
 
 import { PAGE_PATH, ROUTES } from "./constants/route";
 import Routes from "./Routes";

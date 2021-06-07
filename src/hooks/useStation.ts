@@ -1,5 +1,6 @@
-import { useAppDispatch, useAppSelector } from ".";
 import { action } from "../modules/station";
+
+import { useAppDispatch, useAppSelector } from "./useRedux";
 
 const useStation = () => {
   const { items: stations, loading, error } = useAppSelector(
@@ -9,6 +10,7 @@ const useStation = () => {
       error,
     })
   );
+
   const dispatch = useAppDispatch();
 
   const getStations = async () => {
