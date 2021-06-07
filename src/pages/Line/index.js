@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 
-import { useLine, useStation } from '../../hooks';
+import { useLine, useStation, useToggle } from '../../hooks';
 import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
 import { LineListItem } from './LineListItem';
 import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, InvalidMessage } from './style';
@@ -10,11 +10,8 @@ import { COLOR } from '../../constants';
 export const LinePage = () => {
   const { lines, status, requestGetLines, requestAddLine, requestDeleteLine, clearStatus } = useLine();
   const { stations, requestGetStations } = useStation();
-  const [isLineAddOpen, setIsLineAddOpen] = useState(false);
+  const [addModeOn, toggleAddMode] = useToggle(false);
   const { enqueueSnackbar } = useSnackbar();
-
-  const handleOpenModal = () => setIsLineAddOpen(true);
-  const handleCloseModal = () => setIsLineAddOpen(false);
 
   const handleAddLine = (e) => {
     e.preventDefault();
@@ -42,14 +39,14 @@ export const LinePage = () => {
       enqueueSnackbar(status.message);
     }
     if (status.isAddSuccess) {
-      setIsLineAddOpen(false);
+      toggleAddMode();
     }
     clearStatus();
   }, [status]);
 
   return (
     <Section heading="노선 관리">
-      <AddButton onClick={handleOpenModal}>
+      <AddButton onClick={toggleAddMode}>
         <IconPlus width={30} color={COLOR.TEXT.DEFAULT} />
       </AddButton>
       <List>
@@ -58,7 +55,7 @@ export const LinePage = () => {
         ))}
       </List>
 
-      {isLineAddOpen && (
+      {addModeOn && (
         <Modal>
           <Section heading="노선 추가">
             <Form onSubmit={handleAddLine}>
@@ -92,7 +89,7 @@ export const LinePage = () => {
               <ColorPicker label="노선선택" colors={Object.values(COLOR.LINE)} />
               <InvalidMessage></InvalidMessage>
               <ButtonControl>
-                <CancelButton onClick={handleCloseModal}>취소</CancelButton>
+                <CancelButton onClick={toggleAddMode}>취소</CancelButton>
                 <ButtonSquare>확인</ButtonSquare>
               </ButtonControl>
             </Form>
