@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignUp from '.';
-import { BUTTON_ID, ERROR, INPUT_TEXT, TEST } from '../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT } from '../../constants';
 import { Provider } from 'react-redux';
 import store from '../../redux';
 

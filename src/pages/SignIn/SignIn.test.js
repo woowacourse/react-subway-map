@@ -4,7 +4,7 @@ import store from '../../redux';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignIn from '.';
-import { BUTTON_ID, ERROR, INPUT_TEXT, TEST } from '../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT } from '../../constants';
 
 describe('<SignIn />', () => {
   const setup = () => {

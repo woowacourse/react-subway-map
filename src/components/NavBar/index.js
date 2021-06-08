@@ -15,7 +15,7 @@ const publicRoutes = Object.values(ROUTE).filter(
 
 const Menu = ({ openModal }) => {
   const { token } = useSelector(({ user }) => user);
-  const routes = !token ? privateRoutes : publicRoutes;
+  const routes = token ? privateRoutes : publicRoutes;
 
   return (
     <List>

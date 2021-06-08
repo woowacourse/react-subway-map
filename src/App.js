@@ -10,6 +10,7 @@ import {
   StationManager,
   LineManager,
   SectionManager,
+  Map,
 } from './pages';
 import { Flex } from './styles';
 
@@ -45,6 +46,9 @@ function App() {
             </Route>
             <Route exact path={ROUTE.SECTION_MANAGE.PATH}>
               <SectionManager />
+            </Route>
+            <Route exact path={ROUTE.MAP.PATH}>
+              <Map />
             </Route>
           </Switch>
         </Main>
