@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -16,21 +15,19 @@ import Sections from './pages/Sections/Sections';
 import Signup from './pages/Signup/Signup';
 import Stations from './pages/Stations/Stations';
 import { RootState } from './redux/store';
-import { getApiOwner, getBearerToken } from './storage/service';
-
-axios.defaults.baseURL = API_INFO[getApiOwner()].endPoint;
-axios.defaults.headers.common['Authorization'] = getBearerToken();
+import { getBearerToken } from './storage/service';
+import customAxios from './util/API';
 
 const App: FC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 
   useEffect(() => {
-    axios.defaults.baseURL = API_INFO[apiOwner].endPoint;
+    customAxios.defaults.baseURL = API_INFO[apiOwner].endPoint;
   }, [apiOwner]);
 
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = getBearerToken();
+    customAxios.defaults.headers.common['Authorization'] = getBearerToken();
   }, [isLogin]);
 
   return (

@@ -9,7 +9,7 @@ export const APIForm = styled.form`
 
 export const APIList = styled.ul`
   font-size: 1.25rem;
-  width: 400px;
+  width: 500px;
   display: flex;
   justify-content: space-between;
   margin: 0 auto 4rem;

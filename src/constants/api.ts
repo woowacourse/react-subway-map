@@ -6,6 +6,8 @@ interface APIInfo {
   themeColor: Color;
 }
 
+export const DEFAULT_API_OWNER = 'JOEL';
+
 export const API_INFO: { [key: string]: APIInfo } = {
   FAFI: {
     name: '파피',
@@ -28,5 +30,3 @@ export const API_INFO: { [key: string]: APIInfo } = {
     themeColor: PALETTE.CYAN,
   },
 };
-
-export const DEFAULT_API_OWNER = 'JAYON';

@@ -1,12 +1,14 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { Station } from '../types';
+import customAxios from '../util/API';
 
-export const requestGetStations = (): Promise<AxiosResponse<Station[]>> => axios.get(`/stations`);
-
+export const requestGetStations = (): Promise<AxiosResponse<Station[]>> =>
+  customAxios.get(`/stations`);
+customAxios;
 export const requestAddStation = (stationName: string): Promise<AxiosResponse<Station>> =>
-  axios.post(`/stations`, {
+  customAxios.post(`/stations`, {
     name: stationName,
   });
 
 export const requestDeleteStation = (stationId: number): Promise<AxiosResponse> =>
-  axios.delete(`/stations/${stationId}`);
+  customAxios.delete(`/stations/${stationId}`);

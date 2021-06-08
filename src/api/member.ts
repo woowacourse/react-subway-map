@@ -1,12 +1,13 @@
 import { Member } from './../types';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
+import customAxios from '../util/API';
 
 export const requestSignup = (memberInfo: Member): Promise<Response> =>
-  axios.post(`/members`, memberInfo);
+  customAxios.post(`/members`, memberInfo);
 
 interface LoginResponse {
   accessToken: string;
 }
 
 export const requestLogin = (loginInfo: Member): Promise<AxiosResponse<LoginResponse>> =>
-  axios.post(`/login/token`, loginInfo);
+  customAxios.post(`/login/token`, loginInfo);

@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { Line } from '../types';
+import customAxios from '../util/API';
 
 export interface AddLineRequestData {
   name: string;
@@ -27,21 +28,21 @@ interface DeleteSectionRequestData {
   stationId: number;
 }
 
-export const requestGetLines = (): Promise<AxiosResponse<Line[]>> => axios.get(`/lines`);
+export const requestGetLines = (): Promise<AxiosResponse<Line[]>> => customAxios.get(`/lines`);
 
 export const requestAddLine = (
   addLineRequestData: AddLineRequestData
-): Promise<AxiosResponse<Line[]>> => axios.post(`/lines`, addLineRequestData);
+): Promise<AxiosResponse<Line[]>> => customAxios.post(`/lines`, addLineRequestData);
 
 export const requestDeleteLine = (lineId: number): Promise<AxiosResponse> =>
-  axios.delete(`/lines/${lineId}`);
+  customAxios.delete(`/lines/${lineId}`);
 
 export const requestModifyLine = ({
   lineId,
   name,
   color,
 }: ModifyLineRequestData): Promise<AxiosResponse> =>
-  axios.put(`/lines/${lineId}`, {
+  customAxios.put(`/lines/${lineId}`, {
     name,
     color,
   });
@@ -52,7 +53,7 @@ export const requestAddSection = ({
   downStationId,
   distance,
 }: AddSectionRequestData): Promise<AxiosResponse> =>
-  axios.post(`/lines/${lineId}/sections`, {
+  customAxios.post(`/lines/${lineId}/sections`, {
     upStationId,
     downStationId,
     distance,
@@ -62,4 +63,4 @@ export const requestDeleteSection = ({
   lineId,
   stationId,
 }: DeleteSectionRequestData): Promise<AxiosResponse> =>
-  axios.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
+  customAxios.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
