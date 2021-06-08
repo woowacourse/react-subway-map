@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import LineManagementPage from "./LineManagementPage";
 import initialState from "../../fixtures/redux";
 import mockStore from "../../@test/mockStore";
-import TEST_ID from "../../@test/testId";
+import { TEST_ID } from "../../@test/testId";
 import { TEST_LINE } from "../../fixtures/line";
 import { Line } from "../../@types/types";
 
