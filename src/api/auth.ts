@@ -14,14 +14,10 @@ interface SignInRequest {
   password: string;
 }
 
-interface SignInResponse extends AxiosResponse {
-  accessToken: string;
-}
-
 export const authAPI = {
   signUp: async ({ url, ...data }: SignUpRequest) => {
     try {
-      const response = await axios.post<AxiosResponse>(`${url}/members`, data);
+      const response = await axios.post(`${url}/members`, data);
 
       if (response.status === 400) {
         throw new Error(MESSAGE.ERROR.REGISTERED_EMAIL);
@@ -39,7 +35,7 @@ export const authAPI = {
 
   signIn: async (data: SignInRequest) => {
     try {
-      const response = await axios.post<SignInResponse>(API.SIGN_IN(), data);
+      const response = await axios.post<{ accessToken: string }>(API.SIGN_IN(), data);
 
       if (response.status > 400) {
         throw new Error(MESSAGE.ERROR.LOGIN_FAILED);

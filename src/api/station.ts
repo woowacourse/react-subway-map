@@ -3,24 +3,16 @@ import { API, API_RESULT } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 import { StationLineState, StationState } from '../interfaces/station';
 
-interface GetStationsResponse extends AxiosResponse {
-  stations: StationState['stations'];
-}
-
-interface AddStationResponse extends AxiosResponse {
-  station: StationState['stations'];
-}
-
 export const stationAPI = {
   getStations: async () => {
     try {
-      const response = await axios.get<GetStationsResponse>(API.GET_STATIONS());
+      const response = await axios.get<StationState['stations']>(API.GET_STATIONS());
 
       if (response.status >= 400) {
         throw new Error(MESSAGE.ERROR.STATION.LOAD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { stations: response.data.stations } });
+      return Object.assign(API_RESULT.SUCCESS, { data: { stations: response.data } });
     } catch (error) {
       return Object.assign(API_RESULT.FAILURE, { message: error.message });
     }
@@ -29,13 +21,13 @@ export const stationAPI = {
   addStation: async (name: StationLineState['name']) => {
     try {
       const data = { name };
-      const response = await axios.post<AddStationResponse>(API.GET_STATIONS(), data);
+      const response = await axios.post<StationState['stations']>(API.GET_STATIONS(), data);
 
       if (response.status >= 400) {
         throw new Error(MESSAGE.ERROR.STATION.ADD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { station: response.data.station } });
+      return Object.assign(API_RESULT.SUCCESS, { data: { station: response.data } });
     } catch (error) {
       return Object.assign(API_RESULT.FAILURE, { message: error.message });
     }
@@ -43,7 +35,7 @@ export const stationAPI = {
 
   deleteStation: async (id: StationLineState['id']) => {
     try {
-      const response = await axios.delete<AxiosResponse>(`${API.GET_STATIONS()}/${id}`);
+      const response = await axios.delete(`${API.GET_STATIONS()}/${id}`);
 
       if (response.status === 400) {
         throw new Error(MESSAGE.ERROR.STATION.REGISTERED_LINE_STATION);
