@@ -10,7 +10,7 @@ const useLine = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (lines.length !== 0 || !accessToken) return;
+    if (lines.length !== 0) return;
 
     dispatch(getLinesAsync());
   }, [dispatch, lines.length, accessToken]);

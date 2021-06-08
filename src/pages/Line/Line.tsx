@@ -23,9 +23,9 @@ const Line = () => {
     }
   }, [error, resetError]);
 
-  if (!accessToken) {
-    return <Redirect to={ROUTE.SIGN_IN} />;
-  }
+  // if (!accessToken) {
+  //   return <Redirect to={ROUTE.SIGN_IN} />;
+  // }
 
   return (
     <S.Container>
