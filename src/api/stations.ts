@@ -4,7 +4,7 @@ import customAxios from '../util/API';
 
 export const requestGetStations = (): Promise<AxiosResponse<Station[]>> =>
   customAxios.get(`/stations`);
-customAxios;
+
 export const requestAddStation = (stationName: string): Promise<AxiosResponse<Station>> =>
   customAxios.post(`/stations`, {
     name: stationName,

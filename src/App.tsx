@@ -27,7 +27,7 @@ const App: VFC = () => {
   }, [apiOwner]);
 
   useEffect(() => {
-    customAxios.defaults.headers.common['Authorization'] = getBearerToken();
+    customAxios.defaults.headers['Authorization'] = getBearerToken();
   }, [isLogin]);
 
   return (
