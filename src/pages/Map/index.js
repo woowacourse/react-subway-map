@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PageTemplate } from '../../components';
 import { ROUTE } from '../../constants';
-import { useSubwayMap } from '../../hooks';
+// import { useSubwayMap } from '../../hooks';
 import {
   SubwayMap,
   Container,
@@ -35,8 +35,22 @@ const Line = ({ name, color, stations, sections }) => {
   );
 };
 
+const mockSubwayMap = [
+  {
+    id: 1,
+    name: 'test',
+    color: 'red',
+    stations: [
+      { id: 1, name: 'test1' },
+      { id: 2, name: 'test2' },
+    ],
+    sections: [{ distance: 15 }],
+  },
+];
+
 const Map = () => {
-  const { subwayMap } = useSubwayMap();
+  // const { subwayMap } = useSubwayMap();
+  const subwayMap = mockSubwayMap;
 
   return (
     <>
