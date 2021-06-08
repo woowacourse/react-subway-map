@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import Input, { InputProps } from '../Input/Input';
 import { NotificationInputContainer, NotificationText } from './NotificationInput.styles';
 
@@ -13,7 +13,7 @@ interface Props extends InputProps {
   className?: string;
 }
 
-const NotificationInput: FC<Props> = ({ message, className, ...options }) => {
+const NotificationInput: VFC<Props> = ({ message, className, ...options }) => {
   return (
     <NotificationInputContainer
       className={className}

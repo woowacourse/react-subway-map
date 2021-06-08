@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, InputHTMLAttributes } from 'react';
+import React, { VFC, InputHTMLAttributes } from 'react';
 import { LabelIcon, LabelText, StyledLabel } from './Input.styles';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,7 +8,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   labelIcon?: React.ReactNode;
 }
 
-const Input: FC<InputProps> = ({ className, labelText, labelIcon, ...option }) => {
+const Input: VFC<InputProps> = ({ className, labelText, labelIcon, ...option }) => {
   return (
     <StyledLabel className={className}>
       {labelText && <LabelText>{labelText}</LabelText>}

@@ -1,4 +1,4 @@
-import React, { FC, FormEvent } from 'react';
+import React, { VFC, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestSignup } from '../../api/member';
@@ -16,7 +16,7 @@ import { RootState } from '../../redux/store';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
-const Signup: FC = () => {
+const Signup: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const history = useHistory();
 

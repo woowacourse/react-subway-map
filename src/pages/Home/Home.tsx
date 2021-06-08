@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect } from 'react';
+import React, { VFC, FormEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -12,7 +12,7 @@ import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 import { LABEL_TEXT } from '../../constants/a11y';
 
-const Home: FC = () => {
+const Home: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const dispatch = useAppDispatch();
 

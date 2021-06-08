@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect } from 'react';
+import React, { VFC, FormEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -18,7 +18,7 @@ import { StationForm, StationList, StationName, StationNameInput } from './Stati
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import { LABEL_TEXT } from '../../constants/a11y';
 
-const Stations: FC = () => {
+const Stations: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);

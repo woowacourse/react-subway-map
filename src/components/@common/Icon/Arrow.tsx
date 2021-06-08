@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import PALETTE from '../../../constants/palette';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   color?: string;
 }
 
-const Arrow: FC<Props> = ({ width = '24px', color = PALETTE.GRAY[400] }) => {
+const Arrow: VFC<Props> = ({ width = '24px', color = PALETTE.GRAY[400] }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

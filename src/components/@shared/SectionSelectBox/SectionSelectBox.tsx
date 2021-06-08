@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEvent, ChangeEventHandler, FC } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, VFC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import Arrow from '../../@common/Icon/Arrow';
@@ -21,7 +21,7 @@ export interface Props {
   errorMessage?: string;
 }
 
-const SectionSelectBox: FC<Props> = ({ onChangeUpStation, onChangeDownStation, errorMessage }) => {
+const SectionSelectBox: VFC<Props> = ({ onChangeUpStation, onChangeDownStation, errorMessage }) => {
   const { stations } = useSelector((state: RootState) => state.station);
 
   return (

@@ -1,4 +1,4 @@
-import React, { FC, FormEventHandler, useState } from 'react';
+import React, { VFC, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestLogin } from '../../api/member';
@@ -20,7 +20,7 @@ import {
   SignupLink,
 } from './Login.styles';
 
-const Login: FC = () => {
+const Login: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const dispatch = useAppDispatch();
   const history = useHistory();

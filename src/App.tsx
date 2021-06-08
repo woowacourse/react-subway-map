@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect, VFC } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import Subway from './components/@common/Icon/Subway';
@@ -18,7 +18,7 @@ import { RootState } from './redux/store';
 import { getBearerToken } from './storage/service';
 import customAxios from './util/API';
 
-const App: FC = () => {
+const App: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import ReactDOM from 'react-dom';
 import PALETTE from '../../../constants/palette';
 import { SnackbarContainer } from './Snackbar.styles';
@@ -12,7 +12,7 @@ interface Props {
 
 const snackbarRoot: HTMLElement | null = document.getElementById('snackbar-root');
 
-const Snackbar: FC<Props> = ({
+const Snackbar: VFC<Props> = ({
   message,
   duration = 3000,
   backgroundColor = PALETTE.BLACK[300],

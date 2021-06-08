@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useEffect } from 'react';
+import React, { VFC, MouseEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Add from '../../components/@common/Icon/Add';
@@ -18,7 +18,7 @@ import { deleteLine, loadLines } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
 
-const Lines: FC = () => {
+const Lines: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines, errorMessage } = useSelector((state: RootState) => state.line);

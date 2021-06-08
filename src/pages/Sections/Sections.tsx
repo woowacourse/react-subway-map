@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { VFC, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -23,7 +23,7 @@ import { Line } from '../../types';
 import { StationName } from '../Stations/Stations.styles';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
-const Sections: FC = () => {
+const Sections: VFC = () => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { errorMessage: stationErrorMessage } = useSelector((state: RootState) => state.station);

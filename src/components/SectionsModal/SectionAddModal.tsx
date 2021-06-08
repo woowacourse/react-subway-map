@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, FormEventHandler } from 'react';
+import React, { VFC, FormEventHandler } from 'react';
 import { requestAddSection } from '../../api/lines';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { SECTION } from '../../constants/appInfo';
@@ -21,7 +21,7 @@ interface Props {
   line: Line;
 }
 
-const SectionAddModal: FC<Props> = ({ onClose, line }) => {
+const SectionAddModal: VFC<Props> = ({ onClose, line }) => {
   const dispatch = useAppDispatch();
 
   const isStationInLine = (targetId: number) => {

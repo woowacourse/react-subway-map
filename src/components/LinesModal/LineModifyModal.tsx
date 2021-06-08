@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, FormEventHandler, useEffect, useMemo } from 'react';
+import React, { VFC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
@@ -27,7 +27,7 @@ interface Props {
   onClose: () => void;
 }
 
-const LineModifyModal: FC<Props> = ({ line, onClose }) => {
+const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const usedLineColor = useMemo(

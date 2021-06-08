@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, VFC } from 'react';
 import HiddenDiv from '../a11y/HiddenDiv/HiddenDiv';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
@@ -14,7 +14,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   labelText: LabelText;
 }
 
-const ColorRadio: FC<Props> = ({
+const ColorRadio: VFC<Props> = ({
   groupName,
   radioColor,
   labelText,
