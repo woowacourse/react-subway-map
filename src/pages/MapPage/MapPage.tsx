@@ -18,7 +18,6 @@ import {
   StationMarker,
   StationName,
   IncludedLines,
-  LineName,
 } from './MapPage.style';
 
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
@@ -53,6 +52,10 @@ const MapPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
+  if (stations === STATION_BEFORE_FETCH || lines === LINE_BEFORE_FETCH) {
+    return <></>;
+  }
+
   return (
     <Container>
       <MapBox hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
@@ -79,13 +82,18 @@ const MapPage = ({ setIsLoading }: PageProps) => {
                       <StationName>
                         {targetStation.name}
                         <IncludedLines>
-                          {includedLines
-                            ?.filter((includedLine) => includedLine.name !== line.name)
-                            ?.map((line) => (
-                              <Chip size="xs" backgroundColor={line.color} key={line.id}>
-                                {line.name}
-                              </Chip>
-                            ))}
+                          {includedLines?.map(
+                            (includedLine) =>
+                              includedLine.name !== line.name && (
+                                <Chip
+                                  size="xs"
+                                  backgroundColor={includedLine.color}
+                                  key={includedLine.id}
+                                >
+                                  {includedLine.name}
+                                </Chip>
+                              )
+                          )}
                         </IncludedLines>
                       </StationName>
                     </li>
