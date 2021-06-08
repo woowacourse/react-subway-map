@@ -54,13 +54,7 @@ const validate = ({
   return {};
 };
 
-const LineAddModal = ({
-  stations,
-  lines,
-  closeModal,
-  onClickToClose,
-  addLine,
-}) => {
+const LineAddModal = ({ stations, lines, closeModal, addLine }) => {
   const [color, setColor] = useState(LINE_COLOR.DEFAULT);
 
   const handleSubmitForm = (values) => {
@@ -71,8 +65,8 @@ const LineAddModal = ({
   return (
     <ModalTemplate
       title={'노선 생성'}
-      onClickToClose={onClickToClose}
-      hasCloseButton
+      onClose={closeModal}
+      closeButton={<ModalTemplate.CloseButton onClose={closeModal} />}
     >
       <Formik
         initialValues={initialValues}
@@ -163,7 +157,6 @@ LineAddModal.propType = {
     })
   ).isRequired,
   closeModal: PropTypes.func.isRequired,
-  onClickToClose: PropTypes.func.isRequired,
   addLine: PropTypes.func.isRequired,
 };
 

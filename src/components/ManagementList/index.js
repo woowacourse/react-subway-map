@@ -33,7 +33,7 @@ const ManagementList = ({ items, deleteItem }) => {
       </Container>
       {isModalOpen && (
         <ConfirmModal
-          onCloseModal={closeModal}
+          onClose={closeModal}
           onConfirm={() => {
             deleteItem({ id: deleteId });
             setDeleteId(null);

@@ -15,7 +15,7 @@ const publicRoutes = Object.values(ROUTE).filter(
 
 const Menu = ({ openModal }) => {
   const { token } = useSelector(({ user }) => user);
-  const routes = token ? privateRoutes : publicRoutes;
+  const routes = !token ? privateRoutes : publicRoutes;
 
   return (
     <List>
@@ -57,7 +57,7 @@ const NavBar = () => {
       </Container>
       {isModalOpen && (
         <ConfirmModal
-          onCloseModal={closeModal}
+          onClose={closeModal}
           onConfirm={() => history.push(ROUTE.SIGN_OUT.PATH)}
         >
           <span>로그아웃 하시겠습니까?</span>

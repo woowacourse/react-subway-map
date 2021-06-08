@@ -56,7 +56,7 @@ const SectionAddModal = ({
     <ModalTemplate
       title={'구간 추가'}
       onClickToClose={onClickToClose}
-      hasCloseButton
+      closeButton={<ModalTemplate.CloseButton onClose={closeModal} />}
     >
       <LineName color={line.color}>{line.name}</LineName>
       <Formik

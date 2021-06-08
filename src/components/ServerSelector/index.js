@@ -62,7 +62,7 @@ const ServerSelector = () => {
       </Container>
       {isModalOpen && (
         <ConfirmModal
-          onCloseModal={closeModal}
+          onClose={closeModal}
           onConfirm={() => {
             changeServer();
             history.push(ROUTE.SIGN_OUT.PATH);
