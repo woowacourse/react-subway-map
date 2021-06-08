@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
-import { API, API_RESULT } from '../constants/api';
+import axios from 'axios';
+import { failureResponse, successResponse } from '.';
+import { API } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 import { LineInfoState, LineState } from '../interfaces/line';
 
@@ -12,9 +13,9 @@ export const lineAPI = {
         throw new Error(MESSAGE.ERROR.LINE.LOAD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { lines: response.data } });
+      return successResponse({ data: { lines: response.data } });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 
@@ -26,9 +27,9 @@ export const lineAPI = {
         throw new Error(MESSAGE.ERROR.LINE.ADD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { line: response.data } });
+      return successResponse({ data: { line: response.data } });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 
@@ -40,9 +41,9 @@ export const lineAPI = {
         throw new Error(MESSAGE.ERROR.LINE.DELETE_FAILED);
       }
 
-      return API_RESULT.SUCCESS;
+      return successResponse();
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 };

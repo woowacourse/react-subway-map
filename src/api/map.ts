@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
-import { API, API_RESULT } from '../constants/api';
+import axios from 'axios';
+import { failureResponse, successResponse } from '.';
+import { API } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 import { MapState } from '../interfaces/map';
 
@@ -12,9 +13,9 @@ export const mapAPI = {
         throw new Error(MESSAGE.ERROR.MAP.LOAD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: response.data });
+      return successResponse({ data: response.data });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { data: [] as MapState[], message: error.message });
+      return failureResponse({ data: [] as MapState[], message: error.message });
     }
   },
 };

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { failureResponse, successResponse } from '.';
 import { API, API_RESULT } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 
@@ -27,9 +28,9 @@ export const authAPI = {
         throw new Error(MESSAGE.ERROR.REGISTER_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { message: MESSAGE.SUCCESS.RESPONSE });
+      return successResponse({ message: MESSAGE.SUCCESS.RESPONSE });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 
@@ -41,9 +42,9 @@ export const authAPI = {
         throw new Error(MESSAGE.ERROR.LOGIN_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { accessToken: response.data.accessToken } });
+      return successResponse({ data: { accessToken: response.data.accessToken } });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 };

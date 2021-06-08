@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import { failureResponse, successResponse } from '.';
 import { API, API_RESULT } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 import { StationLineState, StationState } from '../interfaces/station';
@@ -12,9 +13,9 @@ export const stationAPI = {
         throw new Error(MESSAGE.ERROR.STATION.LOAD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { stations: response.data } });
+      return successResponse({ data: { stations: response.data } });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 
@@ -27,9 +28,9 @@ export const stationAPI = {
         throw new Error(MESSAGE.ERROR.STATION.ADD_FAILED);
       }
 
-      return Object.assign(API_RESULT.SUCCESS, { data: { station: response.data } });
+      return successResponse({ data: { station: response.data } });
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 
@@ -45,9 +46,9 @@ export const stationAPI = {
         throw new Error(MESSAGE.ERROR.STATION.DELETE_FAILED);
       }
 
-      return API_RESULT.SUCCESS;
+      return successResponse();
     } catch (error) {
-      return Object.assign(API_RESULT.FAILURE, { message: error.message });
+      return failureResponse({ message: error.message });
     }
   },
 };
