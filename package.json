@@ -21,7 +21,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "json-server": "json-server db.json --routes routes.json --port 3004",
-    "chromatic": "npx chromatic --project-token=ba708492826e"
+    "chromatic": "npx chromatic --project-token=0b15ed60804d"
   },
   "eslintConfig": {
     "extends": [
