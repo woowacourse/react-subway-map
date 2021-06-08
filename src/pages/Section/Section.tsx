@@ -43,9 +43,9 @@ const Section = () => {
     }
   }, [error, resetError]);
 
-  if (!accessToken) {
-    return <Redirect to={ROUTE.SIGN_IN} />;
-  }
+  // if (!accessToken) {
+  //   return <Redirect to={ROUTE.SIGN_IN} />;
+  // }
 
   const handleSelectLine = (e: React.ChangeEvent<HTMLSelectElement>) => {
     getSection(Number(e.target.value));
