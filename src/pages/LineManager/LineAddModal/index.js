@@ -7,8 +7,13 @@ import {
   Selector,
   ColorPicker,
 } from '../../../components';
-import { COLOR, INPUT_TEXT, LINE_COLOR, SIZE } from '../../../constants';
-import { TEST } from '../../../constants/test';
+import {
+  BUTTON_ID,
+  COLOR,
+  INPUT_TEXT,
+  LINE_COLOR,
+  SIZE,
+} from '../../../constants';
 import { ButtonWrapper, Form, SelectorWrapper, Validator } from './style';
 import { Formik } from 'formik';
 import {
@@ -124,7 +129,7 @@ const LineAddModal = ({ stations, lines, closeModal, addLine }) => {
               <Button
                 type="submit"
                 backgroundColor={COLOR.AMBER}
-                data-testid={TEST.ID.LINE_ADD_BUTTON}
+                aria-label={BUTTON_ID.LINE_ADD}
               >
                 확인
               </Button>

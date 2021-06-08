@@ -172,3 +172,11 @@ export const INPUT_TEXT = {
     LABEL: '거리',
   },
 };
+
+export const BUTTON_ID = {
+  SIGN_UP: 'signup-button',
+  SIGN_IN: 'signin-button',
+  STATION_ADD: 'station-add-button',
+  LINE_ADD: 'line-add-button',
+  SECTION_ADD: 'section-add-button',
+};

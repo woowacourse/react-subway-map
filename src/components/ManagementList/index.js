@@ -48,7 +48,7 @@ const ManagementList = ({ items, deleteItem }) => {
 
 ManagementList.propTypes = {
   items: PropTypes.array.isRequired,
-  onDeleteItem: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
 };
 
 export default ManagementList;
