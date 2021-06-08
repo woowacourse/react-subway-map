@@ -42,7 +42,7 @@ const Sections: VFC = () => {
   const targetLine = useMemo(() => {
     const id = Number(targetLineIdInput);
     return lines.find((line) => line.id === id);
-  }, [targetLineIdInput]);
+  }, [targetLineIdInput, lines]);
 
   const onOpenSectionAddModal = () => {
     if (!targetLine) {
