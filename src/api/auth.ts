@@ -1,6 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { failureResponse, successResponse } from '.';
-import { API, API_RESULT } from '../constants/api';
+import { API } from '../constants/api';
 import { MESSAGE } from '../constants/constant';
 
 interface SignUpRequest {

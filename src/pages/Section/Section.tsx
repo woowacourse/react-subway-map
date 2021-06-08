@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Redirect } from 'react-router';
+
 import * as S from './Section.styles';
 
 import { ContentContainer } from '../../components/@commons/ContentContainer/ContentContainer.styles';
@@ -9,11 +9,9 @@ import SectionListItem from '../../components/SectionPage/SectionListItem/Sectio
 import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
 import useStation from '../../hook/useStation';
-import useUser from '../../hook/useUser';
 
 import { SectionState } from '../../interfaces/section';
 import { LINE, MESSAGE } from '../../constants/constant';
-import { ROUTE } from '../../constants/api';
 
 const getSectionStations = (lineSection: SectionState['lineSection']) => {
   if (!lineSection?.sections) return [];
@@ -34,7 +32,6 @@ const Section = () => {
   const { lineSection, getSection, addSection, deleteSection, error, resetError } = useSection();
   const { lines } = useLine();
   const { stations } = useStation();
-  const { accessToken } = useUser();
 
   useEffect(() => {
     if (error) {
