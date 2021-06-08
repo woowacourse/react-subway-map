@@ -25,10 +25,4 @@ const Snackbar: VFC<Props> = ({
   );
 };
 
-Snackbar.propTypes = {
-  message: PropTypes.string.isRequired,
-  duration: PropTypes.number,
-  backgroundColor: PropTypes.string,
-};
-
 export default Snackbar;

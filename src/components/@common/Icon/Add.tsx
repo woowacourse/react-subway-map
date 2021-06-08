@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { VFC } from 'react';
 import { Palette } from '../../../constants/palette';
 
@@ -20,11 +19,6 @@ const Add: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
       <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
     </svg>
   );
-};
-
-Add.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
 };
 
 export default Add;

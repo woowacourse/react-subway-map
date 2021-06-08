@@ -22,9 +22,4 @@ const Email: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
   );
 };
 
-Email.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
-
 export default Email;

@@ -17,10 +17,4 @@ const HiddenLabel: FC<Props> = ({ children, className, labelText }) => {
   );
 };
 
-HiddenLabel.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  labelText: PropTypes.string.isRequired,
-};
-
 export default HiddenLabel;

@@ -22,9 +22,4 @@ const Pencil: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
   );
 };
 
-Pencil.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
-
 export default Pencil;

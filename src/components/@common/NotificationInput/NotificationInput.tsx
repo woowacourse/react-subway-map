@@ -28,12 +28,4 @@ const NotificationInput: VFC<Props> = ({ message, className, ...options }) => {
   );
 };
 
-NotificationInput.propTypes = {
-  message: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    isError: PropTypes.bool.isRequired,
-  }),
-  className: PropTypes.string,
-};
-
 export default NotificationInput;

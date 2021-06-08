@@ -54,10 +54,4 @@ const SectionSelectBox: VFC<Props> = ({ onChangeUpStation, onChangeDownStation, 
   );
 };
 
-SectionSelectBox.propTypes = {
-  onChangeUpStation: PropTypes.func.isRequired,
-  onChangeDownStation: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string,
-};
-
 export default SectionSelectBox;

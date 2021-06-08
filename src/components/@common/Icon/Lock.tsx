@@ -25,9 +25,4 @@ const Lock: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
   );
 };
 
-Lock.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
-
 export default Lock;

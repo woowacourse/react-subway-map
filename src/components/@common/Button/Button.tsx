@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
@@ -63,7 +62,12 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const Button: FC<Props> = ({ children, buttonType, isColored, ...options }) => {
+export const Button: FC<Props> = ({
+  children,
+  buttonType = 'square',
+  isColored = true,
+  ...options
+}) => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
 
   return (
@@ -76,17 +80,6 @@ export const Button: FC<Props> = ({ children, buttonType, isColored, ...options 
       {children}
     </StyledButton>
   );
-};
-
-Button.propTypes = {
-  children: PropTypes.node,
-  buttonType: PropTypes.oneOf(['square', 'round']),
-  isColored: PropTypes.bool,
-};
-
-Button.defaultProps = {
-  buttonType: 'square',
-  isColored: true,
 };
 
 export default Button;

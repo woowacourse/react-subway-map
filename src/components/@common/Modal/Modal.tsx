@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { FC, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
 import Close from '../Icon/Close';
@@ -37,12 +36,6 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
     </ModalContainer>,
     $modalRoot as HTMLDivElement
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  titleText: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

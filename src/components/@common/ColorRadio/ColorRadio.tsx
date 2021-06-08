@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { InputHTMLAttributes, VFC } from 'react';
 import HiddenDiv from '../a11y/HiddenDiv/HiddenDiv';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
@@ -37,16 +36,6 @@ const ColorRadio: VFC<Props> = ({
       )}
     </ColorRadioLabel>
   );
-};
-
-ColorRadio.propTypes = {
-  groupName: PropTypes.string.isRequired,
-  radioColor: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  labelText: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-  }).isRequired,
 };
 
 export default ColorRadio;

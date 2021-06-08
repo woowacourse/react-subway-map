@@ -187,8 +187,4 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
   );
 };
 
-LineAddModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
-
 export default LineAddModal;

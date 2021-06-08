@@ -46,8 +46,4 @@ const Navigation: VFC<Props> = ({ navInfoList }) => {
   );
 };
 
-Navigation.propTypes = {
-  navInfoList: PropTypes.array.isRequired,
-};
-
 export default Navigation;

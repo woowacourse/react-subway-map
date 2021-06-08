@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { VFC, InputHTMLAttributes } from 'react';
 import { LabelIcon, LabelText, StyledLabel } from './Input.styles';
 
@@ -16,12 +15,6 @@ const Input: VFC<InputProps> = ({ className, labelText, labelIcon, ...option }) 
       <input {...option} />
     </StyledLabel>
   );
-};
-
-Input.propTypes = {
-  className: PropTypes.string,
-  labelText: PropTypes.string,
-  labelIcon: PropTypes.node,
 };
 
 export default Input;

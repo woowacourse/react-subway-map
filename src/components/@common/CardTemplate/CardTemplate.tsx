@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { Palette } from '../../../constants/palette';
 import { CardTemplateTitle, StyledCardTemplate } from './CardTemplate.styles';
@@ -28,14 +27,6 @@ const CardTemplate: FC<Props> = ({
       {children}
     </StyledCardTemplate>
   );
-};
-
-CardTemplate.propTypes = {
-  children: PropTypes.node.isRequired,
-  templateColor: PropTypes.string,
-  isColoredTitle: PropTypes.bool,
-  titleText: PropTypes.string,
-  titleSize: PropTypes.oneOf(['sm', 'md', 'lg']),
 };
 
 export default CardTemplate;

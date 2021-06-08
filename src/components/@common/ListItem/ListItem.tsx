@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../../constants/a11y';
@@ -43,12 +42,6 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
       )}
     </StyledListItem>
   );
-};
-
-ListItem.propTypes = {
-  children: PropTypes.node,
-  onModify: PropTypes.func,
-  onDelete: PropTypes.func,
 };
 
 export default ListItem;

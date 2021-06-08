@@ -48,9 +48,4 @@ const TrashBin: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
   );
 };
 
-TrashBin.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
-
 export default TrashBin;

@@ -15,9 +15,4 @@ const Close: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
   );
 };
 
-Close.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
-
 export default Close;

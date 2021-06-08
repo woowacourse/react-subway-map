@@ -29,10 +29,4 @@ const Header: FC<Props> = ({ children, title, logo }) => {
   );
 };
 
-Header.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string.isRequired,
-  logo: PropTypes.node,
-};
-
 export default Header;
