@@ -13,5 +13,5 @@ const Template = (args) => <ButtonOnLine {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: <Add width="80%" color={Palette.GRAY_600} />,
+  children: <Add size="80%" color={Palette.GRAY_600} />,
 };

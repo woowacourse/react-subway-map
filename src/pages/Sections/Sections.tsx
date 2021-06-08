@@ -100,7 +100,7 @@ const Sections: VFC = () => {
       </FlexContainer>
       {isLogin && (
         <ButtonOnLine onClick={onOpenSectionAddModal}>
-          <Add width="80%" color={Palette.GRAY_600} />
+          <Add size="80%" color={Palette.GRAY_600} />
         </ButtonOnLine>
       )}
       <LineInfoContainer>

@@ -63,7 +63,7 @@ const Lines: VFC = () => {
     <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={API_INFO[apiOwner].themeColor}>
       {isLogin && (
         <ButtonOnLine onClick={onOpenAddModal} aria-label={LABEL_TEXT.LINE_ADD_BUTTON}>
-          <Add width="80%" color={Palette.GRAY_600} />
+          <Add size="80%" color={Palette.GRAY_600} />
         </ButtonOnLine>
       )}
       {lines && (

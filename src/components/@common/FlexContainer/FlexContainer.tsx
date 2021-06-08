@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface Props {
   direction?: 'column';
-  justifyContent?: 'center' | 'flex-end' | 'space-between' | 'space-around';
+  justifyContent?: 'center' | 'flex-end' | 'flex-start' | 'space-between' | 'space-around';
   alignItems?: 'center' | 'flex-end';
 }
 

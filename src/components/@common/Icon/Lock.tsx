@@ -1,19 +1,18 @@
-import PropTypes from 'prop-types';
 import React, { VFC } from 'react';
 import { Palette } from '../../../constants/palette';
 
 interface Props {
-  width?: string;
+  size?: string;
   color?: string;
 }
 
-const Lock: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
+const Lock: VFC<Props> = ({ size = '24px', color = Palette.GRAY_400 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width={width}
-      height={width}
+      width={size}
+      height={size}
       fill={color}
     >
       <g fill="none">

@@ -1,17 +1,16 @@
 import React, { VFC } from 'react';
-import PropTypes from 'prop-types';
 import { Palette } from '../../../constants/palette';
 
 interface Props {
-  width?: string;
+  size?: string;
   color?: string;
 }
 
-const TrashBin: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
+const TrashBin: VFC<Props> = ({ size = '24px', color = Palette.GRAY_400 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
+      width={size}
       fill={color}
       x="0px"
       y="0px"

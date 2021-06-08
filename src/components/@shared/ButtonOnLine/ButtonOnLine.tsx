@@ -6,7 +6,7 @@ import { ButtonOnLineContainer } from './ButtonOnLine.styles';
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
-  'aria-lable': string;
+  'aria-lable'?: string;
 }
 
 const ButtonOnLine: FC<Props> = ({ children, onClick, 'aria-label': ariaLabel }) => {

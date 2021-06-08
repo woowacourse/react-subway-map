@@ -28,7 +28,7 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
     <ModalContainer onMouseDown={onClickDimmed}>
       <ModalInner>
         <CloseButton buttonType="round" isColored={false} onClick={onClose}>
-          <Close width="90%" />
+          <Close size="90%" />
         </CloseButton>
         {titleText && <ModalTitle>{titleText}</ModalTitle>}
         <ModalContent hasTitle={!!titleText}>{children}</ModalContent>

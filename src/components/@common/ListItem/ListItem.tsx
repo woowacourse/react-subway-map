@@ -26,7 +26,7 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
           isColored={false}
           onClick={onModify}
         >
-          <Pencil width="70%" />
+          <Pencil size="70%" />
         </ListItemButton>
       )}
       {isLogin && onDelete && (
@@ -37,7 +37,7 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
           isColored={false}
           onClick={onDelete}
         >
-          <TrashBin width="70%" />
+          <TrashBin size="70%" />
         </ListItemButton>
       )}
     </StyledListItem>
