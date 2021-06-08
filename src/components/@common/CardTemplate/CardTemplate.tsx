@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { FC } from 'react';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 import { CardTemplateTitle, StyledCardTemplate } from './CardTemplate.styles';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 const CardTemplate: FC<Props> = ({
   children,
-  templateColor = PALETTE.YELLOW[400],
+  templateColor = Palette.YELLOW_400,
   isColoredTitle,
   titleText,
   titleSize = 'md',

@@ -1,4 +1,5 @@
 import { Line, Station } from '../types';
+import { Palette } from './palette';
 
 export const DUMMY_STATIONS: Station[] = [
   {
@@ -31,7 +32,7 @@ export const DUMMY_LINES: Line[] = [
   {
     id: 1,
     name: '신분당선',
-    color: '#008888',
+    color: Palette.CYAN_400,
     stations: [
       {
         id: 1,
@@ -59,7 +60,7 @@ export const DUMMY_LINES: Line[] = [
   {
     id: 2,
     name: '신분당선2',
-    color: '#880088',
+    color: Palette.GREEN_400,
     stations: [
       {
         id: 1,

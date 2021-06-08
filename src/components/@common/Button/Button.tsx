@@ -3,7 +3,7 @@ import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { API_INFO } from '../../../constants/api';
-import PALETTE, { Color } from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 import { RootState } from '../../../redux/store';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,7 +13,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 interface StyledButtonProps extends Props {
-  themeColor: Color;
+  themeColor: Palette;
 }
 
 const buttonTypeCSS = {
@@ -28,8 +28,8 @@ const buttonTypeCSS = {
   `,
 };
 
-const coloredCSS = (themeColor: Color) => css`
-  background-color: ${themeColor[400]};
+const coloredCSS = (themeColor: Palette) => css`
+  background-color: ${themeColor};
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
@@ -57,8 +57,8 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 
   &:disabled {
-    ${({ isColored, themeColor }) => isColored && `background-color: ${themeColor[300]};`}
-    color: ${PALETTE.GRAY[400]};
+    ${({ isColored, themeColor }) => isColored && `background-color: ${themeColor};`}
+    color: ${Palette.GRAY_400};
     cursor: default;
   }
 `;
@@ -70,7 +70,7 @@ export const Button: FC<Props> = ({ children, buttonType, isColored, ...options 
     <StyledButton
       buttonType={buttonType}
       isColored={isColored}
-      themeColor={API_INFO[apiOwner].themeColor as Color}
+      themeColor={API_INFO[apiOwner].themeColor}
       {...options}
     >
       {children}

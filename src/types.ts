@@ -1,3 +1,5 @@
+import { Palette } from './constants/palette';
+
 export interface Page {
   text: string;
   path: string;

@@ -25,6 +25,10 @@ export const ERROR_MESSAGE = {
   INCOMPLETE_FORM: '입력이 완료되지 않았습니다. 모든 값을 입력해주세요!',
 };
 
+export const ERROR_MESSAGE_FOR_DEVELOPER = {
+  COLOR_IS_NOT_PALETTE_TYPE: 'color 색상 값이 Palette 타입이 아닙니다.',
+};
+
 export const SUCCESS_MESSAGE = {
   SIGNUP: '회원가입 성공! 환영합니다☺️',
 };

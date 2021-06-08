@@ -3,12 +3,14 @@ import React, { VFC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
-import { ERROR_MESSAGE } from '../../constants/message';
+import { ERROR_MESSAGE, ERROR_MESSAGE_FOR_DEVELOPER } from '../../constants/message';
+import { Palette } from '../../constants/palette';
 import useInput from '../../hooks/useInput/useInput';
 import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
 import { modifyLine } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
+import { isMyEnumTypeBy } from '../../util/typeGuard';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
@@ -35,7 +37,7 @@ const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
     [lines]
   );
 
-  const isUsedLineColor = (color: string) => usedLineColor.includes(color);
+  const isUsedLineColor = (color: Palette) => usedLineColor.includes(color);
 
   const [nameInput, nameErrorMessage, onChangeName, setNameInput] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
@@ -60,6 +62,13 @@ const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
 
     if (!isReadyToSubmit) {
       alert(ERROR_MESSAGE.INCOMPLETE_FORM);
+
+      return;
+    }
+
+    //TODO: throw error로 바꿀 수 있을까?
+    if (!isMyEnumTypeBy(Palette)(colorInput)) {
+      console.error(ERROR_MESSAGE_FOR_DEVELOPER.COLOR_IS_NOT_PALETTE_TYPE);
 
       return;
     }

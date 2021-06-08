@@ -12,7 +12,7 @@ import { LABEL_TEXT } from '../../constants/a11y';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
-import PALETTE from '../../constants/palette';
+import { Palette } from '../../constants/palette';
 import useInput from '../../hooks/useInput/useInput';
 import useModal from '../../hooks/useModal/useModal';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
@@ -87,10 +87,7 @@ const Sections: VFC = () => {
   }, [stationErrorMessage, lineErrorMessage]);
 
   return (
-    <CardTemplate
-      titleText={PAGE_INFO.SECTIONS.text}
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-    >
+    <CardTemplate titleText={PAGE_INFO.SECTIONS.text} templateColor={API_INFO[apiOwner].themeColor}>
       <FlexContainer>
         <LineSelectBox onChange={onChangeTargetLineId}>
           <option value="">{LABEL_TEXT.PLEASE_SELECT_LINE}</option>
@@ -103,7 +100,7 @@ const Sections: VFC = () => {
       </FlexContainer>
       {isLogin && (
         <ButtonOnLine onClick={onOpenSectionAddModal}>
-          <Add width="80%" color={PALETTE.GRAY[600]} />
+          <Add width="80%" color={Palette.GRAY_600} />
         </ButtonOnLine>
       )}
       <LineInfoContainer>

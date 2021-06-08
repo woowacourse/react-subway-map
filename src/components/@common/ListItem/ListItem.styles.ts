@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 import Button from '../Button/Button';
 import FlexContainer from '../FlexContainer/FlexContainer';
 
 export const StyledListItem = styled.li`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${PALETTE.GRAY[300]};
+  border-bottom: 1px solid ${Palette.GRAY_300};
   padding: 0.75rem 1rem;
 
   &:last-child {

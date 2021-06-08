@@ -1,5 +1,5 @@
 import { Page } from './../types';
-import PALETTE, { Color } from './palette';
+import { Palette } from './palette';
 
 export const APP_TITLE = 'SUNKIST';
 
@@ -32,19 +32,19 @@ export const PAGE_INFO: { [key: string]: Page } = {
 
 export const COMMON_NAV_LIST = [PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS];
 
-export const THEME_COLOR: Color = PALETTE.YELLOW;
+export const THEME_COLOR: Palette = Palette.YELLOW_400;
 
-export const LINE_COLORS: string[] = [
-  PALETTE.RED[400],
-  PALETTE.ORANGE[400],
-  PALETTE.YELLOW[400],
-  PALETTE.GREEN[400],
-  PALETTE.LIME[400],
-  PALETTE.BLUE[400],
-  PALETTE.INDIGO[400],
-  PALETTE.PURPLE[400],
-  PALETTE.PINK[400],
-  PALETTE.CYAN[400],
+export const LINE_COLORS: Palette[] = [
+  Palette.RED_400,
+  Palette.ORANGE_400,
+  Palette.YELLOW_400,
+  Palette.GREEN_400,
+  Palette.LIME_400,
+  Palette.BLUE_400,
+  Palette.INDIGO_400,
+  Palette.PURPLE_400,
+  Palette.PINK_400,
+  Palette.CYAN_400,
 ];
 
 export const HOME = {

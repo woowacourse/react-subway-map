@@ -1,11 +1,11 @@
-import PALETTE from '../../constants/palette';
+import { Palette } from '../../constants/palette';
 
 export const requestGetLines = jest.fn(async () => ({
   data: [
     {
       id: 1,
       name: '신분당선',
-      color: PALETTE.RED[400],
+      color: Palette.RED_400,
       stations: [
         {
           id: 1,
@@ -37,7 +37,7 @@ export const requestAddLine = jest.fn(async () => ({
   data: {
     id: 2,
     name: '새로운역',
-    color: PALETTE.ORANGE[400],
+    color: Palette.ORANGE_400,
     stations: [
       {
         id: 1,

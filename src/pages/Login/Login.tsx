@@ -45,10 +45,7 @@ const Login: VFC = () => {
   };
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.LOGIN.text}
-    >
+    <CardTemplate templateColor={API_INFO[apiOwner].themeColor} titleText={PAGE_INFO.LOGIN.text}>
       <LoginContainer>
         <LoginForm onSubmit={onLogin} role="form">
           <Input

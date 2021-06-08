@@ -118,10 +118,7 @@ const Signup: VFC = () => {
   };
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.SIGN_UP.text}
-    >
+    <CardTemplate templateColor={API_INFO[apiOwner].themeColor} titleText={PAGE_INFO.SIGN_UP.text}>
       <SignupForm onSubmit={onSignup}>
         <SignupNotificationInput
           type="email"

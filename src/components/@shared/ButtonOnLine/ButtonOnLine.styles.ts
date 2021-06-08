@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 
 export const ButtonOnLineContainer = styled.div`
   position: relative;
@@ -10,7 +10,7 @@ export const ButtonOnLineContainer = styled.div`
     display: block;
     width: 100%;
     height: 2px;
-    background-color: ${PALETTE.GRAY[200]};
+    background-color: ${Palette.GRAY_200};
     position: absolute;
     top: 50%;
   }

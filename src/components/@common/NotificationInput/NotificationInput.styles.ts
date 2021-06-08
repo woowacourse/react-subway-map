@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 import FlexContainer from '../FlexContainer/FlexContainer';
 
 interface NotificationTextProps {
@@ -12,7 +12,7 @@ export const NotificationInputContainer = styled(FlexContainer)`
 
 export const NotificationText = styled.p<NotificationTextProps>`
   margin-left: 0.75rem;
-  color: ${({ isError }) => (isError ? PALETTE.RED[400] : PALETTE.GREEN[400])};
+  color: ${({ isError }) => (isError ? Palette.RED_400 : Palette.GREEN_400)};
 
   &::before {
     content: ${({ isError }) => (isError ? '"🚫 "' : '"✅ "')};

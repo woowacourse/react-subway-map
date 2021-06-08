@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { VFC } from 'react';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 
 interface Props {
   width?: string;
   color?: string;
 }
 
-const Person: VFC<Props> = ({ width = '24px', color = PALETTE.GRAY[400] }) => {
+const Person: VFC<Props> = ({ width = '24px', color = Palette.GRAY_400 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

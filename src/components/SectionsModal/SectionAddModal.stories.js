@@ -1,6 +1,6 @@
 import React from 'react';
 import { DUMMY_LINES, DUMMY_STATIONS } from '../../constants/dummies';
-import PALETTE from '../../constants/palette';
+import { Palette } from '../../constants/palette';
 import SectionAddModal from './SectionAddModal';
 
 export default {
@@ -15,7 +15,7 @@ Default.args = {
   line: {
     id: 1,
     name: '밍키선',
-    color: PALETTE.RED[400],
+    color: Palette.RED_400,
     stations: DUMMY_STATIONS,
     sections: DUMMY_LINES.sections,
   },

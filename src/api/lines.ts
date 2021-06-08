@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { Palette } from '../constants/palette';
 import { Line } from '../types';
 import customAxios from '../util/API';
 
@@ -7,13 +8,13 @@ export interface AddLineRequestData {
   upStationId: number;
   downStationId: number;
   distance: number;
-  color: string;
+  color: Palette;
 }
 
 export interface ModifyLineRequestData {
   lineId: number;
   name: string;
-  color: string;
+  color: Palette;
 }
 
 interface AddSectionRequestData {

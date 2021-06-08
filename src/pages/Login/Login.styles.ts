@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Button from '../../components/@common/Button/Button';
-import PALETTE from '../../constants/palette';
+import { Palette } from '../../constants/palette';
 import { Link } from 'react-router-dom';
 
 export const LoginContainer = styled.div`
@@ -21,7 +21,7 @@ export const LoginForm = styled.form`
 export const LoginErrorMessage = styled.p`
   margin-bottom: 0.5rem;
   margin-left: 0.5rem;
-  color: ${PALETTE.RED[400]};
+  color: ${Palette.RED_400};
 `;
 
 export const LoginButton = styled(Button)`
@@ -30,5 +30,5 @@ export const LoginButton = styled(Button)`
 `;
 
 export const SignupLink = styled(Link)`
-  color: ${PALETTE.GRAY[400]};
+  color: ${Palette.GRAY_400};
 `;

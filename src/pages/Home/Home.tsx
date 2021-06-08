@@ -35,10 +35,7 @@ const Home: VFC = () => {
   }, []);
 
   return (
-    <CardTemplate
-      titleText={LABEL_TEXT.API_SELECT}
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-    >
+    <CardTemplate titleText={LABEL_TEXT.API_SELECT} templateColor={API_INFO[apiOwner].themeColor}>
       <APIForm onSubmit={onSubmitAPI}>
         <APIList>
           {Object.keys(API_INFO).map((apiInfoKey) => (
@@ -46,7 +43,7 @@ const Home: VFC = () => {
               <ColorRadio
                 groupName={HOME.API_SELECT_GROUP}
                 value={apiInfoKey}
-                radioColor={API_INFO[apiInfoKey].themeColor[300] as string}
+                radioColor={API_INFO[apiInfoKey].themeColor}
                 labelText={{ text: API_INFO[apiInfoKey].name, isVisible: true }}
                 checked={apiInfoKey === APIInput}
                 onChange={onChangedAPI}

@@ -73,10 +73,7 @@ const Stations: VFC = () => {
   }, [errorMessage]);
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.STATIONS.text}
-    >
+    <CardTemplate templateColor={API_INFO[apiOwner].themeColor} titleText={PAGE_INFO.STATIONS.text}>
       {isLogin && (
         <>
           <StationForm onSubmit={onAddStation}>

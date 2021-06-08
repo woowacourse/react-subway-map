@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 
 export const LabelText = styled.div``;
 
 export const StyledLabel = styled.label`
   display: flex;
-  border: 1px solid ${PALETTE.GRAY[500]};
+  border: 1px solid ${Palette.GRAY_500};
   border-radius: 3px;
   padding: 0.5rem 0.75rem;
   position: relative;
@@ -16,7 +16,7 @@ export const StyledLabel = styled.label`
     overflow-y: visible;
     position: absolute;
     background-color: inherit;
-    color: ${PALETTE.GRAY[500]};
+    color: ${Palette.GRAY_500};
     font-size: 0.875rem;
     top: -0.625rem;
     left: 1rem;

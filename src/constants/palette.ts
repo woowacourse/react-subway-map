@@ -1,76 +1,52 @@
-export interface Color {
-  '200'?: string;
-  '300': string;
-  '400': string;
-  '500': string;
-  '600'?: string;
-  '700'?: string;
+export enum Palette {
+  BLACK_300 = '#444444',
+  BLACK_400 = '#333333',
+  BLACK_500 = '#222222',
+
+  RED_300 = '#FCA5A5',
+  RED_400 = '#F87171',
+  RED_500 = '#EF4444',
+
+  ORANGE_300 = '#FDBA74',
+  ORANGE_400 = '#FB923C',
+  ORANGE_500 = '#F97316',
+
+  YELLOW_300 = '#FDE68A',
+  YELLOW_400 = '#FCD34D',
+  YELLOW_500 = '#FBBF24',
+
+  GREEN_300 = '#34D399',
+  GREEN_400 = '#10B981',
+  GREEN_500 = '#059669',
+
+  LIME_300 = '#BEF264',
+  LIME_400 = '#A3E635',
+  LIME_500 = '#84CC16',
+
+  BLUE_300 = '#7DD3FC',
+  BLUE_400 = '#38BDF8',
+  BLUE_500 = '#0EA5E9',
+
+  INDIGO_300 = '#A5B4FC',
+  INDIGO_400 = '#818CF8',
+  INDIGO_500 = '#6366F1',
+
+  PURPLE_300 = '#C4B5FD',
+  PURPLE_400 = '#A78BFA',
+  PURPLE_500 = '#8B5CF6',
+
+  PINK_300 = '#F9A8D4',
+  PINK_400 = '#F472B6',
+  PINK_500 = '#EC4899',
+
+  CYAN_300 = '#67E8F9',
+  CYAN_400 = '#22D3EE',
+  CYAN_500 = '#06B6D4',
+
+  GRAY_200 = '#EEEEEE',
+  GRAY_300 = '#CCCCCC',
+  GRAY_400 = '#AAAAAA',
+  GRAY_500 = '#999999',
+  GRAY_600 = '#777777',
+  GRAY_700 = '#555555',
 }
-
-const PALETTE: { [key: string]: Color } = {
-  BLACK: {
-    '300': '#444444',
-    '400': '#333333',
-    '500': '#222222',
-  },
-  RED: {
-    '300': '#FCA5A5',
-    '400': '#F87171',
-    '500': '#EF4444',
-  },
-  ORANGE: {
-    '300': '#FDBA74',
-    '400': '#FB923C',
-    '500': '#F97316',
-  },
-  YELLOW: {
-    '300': '#FDE68A',
-    '400': '#FCD34D',
-    '500': '#FBBF24',
-  },
-  GREEN: {
-    '300': '#34D399',
-    '400': '#10B981',
-    '500': '#059669',
-  },
-  LIME: {
-    '300': '#BEF264',
-    '400': '#A3E635',
-    '500': '#84CC16',
-  },
-  BLUE: {
-    '300': '#7DD3FC',
-    '400': '#38BDF8',
-    '500': '#0EA5E9',
-  },
-  INDIGO: {
-    '300': '#A5B4FC',
-    '400': '#818CF8',
-    '500': '#6366F1',
-  },
-  PURPLE: {
-    '300': '#C4B5FD',
-    '400': '#A78BFA',
-    '500': '#8B5CF6',
-  },
-  PINK: {
-    '300': '#F9A8D4',
-    '400': '#F472B6',
-    '500': '#EC4899',
-  },
-  CYAN: {
-    '300': '#67E8F9',
-    '400': '#22D3EE',
-    '500': '#06B6D4',
-  },
-  GRAY: {
-    '200': '#EEEEEE',
-    '300': '#CCCCCC',
-    '400': '#AAAAAA',
-    '500': '#999999',
-    '600': '#777777',
-    '700': '#555555',
-  },
-};
-
-export default PALETTE;

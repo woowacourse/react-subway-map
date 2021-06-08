@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import PALETTE from './constants/palette';
+import { Palette } from './constants/palette';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
-    color: ${PALETTE.BLACK[400]};
+    color: ${Palette.BLACK_400};
   }
 
   a {

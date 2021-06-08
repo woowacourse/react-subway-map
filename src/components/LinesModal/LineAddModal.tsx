@@ -3,13 +3,15 @@ import React, { VFC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
-import { ERROR_MESSAGE } from '../../constants/message';
+import { ERROR_MESSAGE, ERROR_MESSAGE_FOR_DEVELOPER } from '../../constants/message';
+import { Palette } from '../../constants/palette';
 import useInput from '../../hooks/useInput/useInput';
 import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
 import { addLine } from '../../redux/slice/lineSlice';
 import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
+import { isMyEnumTypeBy } from '../../util/typeGuard';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
@@ -29,7 +31,7 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);
   const dispatch = useAppDispatch();
 
-  const isUsedLineColor = (color: string): boolean => usedLineColors.includes(color);
+  const isUsedLineColor = (color: Palette): boolean => usedLineColors.includes(color);
 
   const [nameInput, nameErrorMessage, onChangeName] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
@@ -90,6 +92,13 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
 
     if (!isReadyToSubmit) {
       alert(ERROR_MESSAGE.INCOMPLETE_FORM);
+
+      return;
+    }
+
+    //TODO: throw error로 바꿀 수 있을까?
+    if (!isMyEnumTypeBy(Palette)(colorInput)) {
+      console.error(ERROR_MESSAGE_FOR_DEVELOPER.COLOR_IS_NOT_PALETTE_TYPE);
 
       return;
     }

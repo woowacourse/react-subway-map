@@ -10,7 +10,7 @@ import { LABEL_TEXT } from '../../constants/a11y';
 import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
-import PALETTE from '../../constants/palette';
+import { Palette } from '../../constants/palette';
 import { TEST_ID } from '../../constants/test';
 import useModal from '../../hooks/useModal/useModal';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
@@ -60,13 +60,10 @@ const Lines: VFC = () => {
   }, [errorMessage]);
 
   return (
-    <CardTemplate
-      titleText={PAGE_INFO.LINES.text}
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-    >
+    <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={API_INFO[apiOwner].themeColor}>
       {isLogin && (
         <ButtonOnLine onClick={onOpenAddModal} aria-label={LABEL_TEXT.LINE_ADD_BUTTON}>
-          <Add width="80%" color={PALETTE.GRAY[600]} />
+          <Add width="80%" color={Palette.GRAY_600} />
         </ButtonOnLine>
       )}
       {lines && (

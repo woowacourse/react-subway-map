@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 import FlexContainer from '../../@common/FlexContainer/FlexContainer';
 import HiddenLabel from '../../@common/a11y/HiddenLabel/HiddenLabel';
 
@@ -38,7 +38,7 @@ export const SectionModalButtonContainer = styled(FlexContainer)`
 export const SectionSelectErrorMessage = styled.p`
   margin-top: 0.25rem;
   margin-left: 0.75rem;
-  color: ${PALETTE.RED[400]};
+  color: ${Palette.RED_400};
 
   &::before {
     content: '🚫 ';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PALETTE from '../../../constants/palette';
+import { Palette } from '../../../constants/palette';
 
 interface StyledCardTemplateProps {
   templateColor?: string;
@@ -16,7 +16,7 @@ const TITLE_SIZE = {
 export const CardTemplateTitle = styled.div``;
 
 export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
-  border: 1px solid ${PALETTE.GRAY[300]};
+  border: 1px solid ${Palette.GRAY_300};
   border-radius: 10px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   overflow: hidden;

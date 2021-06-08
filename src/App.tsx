@@ -7,7 +7,7 @@ import Main from './components/@shared/Main/Main';
 import Navigation from './components/@shared/Navigation/Navigation';
 import { API_INFO } from './constants/api';
 import { APP_TITLE, COMMON_NAV_LIST, PAGE_INFO } from './constants/appInfo';
-import PALETTE from './constants/palette';
+import { Palette } from './constants/palette';
 import Home from './pages/Home/Home';
 import Lines from './pages/Lines/Lines';
 import Login from './pages/Login/Login';
@@ -23,7 +23,7 @@ const App: VFC = () => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 
   useEffect(() => {
-    customAxios.defaults.baseURL = API_INFO[apiOwner].endPoint;
+    customAxios.defaults.baseURL = API_INFO[apiOwner]?.endPoint;
   }, [apiOwner]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const App: VFC = () => {
 
   return (
     <>
-      <Header title={APP_TITLE} logo={<Subway color={PALETTE.BLACK[400]} />}>
+      <Header title={APP_TITLE} logo={<Subway color={Palette.BLACK_400} />}>
         <Navigation navInfoList={COMMON_NAV_LIST} />
       </Header>
       <Main>
