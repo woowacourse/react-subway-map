@@ -1,7 +1,9 @@
 import React, { VFC, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
-import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import CardTemplate, {
+  CardTemplateTitleSize,
+} from '../../components/@common/CardTemplate/CardTemplate';
 import FlexContainer from '../../components/@common/FlexContainer/FlexContainer';
 import Add from '../../components/@common/Icon/Add';
 import Subway from '../../components/@common/Icon/Subway';
@@ -107,7 +109,7 @@ const Sections: VFC = () => {
         {targetLine && (
           <CardTemplate
             isColoredTitle={true}
-            titleSize="sm"
+            titleSize={CardTemplateTitleSize.sm}
             titleText={targetLine.name}
             templateColor={targetLine.color}
           >

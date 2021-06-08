@@ -1,17 +1,12 @@
 import styled from 'styled-components';
 import { Palette } from '../../../constants/palette';
+import { CardTemplateTitleSize } from './CardTemplate';
 
 interface StyledCardTemplateProps {
   templateColor?: string;
   isColoredTitle?: boolean;
-  titleSize: 'sm' | 'md' | 'lg';
+  titleSize: CardTemplateTitleSize;
 }
-
-const TITLE_SIZE = {
-  sm: '1.75rem',
-  md: '2.25rem',
-  lg: '3rem',
-};
 
 export const CardTemplateTitle = styled.div``;
 
@@ -31,7 +26,7 @@ export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
 
   & > ${CardTemplateTitle} {
     font-weight: bold;
-    font-size: ${({ titleSize }) => TITLE_SIZE[titleSize]};
+    font-size: ${({ titleSize }) => titleSize};
     padding: 1rem 1.5rem;
     ${({ isColoredTitle, templateColor }) =>
       isColoredTitle

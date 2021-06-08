@@ -2,12 +2,18 @@ import React, { FC } from 'react';
 import { Palette } from '../../../constants/palette';
 import { CardTemplateTitle, StyledCardTemplate } from './CardTemplate.styles';
 
+export enum CardTemplateTitleSize {
+  sm = '1.75rem',
+  md = '2.25rem',
+  lg = '3rem',
+}
+
 interface Props {
   children: React.ReactNode;
   templateColor?: string;
   isColoredTitle?: boolean;
   titleText?: string;
-  titleSize?: 'sm' | 'md' | 'lg';
+  titleSize?: CardTemplateTitleSize;
 }
 
 const CardTemplate: FC<Props> = ({
@@ -15,7 +21,7 @@ const CardTemplate: FC<Props> = ({
   templateColor = Palette.YELLOW_400,
   isColoredTitle,
   titleText,
-  titleSize = 'md',
+  titleSize = CardTemplateTitleSize.md,
 }) => {
   return (
     <StyledCardTemplate
