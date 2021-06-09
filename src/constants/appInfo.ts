@@ -3,7 +3,7 @@ import { Palette } from './palette';
 
 export const APP_TITLE = 'SUNKIST';
 
-export const PAGE_INFO: { [key: string]: PageInfo } = {
+export const PAGE_INFO: Record<string, PageInfo> = {
   HOME: {
     text: 'API 선택',
     path: '/',
