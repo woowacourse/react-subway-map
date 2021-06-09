@@ -18,27 +18,32 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
   return (
     <StyledListItem {...options}>
       <ListContent alignItems="center">{children}</ListContent>
-      {isLogin && onModify && (
-        <ListItemButton
-          type="button"
-          aria-label={LABEL_TEXT.MODIFY_BUTTON}
-          buttonType="round"
-          isColored={false}
-          onClick={onModify}
-        >
-          <Pencil size="70%" />
-        </ListItemButton>
-      )}
-      {isLogin && onDelete && (
-        <ListItemButton
-          type="button"
-          aria-label={LABEL_TEXT.DELETE_BUTTON}
-          buttonType="round"
-          isColored={false}
-          onClick={onDelete}
-        >
-          <TrashBin size="70%" />
-        </ListItemButton>
+      {isLogin && (
+        <>
+          ㄴ
+          {onModify && (
+            <ListItemButton
+              type="button"
+              aria-label={LABEL_TEXT.MODIFY_BUTTON}
+              buttonType="round"
+              isColored={false}
+              onClick={onModify}
+            >
+              <Pencil size="70%" />
+            </ListItemButton>
+          )}
+          {onDelete && (
+            <ListItemButton
+              type="button"
+              aria-label={LABEL_TEXT.DELETE_BUTTON}
+              buttonType="round"
+              isColored={false}
+              onClick={onDelete}
+            >
+              <TrashBin size="70%" />
+            </ListItemButton>
+          )}
+        </>
       )}
     </StyledListItem>
   );
