@@ -1,6 +1,10 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["plugin:prettier/recommended"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:prettier/recommended"
+  ],
   "plugins": ["react", "prettier"],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -12,5 +16,15 @@
     "prettier/prettier": ["error", { "singleQuote": true }],
     "react/jsx-uses-vars": "error"
   },
-  "ignorePatterns": ["*.config.js"]
+  "ignorePatterns": ["*.config.js"],
+  "overrides": [
+    {
+      "files": [
+        "**/*.stories.*"
+      ],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    }
+  ]
 }
