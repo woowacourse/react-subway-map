@@ -5,13 +5,13 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { APIOwnerType, API_INFO } from '../../constants/API';
 import { HOME } from '../../constants/appInfo';
-import useInput from '../../hooks/useInput/useInput';
+import useInput from '../../hooks/@shared/useInput/useInput';
 import { changeOwner } from '../../redux/slice/apiOwnerSlice';
 import { logout } from '../../redux/slice/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 import { LABEL_TEXT } from '../../constants/a11y';
-import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
+import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 
 const Home: VFC = () => {
   const APIInfo = useCurrentAPIInfo();

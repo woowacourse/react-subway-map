@@ -11,11 +11,12 @@ import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import { Palette } from '../../constants/palette';
 import { TEST_ID } from '../../constants/test';
-import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
-import useModal from '../../hooks/useModal/useModal';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
+import useModal from '../../hooks/@shared/useModal/useModal';
+import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
+import { Line } from '../../types';
 import { LineColorDot, LineList } from './Lines.styles';
 
 const Lines: VFC = () => {
@@ -24,7 +25,7 @@ const Lines: VFC = () => {
   const { lines, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
-  const lineModifyModal = useModal(null);
+  const lineModifyModal = useModal<Pick<Line, 'id' | 'name' | 'color'>>();
 
   const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
     lineAddModal.openModal();

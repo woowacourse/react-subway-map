@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
-interface UseModal {
+interface UseModal<T> {
   isModalOpen: boolean;
-  modalData: unknown;
+  modalData?: T;
   openModal: () => void;
   closeModal: () => void;
-  passDataToModal: (data: unknown) => void;
+  passDataToModal: (data: T) => void;
 }
 
-const useModal = (initModalData?: unknown): UseModal => {
+const useModal = <T>(initModalData?: T): UseModal<T> => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(initModalData);
 
-  const passDataToModal = (modalData: unknown) => {
+  const passDataToModal = (modalData: T) => {
     setModalData(modalData);
   };
 

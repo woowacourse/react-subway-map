@@ -7,7 +7,7 @@ import Main from './components/@shared/Main/Main';
 import Navigation from './components/@shared/Navigation/Navigation';
 import { APP_TITLE, COMMON_NAV_LIST, PAGE_INFO } from './constants/appInfo';
 import { Palette } from './constants/palette';
-import useCurrentAPIInfo from './hooks/useCurrentAPIInfo/useCurrentAPIInfo';
+import useCurrentAPIInfo from './hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 import Home from './pages/Home/Home';
 import Lines from './pages/Lines/Lines';
 import Login from './pages/Login/Login';

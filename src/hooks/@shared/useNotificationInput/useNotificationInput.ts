@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useState } from 'react';
-import { BaseInputElement, SetText } from '../../types';
-import useUpdateEffect from '../useUpdateEffect/useUpdateEffect';
+import { BaseInputElement, SetText } from '../../../types';
+import useUpdateEffect from '..//useUpdateEffect/useUpdateEffect';
 
 interface ChangeToolParameter {
   setInput: SetText;

@@ -5,19 +5,18 @@ import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
-import { API_INFO } from '../../constants/API';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
-import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
+import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addStation, deleteStation, loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import { LABEL_TEXT } from '../../constants/a11y';
-import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
+import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 
 const Stations: VFC = () => {
   const APIInfo = useCurrentAPIInfo();

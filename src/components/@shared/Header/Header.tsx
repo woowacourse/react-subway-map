@@ -1,11 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { API_INFO } from '../../../constants/API';
 import { PAGE_INFO } from '../../../constants/appInfo';
-import useCurrentAPIInfo from '../../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
-import { RootState } from '../../../redux/store';
+import useCurrentAPIInfo from '../../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 import { StyledHeader, TitleContainer } from './Header.styles';
 
 interface Props {

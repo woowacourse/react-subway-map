@@ -1,18 +1,12 @@
-import React, { VFC, FormEventHandler, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { requestLogin } from '../../API/member';
+import React, { VFC, FormEventHandler } from 'react';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
 import { LABEL_TEXT } from '../../constants/a11y';
-import { API_INFO } from '../../constants/API';
 import { PAGE_INFO } from '../../constants/appInfo';
-import { ERROR_MESSAGE } from '../../constants/message';
-import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
-import { login } from '../../redux/slice/loginSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
+import useLoginPage from '../../hooks/service/useLoginPage/useLoginPage';
 import {
   LoginButton,
   LoginContainer,
@@ -23,27 +17,7 @@ import {
 
 const Login: VFC = () => {
   const APIInfo = useCurrentAPIInfo();
-  const dispatch = useAppDispatch();
-  const history = useHistory();
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
-    const loginInfo = {
-      email: event.currentTarget.email.value,
-      password: event.currentTarget.password.value,
-    };
-
-    try {
-      const response = await requestLogin(loginInfo);
-
-      dispatch(login(response.data.accessToken));
-      history.push(PAGE_INFO.STATIONS.path);
-    } catch (error) {
-      setErrorMessage(ERROR_MESSAGE.LOGIN_FAILURE);
-    }
-  };
+  const { onLogin, loginErrorMessage } = useLoginPage();
 
   return (
     <CardTemplate templateColor={APIInfo.themeColor} titleText={PAGE_INFO.LOGIN.text}>
@@ -61,7 +35,7 @@ const Login: VFC = () => {
             labelIcon={<Lock />}
             placeholder={LABEL_TEXT.PLEASE_INPUT_PASSWORD}
           />
-          {errorMessage && <LoginErrorMessage>{errorMessage}</LoginErrorMessage>}
+          {loginErrorMessage && <LoginErrorMessage>{loginErrorMessage}</LoginErrorMessage>}
           <LoginButton isColored={true}>{LABEL_TEXT.LOGIN}</LoginButton>
         </LoginForm>
         <SignupLink to={PAGE_INFO.SIGN_UP.path}>{LABEL_TEXT.ARE_YOU_NOT_MEMBER}</SignupLink>

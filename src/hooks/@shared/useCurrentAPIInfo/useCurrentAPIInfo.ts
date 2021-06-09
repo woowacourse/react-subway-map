@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { APIOwnerType, APIInfo, API_INFO, DEFAULT_API_OWNER } from '../../constants/API';
-import { isMyEnumTypeBy } from '../../util/typeGuard';
+import { RootState } from '../../../redux/store';
+import { APIOwnerType, APIInfo, API_INFO, DEFAULT_API_OWNER } from '../../../constants/API';
+import { isMyEnumTypeBy } from '../../../util/typeGuard';
 
 const useCurrentAPIInfo = (): APIInfo => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);

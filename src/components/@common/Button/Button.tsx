@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { Palette } from '../../../constants/palette';
-import useCurrentAPIInfo from '../../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
+import useCurrentAPIInfo from '../../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: 'square' | 'round';

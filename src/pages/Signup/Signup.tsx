@@ -8,9 +8,9 @@ import Person from '../../components/@common/Icon/Person';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
-import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
-import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
-import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
+import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
+import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
+import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
