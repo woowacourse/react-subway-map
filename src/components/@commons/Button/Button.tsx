@@ -11,7 +11,7 @@ export interface Props {
   onClick?: (event: React.MouseEvent) => void;
 }
 
-const Button = ({ type, children, bgColor, fontColor, isDisabled, shape, onClick }: Props) => {
+const Button = ({ type = 'submit', children, bgColor, fontColor, isDisabled, shape, onClick }: Props) => {
   return (
     <S.Button
       type={type}
