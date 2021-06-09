@@ -5,9 +5,9 @@ import Subway from './components/@common/Icon/Subway';
 import Header from './components/@shared/Header/Header';
 import Main from './components/@shared/Main/Main';
 import Navigation from './components/@shared/Navigation/Navigation';
-import { API_INFO } from './constants/api';
 import { APP_TITLE, COMMON_NAV_LIST, PAGE_INFO } from './constants/appInfo';
 import { Palette } from './constants/palette';
+import useCurrentAPIInfo from './hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 import Home from './pages/Home/Home';
 import Lines from './pages/Lines/Lines';
 import Login from './pages/Login/Login';
@@ -19,12 +19,12 @@ import { getBearerToken } from './storage/service';
 import customAxios from './util/API';
 
 const App: VFC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const APIInfo = useCurrentAPIInfo();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 
   useEffect(() => {
-    customAxios.defaults.baseURL = API_INFO[apiOwner]?.endPoint;
-  }, [apiOwner]);
+    customAxios.defaults.baseURL = APIInfo.endPoint;
+  }, [APIInfo]);
 
   useEffect(() => {
     customAxios.defaults.headers['Authorization'] = getBearerToken();

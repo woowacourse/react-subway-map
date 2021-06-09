@@ -20,7 +20,6 @@ const ListItem: FC<Props> = ({ children, onModify, onDelete, ...options }) => {
       <ListContent alignItems="center">{children}</ListContent>
       {isLogin && (
         <>
-          ㄴ
           {onModify && (
             <ListItemButton
               type="button"

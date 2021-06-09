@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SESSION_STORAGE_KEY } from '../../constants/storage';
 import { setSessionStorageItem } from '../../util/sessionStorage';
-import { getApiOwner } from '../../storage/service';
+import { getAPIOwner } from '../../storage/service';
 
 export const apiOwnerSlice = createSlice({
   name: 'api',
   initialState: {
-    owner: getApiOwner(),
+    owner: getAPIOwner(),
   },
   reducers: {
     changeOwner: (state, action) => {

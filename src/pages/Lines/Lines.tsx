@@ -7,11 +7,11 @@ import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
 import { LABEL_TEXT } from '../../constants/a11y';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import { Palette } from '../../constants/palette';
 import { TEST_ID } from '../../constants/test';
+import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 import useModal from '../../hooks/useModal/useModal';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/slice/lineSlice';
@@ -19,7 +19,7 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
 
 const Lines: VFC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const APIInfo = useCurrentAPIInfo();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
@@ -60,7 +60,7 @@ const Lines: VFC = () => {
   }, [errorMessage]);
 
   return (
-    <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={API_INFO[apiOwner].themeColor}>
+    <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={APIInfo.themeColor}>
       {isLogin && (
         <ButtonOnLine onClick={onOpenAddModal} aria-label={LABEL_TEXT.LINE_ADD_BUTTON}>
           <Add size="80%" color={Palette.GRAY_600} />

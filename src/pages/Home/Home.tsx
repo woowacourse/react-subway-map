@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
-import { API_INFO } from '../../constants/api';
+import { APIOwnerType, API_INFO } from '../../constants/API';
 import { HOME } from '../../constants/appInfo';
 import useInput from '../../hooks/useInput/useInput';
 import { changeOwner } from '../../redux/slice/apiOwnerSlice';
@@ -11,8 +11,10 @@ import { logout } from '../../redux/slice/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 import { LABEL_TEXT } from '../../constants/a11y';
+import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 
 const Home: VFC = () => {
+  const APIInfo = useCurrentAPIInfo();
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const dispatch = useAppDispatch();
 
@@ -35,7 +37,7 @@ const Home: VFC = () => {
   }, []);
 
   return (
-    <CardTemplate titleText={LABEL_TEXT.API_SELECT} templateColor={API_INFO[apiOwner].themeColor}>
+    <CardTemplate titleText={LABEL_TEXT.API_SELECT} templateColor={APIInfo.themeColor}>
       <APIForm onSubmit={onSubmitAPI}>
         <APIList>
           {Object.keys(API_INFO).map((apiInfoKey) => (
@@ -43,8 +45,8 @@ const Home: VFC = () => {
               <ColorRadio
                 groupName={HOME.API_SELECT_GROUP}
                 value={apiInfoKey}
-                radioColor={API_INFO[apiInfoKey].themeColor}
-                labelText={{ text: API_INFO[apiInfoKey].name, isVisible: true }}
+                radioColor={API_INFO[apiInfoKey as APIOwnerType].themeColor}
+                labelText={{ text: API_INFO[apiInfoKey as APIOwnerType].name, isVisible: true }}
                 checked={apiInfoKey === APIInput}
                 onChange={onChangedAPI}
               />

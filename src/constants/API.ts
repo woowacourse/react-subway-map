@@ -1,16 +1,21 @@
 import { Palette } from './palette';
 
-type APIHostType = 'FAFI' | 'JOEL' | 'JOAN' | 'JAYON';
+export enum APIOwnerType {
+  FAFI = 'FAFI',
+  JOEL = 'JOEL',
+  JOAN = 'JOAN',
+  JAYON = 'JAYON',
+}
 
-interface APIInfo {
+export interface APIInfo {
   name: string;
   endPoint: string;
   themeColor: Palette;
 }
 
-export const DEFAULT_API_OWNER = 'JOAN';
+export const DEFAULT_API_OWNER = APIOwnerType.JOAN;
 
-export const API_INFO: Record<APIHostType, APIInfo> = {
+export const API_INFO: Record<APIOwnerType, APIInfo> = {
   FAFI: {
     name: '파피',
     endPoint: 'https://fafi-subway.o-r.kr',

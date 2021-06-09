@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { API_INFO } from '../../../constants/api';
+import { API_INFO } from '../../../constants/API';
 import { PAGE_INFO } from '../../../constants/appInfo';
+import useCurrentAPIInfo from '../../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 import { RootState } from '../../../redux/store';
 import { StyledHeader, TitleContainer } from './Header.styles';
 
@@ -14,10 +15,10 @@ interface Props {
 }
 
 const Header: FC<Props> = ({ children, title, logo }) => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const APIInfo = useCurrentAPIInfo();
 
   return (
-    <StyledHeader themeColor={API_INFO[apiOwner].themeColor}>
+    <StyledHeader themeColor={APIInfo.themeColor}>
       <Link to={PAGE_INFO.HOME.path}>
         <TitleContainer>
           {logo}

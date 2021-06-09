@@ -7,9 +7,10 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
 import { LABEL_TEXT } from '../../constants/a11y';
-import { API_INFO } from '../../constants/api';
+import { API_INFO } from '../../constants/API';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 import { login } from '../../redux/slice/loginSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import {
@@ -21,7 +22,7 @@ import {
 } from './Login.styles';
 
 const Login: VFC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const APIInfo = useCurrentAPIInfo();
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [errorMessage, setErrorMessage] = useState('');
@@ -45,7 +46,7 @@ const Login: VFC = () => {
   };
 
   return (
-    <CardTemplate templateColor={API_INFO[apiOwner].themeColor} titleText={PAGE_INFO.LOGIN.text}>
+    <CardTemplate templateColor={APIInfo.themeColor} titleText={PAGE_INFO.LOGIN.text}>
       <LoginContainer>
         <LoginForm onSubmit={onLogin} role="form">
           <Input

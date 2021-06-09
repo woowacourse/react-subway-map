@@ -11,10 +11,11 @@ import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
 import { LABEL_TEXT } from '../../constants/a11y';
-import { API_INFO } from '../../constants/api';
+import { API_INFO } from '../../constants/API';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import { Palette } from '../../constants/palette';
+import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 import useInput from '../../hooks/useInput/useInput';
 import useModal from '../../hooks/useModal/useModal';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
@@ -26,7 +27,7 @@ import { StationName } from '../Stations/Stations.styles';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
 const Sections: VFC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const APIInfo = useCurrentAPIInfo();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { errorMessage: stationErrorMessage } = useSelector((state: RootState) => state.station);
   const { lines, errorMessage: lineErrorMessage } = useSelector((state: RootState) => state.line);
@@ -89,7 +90,7 @@ const Sections: VFC = () => {
   }, [stationErrorMessage, lineErrorMessage]);
 
   return (
-    <CardTemplate titleText={PAGE_INFO.SECTIONS.text} templateColor={API_INFO[apiOwner].themeColor}>
+    <CardTemplate titleText={PAGE_INFO.SECTIONS.text} templateColor={APIInfo.themeColor}>
       <FlexContainer>
         <LineSelectBox onChange={onChangeTargetLineId}>
           <option value="">{LABEL_TEXT.PLEASE_SELECT_LINE}</option>

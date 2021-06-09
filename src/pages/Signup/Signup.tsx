@@ -1,5 +1,4 @@
 import React, { VFC, FormEvent } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestSignup } from '../../API/member';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -7,17 +6,16 @@ import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Person from '../../components/@common/Icon/Person';
 import { LABEL_TEXT } from '../../constants/a11y';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SIGNUP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
+import useCurrentAPIInfo from '../../hooks/useCurrentAPIInfo/useCurrentAPIInfo';
 import useNotificationInput from '../../hooks/useNotificationInput/useNotificationInput';
 import useReadyToSubmit from '../../hooks/useReadyToSubmit/useReadyToSubmit';
-import { RootState } from '../../redux/store';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
 const Signup: VFC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const APIInfo = useCurrentAPIInfo();
   const history = useHistory();
 
   const [emailInput, emailErrorMessage, onChangeEmail] = useNotificationInput(
@@ -118,7 +116,7 @@ const Signup: VFC = () => {
   };
 
   return (
-    <CardTemplate templateColor={API_INFO[apiOwner].themeColor} titleText={PAGE_INFO.SIGN_UP.text}>
+    <CardTemplate templateColor={APIInfo.themeColor} titleText={PAGE_INFO.SIGN_UP.text}>
       <SignupForm onSubmit={onSignup}>
         <SignupNotificationInput
           type="email"
