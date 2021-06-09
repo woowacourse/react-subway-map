@@ -7,15 +7,25 @@ import useStation from "../../hooks/useStation";
 import useInput from "../../hooks/@common/useInput";
 import { validateStationName } from "../../validations/station";
 import { Station } from "../../@types/types";
+import { useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
+import { Redirect } from "react-router";
+import { PAGE_PATH } from "../../constants/route";
+import { TEST_ID } from "../../@test/testId";
 
 const StationManagementPage = () => {
-  const { stations, addStation, deleteStation } = useStation();
+  const { stations, addStation, deleteStation, getStations } = useStation();
   const {
     inputValue: stationName,
     errorMessage: stationNameErrorMessage,
     setValueOnChange: onStationNameChange,
     setInputValue: setStationName,
   } = useInput(validateStationName);
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    getStations();
+  }, []);
 
   const onAddStation: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -41,8 +51,12 @@ const StationManagementPage = () => {
     }
   };
 
+  if (!isAuthenticated) {
+    return <Redirect to={PAGE_PATH.LOGIN} />;
+  }
+
   return (
-    <FlexCenter>
+    <FlexCenter data-testid={TEST_ID.STATION_PAGE}>
       <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
         <h2 style={{ marginBottom: "1rem" }}>🚉역 관리</h2>
         <form onSubmit={onAddStation} style={{ width: "100%" }}>

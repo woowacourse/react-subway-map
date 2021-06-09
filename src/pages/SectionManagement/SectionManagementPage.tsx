@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
@@ -13,17 +13,26 @@ import { CIRCLE_COLOR } from "../../constants/color";
 import { TEST_ID } from "../../@test/testId";
 import { Distance, SectionListItemWrapper } from "./SectionManagementPage.styles";
 import { Station } from "../../@types/types";
+import useAuth from "../../hooks/useAuth";
+import { Redirect } from "react-router";
+import { PAGE_PATH } from "../../constants/route";
 
 const SectionManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
 
-  const { stations } = useStation();
-  const { lines, addSection, deleteSection } = useLine();
+  const { stations, getStations } = useStation();
+  const { lines, addSection, deleteSection, getLines } = useLine();
+  const { isAuthenticated } = useAuth();
 
   const [defaultLine] = lines;
   const { selectValue: lineId, setValueOnChange: setLineIdOnChange } = useSelect(String(defaultLine?.id));
 
   const targetLine = lines.find(({ id }) => id === Number(lineId));
+
+  useEffect(() => {
+    getStations();
+    getLines();
+  }, []);
 
   const onSectionAddModalOpen = () => {
     setIsAddModalOpened(true);
@@ -40,6 +49,10 @@ const SectionManagementPage = () => {
       alert(error.message);
     }
   };
+
+  if (!isAuthenticated) {
+    return <Redirect to={PAGE_PATH.LOGIN} />;
+  }
 
   const sectionList = targetLine?.stations.map((station, index) => {
     return (

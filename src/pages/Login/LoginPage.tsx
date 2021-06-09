@@ -44,7 +44,7 @@ const LoginPage = () => {
   };
 
   return (
-    <FlexCenter>
+    <FlexCenter data-testid={TEST_ID.LOGIN_PAGE}>
       <form onSubmit={onLogin}>
         <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
           <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>

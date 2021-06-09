@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { COLOR } from "./constants/color";
 import GlobalStyle from "./Global.styles";
 import store from "./modules";
+import { BrowserRouter } from "react-router-dom";
 
 export const theme = {
   PRIMARY: COLOR.CYAN_300,
@@ -21,7 +22,9 @@ ReactDOM.render(
     <Provider store={store}>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

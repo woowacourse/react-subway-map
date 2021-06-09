@@ -43,14 +43,6 @@ const App = () => {
     </Link>
   ));
 
-  const PublicRoute = ({ children, ...props }: RouteProps) => (
-    <Route {...props}>{isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};</Route>
-  );
-
-  const PrivateRoute = ({ children, ...props }: RouteProps) => (
-    <Route {...props}>{isAuthenticated ? children : <Redirect to={PAGE_PATH.LOGIN} />};</Route>
-  );
-
   const apiProviders = Object.keys(BASE_URL).map((name) => ({ value: name, text: name }));
 
   const apiProviderName = appLocalStorage.item;
@@ -100,24 +92,24 @@ const App = () => {
         )}
       </Navigation>
       <Switch>
-        <PublicRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.LOGIN]}>
+        <Route exact path={[PAGE_PATH.HOME, PAGE_PATH.LOGIN]}>
           <LoginPage />
-        </PublicRoute>
-        <PublicRoute exact path={PAGE_PATH.SIGN_UP}>
+        </Route>
+        <Route exact path={PAGE_PATH.SIGN_UP}>
           <SignupPage />
-        </PublicRoute>
-        <Route exact path={[PAGE_PATH.STATION_MANAGEMENT]}>
+        </Route>
+        <Route exact path={PAGE_PATH.STATION_MANAGEMENT}>
           <StationManagementPage />
         </Route>
-        <PrivateRoute exact path={PAGE_PATH.LINE_MANAGEMENT}>
+        <Route exact path={PAGE_PATH.LINE_MANAGEMENT}>
           <LineManagementPage />
-        </PrivateRoute>
-        <PrivateRoute exact path={PAGE_PATH.SECTION_MANAGEMENT}>
+        </Route>
+        <Route exact path={PAGE_PATH.SECTION_MANAGEMENT}>
           <SectionManagementPage />
-        </PrivateRoute>
-        <PrivateRoute exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
+        </Route>
+        <Route exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
           <SubwayMapPage />
-        </PrivateRoute>
+        </Route>
       </Switch>
     </>
   );

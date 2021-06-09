@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../../components/Button/Button";
 import Block from "../../components/Block/Block";
@@ -9,11 +9,20 @@ import LineAddModal from "./Modal/LineAddModal";
 import useLine from "../../hooks/useLine";
 import useStation from "../../hooks/useStation";
 import { Line } from "../../@types/types";
+import { Redirect } from "react-router";
+import { PAGE_PATH } from "../../constants/route";
+import useAuth from "../../hooks/useAuth";
 
 const LineManagementPage = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState(false);
-  const { lines, addLine, deleteLine } = useLine();
-  const { stations } = useStation();
+  const { lines, addLine, deleteLine, getLines } = useLine();
+  const { stations, getStations } = useStation();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    getStations();
+    getLines();
+  }, []);
 
   const onDeleteLine = async (id: Line["id"]) => {
     try {
@@ -22,6 +31,10 @@ const LineManagementPage = () => {
       alert(error.message);
     }
   };
+
+  if (!isAuthenticated) {
+    return <Redirect to={PAGE_PATH.LOGIN} />;
+  }
 
   return (
     <FlexCenter>
