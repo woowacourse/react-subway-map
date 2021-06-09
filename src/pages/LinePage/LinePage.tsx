@@ -197,7 +197,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   };
 
   const onLineDelete = async (id: number, name: string) => {
-    if (!confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
     try {
       await deleteLine(id);
       await fetchData();

@@ -17,7 +17,7 @@ const ApiSwitch = () => {
             onChange={() => {
               localStorage.setItem('hostName', host);
               localStorage.setItem('accessToken', '');
-              location.reload();
+              window.location.reload();
             }}
             value={host}
             checked={API_HOST === host}

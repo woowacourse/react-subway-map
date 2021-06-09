@@ -192,7 +192,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    if (!confirm(CONFIRM_MESSAGE.DELETE_SECTION(currentLine?.name ?? '', stationName))) {
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE_SECTION(currentLine?.name ?? '', stationName))) {
       return;
     }
 

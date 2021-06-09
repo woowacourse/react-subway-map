@@ -104,7 +104,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   };
 
   const onStationDelete = async (id: number, name: string) => {
-    if (!confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
+    if (!window.confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
 
     try {
       await deleteStation(id);
