@@ -4,6 +4,7 @@ import ContentContainer from '../../components/@commons/ContentContainer/Content
 import AddSectionForm from '../../components/SectionPage/AddSectionForm';
 import SectionListItem from '../../components/SectionPage/SectionListItem';
 import { ROUTE } from '../../constants/route';
+import { VALIDATION } from '../../constants/validation';
 import useLine from '../../hook/useLine';
 import useSection from '../../hook/useSection';
 import useStation from '../../hook/useStation';
@@ -21,7 +22,7 @@ const getSectionStations = (lineSection: LineSection) => {
     name: upStation.name,
     distance,
   }));
-  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: -1 });
+  sectionStations.push({ id: lastStation.id, name: lastStation.name, distance: VALIDATION.LAST_STATION_DISTANCE });
 
   return sectionStations;
 };

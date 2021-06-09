@@ -4,6 +4,7 @@ import Button from '../@commons/Button/Button';
 import { getStationNameErrorMessage } from './AddStationForm.validation';
 import { Station } from '../../interfaces';
 import subwaySVG from '../../assets/svg/subway.svg';
+import { VALIDATION } from '../../constants/validation';
 import * as S from './AddStationForm.styles';
 
 interface Props {
@@ -17,10 +18,9 @@ const AddStationForm = ({ stations, addStation }: Props) => {
   const isValidForm = !stationNameErrorMessage;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.slice(-1)[0] === ' ') {
-      return;
-    }
+    const lastInput = e.target.value?.slice(-1)[0];
 
+    if (lastInput === VALIDATION.EMPTY_INPUT) return;
     setStationName(e.target.value);
   };
 

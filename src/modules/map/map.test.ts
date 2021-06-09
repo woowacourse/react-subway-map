@@ -3,6 +3,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga-test-plan/matchers';
 import mapReducer, { pending, setMap, error } from './mapReducer';
 import { getMapSaga } from './mapSaga';
+import { VALIDATION } from '../../constants/validation';
 
 const mapData = [
   {
@@ -25,7 +26,7 @@ const mapData = [
       {
         id: 5,
         name: '잠실역',
-        distance: -1,
+        distance: VALIDATION.LAST_STATION_DISTANCE,
         transferLines: [],
       },
     ],

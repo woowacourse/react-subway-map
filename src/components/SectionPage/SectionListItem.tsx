@@ -28,7 +28,7 @@ const SectionListItem = ({ id, name, distance, lineColor, lineSection, deleteSec
     <S.SectionListItem>
       <S.NameWrapper>
         <S.Name lineColor={lineColor}>{name}</S.Name>
-        {distance >= 0 && (
+        {distance !== VALIDATION.LAST_STATION_DISTANCE && (
           <S.Distance>
             다음역까지
             <br /> {distance}KM
