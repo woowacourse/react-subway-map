@@ -1,5 +1,7 @@
 import { Palette } from './palette';
 
+type APIHostType = 'FAFI' | 'JOEL' | 'JOAN' | 'JAYON';
+
 interface APIInfo {
   name: string;
   endPoint: string;
@@ -8,7 +10,7 @@ interface APIInfo {
 
 export const DEFAULT_API_OWNER = 'JOAN';
 
-export const API_INFO: { [key: string]: APIInfo } = {
+export const API_INFO: Record<APIHostType, APIInfo> = {
   FAFI: {
     name: '파피',
     endPoint: 'https://fafi-subway.o-r.kr',

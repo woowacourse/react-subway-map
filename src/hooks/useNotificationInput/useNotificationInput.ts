@@ -2,17 +2,17 @@ import React, { ChangeEventHandler, useState } from 'react';
 import { BaseInputElement, SetText } from '../../types';
 import useUpdateEffect from '../useUpdateEffect/useUpdateEffect';
 
-interface OnChangeTool {
+interface ChangeToolParameter {
   setInput: SetText;
   setErrorMessage: SetText;
   targetValue: string;
 }
 
-type CustomOnChange = (onChangeTool: OnChangeTool) => void;
+type CustomOnChange = (onChangeTool: ChangeToolParameter) => void;
 
 const useNotificationInput = <T extends BaseInputElement = HTMLInputElement>(
   customOnChange: CustomOnChange,
-  onChangeAdditionalDependencyList?: React.DependencyList | undefined
+  onChangeAdditionalDependencyList?: React.DependencyList
 ): [string, string, ChangeEventHandler<T>, React.Dispatch<React.SetStateAction<string>>] => {
   const [input, setInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
