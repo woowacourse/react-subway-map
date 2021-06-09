@@ -11,6 +11,10 @@ const BASE_URL: { [key: string]: string } = {
   OZ: 'https://subwaybot.o-r.kr/api',
   SOLONG: 'https://subwaybot.n-e.kr/api',
   KROPPLE: 'https://subwaybot.p-e.kr/api',
+  // NABOM: 'https://subway-step2-server.herokuapp.com',
+  // OZ: 'https://subway-step2-server.herokuapp.com',
+  // SOLONG: 'https://subway-step2-server.herokuapp.com',
+  // KROPPLE: 'https://subway-step2-server.herokuapp.com',
 };
 
 const REQUEST_URL = BASE_URL[API_HOST];

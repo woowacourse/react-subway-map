@@ -52,14 +52,14 @@ const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 
 const LinePage = ({ setIsLoading }: PageProps) => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
   const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
   const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
   const [lineName, onlineNameChange, setLineName] = useInput('');
+  const [distance, onDistanceChange, setDistance] = useInput('');
 
+  const [formOpen, setFormOpen] = useState<boolean>(false);
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
-  const [distance, onDistanceChange, setDistance] = useInput('');
 
   const colors = useMemo(() => {
     const usedLineColors = lines.map((line) => line.color);
