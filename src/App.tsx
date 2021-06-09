@@ -33,7 +33,7 @@ const App: VFC = () => {
   return (
     <>
       <Header title={APP_TITLE} logo={<Subway color={Palette.BLACK_400} />}>
-        <Navigation navInfoList={COMMON_NAV_LIST} />
+        <Navigation navigatingPageInfoList={COMMON_NAV_LIST} />
       </Header>
       <Main>
         <Switch>

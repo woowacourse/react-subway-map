@@ -15,5 +15,9 @@ export const Default = Template.bind({});
 Default.args = {
   logo: <div>😍</div>,
   title: 'RUNNINGMAP',
-  children: <Navigation navInfoList={[PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS]} />,
+  children: (
+    <Navigation
+      navigatingPageInfoList={[PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS]}
+    />
+  ),
 };

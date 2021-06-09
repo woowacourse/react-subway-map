@@ -1,9 +1,9 @@
-import { Page } from './../types';
+import { PageInfo } from './../types';
 import { Palette } from './palette';
 
 export const APP_TITLE = 'SUNKIST';
 
-export const PAGE_INFO: { [key: string]: Page } = {
+export const PAGE_INFO: { [key: string]: PageInfo } = {
   HOME: {
     text: 'API 선택',
     path: '/',

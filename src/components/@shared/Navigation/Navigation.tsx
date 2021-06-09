@@ -1,19 +1,18 @@
-import PropTypes from 'prop-types';
 import React, { VFC } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { PAGE_INFO } from '../../../constants/appInfo';
 import { logout } from '../../../redux/slice/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../../redux/store';
-import { Page } from '../../../types';
+import { PageInfo } from '../../../types';
 import StyledLink from '../StyledLink/StyledLink';
 import { NavButton, NavList } from './Navigation.styles';
 
 interface Props {
-  navInfoList: Page[];
+  navigatingPageInfoList: PageInfo[];
 }
 
-const Navigation: VFC<Props> = ({ navInfoList }) => {
+const Navigation: VFC<Props> = ({ navigatingPageInfoList }) => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const history = useHistory();
   const dispatch = useAppDispatch();
@@ -27,7 +26,7 @@ const Navigation: VFC<Props> = ({ navInfoList }) => {
   return (
     <nav>
       <NavList>
-        {navInfoList.map((navInfo, index) => (
+        {navigatingPageInfoList.map((navInfo, index) => (
           <li key={index}>
             <StyledLink to={navInfo.path}>{navInfo.text}</StyledLink>
           </li>

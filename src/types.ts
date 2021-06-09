@@ -1,6 +1,6 @@
 import { Palette } from './constants/palette';
 
-export interface Page {
+export interface PageInfo {
   text: string;
   path: string;
 }
