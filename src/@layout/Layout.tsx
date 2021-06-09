@@ -1,39 +1,15 @@
-import Button from '@shared/Button/Button';
 import Header from '@units/Header/Header';
-import PATH from 'constants/path';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from 'redux/authSlice';
 
-interface BaseLayoutProps {
+interface LayoutProps {
   children: React.ReactNode;
   isLogin: boolean;
 }
 
-const Layout = ({ children, isLogin }: BaseLayoutProps) => {
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
+const Layout = ({ children, isLogin }: LayoutProps) => {
   return (
     <div>
-      <Header>
-        <>
-          <Link to={PATH.STATION}>{isLogin && <Button className="mx-1" text="역 관리" />}</Link>
-          <Link to={PATH.LINE}>{isLogin && <Button className="mx-1" text="노선 관리" />}</Link>
-          <Link to={PATH.SECTION}>{isLogin && <Button className="mx-1" text="구간 관리" />}</Link>
-          <Link to={PATH.LOGIN}>
-            {isLogin ? (
-              <Button className="mx-1" text="로그아웃" onClick={handleLogout} />
-            ) : (
-              <Button className="mx-1" text="로그인" />
-            )}
-          </Link>
-        </>
-      </Header>
+      <Header isLogin={isLogin} />
       <div className="flex items-center justify-center min-h-full font-jua">{children}</div>
     </div>
   );

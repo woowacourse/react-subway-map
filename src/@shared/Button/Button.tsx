@@ -8,11 +8,10 @@ interface ButtonProps {
   hoverBgColor?: string;
   className?: string;
   disabled?: boolean;
-  onClick?: () => void | null;
   setColor?: (color: string) => void | null;
 }
 
-const Button = ({ setColor, type, disabled, text, size, className, bgColor, hoverBgColor, onClick }: ButtonProps) => {
+const Button = ({ setColor, type, disabled, text, size, className, bgColor, hoverBgColor }: ButtonProps) => {
   const handleColor = () => {
     return setColor?.(bgColor ?? '');
   };
@@ -24,7 +23,7 @@ const Button = ({ setColor, type, disabled, text, size, className, bgColor, hove
       disabled={disabled}
       // eslint-disable-next-line react/button-has-type
       type={type}
-      onClick={() => handleColor() ?? onClick}
+      onClick={handleColor}
     >
       {text}
     </button>
@@ -39,7 +38,6 @@ Button.defaultProps = {
   bgColor: 'bg-red-300',
   hoverBgColor: 'bg-red-400',
   className: '',
-  onClick: null,
   setColor: null,
 };
 

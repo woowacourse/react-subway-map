@@ -1,4 +1,4 @@
-import BaseLayout from '@layout/Layout';
+import Layout from '@layout/Layout';
 import PATH from 'constants/path';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
@@ -20,7 +20,7 @@ const App = () => {
   const accessToken = useSelector<State>((state) => state.auth.accessToken);
 
   return (
-    <BaseLayout isLogin={!!accessToken}>
+    <Layout isLogin={!!accessToken}>
       <Switch>
         <Route exact path={PATH.HOME}>
           <Home />
@@ -41,7 +41,7 @@ const App = () => {
           <Section />
         </Route>
       </Switch>
-    </BaseLayout>
+    </Layout>
   );
 };
 
