@@ -8,8 +8,6 @@ interface StyledCardTemplateProps {
   titleSize: CardTemplateTitleSize;
 }
 
-export const CardTemplateTitle = styled.div``;
-
 export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
   border: 1px solid ${Palette.GRAY_300};
   border-radius: 10px;
@@ -24,7 +22,7 @@ export const StyledCardTemplate = styled.div<StyledCardTemplateProps>`
     height: 1rem;
   }
 
-  & > ${CardTemplateTitle} {
+  & > .card-template-title {
     font-weight: bold;
     font-size: ${({ titleSize }) => titleSize};
     padding: 1rem 1.5rem;

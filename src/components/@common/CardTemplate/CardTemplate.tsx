@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Palette } from '../../../constants/palette';
-import { CardTemplateTitle, StyledCardTemplate } from './CardTemplate.styles';
+import { StyledCardTemplate } from './CardTemplate.styles';
 
 export enum CardTemplateTitleSize {
   sm = '1.75rem',
@@ -29,7 +29,7 @@ const CardTemplate: FC<Props> = ({
       isColoredTitle={isColoredTitle}
       titleSize={titleSize}
     >
-      {titleText && <CardTemplateTitle>{titleText}</CardTemplateTitle>}
+      {titleText && <div className="card-template-title">{titleText}</div>}
       {children}
     </StyledCardTemplate>
   );
