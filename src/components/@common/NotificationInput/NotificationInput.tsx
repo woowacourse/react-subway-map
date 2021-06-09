@@ -9,11 +9,11 @@ interface Message {
 }
 
 interface Props extends InputProps {
-  message?: Message;
+  messageInfo?: Message;
   className?: string;
 }
 
-const NotificationInput: VFC<Props> = ({ message, className, ...options }) => {
+const NotificationInput: VFC<Props> = ({ messageInfo, className, ...options }) => {
   return (
     <NotificationInputContainer
       className={className}
@@ -21,8 +21,8 @@ const NotificationInput: VFC<Props> = ({ message, className, ...options }) => {
       justifyContent="space-between"
     >
       <Input {...options} />
-      {message?.text && (
-        <NotificationText isError={message.isError}>{message.text}</NotificationText>
+      {messageInfo?.text && (
+        <NotificationText isError={messageInfo.isError}>{messageInfo.text}</NotificationText>
       )}
     </NotificationInputContainer>
   );

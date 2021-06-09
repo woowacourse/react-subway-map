@@ -11,7 +11,7 @@ import { addLine } from '../../redux/slice/lineSlice';
 import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isMyEnumTypeBy } from '../../util/typeGuard';
-import { isKoreanAndNumber } from '../../util/validator';
+import { hasEmptyString, isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
 import Input from '../@common/Input/Input';
@@ -34,7 +34,7 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
 
   const [nameInput, nameErrorMessage, onChangeName] = useNotificationInput(
     ({ setInput, setErrorMessage, targetValue }) => {
-      if (targetValue.length >= 2 && isKoreanAndNumber(targetValue)) {
+      if (targetValue.length > 1 && isKoreanAndNumber(targetValue)) {
         setErrorMessage('');
       } else {
         setErrorMessage(ERROR_MESSAGE.INVALID_LINE_NAME);
@@ -58,7 +58,7 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
     ({ setInput, setErrorMessage, targetValue }) => {
       setInput(targetValue);
 
-      if (targetValue === '' || downStationIdInput === '') {
+      if (hasEmptyString(targetValue, downStationIdInput)) {
         setErrorMessage(ERROR_MESSAGE.NONE_OF_SELECTED_SECTION);
         return;
       }
@@ -136,7 +136,7 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
         <NotificationInput
           value={nameInput}
           onChange={onChangeName}
-          message={{ text: nameErrorMessage, isError: true }}
+          messageInfo={{ text: nameErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
           labelText={LABEL_TEXT.LINE_NAME}

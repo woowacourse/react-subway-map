@@ -13,10 +13,10 @@ Default.args = {};
 
 export const Error = Template.bind({});
 Error.args = {
-  message: { text: '에러 메세지', isError: true },
+  messageInfo: { text: '에러 메세지', isError: true },
 };
 
 export const Success = Template.bind({});
 Success.args = {
-  message: { text: '성공 메세지', isError: false },
+  messageInfo: { text: '성공 메세지', isError: false },
 };

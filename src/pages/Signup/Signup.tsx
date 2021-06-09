@@ -126,7 +126,7 @@ const Signup: VFC = () => {
           onChange={onChangeEmail}
           labelIcon={<Email />}
           placeholder={LABEL_TEXT.PLEASE_INPUT_EMAIL}
-          message={{ text: emailErrorMessage, isError: true }}
+          messageInfo={{ text: emailErrorMessage, isError: true }}
           required
         />
         <SignupNotificationInput
@@ -137,7 +137,7 @@ const Signup: VFC = () => {
           placeholder={LABEL_TEXT.PLEASE_INPUT_AGE}
           min={SIGNUP.MIN_AGE}
           max={SIGNUP.MAX_AGE}
-          message={{ text: ageErrorMessage, isError: true }}
+          messageInfo={{ text: ageErrorMessage, isError: true }}
           required
         />
         <SignupNotificationInput
@@ -148,14 +148,14 @@ const Signup: VFC = () => {
           placeholder={LABEL_TEXT.PLEASE_INPUT_PASSWORD}
           minLength={SIGNUP.PASSWORD_MIN_LENGTH}
           maxLength={SIGNUP.PASSWORD_MAX_LENGTH}
-          message={{ text: passwordErrorMessage, isError: true }}
+          messageInfo={{ text: passwordErrorMessage, isError: true }}
           required
         />
         <SignupNotificationInput
           type="password"
           value={passwordConfirmInput}
           onChange={onChangePasswordConfirm}
-          message={{ text: passwordConfirmErrorMessage, isError: true }}
+          messageInfo={{ text: passwordConfirmErrorMessage, isError: true }}
           labelIcon={<Lock />}
           placeholder={LABEL_TEXT.PLEASE_INPUT_PASSWORD_CONFIRM}
           minLength={SIGNUP.PASSWORD_MIN_LENGTH}

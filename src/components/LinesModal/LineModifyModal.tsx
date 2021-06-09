@@ -95,7 +95,7 @@ const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
         <NotificationInput
           value={nameInput}
           onChange={onChangeName}
-          message={{ text: nameErrorMessage, isError: true }}
+          messageInfo={{ text: nameErrorMessage, isError: true }}
           minLength={2}
           maxLength={10}
           labelText={LABEL_TEXT.LINE_NAME}

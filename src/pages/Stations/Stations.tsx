@@ -84,7 +84,7 @@ const Stations: VFC = () => {
               minLength={STATION.NAME_MIN_LENGTH}
               maxLength={STATION.NAME_MAX_LENGTH}
               labelText={LABEL_TEXT.PLEASE_INPUT_STATION_NAME}
-              message={{ text: stationErrorMessage, isError: true }}
+              messageInfo={{ text: stationErrorMessage, isError: true }}
             />
             <Button disabled={!isValidStationInput}>{LABEL_TEXT.ADD}</Button>
           </StationForm>
