@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import React, { ChangeEvent, ChangeEventHandler, VFC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
+import HiddenLabel from '../../@common/a11y/HiddenLabel/HiddenLabel';
 import Arrow from '../../@common/Icon/Arrow';
 import SelectBox from '../../@common/SelectBox/SelectBox';
 import {
-  SectionHiddenLabel,
   SectionSelectBoxContainer,
   SectionSelectErrorMessage,
   StationsSelectContainer,
@@ -27,7 +26,7 @@ const SectionSelectBox: VFC<Props> = ({ onChangeUpStation, onChangeDownStation, 
   return (
     <SectionSelectBoxContainer direction="column">
       <StationsSelectContainer alignItems="center" justifyContent="space-between">
-        <SectionHiddenLabel labelText="상행역 선택 콤보박스">
+        <HiddenLabel className="section-hidden-label" labelText="상행역 선택 콤보박스">
           <SelectBox onChange={onChangeUpStation}>
             <option value="">역을 선택하세요</option>
             {stations.map((station) => (
@@ -36,9 +35,9 @@ const SectionSelectBox: VFC<Props> = ({ onChangeUpStation, onChangeDownStation, 
               </option>
             ))}
           </SelectBox>
-        </SectionHiddenLabel>
+        </HiddenLabel>
         <Arrow />
-        <SectionHiddenLabel labelText="하행역 선택 콤보박스">
+        <HiddenLabel className="section-hidden-label" labelText="하행역 선택 콤보박스">
           <SelectBox onChange={onChangeDownStation}>
             <option value="">역을 선택하세요</option>
             {stations.map((station) => (
@@ -47,7 +46,7 @@ const SectionSelectBox: VFC<Props> = ({ onChangeUpStation, onChangeDownStation, 
               </option>
             ))}
           </SelectBox>
-        </SectionHiddenLabel>
+        </HiddenLabel>
       </StationsSelectContainer>
       {errorMessage && <SectionSelectErrorMessage>{errorMessage}</SectionSelectErrorMessage>}
     </SectionSelectBoxContainer>

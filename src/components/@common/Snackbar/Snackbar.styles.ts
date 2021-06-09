@@ -5,7 +5,7 @@ interface SnackbarContainerProps {
   backgroundColor: string;
 }
 
-const fadein = keyframes`
+const fadeIn = keyframes`
   from {
     bottom: -50px;
     opacity: 0;
@@ -16,7 +16,7 @@ const fadein = keyframes`
   }
 `;
 
-const fadeout = keyframes`
+const fadeOut = keyframes`
   from {
     bottom: 10px;
     opacity: 1;
@@ -39,6 +39,6 @@ export const SnackbarContainer = styled.div<SnackbarContainerProps>`
   left: 50%;
   transform: translateX(-50%);
   bottom: 10px;
-  -webkit-animation: ${fadein} 0.5s, ${fadeout} 0.5s ${({ duration }) => duration / 1000 + 's'};
-  animation: ${fadein} 0.5s, ${fadeout} 0.5s ${({ duration }) => duration / 1000 + 's'};
+  -webkit-animation: ${fadeIn} 0.5s, ${fadeOut} 0.5s ${({ duration }) => duration / 1000 + 's'};
+  animation: ${fadeIn} 0.5s, ${fadeOut} 0.5s ${({ duration }) => duration / 1000 + 's'};
 `;

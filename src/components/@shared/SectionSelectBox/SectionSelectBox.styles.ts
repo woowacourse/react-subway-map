@@ -1,18 +1,15 @@
 import styled from 'styled-components';
 import { Palette } from '../../../constants/palette';
 import FlexContainer from '../../@common/FlexContainer/FlexContainer';
-import HiddenLabel from '../../@common/a11y/HiddenLabel/HiddenLabel';
 
 export const SectionSelectBoxContainer = styled(FlexContainer)`
   height: 5rem;
 `;
 
-export const SectionHiddenLabel = styled(HiddenLabel)``;
-
 export const StationsSelectContainer = styled(FlexContainer)`
   width: 100%;
 
-  & > ${SectionHiddenLabel} {
+  & > .section-hidden-label {
     flex-grow: 1;
   }
 
