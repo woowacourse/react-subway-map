@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { COLOR } from '../../constants/styleConstant';
+import { css } from '@emotion/react';
+import { COLOR, LINE_COLOR } from '../../constants/styleConstant';
 
 export const LineModalForm = styled.form`
   width: 100%;
@@ -76,7 +77,11 @@ export const PaletteTitle = styled.h3`
   margin-bottom: 1.5rem;
 `;
 
-export const Palette = styled.button`
+export const Palette = styled.button<{ color: LINE_COLOR; isAlreadyExistColor: Boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   width: 4rem;
   height: 4rem;
   border-radius: 1rem;
@@ -84,6 +89,32 @@ export const Palette = styled.button`
   border: none;
   background-color: ${({ color, theme }) => (color ? color : theme.primaryColor)};
   cursor: pointer;
+  ${({ isAlreadyExistColor }) =>
+    isAlreadyExistColor
+      ? css`
+          opacity: 0.5;
+          &:before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 6rem;
+            border: 0.08rem solid black;
+            background-color: black;
+            opacity: 1;
+            transform: rotate(-45deg);
+          }
+          &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 6rem;
+            border: 0.08rem solid black;
+            background-color: black;
+            opacity: 1;
+            transform: rotate(45deg);
+          }
+        `
+      : ''}
 `;
 
 export const SelectedPalette = styled.div`
