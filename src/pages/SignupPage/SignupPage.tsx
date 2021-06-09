@@ -32,7 +32,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const [password, onPasswordChange] = useInput('');
   const [passwordConfirm, onPasswordConfirmChange] = useInput('');
 
-  const emailRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null); // emailRef
 
   if (isLoggedIn) {
     return <Redirect to={PATH.ROOT} />;

@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { request, REQUEST_URL } from '../request';
-import { StationData } from './useStations';
-import { APIReturnTypeSection } from './useSections';
 
 interface LineData {
   name: string;
