@@ -6,6 +6,7 @@ import Login from 'pages/Login';
 import Section from 'pages/Section';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
+import SubwayMap from 'pages/SubwayMap';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -39,6 +40,9 @@ const App = () => {
         </Route>
         <Route exact path={PATH.SECTION}>
           <Section />
+        </Route>
+        <Route exact path={PATH.MAP}>
+          <SubwayMap />
         </Route>
       </Switch>
     </BaseLayout>

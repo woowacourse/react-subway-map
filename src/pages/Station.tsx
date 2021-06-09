@@ -8,17 +8,15 @@ import MESSAGE from 'constants/message';
 import PATH from 'constants/PATH';
 import useCheckAuth from 'hooks/useCheckAuth';
 import React, { useEffect, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
-import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/store';
 import { StationInterface } from 'types';
 
 const Station = () => {
   useCheckAuth(PATH.LOGIN);
 
   const dispatch = useDispatch();
-
-  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const stations: StationInterface[] | null = useAppSelector((state) => state.station.stations);
 
   const [name, setName] = useState('');

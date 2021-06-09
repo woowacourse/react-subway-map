@@ -29,6 +29,9 @@ const MESSAGE = {
     ADD_FAIL: '구간 추가에 실패했습니다.',
     DELETE_FAIL: '구간 삭제에 실패했습니다.',
   },
+  MAP: {
+    GET_FAIL: '전체 목록 조회에 실패했습니다.',
+  },
 };
 
 export default MESSAGE;

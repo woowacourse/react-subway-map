@@ -21,6 +21,7 @@ module.exports = {
     },
   },
   variants: {
+    width: ['last'],
     extend: {},
   },
   plugins: [],

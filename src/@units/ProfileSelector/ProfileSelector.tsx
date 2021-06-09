@@ -33,9 +33,10 @@ const ProfileSelector = () => {
   return (
     <>
       <div className="flex justify-center mb-4">
-        <ProfileButton handleUrl={handleUrl} url={URL.KODA} className="mx-4" imgUrl={kodaImg} />
+        {/* TODO 방학으로 인한 AWS 정리, 서버 다시 올라오는데로 추가할 것. */}
+        {/* <ProfileButton handleUrl={handleUrl} url={URL.KODA} className="mx-4" imgUrl={kodaImg} />
+        <ProfileButton handleUrl={handleUrl} url={URL.WEDGE} className="mx-4" imgUrl={wedgeImg} /> */}
         <ProfileButton handleUrl={handleUrl} url={URL.PK} className="mx-4" imgUrl={pkImg} />
-        <ProfileButton handleUrl={handleUrl} url={URL.WEDGE} className="mx-4" imgUrl={wedgeImg} />
         <ProfileButton handleUrl={handleUrl} url={URL.ROKI} className="mx-4" imgUrl={rokiImg} />
       </div>
       <div className="mb-4 text-center text-gray-800">{message}</div>
