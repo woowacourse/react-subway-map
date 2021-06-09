@@ -1,11 +1,11 @@
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { requestSignup } from '../../api/member';
+import { requestSignup } from '../../API/member';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { customRender } from '../../test-utils';
 import Signup from './Signup';
 
-jest.mock('../../api/member');
+jest.mock('../../API/member');
 
 describe('회원가입 페이지 테스트', () => {
   it('로그인 요청', () => {

@@ -6,15 +6,15 @@ import {
   requestDeleteLine,
   requestGetLines,
   requestModifyLine,
-} from '../../api/lines';
+} from '../../API/lines';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { TEST_ID } from '../../constants/test';
 import { customRender } from '../../test-utils';
 import Lines from './Lines';
 
 jest.mock('../../util/sessionStorage');
-jest.mock('../../api/lines');
-jest.mock('../../api/stations');
+jest.mock('../../API/lines');
+jest.mock('../../API/stations');
 
 describe('노선 관리 페이지 테스트', () => {
   it('노선 목록 요청, 화면에 목록 띄우기', async () => {

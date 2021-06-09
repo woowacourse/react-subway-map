@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Palette } from '../constants/palette';
 import { Line } from '../types';
 import customAxios from '../util/API';
+import { isMyEnumTypeBy } from '../util/typeGuard';
 
 export interface AddLineRequestData {
   name: string;
@@ -29,7 +30,21 @@ interface DeleteSectionRequestData {
   stationId: number;
 }
 
-export const requestGetLines = (): Promise<AxiosResponse<Line[]>> => customAxios.get(`/lines`);
+export const requestGetLines = async (): Promise<Line[]> => {
+  try {
+    const { data: lines } = await customAxios.get<Line[]>(`/lines`);
+
+    if (!lines.every((line) => isMyEnumTypeBy(Palette)(line.color))) {
+      console.error('서버로 부터 받아온 line의 color가 올바른 타입이 아닙니다.');
+    }
+
+    return lines;
+  } catch (error) {
+    alert(error.response.data);
+
+    return [];
+  }
+};
 
 export const requestAddLine = (
   addLineRequestData: AddLineRequestData

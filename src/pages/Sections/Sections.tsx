@@ -1,6 +1,6 @@
 import React, { VFC, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { requestDeleteSection } from '../../api/lines';
+import { requestDeleteSection } from '../../API/lines';
 import CardTemplate, {
   CardTemplateTitleSize,
 } from '../../components/@common/CardTemplate/CardTemplate';

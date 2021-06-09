@@ -21,7 +21,7 @@ import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesM
 export interface ModifyLine {
   id: number;
   name: string;
-  color: string;
+  color: Palette;
 }
 
 interface Props {
@@ -128,15 +128,6 @@ const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
       </LineForm>
     </Modal>
   );
-};
-
-LineModifyModal.propTypes = {
-  line: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default LineModifyModal;

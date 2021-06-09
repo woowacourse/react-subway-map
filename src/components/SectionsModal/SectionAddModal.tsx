@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React, { VFC, FormEventHandler } from 'react';
-import { requestAddSection } from '../../api/lines';
+import { requestAddSection } from '../../API/lines';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -125,17 +124,6 @@ const SectionAddModal: VFC<Props> = ({ onClose, line }) => {
       </SectionForm>
     </Modal>
   );
-};
-
-SectionAddModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  line: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-    stations: PropTypes.array.isRequired,
-    sections: PropTypes.array.isRequired,
-  }).isRequired,
 };
 
 export default SectionAddModal;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { VFC, FormEventHandler, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
@@ -123,7 +122,7 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
     }
 
     alert(errorMessage);
-  });
+  }, [errorMessage]);
 
   useEffect(() => {
     if (stations.length === 0) {

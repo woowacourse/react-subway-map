@@ -6,7 +6,7 @@ import {
   requestDeleteLine,
   requestGetLines,
   requestModifyLine,
-} from '../../api/lines';
+} from '../../API/lines';
 import { Line } from '../../types';
 import { ErrorMessageResponse } from '../store';
 
@@ -14,9 +14,10 @@ export const loadLines = createAsyncThunk<Line[], undefined, { rejectValue: Erro
   'line/load',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await requestGetLines();
+      const lines = await requestGetLines();
 
-      return response.data;
+      return lines;
+      //TODO: loadLines의 rejected 의미가 없어짐
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

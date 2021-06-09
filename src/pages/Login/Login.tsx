@@ -1,7 +1,7 @@
 import React, { VFC, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { requestLogin } from '../../api/member';
+import { requestLogin } from '../../API/member';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';

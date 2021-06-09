@@ -3,7 +3,7 @@ import { Palette } from '../../../constants/palette';
 import { CardTemplateTitleSize } from './CardTemplate';
 
 interface StyledCardTemplateProps {
-  templateColor?: string;
+  templateColor?: Palette;
   isColoredTitle?: boolean;
   titleSize: CardTemplateTitleSize;
 }

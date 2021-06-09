@@ -1,4 +1,4 @@
-import { Member } from './../types';
+import { Member } from '../types';
 import { AxiosResponse } from 'axios';
 import customAxios from '../util/API';
 

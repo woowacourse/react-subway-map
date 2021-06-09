@@ -2,11 +2,11 @@ import React from 'react';
 import { customRender } from '../../test-utils';
 import Stations from './Stations';
 import userEvent from '@testing-library/user-event';
-import { requestAddStation, requestDeleteStation, requestGetStations } from '../../api/stations';
+import { requestAddStation, requestDeleteStation, requestGetStations } from '../../API/stations';
 import { LABEL_TEXT } from '../../constants/a11y';
 
 jest.mock('../../util/sessionStorage');
-jest.mock('../../api/stations');
+jest.mock('../../API/stations');
 
 describe('역 관리 페이지 테스트', () => {
   it('역 목록 조회 요청', () => {

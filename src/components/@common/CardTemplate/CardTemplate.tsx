@@ -10,7 +10,7 @@ export enum CardTemplateTitleSize {
 
 interface Props {
   children: React.ReactNode;
-  templateColor?: string;
+  templateColor?: Palette;
   isColoredTitle?: boolean;
   titleText?: string;
   titleSize?: CardTemplateTitleSize;

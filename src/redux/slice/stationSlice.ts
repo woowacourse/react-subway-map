@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Station } from '../../types';
-import { requestAddStation, requestDeleteStation, requestGetStations } from './../../api/stations';
+import { requestAddStation, requestDeleteStation, requestGetStations } from '../../API/stations';
 import { ErrorMessageResponse } from '../store';
 
 export const loadStations = createAsyncThunk<

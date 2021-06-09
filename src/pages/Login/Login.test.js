@@ -3,10 +3,10 @@ import { fireEvent } from '@testing-library/react';
 import Login from './Login';
 import { customRender } from '../../test-utils';
 import { act } from 'react-dom/test-utils';
-import { requestLogin } from '../../api/member';
+import { requestLogin } from '../../API/member';
 import { LABEL_TEXT } from '../../constants/a11y';
 
-jest.mock('../../api/member');
+jest.mock('../../API/member');
 
 describe('로그인 페이지 테스트', () => {
   it('로그인 요청', () => {

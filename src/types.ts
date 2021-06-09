@@ -19,7 +19,7 @@ export interface Section {
 export interface Line {
   id: number;
   name: string;
-  color: string;
+  color: Palette;
   stations: Station[];
   sections: Section[];
 }
