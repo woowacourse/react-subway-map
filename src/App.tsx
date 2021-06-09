@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Switch, Route, Link, Redirect, RouteProps } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SingupPage";
@@ -12,13 +12,21 @@ import Button from "./components/Button/Button";
 import { Navigation } from "./App.styles";
 import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./constants/route";
 import useAuth from "./hooks/useAuth";
-import useStation from "./hooks/useStation";
-import useLine from "./hooks/useLine";
 import { Flex } from "./components/@shared/FlexContainer/FlexContainer";
 import Select from "./components/Select/Select";
 import { BASE_URL, API_PROVIDER, DEFAULT_API_PROVIDER, API_LOCAL_STORAGE_KEY } from "./apis";
 import useLocalStorage from "./hooks/@common/useLocalStorage";
 import axios from "axios";
+
+type Mapper<T> = (value: string) => T;
+
+const mapper: Mapper<API_PROVIDER> = (value) => {
+  if (value !== "수리" && value !== "와일더" && value !== "에드" && value !== "포모") {
+    return "수리";
+  }
+
+  return value;
+};
 
 const App = () => {
   const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
@@ -46,16 +54,6 @@ const App = () => {
   const apiProviders = Object.keys(BASE_URL).map((name) => ({ value: name, text: name }));
 
   const apiProviderName = appLocalStorage.item;
-
-  type Mapper<T> = (value: string) => T;
-
-  const mapper: Mapper<API_PROVIDER> = (value) => {
-    if (value !== "수리" && value !== "와일더" && value !== "에드" && value !== "포모") {
-      return "수리";
-    }
-
-    return value;
-  };
 
   const onApiProviderChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const apiProvider = event.currentTarget.value;
