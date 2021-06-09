@@ -24,18 +24,14 @@ const App = () => {
   const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
 
   const { isAuthenticated, checkAccessToken, logout } = useAuth();
-  const { getStations } = useStation();
-  const { getLines } = useLine();
-
-  useEffect(() => {
-    checkAccessToken();
-    getStations();
-    getLines();
-  }, []);
 
   useEffect(() => {
     axios.defaults.baseURL = BASE_URL[appLocalStorage.item];
   }, [appLocalStorage.item]);
+
+  useEffect(() => {
+    checkAccessToken();
+  }, []);
 
   const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
@@ -59,6 +55,16 @@ const App = () => {
 
   const apiProviderName = appLocalStorage.item;
 
+  type Mapper<T> = (value: string) => T;
+
+  const mapper: Mapper<API_PROVIDER> = (value) => {
+    if (value !== "수리" && value !== "와일더" && value !== "에드" && value !== "포모") {
+      return "수리";
+    }
+
+    return value;
+  };
+
   const onApiProviderChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const apiProvider = event.currentTarget.value;
 
@@ -66,11 +72,11 @@ const App = () => {
       return;
     }
 
-    appLocalStorage.set(apiProvider as API_PROVIDER);
+    appLocalStorage.set(mapper(apiProvider));
   };
 
   return (
-    <BrowserRouter>
+    <>
       <Flex style={{ width: "100%", padding: "0.9375rem", justifyContent: "flex-end" }}>
         <Select
           defaultValue={apiProviderName}
@@ -94,15 +100,15 @@ const App = () => {
         )}
       </Navigation>
       <Switch>
-        <PublicRoute exact path={PAGE_PATH.LOGIN}>
+        <PublicRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.LOGIN]}>
           <LoginPage />
         </PublicRoute>
         <PublicRoute exact path={PAGE_PATH.SIGN_UP}>
           <SignupPage />
         </PublicRoute>
-        <PrivateRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
+        <Route exact path={[PAGE_PATH.STATION_MANAGEMENT]}>
           <StationManagementPage />
-        </PrivateRoute>
+        </Route>
         <PrivateRoute exact path={PAGE_PATH.LINE_MANAGEMENT}>
           <LineManagementPage />
         </PrivateRoute>
@@ -113,7 +119,7 @@ const App = () => {
           <SubwayMapPage />
         </PrivateRoute>
       </Switch>
-    </BrowserRouter>
+    </>
   );
 };
 
