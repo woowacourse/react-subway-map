@@ -35,8 +35,10 @@ import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants
 import { LINE_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
-import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
-import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
+import useStations from '../../hooks/useStations';
+import useLines from '../../hooks/useLines';
+import { APIReturnTypeStation } from '../../apis/station';
+import { APIReturnTypeLine } from '../../apis/line';
 
 import { isValidLength, isValidRange } from '../../utils/validator';
 import noLine from '../../assets/images/no_line.png';
@@ -60,7 +62,7 @@ const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 
 const LinePage = ({ setIsLoading }: PageProps) => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [isFormOpened, setIsFormOpened] = useState(false);
   const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
   const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
 
@@ -185,7 +187,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       await fetchData();
 
       reset();
-      setFormOpen(false);
+      setIsFormOpened(false);
     } catch (error) {
       console.error(error);
 
@@ -225,7 +227,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Container>
-      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
+      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100} isOpen={isFormOpened}>
         <Heading1>지하철 노선 관리</Heading1>
         {isLoggedIn ? (
           <>
@@ -235,7 +237,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
               size="m"
               backgroundColor={themeColor}
               color={PALETTE.WHITE_100}
-              onClick={() => setFormOpen(!formOpen)}
+              onClick={() => setIsFormOpened(!isFormOpened)}
               aria-label="노선 추가"
             >
               <MdAdd size="1.5rem" />
@@ -245,7 +247,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
       </TitleBox>
-      <FormBox backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
+      <FormBox backgroundColor={PALETTE.WHITE_100} isOpen={isFormOpened}>
         <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식" ref={formElement}>
           <InputContainer
             labelText="노선 이름"

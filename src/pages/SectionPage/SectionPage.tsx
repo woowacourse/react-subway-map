@@ -25,9 +25,12 @@ import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants
 import { SECTION_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
-import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
 import useSections from '../../hooks/useSections';
-import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
+import useStations from '../../hooks/useStations';
+import useLines from '../../hooks/useLines';
+
+import { APIReturnTypeStation } from '../../apis/station';
+import { APIReturnTypeLine } from '../../apis/line';
 
 import { PageProps } from '../types';
 import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
@@ -37,14 +40,14 @@ import { isValidRange } from '../../utils/validator';
 
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
-const NO_SELECTED_LINE: number = -1;
+const NO_SELECTED_LINE = -1;
 
 const SectionPage = ({ setIsLoading }: PageProps) => {
   const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
   const [lines, setLines, fetchLines, fetchLine] = useLines(LINE_BEFORE_FETCH);
   const [addSection, deleteSection] = useSections();
 
-  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [isFormOpened, setIsFormOpened] = useState(false);
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');
@@ -181,7 +184,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       await getLine(selectedLineId);
 
       reset();
-      setFormOpen(false);
+      setIsFormOpened(false);
     } catch (error) {
       console.error(error);
 
@@ -225,7 +228,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Container>
-      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
+      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100} isOpen={isFormOpened}>
         <Heading1>지하철 구간 관리</Heading1>
         {isLoggedIn ? (
           <>
@@ -235,7 +238,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
               size="m"
               backgroundColor={themeColor}
               color={PALETTE.WHITE_100}
-              onClick={() => setFormOpen(!formOpen)}
+              onClick={() => setIsFormOpened(!isFormOpened)}
               aria-label="구간 추가"
             >
               <MdAdd size="1.5rem" />
@@ -258,7 +261,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           </Select>
         </InputContainer>
       </TitleBox>
-      <FormBox backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
+      <FormBox backgroundColor={PALETTE.WHITE_100} isOpen={isFormOpened}>
         <Form onSubmit={onSectionSubmit}>
           <StationSelects>
             <div>

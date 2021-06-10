@@ -14,7 +14,8 @@ import { STATION_VALUE } from '../../constants/values';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
 
 import useInput from '../../hooks/useInput';
-import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
+import useStations from '../../hooks/useStations';
+import { APIReturnTypeStation } from '../../apis/station';
 
 import { isValidLength } from '../../utils/validator';
 
