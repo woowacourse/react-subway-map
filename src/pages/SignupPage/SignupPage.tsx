@@ -27,12 +27,12 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
-  const [isEmailDuplicated, setIsEmailDuplicated] = useState<boolean>(false);
+  const [isEmailDuplicated, setIsEmailDuplicated] = useState(false);
   const [age, onAgeChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const [passwordConfirm, onPasswordConfirmChange] = useInput('');
 
-  const emailRef = useRef<HTMLInputElement | null>(null); // emailRef
+  const emailRef = useRef<HTMLInputElement | null>(null);
 
   if (isLoggedIn) {
     return <Redirect to={PATH.ROOT} />;

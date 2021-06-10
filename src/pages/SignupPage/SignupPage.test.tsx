@@ -15,7 +15,6 @@ const INVALID_EMAIL = 'test';
 const INVALID_AGE = 301;
 const INVALID_PASSWORD = '패스';
 
-// SignupPage test
 describe('사용자는 회원가입을 할 수 있다.', () => {
   const server = setupServer(
     rest.post(`${BASE_URL}/api/members`, (req, res, ctx) => {

@@ -28,7 +28,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
   const [stations, setStations, fetchStations, addStation, deleteStation] =
     useStations(STATION_BEFORE_FETCH);
-  const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
+  const [stationInputErrorMessage, setStationInputErrorMessage] = useState('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;

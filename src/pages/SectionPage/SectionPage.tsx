@@ -36,13 +36,13 @@ const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 
 const SectionPage = ({ setIsLoading }: PageProps) => {
-  const [selectedLineId, setSelectedLineId] = useState<number>(-1);
+  const [selectedLineId, setSelectedLineId] = useState(-1);
 
   const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
   const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
   const [addSection, deleteSection] = useSections();
 
-  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [formOpen, setFormOpen] = useState(false);
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');

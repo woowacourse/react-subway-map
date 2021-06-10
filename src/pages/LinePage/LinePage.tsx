@@ -57,7 +57,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   const [lineName, onlineNameChange, setLineName] = useInput('');
   const [distance, onDistanceChange, setDistance] = useInput('');
 
-  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [formOpen, setFormOpen] = useState(false);
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
 

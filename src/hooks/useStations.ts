@@ -54,7 +54,7 @@ const useStations = (
   (data: StationData) => Promise<APIReturnTypeStation | undefined>,
   (stationId: number) => Promise<void>
 ] => {
-  const [stations, setStations] = useState<APIReturnTypeStation[]>(initialStations);
+  const [stations, setStations] = useState(initialStations);
 
   const fetchStations = async (): Promise<void> => {
     const response = await API.get();

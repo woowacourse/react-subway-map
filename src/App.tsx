@@ -21,7 +21,7 @@ const App = () => {
   const userContext = useContext(UserContext);
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>

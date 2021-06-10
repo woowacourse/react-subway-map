@@ -67,7 +67,7 @@ const useLines = (
   (data: LineData) => Promise<void>,
   (lineId: number) => Promise<void>
 ] => {
-  const [lines, setLines] = useState<APIReturnTypeLine[]>(initialLines);
+  const [lines, setLines] = useState(initialLines);
 
   const fetchLine = async (lineId: number): Promise<void> => {
     const fetchedLine: APIReturnTypeLine = await API.getOne(lineId);
