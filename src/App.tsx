@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
 
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SingupPage";
@@ -30,7 +30,7 @@ const mapper: Mapper<API_PROVIDER> = (value) => {
 
 const App = () => {
   const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
-
+  const history = useHistory();
   const { isAuthenticated, checkAccessToken, logout } = useAuth();
 
   useEffect(() => {

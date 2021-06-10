@@ -1,5 +1,5 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { TEST_ID } from "../../@test/testId";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
@@ -32,7 +32,7 @@ const SignupPage = () => {
     }
   });
 
-  const { signup, error } = useAuth();
+  const { signup, isAuthenticated } = useAuth();
 
   const history = useHistory();
 
@@ -51,6 +51,10 @@ const SignupPage = () => {
       alert(error.message);
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to={PAGE_PATH.STATION_MANAGEMENT} />;
+  }
 
   return (
     <FlexCenter>
