@@ -14,6 +14,7 @@ import MESSAGE from 'constants/message';
 import useData from 'hooks/useData';
 import useChangeEvent from 'hooks/useChangeEvent';
 import PATH from 'constants/path';
+import InputContainer from '@units/InputContainer/InputContainer';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,22 +46,12 @@ const Login = () => {
     <Container>
       <Title className="mb-10 mt-6" text="로그인" />
       <form onSubmit={handleSubmit}>
-        <Input
-          className="mb-4"
-          imgUrl={mailImg}
-          placeholder="이메일을 입력해주세요"
-          type="email"
-          value={email}
-          onChange={onEmailChange}
-        />
-        <Input
-          className="mb-8"
-          imgUrl={lockImg}
-          placeholder="비밀번호를 입력해주세요"
-          type="password"
-          value={password}
-          onChange={onPasswordChange}
-        />
+        <InputContainer className="mb-4" imgUrl={mailImg}>
+          <Input placeholder="이메일을 입력해주세요" type="email" value={email} onChange={onEmailChange} />
+        </InputContainer>
+        <InputContainer className="mb-8" imgUrl={lockImg}>
+          <Input placeholder="비밀번호를 입력해주세요" type="password" value={password} onChange={onPasswordChange} />
+        </InputContainer>
         <ProfileSelector />
         <Button className="mb-4 p-2 shadow-md" size="w-full" text="로그인" />
       </form>

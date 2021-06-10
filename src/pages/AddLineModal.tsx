@@ -12,6 +12,7 @@ import { StationInterface } from 'types';
 import { AddLinePayload } from 'redux/lineSlice';
 import COLORS from 'constants/color';
 import useChangeEvent from 'hooks/useChangeEvent';
+import InputContainer from '@units/InputContainer/InputContainer';
 
 interface AddLineModalProps {
   onSubmit: ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => void;
@@ -57,13 +58,9 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
             />
           </div>
           <Title className="mb-8 text-center" text="🛤️ 노선 생성" />
-          <Input
-            className="mb-8 w-full"
-            placeholder="노선 이름을 입력해주세요"
-            title="노선 이름"
-            value={name}
-            onChange={onNameChange}
-          />
+          <InputContainer className="mb-8 w-full">
+            <Input placeholder="노선 이름을 입력해주세요" title="노선 이름" value={name} onChange={onNameChange} />
+          </InputContainer>
           <div className="flex items-center mb-8">
             <SelectInput
               className="w-full"
@@ -84,14 +81,15 @@ const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) =
             />
           </div>
           <div className="flex items-center justify-between mb-8">
-            <Input
-              className="w-10/12"
-              placeholder="거리를 입력해주세요"
-              title="거리"
-              type="number"
-              value={Number.isNaN(distance) ? '' : distance}
-              onChange={onDistanceChange}
-            />
+            <InputContainer className="w-10/12">
+              <Input
+                placeholder="거리를 입력해주세요"
+                title="거리"
+                type="number"
+                value={Number.isNaN(distance) ? '' : distance}
+                onChange={onDistanceChange}
+              />
+            </InputContainer>
             <div className={`w-1/12 h-12 rounded ring-1 ring-gray-500 ${color} ${COLORS[color]?.ringColor}`} />
           </div>
           <Palette setColor={setColor} />

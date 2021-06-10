@@ -13,6 +13,7 @@ import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import MESSAGE from 'constants/message';
 import useChangeEvent from 'hooks/useChangeEvent';
 import PATH from 'constants/path';
+import InputContainer from '@units/InputContainer/InputContainer';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -46,38 +47,23 @@ const Signup = () => {
     <Container>
       <Title className="mb-10 mt-6" text="회원가입" />
       <form onSubmit={handleSubmit}>
-        <Input
-          className="mb-4"
-          imgUrl={mailImg}
-          placeholder="이메일을 입력해주세요"
-          type="email"
-          value={email}
-          onChange={onEmailChange}
-        />
-        <Input
-          className="mb-4"
-          imgUrl={personImg}
-          placeholder="나이를 입력해주세요"
-          type="number"
-          value={age}
-          onChange={onAgeChange}
-        />
-        <Input
-          className="mb-4"
-          imgUrl={lockImg}
-          placeholder="비밀번호를 입력해주세요"
-          type="password"
-          value={password}
-          onChange={onPasswordChange}
-        />
-        <Input
-          className="mb-8"
-          imgUrl={lockImg}
-          placeholder="비밀번호를 한번 더 입력해주세요"
-          type="password"
-          value={passwordConfirmation}
-          onChange={onPasswordConfirmationChange}
-        />
+        <InputContainer className="mb-4" imgUrl={mailImg}>
+          <Input placeholder="이메일을 입력해주세요" type="email" value={email} onChange={onEmailChange} />
+        </InputContainer>
+        <InputContainer className="mb-4" imgUrl={personImg}>
+          <Input placeholder="나이를 입력해주세요" type="number" value={age} onChange={onAgeChange} />
+        </InputContainer>
+        <InputContainer className="mb-4" imgUrl={lockImg}>
+          <Input placeholder="비밀번호를 입력해주세요" type="password" value={password} onChange={onPasswordChange} />
+        </InputContainer>
+        <InputContainer className="mb-8" imgUrl={lockImg}>
+          <Input
+            placeholder="비밀번호를 한번 더 입력해주세요"
+            type="password"
+            value={passwordConfirmation}
+            onChange={onPasswordConfirmationChange}
+          />
+        </InputContainer>
         <ProfileSelector />
         <Button className="mb-4 p-2" size="w-full" text="회원가입" type="submit" />
       </form>

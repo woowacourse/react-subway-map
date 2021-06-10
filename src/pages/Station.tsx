@@ -2,6 +2,7 @@ import Button from '@shared/Button/Button';
 import Container from '@shared/Container/Container';
 import Input from '@shared/Input/Input';
 import Title from '@shared/Title/Title';
+import InputContainer from '@units/InputContainer/InputContainer';
 import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
@@ -52,14 +53,14 @@ const Station = () => {
     <Container className="mb-16">
       <Title className="mb-8" text="🚉 지하철 역 관리" />
       <form className="flex items-center mb-8" onSubmit={handleSubmit}>
-        <Input
-          className="mr-4 w-full"
-          imgUrl={subwayImg}
-          placeholder="역 이름을 입력해주세요"
-          title="역 이름을 입력해주세요"
-          value={name}
-          onChange={onNameChange}
-        />
+        <InputContainer className="mr-4 w-full" imgUrl={subwayImg}>
+          <Input
+            placeholder="역 이름을 입력해주세요"
+            title="역 이름을 입력해주세요"
+            value={name}
+            onChange={onNameChange}
+          />
+        </InputContainer>
         <Button className="shadow-md" text="추가" />
       </form>
       <hr />

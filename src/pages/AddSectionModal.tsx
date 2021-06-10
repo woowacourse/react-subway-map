@@ -10,6 +10,7 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 import { LineInterface, StationInterface } from 'types';
 import { AddSectionPayload } from 'redux/sectionSlice';
 import useChangeEvent from 'hooks/useChangeEvent';
+import InputContainer from '@units/InputContainer/InputContainer';
 
 interface AddSectionModalProps {
   onModalClose: () => void;
@@ -81,14 +82,15 @@ const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSection
               onChange={onDownStationIdChange}
             />
           </div>
-          <Input
-            className="mb-8 w-full"
-            placeholder="거리를 입력해주세요"
-            title="거리"
-            type="number"
-            value={Number.isNaN(distance) ? '' : distance}
-            onChange={onDistanceChange}
-          />
+          <InputContainer className="mb-8 w-full">
+            <Input
+              placeholder="거리를 입력해주세요"
+              title="거리"
+              type="number"
+              value={Number.isNaN(distance) ? '' : distance}
+              onChange={onDistanceChange}
+            />
+          </InputContainer>
           <div className="flex justify-end">
             <Button text="확인" />
           </div>
