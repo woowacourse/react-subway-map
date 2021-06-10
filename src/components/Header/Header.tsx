@@ -11,13 +11,7 @@ const Header = ({ children, backgroundColor, color = 'white' }: HeaderProps) => 
   const [isAppear, setIsAppear] = useState(true);
 
   useEffect(() => {
-    const onScroll = ({ deltaY }: WheelEvent) => {
-      if (deltaY < 0) {
-        setIsAppear(true);
-      } else {
-        setIsAppear(false);
-      }
-    };
+    const onScroll = ({ deltaY }: WheelEvent) => setIsAppear(deltaY < 0);
 
     document.addEventListener('wheel', onScroll);
 
