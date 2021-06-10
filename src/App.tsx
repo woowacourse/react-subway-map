@@ -18,16 +18,6 @@ import { BASE_URL, API_PROVIDER, DEFAULT_API_PROVIDER, API_LOCAL_STORAGE_KEY } f
 import useLocalStorage from "./hooks/@common/useLocalStorage";
 import axios from "axios";
 
-type Mapper<T> = (value: string) => T;
-
-const mapper: Mapper<API_PROVIDER> = (value) => {
-  if (value !== "수리" && value !== "와일더" && value !== "에드" && value !== "포모") {
-    return "수리";
-  }
-
-  return value;
-};
-
 const App = () => {
   const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
   const history = useHistory();
@@ -62,7 +52,11 @@ const App = () => {
       return;
     }
 
-    appLocalStorage.set(mapper(apiProvider));
+    if (apiProvider !== "수리" && apiProvider !== "와일더" && apiProvider !== "에드" && apiProvider !== "포모") {
+      return "수리";
+    }
+
+    appLocalStorage.set(apiProvider);
   };
 
   return (
