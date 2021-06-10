@@ -36,15 +36,16 @@ const Container = styled.div<ContainerProps>`
   color: ${({ color }) => color};
   z-index: ${Z_INDEX.HEADER};
 
-  animation: ${({ isAppear }) =>
+  ${({ isAppear }) =>
     isAppear
       ? css`
-          ${slideIn} 0.2s
+          animation: ${slideIn} 0.2s;
+          transform: translateY(0);
         `
       : css`
-          ${slideOut} 0.2s
+          animation: ${slideOut} 0.2s;
+          transform: translateY(-105%);
         `};
-  transform: ${({ isAppear }) => (isAppear ? 'translateY(0)' : 'translateY(-105%)')};
 `;
 
 const Inner = styled.div`

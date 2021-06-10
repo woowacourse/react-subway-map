@@ -6,6 +6,12 @@ import { ThemeContext } from '../../contexts/ThemeContextProvider';
 const ApiSwitch = () => {
   const themeColor = useContext(ThemeContext)?.themeColor;
 
+  const onAPIChange = (host: string) => {
+    localStorage.setItem('hostName', host);
+    localStorage.setItem('accessToken', '');
+    location.reload();
+  };
+
   return (
     <Container themeColor={themeColor}>
       <h5>API 서버 변경</h5>
@@ -14,11 +20,7 @@ const ApiSwitch = () => {
           <input
             type="radio"
             name="api-host"
-            onChange={() => {
-              localStorage.setItem('hostName', host);
-              localStorage.setItem('accessToken', '');
-              location.reload();
-            }}
+            onChange={() => onAPIChange(host)}
             value={host}
             checked={API_HOST === host}
           />

@@ -12,12 +12,5 @@ const Template: Story = (args) => <NavBar {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  children: (
-    <>
-      <a href="#">역</a>
-      <a href="#">노선</a>
-      <a href="#">구간</a>
-      <a href="#">전체</a>
-    </>
-  ),
+  children: ['역', '노선', '구간', '전체'].map((item) => <a href="#">{item}</a>),
 };
