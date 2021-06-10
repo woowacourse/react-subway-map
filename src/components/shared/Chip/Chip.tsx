@@ -25,13 +25,10 @@ const chipSize = {
 };
 
 const Chip = styled.span<ChipProps>`
-  ${({ size }) => chipSize[size]}
-  color: ${PALETTE.GRAY_600};
-
-  border: 2px solid
-    ${({ backgroundColor }) => (backgroundColor ? PALETTE[backgroundColor] : PALETTE.GRAY_200)};
-
   background-color: ${PALETTE.WHITE};
+  color: ${PALETTE.GRAY_600};
+  border: 2px solid ${({ borderColor }) => PALETTE[borderColor ?? 'GRAY_200']};
+  ${({ size }) => chipSize[size]}
 `;
 
 export default Chip;

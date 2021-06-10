@@ -14,7 +14,7 @@ const Container = styled.div<ContainerProps>`
   grid-template-rows: repeat(1, 1fr);
   grid-row-gap: 1rem;
   background-color: ${PALETTE.WHITE};
-  border: 3px solid ${({ themeColor }) => (themeColor ? themeColor : PALETTE.BAEMIN)};
+  border: 3px solid ${({ themeColor }) => themeColor ?? PALETTE.BAEMIN};
   border-radius: 0.5rem;
   padding: 1rem;
   font-size: 0.8rem;
@@ -25,7 +25,7 @@ const Container = styled.div<ContainerProps>`
     font-size: 1rem;
     font-weight: 700;
     text-shadow: 1px 1px 0px 1px ${PALETTE.GRAY_700};
-    color: ${({ themeColor }) => (themeColor ? themeColor : PALETTE.BAEMIN)};
+    color: ${({ themeColor }) => themeColor ?? PALETTE.BAEMIN};
   }
 
   input {
@@ -52,7 +52,7 @@ const Container = styled.div<ContainerProps>`
       left: 0.15rem;
       bottom: 0.15rem;
       content: '✔︎';
-      color: ${({ themeColor }) => (themeColor ? themeColor : PALETTE.BAEMIN)};
+      color: ${({ themeColor }) => themeColor ?? PALETTE.BAEMIN};
     }
   }
 

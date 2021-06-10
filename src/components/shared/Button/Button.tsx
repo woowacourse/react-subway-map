@@ -23,14 +23,22 @@ const buttonSize = {
 };
 
 const Button = styled.button<ButtonProps>`
+  transition: transform 0.2s ease;
   background-color: ${({ backgroundColor }) => backgroundColor ?? PALETTE.WHITE};
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.3);
   border-radius: 0.4rem;
-  ${({ size }) => buttonSize[size] ?? ''}
   color: ${({ color }) => color ?? 'black'};
-  ${({ width }) => (width ? `width: ${width};` : '')}
-  ${({ height }) => (height ? `height: ${height};` : '')}
-  transition: transform 0.2s ease;
+  ${({ size }) => buttonSize[size] ?? ''}
+  ${({ width }) =>
+    width &&
+    css`
+      width: ${width};
+    `}
+  ${({ height }) =>
+    height &&
+    css`
+      height: ${height};
+    `}
 
   :hover:enabled {
     transform: scaleX(1.01) scaleY(1.05);

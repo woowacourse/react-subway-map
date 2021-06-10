@@ -171,7 +171,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
                 <p>
                   {name}
                   {lines?.map(({ id, name, color }) => (
-                    <Chip key={id} size="s" backgroundColor={color}>
+                    <Chip key={id} size="s" borderColor={color}>
                       {name}
                     </Chip>
                   ))}
