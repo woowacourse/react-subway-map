@@ -3,6 +3,11 @@
 # custom
 launch.json
 
+# cypress
+cypress/videos
+cypress/screenshots
+.nyc_output
+
 # build
 .firebaserc
 .firebase
