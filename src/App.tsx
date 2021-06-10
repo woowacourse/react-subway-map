@@ -18,6 +18,52 @@ import { SUCCESS_MESSAGE } from './constants/messages';
 
 import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
 
+const RouterConfig = [
+  {
+    path: PATH.LOGIN,
+    Component: LoginPage,
+  },
+  {
+    path: PATH.SIGNUP,
+    Component: SignupPage,
+  },
+  {
+    path: [PATH.STATIONS, PATH.ROOT],
+    Component: StationPage,
+  },
+  {
+    path: PATH.LINES,
+    Component: LinePage,
+  },
+  {
+    path: PATH.SECTIONS,
+    Component: SectionPage,
+  },
+  {
+    path: PATH.MAP,
+    Component: MapPage,
+  },
+];
+
+const NavConfig = [
+  {
+    path: PATH.STATIONS,
+    text: '역관리',
+  },
+  {
+    path: PATH.LINES,
+    text: '노선관리',
+  },
+  {
+    path: PATH.SECTIONS,
+    text: '구간관리',
+  },
+  {
+    path: PATH.STATIONS,
+    text: '전체보기',
+  },
+];
+
 const App = () => {
   const history = useHistory();
 
@@ -25,7 +71,7 @@ const App = () => {
   const userContext = useContext(UserContext);
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onLogout = async () => {
     await userContext?.setIsLoggedIn(false);
@@ -41,18 +87,11 @@ const App = () => {
           <TextLogo height="2rem" />
         </Link>
         <NavBar>
-          <NavLink to={PATH.STATIONS}>역관리</NavLink>
-          <NavLink to={PATH.LINES}>노선관리</NavLink>
-          <NavLink to={PATH.SECTIONS}>구간관리</NavLink>
-          <NavLink to={PATH.MAP}>전체보기</NavLink>
+          {NavConfig.map(({ path, text }) => (
+            <NavLink to={path}>{text}</NavLink>
+          ))}
           {userContext?.isLoggedIn ? (
-            <button
-              onClick={() => {
-                onLogout();
-              }}
-            >
-              로그아웃
-            </button>
+            <button onClick={onLogout}>로그아웃</button>
           ) : (
             <>
               <NavLink to={PATH.LOGIN}>로그인</NavLink>
@@ -63,24 +102,9 @@ const App = () => {
       </Header>
       <Main>
         <Switch>
-          <Route exact path={PATH.LOGIN} render={() => <LoginPage setIsLoading={setIsLoading} />} />
-          <Route
-            exact
-            path={PATH.SIGNUP}
-            render={() => <SignupPage setIsLoading={setIsLoading} />}
-          />
-          <Route
-            exact
-            path={[PATH.STATIONS, PATH.ROOT]}
-            render={() => <StationPage setIsLoading={setIsLoading} />}
-          />
-          <Route exact path={PATH.LINES} render={() => <LinePage setIsLoading={setIsLoading} />} />
-          <Route
-            exact
-            path={PATH.SECTIONS}
-            render={() => <SectionPage setIsLoading={setIsLoading} />}
-          />
-          <Route exact path={PATH.MAP} render={() => <MapPage setIsLoading={setIsLoading} />} />
+          {RouterConfig.map(({ path, Component }) => (
+            <Route exact path={path} render={() => <Component setIsLoading={setIsLoading} />} />
+          ))}
           <Redirect to={PATH.ROOT} />
         </Switch>
       </Main>
