@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Switch, Route, Link, Redirect, RouteProps } from "react-router-dom";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
 
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SingupPage";
@@ -12,8 +12,6 @@ import Button from "./components/Button/Button";
 import { Navigation } from "./App.styles";
 import { PAGE_PATH, privateNavigationLinks, publicNavigationLinks } from "./constants/route";
 import useAuth from "./hooks/useAuth";
-import useStation from "./hooks/useStation";
-import useLine from "./hooks/useLine";
 import { Flex } from "./components/@shared/FlexContainer/FlexContainer";
 import Select from "./components/Select/Select";
 import { BASE_URL, API_PROVIDER, DEFAULT_API_PROVIDER, API_LOCAL_STORAGE_KEY } from "./apis";
@@ -22,7 +20,7 @@ import axios from "axios";
 
 const App = () => {
   const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
-
+  const history = useHistory();
   const { isAuthenticated, checkAccessToken, logout } = useAuth();
 
   useEffect(() => {

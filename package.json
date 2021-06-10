@@ -13,13 +13,18 @@
     }
   ],
   "dependencies": {
+    "@cypress/code-coverage": "^3.9.6",
+    "@cypress/instrument-cra": "^1.4.0",
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
+    "cypress": "^7.5.0",
+    "randomstring": "^1.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "start-server-and-test": "^1.12.5",
     "styled-components": "^5.3.0",
     "styled-normalize": "^8.0.7"
   },
@@ -66,12 +71,14 @@
     "@storybook/node-logger": "^6.2.9",
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
+    "@testing-library/cypress": "^7.0.6",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
     "@types/jest": "^26.0.23",
     "@types/moxios": "^0.4.11",
     "@types/node": "^12.0.0",
+    "@types/randomstring": "^1.1.6",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.16",
@@ -79,6 +86,7 @@
     "@types/redux-mock-store": "^1.0.2",
     "@types/styled-components": "^5.1.9",
     "moxios": "^0.4.0",
+    "msw": "^0.29.0",
     "redux-mock-store": "^1.5.4",
     "typescript": "~4.1.5"
   }

@@ -1,5 +1,5 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { TEST_ID } from "../../@test/testId";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
@@ -32,7 +32,7 @@ const SignupPage = () => {
     }
   });
 
-  const { signup, error } = useAuth();
+  const { signup, isAuthenticated } = useAuth();
 
   const history = useHistory();
 
@@ -45,15 +45,19 @@ const SignupPage = () => {
     }
 
     try {
-      await signup({ email, age: Number(age), password });
-      history.push(PAGE_PATH.HOME);
+      await signup({ email, age, password, passwordConfirm });
+      history.push(PAGE_PATH.LOGIN);
     } catch (error) {
       alert(error.message);
     }
   };
 
+  if (isAuthenticated) {
+    return <Redirect to={PAGE_PATH.STATION_MANAGEMENT} />;
+  }
+
   return (
-    <FlexCenter>
+    <FlexCenter data-testid={TEST_ID.SIGNUP_PAGE}>
       <form onSubmit={onSignup}>
         <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
           <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>

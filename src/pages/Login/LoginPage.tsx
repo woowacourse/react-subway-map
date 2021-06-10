@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import { Flex, FlexBetween, FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import Block from "../../components/Block/Block";
@@ -20,7 +20,7 @@ const LoginPage = () => {
     validatePassword
   );
 
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const history = useHistory();
 
   const onLogin: React.FormEventHandler<HTMLFormElement> = async (event) => {
@@ -42,6 +42,10 @@ const LoginPage = () => {
   const onMoveToSignupPage = () => {
     history.push(PAGE_PATH.SIGN_UP);
   };
+
+  if (isAuthenticated) {
+    return <Redirect to={PAGE_PATH.STATION_MANAGEMENT} />;
+  }
 
   return (
     <FlexCenter data-testid={TEST_ID.LOGIN_PAGE}>
