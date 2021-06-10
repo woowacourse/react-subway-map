@@ -47,16 +47,6 @@ const App = () => {
 
   const apiProviderName = appLocalStorage.item;
 
-  type Mapper<T> = (value: string) => T;
-
-  const mapper: Mapper<API_PROVIDER> = (value) => {
-    if (value !== "수리" && value !== "와일더" && value !== "에드" && value !== "포모") {
-      return "수리";
-    }
-
-    return value;
-  };
-
   const onApiProviderChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const apiProvider = event.currentTarget.value;
 
@@ -64,7 +54,11 @@ const App = () => {
       return;
     }
 
-    appLocalStorage.set(mapper(apiProvider));
+    if (apiProvider !== "수리" && apiProvider !== "와일더" && apiProvider !== "에드" && apiProvider !== "포모") {
+      return "수리";
+    }
+
+    appLocalStorage.set(apiProvider);
   };
 
   return (
