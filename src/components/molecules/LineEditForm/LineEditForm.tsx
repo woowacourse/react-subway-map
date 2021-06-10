@@ -3,7 +3,7 @@ import { Container, Wrapper } from './LineEditForm.styles';
 import { Button, Input, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
 import { IStationRes } from '../../../type.d';
-import { LineColor } from '../../../constants';
+import { COLOR } from '../../../constants';
 
 export interface LineAddFormProps {
   stations: IStationRes[];
@@ -73,7 +73,7 @@ const LineEditForm = ({
         </>
       )}
 
-      <ColorSelector colorList={Object.values(LineColor)} setColor={setColor} />
+      <ColorSelector colorList={Object.values(COLOR.LineColor)} setColor={setColor} />
       <Button>확인</Button>
     </Container>
   );

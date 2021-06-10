@@ -1,4 +1,4 @@
-enum LineColor {
+export enum LineColor {
   COLOR_1 = '#AC3686',
   COLOR_2 = '#DC2626',
   COLOR_3 = '#DB2777',
@@ -11,4 +11,8 @@ enum LineColor {
   COLOR_10 = '#7B341E',
 }
 
-export default LineColor
+export enum ButtonColor {
+  DEFAULT = '#4ecfe0',
+  EDIT = '#f1f5f9',
+  MENU = '#ffffff',
+}

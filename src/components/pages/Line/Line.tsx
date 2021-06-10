@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { BASE_URL, LineColor, RESPONSE_MESSAGE } from '../../../constants';
+import { BASE_URL, COLOR, RESPONSE_MESSAGE } from '../../../constants';
 import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
 import { ILineReq, ILineRes, IStationRes, ModeType } from '../../../type';
-import { isValidUpDownStation } from '../../../utils';
+import { isValidLineName, isValidUpDownStation } from '../../../utils';
 import { Button, Header } from '../../atoms';
 import { LineEditForm, Modal } from '../../molecules';
 import { LineItemWithCircle, ListItemContainer } from './Line.styles';
-
-const isValidLineName = (lineName: string) => {
-  return /^[가-힣0-9]{2,10}$/.test(lineName);
-};
 
 const Line = () => {
   const {
@@ -43,7 +39,7 @@ const Line = () => {
   const { isModalOpen, open: openModal, onClickClose, close: closeModal } = useModal(false);
 
   const [mode, setMode] = useState<ModeType>('ADD');
-  const [color, setColor] = useState<string>(LineColor.COLOR_1);
+  const [color, setColor] = useState<string>(COLOR.LineColor.COLOR_1);
   const [selectedLineId, setSelectedLineId] = useState<number>();
 
   const { value: lineName, onChange: onChangeLineName, setValue: setLineName } = useChangeEvent('');

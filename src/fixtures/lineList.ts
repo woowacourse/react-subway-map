@@ -1,11 +1,11 @@
-import { LineColor } from '../constants';
+import { COLOR } from '../constants';
 import { ILineRes } from '../type';
 
 const lineList: ILineRes[] = [
   {
     id: 1,
     name: '신분당선',
-    color: LineColor.COLOR_1,
+    color: COLOR.LineColor.COLOR_1,
     extraFare: 100,
     stations: [
       {
@@ -39,7 +39,7 @@ const lineList: ILineRes[] = [
   {
     id: 2,
     name: '도비노선',
-    color: LineColor.COLOR_1,
+    color: COLOR.LineColor.COLOR_1,
     extraFare: 100,
     stations: [
       {
@@ -68,7 +68,7 @@ const lineList: ILineRes[] = [
   {
     id: 3,
     name: '삭제테스트노선',
-    color: LineColor.COLOR_1,
+    color: COLOR.LineColor.COLOR_1,
     extraFare: 100,
     stations: [
       {

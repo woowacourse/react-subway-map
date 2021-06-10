@@ -1,17 +1,18 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { COLOR } from '../../../constants';
 import { ButtonTheme } from './Button';
 
 const buttonThemeTable = {
   default: css`
-    background-color: #4ecfe0;
+    background-color: ${COLOR.ButtonColor.DEFAULT};
     border-radius: 30px;
   `,
   edit: css`
-    background-color: #f1f5f9;
+    background-color: ${COLOR.ButtonColor.EDIT};
   `,
   menu: css`
-    background-color: #ffffff;
+    background-color: ${COLOR.ButtonColor.MENU};
   `,
 };
 

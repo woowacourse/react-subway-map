@@ -28,3 +28,7 @@ export const isValidStationName = (stationName: string) => /^[가-힣0-9]{2,20}$
 
 export const isValidUpDownStation = (upStationId: string, downStationId: string) =>
   upStationId.length > 0 && downStationId.length > 0;
+
+export const isValidLineName = (lineName: string) => {
+  return /^[가-힣0-9]{2,10}$/.test(lineName);
+};
