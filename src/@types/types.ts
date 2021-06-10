@@ -47,8 +47,9 @@ export interface LoginInfo {
 
 export interface SignupInfo {
   email: string;
+  age: string;
   password: string;
-  age: number;
+  passwordConfirm: string;
 }
 
 export interface AuthState {

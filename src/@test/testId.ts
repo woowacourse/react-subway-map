@@ -5,6 +5,8 @@ export enum TEST_ID {
   SIGNUP_BUTTON = "signup-button",
   MOVE_TO_SIGN_UP_BUTTON = "move-to-signup-button",
   STATION_PAGE = "station-page",
+  STATION_NAME_INPUT = "station-name-input",
+  STATION_ADD_BUTTON = "station-add-button",
   LINE_PAGE = "line-page",
   LINE_ADD_BUTTON = "line-add-button",
   LINE_NAME_INPUT = "line-name-add-button",

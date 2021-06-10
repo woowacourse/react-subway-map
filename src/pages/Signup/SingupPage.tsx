@@ -45,8 +45,8 @@ const SignupPage = () => {
     }
 
     try {
-      await signup({ email, age: Number(age), password });
-      history.push(PAGE_PATH.HOME);
+      await signup({ email, age, password, passwordConfirm });
+      history.push(PAGE_PATH.LOGIN);
     } catch (error) {
       alert(error.message);
     }
@@ -57,7 +57,7 @@ const SignupPage = () => {
   }
 
   return (
-    <FlexCenter>
+    <FlexCenter data-testid={TEST_ID.SIGNUP_PAGE}>
       <form onSubmit={onSignup}>
         <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
           <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>

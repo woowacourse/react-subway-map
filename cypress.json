@@ -4,5 +4,8 @@
   "fixturesFolder": "src/cypress/fixtures",
   "supportFile": "src/cypress/support/index.js",
   "pluginsFile": "src/cypress/plugins/index.js",
-  "experimentalStudio": true
+  "experimentalStudio": true,
+  "video": true,
+  "viewportWidth": 800,
+  "viewportHeight": 700
 }

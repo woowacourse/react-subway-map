@@ -19,7 +19,7 @@ export const requestAuth = {
     return accessToken;
   },
 
-  signup: async (email: string, password: string, age: number) => {
+  signup: async (email: string, password: string, age: string) => {
     const response = await axios.post("/members", { email, password, age });
 
     return response;
