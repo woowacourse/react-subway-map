@@ -9,11 +9,12 @@ import SignUp from './pages/SignUp/SignUp';
 import Station from './pages/Station/Station';
 import Line from './pages/Line/Line';
 import Section from './pages/Section/Section';
+import Home from './pages/Home/Home';
+import Map from './pages/Map/Map';
 
 import { useSelector } from 'react-redux';
 import { RootState } from './modules';
 import { useEffect } from 'react';
-import Home from './pages/Home/Home';
 
 const App = () => {
   const { accessToken } = useSelector((state: RootState) => state.user);
@@ -38,6 +39,7 @@ const App = () => {
           <Route exact path={ROUTE.STATION} component={Station} />
           <Route exact path={ROUTE.LINE} component={Line} />
           <Route exact path={ROUTE.SECTION} component={Section} />
+          <Route exact path={ROUTE.MAP} component={Map} />
         </Switch>
       </S.Container>
     </S.App>

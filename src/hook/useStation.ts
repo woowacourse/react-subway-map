@@ -14,7 +14,7 @@ const useStation = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (stations.length !== 0 || !accessToken) return;
+    if (stations.length !== 0) return;
     dispatch(getStationsAsync());
   }, [dispatch, stations.length, accessToken]);
 

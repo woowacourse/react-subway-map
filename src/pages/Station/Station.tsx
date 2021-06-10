@@ -1,18 +1,15 @@
 import { useEffect } from 'react';
-import { Redirect } from 'react-router';
 
 import ContentContainer from '../../components/@commons/ContentContainer/ContentContainer';
 import AddStationForm from '../../components/StationPage/AddStationForm/AddStationForm';
 import StationListItem from '../../components/StationPage/StationListItem/StationListItem';
-import { ROUTE } from '../../constants/api';
+
 import useStation from '../../hook/useStation';
-import useUser from '../../hook/useUser';
 
 import * as S from './Station.styles';
 
 const Station = () => {
   const { stations, error, resetError } = useStation();
-  const { accessToken } = useUser();
 
   useEffect(() => {
     if (error) {
@@ -21,9 +18,9 @@ const Station = () => {
     }
   }, [error, resetError]);
 
-  if (!accessToken) {
-    return <Redirect to={ROUTE.SIGN_IN} />;
-  }
+  // if (!accessToken) {
+  //   return <Redirect to={ROUTE.SIGN_IN} />;
+  // }
 
   return (
     <S.Container>

@@ -1,4 +1,4 @@
-export interface HTTPResponse<T> {
+export interface HTTPResponse<T = any> {
   success: boolean;
   data: T;
   message: string;
