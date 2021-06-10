@@ -21,7 +21,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${PALETTE.WHITE};
+  background-color: ${PALETTE.WHITE_100};
 
   :before {
     content: '';

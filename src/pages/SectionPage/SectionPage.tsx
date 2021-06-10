@@ -52,7 +52,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const [selectedLineId, setSelectedLineId] = useState<number>(NO_SELECTED_LINE);
   const currentLine = lines.find((line) => line.id === selectedLineId);
 
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
   const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
@@ -225,7 +225,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Container>
-      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
+      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
         <Heading1>지하철 구간 관리</Heading1>
         {isLoggedIn ? (
           <>
@@ -234,7 +234,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
               type="button"
               size="m"
               backgroundColor={themeColor}
-              color={PALETTE.WHITE}
+              color={PALETTE.WHITE_100}
               onClick={() => setFormOpen(!formOpen)}
               aria-label="구간 추가"
             >
@@ -258,7 +258,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           </Select>
         </InputContainer>
       </TitleBox>
-      <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
+      <FormBox backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
         <Form onSubmit={onSectionSubmit}>
           <StationSelects>
             <div>
@@ -302,12 +302,12 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           >
             <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>
-          <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>
+          <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE_100}>
             추가
           </Button>
         </Form>
       </FormBox>
-      <Box backgroundColor={PALETTE.WHITE}>
+      <Box backgroundColor={PALETTE.WHITE_100}>
         {!currentLine ? (
           <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
         ) : (
@@ -322,8 +322,8 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
                     <Button
                       type="button"
                       size="s"
-                      backgroundColor={PALETTE.PINK}
-                      color={PALETTE.WHITE}
+                      backgroundColor={PALETTE.PINK_100}
+                      color={PALETTE.WHITE_100}
                       onClick={() => onSectionDelete(id, name)}
                       aria-label={`${name} 삭제`}
                     >

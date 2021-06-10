@@ -16,8 +16,8 @@ const Container = styled.div<ContainerProps>`
   padding: 2rem;
 
   ${({ hatColor }) =>
-    hatColor
-      ? `
+    hatColor &&
+    `
     :before {
       content: '';
       display: block;
@@ -30,8 +30,7 @@ const Container = styled.div<ContainerProps>`
       border-top-left-radius: 0.25rem;
       border-top-right-radius: 0.25rem;
     }
-  `
-      : ''}
+  `}
 `;
 
 export { Container };

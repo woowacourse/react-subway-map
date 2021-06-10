@@ -31,7 +31,7 @@ const DEBOUNCE_DELAY = 500;
 
 const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
   const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
@@ -136,7 +136,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
   };
 
   return (
-    <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
+    <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE_100}>
       <Heading1 marginBottom="2rem">회원가입</Heading1>
       <Form onSubmit={onSignup}>
         <InputContainer
@@ -205,7 +205,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
           size="m"
           width="100%"
           backgroundColor={themeColor}
-          color={PALETTE.WHITE}
+          color={PALETTE.WHITE_100}
           disabled={!isFormCompleted}
         >
           회원가입

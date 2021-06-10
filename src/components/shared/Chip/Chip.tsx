@@ -31,7 +31,7 @@ const Chip = styled.span<ChipProps>`
   border: 2px solid
     ${({ backgroundColor }) => (backgroundColor ? PALETTE[backgroundColor] : PALETTE.GRAY_200)};
 
-  background-color: ${PALETTE.WHITE};
+  background-color: ${PALETTE.WHITE_100};
 `;
 
 export default Chip;

@@ -33,7 +33,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
 
   const history = useHistory();
 
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
   const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
@@ -81,7 +81,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
   };
 
   return (
-    <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
+    <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE_100}>
       <Heading1 marginBottom="2rem">로그인</Heading1>
       <Form onSubmit={onLogin}>
         <InputContainer>
@@ -110,7 +110,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
           />
         </InputContainer>
         <ErrorText textAlign="center">{error}</ErrorText>
-        <Button size="m" width="100%" backgroundColor={themeColor} color={PALETTE.WHITE}>
+        <Button size="m" width="100%" backgroundColor={themeColor} color={PALETTE.WHITE_100}>
           로그인
         </Button>
         <SignUpLink to={PATH.SIGNUP}>아직 회원이 아니신가요?</SignUpLink>

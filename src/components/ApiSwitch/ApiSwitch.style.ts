@@ -11,8 +11,8 @@ const Container = styled.div<ContainerProps>`
   display: grid;
   grid-template-rows: repeat(1, 1fr);
   grid-row-gap: 1rem;
-  background-color: ${PALETTE.WHITE};
-  border: 3px solid ${({ themeColor }) => (themeColor ? themeColor : PALETTE.BAEMIN)};
+  background-color: ${PALETTE.WHITE_100};
+  border: 3px solid ${({ themeColor }) => themeColor ?? PALETTE.MINT_100};
   border-radius: 0.5rem;
   padding: 1rem;
   font-size: 0.8rem;
@@ -22,8 +22,8 @@ const Container = styled.div<ContainerProps>`
   h5 {
     font-size: 1rem;
     font-weight: 700;
-    text-shadow: 1px 1px 0px 1px ${PALETTE.GRAY_700};
-    color: ${({ themeColor }) => (themeColor ? themeColor : PALETTE.BAEMIN)};
+    text-shadow: 1px 1px 0 1px ${PALETTE.GRAY_700};
+    color: ${({ themeColor }) => themeColor ?? PALETTE.MINT_100};
   }
 
   input {
@@ -50,7 +50,7 @@ const Container = styled.div<ContainerProps>`
       left: 0.15rem;
       bottom: 0.15rem;
       content: '✔︎';
-      color: ${({ themeColor }) => (themeColor ? themeColor : PALETTE.BAEMIN)};
+      color: ${({ themeColor }) => themeColor ?? PALETTE.MINT_100};
     }
   }
 

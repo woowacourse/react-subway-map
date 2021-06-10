@@ -79,7 +79,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     }));
   }, [lines]);
 
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
   const addSnackBar = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
@@ -225,7 +225,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Container>
-      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
+      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
         <Heading1>지하철 노선 관리</Heading1>
         {isLoggedIn ? (
           <>
@@ -234,7 +234,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
               type="button"
               size="m"
               backgroundColor={themeColor}
-              color={PALETTE.WHITE}
+              color={PALETTE.WHITE_100}
               onClick={() => setFormOpen(!formOpen)}
               aria-label="노선 추가"
             >
@@ -245,7 +245,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
       </TitleBox>
-      <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
+      <FormBox backgroundColor={PALETTE.WHITE_100} isOpen={formOpen}>
         <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식" ref={formElement}>
           <InputContainer
             labelText="노선 이름"
@@ -306,12 +306,12 @@ const LinePage = ({ setIsLoading }: PageProps) => {
           <InputContainer labelText="색상을 선택하세요 (이미 등록된 색상은 선택할 수 없습니다.)">
             <Palette inputName={'color'} colors={colors} />
           </InputContainer>
-          <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>
+          <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE_100}>
             추가
           </Button>
         </Form>
       </FormBox>
-      <Box backgroundColor={PALETTE.WHITE}>
+      <Box backgroundColor={PALETTE.WHITE_100}>
         {lines.length === 0 ? (
           <img src={noLine} alt="지하철 노선 없음 이미지" />
         ) : (
@@ -324,8 +324,8 @@ const LinePage = ({ setIsLoading }: PageProps) => {
                   <Button
                     type="button"
                     size="s"
-                    backgroundColor={PALETTE.PINK}
-                    color={PALETTE.WHITE}
+                    backgroundColor={PALETTE.PINK_100}
+                    color={PALETTE.WHITE_100}
                     onClick={() => onLineDelete(id, name)}
                     aria-label={`${name} 삭제`}
                   >

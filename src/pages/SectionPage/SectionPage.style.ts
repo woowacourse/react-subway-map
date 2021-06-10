@@ -67,7 +67,7 @@ const Distance = styled.span`
   font-size: 0.7rem;
   color: ${PALETTE.GRAY_400};
   height: 1rem;
-  background-color: ${PALETTE.WHITE};
+  background-color: ${PALETTE.WHITE_100};
   padding: 0 0.25rem;
 `;
 

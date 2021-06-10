@@ -15,8 +15,8 @@ const Container = styled.div`
     padding: 0;
     margin: 0;
 
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     border-top: 0.4rem solid ${PALETTE.GRAY_500};
     border-bottom: 0.4rem solid transparent;
     border-left: 0.3rem solid transparent;

@@ -69,7 +69,7 @@ const App = () => {
 
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const userContext = useContext(UserContext);
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,7 +82,7 @@ const App = () => {
 
   return (
     <>
-      <Header backgroundColor={themeColor} color={PALETTE.WHITE}>
+      <Header backgroundColor={themeColor} color={PALETTE.WHITE_100}>
         <Link to={PATH.ROOT}>
           <TextLogo height="2rem" />
         </Link>

@@ -16,43 +16,43 @@ Default.args = {
   inputName: 'color',
   colors: [
     {
-      name: PALETTE.PINK,
+      name: PALETTE.PINK_100,
       disabled: false,
     },
     {
-      name: PALETTE.RED,
+      name: PALETTE.RED_100,
       disabled: false,
     },
     {
-      name: PALETTE.ORANGE,
+      name: PALETTE.ORANGE_100,
       disabled: true,
     },
     {
-      name: PALETTE.YELLOW,
+      name: PALETTE.YELLOW_100,
       disabled: true,
     },
     {
-      name: PALETTE.MALCHA,
+      name: PALETTE.MALCHA_100,
       disabled: false,
     },
     {
-      name: PALETTE.GREEN,
+      name: PALETTE.GREEN_100,
       disabled: false,
     },
     {
-      name: PALETTE.SKYBLUE,
+      name: PALETTE.SKYBLUE_100,
       disabled: false,
     },
     {
-      name: PALETTE.BLUE,
+      name: PALETTE.BLUE_100,
       disabled: false,
     },
     {
-      name: PALETTE.VIOLET,
+      name: PALETTE.VIOLET_100,
       disabled: false,
     },
     {
-      name: PALETTE.PURPLE,
+      name: PALETTE.PURPLE_100,
       disabled: false,
     },
   ],

@@ -25,11 +25,11 @@ const buttonSize = {
 };
 
 const RoundButton = styled.button<ButtonProps>`
-  background-color: ${({ backgroundColor }) => backgroundColor ?? PALETTE.WHITE};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? PALETTE.WHITE_100};
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   ${({ size }) => buttonSize[size] ?? ''}
-  color: ${({ color }) => color ?? 'black'};
+  color: ${({ color }) => color ?? PALETTE.BLACK_900};
   transition: transform 0.2s ease;
 
   :hover:enabled,

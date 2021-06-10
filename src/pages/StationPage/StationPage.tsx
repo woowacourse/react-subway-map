@@ -32,7 +32,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
-  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
+  const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
   const addSnackBar = useContext(SnackBarContext)?.addMessage;
 
   const fetchData = async () => {
@@ -149,7 +149,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
 
   return (
     <Container>
-      <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
+      <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE_100}>
         <Heading1>지하철 역 관리</Heading1>
         {isLoggedIn ? (
           <Form onSubmit={onStationNameSubmit}>
@@ -172,7 +172,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
               width="6rem"
               height="2.8rem"
               backgroundColor={themeColor}
-              color={PALETTE.WHITE}
+              color={PALETTE.WHITE_100}
             >
               추가
             </Button>
@@ -181,7 +181,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
           <Text>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</Text>
         )}
       </Box>
-      <Box backgroundColor={PALETTE.WHITE}>
+      <Box backgroundColor={PALETTE.WHITE_100}>
         {stations.length === 0 ? (
           <img src={noStation} alt="지하철 역 없음 이미지" />
         ) : (
@@ -200,8 +200,8 @@ const StationPage = ({ setIsLoading }: PageProps) => {
                   <Button
                     type="button"
                     size="s"
-                    backgroundColor={PALETTE.PINK}
-                    color={PALETTE.WHITE}
+                    backgroundColor={PALETTE.PINK_100}
+                    color={PALETTE.WHITE_100}
                     aria-label={`${name} 삭제`}
                     onClick={() => onStationDelete(id, name)}
                   >

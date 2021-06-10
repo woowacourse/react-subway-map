@@ -35,7 +35,7 @@ const Label = styled.label`
   left: 0.5rem;
   top: 0;
   transform: translateY(-50%);
-  background-color: ${PALETTE.WHITE};
+  background-color: ${PALETTE.WHITE_100};
 `;
 
 const StatusText = styled.div`

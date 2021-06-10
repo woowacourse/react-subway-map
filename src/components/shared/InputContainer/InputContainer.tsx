@@ -12,7 +12,8 @@ interface InputContainerProps {
   children: ReactNode;
 }
 
-const getValidationColor = (isValid: boolean) => (isValid ? PALETTE.NAVER : PALETTE.RED);
+const getValidationColor = (isValid: boolean) =>
+  isValid ? PALETTE.YELLOW_GREEN_100 : PALETTE.RED_100;
 
 const InputContainer = ({ labelText, validation, children }: InputContainerProps) => (
   <Container>

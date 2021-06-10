@@ -28,7 +28,7 @@ interface ContainerProps extends Properties {
 const Container = styled.div<ContainerProps>`
   width: 100%;
   height: 3.75rem;
-  background-color: ${({ backgroundColor }) => backgroundColor || 'transparent'};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
