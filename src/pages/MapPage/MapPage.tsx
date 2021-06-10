@@ -8,17 +8,8 @@ import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
 import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
 import { PageProps } from '../types';
 
-import {
-  Container,
-  MapBox,
-  SubwayMap,
-  LineContainer,
-  StationList,
-  StationRail,
-  StationMarker,
-  StationName,
-  IncludedLines,
-} from './MapPage.style';
+import { Container, MapBox, SubwayMap, LineContainer, StationList } from './MapPage.style';
+import StationItem from './StationItem';
 
 const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
 const LINE_BEFORE_FETCH: APIReturnTypeLine[] = [];
@@ -73,30 +64,11 @@ const MapPage = ({ setIsLoading }: PageProps) => {
                   )?.lines;
 
                   return (
-                    <li key={targetStation.id}>
-                      <StationRail lineColor={line.color}></StationRail>
-                      <StationMarker
-                        lineColor={line.color}
-                        includedLines={includedLines}
-                      ></StationMarker>
-                      <StationName>
-                        {targetStation.name}
-                        <IncludedLines>
-                          {includedLines?.map(
-                            (includedLine) =>
-                              includedLine.name !== line.name && (
-                                <Chip
-                                  size="xs"
-                                  backgroundColor={includedLine.color}
-                                  key={includedLine.id}
-                                >
-                                  {includedLine.name}
-                                </Chip>
-                              )
-                          )}
-                        </IncludedLines>
-                      </StationName>
-                    </li>
+                    <StationItem
+                      targetStation={targetStation}
+                      line={line}
+                      includedLines={includedLines}
+                    />
                   );
                 })}
               </StationList>
