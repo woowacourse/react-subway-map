@@ -28,7 +28,6 @@ const SelectBody = styled.select`
   width: 100%;
   line-height: 1.5;
   background-color: transparent;
-  z-index: 2;
 
   -webkit-appearance: none;
 `;

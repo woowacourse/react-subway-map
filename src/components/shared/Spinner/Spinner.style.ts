@@ -1,6 +1,8 @@
 import styled, { css, keyframes } from 'styled-components';
 import { Properties } from 'csstype';
+
 import PALETTE from '../../../constants/palette';
+import Z_INDEX from '../../../constants/zIndex';
 
 const spin = keyframes`
   from {
@@ -16,7 +18,7 @@ const Container = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 20;
+  z-index: ${Z_INDEX.MIDDLE};
 
   display: flex;
   justify-content: center;
@@ -30,7 +32,7 @@ const Container = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 19;
+    z-index: ${Z_INDEX.MIDDLE - 1};
 
     background-color: rgba(0, 0, 0, 0.4);
   }
@@ -41,7 +43,7 @@ const Loader = styled.div<Properties>`
   height: 5rem;
   background-color: transparent;
   border-radius: 50%;
-  z-index: 21;
+  z-index: ${Z_INDEX.MIDDLE + 1};
 
   border: 0.75rem solid ${({ borderColor }) => borderColor};
   border-bottom: 0.75rem solid transparent;
