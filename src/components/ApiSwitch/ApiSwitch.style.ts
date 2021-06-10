@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PALETTE from '../../constants/palette';
+import Z_INDEX from '../../constants/zIndex';
 interface ContainerProps {
   themeColor?: string;
 }
@@ -17,7 +18,7 @@ const Container = styled.div<ContainerProps>`
   padding: 1rem;
   font-size: 0.8rem;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1), -3px -3px 3px rgba(255, 255, 255, 0.2);
-  z-index: 50;
+  z-index: ${Z_INDEX.API_SWITCH};
 
   h5 {
     font-size: 1rem;

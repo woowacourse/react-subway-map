@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
+import Z_INDEX from '../../../constants/zIndex';
 
 const Container = styled.div`
   display: flex;
@@ -28,7 +29,7 @@ const SelectBody = styled.select`
   width: 100%;
   line-height: 1.5;
   background-color: transparent;
-  z-index: 2;
+  z-index: ${Z_INDEX.SELECT};
 
   -webkit-appearance: none;
 `;

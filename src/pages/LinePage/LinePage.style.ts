@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PALETTE from '../../constants/palette';
 import { Container as Box } from '../../components/shared/Box/Box.style';
+import Z_INDEX from '../../constants/zIndex';
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const TitleBox = styled<any>(Box)`
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: ${Z_INDEX.TITLE_BOX};
     right: 1rem;
     bottom: -1.5rem;
 

@@ -1,5 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
 import { Properties } from 'csstype';
+import Z_INDEX from '../../constants/zIndex';
 
 const slideIn = keyframes`
   from {
@@ -33,7 +34,7 @@ const Container = styled.div<ContainerProps>`
   position: fixed;
   top: 0;
   color: ${({ color }) => color};
-  z-index: 50;
+  z-index: ${Z_INDEX.HEADER};
 
   animation: ${({ isAppear }) =>
     isAppear
