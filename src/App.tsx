@@ -59,7 +59,7 @@ const NavConfig = [
     text: '구간관리',
   },
   {
-    path: PATH.STATIONS,
+    path: PATH.MAP,
     text: '전체보기',
   },
 ];
