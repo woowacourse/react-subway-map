@@ -11,6 +11,7 @@ import Signup from "../pages/Signup";
 import Stations from "../pages/Stations";
 import Logout from "../pages/Logout";
 import Entry from "../pages/Entry";
+import Overview from "../pages/Overview";
 
 const App = () => (
   <BrowserRouter basename={process.env.PUBLIC_URL}>
@@ -34,8 +35,11 @@ const App = () => (
       <PrivateRoute exact path={PATH.LINES}>
         <Lines />
       </PrivateRoute>
-      <PrivateRoute exact path={[PATH.SECTIONS, PATH.OVERVIEW]}>
+      <PrivateRoute exact path={PATH.SECTIONS}>
         <Sections />
+      </PrivateRoute>
+      <PrivateRoute exact path={PATH.OVERVIEW}>
+        <Overview />
       </PrivateRoute>
 
       <Redirect path="*" to={PATH.ENTRY} />
