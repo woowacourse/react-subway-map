@@ -183,7 +183,7 @@ describe("노선 관리", () => {
   });
 
   describe("노선 삭제", () => {
-    it.only("삭제할 노선이 있다면, 노선을 삭제할 수 있다", () => {
+    it("삭제할 노선이 있다면, 노선을 삭제할 수 있다", () => {
       cy.intercept("GET", "/lines", {
         statusCode: 200,
         body: lines.filter((line) => line.name !== "신분당선"),
