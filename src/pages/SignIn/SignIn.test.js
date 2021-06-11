@@ -4,7 +4,7 @@ import store from '../../redux';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignIn from '.';
-import { ERROR, INPUT_TEXT, TEST } from '../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT } from '../../constants';
 
 describe('<SignIn />', () => {
   const setup = () => {
@@ -15,8 +15,8 @@ describe('<SignIn />', () => {
         </Router>
       </Provider>
     );
-    const { getByTestId, getByPlaceholderText } = utils;
-    const button = getByTestId(TEST.ID.SIGN_IN_BUTTON);
+    const { getByLabelText, getByPlaceholderText } = utils;
+    const button = getByLabelText(BUTTON_ID.SIGN_IN);
     const input = {
       email: getByPlaceholderText(INPUT_TEXT.EMAIL.PLACE_HOLDER),
       password: getByPlaceholderText(INPUT_TEXT.PASSWORD.PLACE_HOLDER),

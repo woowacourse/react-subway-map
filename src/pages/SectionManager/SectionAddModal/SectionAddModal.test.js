@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SectionAddModal from '.';
-import { ERROR, INPUT_TEXT, LINE_COLOR } from '../../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT, LINE_COLOR } from '../../../constants';
 import { TEST } from '../../../constants/test';
 
 const mockStation1 = { id: 0, name: '죽여줘' };
@@ -28,9 +28,9 @@ describe('<SectionAddModal />', () => {
       />
     );
 
-    const { getByTestId, getByLabelText } = utils;
+    const { getByLabelText } = utils;
 
-    const addButton = getByTestId(TEST.ID.SECTION_ADD_BUTTON);
+    const addButton = getByLabelText(BUTTON_ID.SECTION_ADD);
     const input = {
       upStation: getByLabelText(INPUT_TEXT.UP_STATION.LABEL),
       downStation: getByLabelText(INPUT_TEXT.DOWN_STATION.LABEL),

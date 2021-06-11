@@ -1,8 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { PageTemplate, Input, Button, ManagementList } from '../../components';
-import { ROUTE, COLOR, INPUT_TEXT } from '../../constants';
-import { TEST } from '../../constants/test';
+import { ROUTE, COLOR, INPUT_TEXT, BUTTON_ID } from '../../constants';
 import { useStationManager } from '../../hooks';
 import { validateStationName } from '../../utils';
 import { Form, InputWrapper, ButtonWrapper, Validator } from './style';
@@ -55,7 +54,7 @@ const StationManager = () => {
                 <Button
                   type="submit"
                   backgroundColor={COLOR.AMBER}
-                  data-testid={TEST.ID.STATION_ADD_BUTTON}
+                  aria-label={BUTTON_ID.STATION_ADD}
                 >
                   추가
                 </Button>

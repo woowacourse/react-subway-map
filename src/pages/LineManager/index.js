@@ -8,7 +8,7 @@ import { ButtonWrapper } from './style';
 const LineManager = () => {
   const { stations } = useStationManager();
   const { lines, addLine, deleteLine } = useLineManager();
-  const { isModalOpen, openModal, closeModal, handleClickToClose } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
@@ -31,7 +31,6 @@ const LineManager = () => {
           stations={stations}
           lines={lines}
           closeModal={closeModal}
-          onClickToClose={handleClickToClose}
           addLine={addLine}
         />
       )}

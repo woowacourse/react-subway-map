@@ -7,8 +7,13 @@ import {
   Selector,
   ColorPicker,
 } from '../../../components';
-import { COLOR, INPUT_TEXT, LINE_COLOR, SIZE } from '../../../constants';
-import { TEST } from '../../../constants/test';
+import {
+  BUTTON_ID,
+  COLOR,
+  INPUT_TEXT,
+  LINE_COLOR,
+  SIZE,
+} from '../../../constants';
 import { ButtonWrapper, Form, SelectorWrapper, Validator } from './style';
 import { Formik } from 'formik';
 import {
@@ -54,13 +59,7 @@ const validate = ({
   return {};
 };
 
-const LineAddModal = ({
-  stations,
-  lines,
-  closeModal,
-  onClickToClose,
-  addLine,
-}) => {
+const LineAddModal = ({ stations, lines, closeModal, addLine }) => {
   const [color, setColor] = useState(LINE_COLOR.DEFAULT);
 
   const handleSubmitForm = (values) => {
@@ -71,8 +70,8 @@ const LineAddModal = ({
   return (
     <ModalTemplate
       title={'노선 생성'}
-      onClickToClose={onClickToClose}
-      hasCloseButton
+      onClose={closeModal}
+      closeButton={<ModalTemplate.CloseButton onClose={closeModal} />}
     >
       <Formik
         initialValues={initialValues}
@@ -130,7 +129,7 @@ const LineAddModal = ({
               <Button
                 type="submit"
                 backgroundColor={COLOR.AMBER}
-                data-testid={TEST.ID.LINE_ADD_BUTTON}
+                aria-label={BUTTON_ID.LINE_ADD}
               >
                 확인
               </Button>
@@ -163,7 +162,6 @@ LineAddModal.propType = {
     })
   ).isRequired,
   closeModal: PropTypes.func.isRequired,
-  onClickToClose: PropTypes.func.isRequired,
   addLine: PropTypes.func.isRequired,
 };
 

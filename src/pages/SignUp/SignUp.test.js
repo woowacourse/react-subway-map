@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import SignUp from '.';
-import { ERROR, INPUT_TEXT, TEST } from '../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT } from '../../constants';
 import { Provider } from 'react-redux';
 import store from '../../redux';
 
@@ -12,8 +12,8 @@ describe('<SignUp />', () => {
         <SignUp />
       </Provider>
     );
-    const { getByTestId, getByPlaceholderText } = utils;
-    const button = getByTestId(TEST.ID.SIGN_UP_BUTTON);
+    const { getByLabelText, getByPlaceholderText } = utils;
+    const button = getByLabelText(BUTTON_ID.SIGN_UP);
     const input = {
       email: getByPlaceholderText(INPUT_TEXT.EMAIL.PLACE_HOLDER),
       age: getByPlaceholderText(INPUT_TEXT.AGE.PLACE_HOLDER),

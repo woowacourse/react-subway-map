@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
 import { Form, Validator } from './style';
-import { COLOR, ERROR, INPUT_TEXT, ROUTE } from '../../constants';
-import { TEST } from '../../constants/test';
+import { BUTTON_ID, COLOR, ERROR, INPUT_TEXT, ROUTE } from '../../constants';
 import { useSignIn } from '../../hooks';
 
 const initialValues = {
@@ -57,7 +56,7 @@ const SignIn = () => {
             <Button
               type="submit"
               backgroundColor={COLOR.AMBER}
-              data-testid={TEST.ID.SIGN_IN_BUTTON}
+              aria-label={BUTTON_ID.SIGN_IN}
             >
               로그인
             </Button>

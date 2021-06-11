@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import StationManager from '.';
-import { ERROR, INPUT_TEXT } from '../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT } from '../../constants';
 import { configureStore } from '@reduxjs/toolkit';
 import { TEST } from '../../constants/test';
 
@@ -24,8 +24,8 @@ describe('<StationManager />', () => {
         <StationManager />
       </Provider>
     );
-    const { getByTestId, getByPlaceholderText } = utils;
-    const addButton = getByTestId(TEST.ID.STATION_ADD_BUTTON);
+    const { getByLabelText, getByPlaceholderText } = utils;
+    const addButton = getByLabelText(BUTTON_ID.STATION_ADD);
     const input = getByPlaceholderText(INPUT_TEXT.STATION_NAME.PLACE_HOLDER);
 
     return {

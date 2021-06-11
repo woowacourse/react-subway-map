@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ModalTemplate, Input, Selector } from '../../../components';
-import { COLOR, SIZE, INPUT_TEXT } from '../../../constants';
-import { TEST } from '../../../constants/test';
+import { COLOR, SIZE, INPUT_TEXT, BUTTON_ID } from '../../../constants';
 import {
   ButtonWrapper,
   Form,
@@ -56,7 +55,7 @@ const SectionAddModal = ({
     <ModalTemplate
       title={'구간 추가'}
       onClickToClose={onClickToClose}
-      hasCloseButton
+      closeButton={<ModalTemplate.CloseButton onClose={closeModal} />}
     >
       <LineName color={line.color}>{line.name}</LineName>
       <Formik
@@ -106,7 +105,7 @@ const SectionAddModal = ({
               <Button
                 type="submit"
                 backgroundColor={COLOR.AMBER}
-                data-testid={TEST.ID.SECTION_ADD_BUTTON}
+                aria-label={BUTTON_ID.SECTION_ADD}
               >
                 확인
               </Button>

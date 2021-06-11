@@ -47,7 +47,7 @@ const SectionManager = () => {
   const { lines } = useLineManager();
   const { selectedLineId, setSelectedLineId, addSection, deleteSection } =
     useSectionManager();
-  const { isModalOpen, openModal, closeModal, handleClickToClose } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleChangeSelector = (event) => {
     const targetId = Number(event.target.value);
@@ -87,7 +87,6 @@ const SectionManager = () => {
           line={selectedLine}
           addSection={addSection}
           closeModal={closeModal}
-          onClickToClose={handleClickToClose}
         />
       )}
     </>

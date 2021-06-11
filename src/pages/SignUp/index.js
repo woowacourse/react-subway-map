@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { PageTemplate, Input, Button } from '../../components';
-import { COLOR, INPUT_TEXT, ROUTE } from '../../constants';
+import { BUTTON_ID, COLOR, INPUT_TEXT, ROUTE } from '../../constants';
 import { Form, PasswordSuggestion, Validator } from './style';
 import { useSignUp } from '../../hooks';
 import {
@@ -102,7 +102,7 @@ const SignUp = () => {
             <Button
               type="submit"
               backgroundColor={COLOR.AMBER}
-              data-testid="signup-button"
+              aria-label={BUTTON_ID.SIGN_UP}
             >
               회원가입
             </Button>

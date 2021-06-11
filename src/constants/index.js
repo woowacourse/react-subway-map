@@ -45,7 +45,7 @@ export const SIZE = {
 };
 
 export const REG_EXP = {
-  ENG: /^[a-zA-Z]*$/,
+  ENG: /^[a-zA-Z-_]*$/,
   NUMBER: /^[0-9]*$/,
   EMAIL:
     /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/,
@@ -171,4 +171,12 @@ export const INPUT_TEXT = {
   DISTANCE: {
     LABEL: '거리',
   },
+};
+
+export const BUTTON_ID = {
+  SIGN_UP: 'signup-button',
+  SIGN_IN: 'signin-button',
+  STATION_ADD: 'station-add-button',
+  LINE_ADD: 'line-add-button',
+  SECTION_ADD: 'section-add-button',
 };

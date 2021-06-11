@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import LineAddModal from '.';
-import { ERROR, INPUT_TEXT, LINE_COLOR } from '../../../constants';
+import { BUTTON_ID, ERROR, INPUT_TEXT, LINE_COLOR } from '../../../constants';
 import { TEST } from '../../../constants/test';
 
 const mockStation1 = { id: 0, name: '죽여줘' };
@@ -30,9 +30,9 @@ describe('<LineAddModal />', () => {
       />
     );
 
-    const { getByTestId, getByLabelText } = utils;
+    const { getByLabelText } = utils;
 
-    const addButton = getByTestId(TEST.ID.LINE_ADD_BUTTON);
+    const addButton = getByLabelText(BUTTON_ID.LINE_ADD);
     const input = {
       lineName: getByLabelText(INPUT_TEXT.LINE_NAME.LABEL),
       upStation: getByLabelText(INPUT_TEXT.UP_STATION.LABEL),
