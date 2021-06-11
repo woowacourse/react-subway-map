@@ -75,6 +75,16 @@ const API = {
         };
       }
 
+      if (error.message === STATUS_CODE.BAD_REQUEST) {
+        return {
+          ok: false,
+          error: {
+            type: ERROR_TYPE.SECTION_LENGTH_OUT_OF_RANGE,
+            message: ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE,
+          },
+        };
+      }
+
       return {
         ok: false,
         error: { type: ERROR_TYPE.INTERNAL_SERVER_ERROR, message: ERROR_MESSAGE.DEFAULT },
