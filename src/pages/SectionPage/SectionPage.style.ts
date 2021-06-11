@@ -13,7 +13,7 @@ const Container = styled.div`
   min-height: 70vh;
 `;
 
-const TitleBox = styled<any>(Box)`
+const TitleBox = styled(Box)<{ isOpen: boolean }>`
   & button[type='button'] {
     position: absolute;
     display: flex;
@@ -38,7 +38,7 @@ const TitleBox = styled<any>(Box)`
   }
 `;
 
-const FormBox = styled<any>(Box)`
+const FormBox = styled(Box)<{ isOpen: boolean }>`
   transition: max-height 1.2s ease, padding 1.2s ease;
   overflow: hidden;
   ${({ isOpen }) =>
