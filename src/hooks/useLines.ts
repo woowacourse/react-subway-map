@@ -58,10 +58,10 @@ const API = {
 };
 
 const useLines = (
-  initialLines: APIReturnTypeLine[]
+  initialLines: APIReturnTypeLine[] | null
 ): [
-  APIReturnTypeLine[],
-  Dispatch<SetStateAction<APIReturnTypeLine[]>>,
+  APIReturnTypeLine[] | null,
+  Dispatch<SetStateAction<APIReturnTypeLine[] | null>>,
   () => Promise<void>,
   (lineId: number) => Promise<void>,
   (data: LineData) => Promise<void>,
@@ -72,13 +72,15 @@ const useLines = (
   const fetchLine = async (lineId: number): Promise<void> => {
     const fetchedLine: APIReturnTypeLine = await API.getOne(lineId);
 
-    setLines((prevLines) =>
-      prevLines.map((line) => {
-        if (line.id === lineId) {
-          return fetchedLine;
-        }
-        return line;
-      })
+    setLines(
+      (prevLines) =>
+        prevLines &&
+        prevLines.map((line) => {
+          if (line.id === lineId) {
+            return fetchedLine;
+          }
+          return line;
+        })
     );
   };
 

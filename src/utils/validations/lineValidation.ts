@@ -11,8 +11,11 @@ const isLineNameValid = (lineName: string): boolean => {
   );
 };
 
-const isLineNameDuplicated = (lines: APIReturnTypeLine[], lineName: string): boolean => {
-  return lines.some((item) => item.name === lineName);
+const isLineNameDuplicated = (
+  lines: APIReturnTypeLine[] | null,
+  lineName: string
+): boolean | undefined => {
+  return lines?.some((item) => item.name === lineName);
 };
 
 const isStationSelectDuplicated = (upStationId: string, downStationId: string): boolean => {
@@ -27,7 +30,7 @@ const isDistanceValid = (distance: string): boolean => {
   );
 };
 
-const lineNameErrorMessage = (lines: APIReturnTypeLine[], lineName: string): string => {
+const lineNameErrorMessage = (lines: APIReturnTypeLine[] | null, lineName: string): string => {
   if (!lineName) return '';
 
   if (isLineNameValid(lineName)) {
@@ -51,7 +54,7 @@ const distanceErrorMessage = (distance: string): string => {
 };
 
 const isFormCompleted = (
-  lines: APIReturnTypeLine[],
+  lines: APIReturnTypeLine[] | null,
   {
     lineName,
     upStationId,

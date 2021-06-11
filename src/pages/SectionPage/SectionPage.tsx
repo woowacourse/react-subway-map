@@ -32,14 +32,11 @@ import { distanceErrorMessage, isFormCompleted } from '../../utils/validations/s
 import StationSelects from './StationSelects';
 import LineSelect from './LineSelect';
 
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
-
 const SectionPage = ({ setIsLoading }: PageProps) => {
   const [selectedLineId, setSelectedLineId] = useState(-1);
 
-  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const [stations, setStations, fetchStations] = useStations(null);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(null);
   const [addSection, deleteSection] = useSections();
 
   const [formOpen, setFormOpen] = useState(false);
@@ -51,7 +48,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
 
-  const currentLine = lines.find((line) => line.id === selectedLineId);
+  const currentLine = lines?.find((line) => line.id === selectedLineId);
 
   const getLine = async (lineId: number) => {
     const timer = setTimeout(() => setIsLoading(true), 500);
@@ -87,7 +84,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
+  if (lines === null || stations === null) {
     return <></>;
   }
 

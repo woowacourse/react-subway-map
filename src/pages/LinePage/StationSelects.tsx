@@ -9,7 +9,7 @@ import { stationSelectErrorMessage } from '../../utils/validations/lineValidatio
 import { Container } from './StationSelects.style';
 
 interface StationSelectsProps {
-  stations: APIReturnTypeStation[];
+  stations: APIReturnTypeStation[] | null;
   upStationId: string;
   setUpStationId: Dispatch<SetStateAction<string>>;
   downStationId: string;
@@ -39,7 +39,7 @@ const StationSelects = ({
             <option value="/" hidden>
               역 선택
             </option>
-            {stations.map((station) => (
+            {stations?.map((station) => (
               <option key={station.id} value={station.id}>
                 {station.name}
               </option>
@@ -54,7 +54,7 @@ const StationSelects = ({
             <option value="/" hidden>
               역 선택
             </option>
-            {stations.map((station) => (
+            {stations?.map((station) => (
               <option key={station.id} value={station.id}>
                 {station.name}
               </option>

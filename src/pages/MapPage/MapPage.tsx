@@ -11,13 +11,9 @@ import { PageProps } from '../types';
 import { Container, MapBox, SubwayMap, LineContainer, StationList } from './MapPage.style';
 import StationItem from './StationItem';
 
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = [];
-
 const MapPage = ({ setIsLoading }: PageProps) => {
-  const [stations, setStations, fetchStations, addStation, deleteStation] =
-    useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const [stations, setStations, fetchStations, addStation, deleteStation] = useStations(null);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(null);
 
   const themeColor = useContext(ThemeContext)?.themeColor;
   const addMessage = useContext(SnackBarContext)?.addMessage;
@@ -43,7 +39,7 @@ const MapPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (stations === STATION_BEFORE_FETCH || lines === LINE_BEFORE_FETCH) {
+  if (stations === null || lines === null) {
     return <></>;
   }
 
@@ -52,14 +48,14 @@ const MapPage = ({ setIsLoading }: PageProps) => {
       <MapBox hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
         <Heading1>지하철 전체 보기</Heading1>
         <SubwayMap>
-          {lines.map((line) => (
+          {lines?.map((line) => (
             <LineContainer key={line.id}>
               <Chip size="m" backgroundColor={line.color}>
                 {line.name}
               </Chip>
               <StationList>
                 {line.stations.map((targetStation) => {
-                  const includedLines = stations.find(
+                  const includedLines = stations?.find(
                     (station) => station.name === targetStation.name
                   )?.lines;
 
