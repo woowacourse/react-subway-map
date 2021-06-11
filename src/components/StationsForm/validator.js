@@ -1,7 +1,7 @@
 const isValidStationName = (value) => {
-  const stationNamePattern = /^[가-힣0-9]{2,20}$/;
+  const stationNameRegex = /^[가-힣0-9]{2,20}$/;
 
-  return stationNamePattern.test(value);
+  return stationNameRegex.test(value);
 };
 
 export default isValidStationName;
