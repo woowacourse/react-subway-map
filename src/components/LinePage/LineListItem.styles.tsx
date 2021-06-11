@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Line } from '../../interfaces';
 
 export const LineListItem = styled.li`
   display: flex;
@@ -9,7 +10,18 @@ export const LineListItem = styled.li`
   width: 100%;
 `;
 
+export const LineColorCircleContainer = styled.div``;
+
+export const LineColorCircle = styled.div<{ color: Line['color'] }>`
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: ${({ color }) => color};
+  margin-right: 0.5rem;
+`;
+
 export const Name = styled.div`
+  line-height: 1rem;
   width: 100%;
 `;
 

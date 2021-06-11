@@ -76,9 +76,21 @@ const LineModalForm = ({ lines, lineInfo, stations, onChange, onSubmit, onCloseM
       <S.PaletteContainer>
         <S.PaletteTitle>노선 색상 선택</S.PaletteTitle>
         <S.PaletteWrapper>
-          {Object.values(LINE_COLOR).map(color => (
-            <S.Palette type='button' key={color} color={color} name='color' value={color} onClick={onChange} />
-          ))}
+          {Object.values(LINE_COLOR).map(color => {
+            const isAlreadyExistColor = lines.some(line => line.color === color);
+            return (
+              <S.Palette
+                type='button'
+                key={color}
+                color={color}
+                isAlreadyExistColor={isAlreadyExistColor}
+                disabled={isAlreadyExistColor}
+                name='color'
+                value={color}
+                onClick={onChange}
+              />
+            );
+          })}
           <S.SelectedPalette color={lineInfo.color}>{lineColorErrorMessage}</S.SelectedPalette>
         </S.PaletteWrapper>
       </S.PaletteContainer>

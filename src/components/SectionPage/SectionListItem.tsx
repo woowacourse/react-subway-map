@@ -1,6 +1,5 @@
 import * as S from './SectionListItem.styles';
 import trashCanSVG from '../../assets/svg/trash-can.svg';
-import editSVG from '../../assets/svg/edit.svg';
 import { DeleteSectionRequest, LineSection } from '../../interfaces';
 import { VALIDATION } from '../../constants/validation';
 
@@ -29,7 +28,7 @@ const SectionListItem = ({ id, name, distance, lineColor, lineSection, deleteSec
     <S.SectionListItem>
       <S.NameWrapper>
         <S.Name lineColor={lineColor}>{name}</S.Name>
-        {distance >= 0 && (
+        {distance !== VALIDATION.LAST_STATION_DISTANCE && (
           <S.Distance>
             다음역까지
             <br /> {distance}KM
@@ -37,9 +36,6 @@ const SectionListItem = ({ id, name, distance, lineColor, lineSection, deleteSec
         )}
       </S.NameWrapper>
       <S.ButtonContainer>
-        <S.ButtonWrapper>
-          <S.Button src={editSVG} />
-        </S.ButtonWrapper>
         <S.ButtonWrapper>
           <S.Button src={trashCanSVG} onClick={handleDeleteSection} />
         </S.ButtonWrapper>

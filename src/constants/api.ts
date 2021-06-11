@@ -7,6 +7,7 @@ export const API = {
   GET_STATIONS: () => `${store.getState().user.baseURL}/stations`,
   LINES: () => `${store.getState().user.baseURL}/lines`,
   SECTION: (id: number) => `${store.getState().user.baseURL}/lines/${id}/sections`,
+  MAP: () => `${store.getState().user.baseURL}/map`,
 };
 
 export enum RESPONSE {

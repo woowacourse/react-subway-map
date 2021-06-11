@@ -5,6 +5,7 @@ export const ROUTE = {
   STATION: '/station',
   LINE: '/line',
   SECTION: '/section',
+  MAP: '/map',
 };
 
 export const BASE_URL = {

@@ -7,6 +7,8 @@ export type AddStationPayload = Station['name'];
 
 export type DeleteStationPayload = Station['id'];
 
+export type EditStationPayload = { id: Station['id']; name: Station['name'] };
+
 export type ErrorPayload = string;
 
 export interface StationState {
@@ -29,6 +31,7 @@ export const stationSlice = createSlice({
     getStationsAsync: () => {},
     addStationAsync: (state, action: PayloadAction<AddStationPayload>) => {},
     deleteStationAsync: (state, action: PayloadAction<DeleteStationPayload>) => {},
+    editStationAsync: (state, action: PayloadAction<EditStationPayload>) => {},
     error: (state, action: PayloadAction<ErrorPayload>) => {
       state.error = action.payload;
     },
@@ -46,11 +49,20 @@ export type StationActions = ReturnType<
   | typeof stationSlice.actions.getStationsAsync
   | typeof stationSlice.actions.addStationAsync
   | typeof stationSlice.actions.deleteStationAsync
+  | typeof stationSlice.actions.editStationAsync
   | typeof stationSlice.actions.error
   | typeof stationSlice.actions.resetError
   | typeof stationSlice.actions.pending
 >;
 
-export const { setStations, getStationsAsync, addStationAsync, deleteStationAsync, error, resetError, pending } =
-  stationSlice.actions;
+export const {
+  setStations,
+  getStationsAsync,
+  addStationAsync,
+  deleteStationAsync,
+  editStationAsync,
+  error,
+  resetError,
+  pending,
+} = stationSlice.actions;
 export default stationSlice.reducer;

@@ -40,4 +40,14 @@ export const stationAPI = {
 
     return { data: response.data, error: null };
   },
+
+  editStation: async (id: Station['id'], stationName: Station['name']): Promise<HttpResponse> => {
+    const response = await axios.put(`${API.GET_STATIONS()}/${id}`, { name: stationName });
+
+    if (response.status >= 400) {
+      return { data: response.data, error: '역 이름 변경에 실패하였습니다.' };
+    }
+
+    return { data: response.data, error: null };
+  },
 };

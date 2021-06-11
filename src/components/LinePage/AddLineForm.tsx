@@ -37,7 +37,9 @@ const AddLineForm = ({ lines, stations, addLine }: Props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | React.MouseEvent<HTMLElement>) => {
     const { name, value } = e.target as HTMLInputElement;
-    if (value.slice(-1)[0] === VALIDATION.EMPTY_INPUT) return;
+    const lastInput = value?.slice(-1)[0];
+
+    if (lastInput === VALIDATION.EMPTY_INPUT) return;
     setLineInfo({ ...lineInfo, [name]: value });
   };
 
