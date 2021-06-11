@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import API from '../api';
 import BACKEND from '../constants/backend';
 import LOCAL_STORAGE_KEYS from '../constants/localStorageKeys';
@@ -72,6 +72,12 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    changeServer: (state, { payload }: PayloadAction<CREWS>) => {
+      state.server = payload;
+      API.defaults.baseURL = BACKEND[payload].baseUrl;
+
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SERVER, payload);
+    },
     logout: (state) => {
       state.isLogin = false;
       state.accessToken = '';
@@ -105,6 +111,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout, resetError } = authSlice.actions;
+export const { changeServer, logout, resetError } = authSlice.actions;
 
 export default authSlice.reducer;

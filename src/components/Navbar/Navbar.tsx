@@ -37,6 +37,13 @@ const Navbar = () => {
             </Styled.NavItem>
           </>
         )}
+        <Styled.NavItem>
+          <Link to={ROUTES.MAP}>
+            <Button variant="text" active={location.pathname === ROUTES.MAP}>
+              전체 보기
+            </Button>
+          </Link>
+        </Styled.NavItem>
 
         <Styled.NavItem>
           {isLogin ? (
