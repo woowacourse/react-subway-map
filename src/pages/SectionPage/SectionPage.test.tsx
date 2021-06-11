@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 
 import SectionPage from './SectionPage';
-import { API as stationAPI } from '../../hooks/useStations';
-import { API as lineAPI } from '../../hooks/useLines';
-import { API as sectionAPI } from '../../hooks/useSections';
+import stationAPI from '../../apis/station';
+import lineAPI from '../../apis/line';
+import sectionAPI from '../../apis/section';
 
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
@@ -57,19 +57,31 @@ describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.',
     request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
 
     stationAPI.get = jest.fn().mockImplementation(() => {
-      return mock_stations;
+      return { ok: true, data: mock_stations };
     });
-    stationAPI.post = jest.fn();
-    stationAPI.delete = jest.fn();
+    stationAPI.post = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
+    stationAPI.delete = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
 
     lineAPI.get = jest.fn().mockImplementation(() => {
-      return mock_lines;
+      return { ok: true, data: mock_lines };
     });
-    lineAPI.post = jest.fn();
-    lineAPI.delete = jest.fn();
+    lineAPI.post = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
+    lineAPI.delete = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
 
-    sectionAPI.post = jest.fn();
-    sectionAPI.delete = jest.fn();
+    sectionAPI.post = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
+    sectionAPI.delete = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
 
     localStorage.setItem('accessToken', mockAccessToken);
 

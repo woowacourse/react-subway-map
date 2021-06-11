@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 
 import StationPage from './StationPage';
-import { API as stationAPI } from '../../hooks/useStations';
+import stationAPI from '../../apis/station';
 
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
@@ -33,10 +33,14 @@ describe('사용자는 지하철 역 관리 기능을 이용할 수 있다.', ()
     request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
 
     stationAPI.get = jest.fn().mockImplementation(() => {
-      return mock_stations;
+      return { ok: true, data: mock_stations };
     });
-    stationAPI.post = jest.fn();
-    stationAPI.delete = jest.fn();
+    stationAPI.post = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
+    stationAPI.delete = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
 
     localStorage.setItem('accessToken', mockAccessToken);
 
@@ -60,7 +64,7 @@ describe('사용자는 지하철 역 관리 기능을 이용할 수 있다.', ()
   });
 
   it('등록된 지하철 역이 없는 경우, 지하철 역 없음 이미지를 보여준다.', async () => {
-    stationAPI.get = jest.fn().mockReturnValueOnce([]);
+    stationAPI.get = jest.fn().mockReturnValueOnce({ ok: true, data: [] });
     render(<StationPage setIsLoading={() => {}} />);
 
     await waitFor(() => screen.getByAltText('지하철 역 없음 이미지'));

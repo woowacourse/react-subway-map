@@ -2,8 +2,8 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 
 import LinePage from './LinePage';
-import { API as stationAPI } from '../../hooks/useStations';
-import { API as lineAPI } from '../../hooks/useLines';
+import stationAPI from '../../apis/station';
+import lineAPI from '../../apis/line';
 
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
@@ -56,16 +56,24 @@ describe('사용자는 지하철 노선 관리 기능을 이용할 수 있다.',
     request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
 
     stationAPI.get = jest.fn().mockImplementation(() => {
-      return mock_stations;
+      return { ok: true, data: mock_stations };
     });
-    stationAPI.post = jest.fn();
-    stationAPI.delete = jest.fn();
+    stationAPI.post = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
+    stationAPI.delete = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
 
     lineAPI.get = jest.fn().mockImplementation(() => {
-      return mock_lines;
+      return { ok: true, data: mock_lines };
     });
-    lineAPI.post = jest.fn();
-    lineAPI.delete = jest.fn();
+    lineAPI.post = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
+    lineAPI.delete = jest.fn().mockImplementation(() => {
+      return { ok: true };
+    });
 
     localStorage.setItem('accessToken', mockAccessToken);
 
@@ -88,7 +96,7 @@ describe('사용자는 지하철 노선 관리 기능을 이용할 수 있다.',
   });
 
   it('등록된 지하철 노선이 없는 경우, 지하철 노선 없음 이미지를 보여준다.', async () => {
-    lineAPI.get = jest.fn().mockReturnValueOnce([]);
+    lineAPI.get = jest.fn().mockReturnValueOnce({ ok: true, data: [] });
     render(<LinePage setIsLoading={() => {}} />);
 
     await waitFor(() => screen.getByAltText('지하철 노선 없음 이미지'));
