@@ -59,6 +59,16 @@ const overviewSlice = createSlice({
     [fetchOverview.fulfilled]: (state, action) => {
       state.status = STATUS.SUCCEED;
       state.list = action.payload;
+
+      state.list.forEach((line) => {
+        const stationOrder = Object.fromEntries(
+          line.stations.map(({ id }, index) => [id, index])
+        );
+
+        line.sections.sort(
+          (A, B) => stationOrder[A.upStation.id] - stationOrder[B.upStation.id]
+        );
+      });
     },
     [fetchOverview.rejected]: (state, action) => {
       state.status = STATUS.FAILED;
