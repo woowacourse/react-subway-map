@@ -1,16 +1,10 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-
-interface State {
-  auth: {
-    accessToken?: string;
-  };
-}
+import useData from './useData';
 
 const useRedirect = (url: string) => {
   const history = useHistory();
-  const accessToken = useSelector<State>((state) => state.auth.accessToken);
+  const { accessToken } = useData();
 
   useEffect(() => {
     if (!accessToken) {

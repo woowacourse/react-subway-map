@@ -1,5 +1,6 @@
 import Layout from '@layout/Layout';
 import PATH from 'constants/path';
+import useData from 'hooks/useData';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
 import Login from 'pages/Login';
@@ -7,17 +8,10 @@ import Section from 'pages/Section';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
-interface State {
-  auth: {
-    accessToken?: string;
-  };
-}
-
 const App = () => {
-  const accessToken = useSelector<State>((state) => state.auth.accessToken);
+  const { accessToken } = useData();
 
   return (
     <Layout isLogin={!!accessToken}>
