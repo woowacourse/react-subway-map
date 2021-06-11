@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import STATUS from "../../constants/status";
 import { ENDPOINT, MESSAGE, RESPONSE_CODE } from "../../api/constants";
