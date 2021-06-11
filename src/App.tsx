@@ -67,7 +67,7 @@ const NavConfig = [
 const App = () => {
   const history = useHistory();
 
-  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const addMessage = useContext(SnackBarContext)?.pushMessage;
   const userContext = useContext(UserContext);
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
 

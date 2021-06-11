@@ -32,7 +32,7 @@ const DEBOUNCE_DELAY = 500;
 const SignupPage = ({ setIsLoading }: PageProps) => {
   const history = useHistory();
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
-  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const addSnackBar = useContext(SnackBarContext)?.pushMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
 
   const [email, setEmail] = useState<string>('');

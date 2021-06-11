@@ -34,7 +34,7 @@ const TitleBox = styled<any>(Box)`
 `;
 
 const FormBox = styled<any>(Box)`
-  transition: all 0.8s ease;
+  transition: max-height 1.2s ease, padding 1.2s ease;
   overflow: hidden;
   ${({ isOpen }) =>
     isOpen
@@ -42,6 +42,10 @@ const FormBox = styled<any>(Box)`
       : 'max-height: 0; padding-top: 0; padding-bottom: 0; form {opacity: 0;}'}
   position: relative;
   margin: 0.05rem 0;
+
+  form {
+    transition: opacity 0.8s ease;
+  }
 `;
 
 const Form = styled.form`

@@ -34,7 +34,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
-  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const addSnackBar = useContext(SnackBarContext)?.pushMessage;
 
   const fetchData = async () => {
     // 요청이 빠르게 끝나는 경우 로딩화면을 띄우지 않기 위함.

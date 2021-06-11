@@ -1,5 +1,5 @@
 import PALETTE from '../../constants/palette';
-import { Container, ColorOption } from './Palette.style';
+import { Container, InputBox } from './Palette.style';
 
 interface PaletteProps {
   inputName: string;
@@ -21,7 +21,7 @@ const Palette = ({ inputName, colors }: PaletteProps) => (
           hidden
           aria-hidden="true"
         />
-        <ColorOption backgroundColor={PALETTE[name]}></ColorOption>
+        <InputBox backgroundColor={PALETTE[name]}></InputBox>
       </label>
     ))}
   </Container>

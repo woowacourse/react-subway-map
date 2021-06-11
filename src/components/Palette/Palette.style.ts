@@ -43,7 +43,7 @@ const Container = styled.fieldset`
   }
 `;
 
-const ColorOption = styled.span<Properties>`
+const InputBox = styled.span<Properties>`
   width: 2rem;
   height: 2rem;
   margin: 0.2rem;
@@ -54,4 +54,4 @@ const ColorOption = styled.span<Properties>`
   background-color: ${({ backgroundColor }) => backgroundColor ?? 'transparent'};
 `;
 
-export { Container, ColorOption };
+export { Container, InputBox };

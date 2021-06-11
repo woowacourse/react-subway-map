@@ -58,7 +58,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const currentLine = lines.find((line) => line.id === selectedLineId);
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
-  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const addSnackBar = useContext(SnackBarContext)?.pushMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 

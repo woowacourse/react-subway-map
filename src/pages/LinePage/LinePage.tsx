@@ -84,7 +84,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   }, [lines]);
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE_100;
-  const addSnackBar = useContext(SnackBarContext)?.addMessage;
+  const addSnackBar = useContext(SnackBarContext)?.pushMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
   const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
