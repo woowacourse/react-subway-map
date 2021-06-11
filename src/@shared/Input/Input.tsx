@@ -2,9 +2,9 @@ import React from 'react';
 
 interface InputProps {
   type?: string;
-  title?: string | null;
+  title?: string;
   placeholder: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void | null;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
 }
 

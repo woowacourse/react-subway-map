@@ -7,7 +7,7 @@ interface ImageButtonProps {
   bgColor?: string;
   hoverBgColor?: string;
   className?: string;
-  onClick?: () => void | null;
+  onClick?: () => void;
 }
 
 const ImageButton = ({ onClick, imgUrl, size, imgSize, bgColor, hoverBgColor, className }: ImageButtonProps) => {

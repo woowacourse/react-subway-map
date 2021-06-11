@@ -12,7 +12,7 @@ import { Route, Switch } from 'react-router-dom';
 
 interface State {
   auth: {
-    accessToken: string | null;
+    accessToken?: string;
   };
 }
 

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 
 interface State {
   auth: {
-    accessToken: string | null;
+    accessToken?: string;
   };
 }
 

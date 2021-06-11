@@ -4,8 +4,8 @@ import delImg from 'assets/images/trash.png';
 interface ListItemProps {
   id: number;
   title: string;
-  editImg?: string | null;
-  itemColor?: string | null;
+  editImg?: string;
+  itemColor?: string;
   onDelete: (id: number, title: string) => void;
 }
 

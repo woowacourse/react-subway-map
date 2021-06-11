@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface SelectInputProps {
-  title?: string | null;
-  className?: string | null;
+  title?: string;
+  className?: string;
   defaultValue?: string;
-  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void | null;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   data?: Array<DataProps> | null;
   defaultSelect?: string;
 }

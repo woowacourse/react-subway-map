@@ -8,7 +8,7 @@ interface ButtonProps {
   hoverBgColor?: string;
   className?: string;
   disabled?: boolean;
-  setColor?: (color: string) => void | null;
+  setColor?: (color: string) => void;
 }
 
 const Button = ({ setColor, type, disabled, text, size, className, bgColor, hoverBgColor }: ButtonProps) => {
