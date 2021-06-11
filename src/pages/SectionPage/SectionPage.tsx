@@ -242,7 +242,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
         <InputContainer labelText="노선 선택">
-          <ColorDot size="s" backgroundColor={currentLine?.color} />
+          <ColorDot size="s" backgroundColor={currentLine?.color && PALETTE[currentLine.color]} />
           <Select onChange={onLineSelect} aria-label="노선 선택">
             <option value="/" hidden>
               노선 선택
@@ -312,7 +312,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
             {currentLine.stations.map(({ id, name, distance }) => {
               return (
                 <li key={id}>
-                  <ColorDot size="s" backgroundColor={currentLine.color} />
+                  <ColorDot size="s" backgroundColor={PALETTE[currentLine.color]} />
                   <p>{name}</p>
                   {distance && <Distance>{`거리 : ${distance}`}</Distance>}
                   {isLoggedIn && (

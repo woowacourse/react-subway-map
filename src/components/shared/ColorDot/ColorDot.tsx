@@ -24,8 +24,7 @@ const colorDotSize = {
 const ColorDot = styled.span<ColorDotProps>`
   ${({ size }) => colorDotSize[size]}
   border-radius: 50%;
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? PALETTE[backgroundColor] : PALETTE.GRAY_200};
+  background-color: ${({ backgroundColor }) => backgroundColor ?? PALETTE.GRAY_200};
 `;
 
 export default ColorDot;

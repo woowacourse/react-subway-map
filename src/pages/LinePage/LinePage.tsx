@@ -313,7 +313,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
           <List aria-label="노선 목록">
             {lines.map(({ id, name, color }) => (
               <li key={id}>
-                <ColorDot size="s" backgroundColor={color} />
+                <ColorDot size="s" backgroundColor={PALETTE[color]} />
                 <p>{name}</p>
                 {isLoggedIn && (
                   <Button
