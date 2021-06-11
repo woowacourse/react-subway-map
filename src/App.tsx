@@ -10,7 +10,7 @@ import { LoginPage, SignupPage, StationPage, LinePage, SectionPage, MapPage } fr
 
 import { ThemeContext } from './contexts/ThemeContextProvider';
 import { UserContext } from './contexts/UserContextProvider';
-import { SnackBarContext } from './contexts/SnackBarProvider';
+import { SnackBarContext } from './components/shared/SnackBar/SnackBarProvider';
 
 import PATH from './constants/path';
 import PALETTE from './constants/palette';

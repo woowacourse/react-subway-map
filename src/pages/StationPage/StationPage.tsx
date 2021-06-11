@@ -5,7 +5,7 @@ import { Box, Button, Input, InputContainer, Heading1, Icon, Chip } from '../../
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { SnackBarContext } from '../../components/shared/SnackBar/SnackBarProvider';
 
 import PALETTE from '../../constants/palette';
 import REGEX from '../../constants/regex';

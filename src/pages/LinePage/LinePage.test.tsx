@@ -32,7 +32,7 @@ const mock_lines = [
   {
     id: 0,
     name: '피터선',
-    color: 'RED',
+    color: 'RED_100',
     stations: [
       {
         id: 1,
@@ -119,7 +119,7 @@ describe('사용자는 지하철 노선 관리 기능을 이용할 수 있다.',
     fireEvent.change(upStationSelect, { target: { value: '1' } });
     fireEvent.change(downStationSelect, { target: { value: '2' } });
     fireEvent.change(distanceInput, { target: { value: '20' } });
-    fireEvent.change(form, { target: { color: { value: 'MALCHA' } } });
+    fireEvent.change(form, { target: { color: { value: 'MALCHA_100' } } });
     fireEvent.click(addButton);
 
     await waitFor(() => expect(lineAPI.post).toBeCalled());

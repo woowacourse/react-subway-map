@@ -33,7 +33,7 @@ const mock_lines = [
   {
     id: 0,
     name: '피터선',
-    color: 'RED',
+    color: 'RED_100',
     stations: [
       {
         id: 1,

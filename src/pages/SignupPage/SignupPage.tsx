@@ -12,7 +12,7 @@ import { Box, Button, Input, Icon, InputContainer, Heading1 } from '../../compon
 
 import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { SnackBarContext } from '../../components/shared/SnackBar/SnackBarProvider';
 
 import REGEX from '../../constants/regex';
 import { SIGNUP_VALUE } from '../../constants/values';

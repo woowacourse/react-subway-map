@@ -16,7 +16,7 @@ import {
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { SnackBarContext } from '../../components/shared/SnackBar/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
 import PALETTE from '../../constants/palette';

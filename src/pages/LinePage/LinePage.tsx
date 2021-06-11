@@ -25,7 +25,7 @@ import {
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { SnackBarContext } from '../../components/shared/SnackBar/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
 import REGEX from '../../constants/regex';
@@ -46,16 +46,16 @@ import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.s
 import ERROR_TYPE from '../../constants/errorType';
 
 const lineColors = [
-  'PINK',
-  'RED',
-  'ORANGE',
-  'YELLOW',
-  'MALCHA',
-  'GREEN',
-  'SKYBLUE',
-  'BLUE',
-  'VIOLET',
-  'PURPLE',
+  'PINK_100',
+  'RED_100',
+  'ORANGE_100',
+  'YELLOW_100',
+  'MALCHA_100',
+  'GREEN_100',
+  'SKYBLUE_100',
+  'BLUE_100',
+  'VIOLET_100',
+  'PURPLE_100',
 ];
 
 const LINE_BEFORE_FETCH: APIResponseDataLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분

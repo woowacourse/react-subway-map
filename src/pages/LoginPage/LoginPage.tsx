@@ -14,7 +14,7 @@ import {
 
 import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { SnackBarContext } from '../../components/shared/SnackBar/SnackBarProvider';
 
 import PATH from '../../constants/path';
 import STATUS_CODE from '../../constants/statusCode';

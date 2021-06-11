@@ -12,12 +12,12 @@ const mock_stations = [
   {
     id: 1,
     name: '잠실역',
-    lines: [{ id: 1, name: '안녕', color: 'RED' }],
+    lines: [{ id: 1, name: '안녕', color: 'RED_100' }],
   },
   {
     id: 2,
     name: '잠실새내역',
-    lines: [{ id: 2, name: '1호선', color: 'MALCHA' }],
+    lines: [{ id: 2, name: '1호선', color: 'MALCHA_100' }],
   },
   {
     id: 3,

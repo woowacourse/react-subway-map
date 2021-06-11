@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import SnackBarProvider from './contexts/SnackBarProvider';
+import SnackBarProvider from './components/shared/SnackBar/SnackBarProvider';
 import ThemeProvider from './contexts/ThemeContextProvider';
 import UserProvider from './contexts/UserContextProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
