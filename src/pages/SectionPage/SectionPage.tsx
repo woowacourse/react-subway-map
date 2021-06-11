@@ -29,23 +29,25 @@ import useSections from '../../hooks/useSections';
 import useStations from '../../hooks/useStations';
 import useLines from '../../hooks/useLines';
 
-import { APIReturnTypeStation } from '../../apis/station';
-import { APIReturnTypeLine } from '../../apis/line';
+import { APIResponseDataStation } from '../../apis/station';
+import { APIResponseDataLine } from '../../apis/line';
 
 import { PageProps } from '../types';
 import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
-import STATUS_CODE from '../../constants/statusCode';
 import { isValidRange } from '../../utils/validator';
+import ERROR_TYPE from '../../constants/errorType';
 
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+const LINE_BEFORE_FETCH: APIResponseDataLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: APIResponseDataStation[] = [];
 const NO_SELECTED_LINE = -1;
 
 const SectionPage = ({ setIsLoading }: PageProps) => {
-  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine] = useLines(LINE_BEFORE_FETCH);
-  const [addSection, deleteSection] = useSections();
+  const [stations, setStations, fetchStations, addStation, deleteStation, stationRequestError] =
+    useStations(STATION_BEFORE_FETCH);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine, lineRequestError] =
+    useLines(LINE_BEFORE_FETCH);
+  const [addSection, deleteSection, sectionRequestError] = useSections();
 
   const [isFormOpened, setIsFormOpened] = useState(false);
   const [upStationId, setUpStationId] = useState('');
@@ -101,31 +103,32 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   const getLine = async (lineId: number) => {
     const timer = setTimeout(() => setIsLoading(true), 500);
 
-    try {
-      await fetchLine(lineId);
-      clearTimeout(timer);
-    } catch (error) {
-      console.error(error);
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
-    } finally {
-      setIsLoading(false);
+    const response = await fetchLine(lineId);
+
+    if (!response) {
+      console.error(lineRequestError);
+      addSnackBar?.(lineRequestError.message);
     }
+
+    clearTimeout(timer);
+    setIsLoading(false);
   };
 
   const fetchData = async () => {
     const timer = setTimeout(() => setIsLoading(true), 500);
 
-    try {
-      await Promise.all([fetchStations(), fetchLines()]);
-    } catch (error) {
-      console.error(error);
+    const responses = await Promise.all([fetchStations(), fetchLines()]);
+
+    if (responses.some((response) => response === false)) {
+      console.error(lineRequestError, stationRequestError);
+
       addSnackBar?.(ERROR_MESSAGE.DEFAULT);
       setLines([]);
       setStations([]);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
     }
+
+    clearTimeout(timer);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -154,10 +157,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     setDownStationId(event.target.value);
   };
 
-  const isUnauthorizedError = (value: string): boolean => {
-    return value === STATUS_CODE.UNAUTHORIZED;
-  };
-
   const onSectionSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
@@ -171,30 +170,28 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    try {
-      const newSection = {
-        upStationId: Number(upStationId),
-        downStationId: Number(downStationId),
-        distance: Number(distance),
-      };
+    const newSection = {
+      upStationId: Number(upStationId),
+      downStationId: Number(downStationId),
+      distance: Number(distance),
+    };
 
-      await addSection(selectedLineId, newSection);
+    const response = await addSection(selectedLineId, newSection);
 
-      addSnackBar?.(SUCCESS_MESSAGE.ADD_SECTION);
+    if (response) {
       await getLine(selectedLineId);
-
+      addSnackBar?.(SUCCESS_MESSAGE.ADD_SECTION);
       reset();
       setIsFormOpened(false);
-    } catch (error) {
-      console.error(error);
 
-      if (isUnauthorizedError(error.message)) {
-        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-        return;
-      }
+      return;
+    }
 
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
+    console.error(sectionRequestError);
+    addSnackBar?.(sectionRequestError.message);
+
+    if ((sectionRequestError.type = ERROR_TYPE.UNAUTHORIZED)) {
+      setIsLoggedIn?.(false);
     }
   };
 
@@ -208,21 +205,18 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    try {
-      await deleteSection(selectedLineId, stationId);
+    const response = await deleteSection(selectedLineId, stationId);
+    if (response) {
       await getLine(selectedLineId);
-
       addSnackBar?.(SUCCESS_MESSAGE.DELETE_SECTION);
-    } catch (error) {
-      console.error(error);
+      return;
+    }
 
-      if (isUnauthorizedError(error.message)) {
-        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-        return;
-      }
+    console.error(sectionRequestError);
+    addSnackBar?.(sectionRequestError.message);
 
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
+    if (sectionRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+      setIsLoggedIn?.(false);
     }
   };
 

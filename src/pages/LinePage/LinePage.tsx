@@ -30,20 +30,20 @@ import { UserContext } from '../../contexts/UserContextProvider';
 
 import REGEX from '../../constants/regex';
 import PALETTE from '../../constants/palette';
-import STATUS_CODE from '../../constants/statusCode';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 import { LINE_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
 import useStations from '../../hooks/useStations';
 import useLines from '../../hooks/useLines';
-import { APIReturnTypeStation } from '../../apis/station';
-import { APIReturnTypeLine } from '../../apis/line';
+import { APIResponseDataStation } from '../../apis/station';
+import { APIResponseDataLine } from '../../apis/line';
 
 import { isValidLength, isValidRange } from '../../utils/validator';
 import noLine from '../../assets/images/no_line.png';
 import { PageProps } from '../types';
 import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
+import ERROR_TYPE from '../../constants/errorType';
 
 const lineColors = [
   'PINK',
@@ -58,13 +58,15 @@ const lineColors = [
   'PURPLE',
 ];
 
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+const LINE_BEFORE_FETCH: APIResponseDataLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: APIResponseDataStation[] = [];
 
 const LinePage = ({ setIsLoading }: PageProps) => {
   const [isFormOpened, setIsFormOpened] = useState(false);
-  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const [stations, setStations, fetchStations, addStation, deleteStation, stationRequestError] =
+    useStations(STATION_BEFORE_FETCH);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine, lineRequestError] =
+    useLines(LINE_BEFORE_FETCH);
 
   const formElement = useRef<HTMLFormElement>(null);
   const [lineName, onlineNameChange, setLineName] = useInput('');
@@ -128,18 +130,18 @@ const LinePage = ({ setIsLoading }: PageProps) => {
   const fetchData = async () => {
     const timer = setTimeout(() => setIsLoading(true), 500);
 
-    try {
-      await Promise.all([fetchStations(), fetchLines()]);
-    } catch (error) {
-      console.error(error);
+    const responses = await Promise.all([fetchStations(), fetchLines()]);
+
+    if (responses.some((response) => response === false)) {
+      console.error(lineRequestError, stationRequestError);
 
       addSnackBar?.(ERROR_MESSAGE.DEFAULT);
       setLines([]);
       setStations([]);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
     }
+
+    clearTimeout(timer);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -158,10 +160,6 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     setDownStationId(event.target.value);
   };
 
-  const isUnauthorizedError = (value: string): boolean => {
-    return value === STATUS_CODE.UNAUTHORIZED;
-  };
-
   const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
@@ -172,34 +170,31 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    try {
-      const newLine = {
-        name: lineName,
-        color,
-        upStationId: Number(upStationId),
-        downStationId: Number(downStationId),
-        distance: Number(distance),
-      };
+    const newLine = {
+      name: lineName,
+      color,
+      upStationId: Number(upStationId),
+      downStationId: Number(downStationId),
+      distance: Number(distance),
+    };
 
-      await addLine(newLine);
+    const response = await addLine(newLine);
 
-      addSnackBar?.(SUCCESS_MESSAGE.ADD_LINE);
+    if (response) {
       await fetchData();
 
+      addSnackBar?.(SUCCESS_MESSAGE.ADD_LINE);
       reset();
       setIsFormOpened(false);
-    } catch (error) {
-      console.error(error);
-
-      if (isUnauthorizedError(error.message)) {
-        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-
-        return;
-      }
-
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
+      return;
     }
+
+    if (lineRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+      setIsLoggedIn?.(false);
+    }
+
+    console.error(lineRequestError);
+    addSnackBar?.(lineRequestError.message);
   };
 
   const onLineDelete = async (id: number, name: string) => {
@@ -207,22 +202,20 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    try {
-      await deleteLine(id);
+    const response = await deleteLine(id);
+
+    if (response) {
       await fetchData();
       addSnackBar?.(SUCCESS_MESSAGE.DELETE_LINE);
-    } catch (error) {
-      console.error(error);
-
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addSnackBar?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-
-        return;
-      }
-
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
+      return;
     }
+
+    if (lineRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+      setIsLoggedIn?.(false);
+    }
+
+    console.error(lineRequestError);
+    addSnackBar?.(lineRequestError.message);
   };
 
   return (

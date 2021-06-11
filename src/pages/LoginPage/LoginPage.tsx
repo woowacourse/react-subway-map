@@ -43,7 +43,7 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
   }
 
   const isInvalidIdPassword = (value: string): boolean => {
-    return value === STATUS_CODE.INVALID_ID_PASSWORD;
+    return value === STATUS_CODE.BAD_REQUEST;
   };
 
   const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {

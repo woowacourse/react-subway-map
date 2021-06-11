@@ -1,46 +1,79 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import API, { APIReturnTypeStation, StationData } from '../apis/station';
+import API, { APIResponseDataStation, StationData } from '../apis/station';
+import ERROR_TYPE from '../constants/errorType';
+import { ERROR_MESSAGE } from '../constants/messages';
+
+interface Error {
+  type: string;
+  message: string;
+}
+
+const defaultError = { type: ERROR_TYPE.DEFAULT, message: ERROR_MESSAGE.DEFAULT };
 
 const useStations = (
-  initialStations: APIReturnTypeStation[]
+  initialStations: APIResponseDataStation[]
 ): [
-  APIReturnTypeStation[],
-  Dispatch<SetStateAction<APIReturnTypeStation[]>>,
-  () => Promise<void>,
-  (data: StationData) => Promise<APIReturnTypeStation | undefined>,
-  (stationId: number) => Promise<void>
+  APIResponseDataStation[],
+  Dispatch<SetStateAction<APIResponseDataStation[]>>,
+  () => Promise<boolean>,
+  (data: StationData) => Promise<boolean>,
+  (stationId: number) => Promise<boolean>,
+  Error
 ] => {
-  const [stations, setStations] = useState<APIReturnTypeStation[]>(initialStations);
+  const [stations, setStations] = useState<APIResponseDataStation[]>(initialStations);
+  const [error, setError] = useState(defaultError);
 
-  const fetchStations = async (): Promise<void> => {
+  const fetchStations = async (): Promise<boolean> => {
     const response = await API.get();
 
-    setStations(response);
+    if (response.ok) {
+      setStations(response.data || []);
+      return true;
+    }
+
+    setError(response.error || defaultError);
+    return false;
   };
 
-  const addStation = async (data: StationData): Promise<APIReturnTypeStation | undefined> => {
+  const addStation = async (data: StationData): Promise<boolean> => {
     const accessToken = localStorage.getItem('accessToken');
 
     if (!accessToken) {
       console.error('no accessToken');
-      return;
+      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
+      return false;
     }
 
-    await API.post(data, accessToken);
+    const response = await API.post(data, accessToken);
+
+    if (response.ok) {
+      return true;
+    }
+
+    setError(response.error || defaultError);
+    return false;
   };
 
-  const deleteStation = async (stationId: number): Promise<void> => {
+  const deleteStation = async (stationId: number): Promise<boolean> => {
     const accessToken = localStorage.getItem('accessToken');
 
     if (!accessToken) {
       console.error('no accessToken');
-      return;
+      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
+      return false;
     }
 
-    await API.delete(stationId, accessToken);
+    const response = await API.delete(stationId, accessToken);
+
+    if (response.ok) {
+      return true;
+    }
+
+    setError(response.error || defaultError);
+    return false;
   };
 
-  return [stations, setStations, fetchStations, addStation, deleteStation];
+  return [stations, setStations, fetchStations, addStation, deleteStation, error];
 };
 
 export default useStations;
