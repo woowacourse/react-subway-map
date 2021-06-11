@@ -1,35 +1,23 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import STATUS from "../../constants/status";
 import Main from "../../components/@shared/Main";
 import Loading from "../../components/@shared/Loading";
 import StationsForm from "../../components/StationsForm";
 import StationsList from "../../components/StationsList";
-import { fetchStations, reset } from "./slice";
+import { useStationsStatus } from "./hooks";
+import { selectStationsList, selectStationsMessage } from "./slice";
 
 const Stations = () => {
-  const dispatch = useDispatch();
-  const { status, message, list } = useSelector((state) => state.stations);
+  const status = useStationsStatus();
+  const message = useSelector(selectStationsMessage);
+  const list = useSelector(selectStationsList);
 
   useEffect(() => {
-    if (status === STATUS.IDLE) {
-      dispatch(fetchStations());
-    }
-
-    return () => dispatch(reset());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (status === STATUS.SUCCEED) {
-      dispatch(reset());
-    }
-
     if (status === STATUS.FAILED) {
       alert(message);
-      dispatch(reset());
     }
-  }, [status, message, dispatch]);
+  }, [status, message]);
 
   return (
     <>

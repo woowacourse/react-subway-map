@@ -1,42 +1,22 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Loading from "../../components/@shared/Loading";
 import Main from "../../components/@shared/Main";
 import STATUS from "../../constants/status";
 import OverviewList from "../../components/OverviewList";
-import {
-  reset,
-  fetchOverview,
-  selectOverviewMessage,
-  selectOverviewStatus,
-  selectOverviewList,
-} from "./slice";
+import { selectOverviewMessage, selectOverviewList } from "./slice";
+import { useOverviewStatus } from "./hooks";
 
 const Overview = () => {
-  const dispatch = useDispatch();
-  const status = useSelector(selectOverviewStatus);
+  const status = useOverviewStatus();
   const message = useSelector(selectOverviewMessage);
   const list = useSelector(selectOverviewList);
 
   useEffect(() => {
-    if (status === STATUS.IDLE) {
-      dispatch(fetchOverview());
-    }
-
-    return () => dispatch(reset());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (status === STATUS.SUCCEED) {
-      dispatch(reset());
-    }
-
     if (status === STATUS.FAILED) {
       alert(message);
-      dispatch(reset());
     }
-  }, [status, message, dispatch]);
+  }, [status, message]);
 
   return (
     <>

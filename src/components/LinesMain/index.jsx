@@ -1,42 +1,23 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import STATUS from "../../constants/status";
-import {
-  fetchLines,
-  reset,
-  selectLinesMessage,
-  selectLinesStatus,
-} from "../../pages/Lines/slice";
+import { selectLinesMessage } from "../../pages/Lines/slice";
 import Loading from "../@shared/Loading";
 import Main from "../@shared/Main";
 import Button from "../@shared/Button";
 import LinesList from "../LinesList";
+import { useLinesStatus } from "../../pages/Lines/hooks";
 
 const LinesMain = ({ openModal }) => {
-  const dispatch = useDispatch();
-  const status = useSelector(selectLinesStatus);
+  const status = useLinesStatus();
   const message = useSelector(selectLinesMessage);
 
   useEffect(() => {
-    if (status === STATUS.IDLE) {
-      dispatch(fetchLines());
-    }
-
-    return () => dispatch(reset());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (status === STATUS.SUCCEED) {
-      dispatch(reset());
-    }
-
     if (status === STATUS.FAILED) {
       alert(message);
-      dispatch(reset());
     }
-  }, [status, message, dispatch]);
+  }, [message, status]);
 
   return (
     <>
