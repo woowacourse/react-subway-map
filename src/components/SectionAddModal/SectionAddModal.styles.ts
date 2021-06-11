@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import FlexContainer from '../@common/FlexContainer/FlexContainer';
+import Form from '../@common/Form/Form';
 import SelectBox from '../@common/SelectBox/SelectBox';
 
-export const SectionForm = styled.form`
+export const SectionForm = styled(Form)`
   & > * {
     margin: 2rem 1rem;
   }
@@ -24,7 +25,7 @@ export const StationContainer = styled(FlexContainer)`
   }
 `;
 
-export const SectionModalButtonContainer = styled(FlexContainer)`
+export const SectionAddModalButtonContainer = styled(FlexContainer)`
   & > * {
     margin-right: 1rem;
 

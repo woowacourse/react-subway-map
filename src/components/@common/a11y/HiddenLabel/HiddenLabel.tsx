@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { HiddenLabelText, StyledHiddenLabel } from './HiddenLabel.styles';
-import PropTypes from 'prop-types';
 
 interface Props {
   children: React.ReactNode;

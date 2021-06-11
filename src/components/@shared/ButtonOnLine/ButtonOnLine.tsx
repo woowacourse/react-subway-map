@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { ButtonHTMLAttributes, FC, MouseEventHandler } from 'react';
 import Button from '../../@common/Button/Button';
 import { ButtonOnLineContainer } from './ButtonOnLine.styles';

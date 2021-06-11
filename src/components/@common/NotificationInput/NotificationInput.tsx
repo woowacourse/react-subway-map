@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 import React, { VFC } from 'react';
 import Input, { InputProps } from '../Input/Input';
-import { NotificationInputContainer, NotificationText } from './NotificationInput.styles';
+import { NotificationFormInputContainer, NotificationText } from './NotificationInput.styles';
 
 interface Message {
   text: string;
@@ -15,7 +14,7 @@ interface Props extends InputProps {
 
 const NotificationInput: VFC<Props> = ({ messageInfo, className, ...options }) => {
   return (
-    <NotificationInputContainer
+    <NotificationFormInputContainer
       className={className}
       direction="column"
       justifyContent="space-between"
@@ -24,7 +23,7 @@ const NotificationInput: VFC<Props> = ({ messageInfo, className, ...options }) =
       {messageInfo?.text && (
         <NotificationText isError={messageInfo.isError}>{messageInfo.text}</NotificationText>
       )}
-    </NotificationInputContainer>
+    </NotificationFormInputContainer>
   );
 };
 

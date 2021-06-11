@@ -1,30 +1,34 @@
 import React, { ChangeEventHandler, useEffect, useState, VFC } from 'react';
 import { useSelector } from 'react-redux';
-import { ERROR_MESSAGE } from '../../../constants/message';
-import { useFormInput } from '../../../hooks/@shared/useFormInput/useFormInput';
-import { RootState } from '../../../redux/store';
-import { hasEmptyString } from '../../../util/validator';
-import HiddenLabel from '../../@common/a11y/HiddenLabel/HiddenLabel';
-import Arrow from '../../@common/Icon/Arrow';
-import SelectBox from '../../@common/SelectBox/SelectBox';
+import { ERROR_MESSAGE } from '../../constants/message';
+import { useFormInput } from '../../hooks/@shared/useFormInput/useFormInput';
+import { RootState } from '../../redux/store';
+import { Line } from '../../types';
+import HiddenLabel from '../@common/a11y/HiddenLabel/HiddenLabel';
+import Arrow from '../@common/Icon/Arrow';
+import SelectBox from '../@common/SelectBox/SelectBox';
+import { SectionInput } from '../@shared/SectionSelectBox/SectionSelectBox';
 import {
   SectionSelectBoxContainer,
   SectionSelectErrorMessage,
   StationsSelectContainer,
-} from './SectionSelectBox.styles';
+} from '../@shared/SectionSelectBox/SectionSelectBox.styles';
 
-export interface SectionInput {
-  upStationId: string;
-  downStationId: string;
+interface Props {
+  targetLine: Line;
 }
 
-const SectionSelectBox: VFC = () => {
+const SectionAddModalSectionSelectBox: VFC<Props> = ({ targetLine }) => {
   const [sectionInfo, setSectionInfo] = useFormInput<SectionInput>({
     upStationId: '',
     downStationId: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
   const { stations } = useSelector((state: RootState) => state.station);
+
+  const isStationInLine = (targetId: number) => {
+    return targetLine.stations.find((station) => station.id === targetId) ? true : false;
+  };
 
   const onChangeUpStation: ChangeEventHandler<HTMLSelectElement> = (event) => {
     const upStationId = event.currentTarget.value;
@@ -49,19 +53,28 @@ const SectionSelectBox: VFC = () => {
   };
 
   useEffect(() => {
-    //TODO: 이거 onSubmit 이벤트로 넘어갈때 타입추론 안되지 싶은데
     const { upStationId, downStationId } = sectionInfo.data;
     setSectionInfo({
       canSubmit: false,
     });
 
-    if (hasEmptyString(upStationId, downStationId)) {
-      setErrorMessage(ERROR_MESSAGE.NONE_OF_SELECTED_SECTION);
+    let numberOfStationAddedInLine = 0;
+
+    if (isStationInLine(Number(upStationId))) {
+      numberOfStationAddedInLine++;
+    }
+
+    if (isStationInLine(Number(downStationId))) {
+      numberOfStationAddedInLine++;
+    }
+
+    if (numberOfStationAddedInLine !== 1) {
+      setErrorMessage(ERROR_MESSAGE.SHOULD_CONTAIN_ONE_STATION_IN_LINE);
       return;
     }
 
-    if (upStationId === downStationId) {
-      setErrorMessage(ERROR_MESSAGE.DUPLICATED_SECTION);
+    if (upStationId === '' || downStationId === '') {
+      setErrorMessage(ERROR_MESSAGE.NONE_OF_SELECTED_SECTION);
       return;
     }
 
@@ -101,4 +114,4 @@ const SectionSelectBox: VFC = () => {
   );
 };
 
-export default SectionSelectBox;
+export default SectionAddModalSectionSelectBox;

@@ -1,22 +1,20 @@
-import React, { VFC, FormEvent, useEffect } from 'react';
+import React, { useEffect, VFC } from 'react';
 import { useSelector } from 'react-redux';
-import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import { SubmitFormInfoHandler } from '../../components/@common/Form/Form';
+import ResponsiveFormSubmit from '../../components/@common/Form/ResponsiveFormSubmit/ResponsiveFormSubmit';
 import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLine';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
-import { PAGE_INFO, STATION } from '../../constants/appInfo';
-import { ERROR_MESSAGE } from '../../constants/message';
-import useNotificationInput from '../../hooks/@shared/useNotificationInput/useNotificationInput';
-import useReadyToSubmit from '../../hooks/@shared/useReadyToSubmit/useReadyToSubmit';
+import StationNameInput from '../../components/StationNameInput/StationNameInput';
+import { LABEL_TEXT } from '../../constants/a11y';
+import { PAGE_INFO } from '../../constants/appInfo';
+import { CONFIRM_MESSAGE } from '../../constants/message';
+import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { addStation, deleteStation, loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
-import { isKoreanAndNumber } from '../../util/validator';
-import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
-import { CONFIRM_MESSAGE } from '../../constants/message';
-import { LABEL_TEXT } from '../../constants/a11y';
-import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
+import { StationForm, StationList, StationName } from './Stations.styles';
 
 const Stations: VFC = () => {
   const APIInfo = useCurrentAPIInfo();
@@ -24,32 +22,11 @@ const Stations: VFC = () => {
   const { stations, errorMessage } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 
-  const [
-    stationInput,
-    stationErrorMessage,
-    onChangeStationInput,
-    setStationInput,
-  ] = useNotificationInput(({ setInput, setErrorMessage, targetValue }) => {
-    if (targetValue.length >= STATION.NAME_MIN_LENGTH && isKoreanAndNumber(targetValue)) {
-      setErrorMessage('');
-    } else {
-      setErrorMessage(ERROR_MESSAGE.INVALID_STATION_NAME);
-    }
+  const onSubmitAddStation: SubmitFormInfoHandler = (inputValues, clearFormInput) => {
+    const [stationName] = inputValues;
 
-    if (stations?.some(({ name }) => name === targetValue)) {
-      setErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
-    }
-
-    setInput(targetValue);
-  });
-
-  const isValidStationInput = useReadyToSubmit([stationInput], [stationErrorMessage]);
-
-  const onAddStation = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    dispatch(addStation(stationInput));
-    setStationInput('');
+    dispatch(addStation(String(stationName)));
+    clearFormInput();
   };
 
   const onDeleteStation = (stationId: number) => () => {
@@ -76,17 +53,9 @@ const Stations: VFC = () => {
     <CardTemplate templateColor={APIInfo.themeColor} titleText={PAGE_INFO.STATIONS.text}>
       {isLogin && (
         <>
-          <StationForm onSubmit={onAddStation}>
-            <StationNameInput
-              value={stationInput}
-              onChange={onChangeStationInput}
-              labelIcon={<Subway />}
-              minLength={STATION.NAME_MIN_LENGTH}
-              maxLength={STATION.NAME_MAX_LENGTH}
-              labelText={LABEL_TEXT.PLEASE_INPUT_STATION_NAME}
-              messageInfo={{ text: stationErrorMessage, isError: true }}
-            />
-            <Button disabled={!isValidStationInput}>{LABEL_TEXT.ADD}</Button>
+          <StationForm onSubmitFormInfo={onSubmitAddStation}>
+            <StationNameInput className="station-name-input" />
+            <ResponsiveFormSubmit>{LABEL_TEXT.ADD}</ResponsiveFormSubmit>
           </StationForm>
           <HorizontalLine />
         </>

@@ -9,7 +9,7 @@ import Add from '../../components/@common/Icon/Add';
 import Subway from '../../components/@common/Icon/Subway';
 import ListItem from '../../components/@common/ListItem/ListItem';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
-import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
+import SectionAddModal from '../../components/SectionAddModal/SectionAddModal';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';

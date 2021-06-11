@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useState } from 'react';
-import { BaseInputElement, SetText } from '../../types';
+import { BaseInputElement, SetText } from '../../../types';
 
 interface OnChangeTool {
   setInput: SetText;

@@ -2,7 +2,7 @@ import React from 'react';
 import LineAddModal from './LineAddModal';
 
 export default {
-  title: 'modal/LinesModal',
+  title: 'modal/LinesAddModal',
   component: LineAddModal,
   argTypes: {},
 };

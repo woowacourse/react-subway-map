@@ -62,9 +62,7 @@ export const LINE = {
   COLOR_SELECT_GROUP: 'lineColor',
 };
 
-export const SECTION = {
-  MIN_DISTANCE: 1,
-};
+export const MIN_DISTANCE = 1;
 
 export const SIGNUP = {
   MIN_AGE: 1,

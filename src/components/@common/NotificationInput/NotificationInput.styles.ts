@@ -6,7 +6,7 @@ interface NotificationTextProps {
   isError: boolean;
 }
 
-export const NotificationInputContainer = styled(FlexContainer)`
+export const NotificationFormInputContainer = styled(FlexContainer)`
   height: 5rem;
 `;
 

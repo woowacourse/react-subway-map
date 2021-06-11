@@ -1,4 +1,4 @@
-import React, { VFC, FormEventHandler } from 'react';
+import React, { VFC } from 'react';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
