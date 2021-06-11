@@ -7,6 +7,7 @@ import { API as lineAPI } from '../../hooks/useLines';
 
 import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
+import { mockAccessToken } from '../../mockData';
 
 const mock_stations = [
   {
@@ -66,10 +67,7 @@ describe('사용자는 지하철 노선 관리 기능을 이용할 수 있다.',
     lineAPI.post = jest.fn();
     lineAPI.delete = jest.fn();
 
-    localStorage.setItem(
-      'accessToken',
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjIyMDMzMjkxLCJleHAiOjE2MjIwMzY4OTF9.-M7TyMMvXk-y5-kIoPP4crTt6Nnvv8ubREKKZjO5d7A'
-    );
+    localStorage.setItem('accessToken', mockAccessToken);
 
     render(
       <UserProvider>

@@ -1,3 +1,6 @@
+const mockAccessToken =
+  'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjIyMDMzMjkxLCJleHAiOjE2MjIwMzY4OTF9.-M7TyMMvXk-y5-kIoPP4crTt6Nnvv8ubREKKZjO5d7A';
+
 const mockStationList = [
   {
     id: 1,
@@ -55,4 +58,4 @@ const mockLineList = [
   },
 ];
 
-export { mockStationList, mockLineList };
+export { mockAccessToken, mockStationList, mockLineList };
