@@ -34,7 +34,7 @@ const App = () => {
   const navigationLinks = isAuthenticated ? publicNavigationLinks : privateNavigationLinks;
 
   const navigationLinkList = navigationLinks.map((navigationLink) => (
-    <Link to={navigationLink.link} key={navigationLink.link}>
+    <Link data-testid={`navigation-link-${navigationLink.link}`} to={navigationLink.link} key={navigationLink.link}>
       <Button type="button" buttonTheme="white" kind="rect">
         {navigationLink.title}
       </Button>
@@ -77,7 +77,13 @@ const App = () => {
         {navigationLinkList}
         {isAuthenticated && (
           <Link to={PAGE_PATH.LOGIN}>
-            <Button type="button" onClick={logout} buttonTheme="white" kind="rect">
+            <Button
+              data-testid={`navigation-link-logout`}
+              type="button"
+              onClick={logout}
+              buttonTheme="white"
+              kind="rect"
+            >
               ❌ 로그아웃
             </Button>
           </Link>

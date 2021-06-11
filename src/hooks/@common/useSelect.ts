@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useSelect = (initialValue: string) => {
+const useSelect = (initialValue?: string) => {
   const [selectValue, setSelectValue] = useState(initialValue);
 
   const setValueOnChange: React.ChangeEventHandler<HTMLSelectElement> = ({ target }) => {

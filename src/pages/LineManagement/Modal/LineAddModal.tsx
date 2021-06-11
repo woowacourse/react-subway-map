@@ -13,14 +13,15 @@ import useSelect from "../../../hooks/@common/useSelect";
 import { validateLineName } from "../../../validations/line";
 import { validateSectionDistance } from "../../../validations/section";
 import { CIRCLE_COLOR_CODE } from "../../../constants/color";
+import { TEST_ID } from "../../../@test/testId";
 
 interface Props {
-  onClose: MouseEventHandler<HTMLDivElement>;
+  closeModal: () => void;
   stations: Station[];
   addLine: (lineRequestItem: LineAddRequestItem) => void;
 }
 
-const LineAddModal = ({ onClose, stations, addLine }: Props) => {
+const LineAddModal = ({ closeModal, stations, addLine }: Props) => {
   const [firstStation, secondStation] = stations;
 
   const { inputValue: lineName, errorMessage: lineNameErrorMessage, setValueOnChange: setLineNameOnChange } = useInput(
@@ -51,6 +52,7 @@ const LineAddModal = ({ onClose, stations, addLine }: Props) => {
         downStationId: Number(downStationId),
         name: lineName,
       });
+      closeModal();
     } catch (error) {
       alert(error.message);
     }
@@ -59,11 +61,12 @@ const LineAddModal = ({ onClose, stations, addLine }: Props) => {
   const stationOptions = stations.map(({ id, name }) => ({ value: id, text: name }));
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={closeModal}>
       <form onSubmit={onSubmit}>
         <Block style={{ flexDirection: "column", maxWidth: "40.625rem", alignItems: "flex-start" }}>
           <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>🛤️ 노선 추가</h3>
           <Input
+            data-testid={TEST_ID.LINE_NAME_INPUT}
             value={lineName}
             errorMessage={lineNameErrorMessage}
             onChange={setLineNameOnChange}
@@ -73,16 +76,24 @@ const LineAddModal = ({ onClose, stations, addLine }: Props) => {
           />
           <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
             <Select
+              data-testid={TEST_ID.LINE_UP_STATION_SELECT}
               value={upStationId}
               onChange={setUpStationOnChange}
               options={stationOptions}
               style={{ marginRight: "0.625rem" }}
               required
             />
-            <Select value={downStationId} onChange={setDownStationOnChange} options={stationOptions} required />
+            <Select
+              data-testid={TEST_ID.LINE_DOWN_STATION_SELECT}
+              value={downStationId}
+              onChange={setDownStationOnChange}
+              options={stationOptions}
+              required
+            />
           </Flex>
           <Flex style={{ width: "100%", marginBottom: "0.9375rem", flexDirection: "column" }}>
             <Input
+              data-testid={TEST_ID.LINE_DISTANCE_INPUT}
               type="number"
               value={distance}
               errorMessage={disatanceErrorMessage}
@@ -95,7 +106,7 @@ const LineAddModal = ({ onClose, stations, addLine }: Props) => {
           </Flex>
           <ColorPicker color={color} onSetColor={setColor} style={{ marginBottom: "0.9375rem" }} />
           <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
-            <Button>노선 추가</Button>
+            <Button data-testid={TEST_ID.LINE_ADD_BUTTON}>노선 추가</Button>
           </Flex>
         </Block>
       </form>

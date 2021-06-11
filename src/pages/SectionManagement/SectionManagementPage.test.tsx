@@ -69,7 +69,7 @@ const tryAddSection = async (sectionInfo: SectionInfo) => {
   });
 };
 
-const tryDeleteSection = async (id: Station["id"]) => {
+const tryDeleteSection = async (name: Station["name"]) => {
   const { findByTestId } = render(
     <>
       <SectionManagementPage />
@@ -77,7 +77,7 @@ const tryDeleteSection = async (id: Station["id"]) => {
     </>
   );
 
-  const TargetLineItem = await findByTestId(`section-${id}`);
+  const TargetLineItem = await findByTestId(`section-item-${name}`);
   TargetLineItem.querySelector('button[role="delete"]');
 
   act(() => {
@@ -171,7 +171,7 @@ describe("지하철 구간", () => {
         const [firstLine] = initialState.line.items;
         const [lastStationInLine] = firstLine.stations;
 
-        tryDeleteSection(lastStationInLine.id);
+        tryDeleteSection(lastStationInLine.name);
 
         waitFor(() => {
           const actions = store.getActions();

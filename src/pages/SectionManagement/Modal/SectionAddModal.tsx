@@ -17,14 +17,14 @@ import { isLineHasStation } from "../../../utils/line";
 import { MAX_SECTION_DISTANCE } from "../../../constants/config";
 
 interface Props {
-  onClose: MouseEventHandler<HTMLDivElement>;
+  closeModal: () => void;
   line: Line;
   stations: Station[];
   addSection: (sectionAddRequestItem: SectionAddRequestItem) => Promise<void>;
   deleteSection: ({ lineId, stationId }: { lineId: number; stationId: number }) => Promise<void>;
 }
 
-const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
+const SectionAddModal = ({ closeModal, line, stations, addSection }: Props) => {
   const { selectValue: upStationId, setValueOnChange: setUpStationIdOnChange } = useSelect("");
   const { selectValue: downStationId, setValueOnChange: setDownStationIdOnChange } = useSelect("");
 
@@ -94,13 +94,14 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
         downStationId: Number(downStationId),
         distance: Number(distance),
       });
+      closeModal();
     } catch (error) {
       alert(error.message);
     }
   };
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={closeModal}>
       <form onSubmit={onAddSection}>
         <Block style={{ flexDirection: "column", maxWidth: "40.625rem" }}>
           <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>🔁 구간 추가</h3>
@@ -126,6 +127,7 @@ const SectionAddModal = ({ onClose, line, stations, addSection }: Props) => {
           </Flex>
           <Flex style={{ width: "100%", flexDirection: "column", marginBottom: "0.9375rem" }}>
             <Input
+              data-testid={TEST_ID.SECTION_DISTANCE_INPUT}
               value={distance}
               onChange={setDistanceOnChange}
               errorMessage={distanceErrorMessage}

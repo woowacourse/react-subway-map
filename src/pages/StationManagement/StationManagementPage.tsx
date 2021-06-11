@@ -76,7 +76,12 @@ const StationManagementPage = () => {
         </form>
         <Flex style={{ width: "100%", flexDirection: "column" }}>
           {stations.map(({ id, name }) => (
-            <ListItem key={id} style={{ padding: "0.5625rem" }} onDelete={() => onDeleteStation(id)}>
+            <ListItem
+              data-testid={`station-item-${name}`}
+              key={id}
+              style={{ padding: "0.5625rem" }}
+              onDelete={() => onDeleteStation(id)}
+            >
               {name}
             </ListItem>
           ))}

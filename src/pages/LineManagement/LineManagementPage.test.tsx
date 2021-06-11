@@ -79,7 +79,7 @@ const tryDeleteLine = async (id: Line["id"]) => {
     </>
   );
 
-  const TargetLineItem = await findByTestId(`line-${id}`);
+  const TargetLineItem = await findByTestId(`line-item-${name}`);
   TargetLineItem.querySelector('button[role="delete"]');
 
   act(() => {

@@ -25,20 +25,20 @@ const SectionManagementPage = () => {
   const { isAuthenticated } = useAuth();
 
   const [defaultLine] = lines;
-  const { selectValue: lineId, setValueOnChange: setLineIdOnChange } = useSelect(String(defaultLine?.id));
+  const { selectValue: lineId, setValueOnChange: setLineIdOnChange } = useSelect();
 
-  const targetLine = lines.find(({ id }) => id === Number(lineId));
+  const targetLine = lineId ? lines.find(({ id }) => id === Number(lineId)) : defaultLine;
 
   useEffect(() => {
     getStations();
     getLines();
   }, []);
 
-  const onSectionAddModalOpen = () => {
+  const openSectionAddModal = () => {
     setIsAddModalOpened(true);
   };
 
-  const onSectionAddModalClose = () => {
+  const closeSectionAddModal = () => {
     setIsAddModalOpened(false);
   };
 
@@ -58,7 +58,8 @@ const SectionManagementPage = () => {
     return (
       <SectionListItemWrapper key={station.id}>
         <ListItem
-          data-testid={`section-${station.id}`}
+          role="section-item"
+          data-testid={`section-item-${station.name}`}
           circleColor={CIRCLE_COLOR[targetLine.color]}
           style={{ padding: "0.5625rem" }}
           onUpdate={() => {}}
@@ -72,11 +73,11 @@ const SectionManagementPage = () => {
   });
 
   return (
-    <FlexCenter>
+    <FlexCenter data-testid={TEST_ID.SECTION_PAGE}>
       <Block style={{ marginTop: "2.5rem", width: "540px", flexDirection: "column", alignItems: "flex-start" }}>
         <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
           <h2 style={{ marginBottom: "1rem" }}>🔁 구간 관리</h2>
-          <Button data-testid={TEST_ID.SECTION_MODAL_OPEN_BUTTON} type="button" onClick={onSectionAddModalOpen}>
+          <Button data-testid={TEST_ID.SECTION_MODAL_OPEN_BUTTON} type="button" onClick={openSectionAddModal}>
             구간 추가
           </Button>
         </FlexBetween>
@@ -92,7 +93,7 @@ const SectionManagementPage = () => {
       </Block>
       {isAddModalOpened && targetLine && (
         <SectionAddModal
-          onClose={onSectionAddModalClose}
+          closeModal={closeSectionAddModal}
           addSection={addSection}
           deleteSection={deleteSection}
           line={targetLine}
