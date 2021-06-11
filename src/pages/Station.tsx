@@ -6,16 +6,13 @@ import InputContainer from '@units/InputContainer/InputContainer';
 import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
-import PATH from 'constants/path';
 import useChangeEvent from 'hooks/useChangeEvent';
 import useData from 'hooks/useData';
-import useRedirect from 'hooks/useRedirect';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
 
 const Station = () => {
-  useRedirect(PATH.LOGIN);
   const dispatch = useDispatch();
   const { stations } = useData();
   const { value: name, setValue: setName, onChange: onNameChange } = useChangeEvent('');

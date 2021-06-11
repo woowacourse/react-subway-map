@@ -4,11 +4,9 @@ import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import MESSAGE from 'constants/message';
-import PATH from 'constants/path';
 // import editImg from 'assets/images/edit.png';
 import useData from 'hooks/useData';
 import useModal from 'hooks/useModal';
-import useRedirect from 'hooks/useRedirect';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
@@ -16,7 +14,6 @@ import { getStationAsync } from 'redux/stationSlice';
 import AddLineModal from './AddLineModal';
 
 const Line = () => {
-  useRedirect(PATH.LOGIN);
   const dispatch = useDispatch();
   const { stations, lines } = useData();
   const { modalOpen, onModalOpen, onModalClose } = useModal();
