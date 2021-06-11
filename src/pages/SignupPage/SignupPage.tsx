@@ -82,14 +82,16 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
     isPasswordMatched;
 
   const checkEmailDuplicated = useDebounce(async (value: string) => {
-    try {
-      const response = await apiRequest.checkEmailDuplicated(value);
+    const response = await apiRequest.checkEmailDuplicated(value);
 
-      setIsEmailDuplicated(response);
-    } catch (error) {
-      console.error(error);
+    if (response.ok) {
+      setIsEmailDuplicated(response.data ? true : false);
+      return;
+    }
 
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
+    if (response.error) {
+      console.error(response.error);
+      addSnackBar?.(response.error.message);
     }
   }, DEBOUNCE_DELAY);
 
@@ -122,17 +124,17 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
     const timer = setTimeout(() => setIsLoading(true), 500);
 
-    try {
-      await apiRequest.signup({ email, password, age: Number(age) });
+    const response = await apiRequest.signup({ email, password, age: Number(age) });
+    if (response.ok) {
       addSnackBar?.(SUCCESS_MESSAGE.SIGNUP);
       history.push(PATH.LOGIN);
-    } catch (error) {
-      console.error(error);
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
+    } else {
+      console.error(response.error);
+      addSnackBar?.(response.error?.message ?? ERROR_MESSAGE.DEFAULT);
     }
+
+    clearTimeout(timer);
+    setIsLoading(false);
   };
 
   return (

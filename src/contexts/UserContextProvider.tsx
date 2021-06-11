@@ -34,15 +34,14 @@ const UserProvider = ({ children }: UserProviderProps) => {
     isMounted.current = false;
 
     (async () => {
-      try {
-        const userInfo = await apiRequest.getUserInfo();
+      const response = await apiRequest.getUserInfo();
 
-        if (userInfo) {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error(error);
+      if (response.ok) {
+        setIsLoggedIn(true);
+        return;
       }
+
+      console.error(response.error);
     })();
   }, []);
 

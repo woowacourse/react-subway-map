@@ -25,6 +25,7 @@ import useInput from '../../hooks/useInput';
 import apiRequest from '../../request';
 import { PageProps } from '../types';
 import { SignUpLink, Form } from './LoginPage.style';
+import ERROR_TYPE from '../../constants/errorType';
 
 const LoginPage = ({ setIsLoading }: PageProps) => {
   const [email, onEmailChange] = useInput('');
@@ -42,10 +43,6 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     return <Redirect to={PATH.ROOT} />;
   }
 
-  const isInvalidIdPassword = (value: string): boolean => {
-    return value === STATUS_CODE.BAD_REQUEST;
-  };
-
   const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
@@ -57,27 +54,29 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
 
     const timer = setTimeout(() => setIsLoading(true), 500);
 
-    try {
-      const accessToken = await apiRequest.login({ email, password });
+    const response = await apiRequest.login({ email, password });
 
+    if (response.ok) {
       addSnackBar?.(SUCCESS_MESSAGE.LOGIN);
       setIsLoggedIn?.(true);
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('accessToken', response.data);
 
       history.push(PATH.ROOT);
-    } catch (error) {
-      console.error(error);
+    }
 
-      if (isInvalidIdPassword(error.message)) {
-        setError(ERROR_MESSAGE.LOGIN);
+    if (response.error) {
+      console.error(response.error);
+
+      if (response.error.type === ERROR_TYPE.INVALID_LOGIN_INFO) {
+        setError(response.error.message);
         return;
       }
 
       addSnackBar?.(ERROR_MESSAGE.DEFAULT);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
     }
+
+    clearTimeout(timer);
+    setIsLoading(false);
   };
 
   return (

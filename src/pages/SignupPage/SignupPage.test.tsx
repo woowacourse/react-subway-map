@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 
+import apiRequest from '../../request';
 import SignupPage from './SignupPage';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
@@ -16,13 +15,10 @@ const INVALID_AGE = 301;
 const INVALID_PASSWORD = '패스';
 
 describe('사용자는 회원가입을 할 수 있다.', () => {
-  const server = setupServer(
-    rest.post(`${BASE_URL}/api/members`, (req, res, ctx) => {
-      return res(ctx.status(201));
-    })
-  );
-
   beforeEach(() => {
+    apiRequest.checkEmailDuplicated = jest.fn().mockReturnValue({ ok: true, data: false });
+    apiRequest.signup = jest.fn().mockReturnValue({ ok: true });
+
     render(
       <Router>
         <Route exact path="/">
@@ -37,14 +33,6 @@ describe('사용자는 회원가입을 할 수 있다.', () => {
 
     history.pushState({ value: '' }, '', '/signup');
   });
-
-  beforeAll(() => {
-    server.listen();
-  });
-
-  afterEach(() => server.resetHandlers());
-
-  afterAll(() => server.close());
 
   it('사용자는 유효한 정보를 입력해서 회원가입을 할 수 있다.', async () => {
     const emailInput = screen.getByLabelText('이메일 입력');
@@ -72,11 +60,7 @@ describe('사용자는 회원가입을 할 수 있다.', () => {
   });
 
   it('이미 가입된 이메일을 입력하면 에러메시지를 보여준다.', async () => {
-    server.use(
-      rest.get(`${BASE_URL}/api/members`, (req, res, ctx) => {
-        return res(ctx.json(true));
-      })
-    );
+    apiRequest.checkEmailDuplicated = jest.fn().mockReturnValue({ ok: true, data: true });
 
     const emailInput = screen.getByLabelText('이메일 입력');
     fireEvent.change(emailInput, { target: { value: EMAIL } });
@@ -85,12 +69,6 @@ describe('사용자는 회원가입을 할 수 있다.', () => {
   });
 
   it('이메일이 이용가능한 경우 안내메시지를 보여준다.', async () => {
-    server.use(
-      rest.get(`${BASE_URL}/api/members`, (req, res, ctx) => {
-        return res(ctx.json(false));
-      })
-    );
-
     const emailInput = screen.getByLabelText('이메일 입력');
     fireEvent.change(emailInput, { target: { value: EMAIL } });
 

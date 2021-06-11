@@ -54,8 +54,9 @@ const VALID_LINE_NAME = '피터라인';
 
 describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
-    request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
-
+    request.getUserInfo = jest
+      .fn()
+      .mockResolvedValue({ ok: true, data: { id: 1, age: 9, email: 'tets@test.com' } });
     stationAPI.get = jest.fn().mockImplementation(() => {
       return { ok: true, data: mock_stations };
     });
