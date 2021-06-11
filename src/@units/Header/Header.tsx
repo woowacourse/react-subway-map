@@ -45,9 +45,9 @@ const Header = ({ isLogin }: HeaderProps) => {
             로그아웃
           </button>
         ) : (
-          <button className="mx-6 focus:outline-none" type="button">
+          <Link className="mx-6" to={PATH.LOGIN}>
             로그인
-          </button>
+          </Link>
         )}
       </nav>
     </header>
