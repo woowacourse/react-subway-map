@@ -6,9 +6,7 @@ import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import COLORS from 'constants/color';
 import MESSAGE from 'constants/message';
-import useChangeEvent from 'hooks/useChangeEvent';
-import useData from 'hooks/useData';
-import useModal from 'hooks/useModal';
+import { useData, useModal, useSelect } from 'hooks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearSelectedLIne, getLinesAsync, getSelectedLineAsync } from 'redux/lineSlice';
@@ -21,7 +19,7 @@ const Section = () => {
   const { stations, lines, selectedLine } = useData();
   const { modalOpen, onModalOpen, onModalClose } = useModal();
 
-  const { value: selectedLineId, onChange: onSelectedLineIdChange } = useChangeEvent(0);
+  const { value: selectedLineId, onChange: onSelectedLineIdChange } = useSelect();
 
   const handleDelete = async (stationId: number, station: string) => {
     if (!window.confirm(MESSAGE.COMMON.DELETE_CONFIRM(station))) {

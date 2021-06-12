@@ -6,7 +6,7 @@ export interface AddSectionPayload {
   id: number;
   upStationId: number;
   downStationId: number;
-  distance: number;
+  distance: string;
 }
 
 interface DeleteSectionPayload {

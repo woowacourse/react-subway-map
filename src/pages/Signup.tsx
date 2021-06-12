@@ -11,18 +11,18 @@ import { signupAsync } from 'redux/authSlice';
 import { useHistory } from 'react-router';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import MESSAGE from 'constants/message';
-import useChangeEvent from 'hooks/useChangeEvent';
 import PATH from 'constants/path';
 import InputContainer from '@units/InputContainer/InputContainer';
+import useInput from 'hooks/useInput';
 
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { value: email, onChange: onEmailChange } = useChangeEvent('');
-  const { value: age, onChange: onAgeChange } = useChangeEvent(0);
-  const { value: password, onChange: onPasswordChange } = useChangeEvent('');
-  const { value: passwordConfirmation, onChange: onPasswordConfirmationChange } = useChangeEvent('');
+  const { value: email, onChange: onEmailChange } = useInput();
+  const { value: age, onChange: onAgeChange } = useInput();
+  const { value: password, onChange: onPasswordChange } = useInput();
+  const { value: passwordConfirmation, onChange: onPasswordConfirmationChange } = useInput();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

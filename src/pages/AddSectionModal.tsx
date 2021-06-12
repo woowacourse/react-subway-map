@@ -9,8 +9,9 @@ import Button from '@shared/Button/Button';
 import ImageButton from '@shared/ImageButton/ImageButton';
 import { LineInterface, StationInterface } from 'types';
 import { AddSectionPayload } from 'redux/sectionSlice';
-import useChangeEvent from 'hooks/useChangeEvent';
 import InputContainer from '@units/InputContainer/InputContainer';
+import useSelect from 'hooks/useSelect';
+import useInput from 'hooks/useInput';
 
 interface AddSectionModalProps {
   onModalClose: () => void;
@@ -20,10 +21,10 @@ interface AddSectionModalProps {
 }
 
 const AddSectionModal = ({ onModalClose, onSubmit, stations, lines }: AddSectionModalProps) => {
-  const { value: lineId, onChange: onLineIdChange } = useChangeEvent(0);
-  const { value: upStationId, onChange: onUpStationIdChange } = useChangeEvent(0);
-  const { value: downStationId, onChange: onDownStationIdChange } = useChangeEvent(0);
-  const { value: distance, onChange: onDistanceChange } = useChangeEvent(0);
+  const { value: lineId, onChange: onLineIdChange } = useSelect();
+  const { value: upStationId, onChange: onUpStationIdChange } = useSelect();
+  const { value: downStationId, onChange: onDownStationIdChange } = useSelect();
+  const { value: distance, onChange: onDistanceChange } = useInput();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

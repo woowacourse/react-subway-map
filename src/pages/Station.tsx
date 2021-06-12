@@ -6,16 +6,15 @@ import InputContainer from '@units/InputContainer/InputContainer';
 import ListItem from '@units/ListItem/ListItem';
 import subwayImg from 'assets/images/subway.png';
 import MESSAGE from 'constants/message';
-import useChangeEvent from 'hooks/useChangeEvent';
-import useData from 'hooks/useData';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useData, useInput } from 'hooks';
 import { addStationAsync, deleteStationAsync, getStationAsync } from 'redux/stationSlice';
 
 const Station = () => {
   const dispatch = useDispatch();
   const { stations } = useData();
-  const { value: name, setValue: setName, onChange: onNameChange } = useChangeEvent('');
+  const { value: name, setValue: setName, onChange: onNameChange } = useInput();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

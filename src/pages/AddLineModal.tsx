@@ -11,8 +11,9 @@ import ImageButton from '@shared/ImageButton/ImageButton';
 import { StationInterface } from 'types';
 import { AddLinePayload } from 'redux/lineSlice';
 import COLORS from 'constants/color';
-import useChangeEvent from 'hooks/useChangeEvent';
 import InputContainer from '@units/InputContainer/InputContainer';
+import useSelect from 'hooks/useSelect';
+import useInput from 'hooks/useInput';
 
 interface AddLineModalProps {
   onSubmit: ({ name, color, upStationId, downStationId, distance }: AddLinePayload) => void;
@@ -21,11 +22,11 @@ interface AddLineModalProps {
 }
 
 const AddLineModal = ({ onModalClose, onSubmit, stations }: AddLineModalProps) => {
-  const { value: name, onChange: onNameChange } = useChangeEvent('');
-  const { value: upStationId, onChange: onUpStationIdChange } = useChangeEvent(0);
-  const { value: downStationId, onChange: onDownStationIdChange } = useChangeEvent(0);
-  const { value: distance, onChange: onDistanceChange } = useChangeEvent(0);
-  const { value: color, setValue: setColor } = useChangeEvent('');
+  const { value: name, onChange: onNameChange } = useInput();
+  const { value: upStationId, onChange: onUpStationIdChange } = useSelect();
+  const { value: downStationId, onChange: onDownStationIdChange } = useSelect();
+  const { value: distance, onChange: onDistanceChange } = useInput();
+  const { value: color, setValue: setColor } = useInput();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

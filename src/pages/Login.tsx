@@ -11,17 +11,17 @@ import { loginAsync } from 'redux/authSlice';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import axios from 'axios';
 import MESSAGE from 'constants/message';
-import useData from 'hooks/useData';
-import useChangeEvent from 'hooks/useChangeEvent';
+import { useData } from 'hooks';
 import PATH from 'constants/path';
 import InputContainer from '@units/InputContainer/InputContainer';
+import useInput from 'hooks/useInput';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken } = useData();
-  const { value: email, onChange: onEmailChange } = useChangeEvent('');
-  const { value: password, onChange: onPasswordChange } = useChangeEvent('');
+  const { value: email, onChange: onEmailChange } = useInput();
+  const { value: password, onChange: onPasswordChange } = useInput();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

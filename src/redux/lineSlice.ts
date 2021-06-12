@@ -8,7 +8,7 @@ export interface AddLinePayload {
   color: string;
   upStationId: number;
   downStationId: number;
-  distance: number;
+  distance: string;
 }
 interface GetLinePayload {
   id: number;

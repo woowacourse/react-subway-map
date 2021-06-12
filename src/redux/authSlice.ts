@@ -5,7 +5,7 @@ import MESSAGE from 'constants/message';
 export interface SignupPayload {
   email: string;
   password: string;
-  age: number;
+  age: string;
 }
 
 interface LoginPayload {

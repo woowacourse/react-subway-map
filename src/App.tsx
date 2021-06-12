@@ -1,6 +1,6 @@
 import Layout from '@layout/Layout';
 import PATH from 'constants/path';
-import useData from 'hooks/useData';
+import { useData } from 'hooks';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
 import Login from 'pages/Login';

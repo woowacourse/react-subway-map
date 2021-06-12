@@ -5,12 +5,11 @@ import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import MESSAGE from 'constants/message';
 // import editImg from 'assets/images/edit.png';
-import useData from 'hooks/useData';
-import useModal from 'hooks/useModal';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
 import { getStationAsync } from 'redux/stationSlice';
+import { useData, useModal } from '../hooks';
 import AddLineModal from './AddLineModal';
 
 const Line = () => {
