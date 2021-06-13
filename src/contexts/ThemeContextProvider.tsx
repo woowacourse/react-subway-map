@@ -18,7 +18,7 @@ const hostColor: { [key: string]: ThemeColor } = {
 };
 
 const ThemeProvider = ({ children }: HTMLAttributes<HTMLElement>) => {
-  const [themeColor, setThemeColor] = useState<string>(
+  const [themeColor, setThemeColor] = useState(
     apiHostName ? PALETTE[hostColor[apiHostName]] : PALETTE.BAEMIN
   );
 

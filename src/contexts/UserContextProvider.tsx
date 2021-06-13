@@ -21,7 +21,7 @@ interface User {
 const UserContext = createContext<User | null>(null);
 
 const UserProvider = ({ children }: UserProviderProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isMounted = useRef(true);
 
   useEffect(() => {

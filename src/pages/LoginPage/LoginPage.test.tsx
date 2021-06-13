@@ -11,6 +11,7 @@ const BASE_URL = 'https://subwaybot.n-e.kr';
 const EMAIL = 'test@test.com';
 const PASSWORD = '12341234';
 
+// LoginPage test
 describe('사용자는 로그인을 할 수 있다.', () => {
   const server = setupServer(
     rest.post(`${BASE_URL}/api/login/token`, (req, res, ctx) => {

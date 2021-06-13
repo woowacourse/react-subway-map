@@ -1,4 +1,3 @@
-import { access } from 'fs';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { request, REQUEST_URL } from '../request';
 
@@ -46,15 +45,15 @@ const API = {
 };
 
 const useStations = (
-  initialStations: APIReturnTypeStation[]
+  initialStations: APIReturnTypeStation[] | null
 ): [
-  APIReturnTypeStation[],
-  Dispatch<SetStateAction<APIReturnTypeStation[]>>,
+  APIReturnTypeStation[] | null,
+  Dispatch<SetStateAction<APIReturnTypeStation[] | null>>,
   () => Promise<void>,
   (data: StationData) => Promise<APIReturnTypeStation | undefined>,
   (stationId: number) => Promise<void>
 ] => {
-  const [stations, setStations] = useState<APIReturnTypeStation[]>(initialStations);
+  const [stations, setStations] = useState<APIReturnTypeStation[] | null>(initialStations);
 
   const fetchStations = async (): Promise<void> => {
     const response = await API.get();

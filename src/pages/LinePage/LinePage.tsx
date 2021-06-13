@@ -48,25 +48,22 @@ const lineColors = [
   'PURPLE',
 ];
 
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
-
 const LinePage = ({ setIsLoading }: PageProps) => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const [stations, setStations, fetchStations] = useStations(null);
+  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(null);
   const [lineName, onlineNameChange, setLineName] = useInput('');
-
-  const [upStationId, setUpStationId] = useState('');
-  const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');
 
+  const [formOpen, setFormOpen] = useState(false);
+  const [upStationId, setUpStationId] = useState('');
+  const [downStationId, setDownStationId] = useState('');
+
   const colors = useMemo(() => {
-    const usedLineColors = lines.map((line) => line.color);
+    const usedLineColors = lines?.map((line) => line.color);
 
     return lineColors.map((color) => ({
       name: color,
-      disabled: usedLineColors.includes(color),
+      disabled: Boolean(usedLineColors?.includes(color)),
     }));
   }, [lines]);
 
@@ -103,7 +100,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     }
   };
 
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
+  if (lines === null || stations === null) {
     return <></>;
   }
 
@@ -222,11 +219,11 @@ const LinePage = ({ setIsLoading }: PageProps) => {
         </Form>
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE}>
-        {lines.length === 0 ? (
+        {lines?.length === 0 ? (
           <img src={noLine} alt="지하철 노선 없음 이미지" />
         ) : (
           <List aria-label="노선 목록">
-            {lines.map(({ id, name, color }) => (
+            {lines?.map(({ id, name, color }) => (
               <li key={id}>
                 <ColorDot size="s" backgroundColor={color} />
                 <p>{name}</p>

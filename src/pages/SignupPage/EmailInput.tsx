@@ -27,7 +27,7 @@ const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
   ({ isEmailDuplicated, setIsEmailDuplicated }, ref: ForwardedRef<HTMLInputElement>) => {
     const addMessage = useContext(SnackBarContext)?.addMessage;
     const [isEmailInputCompleted, setIsEmailInputCompleted] = useState(false);
-    const emailRef = ref as MutableRefObject<HTMLInputElement>;
+    const emailRef = ref as MutableRefObject<HTMLInputElement>; // ref as MutableRefObject
 
     const checkEmailDuplicated = async (value: string) => {
       try {

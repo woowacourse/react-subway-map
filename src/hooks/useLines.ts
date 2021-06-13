@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { request, REQUEST_URL } from '../request';
-import { StationData } from './useStations';
-import { APIReturnTypeSection } from './useSections';
 
 interface LineData {
   name: string;
@@ -60,27 +58,29 @@ const API = {
 };
 
 const useLines = (
-  initialLines: APIReturnTypeLine[]
+  initialLines: APIReturnTypeLine[] | null
 ): [
-  APIReturnTypeLine[],
-  Dispatch<SetStateAction<APIReturnTypeLine[]>>,
+  APIReturnTypeLine[] | null,
+  Dispatch<SetStateAction<APIReturnTypeLine[] | null>>,
   () => Promise<void>,
   (lineId: number) => Promise<void>,
   (data: LineData) => Promise<void>,
   (lineId: number) => Promise<void>
 ] => {
-  const [lines, setLines] = useState<APIReturnTypeLine[]>(initialLines);
+  const [lines, setLines] = useState(initialLines);
 
   const fetchLine = async (lineId: number): Promise<void> => {
     const fetchedLine: APIReturnTypeLine = await API.getOne(lineId);
 
-    setLines((prevLines) =>
-      prevLines.map((line) => {
-        if (line.id === lineId) {
-          return fetchedLine;
-        }
-        return line;
-      })
+    setLines(
+      (prevLines) =>
+        prevLines &&
+        prevLines.map((line) => {
+          if (line.id === lineId) {
+            return fetchedLine;
+          }
+          return line;
+        })
     );
   };
 

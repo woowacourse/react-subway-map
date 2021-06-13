@@ -22,13 +22,10 @@ import {
   isStationInputValid,
 } from '../../utils/validations/stationValidation';
 
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-
 const StationPage = ({ setIsLoading }: PageProps) => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
-  const [stations, setStations, fetchStations, addStation, deleteStation] =
-    useStations(STATION_BEFORE_FETCH);
-  const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
+  const [stations, setStations, fetchStations, addStation, deleteStation] = useStations(null);
+  const [stationInputErrorMessage, setStationInputErrorMessage] = useState('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
@@ -54,7 +51,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (stations === STATION_BEFORE_FETCH) {
+  if (stations === null) {
     return <></>;
   }
 

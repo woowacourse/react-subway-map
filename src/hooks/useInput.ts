@@ -1,19 +1,13 @@
-import { ChangeEventHandler, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
-const useInput = (
-  defaultValue: string
-): [
-  value: string,
-  onChange: ChangeEventHandler<HTMLInputElement>,
-  setValue: Dispatch<SetStateAction<string>>
-] => {
+const useInput = (defaultValue: string) => {
   const [value, setValue] = useState(defaultValue);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     setValue(target.value);
   };
 
-  return [value, onChange, setValue];
+  return [value, onChange, setValue] as const;
 };
 
 export default useInput;

@@ -27,6 +27,7 @@ const mock_stations = [
 
 const VALID_STATION_NAME = '피터역';
 
+// StationPage test
 describe('사용자는 지하철 역 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
     request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });

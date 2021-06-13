@@ -50,6 +50,7 @@ const mock_lines = [
 
 const VALID_LINE_NAME = '피터라인';
 
+// LinePage test
 describe('사용자는 지하철 노선 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
     request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
