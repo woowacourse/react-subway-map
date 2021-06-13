@@ -1,0 +1,10 @@
+{
+  "registeredUser": {
+    "email": "registeredUser@gmail.com",
+    "password": "test1234"
+  },
+  "unRegisteredUser": {
+    "email": "unRegisteredUser@gmail.com",
+    "password": "unregistered1234"
+  }
+}

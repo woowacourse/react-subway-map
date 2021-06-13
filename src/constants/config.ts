@@ -1,0 +1,1 @@
+export const MAX_SECTION_DISTANCE = 1000;
