@@ -1,16 +1,14 @@
-import { useState } from "react";
-
 import LineAddModal from "./Modal/LineAddModal";
 import { Button, Block, ListItem } from "../../components";
 import { Flex, FlexCenter, FlexBetween } from "../../components";
 
-import { useStation, useLine } from "../../hooks";
+import { useStation, useLine, useModal } from "../../hooks";
 
 import { CIRCLE_COLOR } from "../../constants";
 import { SIZE } from "../../constants";
 
 const LineManagementPage = () => {
-  const [isAddModalOpened, setIsAddModalOpened] = useState(false);
+  const { open } = useModal();
   const { lines, addLine, deleteLine } = useLine();
   const { stations } = useStation();
 
@@ -31,7 +29,7 @@ const LineManagementPage = () => {
           <Button
             type="button"
             onClick={() => {
-              setIsAddModalOpened(!isAddModalOpened);
+              open(<LineAddModal stations={stations} onAddLine={addLine} />);
             }}
           >
             노선 추가
@@ -59,15 +57,6 @@ const LineManagementPage = () => {
           ))}
         </Flex>
       </Block>
-      {isAddModalOpened && (
-        <LineAddModal
-          stations={stations}
-          onClose={() => {
-            setIsAddModalOpened(false);
-          }}
-          onAddLine={addLine}
-        />
-      )}
     </FlexCenter>
   );
 };

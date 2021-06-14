@@ -8,7 +8,7 @@ import Input from "./Input/Input";
 import LabeledNode from "./LabeledNode/LabeledNode";
 import ListItem from "./ListItem/ListItem";
 import Loading from "./Loading/Loading";
-import Modal from "./Modal/Modal";
+import ModalProvider from "./ModalProvider/ModalProvider";
 import Navigation from "./Navigation/Navigation";
 import ScrollArea from "./ScrollArea/ScrollArea";
 import Select from "./Select/Select";
@@ -33,7 +33,7 @@ export {
   LabeledNode,
   ListItem,
   Loading,
-  Modal,
+  ModalProvider,
   Navigation,
   ScrollArea,
   Select,

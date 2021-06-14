@@ -1,18 +1,17 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import Modal, { Props } from "./Modal";
+import ModalProvider, { Props } from "./ModalProvider";
 
 export default {
   title: "components/Modal",
-  component: Modal,
+  component: ModalProvider,
 } as Meta;
 
-const Template: Story<Props> = (args) => <Modal {...args} />;
+const Template: Story<Props> = (args) => <ModalProvider {...args} />;
 
 export const Basic = Template.bind({});
 
 Basic.args = {
-  onClose: () => {},
   children: "children",
 };

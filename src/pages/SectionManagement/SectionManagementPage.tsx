@@ -1,15 +1,13 @@
-import { useState } from "react";
-
 import SectionAddModal from "./Modal/SectionAddModal";
 import { Button, Block, Select, ListItem } from "../../components";
 import { Flex, FlexCenter, FlexBetween } from "../../components";
 
-import { useStation, useLine, useSelect } from "../../hooks";
+import { useStation, useLine, useSelect, useModal } from "../../hooks";
 
 import { SIZE } from "../../constants";
 
 const SectionManagementPage = () => {
-  const [isAddModalOpened, setIsAddModalOpened] = useState(false);
+  const { open } = useModal();
 
   const { stations } = useStation();
   const { lines, addSection, deleteSection } = useLine();
@@ -37,7 +35,15 @@ const SectionManagementPage = () => {
           <Button
             type="button"
             onClick={() => {
-              setIsAddModalOpened(!isAddModalOpened);
+              targetLine &&
+                open(
+                  <SectionAddModal
+                    addSection={addSection}
+                    deleteSection={deleteSection}
+                    line={targetLine}
+                    stations={stations}
+                  />
+                );
             }}
           >
             구간 추가
@@ -78,17 +84,6 @@ const SectionManagementPage = () => {
           ))}
         </Flex>
       </Block>
-      {isAddModalOpened && targetLine && (
-        <SectionAddModal
-          onClose={() => {
-            setIsAddModalOpened(false);
-          }}
-          addSection={addSection}
-          deleteSection={deleteSection}
-          line={targetLine}
-          stations={stations}
-        />
-      )}
     </FlexCenter>
   );
 };

@@ -2,14 +2,18 @@ import React from "react";
 import { Story, Meta } from "@storybook/react";
 
 import Confirm, { Props } from "./Confirm";
+import ModalProvider from "../ModalProvider/ModalProvider";
 
 export default {
   title: "components/Confirm",
   component: Confirm,
 } as Meta;
 
-const Template: Story<Props> = (args) => <Confirm {...args} />;
-
+const Template: Story<Props> = (args) => (
+  <ModalProvider>
+    <Confirm {...args} />;
+  </ModalProvider>
+);
 export const Basic = Template.bind({});
 
 Basic.args = {

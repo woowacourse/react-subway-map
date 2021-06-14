@@ -6,7 +6,7 @@ import store from "./modules";
 import { BASE_URL, changeBaseUrl } from "./apis";
 
 import App from "./App";
-import { Select } from "./components";
+import { ModalProvider, Select } from "./components";
 import { Flex } from "./components";
 
 import GlobalStyle from "./Global.styles";
@@ -27,21 +27,23 @@ changeBaseUrl(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <GlobalStyle />
-      <Flex
-        style={{
-          width: "100%",
-          padding: "0.9375rem",
-          justifyContent: "flex-end",
-        }}
-      >
-        <Select
-          options={targets}
-          onChange={onChange}
-          style={{ width: "9.375rem", backgroundColor: "skyblue" }}
-        />
-      </Flex>
-      <App />
+      <ModalProvider>
+        <GlobalStyle />
+        <Flex
+          style={{
+            width: "100%",
+            padding: "0.9375rem",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Select
+            options={targets}
+            onChange={onChange}
+            style={{ width: "9.375rem", backgroundColor: "skyblue" }}
+          />
+        </Flex>
+        <App />
+      </ModalProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

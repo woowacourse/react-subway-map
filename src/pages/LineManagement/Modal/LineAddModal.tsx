@@ -1,13 +1,6 @@
-import { MouseEventHandler, useState } from "react";
+import { useState } from "react";
 
-import {
-  Block,
-  Button,
-  ColorPicker,
-  Input,
-  Modal,
-  Select,
-} from "../../../components";
+import { Block, Button, ColorPicker, Input, Select } from "../../../components";
 import { Flex } from "../../../components";
 
 import { useInput, useSelect } from "../../../hooks";
@@ -20,12 +13,11 @@ import { CIRCLE_COLOR } from "../../../constants";
 import { LineAddRequestItem, Station } from "../../../@types";
 
 interface Props {
-  onClose: MouseEventHandler<HTMLDivElement>;
   stations: Station[];
   onAddLine: (lineRequestItem: LineAddRequestItem) => void;
 }
 
-const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
+const LineAddModal = ({ stations, onAddLine }: Props) => {
   const [firstStation, secondStation] = stations;
 
   const {
@@ -73,70 +65,68 @@ const LineAddModal = ({ onClose, stations, onAddLine }: Props) => {
   }));
 
   return (
-    <Modal onClose={onClose}>
-      <form onSubmit={onSubmit}>
-        <Block
-          style={{
-            flexDirection: "column",
-            maxWidth: "40.625rem",
-            alignItems: "flex-start",
-          }}
-        >
-          <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
-            🛤️ 노선 추가
-          </h3>
-          <Input
-            value={lineName}
-            errorMessage={lineNameErrorMessage}
-            onChange={setLineNameOnChange}
-            placeholder="노선 이름"
-            style={{ marginBottom: "0.9375rem" }}
+    <form onSubmit={onSubmit}>
+      <Block
+        style={{
+          flexDirection: "column",
+          maxWidth: "40.625rem",
+          alignItems: "flex-start",
+        }}
+      >
+        <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
+          🛤️ 노선 추가
+        </h3>
+        <Input
+          value={lineName}
+          errorMessage={lineNameErrorMessage}
+          onChange={setLineNameOnChange}
+          placeholder="노선 이름"
+          style={{ marginBottom: "0.9375rem" }}
+          required
+        />
+        <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
+          <Select
+            value={upStationId}
+            onChange={setUpStationOnChange}
+            options={stationOptions}
+            style={{ marginRight: "0.625rem" }}
             required
           />
-          <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-            <Select
-              value={upStationId}
-              onChange={setUpStationOnChange}
-              options={stationOptions}
-              style={{ marginRight: "0.625rem" }}
-              required
-            />
-            <Select
-              value={downStationId}
-              onChange={setDownStationOnChange}
-              options={stationOptions}
-              required
-            />
-          </Flex>
-          <Flex
-            style={{
-              width: "100%",
-              marginBottom: "0.9375rem",
-              flexDirection: "column",
-            }}
-          >
-            <Input
-              type="number"
-              value={distance}
-              errorMessage={disatanceErrorMessage}
-              onChange={setDistanceOnChange}
-              step="0.1"
-              min="0.1"
-              placeholder="상행 하행역 거리(km)"
-              required
-            />
-          </Flex>
-          <ColorPicker
-            color={color}
-            onSetColor={setColor}
-            style={{ marginBottom: "0.9375rem" }}
+          <Select
+            value={downStationId}
+            onChange={setDownStationOnChange}
+            options={stationOptions}
+            required
           />
-          <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
-            <Button>노선 추가</Button>
-          </Flex>
-        </Block>
-      </form>
-    </Modal>
+        </Flex>
+        <Flex
+          style={{
+            width: "100%",
+            marginBottom: "0.9375rem",
+            flexDirection: "column",
+          }}
+        >
+          <Input
+            type="number"
+            value={distance}
+            errorMessage={disatanceErrorMessage}
+            onChange={setDistanceOnChange}
+            step="0.1"
+            min="0.1"
+            placeholder="상행 하행역 거리(km)"
+            required
+          />
+        </Flex>
+        <ColorPicker
+          color={color}
+          onSetColor={setColor}
+          style={{ marginBottom: "0.9375rem" }}
+        />
+        <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
+          <Button>노선 추가</Button>
+        </Flex>
+      </Block>
+    </form>
   );
 };
 

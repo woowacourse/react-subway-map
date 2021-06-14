@@ -1,7 +1,9 @@
-import { LiHTMLAttributes, MouseEventHandler, useState } from "react";
+import { LiHTMLAttributes, MouseEventHandler } from "react";
 
 import { Button, Confirm } from "../";
 import { FlexAlignCenter } from "../Layout/";
+
+import { useModal } from "../../hooks";
 
 import {
   ListItemBlock,
@@ -24,7 +26,7 @@ const ListItem = ({
   children,
   ...props
 }: Props) => {
-  const [isDeleteConfirmOpened, setDeleteConfirmStatus] = useState(false);
+  const { open, close } = useModal();
 
   return (
     <ListItemBlock {...props}>
@@ -43,19 +45,20 @@ const ListItem = ({
             type="button"
             size="sm"
             buttonTheme="gray"
-            onClick={() => setDeleteConfirmStatus(true)}
+            onClick={() =>
+              open(
+                <Confirm
+                  title="삭제하시겠습니까?"
+                  onConfirm={onDelete}
+                  onReject={close}
+                />
+              )
+            }
           >
             삭제
           </Button>
         )}
       </ButtonControls>
-      {isDeleteConfirmOpened && onDelete && (
-        <Confirm
-          title="삭제하시겠습니까?"
-          onConfirm={onDelete}
-          onReject={() => setDeleteConfirmStatus(false)}
-        />
-      )}
     </ListItemBlock>
   );
 };

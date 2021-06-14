@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Inner = styled.div`
+const Block = styled.div`
   width: 300px;
   height: 180px;
   flex-wrap: wrap;
@@ -39,4 +39,4 @@ const ButtonControls = styled.section`
   }
 `;
 
-export { Inner, Title, ButtonControls };
+export { Block, Title, ButtonControls };
