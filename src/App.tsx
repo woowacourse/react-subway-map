@@ -9,6 +9,7 @@ import Navigation from './components/@shared/Navigation/Navigation';
 import { APP_TITLE, COMMON_NAV_LIST, PAGE_INFO } from './constants/appInfo';
 import { Palette } from './constants/palette';
 import useCurrentAPIInfo from './hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
+import FullMap from './pages/FullMap/FullMap';
 import Home from './pages/Home/Home';
 import Lines from './pages/Lines/Lines';
 import Login from './pages/Login/Login';
@@ -56,6 +57,9 @@ const App: VFC = () => {
             </Route>
             <Route path={PAGE_INFO.SECTIONS.path}>
               <Sections />
+            </Route>
+            <Route path={PAGE_INFO.FULL_MAP.path}>
+              <FullMap />
             </Route>
           </Switch>
         </ModalProvider>
