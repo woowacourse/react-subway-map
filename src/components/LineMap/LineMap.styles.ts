@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Palette } from '../../constants/palette';
 
 export const LineMapContainer = styled.section`
@@ -33,24 +33,5 @@ export const StationsList = styled.ul<StationListProps>`
     left: 0;
     background-color: ${({ lineColor }) => lineColor};
     top: 1.6rem;
-  }
-`;
-
-export const StationPoint = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 0.5rem;
-
-  &::before {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border: 1px solid ${Palette.BLACK_400};
-    border-radius: 50%;
-    margin-bottom: 0.25rem;
-    z-index: 1;
   }
 `;

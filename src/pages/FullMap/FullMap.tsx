@@ -5,6 +5,7 @@ import LineMap from '../../components/LineMap/LineMap';
 import { PAGE_INFO } from '../../constants/appInfo';
 import useCurrentAPIInfo from '../../hooks/@shared/useCurrentAPIInfo/useCurrentAPIInfo';
 import { loadLines } from '../../redux/slice/lineSlice';
+import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { FullMapContents } from './FullMap.styles';
 
@@ -15,9 +16,8 @@ const FullMap: VFC = () => {
 
   useEffect(() => {
     dispatch(loadLines());
+    dispatch(loadStations());
   }, []);
-
-  console.log(lines);
 
   return (
     <CardTemplate titleText={PAGE_INFO.FULL_MAP.text} templateColor={APIInfo.themeColor}>

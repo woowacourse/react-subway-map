@@ -34,7 +34,12 @@ export const PAGE_INFO: Record<string, PageInfo> = {
   },
 };
 
-export const COMMON_NAV_LIST = [PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS];
+export const COMMON_NAV_LIST = [
+  PAGE_INFO.STATIONS,
+  PAGE_INFO.LINES,
+  PAGE_INFO.SECTIONS,
+  PAGE_INFO.FULL_MAP,
+];
 
 export const THEME_COLOR: Palette = Palette.YELLOW_400;
 

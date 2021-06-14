@@ -5,26 +5,32 @@ export const DUMMY_STATIONS: Station[] = [
   {
     id: 1,
     name: '지하철역',
+    transfer: [],
   },
   {
     id: 2,
     name: '지하철역',
+    transfer: [],
   },
   {
     id: 3,
     name: '지하철역',
+    transfer: [],
   },
   {
     id: 4,
     name: '지하철역',
+    transfer: [],
   },
   {
     id: 5,
     name: '지하철역',
+    transfer: [],
   },
   {
     id: 6,
     name: '지하철역',
+    transfer: [],
   },
 ];
 
@@ -37,10 +43,12 @@ export const DUMMY_LINES: Line[] = [
       {
         id: 1,
         name: '강남역',
+        transfer: [],
       },
       {
         id: 2,
         name: '광교역',
+        transfer: [],
       },
     ],
     sections: [
@@ -48,10 +56,12 @@ export const DUMMY_LINES: Line[] = [
         upStation: {
           id: 1,
           name: '강남역',
+          transfer: [],
         },
         downStation: {
           id: 2,
           name: '광교역',
+          transfer: [],
         },
         distance: 10,
       },
@@ -65,10 +75,12 @@ export const DUMMY_LINES: Line[] = [
       {
         id: 1,
         name: '강남역',
+        transfer: [],
       },
       {
         id: 2,
         name: '광교역',
+        transfer: [],
       },
     ],
     sections: [
@@ -76,10 +88,12 @@ export const DUMMY_LINES: Line[] = [
         upStation: {
           id: 1,
           name: '강남역',
+          transfer: [],
         },
         downStation: {
           id: 2,
           name: '광교역',
+          transfer: [],
         },
         distance: 10,
       },
