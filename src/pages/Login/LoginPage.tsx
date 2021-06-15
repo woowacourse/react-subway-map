@@ -1,9 +1,9 @@
 import { Link, useHistory } from "react-router-dom";
 
-import { Block, Button, Input } from "../../components";
+import { Block, Button, InputField } from "../../components";
 import { Flex, FlexBetween, FlexCenter } from "../../components";
 
-import { useInput, useAuth } from "../../hooks";
+import { useAuth, useForm } from "../../hooks";
 
 import { validateEmail, validatePassword } from "../../validations";
 import { SIZE } from "../../constants";
@@ -11,15 +11,9 @@ import { PAGE_PATH } from "../../constants";
 
 const LoginPage = () => {
   const {
-    inputValue: email,
-    errorMessage: emailErrorMessage,
-    setValueOnChange: onEmailChange,
-  } = useInput(validateEmail);
-  const {
-    inputValue: password,
-    errorMessage: passwordErrorMessage,
-    setValueOnChange: onPasswordChange,
-  } = useInput(validatePassword);
+    values: { email, password },
+    isValid,
+  } = useForm();
 
   const { login } = useAuth();
   const history = useHistory();
@@ -27,7 +21,7 @@ const LoginPage = () => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    if (emailErrorMessage || passwordErrorMessage) {
+    if (!isValid) {
       alert("로그인 할 수 없습니다");
       return;
     }
@@ -51,21 +45,19 @@ const LoginPage = () => {
             <h2 style={{ marginBottom: "1rem" }}>👋 로그인</h2>
           </FlexBetween>
           <Flex style={{ width: "100%", flexDirection: "column" }}>
-            <Input
-              value={email}
-              errorMessage={emailErrorMessage}
+            <InputField
+              name="email"
+              validator={validateEmail}
               placeholder="이메일"
               style={{ marginBottom: "0.9375rem" }}
-              onChange={onEmailChange}
               required
             />
-            <Input
+            <InputField
+              name="password"
+              validator={validatePassword}
               type="password"
-              value={password}
-              errorMessage={passwordErrorMessage}
               placeholder="비밀번호"
               style={{ marginBottom: "0.9375rem" }}
-              onChange={onPasswordChange}
               required
             />
             <Button size="block" style={{ marginBottom: "0.9375rem" }}>

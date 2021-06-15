@@ -1,9 +1,7 @@
-import { MouseEventHandler } from "react";
-
-import { Block, Button, Input, Select } from "../../../components";
+import { Block, Button, Input, InputField, Select } from "../../../components";
 import { Flex } from "../../../components";
 
-import { useInput, useSelect } from "../../../hooks";
+import { useForm, useSelect } from "../../../hooks";
 
 import { validateSectionDistance } from "../../../validations";
 import { Line, SectionAddRequestItem, Station } from "../../../@types";
@@ -41,18 +39,18 @@ const SectionAddModal = ({
     selectValue: downStationId,
     setValueOnChange: setDownStationIdOnChange,
   } = useSelect(String(secondStation.id));
+
   const {
-    inputValue: distance,
-    errorMessage: distanceErrorMessage,
-    setValueOnChange: setDistanceOnChange,
-  } = useInput(validateSectionDistance);
+    values: { distance },
+    isValid,
+  } = useForm();
 
   const onAddSection: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
     event.preventDefault();
 
-    if (distanceErrorMessage) {
+    if (!isValid) {
       alert("구간을 추가할 수 없습니다");
       return;
     }
@@ -95,10 +93,9 @@ const SectionAddModal = ({
           />
         </Flex>
         <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-          <Input
-            value={distance}
-            onChange={setDistanceOnChange}
-            errorMessage={distanceErrorMessage}
+          <InputField
+            name="distance"
+            validator={validateSectionDistance}
             type="number"
             min="0.1"
             max="1000"

@@ -1,33 +1,30 @@
-import { Input, Button, Block, ListItem } from "../../components";
+import { Button, Block, ListItem, InputField } from "../../components";
 import { Flex, FlexCenter } from "../../components";
 
-import { useStation, useInput } from "../../hooks";
+import { useForm, useStation } from "../../hooks";
 
 import { validateStationName } from "../../validations";
 import { SIZE } from "../../constants";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();
+
   const {
-    inputValue: stationName,
-    errorMessage: stationNameErrorMessage,
-    setValueOnChange: onStationNameChange,
-    setInputValue: setStationName,
-  } = useInput(validateStationName);
+    values: { name },
+    isValid,
+  } = useForm();
 
   const onAddStation: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
     event.preventDefault();
 
-    if (stationNameErrorMessage) {
+    if (!isValid) {
       alert("역을 추가할 수 없습니다");
       return;
     }
 
-    await addStation(stationName);
-
-    setStationName("");
+    await addStation(name);
   };
 
   return (
@@ -50,13 +47,12 @@ const StationManagementPage = () => {
                 marginRight: "0.625rem",
               }}
             >
-              <Input
-                value={stationName}
-                errorMessage={stationNameErrorMessage}
+              <InputField
+                name="name"
+                validator={validateStationName}
                 placeholder="역 이름"
-                onChange={onStationNameChange}
                 required
-              ></Input>
+              />
             </Flex>
             <Button>확인</Button>
           </Flex>

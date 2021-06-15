@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
 
-import { Flex, FlexBetween, FlexCenter } from "../../components";
-import { Block, Button, Input } from "../../components";
+import { Flex, FlexBetween, FlexCenter, InputField } from "../../components";
+import { Block, Button } from "../../components";
 
-import { useInput, useAuth } from "../../hooks";
+import { useAuth, useForm } from "../../hooks";
 import {
   validateAge,
   validateEmail,
@@ -15,29 +15,9 @@ import { SIZE } from "../../constants";
 
 const SignupPage = () => {
   const {
-    inputValue: email,
-    errorMessage: emailErrorMessage,
-    setValueOnChange: onEmailChange,
-  } = useInput(validateEmail);
-  const {
-    inputValue: age,
-    errorMessage: ageErrorMessage,
-    setValueOnChange: onAgeChange,
-  } = useInput(validateAge);
-  const {
-    inputValue: password,
-    errorMessage: passwordErrorMessage,
-    setValueOnChange: onPasswordChange,
-  } = useInput(validatePassword);
-  const {
-    inputValue: passwordConfirm,
-    errorMessage: passwordConfirmErrorMessage,
-    setValueOnChange: onPasswordConfirmChange,
-  } = useInput((value: string) => {
-    if (password && !passwordErrorMessage) {
-      validatePasswordConfirm(password, value);
-    }
-  });
+    values: { email, age, password },
+    isValid,
+  } = useForm();
 
   const { signup } = useAuth();
 
@@ -46,12 +26,7 @@ const SignupPage = () => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    if (
-      emailErrorMessage ||
-      ageErrorMessage ||
-      passwordErrorMessage ||
-      passwordConfirmErrorMessage
-    ) {
+    if (!isValid) {
       alert("회원가입할 수 없습니다");
       return;
     }
@@ -75,38 +50,36 @@ const SignupPage = () => {
             <h2 style={{ marginBottom: "1rem" }}>📝 회원가입</h2>
           </FlexBetween>
           <Flex style={{ width: "100%", flexDirection: "column" }}>
-            <Input
-              value={email}
-              errorMessage={emailErrorMessage}
+            <InputField
+              name="email"
+              validator={validateEmail}
               placeholder="이메일"
               style={{ marginBottom: "0.9375rem" }}
-              onChange={onEmailChange}
             />
-            <Input
+            <InputField
+              name="age"
+              validator={validateAge}
               type="number"
-              value={age}
-              errorMessage={ageErrorMessage}
               placeholder="나이"
               min="1"
               max="200"
               style={{ marginBottom: "0.9375rem" }}
-              onChange={onAgeChange}
             />
-            <Input
+            <InputField
+              name="password"
+              validator={validatePassword}
               type="password"
-              value={password}
-              errorMessage={passwordErrorMessage}
               placeholder="비밀번호"
               style={{ marginBottom: "0.9375rem" }}
-              onChange={onPasswordChange}
             />
-            <Input
+            <InputField
+              name="passwordConfirm"
+              validator={(value: string) => {
+                validatePasswordConfirm(password, value);
+              }}
               type="password"
-              value={passwordConfirm}
-              errorMessage={passwordConfirmErrorMessage}
               placeholder="비밀번호 확인"
               style={{ marginBottom: "1.5625rem" }}
-              onChange={onPasswordConfirmChange}
             />
             <Button size="block">확인</Button>
           </Flex>

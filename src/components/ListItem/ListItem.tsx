@@ -1,6 +1,6 @@
 import { LiHTMLAttributes, MouseEventHandler } from "react";
 
-import { Button, Confirm } from "../";
+import { Button, Confirm, FormProvider } from "../";
 import { FlexAlignCenter } from "../Layout/";
 
 import { useModal } from "../../hooks";
@@ -47,11 +47,13 @@ const ListItem = ({
             buttonTheme="gray"
             onClick={() =>
               open(
-                <Confirm
-                  title="삭제하시겠습니까?"
-                  onConfirm={onDelete}
-                  onReject={close}
-                />
+                <FormProvider>
+                  <Confirm
+                    title="삭제하시겠습니까?"
+                    onConfirm={onDelete}
+                    onReject={close}
+                  />
+                </FormProvider>
               )
             }
           >

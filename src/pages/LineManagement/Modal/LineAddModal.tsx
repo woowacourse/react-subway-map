@@ -1,9 +1,15 @@
 import { useState } from "react";
 
-import { Block, Button, ColorPicker, Input, Select } from "../../../components";
+import {
+  Block,
+  Button,
+  ColorPicker,
+  InputField,
+  Select,
+} from "../../../components";
 import { Flex } from "../../../components";
 
-import { useInput, useSelect } from "../../../hooks";
+import { useForm, useSelect } from "../../../hooks";
 
 import {
   validateLineName,
@@ -21,11 +27,6 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
   const [firstStation, secondStation] = stations;
 
   const {
-    inputValue: lineName,
-    errorMessage: lineNameErrorMessage,
-    setValueOnChange: setLineNameOnChange,
-  } = useInput(validateLineName);
-  const {
     selectValue: upStationId,
     setValueOnChange: setUpStationOnChange,
   } = useSelect(String(firstStation.id));
@@ -33,11 +34,11 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
     selectValue: downStationId,
     setValueOnChange: setDownStationOnChange,
   } = useSelect(String(secondStation.id));
+
   const {
-    inputValue: distance,
-    errorMessage: disatanceErrorMessage,
-    setValueOnChange: setDistanceOnChange,
-  } = useInput(validateSectionDistance);
+    values: { name, distance },
+    isValid,
+  } = useForm();
 
   const DEFAULT_COLOR = "bg-cyan-500";
   const [color, setColor] = useState<keyof typeof CIRCLE_COLOR>(DEFAULT_COLOR);
@@ -45,7 +46,7 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    if (lineNameErrorMessage || disatanceErrorMessage) {
+    if (!isValid) {
       alert("노선을 추가할 수 없습니다");
       return;
     }
@@ -55,7 +56,7 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
       distance: Number(distance),
       upStationId: Number(upStationId),
       downStationId: Number(downStationId),
-      name: lineName,
+      name,
     });
   };
 
@@ -76,10 +77,9 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
         <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
           🛤️ 노선 추가
         </h3>
-        <Input
-          value={lineName}
-          errorMessage={lineNameErrorMessage}
-          onChange={setLineNameOnChange}
+        <InputField
+          name="name"
+          validator={validateLineName}
           placeholder="노선 이름"
           style={{ marginBottom: "0.9375rem" }}
           required
@@ -106,11 +106,10 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
             flexDirection: "column",
           }}
         >
-          <Input
+          <InputField
+            name="distance"
+            validator={validateSectionDistance}
             type="number"
-            value={distance}
-            errorMessage={disatanceErrorMessage}
-            onChange={setDistanceOnChange}
             step="0.1"
             min="0.1"
             placeholder="상행 하행역 거리(km)"
