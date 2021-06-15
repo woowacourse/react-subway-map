@@ -1,6 +1,7 @@
 import React from 'react';
 import { DUMMY_LINES, DUMMY_STATIONS } from '../../constants/dummies';
 import { Palette } from '../../constants/palette';
+import ModalProvider from '../@common/ModalProvider/ModalProvider';
 import SectionAddModal from './SectionAddModal';
 
 export default {
@@ -9,7 +10,11 @@ export default {
   argTypes: {},
 };
 
-const Template = (args) => <SectionAddModal {...args} />;
+const Template = (args) => (
+  <ModalProvider>
+    <SectionAddModal {...args} />
+  </ModalProvider>
+);
 export const Default = Template.bind({});
 Default.args = {
   line: {

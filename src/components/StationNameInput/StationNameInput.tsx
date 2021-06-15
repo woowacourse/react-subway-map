@@ -1,9 +1,10 @@
-import React, { ChangeEventHandler, useEffect, useState, VFC } from 'react';
+import React, { ChangeEventHandler, useState, VFC } from 'react';
 import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
 import { useFormInput } from '../../hooks/@shared/useFormInput/useFormInput';
+import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { RootState } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Subway from '../@common/Icon/Subway';
@@ -26,7 +27,7 @@ const StationNameInput: VFC<Props> = ({ className }) => {
     });
   };
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     const stationName = stationNameInfo.data;
 
     setStationNameInfo({

@@ -1,4 +1,4 @@
-import React, { VFC, MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler, useEffect, VFC } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Add from '../../components/@common/Icon/Add';
@@ -16,7 +16,6 @@ import useModal from '../../hooks/@shared/useModal/useModal';
 import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/slice/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
-import { Line } from '../../types';
 import { LineColorDot, LineList } from './Lines.styles';
 
 const Lines: VFC = () => {
@@ -24,22 +23,16 @@ const Lines: VFC = () => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-  const lineAddModal = useModal();
-  const lineModifyModal = useModal<Pick<Line, 'id' | 'name' | 'color'>>();
+  const modal = useModal();
 
   const onOpenAddModal: MouseEventHandler<HTMLButtonElement> = () => {
-    lineAddModal.openModal();
+    modal.openModal(<LineAddModal />);
   };
 
   const onOpenModifyModal = (lineId: number) => () => {
     const selectedLine = lines.find((line) => line.id === lineId) as ModifyLine;
 
-    lineModifyModal.passDataToModal({
-      id: selectedLine.id,
-      name: selectedLine.name,
-      color: selectedLine.color,
-    });
-    lineModifyModal.openModal();
+    modal.openModal(<LineModifyModal line={selectedLine} />);
   };
 
   const onDeleteLine = (lineId: number) => () => {
@@ -81,13 +74,6 @@ const Lines: VFC = () => {
             </ListItem>
           ))}
         </LineList>
-      )}
-      {lineAddModal.isModalOpen && <LineAddModal onClose={lineAddModal.closeModal} />}
-      {lineModifyModal.isModalOpen && (
-        <LineModifyModal
-          line={lineModifyModal.modalData as ModifyLine}
-          onClose={lineModifyModal.closeModal}
-        />
       )}
     </CardTemplate>
   );

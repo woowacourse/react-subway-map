@@ -3,27 +3,25 @@ import { useSelector } from 'react-redux';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { ERROR_MESSAGE_FOR_DEVELOPER } from '../../constants/message';
 import { Palette } from '../../constants/palette';
+import useModal from '../../hooks/@shared/useModal/useModal';
 import { addLine } from '../../redux/slice/lineSlice';
 import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isMyEnumTypeBy } from '../../util/typeGuard';
 import { SubmitFormInfoHandler } from '../@common/Form/Form';
 import ResponsiveFormSubmit from '../@common/Form/ResponsiveFormSubmit/ResponsiveFormSubmit';
-import Modal from '../@common/Modal/Modal';
-import SectionSelectBox, { SectionInput } from '../@shared/SectionSelectBox/SectionSelectBox';
+import ModalTemplate from '../@common/ModalTemplate/ModalTemplate';
+import TransparentButton from '../@common/TransparentButton/TransparentButton';
 import DistanceInput from '../@shared/DistanceInput/DistanceInput';
+import SectionSelectBox, { SectionInput } from '../@shared/SectionSelectBox/SectionSelectBox';
 import LineColorRadio from '../LineColorRadio/LineColorRadio';
 import LineNameInput from '../LineNameInput/LineNameInput';
-import TransparentButton from '../@common/TransparentButton/TransparentButton';
 import { LineAddForm, LineAddModalButtonContainer } from './LinesAddModal.styles';
 
-interface Props {
-  onClose: () => void;
-}
-
-const LineAddModal: VFC<Props> = ({ onClose }) => {
+const LineAddModal: VFC = () => {
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
+  const modal = useModal();
 
   const onSubmitLineFormInfo: SubmitFormInfoHandler = (inputValues) => {
     const [name, section, distance, color] = inputValues;
@@ -45,7 +43,7 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
 
     dispatch(addLine(line));
 
-    onClose();
+    modal.closeModal();
   };
 
   useEffect(() => {
@@ -55,18 +53,18 @@ const LineAddModal: VFC<Props> = ({ onClose }) => {
   }, []);
 
   return (
-    <Modal titleText={LABEL_TEXT.ADD_LINE} onClose={onClose}>
+    <ModalTemplate titleText={LABEL_TEXT.ADD_LINE}>
       <LineAddForm onSubmitFormInfo={onSubmitLineFormInfo}>
         <LineNameInput />
         <SectionSelectBox />
         <DistanceInput />
         <LineColorRadio />
         <LineAddModalButtonContainer justifyContent="flex-end">
-          <TransparentButton onClick={onClose}>{LABEL_TEXT.CANCEL}</TransparentButton>
+          <TransparentButton onClick={modal.closeModal}>{LABEL_TEXT.CANCEL}</TransparentButton>
           <ResponsiveFormSubmit>{LABEL_TEXT.CONFIRM}</ResponsiveFormSubmit>
         </LineAddModalButtonContainer>
       </LineAddForm>
-    </Modal>
+    </ModalTemplate>
   );
 };
 

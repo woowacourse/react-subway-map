@@ -2,15 +2,16 @@ import React, { VFC } from 'react';
 import { LABEL_TEXT } from '../../constants/a11y';
 import { ERROR_MESSAGE_FOR_DEVELOPER } from '../../constants/message';
 import { Palette } from '../../constants/palette';
+import useModal from '../../hooks/@shared/useModal/useModal';
 import { modifyLine } from '../../redux/slice/lineSlice';
 import { useAppDispatch } from '../../redux/store';
 import { isMyEnumTypeBy } from '../../util/typeGuard';
 import Button from '../@common/Button/Button';
 import { SubmitFormInfoHandler } from '../@common/Form/Form';
-import Modal from '../@common/Modal/Modal';
+import ModalTemplate from '../@common/ModalTemplate/ModalTemplate';
+import TransparentButton from '../@common/TransparentButton/TransparentButton';
 import LineColorRadio from '../LineColorRadio/LineColorRadio';
 import LineNameInput from '../LineNameInput/LineNameInput';
-import TransparentButton from '../@common/TransparentButton/TransparentButton';
 import { LineModalButtonContainer, LineModifyForm } from './LinesModifyModal.styles';
 
 export interface ModifyLine {
@@ -21,11 +22,11 @@ export interface ModifyLine {
 
 interface Props {
   line: ModifyLine;
-  onClose: () => void;
 }
 
-const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
+const LineModifyModal: VFC<Props> = ({ line }) => {
   const dispatch = useAppDispatch();
+  const { closeModal } = useModal();
 
   const onSubmitModifyLine: SubmitFormInfoHandler = (inputValues) => {
     const [name, color] = inputValues;
@@ -44,20 +45,20 @@ const LineModifyModal: VFC<Props> = ({ line, onClose }) => {
 
     dispatch(modifyLine(lineInfo));
 
-    onClose();
+    closeModal();
   };
 
   return (
-    <Modal titleText={LABEL_TEXT.MODIFY_LINE} onClose={onClose}>
+    <ModalTemplate titleText={LABEL_TEXT.MODIFY_LINE}>
       <LineModifyForm onSubmitFormInfo={onSubmitModifyLine}>
         <LineNameInput initialValue={line.name} />
         <LineColorRadio initialValue={line.color} />
         <LineModalButtonContainer justifyContent="flex-end">
-          <TransparentButton onClick={onClose}>{LABEL_TEXT.CANCEL}</TransparentButton>
+          <TransparentButton onClick={closeModal}>{LABEL_TEXT.CANCEL}</TransparentButton>
           <Button>{LABEL_TEXT.CONFIRM}</Button>
         </LineModalButtonContainer>
       </LineModifyForm>
-    </Modal>
+    </ModalTemplate>
   );
 };
 

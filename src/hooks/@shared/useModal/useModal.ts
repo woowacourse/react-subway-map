@@ -1,30 +1,14 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ModalContext } from '../../../components/@common/ModalProvider/ModalProvider';
 
-interface UseModal<T> {
-  isModalOpen: boolean;
-  modalData?: T;
-  openModal: () => void;
-  closeModal: () => void;
-  passDataToModal: (data: T) => void;
-}
+const useModal = () => {
+  const modalContext = useContext(ModalContext);
 
-const useModal = <T>(initModalData?: T): UseModal<T> => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalData, setModalData] = useState(initModalData);
+  if (!modalContext) {
+    throw new Error('ModalProvider 컴포넌트 내부에서만 useModal hook을 사용할 수 있습니다.');
+  }
 
-  const passDataToModal = (modalData: T) => {
-    setModalData(modalData);
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  return { isModalOpen, modalData, openModal, closeModal, passDataToModal };
+  return modalContext;
 };
 
 export default useModal;

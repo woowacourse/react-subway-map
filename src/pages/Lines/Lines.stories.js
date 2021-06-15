@@ -1,4 +1,5 @@
 import React from 'react';
+import ModalProvider from '../../components/@common/ModalProvider/ModalProvider';
 import Lines from './Lines';
 
 export default {
@@ -7,6 +8,10 @@ export default {
   argTypes: {},
 };
 
-const Template = (args) => <Lines {...args} />;
+const Template = (args) => (
+  <ModalProvider>
+    <Lines {...args} />
+  </ModalProvider>
+);
 
 export const Default = Template.bind({});

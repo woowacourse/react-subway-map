@@ -2,10 +2,6 @@ import styled from 'styled-components';
 import { Z_INDEX } from '../../../constants/css';
 import Button from '../Button/Button';
 
-interface ModalContentProps {
-  hasTitle: boolean;
-}
-
 export const ModalContainer = styled.div`
   display: flex;
   position: fixed;
@@ -36,15 +32,4 @@ export const CloseButton = styled(Button)`
   right: 1rem;
   width: 2rem;
   height: 2rem;
-`;
-
-export const ModalTitle = styled.h2`
-  text-align: center;
-  margin-top: 1.5rem;
-`;
-
-export const ModalContent = styled.div<ModalContentProps>`
-  max-height: calc(80vh - ${({ hasTitle }) => (hasTitle ? '10rem' : '6rem')});
-  margin-top: 1.5rem;
-  overflow-y: auto;
 `;

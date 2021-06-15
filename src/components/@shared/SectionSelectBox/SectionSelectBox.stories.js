@@ -1,5 +1,6 @@
 import React from 'react';
 import { DUMMY_STATIONS } from '../../../constants/dummies';
+import Form from '../../@common/Form/Form';
 import SectionSelectBox from './SectionSelectBox';
 
 export default {
@@ -8,17 +9,10 @@ export default {
   argTypes: {},
 };
 
-const Template = (args) => <SectionSelectBox {...args} />;
+const Template = (args) => (
+  <Form>
+    <SectionSelectBox {...args} />
+  </Form>
+);
 export const Default = Template.bind({});
-Default.args = {
-  upStationOptions: DUMMY_STATIONS,
-  downStationOptions: DUMMY_STATIONS,
-};
-
-export const WithErrorMessage = Template.bind({});
-
-WithErrorMessage.args = {
-  upStationOptions: DUMMY_STATIONS,
-  downStationOptions: DUMMY_STATIONS,
-  errorMessage: '오류 메시지!!!',
-};
+Default.args = {};

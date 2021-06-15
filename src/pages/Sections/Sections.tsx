@@ -1,4 +1,4 @@
-import React, { VFC, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, VFC } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../API/lines';
 import CardTemplate, {
@@ -21,7 +21,6 @@ import useUpdateEffect from '../../hooks/@shared/useUpdateEffect/useUpdateEffect
 import { loadLines } from '../../redux/slice/lineSlice';
 import { loadStations } from '../../redux/slice/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
-import { Line } from '../../types';
 import { StationName } from '../Stations/Stations.styles';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
@@ -31,7 +30,7 @@ const Sections: VFC = () => {
   const { errorMessage: stationErrorMessage } = useSelector((state: RootState) => state.station);
   const { lines, errorMessage: lineErrorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
-  const sectionAddModal = useModal();
+  const modal = useModal();
 
   const [targetLineIdInput, onChangeTargetLineId] = useInput<HTMLSelectElement>(
     ({ setInput, targetValue }) => {
@@ -51,7 +50,7 @@ const Sections: VFC = () => {
       return;
     }
 
-    sectionAddModal.openModal();
+    modal.openModal(<SectionAddModal line={targetLine} />);
   };
 
   const onDeleteSection = (stationId: number) => async () => {
@@ -124,9 +123,6 @@ const Sections: VFC = () => {
           </CardTemplate>
         )}
       </LineInfoContainer>
-      {sectionAddModal.isModalOpen && (
-        <SectionAddModal line={targetLine as Line} onClose={sectionAddModal.closeModal} />
-      )}
     </CardTemplate>
   );
 };
