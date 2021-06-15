@@ -3,10 +3,10 @@ import { createPortal } from "react-dom";
 
 import { ModalBlock, Dimmed, Contents } from "./ModalProvider.styles";
 
-import { ModalContext } from "../../context";
+import ModalContext from "../../context/modal";
+import { useModal } from "../../hooks";
 
 interface ModalProps {
-  close: React.MouseEventHandler<HTMLDivElement>;
   children: ReactNode;
 }
 
@@ -27,16 +27,23 @@ const ModalPortal = (child: React.ReactNode) => {
   return createPortal(child, $modal);
 };
 
-const Modal = ({ close, children }: ModalProps) => {
-  const [opacity, setOpacity] = useState<number>(0);
+const Modal = ({ children }: ModalProps) => {
+  const [opacity, setOpacity] = useState(0);
+  const { close } = useModal();
 
   useEffect(() => {
     setOpacity(1);
   }, []);
 
+  const dimmedClick: React.MouseEventHandler = ({ target, currentTarget }) => {
+    if (target !== currentTarget) return;
+
+    close();
+  };
+
   return ModalPortal(
-    <ModalBlock onClick={close}>
-      <Dimmed opacity={opacity} />
+    <ModalBlock>
+      <Dimmed opacity={opacity} onClick={dimmedClick} />
       <Contents>{children}</Contents>
     </ModalBlock>
   );
@@ -64,7 +71,7 @@ const ModalProvider = ({ children }: Props) => {
       }}
     >
       {children}
-      {isOpen && <Modal close={close} children={modalChildren} />}
+      {isOpen && <Modal children={modalChildren} />}
     </ModalContext.Provider>
   );
 };

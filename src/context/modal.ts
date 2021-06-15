@@ -7,4 +7,4 @@ interface Modal {
 
 const ModalContext = createContext<Modal | null>(null);
 
-export { ModalContext };
+export default ModalContext;
