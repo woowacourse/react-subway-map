@@ -1,15 +1,15 @@
 import { NavLinkShape } from "../@types/route";
 
-enum PAGE_PATH {
-  HOME = "/",
-  LOGIN = "/login",
-  LOGOUT = "/logout",
-  SIGN_UP = "/signup",
-  STATION_MANAGEMENT = "/station",
-  LINE_MANAGEMENT = "/line",
-  SECTION_MANAGEMENT = "/section",
-  SUBWAY_MANAGEMENT = "/subway",
-}
+const PAGE_PATH = {
+  HOME: "/",
+  LOGIN: "/login",
+  LOGOUT: "/logout",
+  SIGN_UP: "/signup",
+  STATION_MANAGEMENT: "/station",
+  LINE_MANAGEMENT: "/line",
+  SECTION_MANAGEMENT: "/section",
+  SUBWAY_MANAGEMENT: "/subway",
+} as const;
 
 const NAV_LINKS: NavLinkShape[] = [
   {
