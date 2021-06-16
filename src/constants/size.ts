@@ -3,4 +3,8 @@ const SIZE = {
   PAGE_CONTAINER_HEIGHT: "400px",
 } as const;
 
-export { SIZE };
+const Z_INDEX = {
+  MODAL: 1004,
+};
+
+export { SIZE, Z_INDEX };

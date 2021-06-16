@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Z_INDEX } from "../../constants";
+
 interface ContainerProps {
   opacity: number;
 }
@@ -27,7 +29,7 @@ const Dimmed = styled.div<ContainerProps>`
 `;
 
 const Contents = styled.div`
-  z-index: 1004;
+  z-index: ${Z_INDEX.MODAL};
 `;
 
 export { ModalBlock, Dimmed, Contents };
