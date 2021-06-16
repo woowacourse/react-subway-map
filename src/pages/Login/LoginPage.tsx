@@ -34,22 +34,22 @@ const LoginPage = () => {
     <FlexCenter>
       <form onSubmit={onSubmit}>
         <Block
-          style={{
+          css={{
             marginTop: "2.5rem",
             width: SIZE.PAGE_CONTAINER_WIDTH,
             flexDirection: "column",
             alignItems: "flex-start",
           }}
         >
-          <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
-            <h2 style={{ marginBottom: "1rem" }}>👋 로그인</h2>
+          <FlexBetween css={{ width: "100%", marginBottom: "1rem" }}>
+            <h2 css={{ marginBottom: "1rem" }}>👋 로그인</h2>
           </FlexBetween>
-          <Flex style={{ width: "100%", flexDirection: "column" }}>
+          <Flex css={{ width: "100%", flexDirection: "column" }}>
             <InputField
               name="email"
               validator={validateEmail}
               placeholder="이메일"
-              style={{ marginBottom: "0.9375rem" }}
+              css={{ marginBottom: "0.9375rem" }}
               required
             />
             <InputField
@@ -57,10 +57,10 @@ const LoginPage = () => {
               validator={validatePassword}
               type="password"
               placeholder="비밀번호"
-              style={{ marginBottom: "0.9375rem" }}
+              css={{ marginBottom: "0.9375rem" }}
               required
             />
-            <Button size="block" style={{ marginBottom: "0.9375rem" }}>
+            <Button size="block" css={{ marginBottom: "0.9375rem" }}>
               확인
             </Button>
             <p>

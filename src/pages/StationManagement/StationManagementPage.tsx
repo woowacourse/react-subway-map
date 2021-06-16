@@ -30,18 +30,18 @@ const StationManagementPage = () => {
   return (
     <FlexCenter>
       <Block
-        style={{
+        css={{
           marginTop: "2.5rem",
           width: SIZE.PAGE_CONTAINER_WIDTH,
           flexDirection: "column",
           alignItems: "flex-start",
         }}
       >
-        <h2 style={{ marginBottom: "1rem" }}>🚉역 관리</h2>
-        <form onSubmit={onAddStation} style={{ width: "100%" }}>
-          <Flex style={{ width: "100%", marginBottom: "1rem" }}>
+        <h2 css={{ marginBottom: "1rem" }}>🚉역 관리</h2>
+        <form onSubmit={onAddStation} css={{ width: "100%" }}>
+          <Flex css={{ width: "100%", marginBottom: "1rem" }}>
             <Flex
-              style={{
+              css={{
                 width: "100%",
                 flexDirection: "column",
                 marginRight: "0.625rem",
@@ -58,7 +58,7 @@ const StationManagementPage = () => {
           </Flex>
         </form>
         <Flex
-          style={{
+          css={{
             width: "100%",
             flexDirection: "column",
             height: SIZE.PAGE_CONTAINER_HEIGHT,
@@ -68,7 +68,7 @@ const StationManagementPage = () => {
           {stations.map(({ id, name }) => (
             <ListItem
               key={id}
-              style={{ padding: "0.5625rem" }}
+              css={{ padding: "0.5625rem" }}
               onDelete={async () => {
                 await deleteStation(id);
               }}

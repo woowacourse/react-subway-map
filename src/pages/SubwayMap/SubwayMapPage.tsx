@@ -6,7 +6,7 @@ import { SIZE } from "../../constants";
 const SubwayMapPage = () => (
   <FlexCenter>
     <Block
-      style={{
+      css={{
         marginTop: "2.5rem",
         width: SIZE.PAGE_CONTAINER_WIDTH,
         flexDirection: "column",

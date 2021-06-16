@@ -55,28 +55,28 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
   return (
     <form onSubmit={onSubmit}>
       <Block
-        style={{
+        css={{
           flexDirection: "column",
           maxWidth: "40.625rem",
           alignItems: "flex-start",
         }}
       >
-        <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
+        <h3 css={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
           🛤️ 노선 추가
         </h3>
         <InputField
           name="name"
           validator={validateLineName}
           placeholder="노선 이름"
-          style={{ marginBottom: "0.9375rem" }}
+          css={{ marginBottom: "0.9375rem" }}
           required
         />
-        <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
+        <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
           <SelectField
             name="upStationId"
             defaultOption="상행역"
             options={stationOptions}
-            style={{ marginRight: "0.625rem" }}
+            css={{ marginRight: "0.625rem" }}
             required
           />
           <SelectField
@@ -87,7 +87,7 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
           />
         </Flex>
         <Flex
-          style={{
+          css={{
             width: "100%",
             marginBottom: "0.9375rem",
             flexDirection: "column",
@@ -106,9 +106,9 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
         <ColorPicker
           color={color}
           onSetColor={setColor}
-          style={{ marginBottom: "0.9375rem" }}
+          css={{ marginBottom: "0.9375rem" }}
         />
-        <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
+        <Flex css={{ width: "100%", justifyContent: "flex-end" }}>
           <Button>노선 추가</Button>
         </Flex>
       </Block>

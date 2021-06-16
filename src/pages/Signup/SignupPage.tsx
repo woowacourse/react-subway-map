@@ -39,22 +39,22 @@ const SignupPage = () => {
     <FlexCenter>
       <form onSubmit={onSubmit}>
         <Block
-          style={{
+          css={{
             marginTop: "2.5rem",
             width: SIZE.PAGE_CONTAINER_WIDTH,
             flexDirection: "column",
             alignItems: "flex-start",
           }}
         >
-          <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
-            <h2 style={{ marginBottom: "1rem" }}>📝 회원가입</h2>
+          <FlexBetween css={{ width: "100%", marginBottom: "1rem" }}>
+            <h2 css={{ marginBottom: "1rem" }}>📝 회원가입</h2>
           </FlexBetween>
-          <Flex style={{ width: "100%", flexDirection: "column" }}>
+          <Flex css={{ width: "100%", flexDirection: "column" }}>
             <InputField
               name="email"
               validator={validateEmail}
               placeholder="이메일"
-              style={{ marginBottom: "0.9375rem" }}
+              css={{ marginBottom: "0.9375rem" }}
             />
             <InputField
               name="age"
@@ -63,14 +63,14 @@ const SignupPage = () => {
               placeholder="나이"
               min="1"
               max="200"
-              style={{ marginBottom: "0.9375rem" }}
+              css={{ marginBottom: "0.9375rem" }}
             />
             <InputField
               name="password"
               validator={validatePassword}
               type="password"
               placeholder="비밀번호"
-              style={{ marginBottom: "0.9375rem" }}
+              css={{ marginBottom: "0.9375rem" }}
             />
             <InputField
               name="passwordConfirm"
@@ -79,7 +79,7 @@ const SignupPage = () => {
               }}
               type="password"
               placeholder="비밀번호 확인"
-              style={{ marginBottom: "1.5625rem" }}
+              css={{ marginBottom: "1.5625rem" }}
             />
             <Button size="block">확인</Button>
           </Flex>

@@ -30,7 +30,7 @@ ReactDOM.render(
       <ModalProvider>
         <GlobalStyle />
         <Flex
-          style={{
+          css={{
             width: "100%",
             padding: "0.9375rem",
             justifyContent: "flex-end",
@@ -39,7 +39,7 @@ ReactDOM.render(
           <Select
             options={targets}
             onChange={onChange}
-            style={{ width: "9.375rem", backgroundColor: "skyblue" }}
+            css={{ width: "9.375rem", backgroundColor: "skyblue" }}
           />
         </Flex>
         <App />

@@ -15,7 +15,7 @@ const LineManagementPage = () => {
   return (
     <FlexCenter>
       <Block
-        style={{
+        css={{
           marginTop: "2.5rem",
           width: SIZE.PAGE_CONTAINER_WIDTH,
           flexDirection: "column",
@@ -23,7 +23,7 @@ const LineManagementPage = () => {
         }}
       >
         <FlexBetween
-          style={{ width: "100%", marginBottom: "1rem", alignItems: "center" }}
+          css={{ width: "100%", marginBottom: "1rem", alignItems: "center" }}
         >
           <h2>🛤️ 노선 관리</h2>
           <Button
@@ -40,7 +40,7 @@ const LineManagementPage = () => {
           </Button>
         </FlexBetween>
         <Flex
-          style={{
+          css={{
             width: "100%",
             flexDirection: "column",
             height: SIZE.PAGE_CONTAINER_HEIGHT,
@@ -51,7 +51,7 @@ const LineManagementPage = () => {
             <ListItem
               key={id}
               circleColor={CIRCLE_COLOR[color]}
-              style={{ padding: "0.5625rem" }}
+              css={{ padding: "0.5625rem" }}
               onDelete={async () => {
                 await deleteLine(id);
               }}

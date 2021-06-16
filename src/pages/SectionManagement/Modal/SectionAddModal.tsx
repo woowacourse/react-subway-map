@@ -59,23 +59,23 @@ const SectionAddModal = ({
 
   return (
     <form onSubmit={onAddSection}>
-      <Block style={{ flexDirection: "column", maxWidth: "40.625rem" }}>
-        <h3 style={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
+      <Block css={{ flexDirection: "column", maxWidth: "40.625rem" }}>
+        <h3 css={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
           🔁 구간 추가
         </h3>
         <Input
           value={line.name}
           placeholder="노선 이름"
-          style={{ marginBottom: "0.9375rem" }}
+          css={{ marginBottom: "0.9375rem" }}
           disabled
         />
-        <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
+        <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
           <SelectField
             name="upStationId"
             defaultOption="상행역"
             options={stationOptions}
             required
-            style={{ marginRight: "0.625rem" }}
+            css={{ marginRight: "0.625rem" }}
           />
           <SelectField
             name="downStationId"
@@ -84,7 +84,7 @@ const SectionAddModal = ({
             required
           />
         </Flex>
-        <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
+        <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
           <InputField
             name="distance"
             validator={validateSectionDistance}
@@ -96,7 +96,7 @@ const SectionAddModal = ({
             required
           />
         </Flex>
-        <Flex style={{ width: "100%", justifyContent: "flex-end" }}>
+        <Flex css={{ width: "100%", justifyContent: "flex-end" }}>
           <Button>구간 추가</Button>
         </Flex>
       </Block>

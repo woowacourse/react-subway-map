@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
+      <Header css={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
         <Link to={PAGE_PATH.HOME}>🚇 지하철 노선도</Link>
       </Header>
       <Navigation links={NAV_LINKS} isAuthenticated={isAuthenticated} />

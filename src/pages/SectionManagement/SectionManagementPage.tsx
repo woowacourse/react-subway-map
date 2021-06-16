@@ -29,15 +29,15 @@ const SectionManagementPage = () => {
   return (
     <FlexCenter>
       <Block
-        style={{
+        css={{
           marginTop: "2.5rem",
           width: SIZE.PAGE_CONTAINER_WIDTH,
           flexDirection: "column",
           alignItems: "flex-start",
         }}
       >
-        <FlexBetween style={{ width: "100%", marginBottom: "1rem" }}>
-          <h2 style={{ marginBottom: "1rem" }}>🔁 구간 관리</h2>
+        <FlexBetween css={{ width: "100%", marginBottom: "1rem" }}>
+          <h2 css={{ marginBottom: "1rem" }}>🔁 구간 관리</h2>
           <Button
             type="button"
             onClick={() => {
@@ -58,7 +58,7 @@ const SectionManagementPage = () => {
           </Button>
         </FlexBetween>
         <Flex
-          style={{
+          css={{
             width: "100%",
             flexDirection: "column",
             marginBottom: "0.9375rem",
@@ -72,7 +72,7 @@ const SectionManagementPage = () => {
           />
         </Flex>
         <Flex
-          style={{
+          css={{
             width: "100%",
             flexDirection: "column",
             height: SIZE.PAGE_CONTAINER_HEIGHT,
@@ -82,7 +82,7 @@ const SectionManagementPage = () => {
           {targetLine?.stations.map(({ id, name }) => (
             <ListItem
               key={id}
-              style={{ padding: "0.5625rem" }}
+              css={{ padding: "0.5625rem" }}
               onDelete={async () => {
                 await deleteSection({ lineId: Number(lineId), stationId: id });
               }}
