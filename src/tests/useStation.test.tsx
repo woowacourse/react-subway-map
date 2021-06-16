@@ -5,11 +5,17 @@ import useStation from '../service/hooks/useStation';
 import { mockStations, mockToken } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
 import { Station, StationForm } from '../types';
+import useStationAddForm from '../service/hooks/useStationAddForm';
 
 beforeEach(beforeEachFn);
 
 const renderUseStationHook = () =>
   renderHook(() => useStation(mockToken), {
+    wrapper: Wrapper,
+  });
+
+const renderUseStationAddFormHook = () =>
+  renderHook(() => useStationAddForm(), {
     wrapper: Wrapper,
   });
 
@@ -46,5 +52,25 @@ describe('useStation', () => {
     await waitFor(() =>
       expect(result.current.isDeleteStationSuccess).toBeTruthy()
     );
+  });
+});
+
+describe('useStationAddForm', () => {
+  test('역 이름은 2자 이상 20자 이하의 한글이어야 한다', async () => {
+    const { result } = renderUseStationAddFormHook();
+
+    const beneathMinLengthString = '일';
+    const overMaxLengthString = '일'.repeat(21);
+    const englishString = 'abc';
+
+    act(() => result.current.setName(beneathMinLengthString));
+
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
+
+    act(() => result.current.setName(overMaxLengthString));
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
+
+    act(() => result.current.setName(englishString));
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
   });
 });

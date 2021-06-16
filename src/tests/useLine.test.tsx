@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
-import { mockLines } from '../mocks/mockData';
+import { mockLines, mockToken } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
 import useLine from '../service/hooks/useLine';
 import { LineForm } from '../types';
@@ -9,7 +9,7 @@ import { LineForm } from '../types';
 beforeEach(beforeEachFn);
 
 const renderUseLineHook = () =>
-  renderHook(() => useLine(), { wrapper: Wrapper });
+  renderHook(() => useLine(mockToken), { wrapper: Wrapper });
 
 describe('useLine', () => {
   test('사용자는 등록되어 있는 전체 지하철 노선 목록을 조회할 수 있다', async () => {
