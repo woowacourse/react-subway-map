@@ -2,25 +2,30 @@ import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
 import useStation from '../service/hooks/useStation';
-import { mockStations } from '../mocks/mockData';
+import { mockStations, mockToken } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
-import { StationForm } from '../types';
+import { Station, StationForm } from '../types';
 
 beforeEach(beforeEachFn);
 
+const renderUseStationHook = () =>
+  renderHook(() => useStation(mockToken), {
+    wrapper: Wrapper,
+  });
+
 describe('useStation', () => {
   test('사용자는 등록되어 있는 전체 지하철 역 목록을 조회할 수 있다.', async () => {
-    const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
+    const { result } = renderUseStationHook();
 
     await waitFor(() =>
-      expect(result.current.stationsQuery.data).toHaveLength(
+      expect(result.current.stations as Station[]).toHaveLength(
         mockStations.length
       )
     );
   });
 
   test('사용자는 지하철 역을 추가할 수 있다.', async () => {
-    const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
+    const { result } = renderUseStationHook();
 
     const testData: StationForm = {
       name: '광교역',
@@ -34,7 +39,7 @@ describe('useStation', () => {
   });
 
   test('사용자는 지하철 역을 삭제할 수 있다.', async () => {
-    const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
+    const { result } = renderUseStationHook();
 
     act(() => result.current.deleteStation(3));
 

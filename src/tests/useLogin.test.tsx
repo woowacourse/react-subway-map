@@ -8,11 +8,14 @@ import { Wrapper } from './common';
 
 beforeEach(beforeEachFn);
 
+const renderUseLoginHook = () =>
+  renderHook(() => useLogin(), {
+    wrapper: Wrapper,
+  });
+
 describe('useLogin', () => {
   test('사용자는 로그인 할 수 있다.', async () => {
-    const { result } = renderHook(() => useLogin(), {
-      wrapper: Wrapper,
-    });
+    const { result } = renderUseLoginHook();
 
     const testData: LoginForm = {
       email: 'test@test.test',
@@ -25,7 +28,7 @@ describe('useLogin', () => {
   });
 
   test('사용자는 로그아웃 할 수 있다.', () => {
-    const { result } = renderHook(() => useLogin(), { wrapper: Wrapper });
+    const { result } = renderUseLoginHook();
 
     act(() => result.current.logout());
 

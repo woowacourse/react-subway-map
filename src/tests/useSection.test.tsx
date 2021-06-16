@@ -8,11 +8,14 @@ import { SectionForm } from '../types';
 
 beforeEach(beforeEachFn);
 
+const renderUseSectionHook = () =>
+  renderHook(() => useSection(), {
+    wrapper: Wrapper,
+  });
+
 describe('useSection', () => {
   test('사용자는 특정 노선의 전체 구간 목록을 확인할 수 있다', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useSection(), {
-      wrapper: Wrapper,
-    });
+    const { result, waitForNextUpdate } = renderUseSectionHook();
 
     act(() => result.current.setCurrentLineId(1));
 
@@ -28,9 +31,7 @@ describe('useSection', () => {
   });
 
   test('사용자는 특정 지하철 노선에 구간을 추가할 수 있다', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useSection(), {
-      wrapper: Wrapper,
-    });
+    const { result, waitForNextUpdate } = renderUseSectionHook();
 
     act(() => result.current.setCurrentLineId(1));
 
@@ -50,7 +51,7 @@ describe('useSection', () => {
   });
 
   test('사용자는 노선에 등록되어 있는 구간을 삭제할 수 있다', async () => {
-    const { result } = renderHook(() => useSection(), { wrapper: Wrapper });
+    const { result } = renderUseSectionHook();
 
     act(() => result.current.deleteSection(1));
 

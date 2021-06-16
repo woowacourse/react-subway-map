@@ -8,9 +8,12 @@ import { LineForm } from '../types';
 
 beforeEach(beforeEachFn);
 
+const renderUseLineHook = () =>
+  renderHook(() => useLine(), { wrapper: Wrapper });
+
 describe('useLine', () => {
   test('사용자는 등록되어 있는 전체 지하철 노선 목록을 조회할 수 있다', async () => {
-    const { result } = renderHook(() => useLine(), { wrapper: Wrapper });
+    const { result } = renderUseLineHook();
 
     await waitFor(() =>
       expect(result.current.linesQuery.data).toHaveLength(mockLines.length)
@@ -18,7 +21,7 @@ describe('useLine', () => {
   });
 
   test('사용자는 지하철 노선을 추가할 수 있다.', async () => {
-    const { result } = renderHook(() => useLine(), { wrapper: Wrapper });
+    const { result } = renderUseLineHook();
 
     const testData: LineForm = {
       name: '한글노선',
@@ -34,7 +37,7 @@ describe('useLine', () => {
   });
 
   test('사용자는 지하철 노선을 삭제할 수 있다.', async () => {
-    const { result } = renderHook(() => useLine(), { wrapper: Wrapper });
+    const { result } = renderUseLineHook();
 
     act(() => result.current.deleteLine(3));
 
