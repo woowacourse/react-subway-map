@@ -1,16 +1,16 @@
+import { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
 import {
   requestDeleteSection,
   requestAddSection,
   requestSection,
-} from './../service/section';
-import { useEffect, useState } from 'react';
-import { LineDetail, LineId, SectionForm, StationId } from '../types';
+} from '../request/section';
+import { LineDetail, LineId, SectionForm, StationId } from '../../types';
 import useLogin from './useLogin';
-import { useMutation } from 'react-query';
-import { useAppDispatch, useAppSelector } from '../state/store';
-import { lineAction } from '../state/slices/line';
-import { INVALID_VALUE } from '../constants/validate';
-import { lineColors } from '../constants/service';
+import { useAppDispatch, useAppSelector } from '../../state/store';
+import { lineAction } from '../../state/slices/line';
+import { INVALID_VALUE } from '../../constants/validate';
+import { lineColors } from '../../constants/service';
 
 const useSection = () => {
   const dispatch = useAppDispatch();

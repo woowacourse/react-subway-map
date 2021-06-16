@@ -1,6 +1,6 @@
 import { FormEvent, VFC } from 'react';
-import useStation from '../../../hooks/useStation';
-import useStationAddForm from '../../../hooks/useStationAddForm';
+import useStation from '../../../service/hooks/useStation';
+import useStationAddForm from '../../../service/hooks/useStationAddForm';
 import Title from '../../@common/Title/Title.styles';
 import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
 import {

@@ -4,7 +4,7 @@ import Title from '../../components/@common/Title/Title.styles';
 import { APISelectList } from './APISelectPage.styles';
 import { VFC } from 'react';
 import { RouteComponentProps } from 'react-router';
-import useAPISelect from '../../hooks/useAPISelect';
+import useAPISelect from '../../service/hooks/useAPISelect';
 
 const APISelectPage: VFC<RouteComponentProps> = () => {
   const { selectAPI } = useAPISelect();

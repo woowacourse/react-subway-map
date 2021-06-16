@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
-import useLogin from '../hooks/useLogin';
+import useLogin from '../service/hooks/useLogin';
 import { mockToken } from '../mocks/mockData';
 import { LoginForm } from '../types';
 import { beforeEachFn } from './common';

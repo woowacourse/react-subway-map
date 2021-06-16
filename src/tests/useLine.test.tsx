@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
 import { mockLines } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
-import useLine from '../hooks/useLine';
+import useLine from '../service/hooks/useLine';
 import { LineForm } from '../types';
 
 beforeEach(beforeEachFn);
@@ -13,7 +13,7 @@ describe('useLine', () => {
     const { result } = renderHook(() => useLine(), { wrapper: Wrapper });
 
     await waitFor(() =>
-      expect(result.current.lines.data).toHaveLength(mockLines.length)
+      expect(result.current.linesQuery.data).toHaveLength(mockLines.length)
     );
   });
 

@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { INVALID_VALUE } from '../../../constants/validate';
-import useLine from '../../../hooks/useLine';
-import useModal from '../../../hooks/useModal';
-import useSection from '../../../hooks/useSection';
+import useLine from '../../../service/hooks/useLine';
+import useModal from '../../../service/hooks/useModal';
+import useSection from '../../../service/hooks/useSection';
 import { Line } from '../../../types';
 import Title from '../../@common/Title/Title.styles';
 import StationList from '../../StationManagement/StationList/StationList';
@@ -14,7 +14,7 @@ import {
 } from './SectionsManagementSection.styles';
 
 const SectionManagementSection = () => {
-  const { lines } = useLine();
+  const { linesQuery } = useLine();
   const { currentLineId, setCurrentLineId, currentLineDetail, deleteSection } =
     useSection();
 
@@ -32,7 +32,7 @@ const SectionManagementSection = () => {
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
           <Suspense fallback={true}>
-            {(lines.data as Line[]).map((line) => (
+            {(linesQuery.data as Line[]).map((line) => (
               <option key={line.id} value={line.id}>
                 {line.name}
               </option>

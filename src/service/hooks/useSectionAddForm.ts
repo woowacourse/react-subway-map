@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Section, SectionForm, StationId } from '../types';
+import { Section, SectionForm, StationId } from '../../types';
 import useStation from './useStation';
 import useSection from './useSection';
-import { INVALID_VALUE } from '../constants/validate';
-import { SERVICE } from '../constants/service';
+import { INVALID_VALUE } from '../../constants/validate';
+import { SERVICE } from '../../constants/service';
 
 const useSectionForm = () => {
   const [form, setForm] = useState<SectionForm>({

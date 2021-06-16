@@ -1,9 +1,9 @@
 import { FormEvent, Suspense, VFC } from 'react';
 import { lineColors } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
-import useLine from '../../../hooks/useLine';
-import useLineAddForm from '../../../hooks/useLineAddForm';
-import useStation from '../../../hooks/useStation';
+import useLine from '../../../service/hooks/useLine';
+import useLineAddForm from '../../../service/hooks/useLineAddForm';
+import useStation from '../../../service/hooks/useStation';
 import { Station } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
 import Modal from '../../@common/Modal/Modal';
@@ -36,7 +36,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     isSelectedUpStation,
     availableDownStations,
   } = useLineAddForm();
-  const { addLine, lines } = useLine();
+  const { addLine, linesQuery } = useLine();
   const { stations } = useStation();
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
@@ -109,7 +109,9 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
                 selectedColor={form.color}
                 backgroundColor={lineColor}
                 onClick={() => setColor(lineColor)}
-                disabled={lines.data?.some((line) => line.color === lineColor)}
+                disabled={linesQuery.data?.some(
+                  (line) => line.color === lineColor
+                )}
               />
             ))}
           </ColorPicker>

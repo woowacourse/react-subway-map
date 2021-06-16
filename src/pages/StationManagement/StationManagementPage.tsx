@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import Template from '../../components/@common/Template/Template';
 import StationAddForm from '../../components/StationManagement/StationAddForm/StationAddForm';
 import StationList from '../../components/StationManagement/StationList/StationList';
-import useStation from '../../hooks/useStation';
+import useStation from '../../service/hooks/useStation';
 import { Station } from '../../types';
 
 const StationManagementPage = () => {

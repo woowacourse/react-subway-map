@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { requestLogin } from '../../service/auth';
+import { requestLogin } from '../../service/request/auth';
 import { LoginForm } from '../../types';
 
 interface LoginState {

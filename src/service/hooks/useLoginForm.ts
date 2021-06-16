@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { LoginForm } from './../types';
-import { SERVICE } from './../constants/service';
-import { REGEX } from './../constants/validate';
+import { LoginForm } from '../../types';
+import { SERVICE } from '../../constants/service';
+import { REGEX } from '../../constants/validate';
 
 const useLoginForm = () => {
   const [form, setForm] = useState<LoginForm>({

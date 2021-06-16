@@ -1,6 +1,6 @@
-import { StationForm } from './../types';
+import { StationForm } from '../../types';
 import { useState } from 'react';
-import { REGEX } from '../constants/validate';
+import { REGEX } from '../../constants/validate';
 
 const useStationAddForm = () => {
   const [form, setForm] = useState<StationForm>({ name: '' });

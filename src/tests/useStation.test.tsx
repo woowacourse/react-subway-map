@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
-import useStation from '../hooks/useStation';
+import useStation from '../service/hooks/useStation';
 import { mockStations } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
 import { StationForm } from '../types';

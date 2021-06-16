@@ -8,8 +8,8 @@ import SignUpPage from './pages/SignUp/SignUpPage';
 import APISelectPage from './pages/APISelect/APISelectPage';
 import StationManagementPage from './pages/StationManagement/StationManagementPage';
 import NavigationBar from './components/NavigationBar/NavigationBar';
-import useLogin from './hooks/useLogin';
-import useAPI from './hooks/useAPI';
+import useLogin from './service/hooks/useLogin';
+import useAPI from './service/hooks/useAPI';
 
 function App() {
   const { isLogin } = useLogin();

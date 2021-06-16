@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
 import { mockLines } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
-import useSection from '../hooks/useSection';
+import useSection from '../service/hooks/useSection';
 import { SectionForm } from '../types';
 
 beforeEach(beforeEachFn);

@@ -1,5 +1,5 @@
-import APIClient from '../API/API';
-import { Line, LineForm, LineId } from '../types';
+import APIClient from '../../API/API';
+import { Line, LineForm, LineId } from '../../types';
 
 export const requestLines = async (accessToken: string): Promise<Line[]> => {
   const response = await APIClient.get('/lines', accessToken);

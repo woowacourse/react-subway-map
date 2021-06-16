@@ -1,7 +1,7 @@
 import { FormEvent, VFC } from 'react';
 import Button from '../../@common/Button/Button.styles';
 import AuthForm from '../../@mixins/Auth/AuthForm';
-import useSignUp from '../../../hooks/useSignUp';
+import useSignUp from '../../../service/hooks/useSignUp';
 import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
 
 const SignUpForm: VFC = () => {

@@ -1,6 +1,6 @@
 import { FormEvent, VFC } from 'react';
-import useLogin from '../../../hooks/useLogin';
-import useLoginForm from '../../../hooks/useLoginForm';
+import useLogin from '../../../service/hooks/useLogin';
+import useLoginForm from '../../../service/hooks/useLoginForm';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
 import AuthForm from '../../@mixins/Auth/AuthForm';

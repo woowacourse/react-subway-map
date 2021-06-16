@@ -1,9 +1,9 @@
 import { FormEvent, Suspense, VFC } from 'react';
 import { SERVICE } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
-import useLine from '../../../hooks/useLine';
-import useSection from '../../../hooks/useSection';
-import useSectionForm from '../../../hooks/useSectionAddForm';
+import useLine from '../../../service/hooks/useLine';
+import useSection from '../../../service/hooks/useSection';
+import useSectionForm from '../../../service/hooks/useSectionAddForm';
 import { Line } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
@@ -35,7 +35,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     availableDownStations,
     selectedSectionDistance,
   } = useSectionForm();
-  const { lines } = useLine();
+  const { linesQuery } = useLine();
 
   const onAddSection = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,7 +55,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           onChange={({ target }) => setCurrentLineId(Number(target.value))}
         >
           <Suspense fallback={true}>
-            {(lines.data as Line[]).map(({ id, name }) => (
+            {(linesQuery.data as Line[]).map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
               </option>

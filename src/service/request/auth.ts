@@ -1,5 +1,5 @@
-import APIClient from '../API/API';
-import { LoginForm, SignUpForm } from '../types';
+import APIClient from '../../API/API';
+import { LoginForm, SignUpForm } from '../../types';
 
 export const requestSignUp = async (
   form: Omit<SignUpForm, 'passwordForValidation'>

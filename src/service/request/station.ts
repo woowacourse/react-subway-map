@@ -1,6 +1,5 @@
-import { StationId } from './../types';
-import APIClient from '../API/API';
-import { Station, StationForm } from '../types';
+import APIClient from '../../API/API';
+import { StationId, Station, StationForm } from '../../types';
 
 export const requestStations = async (
   accessToken: string

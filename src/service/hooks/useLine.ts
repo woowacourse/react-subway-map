@@ -3,17 +3,21 @@ import {
   requestLines,
   requestAddLine,
   requestDeleteLine,
-} from '../service/line';
+} from '../request/line';
 import useLogin from './useLogin';
-import { LineForm, LineId } from '../types';
-import { QUERY } from '../constants/API';
+import { Line, LineForm, LineId } from '../../types';
+import { QUERY } from '../../constants/API';
 
 const useLine = () => {
   const { accessToken } = useLogin();
   const queryClient = useQueryClient();
-  const lines = useQuery(QUERY.REQUEST_LINES, () => requestLines(accessToken), {
-    onError: () => alert('노선을 불러오지 못했습니다!'),
-  });
+  const linesQuery = useQuery<Line[]>(
+    QUERY.REQUEST_LINES,
+    () => requestLines(accessToken),
+    {
+      onError: () => alert('노선을 불러오지 못했습니다!'),
+    }
+  );
 
   const addLineMutation = useMutation(
     (form: LineForm) => requestAddLine(form, accessToken),
@@ -43,7 +47,7 @@ const useLine = () => {
   const isDeleteLineSuccess = deleteLineMutation.isSuccess;
 
   return {
-    lines,
+    linesQuery,
     addLine,
     deleteLine,
     isAddLineSuccess,

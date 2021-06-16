@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router';
-import useLogin from '../../hooks/useLogin';
+import useLogin from '../../service/hooks/useLogin';
 import {
   NavigationBarContainer,
   Logo,

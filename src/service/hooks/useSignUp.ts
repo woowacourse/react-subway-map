@@ -1,9 +1,9 @@
-import { REGEX } from './../constants/validate';
-import { requestSignUp } from './../service/auth';
 import { useState } from 'react';
-import { SignUpForm } from '../types';
+import { REGEX } from '../../constants/validate';
+import { requestSignUp } from '../request/auth';
+import { SignUpForm } from '../../types';
 import useLogin from './useLogin';
-import { SERVICE } from '../constants/service';
+import { SERVICE } from '../../constants/service';
 
 const useSignUp = () => {
   const [form, setForm] = useState<SignUpForm>({

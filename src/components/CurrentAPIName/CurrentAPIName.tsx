@@ -1,5 +1,5 @@
 import { StyledCurrentAPIName } from './CurrentAPIName.styles';
-import useAPI from '../../hooks/useAPI';
+import useAPI from '../../service/hooks/useAPI';
 import { useHistory } from 'react-router';
 
 const CurrentAPIName = () => {

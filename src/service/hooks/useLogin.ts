@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router';
-import { LoginForm } from '../types';
-import { useAppDispatch, useAppSelector } from '../state/store';
-import { loginAction, loginAsyncAction } from '../state/slices/login';
+import { LoginForm } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../state/store';
+import { loginAction, loginAsyncAction } from '../../state/slices/login';
 
 const useLogin = () => {
   const { accessToken } = useAppSelector(({ login: { accessToken } }) => ({

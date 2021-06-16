@@ -1,4 +1,4 @@
-import { useAppSelector } from './../state/store';
+import { useAppSelector } from '../../state/store';
 
 const useAPI = () => {
   const { APIName } = useAppSelector(({ API: { APIName } }) => ({ APIName }));
