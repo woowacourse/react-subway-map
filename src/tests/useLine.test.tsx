@@ -70,4 +70,14 @@ describe('useLineAddForm', () => {
     act(() => result.current.setName(englishString));
     await waitFor(() => expect(result.current.isValidName).toBeFalsy());
   });
+
+  test('노선 이름은 숫자를 포함하지 않는다.', async () => {
+    const { result } = renderUseLineAddFormHook();
+
+    const stringWithNumber = '노선3';
+
+    act(() => result.current.setName(stringWithNumber));
+
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
+  });
 });
