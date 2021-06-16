@@ -6,7 +6,7 @@ import Routes from "./Routes";
 
 import { useAuth, useStation, useLine } from "./hooks";
 
-import { PAGE_PATH, NAV_LINKS, ROUTES } from "./constants";
+import { PAGE_PATH, NAV_LINKS } from "./constants";
 
 const App = () => {
   const {
@@ -40,7 +40,7 @@ const App = () => {
       </Header>
       <Navigation links={NAV_LINKS} isAuthenticated={isAuthenticated} />
       <Switch>
-        <Routes routes={ROUTES} isAuthenticated={isAuthenticated} />
+        <Routes isAuthenticated={isAuthenticated} />
       </Switch>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {loading && <Loading />}

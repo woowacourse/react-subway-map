@@ -1,16 +1,62 @@
 import { Route, RouteProps, Redirect } from "react-router";
 
-import { PAGE_PATH } from "./constants";
-
 import { FormProvider } from "./components";
+import {
+  Login,
+  Logout,
+  Signup,
+  StationManagement,
+  LineManagement,
+  SectionManagement,
+  SubwayMap,
+} from "./pages";
+
+import { PAGE_PATH } from "./constants";
 import { RouteShape } from "./@types/route";
 
 interface Props {
-  routes: RouteShape[];
   isAuthenticated: boolean;
 }
 
-const Routes = ({ routes, isAuthenticated }: Props) => {
+const ROUTES: RouteShape[] = [
+  {
+    isPrivate: false,
+    path: PAGE_PATH.LOGIN,
+    Component: Login,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.LOGOUT,
+    Component: Logout,
+  },
+  {
+    isPrivate: false,
+    path: PAGE_PATH.SIGN_UP,
+    Component: Signup,
+  },
+  {
+    isPrivate: true,
+    path: [PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT],
+    Component: StationManagement,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.LINE_MANAGEMENT,
+    Component: LineManagement,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.SECTION_MANAGEMENT,
+    Component: SectionManagement,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.SUBWAY_MANAGEMENT,
+    Component: SubwayMap,
+  },
+];
+
+const Routes = ({ isAuthenticated }: Props) => {
   const PublicRoute = ({ children, ...props }: RouteProps) => (
     <Route {...props}>
       {isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};
@@ -25,7 +71,7 @@ const Routes = ({ routes, isAuthenticated }: Props) => {
 
   return (
     <>
-      {routes.map(({ isPrivate, path, Component }, index) => {
+      {ROUTES.map(({ isPrivate, path, Component }, index) => {
         const TargetRoute = isPrivate ? PrivateRoute : PublicRoute;
 
         return (
