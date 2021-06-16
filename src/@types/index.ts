@@ -22,14 +22,8 @@ interface Station {
 }
 
 interface Section {
-  upStation: {
-    id: number;
-    name: string;
-  };
-  downStation: {
-    id: number;
-    name: string;
-  };
+  upStation: Station;
+  downStation: Station;
   distance: number;
 }
 
