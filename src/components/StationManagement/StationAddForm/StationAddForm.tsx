@@ -2,7 +2,7 @@ import { FormEvent, VFC } from 'react';
 import useStation from '../../../service/hooks/useStation';
 import useStationAddForm from '../../../service/hooks/useStationAddForm';
 import Title from '../../@common/Title/Title.styles';
-import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
+import ValidationInput from '../../@mixins/ValidationInput/ValidationInput';
 import {
   InputContainer,
   StyledStationAddForm,
@@ -23,7 +23,7 @@ const StationAddForm: VFC = () => {
     <StyledStationAddForm onSubmit={handleAddStation}>
       <Title>지하철 역 관리</Title>
       <InputContainer>
-        <InputWithAlertText
+        <ValidationInput
           value={form.name}
           isValid={isValidName}
           invalidText={

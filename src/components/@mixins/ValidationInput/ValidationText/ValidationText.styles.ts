@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import { AlertTextProps } from './AlertText';
+import { ValidationTextProps } from './ValidationText';
 
-export const StyledAlertText = styled.span<Pick<AlertTextProps, 'isValid'>>`
+export const StyledAlertText = styled.span<
+  Pick<ValidationTextProps, 'isValid'>
+>`
   color: ${({ isValid }) => (isValid ? 'green' : 'crimson')};
   font-size: 0.725rem;
   position: absolute;

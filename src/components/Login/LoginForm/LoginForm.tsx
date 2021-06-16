@@ -4,7 +4,7 @@ import useLoginForm from '../../../service/hooks/useLoginForm';
 import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
 import AuthForm from '../../@mixins/Auth/AuthForm';
-import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
+import ValidationInput from '../../@mixins/ValidationInput/ValidationInput';
 import { SignUpLink } from './LoginForm.styles';
 
 export interface LoginFormProps {}
@@ -27,14 +27,14 @@ const LoginForm: VFC<LoginFormProps> = () => {
 
   return (
     <AuthForm title="로그인" onSubmit={handleLogin}>
-      <InputWithAlertText
+      <ValidationInput
         value={form.email}
         onChange={({ target: { value } }) => setEmail(value)}
         placeholder="이메일을 입력해주세요."
         isValid={isValidEmail}
         invalidText="이메일 양식에 맞게 입력해주세요."
       />
-      <InputWithAlertText
+      <ValidationInput
         type="password"
         value={form.password}
         onChange={({ target: { value } }) => setPassword(value)}

@@ -2,7 +2,7 @@ import { FormEvent, VFC } from 'react';
 import Button from '../../@common/Button/Button.styles';
 import AuthForm from '../../@mixins/Auth/AuthForm';
 import useSignUp from '../../../service/hooks/useSignUp';
-import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
+import ValidationInput from '../../@mixins/ValidationInput/ValidationInput';
 
 const SignUpForm: VFC = () => {
   const {
@@ -27,7 +27,7 @@ const SignUpForm: VFC = () => {
 
   return (
     <AuthForm title="회원가입" onSubmit={handleSignUp}>
-      <InputWithAlertText
+      <ValidationInput
         value={form.email}
         onChange={({ target: { value } }) => setEmail(value)}
         placeholder="이메일을 입력해주세요."
@@ -35,7 +35,7 @@ const SignUpForm: VFC = () => {
         invalidText="이메일 양식에 맞게 입력해주세요."
         validText="올바른 이메일입니다."
       />
-      <InputWithAlertText
+      <ValidationInput
         type="number"
         value={form.age}
         min={1}
@@ -46,7 +46,7 @@ const SignUpForm: VFC = () => {
         invalidText=" 1세 이상만 가입할 수 있습니다."
       />
 
-      <InputWithAlertText
+      <ValidationInput
         type="password"
         value={form.password}
         onChange={({ target: { value } }) => setPassword(value)}
@@ -55,7 +55,7 @@ const SignUpForm: VFC = () => {
         validText="올바른 비밀번호입니다."
         invalidText="6자 이상의 비밀번호를 입력해주세요."
       />
-      <InputWithAlertText
+      <ValidationInput
         type="password"
         value={form.passwordForValidation}
         onChange={({ target: { value } }) => setPasswordForValidation(value)}

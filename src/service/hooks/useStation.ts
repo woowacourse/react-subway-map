@@ -14,7 +14,7 @@ const useStation = () => {
   const queryClient = useQueryClient();
   const linesQuery = useQuery('requestLines', () => requestLines(accessToken));
 
-  const stations = useQuery(QUERY.REQUEST_STATIONS, () =>
+  const stationsQuery = useQuery(QUERY.REQUEST_STATIONS, () =>
     requestStations(accessToken)
   );
 
@@ -58,7 +58,7 @@ const useStation = () => {
   const isDeleteStationSuccess = deleteMutation.isSuccess;
 
   return {
-    stations,
+    stationsQuery,
     addStation,
     deleteStation,
     isAddStationSuccess,

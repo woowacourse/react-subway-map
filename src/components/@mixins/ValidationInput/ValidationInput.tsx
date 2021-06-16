@@ -1,13 +1,15 @@
 import { InputHTMLAttributes, VFC } from 'react';
-import AlertText, { AlertTextProps } from './AlertText/AlertText';
+import ValidationText, {
+  ValidationTextProps,
+} from './ValidationText/ValidationText';
 import Input from '../../@common/Input/Input';
-import { InputContainer } from './InputWithAlertText.styles';
+import { InputContainer } from './ValidationInput.styles';
 
-interface InputWithAlertTextProps
+interface ValidationInputProps
   extends InputHTMLAttributes<HTMLInputElement>,
-    AlertTextProps {}
+    ValidationTextProps {}
 
-const InputWithAlertText: VFC<InputWithAlertTextProps> = ({
+const ValidationInput: VFC<ValidationInputProps> = ({
   isValid,
   invalidText,
   validText,
@@ -19,7 +21,7 @@ const InputWithAlertText: VFC<InputWithAlertTextProps> = ({
     <InputContainer className={className}>
       <Input value={value} {...inputArgs} />
       {!!value && (
-        <AlertText
+        <ValidationText
           isValid={isValid}
           invalidText={invalidText}
           validText={validText}
@@ -29,4 +31,4 @@ const InputWithAlertText: VFC<InputWithAlertTextProps> = ({
   );
 };
 
-export default InputWithAlertText;
+export default ValidationInput;

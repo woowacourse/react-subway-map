@@ -12,7 +12,7 @@ const useLineAddForm = () => {
     downStationId: INVALID_VALUE,
     distance: SERVICE.MIN_DISTANCE,
   });
-  const { stations } = useStation();
+  const { stationsQuery } = useStation();
 
   const isValidName = REGEX.LINE_NAME.test(form.name);
   const isValidColor = lineColors.includes(form.color as LineColor);
@@ -26,8 +26,8 @@ const useLineAddForm = () => {
     isSelectedUpStation &&
     isSelectedDownStation;
 
-  const availableDownStations = stations.isSuccess
-    ? stations.data.filter((station) => station.id !== form.upStationId)
+  const availableDownStations = stationsQuery.isSuccess
+    ? stationsQuery.data.filter((station) => station.id !== form.upStationId)
     : [];
 
   const setName = (name: string) => {

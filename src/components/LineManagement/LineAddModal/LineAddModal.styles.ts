@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Container from '../../@common/Container/Container.styles';
 import IconButton from '../../@common/IconButton/IconButton';
 import Input from '../../@common/Input/Input';
-import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
+import ValidationInput from '../../@mixins/ValidationInput/ValidationInput';
 
 export const LineAddForm = styled.form`
   width: 100%;
@@ -13,7 +13,7 @@ export const StyledInput = styled(Input)`
   margin-bottom: 1.5rem;
 `;
 
-export const StyledInputWithAlertText = styled(InputWithAlertText)`
+export const StyledInputWithAlertText = styled(ValidationInput)`
   margin-bottom: 1.5rem;
 `;
 

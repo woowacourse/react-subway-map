@@ -13,7 +13,9 @@ describe('useStation', () => {
     const { result } = renderHook(() => useStation(), { wrapper: Wrapper });
 
     await waitFor(() =>
-      expect(result.current.stations.data).toHaveLength(mockStations.length)
+      expect(result.current.stationsQuery.data).toHaveLength(
+        mockStations.length
+      )
     );
   });
 

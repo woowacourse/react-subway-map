@@ -9,7 +9,7 @@ import Button from '../../@common/Button/Button.styles';
 import Container from '../../@common/Container/Container.styles';
 import Modal from '../../@common/Modal/Modal';
 import Title from '../../@common/Title/Title.styles';
-import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
+import ValidationInput from '../../@mixins/ValidationInput/ValidationInput';
 import {
   SectionSelectBox,
   ControlContainer,
@@ -96,7 +96,7 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
           </SectionSelectBox>
         </Container>
 
-        <InputWithAlertText
+        <ValidationInput
           type="number"
           min={SERVICE.MIN_DISTANCE - 1}
           max={selectedSectionDistance - 1}

@@ -12,7 +12,7 @@ const useSectionForm = () => {
     upStationId: INVALID_VALUE,
   });
 
-  const { stations } = useStation();
+  const { stationsQuery } = useStation();
   const { currentLineDetail } = useSection();
 
   const setDistance = (distance: number) => {
@@ -31,8 +31,8 @@ const useSectionForm = () => {
 
   const availableUpStations = currentLineDetail.stations;
 
-  const availableDownStations = stations.isSuccess
-    ? stations.data.filter(
+  const availableDownStations = stationsQuery.isSuccess
+    ? stationsQuery.data.filter(
         (station) =>
           !currentLineDetail.stations.some(
             (listedStation) => listedStation.id === station.id

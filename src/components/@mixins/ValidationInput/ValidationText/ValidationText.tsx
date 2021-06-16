@@ -1,13 +1,13 @@
 import { VFC } from 'react';
-import { StyledAlertText } from './AlertText.styles';
+import { StyledAlertText } from './ValidationText.styles';
 
-export interface AlertTextProps {
+export interface ValidationTextProps {
   isValid: boolean;
   validText?: string;
   invalidText?: string;
 }
 
-const AlertText: VFC<AlertTextProps> = ({
+const ValidationText: VFC<ValidationTextProps> = ({
   isValid,
   validText,
   invalidText,
@@ -19,4 +19,4 @@ const AlertText: VFC<AlertTextProps> = ({
   );
 };
 
-export default AlertText;
+export default ValidationText;

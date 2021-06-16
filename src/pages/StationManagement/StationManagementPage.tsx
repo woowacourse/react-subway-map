@@ -6,7 +6,7 @@ import useStation from '../../service/hooks/useStation';
 import { Station } from '../../types';
 
 const StationManagementPage = () => {
-  const { stations, deleteStation } = useStation();
+  const { stationsQuery, deleteStation } = useStation();
 
   return (
     <Template type="vertical">
@@ -14,7 +14,7 @@ const StationManagementPage = () => {
       <Suspense fallback={true}>
         {
           <StationList
-            stations={stations.data as Station[]}
+            stations={stationsQuery.data as Station[]}
             deleteStation={deleteStation}
           />
         }
