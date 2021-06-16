@@ -7,7 +7,7 @@ import {
   createAction,
 } from "@reduxjs/toolkit";
 
-import { requestAuth } from "../apis/user";
+import { auth } from "../apis";
 
 import {
   isPendingAction,
@@ -40,14 +40,14 @@ const checkAccessToken = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     const accessToken = localStorage.getItem("accessToken") || "";
 
-    try {
-      await requestAuth.getUserInfo(accessToken);
-    } catch (error) {
+    const response = await auth.getUserInfo(accessToken);
+
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
   }
 );
@@ -55,17 +55,19 @@ const checkAccessToken = createAsyncThunk(
 const login = createAsyncThunk(
   "[AUTH] LOGIN",
   async ({ email, password }: LoginInfo, { dispatch, rejectWithValue }) => {
-    try {
-      const accessToken = await requestAuth.login(email, password);
+    const response = await auth.login(email, password);
 
-      localStorage.setItem("accessToken", accessToken);
-    } catch (error) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    localStorage.setItem("accessToken", response.result.accessToken);
+
+    return response.result;
   }
 );
 
@@ -75,16 +77,19 @@ const signup = createAsyncThunk(
     { email, password, age }: SignupInfo,
     { dispatch, rejectWithValue }
   ) => {
-    try {
-      await requestAuth.signup(email, password, age);
-      dispatch(login({ email, password }));
-    } catch (error) {
+    const response = await auth.signup(email, password, age);
+
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    dispatch(login({ email, password }));
+
+    return response.result;
   }
 );
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 
-import { requestAuth } from "./user";
-import { requestStation } from "./station";
-import { requestLine } from "./line";
-import { requestSection } from "./section";
+import { auth } from "./auth";
+import { stations } from "./stations";
+import { lines } from "./lines";
+import { sections } from "./sections";
 
 const BASE_URL = {
   에드: "https://subway-app.kro.kr",
@@ -17,6 +17,6 @@ const changeBaseUrl = (범인: keyof typeof BASE_URL) => {
   axios.defaults.baseURL = BASE_URL[범인];
 };
 
-export { requestAuth, requestStation, requestLine, requestSection };
+export { auth, stations, lines, sections };
 
 export { BASE_URL, changeBaseUrl };

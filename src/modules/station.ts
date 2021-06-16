@@ -7,7 +7,7 @@ import {
   createAction,
 } from "@reduxjs/toolkit";
 
-import { requestStation } from "../apis/station";
+import { stations } from "../apis/stations";
 
 import {
   isFulfilledAction,
@@ -38,51 +38,51 @@ const isStationAction = (action: AnyAction): action is AnyAction => {
 const getStations = createAsyncThunk(
   "[STATION] LOAD",
   async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const stations = await requestStation.getAllStation();
+    const response = await stations.getAllStation();
 
-      return stations;
-    } catch (err) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
 const addStation = createAsyncThunk(
   "[STATION] ADD",
   async (name: string, { dispatch, rejectWithValue }) => {
-    try {
-      const station = await requestStation.addStation(name);
+    const response = await stations.addStation(name);
 
-      return station;
-    } catch (err) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
 const deleteStation = createAsyncThunk(
   "[STATION] DELETE",
   async (id: number, { dispatch, rejectWithValue }) => {
-    try {
-      await requestStation.deleteStation(id);
+    const response = await stations.deleteStation(id);
 
-      return id;
-    } catch (err) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 

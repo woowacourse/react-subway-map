@@ -7,8 +7,8 @@ import {
   createAction,
 } from "@reduxjs/toolkit";
 
-import { requestLine } from "../apis/line";
-import { requestSection } from "../apis/section";
+import { lines } from "../apis/lines";
+import { sections } from "../apis/sections";
 
 import {
   isPendingAction,
@@ -39,17 +39,17 @@ const isLineAction = (action: AnyAction): action is AnyAction => {
 const getLines = createAsyncThunk(
   "[LINE] LOAD",
   async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const line = await requestLine.getAllLines();
+    const response = await lines.getAllLines();
 
-      return line;
-    } catch (error) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
@@ -59,34 +59,34 @@ const addLine = createAsyncThunk(
     lineRequestItem: LineAddRequestItem,
     { dispatch, rejectWithValue }
   ) => {
-    try {
-      const line = await requestLine.addLine(lineRequestItem);
+    const response = await lines.addLine(lineRequestItem);
 
-      return line;
-    } catch (error) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
 const deleteLine = createAsyncThunk(
   "[LINE] DELETE",
   async (id: number, { dispatch, rejectWithValue }) => {
-    try {
-      await requestLine.deleteLine(id);
+    const response = await lines.deleteLine(id);
 
-      return id;
-    } catch (error) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
@@ -96,17 +96,17 @@ const addSection = createAsyncThunk(
     sectionAddRequestItem: SectionAddRequestItem,
     { dispatch, rejectWithValue }
   ) => {
-    try {
-      const response = await requestSection.addSection(sectionAddRequestItem);
+    const response = await sections.addSection(sectionAddRequestItem);
 
-      return response.data;
-    } catch (error) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
@@ -116,20 +116,17 @@ const deleteSection = createAsyncThunk(
     { lineId, stationId }: { lineId: number; stationId: number },
     { dispatch, rejectWithValue }
   ) => {
-    try {
-      await requestSection.deleteSection({ lineId, stationId });
+    const response = await sections.deleteSection({ lineId, stationId });
 
-      return {
-        lineId,
-        stationId,
-      };
-    } catch (error) {
+    if (!response.success) {
       setTimeout(() => {
         dispatch(resetError());
       }, ERROR_DURATION);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(response.result);
     }
+
+    return response.result;
   }
 );
 
