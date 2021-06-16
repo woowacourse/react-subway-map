@@ -90,4 +90,18 @@ describe('useLineAddForm', () => {
 
     await waitFor(() => expect(result.current.isValidName).toBeFalsy());
   });
+
+  test('상행선역을 설정하면 하행선 선택창에서는 해당 역이 존재하지 않는다.', async () => {
+    const { result } = renderUseLineAddFormHook();
+
+    const upStationId = result.current.availableDownStations[0].id;
+
+    act(() => result.current.setUpStationId(upStationId));
+
+    await waitFor(() =>
+      expect(
+        result.current.availableDownStations.map(({ id }) => id)
+      ).not.toContain(upStationId)
+    );
+  });
 });
