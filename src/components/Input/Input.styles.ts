@@ -12,7 +12,7 @@ const InputBlock = styled.input`
   border: none;
   outline: none;
   border-radius: 2rem;
-  background-color: #f1f5f9;
+  background-color: ${COLOR.GRAY_50};
 `;
 
 const ErrorMessage = styled.span`

@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
+import { COLOR } from "../../constants";
+
 const Block = styled.div`
   width: 300px;
   height: 180px;
   flex-wrap: wrap;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: ${COLOR.WHITE};
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.5);
 `;
 
@@ -15,7 +17,7 @@ const Title = styled.section`
   justify-content: center;
   flex-basis: 100%;
   height: 60%;
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid ${COLOR.GRAY_50};
 `;
 
 const ButtonControls = styled.section`
@@ -31,11 +33,11 @@ const ButtonControls = styled.section`
   }
 
   > button:hover {
-    background-color: #dadada;
+    background-color: ${COLOR.GRAY_100};
   }
 
   > button:last-child {
-    border-left: 1px solid #e7e7e7;
+    border-left: 1px solid ${COLOR.GRAY_50};
   }
 `;
 

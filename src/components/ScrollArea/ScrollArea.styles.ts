@@ -15,7 +15,7 @@ const ScrollAreaBlock = styled.div<ScrollAreaBlockProps>`
   ::-webkit-scrollbar {
     width: 30px;
     border-radius: 12px;
-    background-color: #e7f4ff;
+    background-color: ${COLOR.GRAY_100};
   }
 
   ::-webkit-scrollbar-thumb {
