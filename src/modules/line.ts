@@ -76,6 +76,7 @@ const addLine = createAsyncThunk(
 const deleteLine = createAsyncThunk(
   "[LINE] DELETE",
   async (id: number, { dispatch, rejectWithValue }) => {
+    alert("?");
     const response = await lines.deleteLine(id);
 
     if (!response.success) {

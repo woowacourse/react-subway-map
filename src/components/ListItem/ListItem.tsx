@@ -1,4 +1,4 @@
-import { LiHTMLAttributes, MouseEventHandler } from "react";
+import { LiHTMLAttributes } from "react";
 
 import { Button, Confirm, FormProvider } from "../";
 import { FlexAlignCenter } from "../Layout/";
@@ -15,8 +15,8 @@ import {
 export interface Props
   extends LiHTMLAttributes<HTMLLIElement>,
     ListItemStylesProps {
-  onUpdate?: MouseEventHandler<HTMLButtonElement>;
-  onDelete?: MouseEventHandler<HTMLButtonElement>;
+  onUpdate?: () => void;
+  onDelete?: () => void;
 }
 
 const ListItem = ({
@@ -26,7 +26,7 @@ const ListItem = ({
   children,
   ...props
 }: Props) => {
-  const { open, close } = useModal();
+  const { open } = useModal();
 
   return (
     <ListItemBlock {...props}>
@@ -48,11 +48,7 @@ const ListItem = ({
             onClick={() =>
               open(
                 <FormProvider>
-                  <Confirm
-                    title="삭제하시겠습니까?"
-                    onConfirm={onDelete}
-                    onReject={close}
-                  />
+                  <Confirm title="삭제하시겠습니까?" onConfirm={onDelete} />
                 </FormProvider>
               )
             }

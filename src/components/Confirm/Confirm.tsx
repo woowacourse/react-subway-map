@@ -1,27 +1,41 @@
-import { MouseEventHandler } from "react";
+import { useModal } from "../../hooks";
 
 import { Block, Title, ButtonControls } from "./Confirm.styles";
 
 export interface Props {
   title: string;
-  onConfirm: MouseEventHandler<HTMLButtonElement>;
-  onReject: MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
+  onConfirm?: () => void;
+  onReject?: () => void;
 }
 
-const Confirm = ({ title, onConfirm, onReject }: Props) => (
-  <Block>
-    <Title>
-      <p>{title}</p>
-    </Title>
-    <ButtonControls>
-      <button type="button" onClick={onReject}>
-        <p>취소</p>
-      </button>
-      <button type="button" onClick={onConfirm} data-testid="confirm-button">
-        <p>확인</p>
-      </button>
-    </ButtonControls>
-  </Block>
-);
+const Confirm = ({ title, onConfirm, onReject }: Props) => {
+  const { close } = useModal();
+
+  const confirm = () => {
+    onConfirm?.();
+    close();
+  };
+
+  const reject = () => {
+    onReject?.();
+    close();
+  };
+
+  return (
+    <Block>
+      <Title>
+        <p>{title}</p>
+      </Title>
+      <ButtonControls>
+        <button type="button" onClick={reject}>
+          <p>취소</p>
+        </button>
+        <button type="button" onClick={confirm} data-testid="confirm-button">
+          <p>확인</p>
+        </button>
+      </ButtonControls>
+    </Block>
+  );
+};
 
 export default Confirm;
