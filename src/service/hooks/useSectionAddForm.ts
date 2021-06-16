@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Section, SectionForm, StationId } from '../../types';
+import { SectionForm, StationId } from '../../types';
 import useSection from './useSection';
 import { INVALID_VALUE } from '../../constants/validate';
 import { SERVICE } from '../../constants/service';
@@ -30,19 +30,14 @@ const useSectionForm = (accessToken: string) => {
   };
 
   const availableUpStations = currentLineDetail.stations;
-  const availableDownStations = stationsQuery.isSuccess
-    ? stationsQuery.data.filter(
-        (station) =>
-          !currentLineDetail.stations.some(
-            (listedStation) => listedStation.id === station.id
-          )
-      )
-    : [];
+  const availableDownStations =
+    stationsQuery.data?.filter(
+      (station) =>
+        !currentLineDetail.stations.some(({ id }) => id === station.id)
+    ) ?? [];
   const selectedSectionDistance =
-    (
-      currentLineDetail.sections.find(
-        (section) => section.upStation.id === form.upStationId
-      ) as Section
+    currentLineDetail.sections.find(
+      (section) => section.upStation.id === form.upStationId
     )?.distance ?? 0;
   const isSelectedLine = currentLineDetail.id !== INVALID_VALUE;
   const isValidDistance = form.distance < selectedSectionDistance;
