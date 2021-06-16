@@ -1,15 +1,9 @@
 import { useState } from "react";
 
-import {
-  Block,
-  Button,
-  ColorPicker,
-  InputField,
-  Select,
-} from "../../../components";
+import { Block, Button, ColorPicker, InputField } from "../../../components";
 import { Flex } from "../../../components";
 
-import { useForm, useSelect } from "../../../hooks";
+import { useForm, useModal } from "../../../hooks";
 
 import {
   validateLineName,
@@ -17,6 +11,7 @@ import {
 } from "../../../validations";
 import { CIRCLE_COLOR } from "../../../constants";
 import { LineAddRequestItem, Station } from "../../../@types";
+import SelectField from "../../../components/SelectField/SelectField";
 
 interface Props {
   stations: Station[];
@@ -24,26 +19,16 @@ interface Props {
 }
 
 const LineAddModal = ({ stations, onAddLine }: Props) => {
-  const [firstStation, secondStation] = stations;
-
   const {
-    selectValue: upStationId,
-    setValueOnChange: setUpStationOnChange,
-  } = useSelect(String(firstStation.id));
-  const {
-    selectValue: downStationId,
-    setValueOnChange: setDownStationOnChange,
-  } = useSelect(String(secondStation.id));
-
-  const {
-    values: { name, distance },
+    values: { name, distance, upStationId, downStationId },
     isValid,
   } = useForm();
+  const { close } = useModal();
 
   const DEFAULT_COLOR = "bg-cyan-500";
   const [color, setColor] = useState<keyof typeof CIRCLE_COLOR>(DEFAULT_COLOR);
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     if (!isValid) {
@@ -51,13 +36,15 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
       return;
     }
 
-    onAddLine({
+    await onAddLine({
       color,
       distance: Number(distance),
       upStationId: Number(upStationId),
       downStationId: Number(downStationId),
       name,
     });
+
+    close();
   };
 
   const stationOptions = stations.map(({ id, name }) => ({
@@ -85,16 +72,16 @@ const LineAddModal = ({ stations, onAddLine }: Props) => {
           required
         />
         <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-          <Select
-            value={upStationId}
-            onChange={setUpStationOnChange}
+          <SelectField
+            name="upStationId"
+            defaultOption="상행역"
             options={stationOptions}
             style={{ marginRight: "0.625rem" }}
             required
           />
-          <Select
-            value={downStationId}
-            onChange={setDownStationOnChange}
+          <SelectField
+            name="downStationId"
+            defaultOption="하행역"
             options={stationOptions}
             required
           />

@@ -14,10 +14,10 @@ export interface Props
   options: Option[];
 }
 
-const Select = ({ defaultOption, options, ...props }: Props) => (
-  <SelectBlock {...props}>
+const Select = ({ defaultOption, value, options, ...props }: Props) => (
+  <SelectBlock value={value || -1} {...props}>
     {defaultOption && (
-      <option value="" disabled hidden>
+      <option value={-1} disabled hidden>
         {defaultOption}
       </option>
     )}

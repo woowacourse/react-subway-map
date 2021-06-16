@@ -1,10 +1,11 @@
-import { Block, Button, Input, InputField, Select } from "../../../components";
+import { Block, Button, Input, InputField } from "../../../components";
 import { Flex } from "../../../components";
 
-import { useForm, useSelect } from "../../../hooks";
+import { useForm, useModal } from "../../../hooks";
 
 import { validateSectionDistance } from "../../../validations";
 import { Line, SectionAddRequestItem, Station } from "../../../@types";
+import SelectField from "../../../components/SelectField/SelectField";
 
 interface Props {
   line: Line;
@@ -25,25 +26,16 @@ const SectionAddModal = ({
   addSection,
   deleteSection,
 }: Props) => {
-  const [firstStation, secondStation] = stations;
-
   const stationOptions = stations.map(({ id, name }) => ({
     value: id,
     text: name,
   }));
-  const {
-    selectValue: upStationId,
-    setValueOnChange: setUpStationIdOnChange,
-  } = useSelect(String(firstStation.id));
-  const {
-    selectValue: downStationId,
-    setValueOnChange: setDownStationIdOnChange,
-  } = useSelect(String(secondStation.id));
 
   const {
-    values: { distance },
+    values: { distance, upStationId, downStationId },
     isValid,
   } = useForm();
+  const { close } = useModal();
 
   const onAddSection: React.FormEventHandler<HTMLFormElement> = async (
     event
@@ -61,6 +53,8 @@ const SectionAddModal = ({
       downStationId: Number(downStationId),
       distance: Number(distance),
     });
+
+    close();
   };
 
   return (
@@ -76,18 +70,16 @@ const SectionAddModal = ({
           disabled
         />
         <Flex style={{ width: "100%", marginBottom: "0.9375rem" }}>
-          <Select
-            value={upStationId}
-            onChange={setUpStationIdOnChange}
-            defaultOption="이전역"
+          <SelectField
+            name="upStationId"
+            defaultOption="상행역"
             options={stationOptions}
             required
             style={{ marginRight: "0.625rem" }}
           />
-          <Select
-            value={downStationId}
-            onChange={setDownStationIdOnChange}
-            defaultOption="다음역"
+          <SelectField
+            name="downStationId"
+            defaultOption="하행역"
             options={stationOptions}
             required
           />

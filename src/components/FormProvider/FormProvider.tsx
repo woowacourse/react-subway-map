@@ -16,9 +16,7 @@ const FormProvider = ({ children }: Props) => {
 
   const isValid = Object.values(errorMessages).filter(Boolean).length === 0;
 
-  const validate = (name: string) => {
-    const value = values[name];
-
+  const validate = (name: string, value: string) => {
     try {
       validators.current[name](value);
 
@@ -28,12 +26,14 @@ const FormProvider = ({ children }: Props) => {
     }
   };
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    const { name, value } = target;
+  const onChange: React.ChangeEventHandler<
+    HTMLInputElement | HTMLSelectElement
+  > = ({ target }) => {
+    const { name, value, tagName } = target;
 
     setValues({ ...values, [name]: value });
 
-    validate(name);
+    if (tagName !== "SELECT") validate(name, value);
   };
 
   const register = (name: string, { validator }: { validator: Validator }) => {
