@@ -1,4 +1,5 @@
 import React from 'react';
+import AppErrorFallback from '../AppErrorFallback';
 
 interface ErrorBoundaryState {
   error: Error | null;
@@ -31,7 +32,7 @@ class ErrorBoundary extends React.Component<
     const { error } = this.state;
 
     if (error) {
-      return <h1>에러가 발생했습니다.</h1>;
+      return <AppErrorFallback />;
     }
 
     return children;
