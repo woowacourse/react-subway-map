@@ -82,4 +82,13 @@ describe('useStationAddForm', () => {
 
     await waitFor(() => expect(result.current.isValidName).toBeFalsy());
   });
+
+  test('역 이름은 공백이 있을 수 없다.', async () => {
+    const { result } = renderUseStationAddFormHook();
+    const stringWithNumber = '광 교 역';
+
+    act(() => result.current.setName(stringWithNumber));
+
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
+  });
 });
