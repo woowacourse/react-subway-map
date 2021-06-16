@@ -23,10 +23,10 @@
     "styled-normalize": "^8.0.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -76,8 +76,11 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-mock-store": "^1.0.2",
     "@types/styled-components": "^5.1.9",
+    "babel-plugin-styled-components": "^1.12.0",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.1.8",
     "redux-mock-store": "^1.5.4",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "typescript": "~4.1.5"
   }
 }
