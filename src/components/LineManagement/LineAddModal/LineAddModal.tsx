@@ -1,10 +1,10 @@
 import { FormEvent, Suspense, VFC } from 'react';
 import { lineColors } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
+import useLogin from '../../../service/hooks/useLogin';
 import useLine from '../../../service/hooks/useLine';
 import useLineAddForm from '../../../service/hooks/useLineAddForm';
 import useStation from '../../../service/hooks/useStation';
-import { Station } from '../../../types';
 import Button from '../../@common/Button/Button.styles';
 import Modal from '../../@common/Modal/Modal';
 import SelectBox from '../../@common/SelectBox/SelectBox';
@@ -24,6 +24,7 @@ export interface LineAddModalProps {
 }
 
 const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
+  const { accessToken } = useLogin();
   const {
     form,
     setName,
@@ -35,9 +36,9 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     isValidForm,
     isSelectedUpStation,
     availableDownStations,
-  } = useLineAddForm();
-  const { addLine, linesQuery } = useLine();
-  const { stationsQuery } = useStation();
+  } = useLineAddForm(accessToken);
+  const { addLine, linesQuery } = useLine(accessToken);
+  const { stations } = useStation(accessToken);
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,7 +67,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
             <Suspense fallback={true}>
-              {(stationsQuery.data as Station[]).map((station) => (
+              {stations!.map((station) => (
                 <option key={station.id} value={station.id}>
                   {station.name}
                 </option>

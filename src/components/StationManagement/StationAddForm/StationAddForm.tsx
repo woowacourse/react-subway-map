@@ -1,4 +1,5 @@
 import { FormEvent, VFC } from 'react';
+import useLogin from '../../../service/hooks/useLogin';
 import useStation from '../../../service/hooks/useStation';
 import useStationAddForm from '../../../service/hooks/useStationAddForm';
 import Title from '../../@common/Title/Title.styles';
@@ -10,8 +11,9 @@ import {
 } from './StationAddForm.styles';
 
 const StationAddForm: VFC = () => {
+  const { accessToken } = useLogin();
   const { form, setName, isValidName } = useStationAddForm();
-  const { addStation } = useStation();
+  const { addStation } = useStation(accessToken);
 
   const handleAddStation = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

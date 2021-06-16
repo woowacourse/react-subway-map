@@ -3,9 +3,11 @@ import { StyledLineList } from './LineList.styles';
 import LineListItem from './LineListItem/LineListItem';
 import { Line } from '../../../types';
 import { Suspense } from 'react';
+import useLogin from '../../../service/hooks/useLogin';
 
 const LineList = () => {
-  const { linesQuery, deleteLine } = useLine();
+  const { accessToken } = useLogin();
+  const { linesQuery, deleteLine } = useLine(accessToken);
 
   return (
     <StyledLineList>

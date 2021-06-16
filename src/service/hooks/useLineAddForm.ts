@@ -1,10 +1,10 @@
+import { useStationsQuery } from './../queries/station';
 import { useState } from 'react';
 import { LineColor, LineForm, StationId } from '../../types';
-import useStation from './useStation';
 import { INVALID_VALUE, REGEX } from '../../constants/validate';
 import { lineColors, SERVICE } from '../../constants/service';
 
-const useLineAddForm = () => {
+const useLineAddForm = (accessToken: string) => {
   const [form, setForm] = useState<LineForm>({
     name: '',
     color: lineColors[0],
@@ -12,7 +12,8 @@ const useLineAddForm = () => {
     downStationId: INVALID_VALUE,
     distance: SERVICE.MIN_DISTANCE,
   });
-  const { stationsQuery } = useStation();
+
+  const stationsQuery = useStationsQuery(accessToken);
 
   const isValidName = REGEX.LINE_NAME.test(form.name);
   const isValidColor = lineColors.includes(form.color as LineColor);

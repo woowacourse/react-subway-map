@@ -60,11 +60,13 @@ const useSignUp = () => {
 
   return {
     form,
+
     setEmail,
     setAge,
     setPassword,
     setPasswordForValidation,
     signUp,
+
     isFormValid,
     isValidEmail,
     isValidAge,

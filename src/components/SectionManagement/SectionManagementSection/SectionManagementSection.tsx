@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../service/hooks/useLine';
+import useLogin from '../../../service/hooks/useLogin';
 import useModal from '../../../service/hooks/useModal';
 import useSection from '../../../service/hooks/useSection';
 import { Line } from '../../../types';
@@ -14,9 +15,10 @@ import {
 } from './SectionsManagementSection.styles';
 
 const SectionManagementSection = () => {
-  const { linesQuery } = useLine();
+  const { accessToken } = useLogin();
+  const { linesQuery } = useLine(accessToken);
   const { currentLineId, setCurrentLineId, currentLineDetail, deleteSection } =
-    useSection();
+    useSection(accessToken);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 

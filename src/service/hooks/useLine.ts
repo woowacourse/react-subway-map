@@ -1,57 +1,35 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import {
-  requestLines,
-  requestAddLine,
-  requestDeleteLine,
-} from '../request/line';
-import useLogin from './useLogin';
-import { Line, LineForm, LineId } from '../../types';
+import { useLineAddMutation, useLineDeleteMutation } from './../queries/line';
+import { useQueryClient } from 'react-query';
+import { LineForm, LineId } from '../../types';
 import { QUERY } from '../../constants/API';
+import { useLinesQuery } from '../queries/line';
 
-const useLine = () => {
-  const { accessToken } = useLogin();
+const useLine = (accessToken: string) => {
   const queryClient = useQueryClient();
-  const linesQuery = useQuery<Line[]>(
-    QUERY.REQUEST_LINES,
-    () => requestLines(accessToken),
-    {
-      onError: () => alert('노선을 불러오지 못했습니다!'),
-    }
-  );
-
-  const addLineMutation = useMutation(
-    (form: LineForm) => requestAddLine(form, accessToken),
-    {
-      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_LINES),
-      onError: () => alert('노선을 추가하지 못했습니다!'),
-    }
-  );
-
-  const deleteLineMutation = useMutation(
-    (lineId: LineId) => requestDeleteLine(lineId, accessToken),
-    {
-      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_LINES),
-      onError: () => alert('노선을 삭제하지 못했습니다!'),
-    }
-  );
+  const linesQuery = useLinesQuery(accessToken);
+  const addLineMutation = useLineAddMutation(accessToken);
+  const deleteLineMutation = useLineDeleteMutation(accessToken);
 
   const addLine = (form: LineForm) => {
-    addLineMutation.mutate(form);
+    addLineMutation.mutate(form, {
+      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_LINES),
+      onError: () => alert('노선을 추가하지 못했습니다!'),
+    });
   };
 
   const deleteLine = (lineId: LineId) => {
-    deleteLineMutation.mutate(lineId);
+    deleteLineMutation.mutate(lineId, {
+      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_LINES),
+      onError: () => alert('노선을 삭제하지 못했습니다!'),
+    });
   };
-
-  const isAddLineSuccess = addLineMutation.isSuccess;
-  const isDeleteLineSuccess = deleteLineMutation.isSuccess;
 
   return {
     linesQuery,
     addLine,
     deleteLine,
-    isAddLineSuccess,
-    isDeleteLineSuccess,
+    isAddLineSuccess: addLineMutation.isSuccess,
+    isDeleteLineSuccess: deleteLineMutation.isSuccess,
   };
 };
 

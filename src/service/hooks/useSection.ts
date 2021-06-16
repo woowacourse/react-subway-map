@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useMutation } from 'react-query';
-import {
-  requestDeleteSection,
-  requestAddSection,
-  requestSection,
-} from '../request/section';
+import { requestSection } from '../request/section';
 import { LineDetail, LineId, SectionForm, StationId } from '../../types';
-import useLogin from './useLogin';
 import { useAppDispatch, useAppSelector } from '../../state/store';
 import { lineAction } from '../../state/slices/line';
 import { INVALID_VALUE } from '../../constants/validate';
 import { lineColors } from '../../constants/service';
+import {
+  useSectionAddMutation,
+  useSectionDeleteMutation,
+} from '../queries/section';
 
-const useSection = () => {
+const useSection = (accessToken: string) => {
   const dispatch = useAppDispatch();
 
   const [currentLineDetail, setCurrentLineDetail] = useState<LineDetail>({
@@ -30,38 +28,30 @@ const useSection = () => {
     })
   );
 
-  const { accessToken } = useLogin();
-
   const setCurrentLineId = (currentLineId: LineId) => {
     dispatch(lineAction.setLineId(currentLineId));
   };
 
-  const addSectionMutation = useMutation(
-    (form: SectionForm) => requestAddSection(currentLineId, form, accessToken),
-    {
+  const addMutation = useSectionAddMutation(currentLineId, accessToken);
+  const deleteMutation = useSectionDeleteMutation(currentLineId, accessToken);
+
+  const addSection = (form: SectionForm) => {
+    return addMutation.mutate(form, {
       onSuccess: () => {
         dispatch(lineAction.setShouldUpdate());
       },
       onError: () => {
         alert('구간을 추가하지 못했습니다!');
       },
-    }
-  );
+    });
+  };
 
-  const deleteSectionMutation = useMutation(
-    (stationId: StationId) =>
-      requestDeleteSection(currentLineId, stationId, accessToken),
-    {
+  const deleteSection = (stationId: StationId) => {
+    deleteMutation.mutate(stationId, {
       onSuccess: () => updateCurrentSection(),
       onError: () => alert('구간을 삭제하지 못했습니다!'),
-    }
-  );
-
-  useEffect(() => {
-    if (currentLineId === INVALID_VALUE) return;
-
-    updateCurrentSection();
-  }, [currentLineId, shouldUpdate]);
+    });
+  };
 
   const updateCurrentSection = async () => {
     if (currentLineId === INVALID_VALUE) return;
@@ -71,16 +61,11 @@ const useSection = () => {
     setCurrentLineDetail(data);
   };
 
-  const addSection = (form: SectionForm) => {
-    return addSectionMutation.mutate(form);
-  };
+  useEffect(() => {
+    if (currentLineId === INVALID_VALUE) return;
 
-  const deleteSection = (stationId: StationId) => {
-    deleteSectionMutation.mutate(stationId);
-  };
-
-  const isAddSectionSuccess = addSectionMutation.isSuccess;
-  const isDeleteSectionSuccess = deleteSectionMutation.isSuccess;
+    updateCurrentSection();
+  }, [currentLineId, shouldUpdate]);
 
   return {
     currentLineId,
@@ -89,8 +74,8 @@ const useSection = () => {
     addSection,
     deleteSection,
     updateCurrentSection,
-    isAddSectionSuccess,
-    isDeleteSectionSuccess,
+    isAddSectionSuccess: addMutation.isSuccess,
+    isDeleteSectionSuccess: deleteMutation.isSuccess,
   };
 };
 

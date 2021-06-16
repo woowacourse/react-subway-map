@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
-import { mockLines } from '../mocks/mockData';
+import { mockLines, mockToken } from '../mocks/mockData';
 import { act } from 'react-dom/test-utils';
 import useSection from '../service/hooks/useSection';
 import { SectionForm } from '../types';
@@ -9,7 +9,7 @@ import { SectionForm } from '../types';
 beforeEach(beforeEachFn);
 
 const renderUseSectionHook = () =>
-  renderHook(() => useSection(), {
+  renderHook(() => useSection(mockToken), {
     wrapper: Wrapper,
   });
 

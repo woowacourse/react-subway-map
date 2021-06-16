@@ -2,6 +2,7 @@ import { FormEvent, Suspense, VFC } from 'react';
 import { SERVICE } from '../../../constants/service';
 import { INVALID_VALUE } from '../../../constants/validate';
 import useLine from '../../../service/hooks/useLine';
+import useLogin from '../../../service/hooks/useLogin';
 import useSection from '../../../service/hooks/useSection';
 import useSectionForm from '../../../service/hooks/useSectionAddForm';
 import { Line } from '../../../types';
@@ -21,7 +22,7 @@ export interface SectionAddModalProps {
 }
 
 const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
-  const { currentLineId, setCurrentLineId, addSection } = useSection();
+  const { accessToken } = useLogin();
   const {
     form,
     setDistance,
@@ -34,8 +35,10 @@ const SectionAddModal: VFC<SectionAddModalProps> = ({ closeModal }) => {
     availableUpStations,
     availableDownStations,
     selectedSectionDistance,
-  } = useSectionForm();
-  const { linesQuery } = useLine();
+  } = useSectionForm(accessToken);
+  const { linesQuery } = useLine(accessToken);
+  const { currentLineId, setCurrentLineId, addSection } =
+    useSection(accessToken);
 
   const onAddSection = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
