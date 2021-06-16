@@ -80,4 +80,14 @@ describe('useLineAddForm', () => {
 
     await waitFor(() => expect(result.current.isValidName).toBeFalsy());
   });
+
+  test('노선 이름은 공백를 포함하지 않는다.', async () => {
+    const { result } = renderUseLineAddFormHook();
+
+    const stringWithSpace = '노 선 임';
+
+    act(() => result.current.setName(stringWithSpace));
+
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
+  });
 });
