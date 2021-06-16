@@ -73,4 +73,13 @@ describe('useStationAddForm', () => {
     act(() => result.current.setName(englishString));
     await waitFor(() => expect(result.current.isValidName).toBeFalsy());
   });
+
+  test('역 이름은 숫자 포함 하지 않는다.', async () => {
+    const { result } = renderUseStationAddFormHook();
+    const stringWithNumber = '광교역2';
+
+    act(() => result.current.setName(stringWithNumber));
+
+    await waitFor(() => expect(result.current.isValidName).toBeFalsy());
+  });
 });
