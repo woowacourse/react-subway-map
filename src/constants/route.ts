@@ -1,3 +1,15 @@
+import {
+  Login,
+  Logout,
+  Signup,
+  StationManagement,
+  LineManagement,
+  SectionManagement,
+  SubwayMap,
+} from "../pages";
+
+import { RouteShape, NavLinkShape } from "../@types/route";
+
 enum PAGE_PATH {
   HOME = "/",
   LOGIN = "/login",
@@ -9,7 +21,7 @@ enum PAGE_PATH {
   SUBWAY_MANAGEMENT = "/subway",
 }
 
-const ROUTES = [
+const NAV_LINKS: NavLinkShape[] = [
   {
     isPrivate: true,
     to: PAGE_PATH.STATION_MANAGEMENT,
@@ -42,4 +54,42 @@ const ROUTES = [
   },
 ];
 
-export { PAGE_PATH, ROUTES };
+const ROUTES: RouteShape[] = [
+  {
+    isPrivate: false,
+    path: PAGE_PATH.LOGIN,
+    Component: Login,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.LOGOUT,
+    Component: Logout,
+  },
+  {
+    isPrivate: false,
+    path: PAGE_PATH.SIGN_UP,
+    Component: Signup,
+  },
+  {
+    isPrivate: true,
+    path: [PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT],
+    Component: StationManagement,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.LINE_MANAGEMENT,
+    Component: LineManagement,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.SECTION_MANAGEMENT,
+    Component: SectionManagement,
+  },
+  {
+    isPrivate: true,
+    path: PAGE_PATH.SUBWAY_MANAGEMENT,
+    Component: SubwayMap,
+  },
+];
+
+export { PAGE_PATH, NAV_LINKS, ROUTES };

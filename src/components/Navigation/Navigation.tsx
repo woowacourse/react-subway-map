@@ -2,21 +2,16 @@ import { NavLink } from "react-router-dom";
 
 import Button from "../Button/Button";
 import { NavigationBlock } from "./Navigation.styles";
-
-interface route {
-  isPrivate?: boolean;
-  to: string;
-  title: string;
-}
+import { NavLinkShape } from "../../@types/route";
 
 interface Props {
-  routes: route[];
+  links: NavLinkShape[];
   isAuthenticated: boolean;
 }
 
-const Navigation = ({ routes, isAuthenticated }: Props) => (
+const Navigation = ({ links, isAuthenticated }: Props) => (
   <NavigationBlock>
-    {routes
+    {links
       .filter(({ isPrivate }) => isPrivate === isAuthenticated)
       .map(({ to, title }) => (
         <NavLink to={to} key={to}>

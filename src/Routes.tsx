@@ -1,22 +1,16 @@
 import { Route, RouteProps, Redirect } from "react-router";
 
-import {
-  Login,
-  Logout,
-  Signup,
-  StationManagement,
-  LineManagement,
-  SectionManagement,
-  SubwayMap,
-} from "./pages";
-
 import { PAGE_PATH } from "./constants";
 
+import { FormProvider } from "./components";
+import { RouteShape } from "./@types/route";
+
 interface Props {
+  routes: RouteShape[];
   isAuthenticated: boolean;
 }
 
-const Routes = ({ isAuthenticated }: Props) => {
+const Routes = ({ routes, isAuthenticated }: Props) => {
   const PublicRoute = ({ children, ...props }: RouteProps) => (
     <Route {...props}>
       {isAuthenticated ? <Redirect to={PAGE_PATH.HOME} /> : children};
@@ -31,27 +25,17 @@ const Routes = ({ isAuthenticated }: Props) => {
 
   return (
     <>
-      <PublicRoute exact path={PAGE_PATH.LOGIN}>
-        <Login />
-      </PublicRoute>
-      <PrivateRoute exact path={PAGE_PATH.LOGOUT}>
-        <Logout />
-      </PrivateRoute>
-      <PublicRoute exact path={PAGE_PATH.SIGN_UP}>
-        <Signup />
-      </PublicRoute>
-      <PrivateRoute exact path={[PAGE_PATH.HOME, PAGE_PATH.STATION_MANAGEMENT]}>
-        <StationManagement />
-      </PrivateRoute>
-      <PrivateRoute exact path={PAGE_PATH.LINE_MANAGEMENT}>
-        <LineManagement />
-      </PrivateRoute>
-      <PrivateRoute exact path={PAGE_PATH.SECTION_MANAGEMENT}>
-        <SectionManagement />
-      </PrivateRoute>
-      <PrivateRoute exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
-        <SubwayMap />
-      </PrivateRoute>
+      {routes.map(({ isPrivate, path, Component }, index) => {
+        const TargetRoute = isPrivate ? PrivateRoute : PublicRoute;
+
+        return (
+          <TargetRoute key={index} exact path={path}>
+            <FormProvider>
+              <Component />
+            </FormProvider>
+          </TargetRoute>
+        );
+      })}
     </>
   );
 };

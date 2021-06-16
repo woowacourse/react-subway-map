@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { BrowserRouter, Switch, Link } from "react-router-dom";
 
 import { Header, Navigation, Loading, ErrorMessage } from "./components";
+import Routes from "./Routes";
 
 import { useAuth, useStation, useLine } from "./hooks";
 
-import { PAGE_PATH, ROUTES } from "./constants";
-import Routes from "./Routes";
+import { PAGE_PATH, NAV_LINKS, ROUTES } from "./constants";
 
 const App = () => {
   const {
@@ -38,9 +38,9 @@ const App = () => {
       <Header style={{ marginTop: "1.5625rem", marginBottom: "1.5625rem" }}>
         <Link to={PAGE_PATH.HOME}>🚇 지하철 노선도</Link>
       </Header>
-      <Navigation routes={ROUTES} isAuthenticated={isAuthenticated} />
+      <Navigation links={NAV_LINKS} isAuthenticated={isAuthenticated} />
       <Switch>
-        <Routes isAuthenticated={isAuthenticated} />
+        <Routes routes={ROUTES} isAuthenticated={isAuthenticated} />
       </Switch>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       {loading && <Loading />}
