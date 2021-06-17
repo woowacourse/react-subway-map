@@ -1,40 +1,9 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  PayloadAction,
-  AnyAction,
-  isAllOf,
-  createAction,
-} from "@reduxjs/toolkit";
-
-import { lines } from "../apis/lines";
-import { sections } from "../apis/sections";
-
-import {
-  isPendingAction,
-  isFulfilledAction,
-  isRejectedAction,
-} from "./@shared/checkThunkActionStatus";
-import { Line, LineAddRequestItem, SectionAddRequestItem } from "../@types";
-import { ERROR_DURATION } from "../constants";
-
-interface LineState {
-  items: Line[];
-  loading: boolean;
-  error: Error | null;
-}
-
-const initialState: LineState = {
-  items: [],
-  loading: false,
-  error: null,
-};
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { LineAddRequestItem, SectionAddRequestItem } from "../../@types";
+import { lines, sections } from "../../apis";
+import { ERROR_DURATION } from "../../constants";
 
 const resetError = createAction("[LINE] RESET_ERROR");
-
-const isLineAction = (action: AnyAction): action is AnyAction => {
-  return action.type.startsWith("[LINE]");
-};
 
 const getLines = createAsyncThunk(
   "[LINE] LOAD",
@@ -76,7 +45,6 @@ const addLine = createAsyncThunk(
 const deleteLine = createAsyncThunk(
   "[LINE] DELETE",
   async (id: number, { dispatch, rejectWithValue }) => {
-    alert("?");
     const response = await lines.deleteLine(id);
 
     if (!response.success) {
@@ -131,42 +99,4 @@ const deleteSection = createAsyncThunk(
   }
 );
 
-const action = {
-  getLines,
-  addLine,
-  deleteLine,
-  addSection,
-  deleteSection,
-};
-
-const lineSlice = createSlice({
-  name: "line",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(getLines.fulfilled, (state, { payload }) => {
-        state.items = payload;
-        state.loading = false;
-      })
-      .addCase(resetError, (state) => {
-        state.error = null;
-      })
-      .addMatcher(isAllOf(isLineAction, isFulfilledAction), (state) => {
-        state.loading = false;
-      })
-      .addMatcher(isAllOf(isLineAction, isPendingAction), (state) => {
-        state.loading = true;
-      })
-      .addMatcher(
-        isAllOf(isLineAction, isRejectedAction),
-        (state, { payload }: PayloadAction<Error>) => {
-          state.loading = false;
-          state.error = payload;
-        }
-      );
-  },
-});
-
-export default lineSlice.reducer;
-export { action, lineSlice };
+export { getLines, addLine, deleteLine, addSection, deleteSection, resetError };
