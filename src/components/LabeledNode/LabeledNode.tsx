@@ -13,18 +13,19 @@ export interface Props extends LabeledNodeStylesProps {
   title: string;
   content?: React.ReactNode;
   vertextIncluded?: boolean;
+  color?: string;
 }
 
-const LabeledNode = ({ title, content, vertextIncluded = true }: Props) => {
+const LabeledNode = ({ title, content, vertextIncluded = true, color }: Props) => {
   return (
     <LabeledNodeBlock>
       <NodeWrapper>
-        <Node />
-        {vertextIncluded && <Vertex />}
+        <Node nodeColor={color} />
+        {vertextIncluded && <Vertex vertexColor={color} />}
       </NodeWrapper>
       <ContentWrapper>
-        <NodeTitle>{title}</NodeTitle>
-        {content && <NodeContent>{content}</NodeContent>}
+        <NodeTitle textColor={color}>{title}</NodeTitle>
+        {content && <NodeContent textColor={color}>{content}</NodeContent>}
       </ContentWrapper>
     </LabeledNodeBlock>
   );

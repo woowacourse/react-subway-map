@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { ThemeProvider } from "styled-components";
 import { Provider } from "react-redux";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 import { COLOR } from "./constants/color";
 import GlobalStyle from "./Global.styles";
@@ -17,16 +18,20 @@ export const theme = {
   DANGER_TEXT_COLOR: COLOR.RED_500,
 };
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

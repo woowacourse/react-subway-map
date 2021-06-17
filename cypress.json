@@ -6,6 +6,7 @@
   "pluginsFile": "src/cypress/plugins/index.js",
   "experimentalStudio": true,
   "video": true,
+  "screenshot": true,
   "viewportWidth": 800,
   "viewportHeight": 700
 }
