@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import { FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
+import { Flex } from "../../components/@shared/FlexContainer/FlexContainer";
 import { COLOR } from "../../constants/color";
 
-export const SubwayLineListBlock = styled(FlexCenter)`
+export const SubwayLineListBlock = styled(Flex)`
   margin-top: 3.25rem;
   padding-bottom: 3.25rem;
-  width: 80%;
   overflow-x: scroll;
   ::-webkit-scrollbar {
     width: 10px;
