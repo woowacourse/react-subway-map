@@ -8,8 +8,6 @@ interface ButtonBlockProps {
   buttonTheme?: "primary" | "gray" | "white";
 }
 
-type ButtonStylesProps = ButtonBlockProps;
-
 const BUTTON_KIND = {
   rect: {
     boxShadow: "1px 2px 3px rgba(0, 0, 0, 0.2)",
@@ -61,5 +59,5 @@ const ButtonBlock = styled.button<ButtonBlockProps>(
   })
 );
 
-export type { ButtonStylesProps };
+export type { ButtonBlockProps };
 export { ButtonBlock };

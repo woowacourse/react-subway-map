@@ -1,6 +1,6 @@
 import { SelectHTMLAttributes } from "react";
 
-import { SelectBlock, SelectStylesProps } from "./Select.styles";
+import { SelectBlock, SelectBlockProps } from "./Select.styles";
 
 interface Option {
   value: string | number;
@@ -9,7 +9,7 @@ interface Option {
 
 export interface Props
   extends SelectHTMLAttributes<HTMLSelectElement>,
-    SelectStylesProps {
+    SelectBlockProps {
   defaultOption?: string;
   options: Option[];
 }

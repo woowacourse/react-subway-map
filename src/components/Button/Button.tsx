@@ -1,8 +1,8 @@
 import { ButtonHTMLAttributes } from "react";
 
-import { ButtonBlock, ButtonStylesProps } from "./Button.styles";
+import { ButtonBlock, ButtonBlockProps } from "./Button.styles";
 
-export type Props = ButtonHTMLAttributes<HTMLButtonElement> & ButtonStylesProps;
+export type Props = ButtonHTMLAttributes<HTMLButtonElement> & ButtonBlockProps;
 
 const Button = (props: Props) => <ButtonBlock {...props} />;
 

@@ -6,8 +6,6 @@ interface ScrollAreaBlockProps {
   imageUrl?: string;
 }
 
-type ScrollAreaStylesProps = ScrollAreaBlockProps;
-
 const ScrollAreaBlock = styled.div<ScrollAreaBlockProps>`
   height: 50vh;
   overflow-y: scroll;
@@ -28,5 +26,5 @@ const ScrollAreaBlock = styled.div<ScrollAreaBlockProps>`
   }
 `;
 
-export type { ScrollAreaStylesProps };
+export type { ScrollAreaBlockProps };
 export { ScrollAreaBlock };

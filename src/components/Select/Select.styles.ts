@@ -7,8 +7,6 @@ interface SelectBlockProps {
   backgroundColor?: string;
 }
 
-type SelectStylesProps = SelectBlockProps;
-
 const SELECT_SIZE = {
   md: {
     width: "29.75rem",
@@ -42,5 +40,5 @@ const SelectBlock = styled.select<SelectBlockProps>`
   background-repeat: no-repeat;
 `;
 
-export type { SelectStylesProps };
+export type { SelectBlockProps };
 export { SelectBlock };

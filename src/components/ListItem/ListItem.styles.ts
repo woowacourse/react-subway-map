@@ -6,8 +6,6 @@ interface CircleProps {
   circleColor?: string;
 }
 
-type ListItemStylesProps = CircleProps;
-
 const ListItemBlock = styled.li`
   display: flex;
   width: 100%;
@@ -33,5 +31,5 @@ const Circle = styled.div<CircleProps>`
   ${({ circleColor }) => `background-color: ${circleColor}`};
 `;
 
-export type { ListItemStylesProps };
+export type { CircleProps };
 export { ListItemBlock, ButtonControls, Circle };

@@ -7,14 +7,12 @@ import { useModal } from "../../hooks";
 
 import {
   ListItemBlock,
-  ListItemStylesProps,
+  CircleProps,
   ButtonControls,
   Circle,
 } from "./ListItem.styles";
 
-export interface Props
-  extends LiHTMLAttributes<HTMLLIElement>,
-    ListItemStylesProps {
+export interface Props extends LiHTMLAttributes<HTMLLIElement>, CircleProps {
   onUpdate?: () => void;
   onDelete?: () => void;
 }
