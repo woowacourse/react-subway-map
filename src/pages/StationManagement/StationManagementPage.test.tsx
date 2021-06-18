@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 
 import StationManagementPage from "./StationManagementPage";
-import { FormProvider, ModalProvider } from "../../components";
+import { ModalProvider } from "../../components";
 
 import { useAppDispatch } from "../../hooks";
 
@@ -21,9 +21,7 @@ beforeEach(() => {
   render(
     <Provider store={store}>
       <ModalProvider>
-        <FormProvider>
-          <StationManagementPage />
-        </FormProvider>
+        <StationManagementPage />
       </ModalProvider>
     </Provider>
   );

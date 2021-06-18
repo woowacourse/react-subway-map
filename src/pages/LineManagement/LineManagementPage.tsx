@@ -1,5 +1,5 @@
 import LineAddModal from "./Modal/LineAddModal";
-import { Button, Block, ListItem, FormProvider } from "../../components";
+import { Button, Block, ListItem } from "../../components";
 import { Flex, FlexCenter, FlexBetween } from "../../components";
 
 import { useStation, useLine, useModal } from "../../hooks";
@@ -29,11 +29,7 @@ const LineManagementPage = () => {
           <Button
             type="button"
             onClick={() => {
-              open(
-                <FormProvider>
-                  <LineAddModal stations={stations} onAddLine={addLine} />
-                </FormProvider>
-              );
+              open(<LineAddModal stations={stations} onAddLine={addLine} />);
             }}
           >
             노선 추가

@@ -22,9 +22,7 @@ beforeEach(() => {
     <MemoryRouter>
       <Provider store={store}>
         <ModalProvider>
-          <FormProvider>
-            <LoginPage />
-          </FormProvider>
+          <LoginPage />
         </ModalProvider>
       </Provider>
     </MemoryRouter>

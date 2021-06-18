@@ -1,11 +1,5 @@
 import SectionAddModal from "./Modal/SectionAddModal";
-import {
-  Button,
-  Block,
-  Select,
-  ListItem,
-  FormProvider,
-} from "../../components";
+import { Button, Block, Select, ListItem } from "../../components";
 import { Flex, FlexCenter, FlexBetween } from "../../components";
 
 import { useStation, useLine, useSelect, useModal } from "../../hooks";
@@ -43,14 +37,12 @@ const SectionManagementPage = () => {
             onClick={() => {
               targetLine &&
                 open(
-                  <FormProvider>
-                    <SectionAddModal
-                      addSection={addSection}
-                      deleteSection={deleteSection}
-                      line={targetLine}
-                      stations={stations}
-                    />
-                  </FormProvider>
+                  <SectionAddModal
+                    addSection={addSection}
+                    deleteSection={deleteSection}
+                    line={targetLine}
+                    stations={stations}
+                  />
                 );
             }}
           >

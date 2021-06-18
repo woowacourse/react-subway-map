@@ -1,6 +1,6 @@
 import { LiHTMLAttributes } from "react";
 
-import { Button, Confirm, FormProvider } from "../";
+import { Button, Confirm } from "../";
 import { FlexAlignCenter } from "../Layout/";
 
 import { useModal } from "../../hooks";
@@ -44,11 +44,7 @@ const ListItem = ({
             size="sm"
             buttonTheme="gray"
             onClick={() =>
-              open(
-                <FormProvider>
-                  <Confirm title="삭제하시겠습니까?" onConfirm={onDelete} />
-                </FormProvider>
-              )
+              open(<Confirm title="삭제하시겠습니까?" onConfirm={onDelete} />)
             }
           >
             삭제

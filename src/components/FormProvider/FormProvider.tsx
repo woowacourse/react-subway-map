@@ -1,29 +1,48 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import FormContext from "../../context/form";
 import { Validator } from "../../@types/form";
 
-interface Props {
-  children: React.ReactNode;
+interface Values {
+  [key: string]: string;
 }
 
-const FormProvider = ({ children }: Props) => {
-  const [values, setValues] = useState<{ [key: string]: string }>({});
+interface Validators {
+  [key: string]:
+    | ((value: string) => (value: Values) => void | never)
+    | Validator;
+}
+
+interface Props {
+  children: React.ReactNode;
+  submit: (values: Values) => void;
+  validators?: Validators;
+}
+
+const FormProvider = ({ submit, validators, children }: Props) => {
+  const [values, setValues] = useState<Values>({});
   const [errorMessages, setErrorMessages] = useState<{
     [key: string]: string | null;
   }>({});
-  const validators = useRef<{ [key: string]: Validator }>({});
 
   const isValid = Object.values(errorMessages).filter(Boolean).length === 0;
 
   const validate = (name: string, value: string) => {
+    const validator = validators?.[name];
+    if (!validator) return;
+
     try {
-      validators.current[name](value);
+      const func = validator(value);
+      if (typeof func === "function") {
+        func(values);
+      }
 
       setErrorMessages({ ...errorMessages, [name]: null });
     } catch (error) {
       setErrorMessages({ ...errorMessages, [name]: error.message });
     }
+
+    return;
   };
 
   const onChange: React.ChangeEventHandler<
@@ -36,17 +55,17 @@ const FormProvider = ({ children }: Props) => {
     if (tagName !== "SELECT") validate(name, value);
   };
 
-  const register = (name: string, { validator }: { validator: Validator }) => {
-    validators.current[name] = validator;
-  };
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
 
-  const unregister = (name: string) => {
-    delete validators.current[name];
+    if (!isValid) return;
+
+    submit(values);
   };
 
   return (
     <FormContext.Provider
-      value={{ values, errorMessages, onChange, register, unregister, isValid }}
+      value={{ values, errorMessages, onChange, onSubmit, isValid }}
     >
       {children}
     </FormContext.Provider>
@@ -54,4 +73,3 @@ const FormProvider = ({ children }: Props) => {
 };
 
 export default FormProvider;
-export type { Props };

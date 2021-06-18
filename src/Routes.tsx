@@ -1,6 +1,5 @@
 import { Route, RouteProps, Redirect } from "react-router";
 
-import { FormProvider } from "./components";
 import {
   Login,
   Logout,
@@ -76,9 +75,7 @@ const Routes = ({ isAuthenticated }: Props) => {
 
         return (
           <TargetRoute key={index} exact path={path}>
-            <FormProvider>
-              <Component />
-            </FormProvider>
+            <Component />
           </TargetRoute>
         );
       })}
