@@ -24,9 +24,7 @@ export const LogoutPage = () => {
     dispatch(clearMapProgress());
   };
 
-  // TODO : 로그아웃이 안되는 경우(store의 state가 변하지 않는 경우도 우리가 예외처리를 해줘야하는걸까요?)
   useEffect(() => {
-    console.log('logout');
     dispatch(logout());
     clearStore();
     Cookies.remove(ACCESS_TOKEN);
