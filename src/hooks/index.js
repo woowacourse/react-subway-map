@@ -1,1 +1,1 @@
-export { default as useAuthorization } from './useAuthorization';
+export { default as useAuthorization } from './commons/useAuthorization';
