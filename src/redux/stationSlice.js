@@ -1,16 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { requestDelete, requestGet, requestPost } from '../services/httpRequest';
+import { request } from '../services/httpRequest';
 
 const getStations = createAsyncThunk('/station/getStations', async (_, thunkAPI) => {
   try {
-    const response = await requestGet('/stations');
-    const body = await response.json();
+    const response = await request.get('/stations');
 
     if (response.status === 200) {
-      return { stations: body };
+      return { stations: response.data };
     }
-
-    throw new Error(body.message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -19,14 +16,11 @@ const getStations = createAsyncThunk('/station/getStations', async (_, thunkAPI)
 
 const addStation = createAsyncThunk('station/addStation', async ({ name }, thunkAPI) => {
   try {
-    const response = await requestPost('/stations', { name });
-    const body = await response.json();
+    const response = await request.post('/stations', { name });
 
     if (response.status === 201) {
-      return body;
+      return response.data;
     }
-
-    throw new Error(body.message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -35,15 +29,11 @@ const addStation = createAsyncThunk('station/addStation', async ({ name }, thunk
 
 const removeStation = createAsyncThunk('station/removeStation', async ({ id }, thunkAPI) => {
   try {
-    const response = await requestDelete(`/stations/${id}`);
+    const response = await request.delete(`/stations/${id}`);
 
     if (response.status === 204) {
       return { id };
     }
-
-    const { message } = await response.json();
-
-    throw new Error(message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

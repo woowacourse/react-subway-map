@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.5.1",
+    "axios": "^0.21.1",
     "js-cookie": "^2.2.1",
     "notistack": "^1.0.9",
     "react": "^17.0.2",

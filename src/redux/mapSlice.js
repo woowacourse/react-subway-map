@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { requestDelete, requestGet, requestPost } from '../services/httpRequest';
+import { request } from '../services/httpRequest';
 
 const getMap = createAsyncThunk('map/getMap', async (_, thunkAPI) => {
   try {
-    const response = await requestGet('/lines/map');
-    const body = await response.json();
+    const response = await request.get('/lines/map');
 
     if (response.status === 200) {
-      return { map: body };
+      return { map: response.data };
     }
 
-    throw new Error(body.message);
+    throw new Error(response.message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -21,32 +20,24 @@ const addSection = createAsyncThunk(
   'map/addSection',
   async ({ lineId, upStationId, downStationId, distance }, thunkAPI) => {
     try {
-      const response = await requestPost(`/lines/${lineId}/sections`, { upStationId, downStationId, distance });
+      const response = await request.post(`/lines/${lineId}/sections`, { upStationId, downStationId, distance });
 
       if (response.status === 201) {
         return;
       }
-
-      const { message } = await response.json();
-
-      throw new Error(message);
     } catch (e) {
-      console.error(e.response.data);
-      return thunkAPI.rejectWithValue(e.response.data);
+      console.error(e.response);
+      return thunkAPI.rejectWithValue(e.response);
     }
   },
 );
 
 const removeSection = createAsyncThunk('map/removeSection', async ({ lineId, stationId }, thunkAPI) => {
   try {
-    const response = await requestDelete(`/lines/${lineId}/sections?stationId=${stationId}`);
+    const response = await request.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
     if (response.status === 204) {
       return;
     }
-
-    const { message } = await response.json();
-
-    throw new Error(message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

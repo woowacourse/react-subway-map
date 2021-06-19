@@ -1,20 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
-import { requestGet, requestPostWithoutAccessToken } from '../services/httpRequest';
+import { request } from '../services/httpRequest';
 import { ACCESS_TOKEN } from '../constants';
 
 const login = createAsyncThunk('user/login', async ({ email, password }, thunkAPI) => {
   try {
-    const response = await requestPostWithoutAccessToken('/login/token', { email, password });
-    const { accessToken, message } = await response.json();
+    const response = await request.postWithoutToken('/login/token', { email, password });
+    const { accessToken } = response.data;
 
     if (response.status === 200) {
       Cookies.set(ACCESS_TOKEN, accessToken);
       return { email };
     }
-
-    throw new Error(message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);
@@ -23,14 +21,11 @@ const login = createAsyncThunk('user/login', async ({ email, password }, thunkAP
 
 const loginByToken = createAsyncThunk('user/loginByToken', async ({ accessToken }, thunkAPI) => {
   try {
-    const response = await requestGet('/members/me');
-    const body = await response.json();
+    const response = await request.get('/members/me');
 
     if (response.status === 200) {
-      return { email: body.email };
+      return { email: response.email };
     }
-
-    throw new Error(body.message);
   } catch (e) {
     console.error(e);
     return thunkAPI.rejectWithValue(e);

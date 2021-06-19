@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 
 import { useAuthorization } from '../../hooks';
 
-import { requestPostWithoutAccessToken } from '../../services/httpRequest';
+import { request } from '../../services/httpRequest';
 import {
   getAgeValidationMessage,
   getEmailValidationMessage,
@@ -43,7 +43,7 @@ export const SignUpPage = () => {
 
     (async () => {
       try {
-        const response = await requestPostWithoutAccessToken('/members', { email, age, password });
+        const response = await request.postWithoutToken('/members', { email, age, password });
 
         if (response.status === 201) {
           enqueueSnackbar(SIGN_UP.SUCCEED);
