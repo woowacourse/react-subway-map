@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { request } from '../services/httpRequest';
 
 const getLines = createAsyncThunk('line/getLines', async (_, thunkAPI) => {
@@ -118,7 +119,7 @@ const lineSlice = createSlice({
   },
 });
 
-export { getLines, addLine, removeLine };
+export { addLine, getLines, removeLine };
 export const { clearLineProgress, clearLine } = lineSlice.actions;
 
 export default lineSlice.reducer;

@@ -1,15 +1,13 @@
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import Cookies from 'js-cookie';
-
-import { logout } from '../../redux/userSlice';
-import { clearStation, clearStationProgress } from '../../redux/stationSlice';
+import { ACCESS_TOKEN, ROUTE } from '../../constants';
 import { clearLine, clearLineProgress } from '../../redux/lineSlice';
 import { clearMap, clearMapProgress } from '../../redux/mapSlice';
-
-import { ACCESS_TOKEN, ROUTE } from '../../constants';
+import { clearStation, clearStationProgress } from '../../redux/stationSlice';
+import { logout } from '../../redux/userSlice';
 
 export const LogoutPage = () => {
   const dispatch = useDispatch();
@@ -29,8 +27,6 @@ export const LogoutPage = () => {
     clearStore();
     Cookies.remove(ACCESS_TOKEN);
     history.push(ROUTE.LOGIN);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

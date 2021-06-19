@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { useSnackbar } from 'notistack';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { getStations } from '../../redux/stationSlice';
-import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
-
+import { ButtonSquare, ColorPicker, IconArrowLTR, IconPlus, Input, Modal, Section, Select } from '../../components';
+import { COLOR, LINE, MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME } from '../../constants';
 import { useAuthorization } from '../../hooks';
-
-import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
+import { addLine, clearLineProgress, getLines, removeLine } from '../../redux/lineSlice';
+import { getStations } from '../../redux/stationSlice';
 import { LineListItem } from './LineListItem';
-
-import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, Message } from './style';
-import { COLOR, LINE, MESSAGE_TYPE, SHOWING_MESSAGE_TIME, ROUTE } from '../../constants';
+import { AddButton, ButtonControl, CancelButton, Form, List, Message, StationSelect } from './style';
 
 export const LinePage = () => {
   const dispatch = useDispatch();
@@ -27,7 +23,6 @@ export const LinePage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (checkIsLogin()) {
       dispatch(getLines());
@@ -93,7 +88,6 @@ export const LinePage = () => {
         <Modal>
           <Section heading="노선 추가">
             <Form onSubmit={handleAddLine}>
-              {/* eslint-disable jsx-a11y/no-autofocus */}
               <Input
                 type="text"
                 name="name"

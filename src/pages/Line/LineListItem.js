@@ -1,8 +1,8 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import { Button, IconArrowLTR, IconTrashCan } from '../../components';
-import { Item, Name, ColorBox, StationsDetail, StationName, Flex, TotalDistance } from './style';
+import { ColorBox, Flex, Item, Name, StationName, StationsDetail, TotalDistance } from './style';
 
 export const LineListItem = (props) => {
   const { line, onClick } = props;

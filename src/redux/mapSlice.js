@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { request } from '../services/httpRequest';
 
 const getMap = createAsyncThunk('map/getMap', async (_, thunkAPI) => {
@@ -102,7 +103,7 @@ const mapSlice = createSlice({
   },
 });
 
-export { getMap, addSection, removeSection };
+export { addSection, getMap, removeSection };
 export const { clearMapProgress, clearMap } = mapSlice.actions;
 
 export default mapSlice.reducer;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { Button } from '../../';
+
 import { COLOR } from '../../../constants';
+import { Button } from '../../';
 
 export const StyledButtonSquare = styled(Button)`
   min-width: 4.5rem;

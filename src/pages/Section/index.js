@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { useSnackbar } from 'notistack';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { getMap, addSection, removeSection, clearMapProgress } from '../../redux/mapSlice';
-import { getStations } from '../../redux/stationSlice';
-
+import { ButtonSquare, IconArrowLTR, IconPlus, Input, Modal, Section, Select } from '../../components';
+import { COLOR, MESSAGE_TYPE, ROUTE, SECTION, SHOWING_MESSAGE_TIME } from '../../constants';
 import { useAuthorization } from '../../hooks';
-
-import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
+import { addSection, clearMapProgress, getMap, removeSection } from '../../redux/mapSlice';
+import { getStations } from '../../redux/stationSlice';
 import { SectionListItem } from './SectionListItem';
-import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, LineSelectBox, Message } from './style';
-import { COLOR, SECTION, MESSAGE_TYPE, SHOWING_MESSAGE_TIME, ROUTE } from '../../constants';
+import { AddButton, ButtonControl, CancelButton, Form, LineSelectBox, List, Message, StationSelect } from './style';
 
 export const SectionPage = () => {
   const dispatch = useDispatch();
@@ -42,8 +39,6 @@ export const SectionPage = () => {
     } else {
       history.push(ROUTE.LOGIN);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -64,8 +59,6 @@ export const SectionPage = () => {
     }
 
     dispatch(clearMapProgress());
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
 
   const handleOpenModal = () => setIsSectionAddOpen(true);

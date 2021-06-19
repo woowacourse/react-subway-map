@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useSnackbar } from 'notistack';
 import Cookies from 'js-cookie';
+import { useSnackbar } from 'notistack';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { login, clearLoginFail } from '../../redux/userSlice';
-
-import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
-import { Form, Anchor } from './style';
-import { LOGIN, ROUTE, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ACCESS_TOKEN } from '../../constants';
+import { ButtonSquare, IconLock, IconMail, Input, Section } from '../../components';
+import { ACCESS_TOKEN, LOGIN, MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME } from '../../constants';
+import { clearLoginFail, login } from '../../redux/userSlice';
+import { Anchor, Form } from './style';
 
 export const LoginPage = () => {
   const history = useHistory();
@@ -34,8 +32,6 @@ export const LoginPage = () => {
       Cookies.remove(ACCESS_TOKEN);
       dispatch(clearLoginFail());
     }
-
-    /* eslint-disable react-hooks/exhaustive-deps */
   }, [isLogin, isLoginFail]);
 
   const handleLogin = (e) => {

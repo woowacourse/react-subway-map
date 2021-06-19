@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { COLOR, LAYOUT } from '../../../../constants';
 
 export const IconWindow = (props) => {

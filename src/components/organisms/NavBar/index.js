@@ -1,11 +1,11 @@
+import { PropTypes } from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 
-import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
-import { Nav, TitleButton, Title, SubTitle, MainTitle, Menu, MenuList, MenuItem } from './style';
 import { ROUTE } from '../../../constants';
+import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
+import { MainTitle, Menu, MenuItem, MenuList, Nav, SubTitle, Title, TitleButton } from './style';
 
 const FE_CONTRIBUTORS = '티케 하루의';
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { IconCheck } from '../Icons/IconCheck';
 import { COLOR } from '../../../constants';
+import { IconCheck } from '../Icons/IconCheck';
 
 export const Container = styled.div`
   position: relative;

@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import Cookies from 'js-cookie';
 
 import { ACCESS_TOKEN, SERVER_ID, SERVER_LIST } from '../constants';

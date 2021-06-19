@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { useSnackbar } from 'notistack';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
-import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
-
-import { useAuthorization } from '../../hooks';
-
-import getInputStatus from '../../services/stationNameValidator';
-
-import { StationListItem } from './StationListItem';
 import { ButtonSquare, IconSubway, Input, Section } from '../../components';
-import { Form, List, InputWrapper, Message } from './style';
-import { STATION, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ROUTE } from '../../constants';
+import { MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME, STATION } from '../../constants';
+import { useAuthorization } from '../../hooks';
+import { addStation, clearStationProgress, getStations, removeStation } from '../../redux/stationSlice';
+import getInputStatus from '../../services/stationNameValidator';
+import { StationListItem } from './StationListItem';
+import { Form, InputWrapper, List, Message } from './style';
 
 export const StationPage = () => {
   const dispatch = useDispatch();
@@ -26,7 +22,6 @@ export const StationPage = () => {
   const { stations, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.station);
   const { enqueueSnackbar } = useSnackbar();
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (checkIsLogin) {
       dispatch(getStations({}));
@@ -68,7 +63,6 @@ export const StationPage = () => {
   return (
     <Section heading="지하철 역 관리">
       <Form onSubmit={handleAddStation}>
-        {/* eslint-disable jsx-a11y/no-autofocus */}
         <InputWrapper>
           <Input
             ref={ref}

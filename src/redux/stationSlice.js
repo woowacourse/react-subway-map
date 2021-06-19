@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { request } from '../services/httpRequest';
 
 const getStations = createAsyncThunk('/station/getStations', async (_, thunkAPI) => {
@@ -104,7 +105,7 @@ const stationSlice = createSlice({
   },
 });
 
-export { getStations, addStation, removeStation };
+export { addStation, getStations, removeStation };
 export const { clearStationProgress, clearStation } = stationSlice.actions;
 
 export default stationSlice.reducer;

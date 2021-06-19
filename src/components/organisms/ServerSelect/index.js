@@ -1,9 +1,9 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import { ButtonSquare, Modal, Section, ServerSelectItem } from '../..';
-import { ServerList, Form } from './style';
 import { SERVER_LIST } from '../../../constants';
+import { ButtonSquare, Modal, Section, ServerSelectItem } from '../..';
+import { Form, ServerList } from './style';
 
 export const ServerSelect = (props) => {
   const { serverId, onSubmit, ...rest } = props;

@@ -1,9 +1,10 @@
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
+import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
+import { COLOR, ROUTE, SIGN_UP } from '../../constants';
 import { useAuthorization } from '../../hooks';
-
 import { request } from '../../services/httpRequest';
 import {
   getAgeValidationMessage,
@@ -11,10 +12,7 @@ import {
   getEmailValidationMessageAfterBlurred,
   getPasswordValidationMessage,
 } from '../../services/SingUpValidator';
-
-import { ButtonSquare, IconLock, IconMail, IconPerson, Input, Section } from '../../components';
-import { Form, Anchor } from './style';
-import { COLOR, ROUTE, SIGN_UP } from '../../constants';
+import { Anchor, Form } from './style';
 
 export const SignUpPage = () => {
   const history = useHistory();
@@ -30,8 +28,6 @@ export const SignUpPage = () => {
     if (checkIsLogin) {
       history.push(ROUTE.STATION);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSignUpFormSubmit = (e) => {

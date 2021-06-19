@@ -1,11 +1,12 @@
 import '@testing-library/jest-dom';
+
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import WrapComponent from './TestComponent';
-import store from '../../redux/store';
 
-import { StationPage } from '.';
 import { SERVER_LIST } from '../../constants';
+import store from '../../redux/store';
+import { StationPage } from '.';
+import WrapComponent from './TestComponent';
 
 const mockServer = SERVER_LIST['Sally'];
 const Component = WrapComponent(StationPage, store, { server: mockServer });

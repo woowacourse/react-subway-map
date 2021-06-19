@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { loginByToken } from '../../../redux/userSlice';
-
 import Cookies from 'js-cookie';
+import { PropTypes } from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
+import { ACCESS_TOKEN, ROUTE, SERVER_ID, SERVER_LIST } from '../../../constants';
+import { loginByToken } from '../../../redux/userSlice';
 import { NavBar, ServerSelect } from '../..';
-import { Header, ServerSelectButton, Main } from './style';
-
-import { ROUTE, SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from '../../../constants';
+import { Header, Main, ServerSelectButton } from './style';
 
 export const Page = (props) => {
   const { children } = props;
@@ -33,8 +31,6 @@ export const Page = (props) => {
     }
 
     dispatch(loginByToken({ accessToken }));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpenModal = () => setIsServerSelectOpen(true);

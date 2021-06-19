@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
-import { request } from '../services/httpRequest';
 import { ACCESS_TOKEN } from '../constants';
+import { request } from '../services/httpRequest';
 
 const login = createAsyncThunk('user/login', async ({ email, password }, thunkAPI) => {
   try {

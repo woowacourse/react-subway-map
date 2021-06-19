@@ -1,8 +1,8 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import { Button, IconPath, IconTrashCan } from '../../components';
-import { Item, Content, Detail, Flex, Name, ColorBox, Distance } from './style';
+import { ColorBox, Content, Detail, Distance, Flex, Item, Name } from './style';
 
 export const SectionListItem = (props) => {
   const { currentLineName, color, section, onClick } = props;

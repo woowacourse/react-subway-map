@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { COLOR } from '../../../constants';
 
 const CONTAINER_SIZE = '1.5rem';

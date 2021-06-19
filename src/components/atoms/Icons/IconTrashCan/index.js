@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { COLOR } from '../../../../constants';
 
 export const IconTrashCan = (props) => {

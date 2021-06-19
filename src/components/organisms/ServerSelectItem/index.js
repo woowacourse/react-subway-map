@@ -1,8 +1,8 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import { ButtonRadio } from '../..';
-import { Label, Content, Item, Name, Nickname, Image } from './style';
+import { Content, Image, Item, Label, Name, Nickname } from './style';
 
 export const ServerSelectItem = (props) => {
   const { ownerNickname, ownerName, ownerImgSrc, value, ...rest } = props;
