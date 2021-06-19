@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import { ACCESS_TOKEN, ROUTE } from '../../constants';
 import { clearLine, clearLineProgress } from '../../redux/lineSlice';
 import { clearMap, clearMapProgress } from '../../redux/mapSlice';
-import { clearStation, clearStationProgress } from '../../redux/stationSlice';
+import { clearStations, clearStationState } from '../../redux/stationSlice';
 import { logout } from '../../redux/userSlice';
 
 export const LogoutPage = () => {
@@ -14,8 +14,8 @@ export const LogoutPage = () => {
   const history = useHistory();
 
   const clearStore = () => {
-    dispatch(clearStation());
-    dispatch(clearStationProgress());
+    dispatch(clearStations());
+    dispatch(clearStationState());
     dispatch(clearLine());
     dispatch(clearLineProgress());
     dispatch(clearMap());

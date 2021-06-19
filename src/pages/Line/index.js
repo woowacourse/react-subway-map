@@ -7,7 +7,7 @@ import { ButtonSquare, ColorPicker, IconArrowLTR, IconPlus, Input, Modal, Sectio
 import { COLOR, LINE, MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME } from '../../constants';
 import { useAuthorization } from '../../hooks';
 import { addLine, clearLineProgress, getLines, removeLine } from '../../redux/lineSlice';
-import { getStations } from '../../redux/stationSlice';
+import { fetchStations } from '../../redux/stationSlice';
 import { LineListItem } from './LineListItem';
 import { AddButton, ButtonControl, CancelButton, Form, List, Message, StationSelect } from './style';
 
@@ -26,7 +26,7 @@ export const LinePage = () => {
   useEffect(() => {
     if (checkIsLogin()) {
       dispatch(getLines());
-      dispatch(getStations());
+      dispatch(fetchStations());
     } else {
       history.push(ROUTE.LOGIN);
     }

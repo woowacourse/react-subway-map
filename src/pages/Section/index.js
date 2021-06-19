@@ -7,7 +7,7 @@ import { ButtonSquare, IconArrowLTR, IconPlus, Input, Modal, Section, Select } f
 import { COLOR, MESSAGE_TYPE, ROUTE, SECTION, SHOWING_MESSAGE_TIME } from '../../constants';
 import { useAuthorization } from '../../hooks';
 import { addSection, clearMapProgress, getMap, removeSection } from '../../redux/mapSlice';
-import { getStations } from '../../redux/stationSlice';
+import { fetchStations } from '../../redux/stationSlice';
 import { SectionListItem } from './SectionListItem';
 import { AddButton, ButtonControl, CancelButton, Form, LineSelectBox, List, Message, StationSelect } from './style';
 
@@ -35,7 +35,7 @@ export const SectionPage = () => {
   useEffect(() => {
     if (checkIsLogin()) {
       dispatch(getMap());
-      dispatch(getStations());
+      dispatch(fetchStations());
     } else {
       history.push(ROUTE.LOGIN);
     }
