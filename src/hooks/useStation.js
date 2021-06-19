@@ -8,7 +8,7 @@ import { MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME, STATION } from '../constants
 import { addStation, clearStationState, fetchStations, removeStation } from '../redux/stationSlice';
 import useAuthorization from './commons/useAuthorization';
 
-const useStation = ({ ref }) => {
+const useStation = (ref) => {
   const dispatch = useDispatch();
   const history = useHistory();
 

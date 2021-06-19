@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { request } from '../services/httpRequest';
 
-const getLines = createAsyncThunk('line/getLines', async (_, thunkAPI) => {
+const fetchLines = createAsyncThunk('line/fetchLines', async (_, thunkAPI) => {
   try {
     const response = await request.get('/lines');
 
@@ -10,8 +10,10 @@ const getLines = createAsyncThunk('line/getLines', async (_, thunkAPI) => {
       return { lines: response.data };
     }
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -34,8 +36,10 @@ const addLine = createAsyncThunk(
         };
       }
     } catch (e) {
-      console.error(e);
-      return thunkAPI.rejectWithValue(e);
+      const { error } = e.response.data;
+      console.error(error);
+
+      return thunkAPI.rejectWithValue(error);
     }
   },
 );
@@ -49,8 +53,8 @@ const removeLine = createAsyncThunk('line/removeLine', async ({ id }, thunkAPI) 
     }
   } catch (e) {
     const { error } = e.response.data;
+    console.error(error);
 
-    console.error(e);
     return thunkAPI.rejectWithValue(error);
   }
 });
@@ -60,66 +64,60 @@ const lineSlice = createSlice({
   initialState: {
     lines: [],
     isLoading: false,
-    isAddSuccess: false,
-    isAddFail: false,
-    isDeleteSuccess: false,
-    isDeleteFail: false,
+    error: '',
   },
   reducers: {
-    clearLineProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
-    },
     clearLine: (state) => {
       state.lines = [];
     },
+    clearLineState: (state) => {
+      state.error = '';
+      state.isLoading = false;
+    },
   },
   extraReducers: {
-    [getLines.fulfilled]: (state, action) => {
+    [fetchLines.fulfilled]: (state, action) => {
       const { lines } = action.payload;
 
       state.lines = lines;
     },
-    [getLines.pending]: (state) => {
+    [fetchLines.pending]: (state) => {
       state.isLoading = true;
     },
-    [getLines.rejected]: (state) => {
+    [fetchLines.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
 
     [addLine.fulfilled]: (state, action) => {
       const line = action.payload;
 
       state.lines = [line, ...state.lines];
-      state.isAddSuccess = true;
     },
     [addLine.pending]: (state) => {
       state.isLoading = true;
     },
-    [addLine.rejected]: (state) => {
-      state.isAddFail = true;
+    [addLine.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
 
     [removeLine.fulfilled]: (state, action) => {
       const { id } = action.payload;
 
       state.lines = state.lines.filter((line) => line.id !== id);
-      state.isDeleteSuccess = true;
     },
     [removeLine.pending]: (state) => {
       state.isLoading = true;
     },
-    [removeLine.rejected]: (state) => {
-      state.isDeleteFail = true;
+    [removeLine.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
   },
 });
 
-export { addLine, getLines, removeLine };
-export const { clearLineProgress, clearLine } = lineSlice.actions;
+export { addLine, fetchLines, removeLine };
+export const { clearLine, clearLineState } = lineSlice.actions;
 
 export default lineSlice.reducer;

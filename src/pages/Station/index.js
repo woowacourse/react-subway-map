@@ -9,7 +9,7 @@ import { Form, InputWrapper, List, Message } from './style';
 export const StationPage = () => {
   const ref = useRef();
 
-  const { stations, handleAddStation, handleDeleteStation } = useStation({ ref });
+  const { stations, handleAddStation, handleDeleteStation } = useStation(ref);
 
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
   const handleStationNameInputChange = ({ target: { value } }) => setInputStatus(getInputStatus(value));
