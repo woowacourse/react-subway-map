@@ -1,31 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import subwayVideo from './assets/video/subwayBackground.mp4';
-import { Button, Main, Menu, RootContainer, Title, Video } from './components/atoms';
+import { Link, useHistory } from 'react-router-dom';
+// import subwayVideo from './assets/video/subwayBackground.mp4';
+import { Button, Main, Menu, RootContainer, Title } from './components/atoms';
 import { HostSelect } from './components/molecules';
-import { Home, Line, Login, Logout, Section, SignUp, Station } from './components/pages';
+import Routes from './components/molecules/Routes/Routes';
 import { ROUTE } from './constants';
 import { initialState as initialAccessToken, setAccessToken } from './features/accessTokenSlice';
 import { getSignedUserAsync } from './features/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
-
-interface ConditionalRouteProps {
-  exact?: boolean;
-  path: string;
-  Component: React.ComponentType;
-  condition: boolean;
-}
-
-const ConditionalRoute = ({ exact, path, Component, condition }: ConditionalRouteProps) => {
-  return (
-    <Route
-      exact={exact}
-      path={path}
-      render={() => (condition ? <Component /> : <Redirect to={ROUTE.HOME} />)}
-    />
-  );
-};
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +23,8 @@ const App = () => {
     accessTokenState: state.accessTokenReducer,
     hostState: state.hostReducer,
   }));
+
+  const isAuthed = !!signedUserState.id;
 
   useEffect(() => {
     if (signedUserState?.isError === true) {
@@ -100,55 +85,13 @@ const App = () => {
 
   return (
     <RootContainer>
-      <Video src={subwayVideo} loop autoPlay muted />
+      {/* <Video src={subwayVideo} loop autoPlay muted /> */}
       <Title>
         <Link to={ROUTE.HOME}>지하철 노선도</Link>
       </Title>
       <Menu>{signedUserState.id ? LoginedMenu : UnLoginedMenu}</Menu>
       <Main>
-        <Switch>
-          <Route exact path={ROUTE.HOME} component={Home} />
-
-          <ConditionalRoute
-            exact
-            path={ROUTE.STATION}
-            Component={Station}
-            condition={!!signedUserState.id}
-          />
-          <ConditionalRoute
-            exact
-            path={ROUTE.LINE}
-            Component={Line}
-            condition={!!signedUserState.id}
-          />
-          <ConditionalRoute
-            exact
-            path={ROUTE.SECTION}
-            Component={Section}
-            condition={!!signedUserState.id}
-          />
-          <ConditionalRoute
-            exact
-            path={ROUTE.LOGOUT}
-            Component={Logout}
-            condition={!!signedUserState.id}
-          />
-
-          <ConditionalRoute
-            exact
-            path={ROUTE.SIGNUP}
-            Component={SignUp}
-            condition={!signedUserState.id}
-          />
-          <ConditionalRoute
-            exact
-            path={ROUTE.LOGIN}
-            Component={Login}
-            condition={!signedUserState.id}
-          />
-
-          <Redirect to={ROUTE.HOME} />
-        </Switch>
+        <Routes isAuthed={isAuthed} />
       </Main>
       <HostSelect />
     </RootContainer>
