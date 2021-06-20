@@ -27,6 +27,8 @@ export const LogoutPage = () => {
     clearStore();
     Cookies.remove(ACCESS_TOKEN);
     history.push(ROUTE.LOGIN);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

@@ -25,6 +25,7 @@ export const StationPage = () => {
             icon={<IconSubway />}
             placeholder="지하철 역 이름을 입력해주세요."
             onChange={handleStationNameInputChange}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
           <Message data-testid="message">{inputStatus.message}</Message>

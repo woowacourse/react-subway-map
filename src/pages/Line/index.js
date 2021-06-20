@@ -32,6 +32,7 @@ export const LinePage = () => {
                 name="name"
                 label="노선 이름"
                 placeholder="노선 이름을 입력해주세요."
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 required
               />
