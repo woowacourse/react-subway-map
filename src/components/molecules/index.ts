@@ -1,21 +1,11 @@
-import ColorSelector from './ColorSelector/ColorSelector';
-import HostSelect from './HostSelect/HostSelect';
-import LineEditForm from './LineEditForm/LineEditForm';
-import ListItem from './ListItem/ListItem';
-import LoginForm from './LoginForm/LoginForm';
-import Modal from './Modal/Modal';
-import SectionAddForm from './SectionAddForm/SectionAddForm';
-import SignUpForm from './SignUpForm/SignUpForm';
-import StationAddForm from './StationAddForm/StationAddForm';
-
-export {
-  StationAddForm,
-  SignUpForm,
-  SectionAddForm,
-  Modal,
-  LoginForm,
-  LineEditForm,
-  ListItem,
-  HostSelect,
-  ColorSelector,
-};
+export { default as ColorSelector } from './ColorSelector/ColorSelector';
+export { default as HostSelect } from './HostSelect/HostSelect';
+export { default as LineEditForm } from './LineEditForm/LineEditForm';
+export { default as ListItem } from './ListItem/ListItem';
+export { default as LoginForm } from './LoginForm/LoginForm';
+export { default as Modal } from './Modal/Modal';
+export { default as SectionAddForm } from './SectionAddForm/SectionAddForm';
+export { default as SignUpForm } from './SignUpForm/SignUpForm';
+export { default as StationAddForm } from './StationAddForm/StationAddForm';
+export { default as Routes } from './Routes/Routes';
+export { default as Links } from './Links/Links';
