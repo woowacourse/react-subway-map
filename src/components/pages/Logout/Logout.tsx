@@ -5,11 +5,11 @@ import { ROUTE } from '../../../constants';
 import {
   initialState as accessTokenInitialState,
   setAccessToken,
-} from '../../../features/accessTokenSlice';
+} from '../../../modules/accessTokenSlice';
 import {
   initialState as signedUserInitialState,
   setSignedUser,
-} from '../../../features/signedUserSlice';
+} from '../../../modules/signedUserSlice';
 import { RootState, useAppDispatch } from '../../../store';
 import Home from '../Home/Home';
 

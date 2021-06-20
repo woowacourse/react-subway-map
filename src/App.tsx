@@ -6,8 +6,8 @@ import { Main, Menu, RootContainer, Title } from './components/atoms';
 import { HostSelect, Links } from './components/molecules';
 import Routes from './components/molecules/Routes/Routes';
 import { ROUTE } from './constants';
-import { initialState as initialAccessToken, setAccessToken } from './features/accessTokenSlice';
-import { getSignedUserAsync } from './features/signedUserSlice';
+import { initialState as initialAccessToken, setAccessToken } from './modules/accessTokenSlice';
+import { getSignedUserAsync } from './modules/signedUserSlice';
 import { RootState, useAppDispatch } from './store';
 
 const App = () => {

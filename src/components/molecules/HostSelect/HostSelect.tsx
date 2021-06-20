@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { HOST, ROUTE } from '../../../constants';
-import { setHost } from '../../../features/hostSlice';
+import { setHost } from '../../../modules/hostSlice';
 import { RootState, useAppDispatch } from '../../../store';
 import { Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';

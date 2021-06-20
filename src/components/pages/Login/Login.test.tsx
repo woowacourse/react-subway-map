@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
-import { IAccessToken } from '../../../features/accessTokenSlice';
+import { IAccessToken } from '../../../modules/accessTokenSlice';
 import {
   unValidAccessTokenState,
   unValidSignedUser,
