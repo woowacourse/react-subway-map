@@ -2,29 +2,26 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { ACCESS_TOKEN, LOGIN, MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME } from '../constants';
 import { clearLoginState, login } from '../redux/userSlice';
+import useAuthorization from './commons/useAuthorization';
 
 const useLogin = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { isLogin } = useSelector((store) => store.user);
   const { enqueueSnackbar } = useSnackbar();
+  useAuthorization();
 
   useEffect(() => {
     if (!Cookies.get(ACCESS_TOKEN)) {
       history.push(ROUTE.LOGIN);
       return;
     }
-
-    if (isLogin) {
-      history.push(ROUTE.STATION);
-    }
-  }, [isLogin]);
+  }, [history]);
 
   const handleLogin = async (e) => {
     try {

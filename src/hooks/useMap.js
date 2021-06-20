@@ -2,15 +2,13 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
-import { MESSAGE_TYPE, ROUTE, SECTION, SHOWING_MESSAGE_TIME } from '../constants';
+import { MESSAGE_TYPE, SECTION, SHOWING_MESSAGE_TIME } from '../constants';
 import { addSection, clearMapState, fetchMap, removeSection } from '../redux/mapSlice';
 import useAuthorization from './commons/useAuthorization';
 
 const useMap = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [isSectionModalOpen, setIsSectionModalOpen] = useState(false);
   const [selectedLine, setSelectedLine] = useState({
@@ -23,23 +21,23 @@ const useMap = () => {
 
   const { map } = useSelector((store) => store.map);
   const { enqueueSnackbar } = useSnackbar();
-  const { checkIsLogin } = useAuthorization();
 
   const selectedLineSections = map.find((line) => line.id === selectedLine.id);
   const lines = map.map((section) => ({ id: section.id, name: section.name, color: section.color }));
+  useAuthorization();
 
-  useEffect(async () => {
-    if (checkIsLogin()) {
+  useEffect(() => {
+    const getMap = async () => {
       try {
         const response = await dispatch(fetchMap());
         unwrapResult(response);
       } catch (error) {
-        //TODO : error 처리
+        console.error(error);
       }
-    } else {
-      history.push(ROUTE.LOGIN);
-    }
-  }, []);
+    };
+
+    getMap();
+  }, [dispatch]);
 
   const handleOpenSectionModal = () => setIsSectionModalOpen(true);
   const handleCloseSectionModal = () => setIsSectionModalOpen(false);

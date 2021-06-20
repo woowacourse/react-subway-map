@@ -2,34 +2,32 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
-import { LINE, MESSAGE_TYPE, ROUTE, SHOWING_MESSAGE_TIME } from '../constants';
+import { LINE, MESSAGE_TYPE, SHOWING_MESSAGE_TIME } from '../constants';
 import { addLine, clearLineState, fetchLines, removeLine } from '../redux/lineSlice';
 import useAuthorization from './commons/useAuthorization';
 
 const useLine = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [isLineModalOpen, setIsLineModalOpen] = useState(false);
 
   const { lines } = useSelector((store) => store.line);
   const { enqueueSnackbar } = useSnackbar();
-  const { checkIsLogin } = useAuthorization();
+  useAuthorization();
 
-  useEffect(async () => {
-    if (checkIsLogin()) {
+  useEffect(() => {
+    const getLines = async () => {
       try {
         const response = await dispatch(fetchLines());
         unwrapResult(response);
       } catch (error) {
-        //TODO : 에러처리 해주기
+        console.error(error);
       }
-    } else {
-      history.push(ROUTE.LOGIN);
-    }
-  }, []);
+    };
+
+    getLines();
+  }, [dispatch]);
 
   const handleLineModalOpen = () => setIsLineModalOpen(true);
   const handleLineCloseModal = () => setIsLineModalOpen(false);
