@@ -31,7 +31,7 @@ export const unValidAccessTokenState = {
 };
 
 export const validHostState = {
-  host: HOST['인비'],
+  host: HOST['김김'],
 };
 
 export const unValidHostState = {

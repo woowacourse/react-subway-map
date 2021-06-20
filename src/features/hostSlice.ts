@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { HOST } from '../constants';
 
 export const initialState = {
-  host: HOST['인비'],
+  host: HOST['김김'],
 };
 
 const hostSlice = createSlice({

@@ -1,8 +1,5 @@
 const HOST = {
-  인비: 'https://inbi-subway.kro.kr',
-  김김: 'https://kimkimsubway.o-r.kr',
-  아마찌: 'https://newwisdom-subway.p-e.kr',
-  라이언: 'https://subway-fare.kro.kr',
-};
+  김김: 'http://ec2-13-125-127-227.ap-northeast-2.compute.amazonaws.com:8080',
+} as const;
 
 export default HOST;
