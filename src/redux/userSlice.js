@@ -14,8 +14,10 @@ const login = createAsyncThunk('user/login', async ({ email, password }, thunkAP
       return { email };
     }
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -24,10 +26,12 @@ const loginByToken = createAsyncThunk('user/loginByToken', async ({ accessToken 
     const response = await request.get('/members/me');
 
     if (response.status === 200) {
-      return { email: response.email };
+      return { email: response.data.email };
     }
   } catch (e) {
-    console.error(e);
+    const { error } = e.response.data;
+    console.error(error);
+
     return thunkAPI.rejectWithValue(e);
   }
 });
@@ -38,16 +42,18 @@ const userSlice = createSlice({
     email: null,
     isLogin: false,
     isLoading: false,
-    isLoginFail: false,
+    error: '',
   },
   reducers: {
     logout: (state) => {
       state.email = null;
+      state.isLoading = false;
       state.isLogin = false;
-      state.isLoginFail = false;
+      state.error = '';
     },
-    clearLoginFail: (state) => {
-      state.isLoginFail = false;
+    clearLoginState: (state) => {
+      state.error = '';
+      state.isLoading = false;
     },
   },
   extraReducers: {
@@ -61,10 +67,11 @@ const userSlice = createSlice({
     [login.pending]: (state) => {
       state.isLoading = true;
     },
-    [login.rejected]: (state) => {
+    [login.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isLoginFail = true;
+      state.error = action.payload;
     },
+
     [loginByToken.fulfilled]: (state, action) => {
       const { email } = action.payload;
 
@@ -75,14 +82,14 @@ const userSlice = createSlice({
     [loginByToken.pending]: (state) => {
       state.isLoading = true;
     },
-    [loginByToken.rejected]: (state) => {
+    [loginByToken.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isLoginFail = true;
+      state.error = action.payload;
     },
   },
 });
 
 export { login, loginByToken };
-export const { logout, clearLoginFail } = userSlice.actions;
+export const { logout, clearLoginState } = userSlice.actions;
 
 export default userSlice.reducer;
