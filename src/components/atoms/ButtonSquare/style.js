@@ -21,5 +21,6 @@ export const StyledButtonSquare = styled(Button)`
   }
   &:disabled {
     background-color: ${COLOR.THEME_LIGHT};
+    cursor: not-allowed;
   }
 `;

@@ -21,6 +21,17 @@ const login = createAsyncThunk('user/login', async ({ email, password }, thunkAP
   }
 });
 
+const signUp = createAsyncThunk('user/signUp', async ({ email, age, password }, thunkAPI) => {
+  try {
+    await request.postWithoutToken('/members', { email, age, password });
+  } catch (e) {
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(e);
+  }
+});
+
 const loginByToken = createAsyncThunk('user/loginByToken', async ({ accessToken }, thunkAPI) => {
   try {
     const response = await request.get('/members/me');
@@ -72,6 +83,17 @@ const userSlice = createSlice({
       state.error = action.payload;
     },
 
+    [signUp.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [signUp.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [signUp.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     [loginByToken.fulfilled]: (state, action) => {
       const { email } = action.payload;
 
@@ -89,7 +111,7 @@ const userSlice = createSlice({
   },
 });
 
-export { login, loginByToken };
+export { login, loginByToken, signUp };
 export const { logout, clearLoginState } = userSlice.actions;
 
 export default userSlice.reducer;
