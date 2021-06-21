@@ -1,26 +1,15 @@
-import { Container } from './Button.styles';
-
-export type ButtonTheme = 'default' | 'edit' | 'menu';
-export type ButtonType = 'submit' | 'button';
-export interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+import { ButtonHTMLAttributes } from 'react';
+import { ButtonTheme, StyledButton } from './Button.styles';
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: React.ReactNode;
   buttonTheme?: ButtonTheme;
-  disabled?: boolean;
-  type?: ButtonType;
+  bgColor?: string;
 }
 
-const Button = ({
-  type = 'submit',
-  onClick,
-  buttonTheme = 'default',
-  children,
-  disabled = false,
-  ...props
-}: ButtonProps) => (
-  <Container type={type} buttonTheme={buttonTheme} onClick={onClick} disabled={disabled} {...props}>
+const Button = ({ buttonTheme = 'default', children, bgColor, ...props }: ButtonProps) => (
+  <StyledButton buttonTheme={buttonTheme} bgColor={bgColor} {...props}>
     {children}
-  </Container>
+  </StyledButton>
 );
 
 export default Button;
