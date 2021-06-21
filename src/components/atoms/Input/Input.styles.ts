@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const Container = styled.input`
+const StyledInput = styled.input`
   border: none;
   font-size: 1.2rem;
   padding: 0.6rem 1rem;
@@ -8,4 +8,4 @@ const Container = styled.input`
   border-radius: 10px;
 `;
 
-export { Container };
+export { StyledInput };

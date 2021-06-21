@@ -15,6 +15,7 @@ const StationAddForm = ({
   return (
     <Container onSubmit={onSubmitStationInfo}>
       <Input
+        name="station-name"
         placeholder="역 이름"
         onChange={onChangeStationName}
         value={stationName}

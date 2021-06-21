@@ -39,6 +39,7 @@ const SignUpForm = ({
   return (
     <Container onSubmit={onSubmitSignUp}>
       <Input
+        name="age"
         type="number"
         placeholder="나이"
         onChange={onChangeAge}
@@ -49,6 +50,7 @@ const SignUpForm = ({
       {!isValidAge && age !== 0 && <ErrorMessage text={'나이는 200살 이하여야 합니다.'} />}
 
       <Input
+        name="email"
         type="email"
         placeholder="이메일"
         onChange={onChangeEmail}
@@ -60,6 +62,7 @@ const SignUpForm = ({
       )}
 
       <Input
+        name="password"
         type="password"
         placeholder="비밀번호"
         onChange={onChangePassword}
@@ -71,6 +74,7 @@ const SignUpForm = ({
       )}
 
       <Input
+        name="password-check"
         type="password"
         placeholder="비밀번호 확인"
         onChange={onChangePasswordCheck}

@@ -19,6 +19,7 @@ const LoginForm = ({
   return (
     <Container onSubmit={onSubmitLogin}>
       <Input
+        name="email"
         type="email"
         placeholder="이메일"
         onChange={onChangeEmail}
@@ -27,6 +28,7 @@ const LoginForm = ({
         autoFocus
       />
       <Input
+        name="password"
         type="password"
         placeholder="비밀번호"
         onChange={onChangePassword}

@@ -39,6 +39,7 @@ const LineEditForm = ({
   return (
     <Container onSubmit={onSubmitLineInfo}>
       <Input
+        name="line-name"
         placeholder="노선 이름"
         onChange={onChangeLineName}
         value={lineName}
@@ -63,6 +64,7 @@ const LineEditForm = ({
             />
           </Wrapper>
           <Input
+            name="line-distance"
             type="number"
             onChange={addFormProps.onChangeDistance}
             value={addFormProps.distance}
