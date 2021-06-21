@@ -1,12 +1,13 @@
+import { HTMLAttributes } from 'react';
 import { Container } from './Header.styles';
 
-export interface HeaderProps {
+export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   hasExtra?: boolean;
 }
 
-const Header = ({ hasExtra = false, children }: HeaderProps) => {
-  return <Container hasExtra={hasExtra}>{children}</Container>;
+const Header = ({ children, ...props }: HeaderProps) => {
+  return <Container {...props}>{children}</Container>;
 };
 
 export default Header;

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
+import { HeaderProps } from './Header';
 
-const Container = styled.header`
+const Container = styled.header<HeaderProps>`
   display: flex;
   align-items: center;
-  justify-content: ${({ hasExtra }: { hasExtra: boolean }) =>
-    hasExtra ? 'space-between' : 'center'};
+  justify-content: ${({ hasExtra }) => (hasExtra ? 'space-between' : 'center')};
 
   padding: 1rem 4rem 0 4rem;
 
