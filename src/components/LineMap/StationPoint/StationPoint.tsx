@@ -36,6 +36,10 @@ const StationPoint: VFC<Props> = ({ station }) => {
   const canTransfer = (station: Station) => station.transfer.length > 1;
 
   const onShowTransferInfo: MouseEventHandler<HTMLLIElement> = () => {
+    if (!canTransfer(targetStation)) {
+      return;
+    }
+
     setIsVisibleTransferInfo(true);
   };
 
@@ -49,9 +53,7 @@ const StationPoint: VFC<Props> = ({ station }) => {
       onMouseEnter={onShowTransferInfo}
       onMouseLeave={onHideTransferInfo}
     >
-      {isVisibleTransferInfo && canTransfer(targetStation) && (
-        <TransferInfo station={targetStation} />
-      )}
+      {isVisibleTransferInfo && <TransferInfo station={targetStation} />}
       {targetStation.name}
     </StationPointContainer>
   );
