@@ -10,7 +10,6 @@ export const StationPointContainer = styled.li<StationPointProps>`
   flex-direction: column;
   align-items: center;
   margin-right: 0.5rem;
-  cursor: pointer;
 
   &::before {
     content: '';
