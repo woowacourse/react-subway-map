@@ -32,7 +32,8 @@ export const loadStations = createAsyncThunk<
 
     return stationsWithTransfer;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    console.dir(error);
+    return rejectWithValue(error.response?.data || error.message);
   }
 });
 
@@ -44,7 +45,7 @@ export const addStation = createAsyncThunk<Station, string, { rejectValue: Error
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data || error.message);
     }
   }
 );
@@ -59,7 +60,7 @@ export const deleteStation = createAsyncThunk<
 
     return stationId;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response.data || error.message);
   }
 });
 
