@@ -1,20 +1,17 @@
-import React, { useContext, VFC } from 'react';
-import { Station } from '../../../../types';
-import { LineContext } from '../../LineMap';
+import React, { VFC } from 'react';
 import { TransferInfoContainer } from './TransferInfo.styles';
 
 interface TransferInfoProps {
-  station: Station;
+  transferLines: string[];
+  currentLineName: string;
 }
 
-const TransferInfo: VFC<TransferInfoProps> = ({ station }) => {
-  const line = useContext(LineContext);
-
+const TransferInfo: VFC<TransferInfoProps> = ({ transferLines, currentLineName }) => {
   return (
     <TransferInfoContainer>
       <div className="transfer-info-title">환승역</div>
-      {station.transfer.map((lineName, index) => {
-        if (lineName === line?.name) {
+      {transferLines.map((lineName, index) => {
+        if (lineName === currentLineName) {
           return;
         }
 

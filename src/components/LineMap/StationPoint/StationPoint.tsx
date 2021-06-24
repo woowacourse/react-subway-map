@@ -1,38 +1,14 @@
-import React, { MouseEventHandler, useMemo, useState, VFC } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
+import React, { MouseEventHandler, ReactNode, useState, VFC } from 'react';
 import { Station } from '../../../types';
 import { StationPointContainer } from './StationPoint.styles';
-import TransferInfo from './TransferInfo/TransferInfo';
 
 interface Props {
-  station: Station;
+  targetStation: Station;
+  transferInfo?: ReactNode;
 }
 
-const StationPoint: VFC<Props> = ({ station }) => {
+const StationPoint: VFC<Props> = ({ targetStation, transferInfo }) => {
   const [isVisibleTransferInfo, setIsVisibleTransferInfo] = useState(false);
-  const { stations } = useSelector((state: RootState) => state.station);
-  const targetStation: Station = useMemo(() => {
-    const dummyStation = {
-      id: -1,
-      name: '',
-      transfer: [],
-    };
-
-    if (stations.length === 0) {
-      return dummyStation;
-    }
-
-    const target = stations.find(({ id }) => station.id === id);
-
-    if (!target) {
-      console.error('해당 id를 가진 station 정보가 없습니다.');
-      return dummyStation;
-    }
-
-    return target;
-  }, [stations]);
-
   const canTransfer = (station: Station) => station.transfer.length > 1;
 
   const onShowTransferInfo: MouseEventHandler<HTMLLIElement> = () => {
@@ -53,7 +29,7 @@ const StationPoint: VFC<Props> = ({ station }) => {
       onMouseEnter={onShowTransferInfo}
       onMouseLeave={onHideTransferInfo}
     >
-      {isVisibleTransferInfo && <TransferInfo station={targetStation} />}
+      {isVisibleTransferInfo && transferInfo}
       {targetStation.name}
     </StationPointContainer>
   );
