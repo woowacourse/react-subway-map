@@ -11,7 +11,7 @@ export default {
 
 const Template: Story<Props> = (args) => (
   <ModalProvider>
-    <Confirm {...args} />;
+    <Confirm {...args} />
   </ModalProvider>
 );
 export const Basic = Template.bind({});
