@@ -5,7 +5,7 @@ export enum PAGE_PATH {
   STATION_MANAGEMENT = "/station",
   LINE_MANAGEMENT = "/line",
   SECTION_MANAGEMENT = "/section",
-  SUBWAY_MANAGEMENT = "/subway",
+  SUBWAY_MANAGEMENT = "/subwayMap",
 }
 
 export const publicNavigationLinks = [
