@@ -62,7 +62,6 @@ const SectionManagementPage = () => {
           data-testid={`section-item-${station.name}`}
           circleColor={CIRCLE_COLOR[targetLine.color]}
           style={{ padding: "0.5625rem" }}
-          onUpdate={() => {}}
           onDelete={() => onDeleteSection(station)}
         >
           {station.name}

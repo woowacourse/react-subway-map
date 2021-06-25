@@ -65,7 +65,6 @@ const LineManagementPage = () => {
               key={id}
               circleColor={CIRCLE_COLOR[color]}
               style={{ padding: "9px" }}
-              onUpdate={() => {}}
               onDelete={() => onDeleteLine(id)}
             >
               {name}

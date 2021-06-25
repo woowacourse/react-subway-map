@@ -33,6 +33,13 @@ export interface Section {
   distance: number;
 }
 
+export interface SubwayMapItem {
+  id: number;
+  name: string;
+  color: CIRCLE_COLOR_CODE;
+  sections: Section[];
+}
+
 export interface SectionAddRequestItem {
   lineId: number;
   upStationId: number;
