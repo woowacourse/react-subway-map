@@ -28,9 +28,18 @@ export const PAGE_INFO: Record<string, PageInfo> = {
     text: '구간 관리',
     path: '/sections',
   },
+  FULL_MAP: {
+    text: '전체 보기',
+    path: '/full-map',
+  },
 };
 
-export const COMMON_NAV_LIST = [PAGE_INFO.STATIONS, PAGE_INFO.LINES, PAGE_INFO.SECTIONS];
+export const COMMON_NAV_LIST = [
+  PAGE_INFO.STATIONS,
+  PAGE_INFO.LINES,
+  PAGE_INFO.SECTIONS,
+  PAGE_INFO.FULL_MAP,
+];
 
 export const THEME_COLOR: Palette = Palette.YELLOW_400;
 

@@ -8,6 +8,7 @@ export interface PageInfo {
 export interface Station {
   id: number;
   name: string;
+  transfer: string[];
 }
 
 export interface Section {

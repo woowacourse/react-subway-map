@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Station } from '../../types';
-import { requestAddStation, requestDeleteStation, requestGetStations } from '../../API/stations';
+import {
+  requestAddStation,
+  requestDeleteStation,
+  requestGetStations,
+  requestGetStationTransferInfoList,
+} from '../../API/stations';
 import { ErrorMessageResponse } from '../store';
 
 export const loadStations = createAsyncThunk<
@@ -9,11 +14,26 @@ export const loadStations = createAsyncThunk<
   { rejectValue: ErrorMessageResponse }
 >('station/load', async (_, { rejectWithValue }) => {
   try {
-    const response = await requestGetStations();
+    const { data: stations } = await requestGetStations();
+    const { data: transferInfoList } = await requestGetStationTransferInfoList();
 
-    return response.data;
+    const stationsWithTransfer = stations.map((station) => {
+      const transferInfo = transferInfoList.find((transferInfo) => transferInfo.id === station.id);
+
+      if (!transferInfo) {
+        return {
+          ...station,
+          transfer: [],
+        };
+      }
+
+      return transferInfo;
+    });
+
+    return stationsWithTransfer;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    console.dir(error);
+    return rejectWithValue(error.response?.data || error.message);
   }
 });
 
@@ -25,7 +45,7 @@ export const addStation = createAsyncThunk<Station, string, { rejectValue: Error
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data || error.message);
     }
   }
 );
@@ -40,7 +60,7 @@ export const deleteStation = createAsyncThunk<
 
     return stationId;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response.data || error.message);
   }
 });
 
