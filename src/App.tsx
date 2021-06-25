@@ -107,6 +107,9 @@ const App = () => {
         <Route exact path={PAGE_PATH.SUBWAY_MANAGEMENT}>
           <SubwayMapPage />
         </Route>
+        <Route>
+          <LoginPage />
+        </Route>
       </Switch>
     </>
   );

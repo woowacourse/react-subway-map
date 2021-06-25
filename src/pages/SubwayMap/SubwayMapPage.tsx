@@ -1,3 +1,4 @@
+import { Redirect } from "react-router-dom";
 import { SubwayMapPageBlock, LineItemHeader, SubwayLineListBlock } from "./SubwayMapPage.styles";
 import ScrollArea from "../../components/ScrollArea/ScrollArea";
 import LabeledNode from "../../components/LabeledNode/LabeledNode";
@@ -6,9 +7,12 @@ import { Section } from "../../@types/types";
 import { CIRCLE_COLOR } from "../../constants/color";
 import { FlexCenter } from "../../components/@shared/FlexContainer/FlexContainer";
 import { useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
+import { PAGE_PATH } from "../../constants/route";
 
 const SubwayMapPage = () => {
   const { subwayMapItems, loading, error, getSubwayMap } = useSubwayMap();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     getSubwayMap();
@@ -58,6 +62,10 @@ const SubwayMapPage = () => {
       </FlexCenter>
     );
   });
+
+  if (!isAuthenticated) {
+    return <Redirect to={PAGE_PATH.LOGIN} />;
+  }
 
   if (loading) {
     return <h3 style={{ textAlign: "center", marginTop: "3rem" }}>로딩 중</h3>;
