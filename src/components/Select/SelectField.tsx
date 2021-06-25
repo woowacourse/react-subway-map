@@ -1,5 +1,5 @@
-import Select from "../Select/Select";
-import { Props as SelectProps } from "../Select/Select";
+import Select from "./Select";
+import { Props as SelectProps } from "./Select";
 
 import useForm from "../../hooks/useForm";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Story, Meta } from "@storybook/react";
 
 import ListItem, { Props } from "./ListItem";
-import ModalProvider from "../ModalProvider/ModalProvider";
+import ModalProvider from "../Modal/ModalProvider";
 
 export default {
   title: "components/ListItem",

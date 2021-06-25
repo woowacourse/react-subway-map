@@ -1,14 +1,19 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import ModalProvider, { Props } from "./ModalProvider";
+import ModalProvider from "./ModalProvider";
+import Modal, { Props } from "./Modal";
 
 export default {
   title: "components/Modal",
-  component: ModalProvider,
+  component: Modal,
 } as Meta;
 
-const Template: Story<Props> = (args) => <ModalProvider {...args} />;
+const Template: Story<Props> = (args) => (
+  <ModalProvider>
+    <Modal {...args} />
+  </ModalProvider>
+);
 
 export const Basic = Template.bind({});
 

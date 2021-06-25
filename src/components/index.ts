@@ -5,16 +5,16 @@ import Confirm from "./Confirm/Confirm";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import Header from "./Header/Header";
 import Input from "./Input/Input";
+import InputField from "./Input/InputField";
+import Select from "./Select/Select";
+import SelectField from "./Select/SelectField";
 import LabeledNode from "./LabeledNode/LabeledNode";
 import ListItem from "./ListItem/ListItem";
 import Loading from "./Loading/Loading";
-import ModalProvider from "./ModalProvider/ModalProvider";
-import FormProvider from "./FormProvider/FormProvider";
+import ModalProvider from "./Modal/ModalProvider";
+import FormProvider from "./Form/FormProvider";
 import Navigation from "./Navigation/Navigation";
 import Line from "./Line/Line";
-import Select from "./Select/Select";
-import InputField from "./InputField/InputField";
-import SelectField from "./SelectField/SelectField";
 import Form from "./Form/Form";
 
 import {
@@ -34,6 +34,9 @@ export {
   ErrorMessage,
   Header,
   Input,
+  InputField,
+  Select,
+  SelectField,
   LabeledNode,
   ListItem,
   Loading,
@@ -41,9 +44,6 @@ export {
   FormProvider,
   Navigation,
   Line,
-  Select,
-  InputField,
-  SelectField,
   Form,
 };
 

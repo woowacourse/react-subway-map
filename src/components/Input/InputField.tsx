@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from "react";
 
-import Input from "../Input/Input";
+import Input from "./Input";
 
 import useForm from "../../hooks/useForm";
 
