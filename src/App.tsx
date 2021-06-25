@@ -20,7 +20,6 @@ import axios from "axios";
 
 const App = () => {
   const appLocalStorage = useLocalStorage<API_PROVIDER>(API_LOCAL_STORAGE_KEY, DEFAULT_API_PROVIDER);
-  const history = useHistory();
   const { isAuthenticated, checkAccessToken, logout } = useAuth();
 
   useEffect(() => {

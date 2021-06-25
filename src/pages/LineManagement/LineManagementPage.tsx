@@ -12,7 +12,6 @@ import { Line } from "../../@types/types";
 import { Redirect } from "react-router";
 import { PAGE_PATH } from "../../constants/route";
 import useAuth from "../../hooks/useAuth";
-import { NONAME } from "dns";
 import { TEST_ID } from "../../@test/testId";
 
 const LineManagementPage = () => {
