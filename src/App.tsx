@@ -45,14 +45,14 @@ const App = () => {
 
   const apiProviderName = appLocalStorage.item;
 
+  function isApiProvider(person: string): person is API_PROVIDER {
+    return ["수리", "와일더", "에드", "포모"].includes(person);
+  }
+
   const onApiProviderChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const apiProvider = event.currentTarget.value;
 
-    if (!(apiProvider in BASE_URL)) {
-      return;
-    }
-
-    if (apiProvider !== "수리" && apiProvider !== "와일더" && apiProvider !== "에드" && apiProvider !== "포모") {
+    if (!isApiProvider(apiProvider)) {
       return "수리";
     }
 
