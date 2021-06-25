@@ -19,21 +19,11 @@ const SubwayMapPage = () => {
       if (index === sections.length - 1) {
         return (
           <>
-            <div style={{ marginTop: "10px" }}>
-              <LabeledNode
-                color={lineColor}
-                key={section.upStation.id}
-                title={section.upStation.name}
-                content={`${section.distance}km`}
-              />
+            <div style={{ marginTop: "10px" }} key={section.upStation.id}>
+              <LabeledNode color={lineColor} title={section.upStation.name} content={`${section.distance}km`} />
             </div>
-            <div style={{ marginTop: "10px" }}>
-              <LabeledNode
-                color={lineColor}
-                vertextIncluded={false}
-                key={section.downStation.id}
-                title={section.downStation.name}
-              />
+            <div style={{ marginTop: "10px" }} key={section.downStation.id}>
+              <LabeledNode color={lineColor} vertextIncluded={false} title={section.downStation.name} />
             </div>
           </>
         );

@@ -58,10 +58,12 @@ export const stationSlice = createSlice({
   extraReducers: {
     [getStations.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [getStations.fulfilled.type]: (state, { payload }) => {
       state.items = payload;
       state.loading = false;
+      state.error = null;
     },
     [getStations.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -69,9 +71,11 @@ export const stationSlice = createSlice({
     },
     [addStation.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [addStation.fulfilled.type]: (state) => {
       state.loading = false;
+      state.error = null;
     },
     [addStation.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -79,9 +83,11 @@ export const stationSlice = createSlice({
     },
     [deleteStation.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [deleteStation.fulfilled.type]: (state) => {
       state.loading = false;
+      state.error = null;
     },
     [deleteStation.rejected.type]: (state, { payload }) => {
       state.error = payload;

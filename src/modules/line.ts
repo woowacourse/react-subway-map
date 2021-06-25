@@ -92,10 +92,12 @@ export const lineSlice = createSlice({
   extraReducers: {
     [getLines.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [getLines.fulfilled.type]: (state, { payload }) => {
       state.items = payload;
       state.loading = false;
+      state.error = null;
     },
     [getLines.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -103,9 +105,11 @@ export const lineSlice = createSlice({
     },
     [addLine.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [addLine.fulfilled.type]: (state) => {
       state.loading = false;
+      state.error = null;
     },
     [addLine.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -113,9 +117,11 @@ export const lineSlice = createSlice({
     },
     [deleteLine.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [deleteLine.fulfilled.type]: (state) => {
       state.loading = false;
+      state.error = null;
     },
     [deleteLine.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -123,9 +129,11 @@ export const lineSlice = createSlice({
     },
     [addSection.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [addSection.fulfilled.type]: (state) => {
       state.loading = false;
+      state.error = null;
     },
     [addSection.rejected.type]: (state, { payload }) => {
       state.error = payload;
@@ -133,9 +141,11 @@ export const lineSlice = createSlice({
     },
     [deleteSection.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [deleteSection.fulfilled.type]: (state) => {
       state.loading = false;
+      state.error = null;
     },
     [deleteSection.rejected.type]: (state, { payload }) => {
       state.error = payload;

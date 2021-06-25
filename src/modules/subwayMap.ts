@@ -36,10 +36,12 @@ export const subwayMapSlice = createSlice({
   extraReducers: {
     [getSubwayMap.pending.type]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [getSubwayMap.fulfilled.type]: (state, { payload }) => {
       state.items = payload;
       state.loading = false;
+      state.error = null;
     },
     [getSubwayMap.rejected.type]: (state, { payload }) => {
       state.error = payload;

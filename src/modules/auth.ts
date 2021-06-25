@@ -63,15 +63,18 @@ export const authSlice = createSlice({
     },
     [checkAccessToken.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
+      state.error = null;
     },
-    [checkAccessToken.rejected.type]: (state) => {
+    [checkAccessToken.rejected.type]: (state, payload) => {
       state.isAuthenticated = false;
+      state.error = payload;
     },
     [login.pending.type]: (state) => {
       state.error = null;
     },
     [login.fulfilled.type]: (state) => {
       state.isAuthenticated = true;
+      state.error = null;
     },
     [login.rejected.type]: (state, { payload }) => {
       state.isAuthenticated = false;
