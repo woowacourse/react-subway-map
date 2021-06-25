@@ -18,14 +18,14 @@ const SubwayMapPage = () => {
     sections.map((section, index) => {
       if (index === sections.length - 1) {
         return (
-          <>
-            <div style={{ marginTop: "10px" }} key={section.upStation.id}>
+          <div key={section.downStation.id}>
+            <div style={{ marginTop: "10px" }}>
               <LabeledNode color={lineColor} title={section.upStation.name} content={`${section.distance}km`} />
             </div>
-            <div style={{ marginTop: "10px" }} key={section.downStation.id}>
+            <div style={{ marginTop: "10px" }}>
               <LabeledNode color={lineColor} vertextIncluded={false} title={section.downStation.name} />
             </div>
-          </>
+          </div>
         );
       }
 
