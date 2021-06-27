@@ -1,5 +1,5 @@
 import { Story } from '@storybook/react';
-import LoginForm, { LoginFormProps } from './LoginForm';
+import LoginForm from './LoginForm';
 
 export default {
   title: 'molecule/LoginForm',
@@ -7,7 +7,7 @@ export default {
   argTypes: { children: { control: 'text' } },
 };
 
-const Template: Story<LoginFormProps> = args => <LoginForm {...args} />;
+const Template: Story = args => <LoginForm {...args} />;
 
 export const Basic = Template.bind({});
 

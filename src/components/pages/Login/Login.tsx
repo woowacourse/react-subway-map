@@ -5,14 +5,21 @@ import { Link } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
 import { loginRequestAsync } from '../../../modules/accessTokenSlice';
 import { getSignedUserAsync } from '../../../modules/signedUserSlice';
-import { useChangeEvent } from '../../../hooks';
 import { RootState, useAppDispatch } from '../../../store';
 import { FullVerticalCenterBox } from '../../../styles/shared';
-import { ILoginReq } from '../../../type';
-import { isValidLoginInput } from '../../../utils';
 import { Header } from '../../atoms';
 import { LoginForm } from '../../molecules';
 import { Footer } from './Login.styles';
+import { FormProvider } from '../../contexts/FormContext/FormContext';
+
+interface LoginFormState {
+  email: {
+    value: string;
+  };
+  password: {
+    value: string;
+  };
+}
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -25,19 +32,13 @@ const Login = () => {
     hostState: state.hostReducer,
   }));
 
-  const { value: email, onChange: onChangeEmail } = useChangeEvent('');
-  const { value: password, onChange: onChangePassword } = useChangeEvent('');
+  const loginRequestWrapper = (formContextState: unknown) => {
+    const {
+      email: { value: email },
+      password: { value: password },
+    } = formContextState as LoginFormState;
 
-  const onSubmitLogin: React.FormEventHandler<HTMLFormElement> = event => {
-    event.preventDefault();
-
-    if (!isValidLoginInput(email, password)) {
-      window.alert('계정정보를 입력해주세요.');
-
-      return;
-    }
-
-    const body: ILoginReq = {
+    const body = {
       email,
       password,
     };
@@ -61,13 +62,9 @@ const Login = () => {
         <h3>로그인</h3>
       </Header>
 
-      <LoginForm
-        email={email}
-        onChangeEmail={onChangeEmail}
-        password={password}
-        onChangePassword={onChangePassword}
-        onSubmitLogin={onSubmitLogin}
-      />
+      <FormProvider submitFunc={loginRequestWrapper}>
+        <LoginForm />
+      </FormProvider>
 
       <Footer>
         계정이 없으신가요? <Link to={ROUTE.SIGNUP}>회원가입</Link> 을 통해 계정을 생성해보세요.
