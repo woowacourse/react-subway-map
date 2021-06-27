@@ -3,6 +3,7 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import CurrentAPIName from './components/CurrentAPIName/CurrentAPIName';
 import LineManagementPage from './pages/LineManagement/LineManagementPage';
 import LoginPage from './pages/Login/LoginPage';
+import MapsPage from './pages/Maps/MapsPage';
 import SectionManagementPage from './pages/SectionManagement/SectionManagementPage';
 import SignUpPage from './pages/SignUp/SignUpPage';
 import APISelectPage from './pages/APISelect/APISelectPage';
@@ -48,6 +49,12 @@ function App() {
           path="/station"
           redirectTo="/login"
           component={StationManagementPage}
+          isAuthenticated={isLogin && hasAPI}
+        />
+        <PrivateRoute
+          path="/maps"
+          redirectTo="/login"
+          component={MapsPage}
           isAuthenticated={isLogin && hasAPI}
         />
       </Switch>
