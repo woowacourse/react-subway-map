@@ -1,5 +1,5 @@
 import { Story } from '@storybook/react';
-import SignUpForm, { SignUpFormProps } from './SignUpForm';
+import SignUpForm from './SignUpForm';
 
 export default {
   title: 'molecule/SignUpForm',
@@ -7,13 +7,8 @@ export default {
   argTypes: { children: { control: 'text' } },
 };
 
-const Template: Story<SignUpFormProps> = args => <SignUpForm {...args} />;
+const Template: Story = args => <SignUpForm {...args} />;
 
 export const Basic = Template.bind({});
 
-Basic.args = {
-  isValidAge: true,
-  isValidEmail: true,
-  isValidPassword: true,
-  isValidPasswordCheck: true,
-};
+Basic.args = {};

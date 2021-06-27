@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { FlexCenter } from '../../../styles/css';
 
-const Container = styled.form`
+const StyledForm = styled.form`
   ${FlexCenter};
   flex-direction: column;
   background-color: #fff;
@@ -17,4 +17,4 @@ const Container = styled.form`
   }
 `;
 
-export { Container };
+export { StyledForm };

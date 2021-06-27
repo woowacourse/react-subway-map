@@ -21,6 +21,10 @@ export const isValidPassword = (value: string) => {
   return 5 < value.length && value.length < 13 && !hasBlank(value);
 };
 
+export const isValidPasswordCheck = (password: string, passwordCheck: string) => {
+  return isValidPassword(password) && isValidPassword(passwordCheck) && password === passwordCheck;
+};
+
 export const isValidLoginInput = (email: string, password: string) =>
   email.length > 0 || password.length > 0;
 
