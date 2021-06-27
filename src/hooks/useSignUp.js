@@ -5,14 +5,10 @@ import { SIGN_UP } from '../constants';
 export const useSignUp = () => {
   const { endpoint } = useCookies();
 
-  const requestSignUp = async (email, age, password) => {
+  const requestSignUp = async (data) => {
     await requestPost({
       url: `${endpoint}/members`,
-      body: {
-        email: email.value,
-        age: age.value,
-        password: password.value,
-      },
+      body: data,
     });
   };
 

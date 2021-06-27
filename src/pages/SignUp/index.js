@@ -30,7 +30,11 @@ export const SignUpPage = () => {
     const { email, age, password } = e.target;
 
     try {
-      const response = await requestSignUp(email, age, password);
+      const response = await requestSignUp({
+        email: email.value,
+        age: age.value,
+        password: password.value,
+      });
 
       if (response.status !== 201) {
         throw new Error();
