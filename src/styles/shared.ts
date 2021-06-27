@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
+import { FlexCenter } from './css';
 
 const FlexCenterBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${FlexCenter}
 `;
 
 const FullVerticalCenterBox = styled(FlexCenterBox)`
