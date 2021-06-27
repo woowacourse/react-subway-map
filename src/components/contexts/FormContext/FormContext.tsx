@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { changeValue, FormState, reducer } from './reducer';
+import { changeValue, FormState, reducer, resetForm } from './reducer';
 
 interface FormContextProps {
   state: FormState;
@@ -26,6 +26,8 @@ export const FormProvider = ({ children, submitFunc }: FormContextProviderProps)
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     submitFunc(state);
+
+    dispatch(resetForm());
   };
 
   return (
