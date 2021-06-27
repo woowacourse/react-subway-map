@@ -14,7 +14,7 @@ const SelectBox: FC<Props> = ({
   return (
     <Label className={className}>
       <StyledSelectBox value={value} {...args}>
-        <option value={defaultValue} disabled selected hidden>
+        <option value={defaultValue} disabled hidden>
           {placeholder}
         </option>
         {children}
