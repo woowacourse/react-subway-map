@@ -7,14 +7,10 @@ import { Section } from '../../components';
 import { Line, StationList, LineName, StationItem, StationName, TransferLineBall } from './style';
 
 export const MapPage = () => {
-  const { map, status, requestGetMap, clearStatus } = useMap();
+  const { map, status, clearStatus } = useMap();
   const { enqueueSnackbar } = useSnackbar();
 
   /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    requestGetMap();
-  }, []);
-
   useEffect(() => {
     if (status.message) {
       enqueueSnackbar(status.message);

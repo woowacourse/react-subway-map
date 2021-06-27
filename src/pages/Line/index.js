@@ -8,8 +8,8 @@ import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, Inva
 import { COLOR } from '../../constants';
 
 export const LinePage = () => {
-  const { lines, status, requestGetLines, requestAddLine, requestDeleteLine, clearStatus } = useLine();
-  const { stations, requestGetStations } = useStation();
+  const { lines, status, requestAddLine, requestDeleteLine, clearStatus } = useLine();
+  const { stations } = useStation();
   const [addModeOn, toggleAddMode] = useToggle(false);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -27,12 +27,6 @@ export const LinePage = () => {
   const handleDeleteLine = (_, id) => {
     requestDeleteLine(id);
   };
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    requestGetStations();
-    requestGetLines();
-  }, []);
 
   useEffect(() => {
     if (status.message) {

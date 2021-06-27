@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useCookies } from '../hooks';
@@ -23,6 +24,11 @@ export const useLine = () => {
   const clearStatus = () => {
     dispatch(clearLineStatus());
   };
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    requestGetLines();
+  }, []);
 
   return {
     lines,

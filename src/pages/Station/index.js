@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSnackbar } from 'notistack';
 
-import { useLogin, useStation } from '../../hooks';
+import { useStation } from '../../hooks';
 import { ButtonSquare, IconSubway, Input, Section } from '../../components';
 import { StationListItem } from './StationListItem';
 import { Form, List } from './style';
 import { STATION } from '../../constants';
 
 export const StationPage = () => {
-  const { isLogin } = useLogin();
-  const { stations, status, requestGetStations, requestAddStation, requestDeleteStation, clearStatus } = useStation();
+  const { stations, status, requestAddStation, requestDeleteStation, clearStatus } = useStation();
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
   const { enqueueSnackbar } = useSnackbar();
   const ref = useRef();
@@ -28,12 +27,6 @@ export const StationPage = () => {
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (isLogin) {
-      requestGetStations();
-    }
-  }, [isLogin]);
-
   useEffect(() => {
     if (status.message) {
       enqueueSnackbar(status.message);

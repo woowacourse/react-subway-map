@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useCookies } from '.';
@@ -27,6 +28,11 @@ export const useMap = () => {
   const clearStatus = () => {
     dispatch(clearMapStatus());
   };
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    requestGetMap();
+  }, []);
 
   return {
     map,
