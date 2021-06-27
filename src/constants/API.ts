@@ -4,6 +4,7 @@ export const QUERY = {
 };
 
 export const API_URL = {
+  MOCK_API: 'http://localhost:3000',
   BETTER: 'https://subway-fare-mission.kro.kr',
   KEVIN: 'https://jipark.p-e.kr',
   MUNGTO: 'https://mungto-subway.o-r.kr',

@@ -11,13 +11,14 @@ export interface StationProps {
 const StationList: VFC<StationProps> = ({ stations, deleteStation }) => {
   return (
     <StyledStationList>
-      {stations.map(({ id, name }) => (
-        <StationListItem
-          key={id}
-          name={name}
-          onDelete={() => deleteStation(id)}
-        />
-      ))}
+      {stations &&
+        stations.map(({ id, name }) => (
+          <StationListItem
+            key={id}
+            name={name}
+            onDelete={() => deleteStation(id)}
+          />
+        ))}
     </StyledStationList>
   );
 };

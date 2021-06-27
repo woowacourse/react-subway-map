@@ -1,20 +1,21 @@
+import {
+  CancelButton,
+  ControlContainer,
+  SectionSelectBox,
+} from './SectionAddModal.styles';
 import { FormEvent, Suspense, VFC } from 'react';
-import { SERVICE } from '../../../constants/service';
+
+import Button from '../../@common/Button/Button.styles';
+import Container from '../../@common/Container/Container.styles';
 import { INVALID_VALUE } from '../../../constants/validate';
+import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
+import { Line } from '../../../types';
+import Modal from '../../@common/Modal/Modal';
+import { SERVICE } from '../../../constants/service';
+import Title from '../../@common/Title/Title.styles';
 import useLine from '../../../hooks/useLine';
 import useSection from '../../../hooks/useSection';
 import useSectionAddForm from '../../../hooks/useSectionAddForm';
-import { Line } from '../../../types';
-import Button from '../../@common/Button/Button.styles';
-import Container from '../../@common/Container/Container.styles';
-import Modal from '../../@common/Modal/Modal';
-import Title from '../../@common/Title/Title.styles';
-import InputWithAlertText from '../../@mixins/InputWithAlertText/InputWithAlertText';
-import {
-  SectionSelectBox,
-  ControlContainer,
-  CancelButton,
-} from './SectionAddModal.styles';
 
 export interface SectionAddModalProps {
   closeModal: () => void;

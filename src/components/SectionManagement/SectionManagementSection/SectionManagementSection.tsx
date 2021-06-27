@@ -17,7 +17,6 @@ const SectionManagementSection = () => {
   const { lines } = useLine();
   const { currentLineId, setCurrentLineId, currentLineDetail, deleteSection } =
     useSection();
-
   const { isModalOpen, openModal, closeModal } = useModal();
 
   return (

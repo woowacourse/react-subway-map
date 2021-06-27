@@ -56,11 +56,11 @@ export interface Line {
   name: string;
   color: LineColor;
   stations: Station[];
+  sections: Section[];
 }
 
 export interface LineDetail extends Line {
   stations: Station[];
-  sections: Section[];
 }
 
 export type APIName = keyof typeof API_URL;
