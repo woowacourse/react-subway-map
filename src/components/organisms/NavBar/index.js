@@ -36,14 +36,14 @@ export const NavBar = (props) => {
       </TitleButton>
 
       <Menu>
-        <MenuGroup
+        <MultipleMenus
           isVisible={isLogin}
           menuList={[
             { content: '전체보기', icon: <IconWindow />, route: ROUTE.MAP },
             { content: '경로탐색', icon: <IconSearch />, route: ROUTE.SEARCH },
           ]}
         />
-        <MenuGroup
+        <MultipleMenus
           isVisible={isLogin}
           menuList={[
             { content: '역관리', icon: <IconSetting />, route: ROUTE.STATION },
@@ -53,19 +53,19 @@ export const NavBar = (props) => {
         />
 
         {isLogin ? (
-          <MenuList isVisible={isLogin}>
-            <MenuItem>
-              <button onClick={handleLogoutRequest}>
-                <IconPerson />
-                로그아웃
-              </button>
-            </MenuItem>
-          </MenuList>
+          <SingleMenu>
+            <button onClick={handleLogoutRequest}>
+              <IconPerson />
+              로그아웃
+            </button>
+          </SingleMenu>
         ) : (
-          <MenuGroup
-            isVisible={!isLogin}
-            menuList={[{ content: '로그인', icon: <IconPerson />, route: ROUTE.LOGIN }]}
-          />
+          <SingleMenu>
+            <NavLink activeClassName="selected" to={ROUTE.LOGIN}>
+              <IconPerson />
+              {'로그인'}
+            </NavLink>
+          </SingleMenu>
         )}
       </Menu>
     </Nav>
@@ -76,16 +76,16 @@ NavBar.propTypes = {
   serverOwner: PropTypes.string,
 };
 
-function MenuGroup(props) {
-  const { menuList, ...rest } = props;
+function MultipleMenus(props) {
+  const { menuList, isVisible, ...rest } = props;
 
   return (
-    <MenuList {...rest}>
-      {menuList.map((item, index) => (
+    <MenuList isVisible={isVisible} {...rest}>
+      {menuList.map((menuEntity, index) => (
         <MenuItem key={index}>
-          <NavLink activeClassName="selected" to={item.route}>
-            {item.icon}
-            {item.content}
+          <NavLink activeClassName="selected" to={menuEntity.route}>
+            {menuEntity.icon}
+            {menuEntity.content}
           </NavLink>
         </MenuItem>
       ))}
@@ -93,6 +93,21 @@ function MenuGroup(props) {
   );
 }
 
-MenuGroup.propTypes = {
+MultipleMenus.propTypes = {
   menuList: PropTypes.array.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+};
+
+function SingleMenu(props) {
+  const { children, ...rest } = props;
+
+  return (
+    <MenuList isVisible {...rest}>
+      <MenuItem>{children}</MenuItem>
+    </MenuList>
+  );
+}
+
+MultipleMenus.propTypes = {
+  children: PropTypes.node.isRequired,
 };
