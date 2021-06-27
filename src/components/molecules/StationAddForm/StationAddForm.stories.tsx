@@ -1,5 +1,5 @@
 import { Story } from '@storybook/react';
-import StationAddForm, { StationAddFormProps } from './StationAddForm';
+import StationAddForm from './StationAddForm';
 
 export default {
   title: 'molecule/StationAddForm',
@@ -7,7 +7,7 @@ export default {
   argTypes: { children: { control: 'text' } },
 };
 
-const Template: Story<StationAddFormProps> = args => <StationAddForm {...args} />;
+const Template: Story = args => <StationAddForm {...args} />;
 
 export const Basic = Template.bind({});
 

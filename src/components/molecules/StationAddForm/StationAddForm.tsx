@@ -1,27 +1,13 @@
 import { Container } from './StationAddForm.styles';
 import { Input, Button } from '../../atoms';
+import { useFormContext } from '../../contexts/FormContext/FormContext';
 
-export interface StationAddFormProps {
-  stationName: string;
-  onChangeStationName: React.ChangeEventHandler<HTMLInputElement>;
-  onSubmitStationInfo: React.FormEventHandler<HTMLFormElement>;
-}
+const StationAddForm = () => {
+  const { onSubmit } = useFormContext();
 
-const StationAddForm = ({
-  stationName,
-  onChangeStationName,
-  onSubmitStationInfo,
-}: StationAddFormProps) => {
   return (
-    <Container onSubmit={onSubmitStationInfo}>
-      <Input
-        name="station-name"
-        placeholder="역 이름"
-        onChange={onChangeStationName}
-        value={stationName}
-        minLength={2}
-        maxLength={20}
-      />
+    <Container onSubmit={onSubmit}>
+      <Input name="stationName" placeholder="역 이름" minLength={2} maxLength={20} required />
       <Button>추가</Button>
     </Container>
   );

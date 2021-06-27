@@ -60,19 +60,27 @@ const SectionAddForm = ({
       />
       <Wrapper>
         <Select
+          name="upStation"
           defaultName="출발역"
           options={stationOptionsWithSelectedLine}
           onChange={onChangeUpStation}
           selectValue={upStation}
         />
         <Select
+          name="downStation"
           defaultName="다음역"
           options={stationOptions}
           onChange={onChangeDownStation}
           selectValue={downStation}
         />
       </Wrapper>
-      <Input type="text" onChange={onChangeDistance} value={distance} placeholder="거리 (km)" />
+      <Input
+        name="distance"
+        type="text"
+        onChange={onChangeDistance}
+        value={distance}
+        placeholder="거리 (km)"
+      />
 
       <Button>확인</Button>
     </Container>
