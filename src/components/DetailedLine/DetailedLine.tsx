@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import { LineDetail } from '../../types';
+import { Line } from '../../types';
 import {
   DetailedLineContainer,
   LineColorDot,
@@ -9,7 +9,7 @@ import {
 } from './DetailedLine.styles';
 
 interface DetailedLineProps {
-  line: LineDetail;
+  line: Line;
 }
 
 const DetailedLine: VFC<DetailedLineProps> = ({ line }) => {

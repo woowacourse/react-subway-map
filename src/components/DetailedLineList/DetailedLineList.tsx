@@ -7,12 +7,12 @@ import useLogin from '../../service/hooks/useLogin';
 
 const DetailedLineList = () => {
   const { accessToken } = useLogin();
-  const { data: map } = useMapQuery(accessToken);
+  const { data: lines } = useMapQuery(accessToken);
 
   return (
     <StyledDetailedLineList>
       <Suspense fallback={true}>
-        {map!.map((line) => (
+        {lines!.map((line) => (
           <DetailedLine key={line.id} line={line} />
         ))}
       </Suspense>
