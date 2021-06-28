@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
 
-import { ButtonRadio } from '../..';
+import { RadioButton } from '../../../components';
 import { Content, Image, Item, Label, Name, Nickname } from './style';
 
 export const ServerSelectItem = (props) => {
@@ -10,7 +10,7 @@ export const ServerSelectItem = (props) => {
   return (
     <Item>
       <Label>
-        <ButtonRadio name="serverSelect" value={value} {...rest} />
+        <RadioButton name="serverSelect" value={value} {...rest} />
         <Content>
           <Nickname>{ownerNickname}</Nickname>
           <Name>{ownerName}</Name>

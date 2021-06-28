@@ -1,5 +1,4 @@
 export { Button } from './atoms/Button';
-export { ButtonRadio } from './atoms/ButtonRadio';
 export { ButtonRound } from './atoms/ButtonRound';
 export { ButtonSquare } from './atoms/ButtonSquare';
 export { ColorPicker } from './atoms/ColorPicker';
@@ -21,6 +20,7 @@ export { IconTrashCan } from './atoms/Icons/IconTrashCan';
 export { IconWindow } from './atoms/Icons/IconWindow';
 export { Input } from './atoms/Input';
 export { Modal } from './atoms/Modal';
+export { RadioButton } from './atoms/RadioButton';
 export { Section } from './atoms/Section';
 export { Select } from './atoms/Select';
 export { NavBar } from './organisms/NavBar';
