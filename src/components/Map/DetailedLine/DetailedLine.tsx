@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import { Line } from '../../types';
+import { Line } from '../../../types';
 import {
   DetailedLineContainer,
   LineColorDot,

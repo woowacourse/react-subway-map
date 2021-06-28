@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 
 import { StyledDetailedLineList } from './DetailedLineList.styles';
 import DetailedLine from '../DetailedLine/DetailedLine';
-import { useMapQuery } from '../../service/queries/map';
-import useLogin from '../../service/hooks/useLogin';
+import { useMapQuery } from '../../../service/queries/map';
+import useLogin from '../../../service/hooks/useLogin';
 
 const DetailedLineList = () => {
   const { accessToken } = useLogin();
