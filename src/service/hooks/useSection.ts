@@ -36,7 +36,7 @@ const useSection = (accessToken: string) => {
   const deleteMutation = useSectionDeleteMutation(currentLineId, accessToken);
 
   const addSection = (form: SectionForm) => {
-    return addMutation.mutate(form, {
+    addMutation.mutate(form, {
       onSuccess: () => {
         dispatch(lineAction.setShouldUpdate());
       },
@@ -46,8 +46,8 @@ const useSection = (accessToken: string) => {
     });
   };
 
-  const deleteSection = (stationId: StationId) => {
-    deleteMutation.mutate(stationId, {
+  const deleteSection = async (stationId: StationId) => {
+    await deleteMutation.mutate(stationId, {
       onSuccess: () => updateCurrentSection(),
       onError: () => alert('구간을 삭제하지 못했습니다!'),
     });
@@ -74,8 +74,8 @@ const useSection = (accessToken: string) => {
     addSection,
     deleteSection,
     updateCurrentSection,
-    isAddSectionSuccess: addMutation.isSuccess,
-    isDeleteSectionSuccess: deleteMutation.isSuccess,
+    deleteMutation,
+    addMutation,
   };
 };
 
