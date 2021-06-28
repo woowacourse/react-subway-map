@@ -1,14 +1,14 @@
 import { VFC } from 'react';
-import Template from '../../components/@common/Template/Template';
+import { MapTemplate } from '../../components/Map/MapTemplate/MapTemplate.styles';
 import Title from '../../components/@common/Title/Title.styles';
-import DetailedLineList from '../../components/DetailedLineList/DetailedLineList';
+import DetailedLineList from '../../components/Map/DetailedLineList/DetailedLineList';
 
 const MapPage: VFC = () => {
   return (
-    <Template type="vertical">
+    <MapTemplate>
       <Title>전체 지도</Title>
       <DetailedLineList />
-    </Template>
+    </MapTemplate>
   );
 };
 

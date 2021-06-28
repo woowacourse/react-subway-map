@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import PALETTE from '../../constants/palette';
-import { LineColor } from '../../types';
-import Container from '../@common/Container/Container.styles';
+import PALETTE from '../../../constants/palette';
+import { LineColor } from '../../../types';
+import Container from '../../@common/Container/Container.styles';
 
 export const DetailedLineContainer = styled.div`
   flex-direction: column;
