@@ -31,7 +31,6 @@ const useStation = (accessToken: string) => {
   const deleteStation = async (stationId: StationId) => {
     if (isStationInLine(linesQuery.data ?? [], stationId)) {
       alert('노선에 등록된 역은 삭제하실 수 없습니다.');
-      return { isSuccess: false, isError: true };
     }
 
     await deleteMutation.mutate(stationId, {
@@ -41,7 +40,7 @@ const useStation = (accessToken: string) => {
   };
 
   return {
-    stations: stationsQuery.data,
+    stationsQuery,
     addStation,
     deleteStation,
     deleteMutation,
