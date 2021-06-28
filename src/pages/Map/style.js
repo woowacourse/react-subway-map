@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { COLOR } from '../../constants/style';
+
 export const Map = styled.ul`
   padding: 1rem 0 0;
   box-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.15);
@@ -40,8 +42,8 @@ export const StationItem = styled.li`
     content: '';
     display: block;
     width: 4rem;
-    height: 6px;
-    margin: 0 -0.2rem;
+    height: 0.4rem;
+    margin: 0 -0.1rem;
     background-color: ${(props) => props.lineColor};
     border: 1px solid ${(props) => props.lineColor};
   }
@@ -57,12 +59,15 @@ export const StationItem = styled.li`
   }
 `;
 
-export const StationName = styled.p`
+export const Station = styled.div`
   margin: auto 0;
   width: 1.2rem;
   height: 1.2rem;
-  background: ${(props) => (props.transferLines ? 'conic-gradient(#c81119 40%, #1b24d1 0 70%, #f7f701 0)' : '#FFF')};
-  border: 0.2rem solid ${(props) => props.lineColor};
+  background: ${(props) =>
+    props.transferLines
+      ? `conic-gradient(${COLOR.GRADIENT.RED} 40%, ${COLOR.GRADIENT.BLUE} 0 70%, ${COLOR.GRADIENT.YELLOW} 0)`
+      : '#FFF'};
+  border: 0.13rem solid ${(props) => props.lineColor};
   border-radius: 50%;
   z-index: 1;
 
