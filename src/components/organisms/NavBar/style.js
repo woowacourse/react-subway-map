@@ -42,7 +42,7 @@ export const SubTitle = styled.span`
 
 export const Menu = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 42.5%;
   min-width: 50rem;
 `;

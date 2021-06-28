@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
-  ul {
+  ul,ol {
     list-style-type: none;
     margin: 0;
     padding: 0;

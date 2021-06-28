@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { Page } from './components';
 import { ROUTE } from './constants';
-import { LinePage, LoginPage, LogoutPage, SectionPage, SignUpPage, StationPage } from './pages';
+import { LinePage, LoginPage, LogoutPage, MapPage, SectionPage, SignUpPage, StationPage } from './pages';
 
 const App = () => {
   return (
@@ -26,6 +26,9 @@ const App = () => {
         </Route>
         <Route exact path={ROUTE.SECTION}>
           <SectionPage />
+        </Route>
+        <Route exact path={ROUTE.MAP}>
+          <MapPage />
         </Route>
       </Switch>
     </Page>

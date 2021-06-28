@@ -91,6 +91,7 @@ const useMap = () => {
   };
 
   return {
+    map,
     lines,
     handleAddSection,
     handleDeleteSection,
