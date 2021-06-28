@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-
-const formatDistance = (dist) => dist.toLocaleString("en-US");
+import { formatDistance } from "../../utils/format";
 
 const OverviewListItemDetail = ({ lineColor, sections }) => (
   <ol className="flex flex-wrap">

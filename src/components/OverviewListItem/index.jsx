@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
+import { formatDistance } from "../../utils/format";
 import OverviewListItemDetail from "../OverviewListItemDetail";
-
-const formatDistance = (dist) => dist.toLocaleString("en-US");
 
 const OverviewListItem = ({ item }) => {
   const {
