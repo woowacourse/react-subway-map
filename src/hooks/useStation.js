@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useCookies } from '../hooks';
@@ -23,6 +24,11 @@ export const useStation = () => {
   const clearStatus = () => {
     dispatch(clearStationStatus());
   };
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    requestGetStations();
+  }, []);
 
   return {
     stations,

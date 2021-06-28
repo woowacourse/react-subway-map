@@ -6,7 +6,7 @@ import { useLogin, useCookies } from '../../hooks';
 import { clearStation } from '../../redux/stationSlice';
 import { clearLine } from '../../redux/lineSlice';
 import { clearMap } from '../../redux/mapSlice';
-import { NavBar, ServerSelect } from '../../components';
+import { ErrorBoundary, NavBar, ServerSelect } from '../../components';
 import { Header, ServerSelectButton, Main } from './style';
 import { SERVER_LIST } from '../../constants';
 
@@ -17,6 +17,13 @@ export const Template = (props) => {
   const { isLogin, requestLogout, removeToken, goToAllowedPage } = useLogin();
   const { serverId, setServerId } = useCookies();
   const [isServerSelectOpen, setIsServerSelectOpen] = useState(!serverId);
+
+  const resetData = () => {
+    removeToken();
+    dispatch(clearLine());
+    dispatch(clearStation());
+    dispatch(clearMap());
+  };
 
   const handleServerSubmit = (e) => {
     e.preventDefault();
@@ -34,11 +41,8 @@ export const Template = (props) => {
     setServerId(selectedId);
     setIsServerSelectOpen(false);
 
-    removeToken();
+    resetData();
     goToAllowedPage();
-    dispatch(clearLine());
-    dispatch(clearStation());
-    dispatch(clearMap());
   };
 
   const handleServerSelectButtonClick = () => {
@@ -46,16 +50,14 @@ export const Template = (props) => {
   };
 
   return (
-    <>
+    <ErrorBoundary>
       <Header>
         <NavBar serverOwner={SERVER_LIST[serverId]?.nickname} />
       </Header>
-
       <Main {...rest}>{children}</Main>
-
       <ServerSelectButton onClick={handleServerSelectButtonClick}>서버선택</ServerSelectButton>
       {isServerSelectOpen && <ServerSelect serverId={serverId} onSubmit={handleServerSubmit} />}
-    </>
+    </ErrorBoundary>
   );
 };
 

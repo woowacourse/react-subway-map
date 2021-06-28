@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useCookies } from '../hooks';
+import { useCookies } from '.';
 import { getMap, addSection, removeSection, clearMap, clearMapStatus } from '../redux/mapSlice';
 
-export const useSection = () => {
+export const useMap = () => {
   const dispatch = useDispatch();
   const { accessToken, endpoint } = useCookies();
   const { map, status } = useSelector((store) => store.map);
@@ -27,6 +28,11 @@ export const useSection = () => {
   const clearStatus = () => {
     dispatch(clearMapStatus());
   };
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    requestGetMap();
+  }, []);
 
   return {
     map,

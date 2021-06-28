@@ -18,6 +18,10 @@ export const Nav = styled.nav`
 export const TitleButton = styled.button`
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.div`
@@ -42,11 +46,12 @@ export const SubTitle = styled.span`
 export const Menu = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 42.5%;
+  width: 60%;
   min-width: 50rem;
 `;
 
 export const MenuList = styled.ul`
+  visibility: ${(props) => (props.isVisible ? 'visible' : 'hidden')};
   display: flex;
   justify-content: space-between;
 `;

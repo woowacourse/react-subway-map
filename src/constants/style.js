@@ -10,12 +10,13 @@ export const COLOR = {
     HEADER: '#333',
   },
 
-  BORDER_DEFAULT: '#EEEEEE',
+  BORDER_DEFAULT: '#EEE',
   PLACEHOLDER: '#999',
   ERROR: '#FF7C74',
   LIST_ITEM_HOVER_BG: '#F6F6F6',
 
   ICON_DEFAULT: '#999',
+  ICON_LIGHT: '#DDD',
 
   LINE: {
     '1호선': '#A5BAE2',

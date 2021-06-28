@@ -3,6 +3,7 @@ export { ButtonRadio } from './atoms/ButtonRadio';
 export { ButtonRound } from './atoms/ButtonRound';
 export { ButtonSquare } from './atoms/ButtonSquare';
 export { ColorPicker } from './atoms/ColorPicker';
+export { ErrorBlueScreen } from './atoms/ErrorBlueScreen';
 export { IconArrowLTR } from './atoms/IconArrowLTR';
 export { IconCheck } from './atoms/IconCheck';
 export { IconDropDown } from './atoms/IconDropDown';
@@ -24,6 +25,7 @@ export { Modal } from './atoms/Modal';
 export { Section } from './atoms/Section';
 export { Select } from './atoms/Select';
 
+export { ErrorBoundary } from './organisms/ErrorBoundary';
 export { NavBar } from './organisms/NavBar';
 export { ServerSelect } from './organisms/ServerSelect';
 export { ServerSelectItem } from './organisms/ServerSelectItem';

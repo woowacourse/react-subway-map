@@ -15,6 +15,7 @@ export const SIGN_UP = {
   EMAIL_CANNOT_INCLUDE_BLANK: '이메일에 공백이 포함되지 않도록 입력해주세요.',
   EMAIL_CANNOT_INCLUDE_KOREAN: '이메일에 한글이 포함되지 않도록 입력해주세요.',
   EMAIL_SHOULD_BE_IN_VALID_FORMAT: '유효한 이메일 형식으로 입력해주세요.',
+  EMAIL_CANNOT_BE_DUPLICATED: '중복된 이메일입니다. 다른 주소로 입력해주세요.',
 
   MIN_AGE: 1,
   MAX_AGE: 200,
@@ -67,4 +68,8 @@ export const SECTION = {
   ADD_FAIL: '구간 추가에 실패하였습니다.',
   DELETE_SUCCEED: '구간 삭제에 성공하였습니다.',
   DELETE_FAIL: '구간 삭제에 실패하였습니다.',
+};
+
+export const SEARCH = {
+  GET_FAIL: '경로조회에 실패하였습니다.',
 };
