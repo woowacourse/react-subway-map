@@ -18,7 +18,17 @@ const useAuthorization = () => {
     const currentPage = location.pathname;
 
     if (!accessToken) {
-      currentPage === ROUTE.SING_UP ? history.push(ROUTE.SING_UP) : history.push(ROUTE.LOGIN);
+      if (currentPage === ROUTE.MAP) {
+        history.push(ROUTE.MAP);
+        return;
+      }
+
+      if (currentPage === ROUTE.SING_UP) {
+        history.push(ROUTE.SING_UP);
+        return;
+      }
+
+      history.push(ROUTE.LOGIN);
       return;
     }
 
