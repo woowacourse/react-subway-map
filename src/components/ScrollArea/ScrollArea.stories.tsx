@@ -1,4 +1,3 @@
-import React from "react";
 import { Story, Meta } from "@storybook/react";
 
 import ScrollArea, { Props } from "./ScrollArea";
@@ -41,7 +40,7 @@ Basic.args = {
 };
 
 TrainScorllArea.args = {
-  imageUrl: TrainIconPNG,
+  scrollBarImage: TrainIconPNG,
   children: (
     <>
       <br />

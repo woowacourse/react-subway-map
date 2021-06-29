@@ -7,7 +7,7 @@ export type Props = ScrollAreaStylesProps & HTMLAttributes<HTMLDivElement>;
 // TODO: 스크롤 끝까지 안내려감(열차 이미지)
 const ScrollArea = ({ children, ...props }: Props) => (
   <ScrollAreaBlock dir="rtl" {...props}>
-    {children}
+    <div dir="ltr">{children}</div>
   </ScrollAreaBlock>
 );
 

@@ -12,17 +12,17 @@ export const NodeWrapper = styled(FlexAlignCenter)`
   margin-right: 10px;
 `;
 
-export const Node = styled.div`
+export const Node = styled.div<{ nodeColor?: string }>`
   border-radius: 50%;
-  border: 4px solid #2699fb;
+  border: 4px solid ${({ nodeColor }) => (nodeColor ? nodeColor : "#2699fb")};
   width: 1.125rem;
   height: 1.125rem;
   margin-bottom: 8px;
 `;
 
-export const Vertex = styled.div`
+export const Vertex = styled.div<{ vertexColor?: string }>`
   height: 9.375rem;
-  border: 2px solid #bce0fd;
+  border: 2px solid ${({ vertexColor }) => `rgba(${vertexColor}, 0.2)`};
   border-radius: 0.3125rem;
 `;
 
@@ -31,14 +31,15 @@ export const ContentWrapper = styled(Flex)`
   justify-content: flex-start;
 `;
 
-export const NodeTitle = styled.span`
-  color: #2699fb;
+export const NodeTitle = styled.span<{ textColor?: string }>`
+  width: 80px;
+  color: ${({ textColor }) => (textColor ? textColor : "#2699fb")};
   font-weight: bold;
   font-size: 1.0625rem;
   margin-bottom: 0.5rem;
 `;
 
-export const NodeContent = styled.span`
-  color: #2699fb;
+export const NodeContent = styled.span<{ textColor?: string }>`
+  color: ${({ textColor }) => (textColor ? textColor : "#2699fb")};
   font-size: 0.875rem;
 `;

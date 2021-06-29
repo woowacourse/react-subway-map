@@ -3,23 +3,27 @@ import styled from "styled-components";
 export type ScrollAreaStylesProps = ScrollAreaBlockProps;
 
 interface ScrollAreaBlockProps {
-  imageUrl?: string;
+  scrollBarImage?: string;
+  scrollBarColor?: string;
+  scrollTrackColor?: string;
+  scrollTrackWidth?: string;
 }
 
 export const ScrollAreaBlock = styled.div<ScrollAreaBlockProps>`
-  height: 50vh;
+  height: 500px;
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
-    width: 30px;
+    width: ${({ scrollTrackWidth }) => (scrollTrackWidth ? scrollTrackWidth : "30px")};
     border-radius: 12px;
-    background-color: #e7f4ff;
+    background-color: ${({ scrollTrackColor }) => scrollTrackColor};
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${({ imageUrl, theme }) => (imageUrl ? `url(${imageUrl})` : theme.PRIMARY)};
     border-radius: 12px;
     background-repeat: no-repeat;
     background-position-x: center;
+    background-image: ${({ scrollBarImage }) => `url(${scrollBarImage})`};
+    background-color: ${({ scrollBarColor }) => scrollBarColor};
   }
 `;
