@@ -3,7 +3,7 @@ import React, { FC, MouseEventHandler } from 'react';
 import ReactDOM from 'react-dom';
 import Dimmed from '../Dimmed/Dimmed';
 import Close from '../Icon/Close';
-import { CloseButton, ModalContainer, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
+import { CloseButton, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
 
 const $modalRoot = document.getElementById('modal-root');
 
