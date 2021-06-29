@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { useLinesStatus } from "../../pages/Lines/hooks";
 import STATUS from "../../constants/status";
 import { selectLinesMessage } from "../../pages/Lines/slice";
 import Loading from "../@shared/Loading";
 import Main from "../@shared/Main";
 import Button from "../@shared/Button";
 import LinesList from "../LinesList";
-import { useLinesStatus } from "../../pages/Lines/hooks";
 
 const LinesMain = ({ openModal }) => {
   const status = useLinesStatus();

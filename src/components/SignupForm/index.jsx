@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signup } from "../../pages/Signup/slice";
 import { useInput } from "../@shared/Input/hooks";
+import { useSignupAge, useSignupEmail, useSignupPassword } from "./hooks";
+import { signup } from "../../pages/Signup/slice";
 import Input from "../@shared/Input";
 import Button from "../@shared/Button";
-import { useSignupAge, useSignupEmail, useSignupPassword } from "./hooks";
 
 const SignupForm = () => {
   const dispatch = useDispatch();

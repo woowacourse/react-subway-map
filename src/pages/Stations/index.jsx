@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useStationsStatus } from "./hooks";
 import STATUS from "../../constants/status";
+import { selectStationsList, selectStationsMessage } from "./slice";
 import Main from "../../components/@shared/Main";
 import Loading from "../../components/@shared/Loading";
 import StationsForm from "../../components/StationsForm";
 import StationsList from "../../components/StationsList";
-import { useStationsStatus } from "./hooks";
-import { selectStationsList, selectStationsMessage } from "./slice";
 
 const Stations = () => {
   const status = useStationsStatus();

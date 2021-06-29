@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 import { useInput } from "../@shared/Input/hooks";
+import { useDistanceInput, useLineNameInput } from "./hooks";
 import { addLine } from "../../pages/Lines/slice";
 import { selectStationsList } from "../../pages/Stations/slice";
 import FloatingLabelInput from "../@shared/FloatingLabelInput";
 import Button from "../@shared/Button";
 import ColorSelect from "../ColorSelect";
 import ListSelect from "../ListSelect";
-import { useDistanceInput, useLineNameInput } from "./hooks";
 
 const LinesForm = ({ closeModal }) => {
   const dispatch = useDispatch();

@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PATH from "../../constants/path";
 import STATUS from "../../constants/status";
+import { reset } from "./slice";
 import Main from "../../components/@shared/Main";
 import Loading from "../../components/@shared/Loading";
 import SignupForm from "../../components/SignupForm";
-import { reset } from "./slice";
 
 const Signup = () => {
   const dispatch = useDispatch();

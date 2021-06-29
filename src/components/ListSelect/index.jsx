@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import Select from "../@shared/Select";
 
 const ListSelect = ({ list, placeholder, value, onChange }) => (

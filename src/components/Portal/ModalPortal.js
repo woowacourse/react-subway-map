@@ -1,5 +1,5 @@
-import ReactDOM from "react-dom";
 import { useEffect } from "react";
+import ReactDOM from "react-dom";
 
 const modalRoot = document.createElement("div");
 modalRoot.id = "modal-root";

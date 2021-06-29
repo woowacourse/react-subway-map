@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import STATUS from "../../constants/status";
 import {
   fetchLines,
   selectLinesList,
@@ -10,7 +11,6 @@ import {
   selectLinesStatus,
   reset,
 } from "../../pages/Lines/slice";
-import STATUS from "../../constants/status";
 import Loading from "../@shared/Loading";
 import Main from "../@shared/Main";
 import Button from "../@shared/Button";

@@ -1,6 +1,6 @@
 import React from "react";
-import cx from "classnames";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 const lineColors = [
   ["line1", "bg-line1 hover:ring-line1 focus:ring-line1"],

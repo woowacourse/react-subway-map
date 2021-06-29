@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NavLink from "../@shared/NavLink";
 import PATH from "../../constants/path";
-
 import { useAuth } from "../../pages/Login/hooks";
-
+import NavLink from "../@shared/NavLink";
 import runningmapLogo from "../../assets/runningmap-logo.png";
 
 const Header = () => {

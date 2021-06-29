@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Loading from "../../components/@shared/Loading";
-import Main from "../../components/@shared/Main";
-import STATUS from "../../constants/status";
-import OverviewList from "../../components/OverviewList";
-import { selectOverviewMessage, selectOverviewList } from "./slice";
 import { useOverviewStatus } from "./hooks";
+import STATUS from "../../constants/status";
+import { selectOverviewMessage, selectOverviewList } from "./slice";
+import Main from "../../components/@shared/Main";
+import Loading from "../../components/@shared/Loading";
+import OverviewList from "../../components/OverviewList";
 
 const Overview = () => {
   const status = useOverviewStatus();

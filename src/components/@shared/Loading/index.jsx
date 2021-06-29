@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
 import PropTypes from "prop-types";
-import { PulseSpinner } from "react-spinners-kit";
 import cx from "classnames";
 import { yellow } from "tailwindcss/colors";
+import { PulseSpinner } from "react-spinners-kit";
 
 const BG_OPACITY_STYLE = {
   0: "bg-opacity-0",

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OverviewListItem from "../OverviewListItem/index";
+import OverviewListItem from "../OverviewListItem";
 
 const OverviewList = ({ list }) => (
   <ul className="space-y-6">
