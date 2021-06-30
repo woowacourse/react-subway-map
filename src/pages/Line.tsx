@@ -4,7 +4,6 @@ import Title from '@shared/Title/Title';
 import ListItem from '@units/ListItem/ListItem';
 import addImg from 'assets/images/add.png';
 import MESSAGE from 'constants/message';
-// import editImg from 'assets/images/edit.png';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addLineAsync, AddLinePayload, deleteLineAsync, getLinesAsync } from 'redux/lineSlice';
@@ -53,15 +52,7 @@ const Line = () => {
           <ImageButton imgUrl={addImg} onClick={onModalOpen} />
         </div>
         {lines?.map((line) => (
-          <ListItem
-            key={line.id}
-            id={line.id}
-            itemColor={line.color}
-            title={line.name}
-            // TODO 수정 기능 구현시 주석 살릴 것.
-            // editImg={editImg}
-            onDelete={handleDelete}
-          />
+          <ListItem key={line.id} id={line.id} itemColor={line.color} title={line.name} onDelete={handleDelete} />
         ))}
       </Container>
       {modalOpen && <AddLineModal stations={stations} onModalClose={onModalClose} onSubmit={handleSubmit} />}

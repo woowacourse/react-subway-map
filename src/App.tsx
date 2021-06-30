@@ -3,6 +3,7 @@ import PATH from 'constants/path';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
 import Login from 'pages/Login';
+import Map from 'pages/Map';
 import Section from 'pages/Section';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
@@ -30,6 +31,9 @@ const App = () => {
         </Route>
         <Route exact path={PATH.SECTION}>
           <Section />
+        </Route>
+        <Route exact path={PATH.MAP}>
+          <Map />
         </Route>
       </Switch>
     </Layout>
