@@ -1,13 +1,15 @@
-import React, { FC, ReactNode, HTMLAttributes } from 'react';
-import { StyledDimmed } from './Dimmed.styled';
 import PropTypes from 'prop-types';
+import React, { FC, PropsWithChildren } from 'react';
+import { StyledDimmed } from './Dimmed.styled';
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
+interface Props {
   backgroundColor?: string;
 }
 
-const Dimmed: FC<Props> = ({ children, backgroundColor = 'rgba(0, 0, 0, 0.3)' }) => {
+const Dimmed: FC<PropsWithChildren<Props>> = ({
+  children,
+  backgroundColor = 'rgba(0, 0, 0, 0.3)',
+}) => {
   return <StyledDimmed backgroundColor={backgroundColor}>{children}</StyledDimmed>;
 };
 
