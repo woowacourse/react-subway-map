@@ -1,12 +1,8 @@
 import React from 'react';
 import PALETTE from '../../../constants/palette';
+import { IconProps } from '../../../types';
 
-interface Props {
-  width?: string;
-  color?: string;
-}
-
-const Person = ({ width = '24px', color = PALETTE.GRAY[400] }: Props): JSX.Element => {
+const Person = ({ width = '24px', color = PALETTE.GRAY[400] }: IconProps): JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +16,5 @@ const Person = ({ width = '24px', color = PALETTE.GRAY[400] }: Props): JSX.Eleme
     </svg>
   );
 };
-
 
 export default Person;

@@ -27,3 +27,8 @@ export interface Member {
   age?: number;
   password: string;
 }
+
+export interface IconProps {
+  width?: string;
+  color?: string;
+}
