@@ -1,6 +1,5 @@
 import Layout from '@layout/Layout';
 import PATH from 'constants/path';
-import { useData } from 'hooks';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
 import Login from 'pages/Login';
@@ -11,10 +10,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 const App = () => {
-  const { accessToken } = useData();
-
   return (
-    <Layout isLogin={!!accessToken}>
+    <Layout>
       <Switch>
         <Route exact path={PATH.HOME}>
           <Home />

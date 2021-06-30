@@ -11,15 +11,15 @@ import { loginAsync } from 'redux/authSlice';
 import ProfileSelector from '@units/ProfileSelector/ProfileSelector';
 import axios from 'axios';
 import MESSAGE from 'constants/message';
-import { useData } from 'hooks';
 import PATH from 'constants/path';
 import InputContainer from '@units/InputContainer/InputContainer';
 import useInput from 'hooks/useInput';
+import useCheckingAuth from 'hooks/useCheckingAuth';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { accessToken } = useData();
+  const accessToken = useCheckingAuth();
   const { value: email, onChange: onEmailChange } = useInput();
   const { value: password, onChange: onPasswordChange } = useInput();
 

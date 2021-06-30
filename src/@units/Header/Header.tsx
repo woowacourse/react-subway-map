@@ -26,25 +26,22 @@ const Header = ({ isLogin }: HeaderProps) => {
       </Link>
       <nav className="font-jua">
         {isLogin && (
-          <Link className="mx-6" to={PATH.STATION}>
-            역 관리
-          </Link>
+          <>
+            <Link className="mx-6" to={PATH.STATION}>
+              역 관리
+            </Link>
+            <Link className="mx-6" to={PATH.LINE}>
+              노선 관리
+            </Link>
+            <Link className="mx-6" to={PATH.SECTION}>
+              구간 관리
+            </Link>
+            <button className="mx-6 focus:outline-none" type="button" onClick={onLogout}>
+              로그아웃
+            </button>
+          </>
         )}
-        {isLogin && (
-          <Link className="mx-6" to={PATH.LINE}>
-            노선 관리
-          </Link>
-        )}
-        {isLogin && (
-          <Link className="mx-6" to={PATH.SECTION}>
-            구간 관리
-          </Link>
-        )}
-        {isLogin ? (
-          <button className="mx-6 focus:outline-none" type="button" onClick={onLogout}>
-            로그아웃
-          </button>
-        ) : (
+        {!isLogin && (
           <Link className="mx-6" to={PATH.LOGIN}>
             로그인
           </Link>
