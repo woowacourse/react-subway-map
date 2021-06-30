@@ -20,22 +20,20 @@ const LinesMain = ({ openModal }) => {
   }, [message, status]);
 
   return (
-    <>
-      <Loading isLoading={status === STATUS.LOADING} bgOpacity="10" />
-      <Main>
-        <section className="pb-8 w-144 border-t-8 border-yellow-300 rounded-sm shadow-md">
-          <div className="flex items-center justify-between px-4">
-            <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
-              노선 관리
-            </h2>
-            <Button onClick={openModal} type="button" size="medium">
-              등록
-            </Button>
-          </div>
-          <LinesList />
-        </section>
-      </Main>
-    </>
+    <Main className="relative">
+      <Loading isLoading={status === STATUS.LOADING} />
+      <section className="pb-8 w-144 border-t-8 border-yellow-300 rounded-sm shadow-md">
+        <div className="flex items-center justify-between px-4">
+          <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
+            노선 관리
+          </h2>
+          <Button onClick={openModal} type="button" size="medium">
+            등록
+          </Button>
+        </div>
+        <LinesList />
+      </section>
+    </Main>
   );
 };
 
