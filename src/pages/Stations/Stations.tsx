@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -16,7 +16,7 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
 
-const Stations: FC = () => {
+const Stations = (): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, isLoading, errorMessage } = useSelector((state: RootState) => state.station);

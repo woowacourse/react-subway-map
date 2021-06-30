@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { PAGE_INFO } from '../../../constants/appInfo';
@@ -13,7 +13,7 @@ interface Props {
   navInfoList: Page[];
 }
 
-const Navigation: FC<Props> = ({ navInfoList }) => {
+const Navigation = ({ navInfoList }: Props): JSX.Element => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const history = useHistory();
   const dispatch = useAppDispatch();

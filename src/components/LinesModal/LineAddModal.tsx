@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React, {
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
+  ChangeEventHandler, FormEventHandler,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
@@ -20,7 +18,7 @@ import ColorRadio from '../@common/ColorRadio/ColorRadio';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
 import SectionSelectBox, {
-  OnChangeSectionSelectBoxHandler,
+  OnChangeSectionSelectBoxHandler
 } from '../@shared/SectionSelectBox/SectionSelectBox';
 import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesModal.styles';
 
@@ -42,7 +40,7 @@ interface ErrorMessage {
   distance: string;
 }
 
-const LineAddModal: FC<Props> = ({ onClose }) => {
+const LineAddModal = ({ onClose }: Props): JSX.Element => {
   const { stations } = useSelector((state: RootState) => state.station);
   const { lines, errorMessage } = useSelector((state: RootState) => state.line);
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);

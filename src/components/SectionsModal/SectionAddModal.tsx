@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
@@ -21,7 +21,7 @@ interface Props {
   line: Line;
 }
 
-const SectionAddModal: FC<Props> = ({ onClose, line }) => {
+const SectionAddModal = ({ onClose, line }: Props): JSX.Element => {
   const { stations } = useSelector((state: RootState) => state.station);
   const dispatch = useAppDispatch();
 

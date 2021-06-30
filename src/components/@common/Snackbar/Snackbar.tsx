@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import PALETTE from '../../../constants/palette';
 import { SnackbarContainer } from './Snackbar.styles';
@@ -12,11 +12,11 @@ interface Props {
 
 const snackbarRoot: HTMLElement | null = document.getElementById('snackbar-root');
 
-const Snackbar: FC<Props> = ({
+const Snackbar = ({
   message,
   duration = 3000,
   backgroundColor = PALETTE.BLACK[300],
-}) => {
+}: Props): JSX.Element => {
   return ReactDOM.createPortal(
     <SnackbarContainer key={Date.now()} backgroundColor={backgroundColor} duration={duration}>
       {message}

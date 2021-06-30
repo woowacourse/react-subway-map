@@ -1,9 +1,11 @@
-import React, { FC, MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import Dimmed from '../../components/@common/Dimmed/Dimmed';
 import Add from '../../components/@common/Icon/Add';
-import ListItem from '../../components/@shared/ListItem/ListItem';
+import Loading from '../../components/@common/Loading/Loading';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
+import ListItem from '../../components/@shared/ListItem/ListItem';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
 import { API_INFO } from '../../constants/api';
@@ -15,10 +17,8 @@ import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
-import Dimmed from '../../components/@common/Dimmed/Dimmed';
-import Loading from '../../components/@common/Loading/Loading';
 
-const Lines: FC = () => {
+const Lines = (): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);

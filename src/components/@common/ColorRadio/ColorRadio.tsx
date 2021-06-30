@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
 interface LabelText {
@@ -13,13 +13,13 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   labelText?: LabelText;
 }
 
-const ColorRadio: FC<Props> = ({
+const ColorRadio = ({
   groupName,
   radioColor,
   labelText,
   checked = false,
   ...options
-}) => {
+}: Props): JSX.Element => {
   return (
     <ColorRadioLabel>
       <ColorRadioInput

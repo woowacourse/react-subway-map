@@ -1,10 +1,8 @@
 import React, {
-  ChangeEventHandler,
-  FC,
-  FocusEventHandler,
+  ChangeEventHandler, FocusEventHandler,
   FormEventHandler,
   useEffect,
-  useState,
+  useState
 } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -20,7 +18,7 @@ import { RootState } from '../../redux/store';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
-const Signup: FC = () => {
+const Signup = (): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const [formInput, setFormInput] = useState({
     email: '',

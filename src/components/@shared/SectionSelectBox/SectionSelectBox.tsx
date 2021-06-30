@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent } from 'react';
 import { Station } from '../../../types';
 import Arrow from '../../@common/Icon/Arrow';
 import {
   SectionSelectBoxContainer,
   SectionSelectErrorMessage,
   StationSelectBox,
-  StationsSelectContainer,
+  StationsSelectContainer
 } from './SectionSelectBox.styles';
 
 export type OnChangeSectionSelectBoxHandler = (
@@ -20,12 +20,12 @@ export interface Props {
   downStationOptions: Station[];
 }
 
-const SectionSelectBox: FC<Props> = ({
+const SectionSelectBox = ({
   onChange,
   errorMessage,
   upStationOptions,
   downStationOptions,
-}) => {
+}: Props): JSX.Element => {
   return (
     <SectionSelectBoxContainer direction="column">
       <StationsSelectContainer alignItems="center" justifyContent="space-between">

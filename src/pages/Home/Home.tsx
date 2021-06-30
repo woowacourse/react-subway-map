@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -9,7 +9,7 @@ import { logout } from '../../redux/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 
-const Home: FC = () => {
+const Home = (): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const dispatch = useAppDispatch();
   const [selectedAPI, setSelectedAPI] = useState(apiOwner);

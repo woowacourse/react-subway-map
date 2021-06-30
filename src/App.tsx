@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import Subway from './components/@common/Icon/Subway';
@@ -21,7 +21,7 @@ import { getApiOwner, getBearerToken } from './storage/service';
 axios.defaults.baseURL = API_INFO[getApiOwner()].endPoint;
 axios.defaults.headers.common['Authorization'] = getBearerToken();
 
-const App: FC = () => {
+const App = (): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
 

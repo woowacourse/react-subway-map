@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { PropsWithChildren } from 'react';
 import PALETTE from '../../../constants/palette';
 import { CardTemplateTitle, StyledCardTemplate } from './CardTemplate.styles';
 
 interface Props {
-  children: React.ReactNode;
   templateColor?: string;
   isColoredTitle?: boolean;
   titleText?: string;
   titleSize?: 'sm' | 'md' | 'lg';
 }
 
-const CardTemplate: FC<Props> = ({
+const CardTemplate = ({
   children,
   templateColor = PALETTE.YELLOW[400],
   isColoredTitle,
   titleText,
   titleSize = 'md',
-}) => {
+}: PropsWithChildren<Props>): JSX.Element => {
   return (
     <StyledCardTemplate
       templateColor={templateColor}

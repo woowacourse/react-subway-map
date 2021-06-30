@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC, FormEventHandler, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
@@ -28,7 +28,7 @@ interface FormValue {
   color: string;
 }
 
-const LineModifyModal: FC<Props> = ({ line, onClose }) => {
+const LineModifyModal = ({ line, onClose }: Props): JSX.Element => {
   const { lines } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
 

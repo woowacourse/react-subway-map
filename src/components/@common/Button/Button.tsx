@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
+import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { API_INFO } from '../../../constants/api';
@@ -7,16 +7,15 @@ import PALETTE, { Color } from '../../../constants/palette';
 import { RootState } from '../../../redux/store';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  buttonType?: 'square' | 'round';
+  buttonShape?: 'square' | 'round';
   isColored?: boolean;
-  children: ReactNode;
 }
 
 interface StyledButtonProps extends Props {
   themeColor: Color;
 }
 
-const buttonTypeCSS = {
+const buttonShapeCSS = {
   round: css`
     border-radius: 50%;
     width: 4.5rem;
@@ -42,7 +41,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${({ buttonType }) => buttonType && buttonTypeCSS[buttonType]}
+  ${({ buttonShape }) => buttonShape && buttonShapeCSS[buttonShape]}
   ${({ isColored, themeColor }) => isColored && coloredCSS(themeColor)}
 
   &:enabled:hover::after {
@@ -63,17 +62,17 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-export const Button: FC<Props> = ({
+export const Button = ({
   children,
-  buttonType = 'square',
+  buttonShape = 'square',
   isColored = true,
   ...options
-}) => {
+}: PropsWithChildren<Props>): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
 
   return (
     <StyledButton
-      buttonType={buttonType}
+      buttonShape={buttonShape}
       isColored={isColored}
       themeColor={API_INFO[apiOwner].themeColor as Color}
       {...options}
@@ -85,7 +84,7 @@ export const Button: FC<Props> = ({
 
 Button.propTypes = {
   children: PropTypes.node,
-  buttonType: PropTypes.oneOf(['square', 'round']),
+  buttonShape: PropTypes.oneOf(['square', 'round']),
   isColored: PropTypes.bool,
 };
 

@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -23,7 +23,7 @@ import { Line } from '../../types';
 import { StationName } from '../Stations/Stations.styles';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
-const Sections: FC = () => {
+const Sections = (): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, isLoading: stationsIsLoading, errorMessage: stationErrorMessage } = useSelector(

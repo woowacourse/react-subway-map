@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, MouseEventHandler, PropsWithChildren } from 'react';
+import React, { MouseEventHandler, PropsWithChildren } from 'react';
 import Button from '../../@common/Button/Button';
 import { ButtonOnLineContainer } from './ButtonOnLine.styles';
 
@@ -7,10 +7,10 @@ interface Props {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonOnLine: FC<PropsWithChildren<Props>> = ({ children, onClick }) => {
+const ButtonOnLine = ({ children, onClick }: PropsWithChildren<Props>): JSX.Element => {
   return (
     <ButtonOnLineContainer>
-      <Button onClick={onClick} buttonType="round">
+      <Button onClick={onClick} buttonShape="round">
         {children}
       </Button>
     </ButtonOnLineContainer>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { API_INFO } from '../../../constants/api';
@@ -13,7 +13,7 @@ interface Props {
   logo?: React.ReactNode;
 }
 
-const Header: FC<Props> = ({ children, title, logo }) => {
+const Header = ({ children, title, logo }: Props): JSX.Element => {
   const apiOwner = useSelector((state: RootState) => state.api.owner);
 
   return (
