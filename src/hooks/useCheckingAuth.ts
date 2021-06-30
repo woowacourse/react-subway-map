@@ -1,5 +1,5 @@
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { RootState } from 'redux/store';
 import { useHistory } from 'react-router';
 import PATH from 'constants/path';
