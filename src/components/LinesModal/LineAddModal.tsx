@@ -54,7 +54,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     }
 
     alert(errorMessage);
-  });
+  }, [errorMessage]);
 
   const [formInput, setFormInput] = useState<FormInput>({
     name: '',
