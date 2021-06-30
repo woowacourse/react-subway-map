@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { ChangeEventHandler, FormEventHandler, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
@@ -120,13 +119,6 @@ const LineModifyModal = ({ line, onClose }: Props): JSX.Element => {
   );
 };
 
-LineModifyModal.propTypes = {
-  line: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+
 
 export default LineModifyModal;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -44,10 +43,6 @@ const Navigation = ({ navInfoList }: Props): JSX.Element => {
       </NavList>
     </nav>
   );
-};
-
-Navigation.propTypes = {
-  navInfoList: PropTypes.array.isRequired,
 };
 
 export default Navigation;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import PALETTE from '../../../constants/palette';
 
@@ -15,9 +14,6 @@ const Close = ({ width = '24px', color = PALETTE.GRAY[400] }: Props): JSX.Elemen
   );
 };
 
-Close.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
+
 
 export default Close;

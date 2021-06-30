@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { InputHTMLAttributes } from 'react';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
@@ -34,14 +33,5 @@ const ColorRadio = ({
   );
 };
 
-ColorRadio.propTypes = {
-  groupName: PropTypes.string.isRequired,
-  radioColor: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  labelText: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-  }),
-};
 
 export default ColorRadio;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PALETTE from '../../../constants/palette';
@@ -23,12 +22,6 @@ const Snackbar = ({
     </SnackbarContainer>,
     snackbarRoot as HTMLElement
   );
-};
-
-Snackbar.propTypes = {
-  message: PropTypes.string.isRequired,
-  duration: PropTypes.number,
-  backgroundColor: PropTypes.string,
 };
 
 export default Snackbar;

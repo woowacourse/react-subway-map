@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
@@ -80,12 +79,6 @@ export const Button = ({
       {children}
     </StyledButton>
   );
-};
-
-Button.propTypes = {
-  children: PropTypes.node,
-  buttonShape: PropTypes.oneOf(['square', 'round']),
-  isColored: PropTypes.bool,
 };
 
 export default Button;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { ChangeEvent } from 'react';
 import { Station } from '../../../types';
 import Arrow from '../../@common/Icon/Arrow';
@@ -6,7 +5,7 @@ import {
   SectionSelectBoxContainer,
   SectionSelectErrorMessage,
   StationSelectBox,
-  StationsSelectContainer
+  StationsSelectContainer,
 } from './SectionSelectBox.styles';
 
 export type OnChangeSectionSelectBoxHandler = (
@@ -50,13 +49,6 @@ const SectionSelectBox = ({
       {errorMessage && <SectionSelectErrorMessage>{errorMessage}</SectionSelectErrorMessage>}
     </SectionSelectBoxContainer>
   );
-};
-
-SectionSelectBox.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string,
-  upStationOptions: PropTypes.array.isRequired,
-  downStationOptions: PropTypes.array.isRequired,
 };
 
 export default SectionSelectBox;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
@@ -30,12 +29,6 @@ const ListItem = ({ children, onModify, onDelete }: Props): JSX.Element => {
       )}
     </StyledListItem>
   );
-};
-
-ListItem.propTypes = {
-  children: PropTypes.node,
-  onModify: PropTypes.func,
-  onDelete: PropTypes.func,
 };
 
 export default ListItem;

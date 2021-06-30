@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, {
   ChangeEventHandler, FormEventHandler,
   useEffect,
@@ -213,8 +212,5 @@ const LineAddModal = ({ onClose }: Props): JSX.Element => {
   );
 };
 
-LineAddModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
 
 export default LineAddModal;

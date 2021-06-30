@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import PALETTE from '../../../constants/palette';
 
@@ -22,9 +21,6 @@ const Pencil = ({ width = '24px', color = PALETTE.GRAY[400] }: Props): JSX.Eleme
   );
 };
 
-Pencil.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
-};
+
 
 export default Pencil;

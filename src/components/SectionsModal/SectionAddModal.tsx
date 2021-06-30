@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
@@ -130,17 +129,6 @@ const SectionAddModal = ({ onClose, line }: Props): JSX.Element => {
       </SectionForm>
     </Modal>
   );
-};
-
-SectionAddModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  line: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-    stations: PropTypes.array.isRequired,
-    sections: PropTypes.array.isRequired,
-  }).isRequired,
 };
 
 export default SectionAddModal;

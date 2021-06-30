@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { MouseEventHandler } from 'react';
 import ReactDOM from 'react-dom';
 import Dimmed from '../Dimmed/Dimmed';
@@ -32,12 +31,6 @@ const Modal = ({ children, titleText, onClose }: Props): JSX.Element => {
     </Dimmed>,
     $modalRoot as HTMLDivElement
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  titleText: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import PALETTE from '../../../constants/palette';
 
@@ -46,11 +45,6 @@ const TrashBin = ({ width = '24px', color = PALETTE.GRAY[400] }: Props): JSX.Ele
       </g>
     </svg>
   );
-};
-
-TrashBin.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
 };
 
 export default TrashBin;
