@@ -6,6 +6,7 @@ import { mockLines, mockToken } from '../mocks/mockData';
 import useLine from '../service/hooks/useLine';
 import { LineForm } from '../types';
 import useLineAddForm from '../service/hooks/useLineAddForm';
+import { requestDeleteStation } from '../service/request/station';
 
 beforeEach(beforeEachFn);
 
@@ -35,23 +36,19 @@ describe('useLine', () => {
       upStationId: 2,
     };
 
-    act(() => {
-      result.current.addLine(testData);
-    });
+    act(() => result.current.addLine(testData));
 
-    await waitFor(() => {
-      expect(result.current.addLineMutation.isSuccess).toBeTruthy();
-    });
+    await waitFor(() => expect(result.current.isAddLineSuccess).toBeTruthy());
   });
 
   test('사용자는 지하철 노선을 삭제할 수 있다.', async () => {
     const { result } = renderUseLineHook();
 
-    await result.current.deleteLine(3);
+    act(() => result.current.deleteLine(3));
 
-    await waitFor(() => {
-      expect(result.current.deleteLineMutation.isSuccess).toBeTruthy();
-    });
+    await waitFor(() =>
+      expect(result.current.isDeleteLineSuccess).toBeTruthy()
+    );
   });
 });
 

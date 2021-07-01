@@ -10,38 +10,26 @@ const useLine = (accessToken: string) => {
   const addLineMutation = useLineAddMutation(accessToken);
   const deleteLineMutation = useLineDeleteMutation(accessToken);
 
-  const addLine = async (form: LineForm) => {
-    await addLineMutation.mutate(form);
-
-    const { isSuccess, isError } = addLineMutation;
-
-    if (isSuccess) {
-      queryClient.invalidateQueries(QUERY.REQUEST_LINES);
-    }
-
-    if (isError) {
-      alert('노선을 추가하지 못했습니다!');
-    }
+  const addLine = (form: LineForm) => {
+    addLineMutation.mutate(form, {
+      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_LINES),
+      onError: () => alert('노선을 추가하지 못했습니다!'),
+    });
   };
 
-  const deleteLine = async (lineId: LineId) => {
-    await deleteLineMutation.mutate(lineId);
-
-    if (deleteLineMutation.isSuccess) {
-      queryClient.invalidateQueries(QUERY.REQUEST_LINES);
-    }
-
-    if (deleteLineMutation.isError) {
-      alert('노선을 삭제하지 못했습니다!');
-    }
+  const deleteLine = (lineId: LineId) => {
+    deleteLineMutation.mutate(lineId, {
+      onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_LINES),
+      onError: () => alert('노선을 삭제하지 못했습니다!'),
+    });
   };
 
   return {
     linesQuery,
     addLine,
     deleteLine,
-    addLineMutation,
-    deleteLineMutation,
+    isAddLineSuccess: addLineMutation.isSuccess,
+    isDeleteLineSuccess: deleteLineMutation.isSuccess,
   };
 };
 

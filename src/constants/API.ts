@@ -1,7 +1,6 @@
 export const QUERY = {
   REQUEST_LINES: 'requestLines',
   REQUEST_STATIONS: 'requestStations',
-  REQUEST_MAP: 'requestMap',
 };
 
 export const API_URL = {

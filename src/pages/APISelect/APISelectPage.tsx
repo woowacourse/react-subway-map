@@ -13,7 +13,7 @@ const APISelectPage: VFC<RouteComponentProps> = () => {
     <Template type="vertical">
       <Title>API를 선택해주세요.</Title>
       <APISelectList>
-        {/* <li>
+        <li>
           <Button type="button" onClick={() => selectAPI('BETTER')}>
             배럴
           </Button>
@@ -23,14 +23,14 @@ const APISelectPage: VFC<RouteComponentProps> = () => {
             케빈
           </Button>
         </li>
-         <li>
-          <Button type="button" onClick={() => selectAPI('PIKA')}>
-            피카
-          </Button>
-        </li> */}
         <li>
           <Button type="button" onClick={() => selectAPI('MUNGTO')}>
             멍토
+          </Button>
+        </li>
+        <li>
+          <Button type="button" onClick={() => selectAPI('PIKA')}>
+            피카
           </Button>
         </li>
       </APISelectList>

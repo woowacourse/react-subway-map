@@ -8,7 +8,7 @@ import { Station } from '../../types';
 
 const StationManagementPage = () => {
   const { accessToken } = useLogin();
-  const { stationsQuery, deleteStation } = useStation(accessToken);
+  const { stations, deleteStation } = useStation(accessToken);
 
   return (
     <Template type="vertical">
@@ -16,7 +16,7 @@ const StationManagementPage = () => {
       <Suspense fallback={true}>
         {
           <StationList
-            stations={stationsQuery.data as Station[]}
+            stations={stations as Station[]}
             deleteStation={deleteStation}
           />
         }

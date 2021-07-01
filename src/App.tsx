@@ -10,7 +10,6 @@ import StationManagementPage from './pages/StationManagement/StationManagementPa
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import useLogin from './service/hooks/useLogin';
 import useAPI from './service/hooks/useAPI';
-import MapPage from './pages/Map/MapPage';
 
 function App() {
   const { isLogin } = useLogin();
@@ -50,12 +49,6 @@ function App() {
           redirectTo="/login"
           component={StationManagementPage}
           isAuthenticated={isLogin && hasAPI}
-        />
-        <PrivateRoute
-          path="/map"
-          redirectTo="/"
-          component={MapPage}
-          isAuthenticated={hasAPI}
         />
       </Switch>
       <CurrentAPIName />

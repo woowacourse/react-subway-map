@@ -38,7 +38,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
     availableDownStations,
   } = useLineAddForm(accessToken);
   const { addLine, linesQuery } = useLine(accessToken);
-  const { stationsQuery } = useStation(accessToken);
+  const { stations } = useStation(accessToken);
 
   const handleAddLine = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -67,7 +67,7 @@ const LineAddModal: VFC<LineAddModalProps> = ({ closeModal }) => {
             onChange={({ target }) => setUpStationId(Number(target.value))}
           >
             <Suspense fallback={true}>
-              {stationsQuery.data!.map((station) => (
+              {stations!.map((station) => (
                 <option key={station.id} value={station.id}>
                   {station.name}
                 </option>

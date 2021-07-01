@@ -16,7 +16,7 @@ export const requestLines = async (accessToken: string): Promise<Line[]> => {
 export const requestAddLine = async (
   form: LineForm,
   accessToken: string
-): Promise<void> => {
+): Promise<Line> => {
   const response = await APIClient.post('/lines', form, accessToken);
 
   if (!response.ok) {
@@ -24,6 +24,8 @@ export const requestAddLine = async (
 
     throw new Error(responseText);
   }
+
+  return response.json();
 };
 
 export const requestDeleteLine = async (

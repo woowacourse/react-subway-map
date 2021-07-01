@@ -21,7 +21,6 @@ const NavigationBar = () => {
         <StyledNavLink to="/station">역 관리</StyledNavLink>
         <StyledNavLink to="/line">노선 관리</StyledNavLink>
         <StyledNavLink to="/section">구간 관리</StyledNavLink>
-        <StyledNavLink to="/map">전체 지도</StyledNavLink>
         {isLogin ? (
           <StyledNavLink to="/login" onClick={logout}>
             로그아웃

@@ -28,23 +28,26 @@ const useStation = (accessToken: string) => {
     );
   };
 
-  const deleteStation = async (stationId: StationId) => {
+  const deleteStation = (stationId: StationId) => {
     if (isStationInLine(linesQuery.data ?? [], stationId)) {
       alert('노선에 등록된 역은 삭제하실 수 없습니다.');
+      return;
     }
 
-    await deleteMutation.mutate(stationId, {
+    if (!window.confirm('정말로 삭제하시겠습니까?')) return;
+
+    deleteMutation.mutate(stationId, {
       onSuccess: () => queryClient.invalidateQueries(QUERY.REQUEST_STATIONS),
       onError: () => alert('역을 삭제하지 못했습니다!'),
     });
   };
 
   return {
-    stationsQuery,
+    stations: stationsQuery.data,
     addStation,
     deleteStation,
-    deleteMutation,
-    addMutation,
+    isAddStationSuccess: addMutation.isSuccess,
+    isDeleteStationSuccess: deleteMutation.isSuccess,
   };
 };
 

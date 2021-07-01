@@ -43,24 +43,20 @@ describe('useSection', () => {
       upStationId: 2,
     };
 
-    act(() => {
-      result.current.addSection(testData);
-    });
+    act(() => result.current.addSection(testData));
 
     await waitFor(() =>
-      expect(result.current.addMutation.isSuccess).toBeTruthy()
+      expect(result.current.isAddSectionSuccess).toBeTruthy()
     );
   });
 
   test('사용자는 노선에 등록되어 있는 구간을 삭제할 수 있다', async () => {
     const { result } = renderUseSectionHook();
 
-    act(() => {
-      result.current.deleteSection(1);
-    });
+    act(() => result.current.deleteSection(1));
 
-    await waitFor(() => {
-      expect(result.current.deleteMutation.isSuccess).toBeTruthy();
-    });
+    await waitFor(() =>
+      expect(result.current.isDeleteSectionSuccess).toBeTruthy()
+    );
   });
 });
