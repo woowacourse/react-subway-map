@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { waitFor } from '@testing-library/react';
+import { wait, waitFor } from '@testing-library/react';
 import { Wrapper, beforeEachFn } from './common';
 import useStation from '../service/hooks/useStation';
 import { mockStations, mockToken } from '../mocks/mockData';
@@ -40,17 +40,21 @@ describe('useStation', () => {
     act(() => result.current.addStation(testData));
 
     await waitFor(() =>
-      expect(result.current.isAddStationSuccess).toBeTruthy()
+      expect(result.current.addMutation.isSuccess).toBeTruthy()
     );
   });
 
   test('사용자는 지하철 역을 삭제할 수 있다.', async () => {
-    const { result } = renderUseStationHook();
+    const { result, waitForNextUpdate } = renderUseStationHook();
 
-    act(() => result.current.deleteStation(3));
+    act(() => {
+      result.current.deleteStation(5);
+    });
+
+    await waitForNextUpdate();
 
     await waitFor(() =>
-      expect(result.current.isDeleteStationSuccess).toBeTruthy()
+      expect(result.current.deleteMutation.isSuccess).toBeTruthy()
     );
   });
 });

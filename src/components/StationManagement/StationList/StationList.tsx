@@ -9,14 +9,15 @@ export interface StationProps {
 }
 
 const StationList: VFC<StationProps> = ({ stations, deleteStation }) => {
+  const onDelete = (id: number) => {
+    if (!window.confirm('정말로 삭제하시겠습니까?')) return;
+    deleteStation(id);
+  };
+
   return (
     <StyledStationList>
       {stations.map(({ id, name }) => (
-        <StationListItem
-          key={id}
-          name={name}
-          onDelete={() => deleteStation(id)}
-        />
+        <StationListItem key={id} name={name} onDelete={() => onDelete(id)} />
       ))}
     </StyledStationList>
   );

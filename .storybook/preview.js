@@ -20,7 +20,7 @@ export const parameters = {
 };
 
 export const decorators = [
-  initializeWorker(),
+  // initializeWorker(),
   StoryRouter(),
   (Story) => (
     <>

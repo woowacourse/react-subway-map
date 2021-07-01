@@ -8,6 +8,7 @@ export const CommonErrorContainer = styled(Container)`
   left: 0;
   width: 100vw;
   height: 100vh;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -21,6 +22,7 @@ export const ErrorText = styled.p`
 
 export const HomeButton = styled(Button)`
   background-color: white;
+  width: 200px;
   color: black;
   border-radius: 0.5rem;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
