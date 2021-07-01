@@ -4,7 +4,7 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 import StationPage from './StationPage';
 import stationAPI from '../../apis/station';
 
-import request from '../../request';
+import request from '../../apis/request';
 import UserProvider from '../../contexts/UserContextProvider';
 import { mockAccessToken } from '../../mockData';
 

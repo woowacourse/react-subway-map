@@ -22,10 +22,10 @@ import PALETTE from '../../constants/palette';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
 import useInput from '../../hooks/useInput';
-import apiRequest from '../../request';
 import { PageProps } from '../types';
 import { SignUpLink, Form } from './LoginPage.style';
 import ERROR_TYPE from '../../constants/errorType';
+import API from '../../apis/user';
 
 const LoginPage = ({ setIsLoading }: PageProps) => {
   const [email, onEmailChange] = useInput('');
@@ -53,26 +53,28 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     }
 
     const timer = setTimeout(() => setIsLoading(true), 500);
-
-    const response = await apiRequest.login({ email, password });
+    const response = await API.login({ email, password });
 
     if (response.ok) {
       addSnackBar?.(SUCCESS_MESSAGE.LOGIN);
       setIsLoggedIn?.(true);
-      localStorage.setItem('accessToken', response.data);
 
+      localStorage.setItem('accessToken', response.data?.accessToken as string);
       history.push(PATH.ROOT);
     }
 
-    if (response.error) {
+    if (!response.ok) {
       console.error(response.error);
 
-      if (response.error.type === ERROR_TYPE.INVALID_LOGIN_INFO) {
-        setError(response.error.message);
+      if (response.error?.type === ERROR_TYPE.BAD_REQUEST) {
+        // TODO: ERROR MESSAGE 정리
+        setError('틀림');
+        clearTimeout(timer);
+        setIsLoading(false);
         return;
       }
 
-      addSnackBar?.(ERROR_MESSAGE.DEFAULT);
+      addSnackBar?.(response.error?.message as string);
     }
 
     clearTimeout(timer);

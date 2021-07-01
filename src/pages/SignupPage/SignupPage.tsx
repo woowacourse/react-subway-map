@@ -22,10 +22,10 @@ import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
 import useDebounce from '../../hooks/useDebounce';
 import useInput from '../../hooks/useInput';
-import apiRequest from '../../request';
 import { PageProps } from '../types';
 import { Form } from './SignupPage.style';
 import { isValidRange } from '../../utils/validator';
+import API from '../../apis/user';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -82,7 +82,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
     isPasswordMatched;
 
   const checkEmailDuplicated = useDebounce(async (value: string) => {
-    const response = await apiRequest.checkEmailDuplicated(value);
+    const response = await API.checkEmailDuplicated(value);
 
     if (response.ok) {
       setIsEmailDuplicated(response.data ? true : false);
@@ -124,7 +124,7 @@ const SignupPage = ({ setIsLoading }: PageProps) => {
 
     const timer = setTimeout(() => setIsLoading(true), 500);
 
-    const response = await apiRequest.signup({ email, password, age: Number(age) });
+    const response = await API.signup({ email, password, age: Number(age) });
     if (response.ok) {
       addSnackBar?.(SUCCESS_MESSAGE.SIGNUP);
       history.push(PATH.LOGIN);

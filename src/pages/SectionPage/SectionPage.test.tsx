@@ -6,7 +6,7 @@ import stationAPI from '../../apis/station';
 import lineAPI from '../../apis/line';
 import sectionAPI from '../../apis/section';
 
-import request from '../../request';
+import request from '../../apis/request';
 import UserProvider from '../../contexts/UserContextProvider';
 import { mockAccessToken } from '../../mockData';
 

@@ -18,15 +18,7 @@ const useSections = (): [
   const [error, setError] = useState(defaultError);
 
   const addSection = async (lineId: number, data: SectionData): Promise<boolean> => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('no accessToken');
-      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
-      return false;
-    }
-
-    const response = await API.post(lineId, data, accessToken);
+    const response = await API.post(lineId, data);
 
     if (response.ok) {
       return true;
@@ -37,15 +29,7 @@ const useSections = (): [
   };
 
   const deleteSection = async (lineId: number, stationId: number): Promise<boolean> => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('no accessToken');
-      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
-      return false;
-    }
-
-    const response = await API.delete(lineId, stationId, accessToken);
+    const response = await API.delete(lineId, stationId);
 
     if (response.ok) {
       return true;

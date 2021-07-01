@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
-import apiRequest from '../../request';
+import apiRequest from '../../apis/request';
 import SignupPage from './SignupPage';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 

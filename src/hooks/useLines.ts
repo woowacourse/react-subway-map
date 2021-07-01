@@ -8,7 +8,10 @@ interface Error {
   message: string;
 }
 
-const defaultError = { type: ERROR_TYPE.DEFAULT, message: ERROR_MESSAGE.DEFAULT };
+const defaultError = {
+  type: ERROR_TYPE.DEFAULT,
+  message: ERROR_MESSAGE.DEFAULT,
+};
 
 const useLines = (
   initialLines: APIResponseDataLine[]
@@ -56,15 +59,7 @@ const useLines = (
   };
 
   const addLine = async (data: LineData): Promise<boolean> => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('no accessToken');
-      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
-      return false;
-    }
-
-    const response = await API.post(data, accessToken);
+    const response = await API.post(data);
 
     if (response.ok) {
       return true;
@@ -75,15 +70,7 @@ const useLines = (
   };
 
   const deleteLine = async (lineId: number): Promise<boolean> => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('no accessToken');
-      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
-      return false;
-    }
-
-    const response = await API.delete(lineId, accessToken);
+    const response = await API.delete(lineId);
 
     if (response.ok) {
       return true;

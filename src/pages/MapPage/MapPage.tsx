@@ -1,8 +1,6 @@
 import { Container } from './MapPage.style';
 
 import notReady from '../../assets/images/not_ready.png';
-import Box from '../../components/shared/Box/Box';
-import PALETTE from '../../constants/palette';
 import { PageProps } from '../types';
 
 const MapPage = ({ setIsLoading }: PageProps) => {
