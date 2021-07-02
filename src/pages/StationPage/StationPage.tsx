@@ -64,7 +64,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     if (!response) {
       addSnackBar?.(stationRequestError.message);
 
-      if (stationRequestError.type === ERROR_TYPE.DUPLICATED) {
+      if (stationRequestError.type === ERROR_TYPE.BAD_REQUEST) {
         setStationInputErrorMessage(stationRequestError.message);
       }
 

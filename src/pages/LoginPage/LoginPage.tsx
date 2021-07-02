@@ -17,7 +17,6 @@ import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../components/shared/SnackBar/SnackBarProvider';
 
 import PATH from '../../constants/path';
-import STATUS_CODE from '../../constants/statusCode';
 import PALETTE from '../../constants/palette';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
