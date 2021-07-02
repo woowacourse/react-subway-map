@@ -3,8 +3,8 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 
 import StationPage from './StationPage';
 import stationAPI from '../../apis/station';
+import userAPI from '../../apis/user';
 
-import request from '../../apis/request';
 import UserProvider from '../../contexts/UserContextProvider';
 import { mockAccessToken } from '../../mockData';
 
@@ -30,7 +30,7 @@ const VALID_STATION_NAME = '피터역';
 
 describe('사용자는 지하철 역 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
-    request.getUserInfo = jest
+    userAPI.get = jest
       .fn()
       .mockResolvedValue({ ok: true, data: { id: 1, age: 9, email: 'tets@test.com' } });
 

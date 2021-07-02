@@ -4,8 +4,8 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 import LinePage from './LinePage';
 import stationAPI from '../../apis/station';
 import lineAPI from '../../apis/line';
+import userAPI from '../../apis/user';
 
-import request from '../../apis/request';
 import UserProvider from '../../contexts/UserContextProvider';
 import { mockAccessToken } from '../../mockData';
 
@@ -53,7 +53,7 @@ const VALID_LINE_NAME = '피터라인';
 
 describe('사용자는 지하철 노선 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
-    request.getUserInfo = jest
+    userAPI.get = jest
       .fn()
       .mockResolvedValue({ ok: true, data: { id: 1, age: 9, email: 'tets@test.com' } });
 
