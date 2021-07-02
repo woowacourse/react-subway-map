@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
-import { Properties } from 'csstype';
 
-const List = styled.ul<Properties>`
+const List = styled.ul<React.CSSProperties>`
   max-height: ${({ maxHeight }) => maxHeight ?? '45vh'};
   overflow: auto;
 

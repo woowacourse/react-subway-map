@@ -1,8 +1,7 @@
-import { Properties } from 'csstype';
 import styled from 'styled-components';
 import PALETTE from '../../../constants/palette';
 
-const Heading1 = styled.h1<Properties>`
+const Heading1 = styled.h1<React.CSSProperties>`
   text-align: center;
   font-size: 1.5rem;
   font-weight: 600;

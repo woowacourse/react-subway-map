@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-import { Properties } from 'csstype';
 import PALETTE from '../../../constants/palette';
 import Z_INDEX from '../../../constants/zIndex';
 
@@ -37,7 +36,7 @@ const Container = styled.div`
   }
 `;
 
-const Loader = styled.div<Properties>`
+const Loader = styled.div<React.CSSProperties>`
   width: 5rem;
   height: 5rem;
   background-color: transparent;

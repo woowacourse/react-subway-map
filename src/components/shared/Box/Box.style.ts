@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import { Properties } from 'csstype';
-
-interface ContainerProps extends Properties {
+interface ContainerProps extends React.CSSProperties {
   hatColor?: string;
 }
 

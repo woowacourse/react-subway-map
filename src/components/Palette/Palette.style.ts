@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Properties } from 'csstype';
 
 const Container = styled.fieldset`
   width: 100%;
@@ -43,7 +42,7 @@ const Container = styled.fieldset`
   }
 `;
 
-const InputBox = styled.span<Properties>`
+const InputBox = styled.span<React.CSSProperties>`
   width: 2rem;
   height: 2rem;
   margin: 0.2rem;
