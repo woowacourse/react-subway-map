@@ -1,9 +1,11 @@
-const ERROR_MESSAGE = {
+const ERROR_MESSAGE: { [key: string]: string } = {
   DEFAULT: '🚨 에러가 발생했습니다. 다시 시도해주세요.',
+
+  // 양식 관련
   LOGIN: '이메일, 비밀번호가 정확하지 않습니다.',
-  INCOMPLETE_FORM: '👾 양식에 값이 정확하게 입력되었는지 확인해주세요.',
   INCOMPLETE_LOGIN_FORM: '이메일, 비밀번호를 입력하세요.',
-  UNAUTHORIZED: '로그인한 사용자만 이용할 수 있는 서비스입니다.',
+  INCOMPLETE_FORM: '👾 양식에 값이 정확하게 입력되었는지 확인해주세요.',
+
   INVALID_EMAIL: '이메일 형식에 맞게 작성하세요.',
   INVALID_AGE: '1살 이상 200살 이하의 나이를 입력해주세요.',
   INVALID_PASSWORD: '비밀번호는 영문, 숫자, 특수문자만을 포함한 8자 이상 14자 이하여야 합니다.',
@@ -11,15 +13,26 @@ const ERROR_MESSAGE = {
   INVALID_STATION_INPUT: '2자 이상 20자 이하 한글, 숫자만 입력해 주세요.',
   INVALID_LINE_INPUT: '2자 이상 10자 이하 한글, 숫자만 입력해 주세요.',
   INVALID_DISTANCE: '1과 300 사이의 숫자만 입력 가능합니다.',
+
   DUPLICATED_EMAIL: '이미 존재하는 이메일입니다.',
   DUPLICATED_STATION_NAME: '이미 존재하는 지하철 역입니다.',
   DUPLICATED_LINE_NAME: '이미 존재하는 지하철 노선입니다.',
   DUPLICATED_TERMINAL: '상행종점과 하행종점은 같을 수 없습니다.',
-  SECTION_LENGTH_OUT_OF_RANGE: '😥 한 노선에 지하철 역은 2개 이상이어야 합니다.',
+
   NO_LINE_SELECTED: '😭 노선을 선택해 주세요',
   ONLY_ONE_STATION_INCLUDED: '반드시 한 역이 기존 노선에 포함되어야 합니다.',
-  STATION_IN_SECTION: '😭 노선에 포함된 지하철 역은 삭제할 수 없습니다.',
   TOKEN_EXPIRED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
+
+  // API 관련
+  UNAUTHORIZED: '로그인한 사용자만 이용할 수 있는 서비스입니다.',
+
+  STATION_DELETE_BAD_REQUEST: '😭 노선에 포함된 지하철 역은 삭제할 수 없습니다.',
+  STATION_DELETE_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
+
+  LINE_DELETE_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
+
+  SECTION_DELETE_BAD_REQUEST: '😥 한 노선에 지하철 역은 2개 이상이어야 합니다.',
+  SECTION_DELETE_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
 };
 
 const SUCCESS_MESSAGE = {

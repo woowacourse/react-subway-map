@@ -17,25 +17,31 @@ const useSections = (): [
 ] => {
   const [error, setError] = useState(defaultError);
 
-  const addSection = async (lineId: number, data: SectionData): Promise<boolean> => {
+  const addSection = async (lineId: number, data: SectionData) => {
     const response = await API.post(lineId, data);
 
     if (response.ok) {
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE[response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
-  const deleteSection = async (lineId: number, stationId: number): Promise<boolean> => {
+  const deleteSection = async (lineId: number, stationId: number) => {
     const response = await API.delete(lineId, stationId);
 
     if (response.ok) {
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE['SECTION_DELETE_' + response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 

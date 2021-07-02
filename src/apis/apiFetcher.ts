@@ -1,5 +1,4 @@
 import ERROR_TYPE from '../constants/errorType';
-import { ERROR_MESSAGE } from '../constants/messages';
 import { request } from './request';
 
 interface APISuccess<T> {
@@ -17,7 +16,7 @@ const APIFetcher =
   async <SW extends APISuccess<S>, FW extends APIFailure<F>>(
     uri: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-    ...args: (string | number)[]
+    data?: BodyInit
   ): Promise<SW | FW> => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -27,18 +26,18 @@ const APIFetcher =
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        body: (args[0] as string) ?? null,
+        body: data ?? null,
       };
       const response = await request(`${uri}`, requestConfig);
 
       try {
         const json: S = await response.json();
+
         return { ok: true, data: json } as SW;
       } catch (error) {
         return { ok: true, data: {} } as SW;
       }
     } catch (error) {
-      console.error(error);
       return {
         ok: false,
         error: {

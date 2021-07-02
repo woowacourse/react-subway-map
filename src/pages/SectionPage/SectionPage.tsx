@@ -157,6 +157,31 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     setDownStationId(event.target.value);
   };
 
+  const createSection = async () => {
+    const newSection = {
+      upStationId: Number(upStationId),
+      downStationId: Number(downStationId),
+      distance: Number(distance),
+    };
+
+    const response = await addSection(selectedLineId, newSection);
+
+    if (!response) {
+      addSnackBar?.(sectionRequestError.message);
+
+      if ((sectionRequestError.type = ERROR_TYPE.UNAUTHORIZED)) {
+        setIsLoggedIn?.(false);
+      }
+
+      return;
+    }
+
+    await getLine(selectedLineId);
+    addSnackBar?.(SUCCESS_MESSAGE.ADD_SECTION);
+    reset();
+    setIsFormOpened(false);
+  };
+
   const onSectionSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
@@ -170,29 +195,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    const newSection = {
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      distance: Number(distance),
-    };
-
-    const response = await addSection(selectedLineId, newSection);
-
-    if (response) {
-      await getLine(selectedLineId);
-      addSnackBar?.(SUCCESS_MESSAGE.ADD_SECTION);
-      reset();
-      setIsFormOpened(false);
-
-      return;
-    }
-
-    console.error(sectionRequestError);
-    addSnackBar?.(sectionRequestError.message);
-
-    if ((sectionRequestError.type = ERROR_TYPE.UNAUTHORIZED)) {
-      setIsLoggedIn?.(false);
-    }
+    await createSection();
   };
 
   const onSectionDelete = async (stationId: number, stationName: string) => {
@@ -206,18 +209,19 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     }
 
     const response = await deleteSection(selectedLineId, stationId);
-    if (response) {
-      await getLine(selectedLineId);
-      addSnackBar?.(SUCCESS_MESSAGE.DELETE_SECTION);
+
+    if (!response) {
+      addSnackBar?.(sectionRequestError.message);
+
+      if (sectionRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+        setIsLoggedIn?.(false);
+      }
+
       return;
     }
 
-    console.error(sectionRequestError);
-    addSnackBar?.(sectionRequestError.message);
-
-    if (sectionRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
-      setIsLoggedIn?.(false);
-    }
+    await getLine(selectedLineId);
+    addSnackBar?.(SUCCESS_MESSAGE.DELETE_SECTION);
   };
 
   return (

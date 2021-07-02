@@ -8,10 +8,7 @@ interface Error {
   message: string;
 }
 
-const defaultError = {
-  type: ERROR_TYPE.DEFAULT,
-  message: ERROR_MESSAGE.DEFAULT,
-};
+const defaultError = { type: ERROR_TYPE.DEFAULT, message: ERROR_MESSAGE.DEFAULT };
 
 const useStations = (
   initialStations: APIResponseDataStation[]
@@ -26,7 +23,7 @@ const useStations = (
   const [stations, setStations] = useState<APIResponseDataStation[]>(initialStations);
   const [error, setError] = useState(defaultError);
 
-  const fetchStations = async (): Promise<boolean> => {
+  const fetchStations = async () => {
     const response = await API.get();
 
     if (response.ok) {
@@ -34,29 +31,38 @@ const useStations = (
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE['STATION_DELETE_' + response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
-  const addStation = async (data: StationData): Promise<boolean> => {
+  const addStation = async (data: StationData) => {
     const response = await API.post(data);
 
     if (response.ok) {
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE['STATION_DELETE_' + response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
-  const deleteStation = async (stationId: number): Promise<boolean> => {
+  const deleteStation = async (stationId: number) => {
     const response = await API.delete(stationId);
 
     if (response.ok) {
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE['STATION_DELETE_' + response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
