@@ -1,8 +1,13 @@
-import { Block, Flex, Line } from "../../components";
-import { FlexCenter } from "../../components";
+import Block from "../../components/Block/Block";
+import {
+  Flex,
+  FlexCenter,
+} from "../../components/Layout/FlexContainer/FlexContainer";
+import Line from "../../components/Line/Line";
 
-import { SIZE } from "../../constants";
 import { useLine } from "../../hooks";
+
+import { SIZE } from "../../constants/size";
 
 const SubwayMapPage = () => {
   const { lines } = useLine();

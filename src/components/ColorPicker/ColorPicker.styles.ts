@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { Flex, Grid } from "../Layout/";
+import { Flex } from "../Layout/FlexContainer/FlexContainer";
+import { Grid } from "../Layout/GridContainer/GridContainer";
 
 const ColorPickerBlock = styled(Flex)`
   width: 100%;

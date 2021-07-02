@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Flex } from "../Layout";
+import { Flex } from "../Layout/FlexContainer/FlexContainer";
 
 const LineBlock = styled(Flex)`
   flex-direction: column;

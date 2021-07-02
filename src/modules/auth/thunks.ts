@@ -3,7 +3,7 @@ import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { auth } from "../../apis";
 
 import { LoginInfo, SignupInfo } from "../../types/auth";
-import { ERROR_DURATION } from "../../constants";
+import { ERROR_DURATION } from "../../constants/time";
 
 const resetError = createAction("[AUTH] RESET_ERROR");
 const logout = createAction("[AUTH] LOGOUT");

@@ -1,17 +1,18 @@
-import {
-  Button,
-  Block,
-  ListItem,
-  InputField,
-  FormProvider,
-  Form,
-} from "../../components";
-import { Flex, FlexCenter } from "../../components";
-
 import { useStation } from "../../hooks";
 
-import { validateStationName } from "../../validations";
-import { SIZE } from "../../constants";
+import {
+  Flex,
+  FlexCenter,
+} from "../../components/Layout/FlexContainer/FlexContainer";
+import Block from "../../components/Block/Block";
+import FormProvider from "../../components/Form/FormProvider";
+import Form from "../../components/Form/Form";
+import Button from "../../components/Button/Button";
+import ListItem from "../../components/ListItem/ListItem";
+import InputField from "../../components/Input/InputField";
+
+import { validateStationName } from "../../validations/station";
+import { SIZE } from "../../constants/size";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();

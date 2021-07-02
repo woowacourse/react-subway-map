@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 
 import StationManagementPage from "./StationManagementPage";
-import { ModalProvider } from "../../components";
+import ModalProvider from "../../components/Modal/ModalProvider";
 
 import { useAppDispatch } from "../../hooks";
 

@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { stations } from "../../apis";
 
-import { ERROR_DURATION } from "../../constants";
+import { ERROR_DURATION } from "../../constants/time";
 
 const resetError = createAction("[STATION] RESET_ERROR");
 

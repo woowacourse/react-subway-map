@@ -1,24 +1,26 @@
 import { useHistory } from "react-router-dom";
 
+import FormProvider from "../../components/Form/FormProvider";
 import {
   Flex,
   FlexBetween,
   FlexCenter,
-  Form,
-  FormProvider,
-  InputField,
-} from "../../components";
-import { Block, Button } from "../../components";
+} from "../../components/Layout/FlexContainer/FlexContainer";
+import Form from "../../components/Form/Form";
+import Block from "../../components/Block/Block";
+import InputField from "../../components/Input/InputField";
+import Button from "../../components/Button/Button";
 
 import { useAuth } from "../../hooks";
+
+import { validateEmail } from "../../validations/email";
+import { validateAge } from "../../validations/age";
 import {
-  validateAge,
-  validateEmail,
   validatePassword,
   validatePasswordConfirm,
-} from "../../validations";
-import { PAGE_PATH } from "../../constants";
-import { SIZE } from "../../constants";
+} from "../../validations/password";
+import { PAGE_PATH } from "../../constants/route";
+import { SIZE } from "../../constants/size";
 
 const SignupPage = () => {
   const { signup } = useAuth();

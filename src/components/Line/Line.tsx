@@ -1,9 +1,10 @@
 import { HTMLAttributes } from "react";
 
-import { Flex, FlexAlignCenter } from "../Layout";
+import { Flex, FlexAlignCenter } from "../Layout/FlexContainer/FlexContainer";
+
 import { LineBlock, LineName, Circle, StationName, Path } from "./Line.styles";
 import { Line as LineType } from "../../types/line";
-import { CIRCLE_COLOR } from "../../constants";
+import { CIRCLE_COLOR } from "../../constants/color";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   line: LineType;

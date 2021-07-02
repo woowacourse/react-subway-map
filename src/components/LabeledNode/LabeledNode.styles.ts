@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { COLOR } from "../../constants";
+import { COLOR } from "../../constants/color";
 
-import { Flex, FlexAlignCenter } from "../Layout";
+import { Flex, FlexAlignCenter } from "../Layout/FlexContainer/FlexContainer";
 
 const LabeledNodeBlock = styled.div`
   display: flex;

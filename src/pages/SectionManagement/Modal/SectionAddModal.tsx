@@ -1,17 +1,15 @@
-import {
-  Block,
-  Button,
-  Form,
-  FormProvider,
-  Input,
-  InputField,
-  SelectField,
-} from "../../../components";
-import { Flex } from "../../../components";
+import FormProvider from "../../../components/Form/FormProvider";
+import Form from "../../../components/Form/Form";
+import Block from "../../../components/Block/Block";
+import Input from "../../../components/Input/Input";
+import SelectField from "../../../components/Select/SelectField";
+import { Flex } from "../../../components/Layout/FlexContainer/FlexContainer";
+import InputField from "../../../components/Input/InputField";
+import Button from "../../../components/Button/Button";
 
 import { useModal } from "../../../hooks";
 
-import { validateSectionDistance } from "../../../validations";
+import { validateSectionDistance } from "../../../validations/section";
 import { Line, SectionAddRequestItem } from "../../../types/line";
 import { Station } from "../../../types/station";
 

@@ -1,11 +1,18 @@
 import LineAddModal from "./Modal/LineAddModal";
-import { Button, Block, ListItem } from "../../components";
-import { Flex, FlexCenter, FlexBetween } from "../../components";
+
+import {
+  Flex,
+  FlexBetween,
+  FlexCenter,
+} from "../../components/Layout/FlexContainer/FlexContainer";
+import Block from "../../components/Block/Block";
+import Button from "../../components/Button/Button";
+import ListItem from "../../components/ListItem/ListItem";
 
 import { useStation, useLine, useModal } from "../../hooks";
 
-import { CIRCLE_COLOR } from "../../constants";
-import { SIZE } from "../../constants";
+import { CIRCLE_COLOR } from "../../constants/color";
+import { SIZE } from "../../constants/size";
 
 const LineManagementPage = () => {
   const { open } = useModal();

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Z_INDEX } from "../../constants";
+import { Z_INDEX } from "../../constants/size";
 
 interface ContainerProps {
   opacity: number;

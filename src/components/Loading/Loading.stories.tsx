@@ -2,7 +2,7 @@ import { Story, Meta } from "@storybook/react";
 
 import Loading, { Props } from "./Loading";
 
-import { COLOR } from "../../constants";
+import { COLOR } from "../../constants/color";
 
 export default {
   title: "components/Loading",

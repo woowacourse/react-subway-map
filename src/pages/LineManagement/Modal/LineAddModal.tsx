@@ -1,23 +1,19 @@
 import { useState } from "react";
 
-import {
-  Block,
-  Button,
-  ColorPicker,
-  Form,
-  FormProvider,
-  InputField,
-  SelectField,
-} from "../../../components";
-import { Flex } from "../../../components";
+import FormProvider from "../../../components/Form/FormProvider";
+import Form from "../../../components/Form/Form";
+import Block from "../../../components/Block/Block";
+import InputField from "../../../components/Input/InputField";
+import SelectField from "../../../components/Select/SelectField";
+import { Flex } from "../../../components/Layout/FlexContainer/FlexContainer";
+import ColorPicker from "../../../components/ColorPicker/ColorPicker";
+import Button from "../../../components/Button/Button";
 
 import { useModal } from "../../../hooks";
 
-import {
-  validateLineName,
-  validateSectionDistance,
-} from "../../../validations";
-import { CIRCLE_COLOR } from "../../../constants";
+import { validateSectionDistance } from "../../../validations/section";
+import { validateLineName } from "../../../validations/line";
+import { CIRCLE_COLOR } from "../../../constants/color";
 import { LineAddRequestItem } from "../../../types/line";
 import { Station } from "../../../types/station";
 
