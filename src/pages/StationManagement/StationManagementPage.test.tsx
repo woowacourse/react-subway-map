@@ -7,8 +7,8 @@ import ModalProvider from "../../components/Modal/ModalProvider";
 
 import { useAppDispatch } from "../../hooks";
 
-import initialState from "../../fixtures/redux";
-import mockStore from "../../utils/mockStore";
+import mockStore from "../../__mock__/mockStore";
+import initialState from "../../__mock__/redux";
 
 const mockedUseAppDispatch = useAppDispatch as jest.MockedFunction<
   typeof useAppDispatch

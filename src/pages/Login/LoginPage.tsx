@@ -13,10 +13,10 @@ import Button from "../../components/Button/Button";
 
 import { useAuth } from "../../hooks";
 
-import { validateEmail } from "../../validations/email";
-import { validatePassword } from "../../validations/password";
-import { SIZE } from "../../constants/size";
-import { PAGE_PATH } from "../../constants/route";
+import { validateEmail } from "../../utils/validations/email";
+import { validatePassword } from "../../utils/validations/password";
+import { SIZE } from "../../utils/constants/size";
+import { PAGE_PATH } from "../../utils/constants/route";
 
 const LoginPage = () => {
   const { login } = useAuth();

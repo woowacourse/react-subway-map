@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, Dispatch, SetStateAction } from "react";
 
-import { CIRCLE_COLOR } from "../../constants/color";
+import { CIRCLE_COLOR } from "../../utils/constants/color";
 import {
   ColorPickerBlock,
   ColorBlockGrid,

@@ -8,7 +8,7 @@ import SignupPage from "./pages/Signup/SignupPage";
 import StationManagementPage from "./pages/StationManagement/StationManagementPage";
 import SubwayMapPage from "./pages/SubwayMap/SubwayMapPage";
 
-import { PAGE_PATH } from "./constants/route";
+import { PAGE_PATH } from "./utils/constants/route";
 import { RouteShape } from "./types/route";
 
 interface Props {

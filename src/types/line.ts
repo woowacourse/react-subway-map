@@ -1,6 +1,6 @@
 import { Station } from "./station";
 
-import { CIRCLE_COLOR } from "../constants/color";
+import { CIRCLE_COLOR } from "../utils/constants/color";
 
 export interface Line {
   id: number;

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import store from "./modules";
+import store from "./store";
 import { BASE_URL, changeBaseUrl } from "./apis";
 
 import App from "./App";

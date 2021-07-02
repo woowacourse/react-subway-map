@@ -11,8 +11,8 @@ import ListItem from "../../components/ListItem/ListItem";
 
 import { useStation, useLine, useModal } from "../../hooks";
 
-import { CIRCLE_COLOR } from "../../constants/color";
-import { SIZE } from "../../constants/size";
+import { CIRCLE_COLOR } from "../../utils/constants/color";
+import { SIZE } from "../../utils/constants/size";
 
 const LineManagementPage = () => {
   const { open } = useModal();

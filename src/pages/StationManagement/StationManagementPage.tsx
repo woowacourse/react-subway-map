@@ -11,8 +11,8 @@ import Button from "../../components/Button/Button";
 import ListItem from "../../components/ListItem/ListItem";
 import InputField from "../../components/Input/InputField";
 
-import { validateStationName } from "../../validations/station";
-import { SIZE } from "../../constants/size";
+import { validateStationName } from "../../utils/validations/station";
+import { SIZE } from "../../utils/constants/size";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();

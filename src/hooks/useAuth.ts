@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "./useRedux";
 
-import { action } from "../modules/auth";
+import { action } from "../store/auth";
 
 import { LoginInfo, SignupInfo } from "../types/auth";
 

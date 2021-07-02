@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { COLOR } from "../../constants/color";
+import { COLOR } from "../../utils/constants/color";
 
 interface ButtonBlockProps {
   kind?: "rect" | "eclipse";

@@ -10,7 +10,7 @@ import Loading from "./components/Loading/Loading";
 
 import { useAuth, useStation, useLine } from "./hooks";
 
-import { PAGE_PATH, NAV_LINKS } from "./constants/route";
+import { PAGE_PATH, NAV_LINKS } from "./utils/constants/route";
 
 const App = () => {
   const {

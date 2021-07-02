@@ -1,4 +1,4 @@
-import { action } from "../modules/station";
+import { action } from "../store/station";
 
 import { useAppDispatch, useAppSelector } from "./useRedux";
 

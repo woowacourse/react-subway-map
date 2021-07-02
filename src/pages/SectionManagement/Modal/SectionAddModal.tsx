@@ -9,7 +9,7 @@ import Button from "../../../components/Button/Button";
 
 import { useModal } from "../../../hooks";
 
-import { validateSectionDistance } from "../../../validations/section";
+import { validateSectionDistance } from "../../../utils/validations/section";
 import { Line, SectionAddRequestItem } from "../../../types/line";
 import { Station } from "../../../types/station";
 

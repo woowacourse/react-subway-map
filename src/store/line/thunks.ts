@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { LineAddRequestItem, SectionAddRequestItem } from "../../types/line";
 import { lines, sections } from "../../apis";
-import { ERROR_DURATION } from "../../constants/time";
+import { ERROR_DURATION } from "../../utils/constants/time";
 
 const resetError = createAction("[LINE] RESET_ERROR");
 

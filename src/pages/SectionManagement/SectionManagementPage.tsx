@@ -12,7 +12,7 @@ import ListItem from "../../components/ListItem/ListItem";
 
 import { useStation, useLine, useSelect, useModal } from "../../hooks";
 
-import { SIZE } from "../../constants/size";
+import { SIZE } from "../../utils/constants/size";
 
 const SectionManagementPage = () => {
   const { open } = useModal();

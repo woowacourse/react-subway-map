@@ -1,4 +1,4 @@
-import { action } from "../modules/line";
+import { action } from "../store/line";
 
 import { useAppDispatch, useAppSelector } from "./useRedux";
 

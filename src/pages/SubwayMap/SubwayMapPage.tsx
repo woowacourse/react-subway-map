@@ -7,7 +7,7 @@ import Line from "../../components/Line/Line";
 
 import { useLine } from "../../hooks";
 
-import { SIZE } from "../../constants/size";
+import { SIZE } from "../../utils/constants/size";
 
 const SubwayMapPage = () => {
   const { lines } = useLine();

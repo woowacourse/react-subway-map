@@ -3,7 +3,8 @@ import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { useAppSelector } from "./hooks";
-import initialState from "./fixtures/redux";
+
+import initialState from "./__mock__/redux";
 
 jest.mock("axios");
 jest.mock("./hooks", () => {

@@ -4,7 +4,7 @@ import { Flex, FlexAlignCenter } from "../Layout/FlexContainer/FlexContainer";
 
 import { LineBlock, LineName, Circle, StationName, Path } from "./Line.styles";
 import { Line as LineType } from "../../types/line";
-import { CIRCLE_COLOR } from "../../constants/color";
+import { CIRCLE_COLOR } from "../../utils/constants/color";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   line: LineType;

@@ -1,7 +1,7 @@
 import { createGlobalStyle, css } from "styled-components";
 import { normalize } from "styled-normalize";
 
-import { COLOR } from "./constants/color";
+import { COLOR } from "./utils/constants/color";
 
 const customNormalize = css`
   html,

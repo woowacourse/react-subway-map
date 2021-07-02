@@ -1,6 +1,6 @@
-import initialState from "../../fixtures/redux";
-import mockStore from "../../utils/mockStore";
-import { mockingAxiosError } from "../../utils/throwAxiosError";
+import initialState from "../../__mock__/redux";
+import mockStore from "../../__mock__/mockStore";
+import { mockingAxiosError } from "../../__mock__/throwAxiosError";
 
 import { action } from ".";
 

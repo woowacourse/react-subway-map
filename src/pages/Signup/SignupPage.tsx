@@ -13,14 +13,14 @@ import Button from "../../components/Button/Button";
 
 import { useAuth } from "../../hooks";
 
-import { validateEmail } from "../../validations/email";
-import { validateAge } from "../../validations/age";
+import { validateEmail } from "../../utils/validations/email";
+import { validateAge } from "../../utils/validations/age";
 import {
   validatePassword,
   validatePasswordConfirm,
-} from "../../validations/password";
-import { PAGE_PATH } from "../../constants/route";
-import { SIZE } from "../../constants/size";
+} from "../../utils/validations/password";
+import { PAGE_PATH } from "../../utils/constants/route";
+import { SIZE } from "../../utils/constants/size";
 
 const SignupPage = () => {
   const { signup } = useAuth();

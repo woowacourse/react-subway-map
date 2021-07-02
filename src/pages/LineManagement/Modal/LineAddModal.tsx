@@ -11,9 +11,9 @@ import Button from "../../../components/Button/Button";
 
 import { useModal } from "../../../hooks";
 
-import { validateSectionDistance } from "../../../validations/section";
-import { validateLineName } from "../../../validations/line";
-import { CIRCLE_COLOR } from "../../../constants/color";
+import { validateSectionDistance } from "../../../utils/validations/section";
+import { validateLineName } from "../../../utils/validations/line";
+import { CIRCLE_COLOR } from "../../../utils/constants/color";
 import { LineAddRequestItem } from "../../../types/line";
 import { Station } from "../../../types/station";
 

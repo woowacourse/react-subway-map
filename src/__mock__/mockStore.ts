@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 
-import { RootState } from "../modules";
+import { RootState } from "../store";
 
 const middlewares = [thunk];
 
