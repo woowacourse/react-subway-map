@@ -1,6 +1,6 @@
 import { AnyAction } from "@reduxjs/toolkit";
 
-import { Station } from "../../@types";
+import { Station } from "../../types/station";
 
 const isStationAction = (action: AnyAction): action is AnyAction => {
   return action.type.startsWith("[STATION]");

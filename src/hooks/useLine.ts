@@ -2,7 +2,7 @@ import { action } from "../modules/line";
 
 import { useAppDispatch, useAppSelector } from "./useRedux";
 
-import { LineAddRequestItem, SectionAddRequestItem } from "../@types";
+import { LineAddRequestItem, SectionAddRequestItem } from "../types/line";
 
 const useLine = () => {
   const { items: lines, loading, error } = useAppSelector(

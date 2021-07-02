@@ -1,5 +1,6 @@
 import { request } from "./request";
-import { SectionAddRequestItem } from "../@types";
+
+import { SectionAddRequestItem } from "../types/line";
 
 const sections = {
   addSection: ({

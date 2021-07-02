@@ -11,7 +11,7 @@ import {
 } from "./pages";
 
 import { PAGE_PATH } from "./constants";
-import { RouteShape } from "./@types/route";
+import { RouteShape } from "./types/route";
 
 interface Props {
   isAuthenticated: boolean;

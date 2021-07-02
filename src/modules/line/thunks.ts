@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { LineAddRequestItem, SectionAddRequestItem } from "../../@types";
+import { LineAddRequestItem, SectionAddRequestItem } from "../../types/line";
 import { lines, sections } from "../../apis";
 import { ERROR_DURATION } from "../../constants";
 

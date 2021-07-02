@@ -1,5 +1,6 @@
 import { request } from "./request";
-import { Line, LineAddRequestItem } from "../@types";
+
+import { Line, LineAddRequestItem } from "../types/line";
 
 const lines = {
   getAllLines: () => {

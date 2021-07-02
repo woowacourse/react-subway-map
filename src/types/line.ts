@@ -1,6 +1,8 @@
+import { Station } from "./station";
+
 import { CIRCLE_COLOR } from "../constants";
 
-interface Line {
+export interface Line {
   id: number;
   name: string;
   color: keyof typeof CIRCLE_COLOR;
@@ -8,7 +10,7 @@ interface Line {
   sections: Section[];
 }
 
-interface LineAddRequestItem {
+export interface LineAddRequestItem {
   name: string;
   color: keyof typeof CIRCLE_COLOR;
   upStationId: number;
@@ -16,41 +18,15 @@ interface LineAddRequestItem {
   distance: number;
 }
 
-interface Station {
-  id: number;
-  name: string;
-}
-
-interface Section {
+export interface Section {
   upStation: Station;
   downStation: Station;
   distance: number;
 }
 
-interface SectionAddRequestItem {
+export interface SectionAddRequestItem {
   lineId: number;
   upStationId: number;
   downStationId: number;
   distance: number;
 }
-
-interface LoginInfo {
-  email: string;
-  password: string;
-}
-
-interface SignupInfo {
-  email: string;
-  password: string;
-  age: number;
-}
-
-export type {
-  Line,
-  LineAddRequestItem,
-  Station,
-  Section,
-  SectionAddRequestItem,
-  LoginInfo,
-  SignupInfo,
-};

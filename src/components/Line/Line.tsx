@@ -2,7 +2,7 @@ import { HTMLAttributes } from "react";
 
 import { Flex, FlexAlignCenter } from "../Layout";
 import { LineBlock, LineName, Circle, StationName, Path } from "./Line.styles";
-import { Line as LineType } from "../../@types";
+import { Line as LineType } from "../../types/line";
 import { CIRCLE_COLOR } from "../../constants";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

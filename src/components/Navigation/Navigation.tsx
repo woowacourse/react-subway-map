@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import Button from "../Button/Button";
 import { NavigationBlock } from "./Navigation.styles";
-import { NavLinkShape } from "../../@types/route";
+import { NavLinkShape } from "../../types/route";
 
 interface Props {
   links: NavLinkShape[];

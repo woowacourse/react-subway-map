@@ -1,6 +1,6 @@
 import { AnyAction } from "@reduxjs/toolkit";
 
-import { Line } from "../../@types";
+import { Line } from "../../types/line";
 
 const isLineAction = (action: AnyAction): action is AnyAction => {
   return action.type.startsWith("[LINE]");

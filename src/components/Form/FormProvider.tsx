@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import FormContext from "../../context/form";
-import { Validator } from "../../@types/form";
+import { Validator } from "../../types/form";
 
 interface Values {
   [key: string]: string;

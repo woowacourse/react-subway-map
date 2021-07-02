@@ -1,4 +1,4 @@
-import { NavLinkShape } from "../@types/route";
+import { NavLinkShape } from "../types/route";
 
 const PAGE_PATH = {
   HOME: "/",

@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "./useRedux";
 
 import { action } from "../modules/auth";
 
-import { LoginInfo, SignupInfo } from "../@types";
+import { LoginInfo, SignupInfo } from "../types/auth";
 
 const useAuth = () => {
   const { isAuthenticated, loading, error } = useAppSelector(

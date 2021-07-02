@@ -18,7 +18,8 @@ import {
   validateSectionDistance,
 } from "../../../validations";
 import { CIRCLE_COLOR } from "../../../constants";
-import { LineAddRequestItem, Station } from "../../../@types";
+import { LineAddRequestItem } from "../../../types/line";
+import { Station } from "../../../types/station";
 
 interface Props {
   stations: Station[];

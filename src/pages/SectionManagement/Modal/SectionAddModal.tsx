@@ -12,7 +12,8 @@ import { Flex } from "../../../components";
 import { useModal } from "../../../hooks";
 
 import { validateSectionDistance } from "../../../validations";
-import { Line, SectionAddRequestItem, Station } from "../../../@types";
+import { Line, SectionAddRequestItem } from "../../../types/line";
+import { Station } from "../../../types/station";
 
 interface Props {
   line: Line;
