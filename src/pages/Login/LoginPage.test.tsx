@@ -3,12 +3,12 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
 
 import LoginPage from "./LoginPage";
+import ModalProvider from "../../components/Modal/ModalProvider";
 
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../hooks/useRedux";
 
 import initialState from "../../__mock__/redux";
 import mockStore from "../../__mock__/mockStore";
-import ModalProvider from "../../components/Modal/ModalProvider";
 
 const mockedUseAppDispatch = useAppDispatch as jest.MockedFunction<
   typeof useAppDispatch

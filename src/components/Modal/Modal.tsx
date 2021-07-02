@@ -2,10 +2,11 @@ import React, { useEffect, useState, ReactNode } from "react";
 
 import ModalPortal from "./ModalPortal";
 
-import { useModal } from "../../hooks";
+import useModal from "../../hooks/useModal";
+
 import { ModalBlock, Dimmed, Contents } from "./Modal.styles";
 
-interface Props {
+export interface Props {
   children: ReactNode;
 }
 
@@ -32,4 +33,3 @@ const Modal = ({ children }: Props) => {
 };
 
 export default Modal;
-export type { Props };

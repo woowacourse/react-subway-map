@@ -5,7 +5,7 @@ import {
 } from "../../components/Layout/FlexContainer/FlexContainer";
 import Line from "../../components/Line/Line";
 
-import { useLine } from "../../hooks";
+import useLine from "../../hooks/useLine";
 
 import { SIZE } from "../../utils/constants/size";
 

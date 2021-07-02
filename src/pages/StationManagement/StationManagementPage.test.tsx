@@ -5,7 +5,7 @@ import axios from "axios";
 import StationManagementPage from "./StationManagementPage";
 import ModalProvider from "../../components/Modal/ModalProvider";
 
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../hooks/useRedux";
 
 import mockStore from "../../__mock__/mockStore";
 import initialState from "../../__mock__/redux";

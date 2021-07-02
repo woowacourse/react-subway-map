@@ -1,11 +1,17 @@
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, createContext } from "react";
 
 import Modal from "./Modal";
-import ModalContext from "../../context/modal";
 
-interface Props {
+export interface Props {
   children: ReactNode;
 }
+
+interface ModalContextProps {
+  open: (children: React.ReactNode) => void;
+  close: () => void;
+}
+
+export const ModalContext = createContext<ModalContextProps | null>(null);
 
 const ModalProvider = ({ children }: Props) => {
   const [isOpen, setOpen] = useState(false);
@@ -35,4 +41,3 @@ const ModalProvider = ({ children }: Props) => {
 };
 
 export default ModalProvider;
-export type { Props };

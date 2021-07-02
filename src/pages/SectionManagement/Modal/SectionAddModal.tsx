@@ -1,4 +1,3 @@
-import FormProvider from "../../../components/Form/FormProvider";
 import Form from "../../../components/Form/Form";
 import Block from "../../../components/Block/Block";
 import Input from "../../../components/Input/Input";
@@ -7,7 +6,7 @@ import { Flex } from "../../../components/Layout/FlexContainer/FlexContainer";
 import InputField from "../../../components/Input/InputField";
 import Button from "../../../components/Button/Button";
 
-import { useModal } from "../../../hooks";
+import useModal from "../../../hooks/useModal";
 
 import { validateSectionDistance } from "../../../utils/validations/section";
 import { Line, SectionAddRequestItem } from "../../../types/line";
@@ -40,7 +39,7 @@ const SectionAddModal = ({
   const { close } = useModal();
 
   return (
-    <FormProvider
+    <Form
       submit={async ({ distance, upStationId, downStationId }) => {
         await addSection({
           lineId: line.id,
@@ -53,49 +52,47 @@ const SectionAddModal = ({
       }}
       validators={{ distance: validateSectionDistance }}
     >
-      <Form>
-        <Block css={{ flexDirection: "column", maxWidth: "40.625rem" }}>
-          <h3 css={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
-            🔁 구간 추가
-          </h3>
-          <Input
-            value={line.name}
-            placeholder="노선 이름"
-            css={{ marginBottom: "0.9375rem" }}
-            disabled
+      <Block css={{ flexDirection: "column", maxWidth: "40.625rem" }}>
+        <h3 css={{ marginBottom: "1.5rem", fontSize: "1.6875rem" }}>
+          🔁 구간 추가
+        </h3>
+        <Input
+          value={line.name}
+          placeholder="노선 이름"
+          css={{ marginBottom: "0.9375rem" }}
+          disabled
+        />
+        <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
+          <SelectField
+            name="upStationId"
+            defaultOption="상행역"
+            options={stationOptions}
+            required
+            css={{ marginRight: "0.625rem" }}
           />
-          <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
-            <SelectField
-              name="upStationId"
-              defaultOption="상행역"
-              options={stationOptions}
-              required
-              css={{ marginRight: "0.625rem" }}
-            />
-            <SelectField
-              name="downStationId"
-              defaultOption="하행역"
-              options={stationOptions}
-              required
-            />
-          </Flex>
-          <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
-            <InputField
-              name="distance"
-              type="number"
-              min="0.1"
-              max="1000"
-              step="0.1"
-              placeholder="상행 하행역 거리(km)"
-              required
-            />
-          </Flex>
-          <Flex css={{ width: "100%", justifyContent: "flex-end" }}>
-            <Button>구간 추가</Button>
-          </Flex>
-        </Block>
-      </Form>
-    </FormProvider>
+          <SelectField
+            name="downStationId"
+            defaultOption="하행역"
+            options={stationOptions}
+            required
+          />
+        </Flex>
+        <Flex css={{ width: "100%", marginBottom: "0.9375rem" }}>
+          <InputField
+            name="distance"
+            type="number"
+            min="0.1"
+            max="1000"
+            step="0.1"
+            placeholder="상행 하행역 거리(km)"
+            required
+          />
+        </Flex>
+        <Flex css={{ width: "100%", justifyContent: "flex-end" }}>
+          <Button>구간 추가</Button>
+        </Flex>
+      </Block>
+    </Form>
   );
 };
 

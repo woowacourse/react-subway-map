@@ -9,7 +9,9 @@ import Block from "../../components/Block/Block";
 import Button from "../../components/Button/Button";
 import ListItem from "../../components/ListItem/ListItem";
 
-import { useStation, useLine, useModal } from "../../hooks";
+import useModal from "../../hooks/useModal";
+import useLine from "../../hooks/useLine";
+import useStation from "../../hooks/useStation";
 
 import { CIRCLE_COLOR } from "../../utils/constants/color";
 import { SIZE } from "../../utils/constants/size";
