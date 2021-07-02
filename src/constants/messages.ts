@@ -2,7 +2,6 @@ const ERROR_MESSAGE: { [key: string]: string } = {
   DEFAULT: '🚨 에러가 발생했습니다. 다시 시도해주세요.',
 
   // 양식 관련
-  LOGIN: '이메일, 비밀번호가 정확하지 않습니다.',
   INCOMPLETE_LOGIN_FORM: '이메일, 비밀번호를 입력하세요.',
   INCOMPLETE_FORM: '👾 양식에 값이 정확하게 입력되었는지 확인해주세요.',
 
@@ -25,6 +24,8 @@ const ERROR_MESSAGE: { [key: string]: string } = {
 
   // API 관련
   UNAUTHORIZED: '로그인한 사용자만 이용할 수 있는 서비스입니다.',
+
+  LOGIN_BAD_REQUEST: '이메일, 비밀번호가 정확하지 않습니다.',
 
   STATION_DELETE_BAD_REQUEST: '😭 노선에 포함된 지하철 역은 삭제할 수 없습니다.',
   STATION_DELETE_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',

@@ -64,11 +64,8 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
     }
 
     if (!response.ok) {
-      console.error(response.error);
-
       if (response.error?.type === ERROR_TYPE.BAD_REQUEST) {
-        // TODO: ERROR MESSAGE 정리
-        setError('틀림');
+        setError(ERROR_MESSAGE['LOGIN_' + ERROR_TYPE.BAD_REQUEST] || ERROR_MESSAGE.DEFAULT);
         clearTimeout(timer);
         setIsLoading(false);
         return;

@@ -42,7 +42,7 @@ const APIFetcher =
         ok: false,
         error: {
           type: ERROR_TYPE[error.message],
-          message: '',
+          message: error.message,
         },
       } as FW;
     }
