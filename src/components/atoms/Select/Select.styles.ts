@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const Container = styled.select`
+const StyledSelect = styled.select`
   border: none;
   font-size: 1.2rem;
   padding: 1rem 1rem;
@@ -9,4 +9,4 @@ const Container = styled.select`
   outline: none;
 `;
 
-export { Container };
+export { StyledSelect };
