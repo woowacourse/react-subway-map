@@ -3,25 +3,24 @@ import { Container as Box } from '../../components/shared/Box/Box.style';
 import PALETTE from '../../constants/palette';
 
 const Container = styled.div`
-  width: 100%;
-  min-height: 70vh;
   display: flex;
-  justify-content: center;
-
-  margin: auto 0;
-
-  img {
-    height: 420px;
+  flex-direction: column;
+  & > *:not(:last-child) {
+    margin-bottom: 0.75rem;
   }
+  min-height: 70vh;
 `;
 
 const MapBox = styled(Box)`
+  width: 30rem;
   display: grid;
   grid-template-rows: repeat(1, 1fr);
   grid-row-gap: 3rem;
 `;
 
 const LineBox = styled(Box)<{ title: string }>`
+  min-width: 24rem;
+
   :before {
     ${({ title }) => title && `content: "${title}";`}
     height: 2rem;

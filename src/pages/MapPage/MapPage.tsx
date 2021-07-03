@@ -22,12 +22,9 @@ const MapPage = ({ setIsLoading }: PageProps) => {
 
   const fetchData = async () => {
     const timer = setTimeout(() => setIsLoading(true), 500);
-
     const responses = await fetchLines();
 
     if (!responses) {
-      console.error(lineRequestError);
-
       addSnackBar?.(lineRequestError.message);
       setLines([]);
     }
@@ -40,15 +37,11 @@ const MapPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (lines === LINE_BEFORE_FETCH) {
-    return <></>;
-  }
-
   return (
     <Container>
       <MapBox hatColor={themeColor} backgroundColor={PALETTE.WHITE_100}>
         <Heading1>지하철 노선 전체보기</Heading1>
-        {lines.length === 0 ? (
+        {lines.length === 0 && lines !== LINE_BEFORE_FETCH ? (
           <img src={noLine} alt="지하철 노선 없음 이미지" />
         ) : (
           lines.map(({ id, name, color, stations }) => (
