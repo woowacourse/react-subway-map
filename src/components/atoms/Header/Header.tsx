@@ -1,9 +1,8 @@
 import { HTMLAttributes } from 'react';
-import { Container } from './Header.styles';
+import { Container, HeaderStyleProps } from './Header.styles';
 
-export interface HeaderProps extends HTMLAttributes<HTMLElement> {
+export interface HeaderProps extends HTMLAttributes<HTMLElement>, HeaderStyleProps {
   children: React.ReactNode;
-  hasExtra?: boolean;
 }
 
 const Header = ({ children, ...props }: HeaderProps) => {

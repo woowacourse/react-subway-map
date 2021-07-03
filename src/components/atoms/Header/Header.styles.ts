@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { HeaderProps } from './Header';
+export interface HeaderStyleProps {
+  hasExtra?: boolean;
+}
 
-const Container = styled.header<HeaderProps>`
+const Container = styled.header<HeaderStyleProps>`
   display: flex;
   align-items: center;
   justify-content: ${({ hasExtra }) => (hasExtra ? 'space-between' : 'center')};
