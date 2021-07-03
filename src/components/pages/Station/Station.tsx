@@ -17,11 +17,16 @@ const Station = () => {
   const {
     stations,
     getAllStations,
-    addStationWrapper,
-    onDeleteStation,
+    addStation,
     addStationResponse,
+    deleteStation,
     deleteStationResponse,
   } = useStation(host);
+
+  const onDeleteStation = (stationId: number) => {
+    if (!window.confirm('해당 역을 정말로 삭제하시겠습니까?')) return;
+    deleteStation(`${stationId}`);
+  };
 
   useEffect(() => {
     getAllStations();
@@ -33,7 +38,7 @@ const Station = () => {
         <h3>🚉 역 관리</h3>
       </Header>
 
-      <FormProvider submitFunc={addStationWrapper}>
+      <FormProvider submitFunc={addStation}>
         <StationAddForm />
       </FormProvider>
 
