@@ -97,6 +97,8 @@ const lineAPI = {
       };
     } catch (error) {
       console.error(error);
+      console.dir(error.response);
+      console.dir(error.config.data);
 
       return {
         isSucceeded: false,

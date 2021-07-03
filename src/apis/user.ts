@@ -66,19 +66,25 @@ const userAPI = {
     try {
       const { status, data } = await axios.post('/login/token', loginInfo);
 
-      if (status !== STATUS_CODE.OK && status !== STATUS_CODE.UNAUTHORIZED) {
+      if (status !== STATUS_CODE.OK) {
         throw new Error(ERROR_MESSAGE.API_CALL(status));
       }
 
-      const message = status === STATUS_CODE.OK ? SUCCESS_MESSAGE.LOGIN : ERROR_MESSAGE.LOGIN;
-
       return {
         isSucceeded: true,
-        message,
+        message: SUCCESS_MESSAGE.LOGIN,
         result: data.accessToken,
       };
     } catch (error) {
       console.error(error);
+
+      if (error.response.status === STATUS_CODE.UNAUTHORIZED) {
+        return {
+          isSucceeded: false,
+          message: ERROR_MESSAGE.LOGIN,
+          result: '',
+        };
+      }
 
       return {
         isSucceeded: false,

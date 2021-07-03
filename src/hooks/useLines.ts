@@ -87,7 +87,7 @@ const useLines = (initialLines: Line[]) => {
   };
 
   const addLine = async (data: RequestTypeLine): Promise<void> => {
-    const { message, result } = await api.station.post(data);
+    const { message, result } = await api.line.post(data);
 
     if (result && !result.auth) {
       setIsLoggedIn?.(false);
@@ -100,7 +100,7 @@ const useLines = (initialLines: Line[]) => {
   };
 
   const deleteLine = async (lineId: number): Promise<void> => {
-    const { message, result } = await api.station.delete(lineId);
+    const { message, result } = await api.line.delete(lineId);
 
     if (result && !result.auth) {
       setIsLoggedIn?.(false);
