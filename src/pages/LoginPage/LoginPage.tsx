@@ -1,6 +1,6 @@
-import { FormEventHandler, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { MdEmail, MdLock } from 'react-icons/md';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import {
   Box,
@@ -14,50 +14,20 @@ import {
 
 import { UserContext } from '../../contexts/UserContextProvider';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
 
 import PATH from '../../constants/path';
 import PALETTE from '../../constants/palette';
 
-import api from '../../apis';
-import useInput from '../../hooks/useInput';
 import { SignUpLink, Form } from './LoginPage.style';
-import { ERROR_MESSAGE } from '../../constants/messages';
-import { LoadingContext } from '../../contexts/LoadingContext';
+import useLoginForm from '../../hooks/useLoginForm';
 
 const LoginPage = () => {
-  const [email, onEmailChange] = useInput('');
-  const [password, onPasswordChange] = useInput('');
-  const [error, setError] = useState('');
-
-  const history = useHistory();
+  const { formValue, handler, loginErrorMessage } = useLoginForm();
+  const { email, password } = formValue;
+  const { onEmailChange, onPasswordChange, onLogin } = handler;
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
-  const callWithLoading = useContext(LoadingContext)?.callWithLoading;
-
-  const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
-    if (email === '' || password === '') {
-      setError(ERROR_MESSAGE.INCOMPLETE_LOGIN_FORM);
-
-      return;
-    }
-
-    callWithLoading?.(async () => {
-      const { isSucceeded, message, result } = await api.user.login({ email, password });
-
-      addMessage?.(message);
-      setIsLoggedIn?.(isSucceeded);
-
-      if (isSucceeded) {
-        localStorage.setItem('accessToken', result);
-        history.push(PATH.ROOT);
-      }
-    });
-  };
+  const { isLoggedIn } = useContext(UserContext) ?? {};
 
   return isLoggedIn ? (
     <Redirect to={PATH.ROOT} />
@@ -90,7 +60,7 @@ const LoginPage = () => {
             aria-label="비밀번호"
           />
         </InputContainer>
-        <ErrorText textAlign="center">{error}</ErrorText>
+        <ErrorText textAlign="center">{loginErrorMessage}</ErrorText>
         <Button size="m" width="100%" backgroundColor={themeColor} color={PALETTE.WHITE}>
           로그인
         </Button>

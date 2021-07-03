@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useContext, useEffect, useState, FormEventHandler } from 'react';
+import { useContext, useState } from 'react';
 import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
 import {
@@ -16,141 +16,36 @@ import {
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
 import PALETTE from '../../constants/palette';
-import REGEX from '../../constants/regex';
-import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/messages';
-import { SECTION_VALUE } from '../../constants/values';
 
-import useInput from '../../hooks/useInput';
-import useStations from '../../hooks/useStations';
 import useSections from '../../hooks/useSections';
-import useLines from '../../hooks/useLines';
-
-import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 import noSelectedLine from '../../assets/images/no_selected_line.png';
 import { Line, Station } from '../../types';
-import { LoadingContext } from '../../contexts/LoadingContext';
+import { Container, TitleBox, Form, FormBox, StationSelects, Distance } from './SectionPage.style';
 
 const LINE_BEFORE_FETCH: Line[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 const STATION_BEFORE_FETCH: Station[] = [];
 
 const SectionPage = () => {
-  const [selectedLineId, setSelectedLineId] = useState<number>(-1);
-
-  const { stations, fetchStations } = useStations(STATION_BEFORE_FETCH);
-  const { lines, fetchLines, fetchLine } = useLines(LINE_BEFORE_FETCH);
-  const [addSection, deleteSection] = useSections();
-
-  const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [upStationId, setUpStationId] = useState('');
-  const [downStationId, setDownStationId] = useState('');
-  const [distance, onDistanceChange, setDistance] = useInput('');
+  const [formOpen, setFormOpen] = useState(false);
+  const { stations, lines, currentLine, formValue, handler, validation } = useSections(
+    STATION_BEFORE_FETCH,
+    LINE_BEFORE_FETCH
+  );
+  const { upStationId, downStationId, distance } = formValue;
+  const {
+    onLineSelect,
+    onUpStationIdChange,
+    onDownStationIdChange,
+    onDistanceChange,
+    onSectionSubmit,
+    onSectionDelete,
+  } = handler;
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
   const { isLoggedIn } = useContext(UserContext) ?? {};
-  const callWithLoading = useContext(LoadingContext)?.callWithLoading;
-
-  const currentLine = lines.find((line) => line.id === selectedLineId);
-
-  const isOnlyOneStationInCurrentLine = Boolean(
-    Number(currentLine?.stations.some(({ id }) => id === Number(upStationId))) ^
-      Number(currentLine?.stations.some(({ id }) => id === Number(downStationId)))
-  );
-  const isStationSelectDuplicated = upStationId === downStationId;
-
-  const isDistanceValid =
-    REGEX.ONLY_DIGIT.test(distance) &&
-    Number(distance) >= SECTION_VALUE.DISTANCE_MIN_VALUE &&
-    Number(distance) <= SECTION_VALUE.DISTANCE_MAX_VALUE;
-
-  const stationSelectErrorMessage =
-    upStationId && downStationId
-      ? isStationSelectDuplicated
-        ? ERROR_MESSAGE.DUPLICATED_TERMINAL
-        : isOnlyOneStationInCurrentLine
-        ? ''
-        : ERROR_MESSAGE.ONLY_ONE_STATION_INCLUDED
-      : '';
-
-  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
-  const isFormCompleted =
-    upStationId &&
-    downStationId &&
-    distance &&
-    !isStationSelectDuplicated &&
-    isDistanceValid &&
-    isOnlyOneStationInCurrentLine;
-
-  const getLine = async (lineId: number) => {
-    callWithLoading?.(fetchLine, lineId);
-  };
-
-  useEffect(() => {
-    callWithLoading?.(Promise.all, [fetchStations(), fetchLines()]);
-  }, []);
-
-  const reset = () => {
-    setUpStationId('');
-    setDownStationId('');
-    setDistance('');
-  };
-
-  const onLineSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setSelectedLineId(Number(event.target.value));
-  };
-
-  const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setUpStationId(event.target.value);
-  };
-
-  const onDownStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setDownStationId(event.target.value);
-  };
-
-  const onSectionSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
-    if (!currentLine) {
-      addMessage?.(ERROR_MESSAGE.NO_LINE_SELECTED);
-      return;
-    }
-
-    if (!isFormCompleted) {
-      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
-      return;
-    }
-
-    const newSection = {
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      distance: Number(distance),
-    };
-
-    await addSection(selectedLineId, newSection);
-    await getLine(selectedLineId);
-    reset();
-    setFormOpen(false);
-  };
-
-  const onSectionDelete = async (stationId: number, stationName: string) => {
-    if (stationId === -1 || stationName === '') return;
-
-    if (currentLine?.stations.length === 1) {
-      addMessage?.(ERROR_MESSAGE.SECTION_LENGTH_OUT_OF_RANGE);
-      return;
-    }
-
-    if (!window.confirm(CONFIRM_MESSAGE.DELETE_SECTION(currentLine?.name ?? '', stationName))) {
-      return;
-    }
-
-    await deleteSection(selectedLineId, stationId);
-    await getLine(selectedLineId);
-  };
 
   return lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH ? (
     <></>
@@ -191,7 +86,12 @@ const SectionPage = () => {
         </InputContainer>
       </TitleBox>
       <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
-        <Form onSubmit={onSectionSubmit}>
+        <Form
+          onSubmit={(event) => {
+            onSectionSubmit(event);
+            setFormOpen(false);
+          }}
+        >
           <StationSelects>
             <div>
               <InputContainer labelText="상행역">
@@ -226,12 +126,9 @@ const SectionPage = () => {
                 </Select>
               </InputContainer>
             </div>
-            <ErrorText>{stationSelectErrorMessage}</ErrorText>
+            <ErrorText>{validation.stationSelect.text}</ErrorText>
           </StationSelects>
-          <InputContainer
-            labelText="거리 (단위:km)"
-            validation={{ text: distanceErrorMessage, isValid: false }}
-          >
+          <InputContainer labelText="거리 (단위:km)" validation={validation.distance}>
             <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>
           <Button type="submit" size="m" backgroundColor={themeColor} color={PALETTE.WHITE}>

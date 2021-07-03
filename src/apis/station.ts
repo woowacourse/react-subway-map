@@ -110,6 +110,14 @@ const stationAPI = {
     } catch (error) {
       console.error(error);
 
+      if (error.response.status === STATUS_CODE.BAD_REQUEST) {
+        return {
+          isSucceeded: false,
+          message: ERROR_MESSAGE.STATION_IN_SECTION,
+          result: null,
+        };
+      }
+
       return {
         isSucceeded: false,
         message: ERROR_MESSAGE.DEFAULT,

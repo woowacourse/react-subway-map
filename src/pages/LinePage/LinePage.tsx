@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  FormEventHandler,
-  ChangeEventHandler,
-} from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { MdAdd, MdArrowForward, MdDelete } from 'react-icons/md';
 
 import Palette from '../../components/Palette/Palette';
@@ -24,18 +17,12 @@ import {
 } from '../../components/shared';
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
-import REGEX from '../../constants/regex';
 import PALETTE from '../../constants/palette';
-import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/messages';
-import { LINE_VALUE } from '../../constants/values';
 
-import useInput from '../../hooks/useInput';
 import useStations from '../../hooks/useStations';
 import useLines from '../../hooks/useLines';
-
 import noLine from '../../assets/images/no_line.png';
 import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
 import { Line, Station } from '../../types';
@@ -58,13 +45,19 @@ const LINE_BEFORE_FETCH: Line[] = []; // FETCH 이전과 이후의 빈 배열을
 const STATION_BEFORE_FETCH: Station[] = [];
 
 const LinePage = () => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
   const { stations, fetchStations } = useStations(STATION_BEFORE_FETCH);
-  const { lines, fetchLines, addLine, deleteLine } = useLines(LINE_BEFORE_FETCH);
-  const [lineName, onlineNameChange, setLineName] = useInput('');
-  const [upStationId, setUpStationId] = useState('');
-  const [downStationId, setDownStationId] = useState('');
-  const [distance, onDistanceChange, setDistance] = useInput('');
+  const { lines, fetchLines, formValue, handler, validation } = useLines(LINE_BEFORE_FETCH);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const { lineName, upStationId, downStationId, distance } = formValue;
+  const {
+    onLineNameChange,
+    onDistanceChange,
+    onUpStationIdChange,
+    onDownStationIdChange,
+    onLineSubmit,
+    onLineDelete,
+  } = handler;
 
   const colors = useMemo(() => {
     const usedLineColors = lines.map((line) => line.color);
@@ -76,98 +69,18 @@ const LinePage = () => {
   }, [lines]);
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
   const { isLoggedIn } = useContext(UserContext) ?? {};
   const callWithLoading = useContext(LoadingContext)?.callWithLoading;
 
-  const isLineNameValid =
-    lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
-    lineName.length <= LINE_VALUE.NAME_MAX_LENGTH &&
-    REGEX.KOREAN_DIGIT.test(lineName);
-  const isLineNameDuplicated = lines.some((item) => item.name === lineName);
-  const isStationSelectDuplicated = upStationId === downStationId;
-  const isDistanceValid =
-    REGEX.ONLY_DIGIT.test(distance) &&
-    Number(distance) >= LINE_VALUE.DISTANCE_MIN_VALUE &&
-    Number(distance) <= LINE_VALUE.DISTANCE_MAX_VALUE;
-
-  const lineNameErrorMessage =
-    lineName &&
-    (!isLineNameValid
-      ? ERROR_MESSAGE.INVALID_LINE_INPUT
-      : isLineNameDuplicated
-      ? ERROR_MESSAGE.DUPLICATED_LINE_NAME
-      : '');
-  const stationSelectErrorMessage =
-    upStationId && downStationId && isStationSelectDuplicated
-      ? ERROR_MESSAGE.DUPLICATED_TERMINAL
-      : '';
-  const distanceErrorMessage = distance && !isDistanceValid ? ERROR_MESSAGE.INVALID_DISTANCE : '';
-  const isFormCompleted =
-    lineName &&
-    upStationId &&
-    downStationId &&
-    distance &&
-    isLineNameValid &&
-    !isLineNameDuplicated &&
-    !isStationSelectDuplicated &&
-    isDistanceValid;
-
-  const reset = () => {
-    setLineName('');
-    setUpStationId('');
-    setDownStationId('');
-    setDistance('');
-  };
-
   useEffect(() => {
-    callWithLoading?.(Promise.all, [fetchStations(), fetchLines()]);
+    callWithLoading?.(Promise.all.bind(Promise), [fetchStations(), fetchLines()]);
   }, []);
-
-  const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setUpStationId(event.target.value);
-  };
-
-  const onDownStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setDownStationId(event.target.value);
-  };
-
-  const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
-    const formElement = event.currentTarget;
-    const color = formElement['color'].value;
-
-    if (!isFormCompleted || !color) {
-      addMessage?.(ERROR_MESSAGE.INCOMPLETE_FORM);
-      return;
-    }
-
-    const newLine = {
-      name: lineName,
-      color,
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      distance: Number(distance),
-    };
-
-    await addLine(newLine);
-    formElement.reset();
-    reset();
-    setFormOpen(false);
-  };
-
-  const onLineDelete = async (id: number, name: string) => {
-    if (!window.confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
-
-    await deleteLine(id);
-  };
 
   return lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH ? (
     <></>
   ) : (
     <Container>
-      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
+      <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={isFormOpen}>
         <Heading1>지하철 노선 관리</Heading1>
         {isLoggedIn ? (
           <>
@@ -177,7 +90,7 @@ const LinePage = () => {
               size="m"
               backgroundColor={themeColor}
               color={PALETTE.WHITE}
-              onClick={() => setFormOpen(!formOpen)}
+              onClick={() => setIsFormOpen(!isFormOpen)}
               aria-label="노선 추가"
             >
               <MdAdd size="1.5rem" />
@@ -187,15 +100,18 @@ const LinePage = () => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
       </TitleBox>
-      <FormBox backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
-        <Form onSubmit={onLineSubmit} aria-label="노선 추가 양식">
-          <InputContainer
-            labelText="노선 이름"
-            validation={{ text: lineNameErrorMessage, isValid: false }}
-          >
+      <FormBox backgroundColor={PALETTE.WHITE} isOpen={isFormOpen}>
+        <Form
+          onSubmit={(event) => {
+            onLineSubmit(event);
+            setIsFormOpen(false);
+          }}
+          aria-label="노선 추가 양식"
+        >
+          <InputContainer labelText="노선 이름" validation={validation.lineName}>
             <Input
               value={lineName}
-              onChange={onlineNameChange}
+              onChange={onLineNameChange}
               aria-label="지하철 노선 이름 입력"
             />
           </InputContainer>
@@ -237,12 +153,9 @@ const LinePage = () => {
                 </Select>
               </InputContainer>
             </div>
-            <ErrorText>{stationSelectErrorMessage}</ErrorText>
+            <ErrorText>{validation.stationSelect.text}</ErrorText>
           </StationSelects>
-          <InputContainer
-            labelText="거리 (단위:km)"
-            validation={{ text: distanceErrorMessage, isValid: false }}
-          >
+          <InputContainer labelText="거리 (단위:km)" validation={validation.distance}>
             <Input value={distance} onChange={onDistanceChange} aria-label="거리 입력" />
           </InputContainer>
           <InputContainer labelText="색상을 선택하세요 (이미 등록된 색상은 선택할 수 없습니다.)">

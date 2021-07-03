@@ -8,13 +8,8 @@ import { UserContext } from '../../contexts/UserContextProvider';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
 import PALETTE from '../../constants/palette';
-import REGEX from '../../constants/regex';
-import { STATION_VALUE } from '../../constants/values';
-import { ERROR_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
 
-import useInput from '../../hooks/useInput';
 import useStations from '../../hooks/useStations';
-
 import { Station } from '../../types';
 import noStation from '../../assets/images/no_station.png';
 import { Container, Form, Text, StationList } from './StationPage.style';
@@ -22,9 +17,15 @@ import { Container, Form, Text, StationList } from './StationPage.style';
 const STATION_BEFORE_FETCH: Station[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 
 const StationPage = () => {
-  const [stationInput, onStationInputChange, setStationInput] = useInput('');
-  const { stations, fetchStations, addStation, deleteStation } = useStations(STATION_BEFORE_FETCH);
-  const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
+  const {
+    stations,
+    fetchStations,
+    stationInput,
+    onStationInputChange,
+    stationInputErrorMessage,
+    handler,
+  } = useStations(STATION_BEFORE_FETCH);
+  const { onStationInputSubmit, onStationDelete } = handler;
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
@@ -34,41 +35,6 @@ const StationPage = () => {
     callWithLoading?.(fetchStations);
   }, []);
 
-  const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
-    const isStationInputValid =
-      stationInput.length >= STATION_VALUE.NAME_MIN_LENGTH &&
-      stationInput.length <= STATION_VALUE.NAME_MAX_LENGTH &&
-      REGEX.KOREAN_DIGIT.test(stationInput);
-    const isStationInputDuplicated = stations.some((item) => item.name === stationInput);
-
-    if (!isStationInputValid) {
-      setStationInputErrorMessage(ERROR_MESSAGE.INVALID_STATION_INPUT);
-      return;
-    }
-
-    if (isStationInputDuplicated) {
-      setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
-      return;
-    }
-
-    const [isDuplicated, message] = (await addStation({ name: stationInput })) ?? [];
-
-    if (isDuplicated) {
-      setStationInputErrorMessage(message ?? '');
-    }
-
-    setStationInputErrorMessage('');
-    setStationInput('');
-  };
-
-  const onStationDelete = async (id: number, name: string) => {
-    if (!window.confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
-
-    await deleteStation(id);
-  };
-
   return stations === STATION_BEFORE_FETCH ? (
     <></>
   ) : (
@@ -76,7 +42,7 @@ const StationPage = () => {
       <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
         <Heading1>지하철 역 관리</Heading1>
         {isLoggedIn && (
-          <Form onSubmit={onStationNameSubmit}>
+          <Form onSubmit={onStationInputSubmit}>
             <InputContainer
               labelText="지하철 역 이름을 입력하세요"
               validation={{ text: stationInputErrorMessage, isValid: false }}
