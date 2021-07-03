@@ -5,56 +5,34 @@ import { Box, Button, Input, InputContainer, Heading1, Icon, Chip } from '../../
 
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
-import { SnackBarContext } from '../../contexts/SnackBarProvider';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
 import PALETTE from '../../constants/palette';
-import STATUS_CODE from '../../constants/statusCode';
 import REGEX from '../../constants/regex';
 import { STATION_VALUE } from '../../constants/values';
-import { ERROR_MESSAGE, SUCCESS_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
+import { ERROR_MESSAGE, CONFIRM_MESSAGE } from '../../constants/messages';
 
 import useInput from '../../hooks/useInput';
-import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
+import useStations from '../../hooks/useStations';
 
-import { Container, Form, Text, StationList } from './StationPage.style';
+import { Station } from '../../types';
 import noStation from '../../assets/images/no_station.png';
-import { PageProps } from '../types';
+import { Container, Form, Text, StationList } from './StationPage.style';
 
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: Station[] = []; // FETCH 이전과 이후의 빈 배열을 구분
 
-const StationPage = ({ setIsLoading }: PageProps) => {
+const StationPage = () => {
   const [stationInput, onStationInputChange, setStationInput] = useInput('');
-  const [stations, setStations, fetchStations, addStation, deleteStation] =
-    useStations(STATION_BEFORE_FETCH);
+  const { stations, fetchStations, addStation, deleteStation } = useStations(STATION_BEFORE_FETCH);
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-  const addMessage = useContext(SnackBarContext)?.addMessage;
   const isLoggedIn = useContext(UserContext)?.isLoggedIn;
-  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
-
-  const fetchData = async () => {
-    const timer = setTimeout(() => setIsLoading(true), 500);
-
-    try {
-      await fetchStations();
-    } catch (error) {
-      console.error(error);
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-      setStations([]);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
-    }
-  };
+  const callWithLoading = useContext(LoadingContext)?.callWithLoading;
 
   useEffect(() => {
-    fetchData();
+    callWithLoading?.(fetchStations);
   }, []);
-
-  if (stations === STATION_BEFORE_FETCH) {
-    return <></>;
-  }
 
   const onStationNameSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -75,60 +53,25 @@ const StationPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    setStationInputErrorMessage('');
+    const [isDuplicated, message] = (await addStation({ name: stationInput })) ?? [];
 
-    try {
-      await addStation({ name: stationInput });
-      await fetchData();
-      addMessage?.(SUCCESS_MESSAGE.ADD_STATION);
-
-      setStationInput('');
-    } catch (error) {
-      console.error(error);
-
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-        return;
-      }
-
-      if (error.message === STATUS_CODE.STATION_DUPLICATED) {
-        setStationInputErrorMessage(ERROR_MESSAGE.DUPLICATED_STATION_NAME);
-        await fetchData();
-
-        return;
-      }
-
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
+    if (isDuplicated) {
+      setStationInputErrorMessage(message ?? '');
     }
+
+    setStationInputErrorMessage('');
+    setStationInput('');
   };
 
   const onStationDelete = async (id: number, name: string) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
 
-    try {
-      await deleteStation(id);
-      await fetchData();
-      addMessage?.(SUCCESS_MESSAGE.DELETE_STATION);
-    } catch (error) {
-      console.error(error);
-
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-        return;
-      }
-
-      if (error.message === STATUS_CODE.STATION_IN_SECTION) {
-        addMessage?.(ERROR_MESSAGE.STATION_IN_SECTION);
-        return;
-      }
-
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    }
+    await deleteStation(id);
   };
 
-  return (
+  return stations === STATION_BEFORE_FETCH ? (
+    <></>
+  ) : (
     <Container>
       <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
         <Heading1>지하철 역 관리</Heading1>

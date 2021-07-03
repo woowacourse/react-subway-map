@@ -7,7 +7,7 @@ import {
   useState,
   useRef,
 } from 'react';
-import apiRequest from '../request';
+import api from '../apis';
 
 interface UserProviderProps {
   children: ReactNode;
@@ -35,7 +35,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     const checkLoginStatus = async () => {
       try {
-        const userInfo = await apiRequest.getUserInfo();
+        const userInfo = await api.user.getInfo();
 
         if (userInfo) {
           setIsLoggedIn(true);

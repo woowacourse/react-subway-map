@@ -29,18 +29,17 @@ import { UserContext } from '../../contexts/UserContextProvider';
 
 import REGEX from '../../constants/regex';
 import PALETTE from '../../constants/palette';
-import STATUS_CODE from '../../constants/statusCode';
-import { CONFIRM_MESSAGE, ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
+import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/messages';
 import { LINE_VALUE } from '../../constants/values';
 
 import useInput from '../../hooks/useInput';
-import useStations, { APIReturnTypeStation } from '../../hooks/useStations';
-import useLines, { APIReturnTypeLine } from '../../hooks/useLines';
+import useStations from '../../hooks/useStations';
+import useLines from '../../hooks/useLines';
 
-import apiRequest from '../../request';
 import noLine from '../../assets/images/no_line.png';
-import { PageProps } from '../types';
 import { Container, TitleBox, FormBox, Form, StationSelects } from './LinePage.style';
+import { Line, Station } from '../../types';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
 const lineColors = [
   'PINK',
@@ -55,15 +54,14 @@ const lineColors = [
   'PURPLE',
 ];
 
-const LINE_BEFORE_FETCH: APIReturnTypeLine[] = []; // FETCH 이전과 이후의 빈 배열을 구분
-const STATION_BEFORE_FETCH: APIReturnTypeStation[] = [];
+const LINE_BEFORE_FETCH: Line[] = []; // FETCH 이전과 이후의 빈 배열을 구분
+const STATION_BEFORE_FETCH: Station[] = [];
 
-const LinePage = ({ setIsLoading }: PageProps) => {
+const LinePage = () => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
-  const [stations, setStations, fetchStations] = useStations(STATION_BEFORE_FETCH);
-  const [lines, setLines, fetchLines, fetchLine, addLine, deleteLine] = useLines(LINE_BEFORE_FETCH);
+  const { stations, fetchStations } = useStations(STATION_BEFORE_FETCH);
+  const { lines, fetchLines, addLine, deleteLine } = useLines(LINE_BEFORE_FETCH);
   const [lineName, onlineNameChange, setLineName] = useInput('');
-
   const [upStationId, setUpStationId] = useState('');
   const [downStationId, setDownStationId] = useState('');
   const [distance, onDistanceChange, setDistance] = useInput('');
@@ -79,7 +77,8 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
+  const { isLoggedIn } = useContext(UserContext) ?? {};
+  const callWithLoading = useContext(LoadingContext)?.callWithLoading;
 
   const isLineNameValid =
     lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
@@ -121,30 +120,9 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     setDistance('');
   };
 
-  const fetchData = async () => {
-    const timer = setTimeout(() => setIsLoading(true), 500);
-
-    try {
-      await Promise.all([fetchStations(), fetchLines()]);
-    } catch (error) {
-      console.error(error);
-
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-      setLines([]);
-      setStations([]);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    callWithLoading?.(Promise.all, [fetchStations(), fetchLines()]);
   }, []);
-
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
-    return <></>;
-  }
 
   const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     setUpStationId(event.target.value);
@@ -165,58 +143,29 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    try {
-      const newLine = {
-        name: lineName,
-        color,
-        upStationId: Number(upStationId),
-        downStationId: Number(downStationId),
-        distance: Number(distance),
-      };
+    const newLine = {
+      name: lineName,
+      color,
+      upStationId: Number(upStationId),
+      downStationId: Number(downStationId),
+      distance: Number(distance),
+    };
 
-      await addLine(newLine);
-
-      addMessage?.(SUCCESS_MESSAGE.ADD_LINE);
-      await fetchData();
-
-      reset();
-      formElement.reset();
-      setFormOpen(false);
-    } catch (error) {
-      console.error(error);
-
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-
-        return;
-      }
-
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    }
+    await addLine(newLine);
+    formElement.reset();
+    reset();
+    setFormOpen(false);
   };
 
   const onLineDelete = async (id: number, name: string) => {
     if (!window.confirm(CONFIRM_MESSAGE.DELETE_LINE(name))) return;
-    try {
-      await deleteLine(id);
-      await fetchData();
-      addMessage?.(SUCCESS_MESSAGE.DELETE_LINE);
-    } catch (error) {
-      console.error(error);
 
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        addMessage?.(ERROR_MESSAGE.TOKEN_EXPIRED);
-        setIsLoggedIn?.(false);
-
-        return;
-      }
-
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    }
+    await deleteLine(id);
   };
 
-  return (
+  return lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH ? (
+    <></>
+  ) : (
     <Container>
       <TitleBox hatColor={themeColor} backgroundColor={PALETTE.WHITE} isOpen={formOpen}>
         <Heading1>지하철 노선 관리</Heading1>

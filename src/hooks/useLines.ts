@@ -1,122 +1,78 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { request, REQUEST_URL } from '../request';
-import { StationData } from './useStations';
-import { APIReturnTypeSection } from './useSections';
-
-interface LineData {
-  name: string;
-  color: string;
-  upStationId: number;
-  downStationId: number;
-  distance: number;
-}
-interface APIReturnTypeLine {
-  id: number;
-  name: string;
-  color: string;
-  stations: {
-    id: number;
-    name: string;
-    distance?: number;
-  }[];
-}
-
-const API = {
-  get: async (): Promise<APIReturnTypeLine[]> => {
-    const response = await request(`${REQUEST_URL}/lines`, {
-      method: 'GET',
-    });
-
-    return await response.json();
-  },
-
-  getOne: async (lineId: number): Promise<APIReturnTypeLine> => {
-    const response = await request(`${REQUEST_URL}/lines/${lineId}`, {
-      method: 'GET',
-    });
-
-    return await response.json();
-  },
-
-  post: async (data: LineData, accessToken: string): Promise<void> => {
-    await request(`${REQUEST_URL}/lines`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
-  },
-
-  delete: async (lineId: number, accessToken: string): Promise<void> => {
-    await request(`${REQUEST_URL}/lines/${lineId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  },
-};
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import api from '../apis';
+import { RequestTypeLine } from '../apis/types';
+import { SnackBarContext } from '../contexts/SnackBarProvider';
+import { UserContext } from '../contexts/UserContextProvider';
+import { Line } from '../types';
 
 const useLines = (
-  initialLines: APIReturnTypeLine[]
-): [
-  APIReturnTypeLine[],
-  Dispatch<SetStateAction<APIReturnTypeLine[]>>,
-  () => Promise<void>,
-  (lineId: number) => Promise<void>,
-  (data: LineData) => Promise<void>,
-  (lineId: number) => Promise<void>
-] => {
-  const [lines, setLines] = useState<APIReturnTypeLine[]>(initialLines);
+  initialLines: Line[]
+): {
+  lines: Line[];
+  setLines: Dispatch<SetStateAction<Line[]>>;
+  fetchLine: (lineId: number) => Promise<void>;
+  fetchLines: () => Promise<void>;
+  addLine: (data: RequestTypeLine) => Promise<void>;
+  deleteLine: (lineId: number) => Promise<void>;
+} => {
+  const [lines, setLines] = useState<Line[]>(initialLines);
+  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   const fetchLine = async (lineId: number): Promise<void> => {
-    const fetchedLine: APIReturnTypeLine = await API.getOne(lineId);
+    const { isSucceeded, message, result } = await api.line.getOne(lineId);
 
-    setLines((prevLines) =>
-      prevLines.map((line) => {
-        if (line.id === lineId) {
-          return fetchedLine;
-        }
-        return line;
-      })
-    );
+    if (isSucceeded) {
+      setLines((prevLines) =>
+        prevLines.map((line) => {
+          if (line.id === lineId && result) {
+            return result;
+          }
+          return line;
+        })
+      );
+    } else {
+      addMessage?.(message);
+    }
   };
 
   const fetchLines = async (): Promise<void> => {
-    const response = await API.get();
+    const { isSucceeded, message, result } = await api.line.get();
 
-    setLines(response);
+    setLines(result ?? []);
+
+    if (!isSucceeded) {
+      addMessage?.(message);
+    }
   };
 
-  const addLine = async (data: LineData): Promise<void> => {
-    const accessToken = localStorage.getItem('accessToken');
+  const addLine = async (data: RequestTypeLine): Promise<void> => {
+    const { message, result } = await api.station.post(data);
 
-    if (!accessToken) {
-      console.error('no accessToken');
+    if (result && !result.auth) {
+      setIsLoggedIn?.(false);
 
       return;
     }
 
-    await API.post(data, accessToken);
+    addMessage?.(message);
+    await fetchLines();
   };
 
   const deleteLine = async (lineId: number): Promise<void> => {
-    const accessToken = localStorage.getItem('accessToken');
+    const { message, result } = await api.station.delete(lineId);
 
-    if (!accessToken) {
-      console.error('no accessToken');
+    if (result && !result.auth) {
+      setIsLoggedIn?.(false);
 
       return;
     }
 
-    await API.delete(lineId, accessToken);
+    addMessage?.(message);
+    await fetchLines();
   };
 
-  return [lines, setLines, fetchLines, fetchLine, addLine, deleteLine];
+  return { lines, setLines, fetchLine, fetchLines, addLine, deleteLine };
 };
 
 export default useLines;
-export { API };
-export type { APIReturnTypeLine };

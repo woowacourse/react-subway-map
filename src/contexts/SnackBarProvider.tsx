@@ -8,11 +8,11 @@ interface SnackBarProviderProps {
   children: ReactNode;
 }
 
-interface SnackBar {
+interface SnackBarHandler {
   addMessage: (message: string) => void;
 }
 
-const SnackBarContext = createContext<SnackBar | null>(null);
+const SnackBarContext = createContext<SnackBarHandler | null>(null);
 
 const keyGenerator = (() => {
   let id = 0;

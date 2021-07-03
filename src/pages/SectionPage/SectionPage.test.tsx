@@ -2,12 +2,8 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 
 import SectionPage from './SectionPage';
-import { API as stationAPI } from '../../hooks/useStations';
-import { API as lineAPI } from '../../hooks/useLines';
-import { API as sectionAPI } from '../../hooks/useSections';
-
-import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
+import api from '../../apis';
 
 const mock_stations = [
   {
@@ -49,26 +45,30 @@ const mock_lines = [
   },
 ];
 
-const VALID_LINE_NAME = '피터라인';
-
 describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
-    request.getUserInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
-
-    stationAPI.get = jest.fn().mockImplementation(() => {
-      return mock_stations;
+    api.user.getInfo = jest.fn().mockResolvedValue({ id: 1, age: 9, email: 'tets@test.com' });
+    api.station.get = jest.fn().mockImplementation(() => {
+      return {
+        isSucceeded: true,
+        message: '',
+        result: mock_stations,
+      };
     });
-    stationAPI.post = jest.fn();
-    stationAPI.delete = jest.fn();
+    api.station.post = jest.fn();
+    api.station.delete = jest.fn();
 
-    lineAPI.get = jest.fn().mockImplementation(() => {
-      return mock_lines;
+    api.line.get = jest.fn().mockImplementation(() => {
+      return {
+        isSucceeded: true,
+        message: '',
+        result: mock_lines,
+      };
     });
-    lineAPI.post = jest.fn();
-    lineAPI.delete = jest.fn();
-
-    sectionAPI.post = jest.fn();
-    sectionAPI.delete = jest.fn();
+    api.line.post = jest.fn();
+    api.line.delete = jest.fn();
+    api.section.post = jest.fn();
+    api.section.delete = jest.fn();
 
     localStorage.setItem(
       'accessToken',
@@ -81,11 +81,9 @@ describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.',
       </UserProvider>
     );
 
-    await waitFor(() => expect(stationAPI.get).toBeCalled());
-    await waitFor(() => expect(lineAPI.get).toBeCalled());
+    await waitFor(() => expect(api.station.get).toBeCalled());
+    await waitFor(() => expect(api.line.get).toBeCalled());
   });
-
-  afterEach(() => {});
 
   it('사용자는 선택한 지하철 노선의 구간 목록을 조회할 수 있다.', async () => {
     const lineSelect = screen.getByLabelText('노선 선택');
@@ -120,8 +118,8 @@ describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.',
     fireEvent.change(distanceInput, { target: { value: '20' } });
     fireEvent.click(addButton);
 
-    await waitFor(() => expect(sectionAPI.post).toBeCalled());
-    await waitFor(() => expect(lineAPI.get).toBeCalled());
+    await waitFor(() => expect(api.station.post).toBeCalled());
+    await waitFor(() => expect(api.line.get).toBeCalled());
   });
 
   it('지하철 구간 삭제가 가능하다.', async () => {
@@ -137,7 +135,7 @@ describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.',
 
     expect(confirmSpy).toBeCalled();
 
-    await waitFor(() => expect(sectionAPI.delete).toBeCalled());
-    await waitFor(() => expect(lineAPI.get).toBeCalled());
+    await waitFor(() => expect(api.section.delete).toBeCalled());
+    await waitFor(() => expect(api.line.get).toBeCalled());
   });
 });

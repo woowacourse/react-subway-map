@@ -17,6 +17,7 @@ import PALETTE from './constants/palette';
 import { SUCCESS_MESSAGE } from './constants/messages';
 
 import { ReactComponent as TextLogo } from './assets/images/ww-subway-logo-text.svg';
+import { LoadingContext } from './contexts/LoadingContext';
 
 const App = () => {
   const history = useHistory();
@@ -24,8 +25,7 @@ const App = () => {
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const userContext = useContext(UserContext);
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const isLoading = useContext(LoadingContext)?.isLoading;
 
   const onLogout = async () => {
     await userContext?.setIsLoggedIn(false);
@@ -63,29 +63,17 @@ const App = () => {
       </Header>
       <Main>
         <Switch>
-          <Route exact path={PATH.LOGIN} render={() => <LoginPage setIsLoading={setIsLoading} />} />
-          <Route
-            exact
-            path={PATH.SIGNUP}
-            render={() => <SignupPage setIsLoading={setIsLoading} />}
-          />
-          <Route
-            exact
-            path={[PATH.STATIONS, PATH.ROOT]}
-            render={() => <StationPage setIsLoading={setIsLoading} />}
-          />
-          <Route exact path={PATH.LINES} render={() => <LinePage setIsLoading={setIsLoading} />} />
-          <Route
-            exact
-            path={PATH.SECTIONS}
-            render={() => <SectionPage setIsLoading={setIsLoading} />}
-          />
-          <Route exact path={PATH.MAP} render={() => <MapPage setIsLoading={setIsLoading} />} />
+          <Route exact path={PATH.LOGIN} render={() => <LoginPage />} />
+          <Route exact path={PATH.SIGNUP} render={() => <SignupPage />} />
+          <Route exact path={[PATH.STATIONS, PATH.ROOT]} render={() => <StationPage />} />
+          <Route exact path={PATH.LINES} render={() => <LinePage />} />
+          <Route exact path={PATH.SECTIONS} render={() => <SectionPage />} />
+          <Route exact path={PATH.MAP} render={() => <MapPage />} />
           <Redirect to={PATH.ROOT} />
         </Switch>
       </Main>
       <ApiSwitch />
-      <Spinner isLoading={isLoading} />
+      <Spinner isLoading={isLoading ?? false} />
     </>
   );
 };

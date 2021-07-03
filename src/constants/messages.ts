@@ -11,6 +11,7 @@ const ERROR_MESSAGE = {
   INVALID_STATION_INPUT: '2자 이상 20자 이하 한글, 숫자만 입력해 주세요.',
   INVALID_LINE_INPUT: '2자 이상 10자 이하 한글, 숫자만 입력해 주세요.',
   INVALID_DISTANCE: '1과 300 사이의 숫자만 입력 가능합니다.',
+  UNCHECKED_EMAIL: '이메일 중복확인을 수행할 수 없습니다. 다시 시도해주세요.',
   DUPLICATED_EMAIL: '이미 존재하는 이메일입니다.',
   DUPLICATED_STATION_NAME: '이미 존재하는 지하철 역입니다.',
   DUPLICATED_LINE_NAME: '이미 존재하는 지하철 노선입니다.',
@@ -20,9 +21,12 @@ const ERROR_MESSAGE = {
   ONLY_ONE_STATION_INCLUDED: '반드시 한 역이 기존 노선에 포함되어야 합니다.',
   STATION_IN_SECTION: '😭 노선에 포함된 지하철 역은 삭제할 수 없습니다.',
   TOKEN_EXPIRED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
+  NO_ACCESS_TOKEN: 'No Access Token',
+  API_CALL: (status: number) => `API call error: ${status}`,
 };
 
 const SUCCESS_MESSAGE = {
+  WELCOME: '😄 환영합니다.',
   AVAILABLE_EMAIL: '사용할 수 있는 이메일입니다.',
   SIGNUP: '😄 회원가입에 성공했습니다.',
   LOGIN: '😄 로그인에 성공했습니다.',

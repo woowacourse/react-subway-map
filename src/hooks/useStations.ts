@@ -1,92 +1,67 @@
-import { access } from 'fs';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { request, REQUEST_URL } from '../request';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 
-interface StationData {
-  name: string;
-}
-
-interface APIReturnTypeStation {
-  id: number;
-  name: string;
-  lines?: {
-    id: number;
-    name: string;
-    color: string;
-  }[];
-}
-
-const API = {
-  get: async (): Promise<APIReturnTypeStation[]> => {
-    const response = await request(`${REQUEST_URL}/stations`, {
-      method: 'GET',
-    });
-
-    return await response.json();
-  },
-
-  post: async (data: StationData, accessToken: string): Promise<void> => {
-    await request(`${REQUEST_URL}/stations`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
-  },
-  delete: async (stationId: number, accessToken: string): Promise<void> => {
-    await request(`${REQUEST_URL}/stations/${stationId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  },
-};
+import api from '../apis';
+import { RequestTypeStation } from '../apis/types';
+import { SnackBarContext } from '../contexts/SnackBarProvider';
+import { UserContext } from '../contexts/UserContextProvider';
+import { Station } from '../types';
 
 const useStations = (
-  initialStations: APIReturnTypeStation[]
-): [
-  APIReturnTypeStation[],
-  Dispatch<SetStateAction<APIReturnTypeStation[]>>,
-  () => Promise<void>,
-  (data: StationData) => Promise<APIReturnTypeStation | undefined>,
-  (stationId: number) => Promise<void>
-] => {
-  const [stations, setStations] = useState<APIReturnTypeStation[]>(initialStations);
+  initialStations: Station[] = []
+): {
+  stations: Station[];
+  setStations: Dispatch<SetStateAction<Station[]>>;
+  fetchStations: () => Promise<void>;
+  addStation: (data: RequestTypeStation) => Promise<[boolean, string] | undefined>;
+  deleteStation: (stationId: number) => Promise<void>;
+} => {
+  const [stations, setStations] = useState<Station[]>(initialStations);
+  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
   const fetchStations = async (): Promise<void> => {
-    const response = await API.get();
+    const { isSucceeded, message, result } = await api.station.get();
 
-    setStations(response);
+    setStations(result ?? []);
+
+    if (!isSucceeded) {
+      addMessage?.(message);
+    }
   };
 
-  const addStation = async (data: StationData): Promise<APIReturnTypeStation | undefined> => {
-    const accessToken = localStorage.getItem('accessToken');
+  const addStation = async (data: RequestTypeStation): Promise<[boolean, string] | undefined> => {
+    const { message, result } = await api.station.post(data);
 
-    if (!accessToken) {
-      console.error('no accessToken');
+    if (result && !result.auth) {
+      setIsLoggedIn?.(false);
+
       return;
     }
 
-    await API.post(data, accessToken);
+    if (result && !result.duplicated) {
+      addMessage?.(message);
+    }
+
+    await fetchStations();
+
+    return [result?.duplicated ?? false, message];
   };
 
   const deleteStation = async (stationId: number): Promise<void> => {
-    const accessToken = localStorage.getItem('accessToken');
+    const { message, result } = await api.station.delete(stationId);
 
-    if (!accessToken) {
-      console.error('no accessToken');
+    addMessage?.(message);
+
+    if (result && !result.auth) {
+      setIsLoggedIn?.(false);
+
       return;
     }
 
-    await API.delete(stationId, accessToken);
+    await fetchStations();
   };
 
-  return [stations, setStations, fetchStations, addStation, deleteStation];
+  return { stations, setStations, fetchStations, addStation, deleteStation };
 };
 
 export default useStations;
-export { API };
-export type { StationData, APIReturnTypeStation };

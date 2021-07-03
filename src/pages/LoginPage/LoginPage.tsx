@@ -17,28 +17,25 @@ import { ThemeContext } from '../../contexts/ThemeContextProvider';
 import { SnackBarContext } from '../../contexts/SnackBarProvider';
 
 import PATH from '../../constants/path';
-import STATUS_CODE from '../../constants/statusCode';
 import PALETTE from '../../constants/palette';
-import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
+import api from '../../apis';
 import useInput from '../../hooks/useInput';
-import apiRequest from '../../request';
-import { PageProps } from '../types';
 import { SignUpLink, Form } from './LoginPage.style';
+import { ERROR_MESSAGE } from '../../constants/messages';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
-const LoginPage = ({ setIsLoading }: PageProps) => {
+const LoginPage = () => {
   const [email, onEmailChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const [error, setError] = useState('');
 
   const history = useHistory();
+
   const themeColor = useContext(ThemeContext)?.themeColor ?? PALETTE.WHITE;
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext) ?? {};
-
-  if (isLoggedIn) {
-    return <Redirect to={PATH.ROOT} />;
-  }
+  const callWithLoading = useContext(LoadingContext)?.callWithLoading;
 
   const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -49,32 +46,22 @@ const LoginPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    const timer = setTimeout(() => setIsLoading(true), 500);
+    callWithLoading?.(async () => {
+      const { isSucceeded, message, result } = await api.user.login({ email, password });
 
-    try {
-      const accessToken = await apiRequest.login({ email, password });
+      addMessage?.(message);
+      setIsLoggedIn?.(isSucceeded);
 
-      addMessage?.(SUCCESS_MESSAGE.LOGIN);
-      setIsLoggedIn?.(true);
-      localStorage.setItem('accessToken', accessToken);
-
-      history.push(PATH.ROOT);
-    } catch (error) {
-      console.error(error);
-
-      if (error.message === STATUS_CODE.UNAUTHORIZED) {
-        setError(ERROR_MESSAGE.LOGIN);
-        return;
+      if (isSucceeded) {
+        localStorage.setItem('accessToken', result);
+        history.push(PATH.ROOT);
       }
-
-      addMessage?.(ERROR_MESSAGE.DEFAULT);
-    } finally {
-      clearTimeout(timer);
-      setIsLoading(false);
-    }
+    });
   };
 
-  return (
+  return isLoggedIn ? (
+    <Redirect to={PATH.ROOT} />
+  ) : (
     <Box hatColor={themeColor} backgroundColor={PALETTE.WHITE}>
       <Heading1 marginBottom="2rem">로그인</Heading1>
       <Form onSubmit={onLogin}>

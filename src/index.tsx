@@ -7,6 +7,7 @@ import UserProvider from './contexts/UserContextProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import GlobalStyle from './GlobalStyle';
+import LoadingProvider from './contexts/LoadingContext';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,9 +15,11 @@ ReactDOM.render(
     <ThemeProvider>
       <SnackBarProvider>
         <UserProvider>
-          <Router>
-            <App />
-          </Router>
+          <LoadingProvider>
+            <Router>
+              <App />
+            </Router>
+          </LoadingProvider>
         </UserProvider>
       </SnackBarProvider>
     </ThemeProvider>

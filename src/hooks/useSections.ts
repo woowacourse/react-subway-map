@@ -1,69 +1,41 @@
-import { request, REQUEST_URL } from '../request';
-import { APIReturnTypeStation } from './useStations';
-
-interface SectionData {
-  upStationId: number;
-  downStationId: number;
-  distance: number;
-}
-
-interface APIReturnTypeSection {
-  id: number;
-  upStation: APIReturnTypeStation;
-  downStation: APIReturnTypeStation;
-  distance: number;
-}
-
-const API = {
-  post: async (lineId: number, data: SectionData, accessToken: string) => {
-    await request(`${REQUEST_URL}/lines/${lineId}/sections`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
-  },
-  delete: async (lineId: number, stationId: number, accessToken: string) => {
-    await request(`${REQUEST_URL}/lines/${lineId}/sections?stationId=${stationId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  },
-};
+import { useContext } from 'react';
+import api from '../apis';
+import { RequestTypeSection } from '../apis/types';
+import { SnackBarContext } from '../contexts/SnackBarProvider';
+import { UserContext } from '../contexts/UserContextProvider';
 
 const useSections = (): [
-  (lineId: number, data: SectionData) => Promise<void>,
+  (lineId: number, data: RequestTypeSection) => Promise<void>,
   (lineId: number, stationId: number) => Promise<void>
 ] => {
-  const addSection = async (lineId: number, data: SectionData): Promise<void> => {
-    const accessToken = localStorage.getItem('accessToken');
+  const addMessage = useContext(SnackBarContext)?.addMessage;
+  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
 
-    if (!accessToken) {
-      console.error('no accessToken');
+  const addSection = async (lineId: number, data: RequestTypeSection): Promise<void> => {
+    const { message, result } = await api.section.post(lineId, data);
+
+    if (result && !result.auth) {
+      setIsLoggedIn?.(false);
+
       return;
     }
 
-    await API.post(lineId, data, accessToken);
+    addMessage?.(message);
   };
 
   const deleteSection = async (lineId: number, stationId: number): Promise<void> => {
-    const accessToken = localStorage.getItem('accessToken');
+    const { message, result } = await api.section.delete(lineId, stationId);
 
-    if (!accessToken) {
-      console.error('no accessToken');
+    if (result && !result.auth) {
+      setIsLoggedIn?.(false);
+
       return;
     }
 
-    await API.delete(lineId, stationId, accessToken);
+    addMessage?.(message);
   };
 
   return [addSection, deleteSection];
 };
 
 export default useSections;
-export { API };
-export type { APIReturnTypeSection };

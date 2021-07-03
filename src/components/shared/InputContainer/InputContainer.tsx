@@ -2,13 +2,11 @@ import { ReactNode } from 'react';
 
 import { Container, BorderBox, Label, StatusText } from './InputContainer.style';
 import PALETTE from '../../../constants/palette';
+import { Validation } from '../../../types';
 
 interface InputContainerProps {
   labelText?: string;
-  validation?: {
-    text: string;
-    isValid: boolean;
-  };
+  validation?: Validation;
   children: ReactNode;
 }
 
