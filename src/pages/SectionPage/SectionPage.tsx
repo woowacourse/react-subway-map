@@ -164,7 +164,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     if (!response) {
       addSnackBar?.(sectionRequestError.message);
 
-      if (sectionRequestError.type == ERROR_TYPE.UNAUTHORIZED) {
+      if (sectionRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
         setIsLoggedIn?.(false);
       }
 
