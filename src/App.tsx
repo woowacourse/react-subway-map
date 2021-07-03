@@ -1,9 +1,9 @@
 import Layout from '@layout/Layout';
 import PATH from 'constants/path';
-import { useData } from 'hooks';
 import Home from 'pages/Home';
 import Line from 'pages/Line';
 import Login from 'pages/Login';
+import Map from 'pages/Map';
 import Section from 'pages/Section';
 import Signup from 'pages/Signup';
 import Station from 'pages/Station';
@@ -11,10 +11,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 const App = () => {
-  const { accessToken } = useData();
-
   return (
-    <Layout isLogin={!!accessToken}>
+    <Layout>
       <Switch>
         <Route exact path={PATH.HOME}>
           <Home />
@@ -33,6 +31,9 @@ const App = () => {
         </Route>
         <Route exact path={PATH.SECTION}>
           <Section />
+        </Route>
+        <Route exact path={PATH.MAP}>
+          <Map />
         </Route>
       </Switch>
     </Layout>
