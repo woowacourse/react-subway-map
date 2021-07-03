@@ -26,7 +26,7 @@ const useSections = (): [
 
     setError({
       ...response.error,
-      message: ERROR_MESSAGE[response.error.type] || ERROR_MESSAGE.DEFAULT,
+      message: ERROR_MESSAGE['SECTION_ADD_' + response.error.type] || ERROR_MESSAGE.DEFAULT,
     });
     return false;
   };
