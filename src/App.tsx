@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import subwayVideo from './assets/video/subwayBackground.mp4';
-import { Main, Menu, RootContainer, Title } from './components/atoms';
+import subwayVideo from './assets/video/subwayBackground.mp4';
+import { Main, Menu, RootContainer, Title, Video } from './components/atoms';
 import { HostSelect, Links } from './components/molecules';
 import Routes from './components/molecules/Routes/Routes';
 import { ROUTE } from './constants';
@@ -37,7 +37,7 @@ const App = () => {
 
   return (
     <RootContainer>
-      {/* <Video src={subwayVideo} loop autoPlay muted /> */}
+      <Video src={subwayVideo} loop autoPlay muted />
       <Title>
         <Link to={ROUTE.HOME}>지하철 노선도</Link>
       </Title>
