@@ -54,10 +54,6 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (stations === STATION_BEFORE_FETCH) {
-    return <></>;
-  }
-
   const createStation = async () => {
     const response = await addStation({ name: stationInput });
 
@@ -170,7 +166,7 @@ const StationPage = ({ setIsLoading }: PageProps) => {
         )}
       </Box>
       <Box backgroundColor={PALETTE.WHITE_100}>
-        {stations.length === 0 ? (
+        {stations.length === 0 && stations !== STATION_BEFORE_FETCH ? (
           <img src={noStation} alt="지하철 역 없음 이미지" />
         ) : (
           <StationList aria-label="역 목록">

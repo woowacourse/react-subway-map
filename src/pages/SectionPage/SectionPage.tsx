@@ -135,10 +135,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
-    return <></>;
-  }
-
   const reset = () => {
     setUpStationId('');
     setDownStationId('');
@@ -310,7 +306,10 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE_100}>
         {!currentLine ? (
-          <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
+          lines !== LINE_BEFORE_FETCH &&
+          stations !== STATION_BEFORE_FETCH && (
+            <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
+          )
         ) : (
           <List position="relative" aria-label="구간 목록">
             {currentLine.stations.map(({ id, name, distance }) => {
