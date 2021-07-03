@@ -1,0 +1,11 @@
+const Z_INDEX = {
+  HEADER: 50,
+  API_SWITCH: 50,
+  SPINNER: 21,
+  SPINNER_CONTAINER: 20,
+  SPINNER_DIMMER: 19,
+  TITLE_BOX: 10,
+  SELECT: 2,
+};
+
+export default Z_INDEX;
