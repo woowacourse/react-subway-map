@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-import { FlexCenter } from "../Layout/";
-import { COLOR } from "../../constants";
+import { FlexCenter } from "../Layout/FlexContainer/FlexContainer";
+
+import { COLOR } from "../../utils/constants/color";
 
 const BlockBlock = styled(FlexCenter)`
   background-color: ${COLOR.WHITE};

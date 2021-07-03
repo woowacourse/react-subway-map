@@ -1,9 +1,10 @@
 import { LiHTMLAttributes } from "react";
 
-import { Button, Confirm } from "../";
-import { FlexAlignCenter } from "../Layout/";
+import { FlexAlignCenter } from "../Layout/FlexContainer/FlexContainer";
+import Button from "../Button/Button";
+import Confirm from "../Confirm/Confirm";
 
-import { useModal } from "../../hooks";
+import useModal from "../../hooks/useModal";
 
 import {
   ListItemBlock,

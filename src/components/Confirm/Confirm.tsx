@@ -1,4 +1,4 @@
-import { useModal } from "../../hooks";
+import useModal from "../../hooks/useModal";
 
 import { Block, Title, ButtonControls } from "./Confirm.styles";
 

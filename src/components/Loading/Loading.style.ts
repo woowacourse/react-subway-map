@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-import { FlexCenter } from "../Layout";
+import { FlexCenter } from "../Layout/FlexContainer/FlexContainer";
 
 interface LoadingBlockProps {
   bgColor: string;

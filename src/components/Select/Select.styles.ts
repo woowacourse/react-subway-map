@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { COLOR } from "../../constants";
+import { COLOR } from "../../utils/constants/color";
 
 interface SelectBlockProps {
   selectSize?: "md" | "block";
@@ -15,9 +15,6 @@ const SELECT_SIZE = {
     width: "100%",
   },
 };
-
-// TODO : selectSize 네이밍 수정
-// TODO : 스토리북 상에서 undefined 선택 못하게 만들기
 
 const SelectBlock = styled.select<SelectBlockProps>`
   font-size: 1rem;

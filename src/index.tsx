@@ -2,14 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import store from "./modules";
+import store from "./store";
 import { BASE_URL, changeBaseUrl } from "./apis";
 
 import App from "./App";
-import { ModalProvider, Select } from "./components";
-import { Flex } from "./components";
 
 import GlobalStyle from "./Global.styles";
+
+import ModalProvider from "./components/Modal/ModalProvider";
+import Select from "./components/Select/Select";
+import { Flex } from "./components/Layout/FlexContainer/FlexContainer";
 
 const targets = Object.keys(BASE_URL).map((name) => ({
   value: name,

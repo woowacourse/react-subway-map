@@ -1,10 +1,21 @@
 import SectionAddModal from "./Modal/SectionAddModal";
-import { Button, Block, Select, ListItem } from "../../components";
-import { Flex, FlexCenter, FlexBetween } from "../../components";
 
-import { useStation, useLine, useSelect, useModal } from "../../hooks";
+import {
+  Flex,
+  FlexBetween,
+  FlexCenter,
+} from "../../components/Layout/FlexContainer/FlexContainer";
+import Block from "../../components/Block/Block";
+import Button from "../../components/Button/Button";
+import Select from "../../components/Select/Select";
+import ListItem from "../../components/ListItem/ListItem";
 
-import { SIZE } from "../../constants";
+import useModal from "../../hooks/useModal";
+import useStation from "../../hooks/useStation";
+import useLine from "../../hooks/useLine";
+import useSelect from "../../hooks/useSelect";
+
+import { SIZE } from "../../utils/constants/size";
 
 const SectionManagementPage = () => {
   const { open } = useModal();

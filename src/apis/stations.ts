@@ -1,5 +1,6 @@
 import { request } from "./request";
-import { Station } from "../@types";
+
+import { Station } from "../types/station";
 
 const stations = {
   getAllStation: () => {

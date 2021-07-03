@@ -2,19 +2,12 @@ import axios from "axios";
 import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { useAppSelector } from "./hooks";
-import initialState from "./fixtures/redux";
+import { useAppSelector } from "./hooks/useRedux";
+
+import initialState from "./__mock__/redux";
 
 jest.mock("axios");
-jest.mock("./hooks", () => {
-  const originalModule = jest.requireActual("./hooks");
-
-  return {
-    ...originalModule,
-    useAppDispatch: jest.fn(),
-    useAppSelector: jest.fn(),
-  };
-});
+jest.mock("./hooks/useRedux");
 
 jest.spyOn(window, "alert").mockImplementation(() => true);
 

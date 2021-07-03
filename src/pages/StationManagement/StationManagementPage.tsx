@@ -1,17 +1,17 @@
 import {
-  Button,
-  Block,
-  ListItem,
-  InputField,
-  FormProvider,
-  Form,
-} from "../../components";
-import { Flex, FlexCenter } from "../../components";
+  Flex,
+  FlexCenter,
+} from "../../components/Layout/FlexContainer/FlexContainer";
+import Block from "../../components/Block/Block";
+import Form from "../../components/Form/Form";
+import Button from "../../components/Button/Button";
+import ListItem from "../../components/ListItem/ListItem";
+import InputField from "../../components/Input/InputField";
 
-import { useStation } from "../../hooks";
+import useStation from "../../hooks/useStation";
 
-import { validateStationName } from "../../validations";
-import { SIZE } from "../../constants";
+import { validateStationName } from "../../utils/validations/station";
+import { SIZE } from "../../utils/constants/size";
 
 const StationManagementPage = () => {
   const { stations, addStation, deleteStation } = useStation();
@@ -27,27 +27,26 @@ const StationManagementPage = () => {
         }}
       >
         <h2 css={{ marginBottom: "1rem" }}>🚉역 관리</h2>
-        <FormProvider
+        <Form
+          css={{ width: "100%" }}
           submit={async ({ name }) => {
             await addStation(name);
           }}
           validators={{ name: validateStationName }}
         >
-          <Form css={{ width: "100%" }}>
-            <Flex css={{ width: "100%", marginBottom: "1rem" }}>
-              <Flex
-                css={{
-                  width: "100%",
-                  flexDirection: "column",
-                  marginRight: "0.625rem",
-                }}
-              >
-                <InputField name="name" placeholder="역 이름" required />
-              </Flex>
-              <Button>확인</Button>
+          <Flex css={{ width: "100%", marginBottom: "1rem" }}>
+            <Flex
+              css={{
+                width: "100%",
+                flexDirection: "column",
+                marginRight: "0.625rem",
+              }}
+            >
+              <InputField name="name" placeholder="역 이름" required />
             </Flex>
-          </Form>
-        </FormProvider>
+            <Button>확인</Button>
+          </Flex>
+        </Form>
         <Flex
           css={{
             width: "100%",

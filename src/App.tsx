@@ -1,12 +1,18 @@
 import { useEffect } from "react";
 import { BrowserRouter, Switch, Link } from "react-router-dom";
 
-import { Header, Navigation, Loading, ErrorMessage } from "./components";
 import Routes from "./Routes";
 
-import { useAuth, useStation, useLine } from "./hooks";
+import Header from "./components/Header/Header";
+import Navigation from "./components/Navigation/Navigation";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import Loading from "./components/Loading/Loading";
 
-import { PAGE_PATH, NAV_LINKS } from "./constants";
+import useAuth from "./hooks/useAuth";
+import useStation from "./hooks/useStation";
+import useLine from "./hooks/useLine";
+
+import { PAGE_PATH, NAV_LINKS } from "./utils/constants/route";
 
 const App = () => {
   const {
