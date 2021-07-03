@@ -11,11 +11,12 @@ export default {
 const Template: Story<MenuProps> = args => <Menu {...args} />;
 
 export const Basic = Template.bind({});
+const menuNames = ['역 관리', '노선 관리', '구간 관리', '경로 조회'];
 
 Basic.args = {
   children: (
     <div>
-      {['역 관리', '노선 관리', '구간 관리', '경로 조회'].map(text => (
+      {menuNames.map(text => (
         <Button
           key={text}
           buttonTheme="menu"

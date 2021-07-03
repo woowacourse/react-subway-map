@@ -32,7 +32,7 @@ describe('Home', () => {
     expect(container).toHaveTextContent(GUIDE_MESSAGE.BEFORE_LOGIN);
   });
 
-  it('render before-login guide message', () => {
+  it('render after-login guide message', () => {
     (useSelector as jest.Mock).mockImplementation(() => {
       return validSignedUser;
     });
