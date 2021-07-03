@@ -32,6 +32,9 @@ const ERROR_MESSAGE: { [key: string]: string } = {
 
   LINE_DELETE_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
 
+  SECTION_ADD_BAD_REQUEST: '😥 기존 구간의 거리보다 짧은 거리만 입력할 수 있습니다.',
+  SECTION_ADD_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
+
   SECTION_DELETE_BAD_REQUEST: '😥 한 노선에 지하철 역은 2개 이상이어야 합니다.',
   SECTION_DELETE_UNAUTHORIZED: '😇 로그인 시간이 만료되었습니다. 다시 로그인해주세요',
 };
