@@ -1,8 +1,7 @@
-import { Properties } from 'csstype';
 import styled, { css } from 'styled-components';
 import PALETTE from '../../../constants/palette';
 
-interface ColorDotProps extends Omit<Properties, 'translate'> {
+interface ColorDotProps extends Omit<React.CSSProperties, 'translate'> {
   size: 's' | 'm' | 'l';
 }
 

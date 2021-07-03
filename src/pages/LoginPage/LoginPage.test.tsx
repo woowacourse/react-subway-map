@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import apiRequest from '../../request';
+import API from '../../apis/user';
 
 import LoginPage from './LoginPage';
 import { ERROR_MESSAGE } from '../../constants/messages';
@@ -13,7 +13,7 @@ const PASSWORD = '12341234';
 
 describe('사용자는 로그인을 할 수 있다.', () => {
   beforeEach(() => {
-    apiRequest.login = jest.fn().mockImplementation(() => {
+    API.login = jest.fn().mockImplementation(() => {
       return { ok: true, data: 'peterbeuccolsunny' };
     });
 
@@ -47,10 +47,10 @@ describe('사용자는 로그인을 할 수 있다.', () => {
   });
 
   it('유효하지 않은 계정 정보를 입력하면 에러메시지를 보여준다.', async () => {
-    apiRequest.login = jest.fn().mockImplementation(() => {
+    API.login = jest.fn().mockImplementation(() => {
       return {
         ok: false,
-        error: { type: ERROR_TYPE.INVALID_LOGIN_INFO, message: ERROR_MESSAGE.LOGIN },
+        error: { type: ERROR_TYPE.BAD_REQUEST, message: ERROR_MESSAGE.LOGIN_BAD_REQUEST },
       };
     });
 
@@ -64,7 +64,7 @@ describe('사용자는 로그인을 할 수 있다.', () => {
     fireEvent.change(passwordInput, { target: { value: PASSWORD } });
     fireEvent.click(loginButton);
 
-    await waitFor(() => screen.getByText(ERROR_MESSAGE.LOGIN));
+    await waitFor(() => screen.getByText(ERROR_MESSAGE.LOGIN_BAD_REQUEST));
   });
 
   it('이메일 혹은 패스워드가 입력되지 않으면 에러메시지를 보여준다.', async () => {

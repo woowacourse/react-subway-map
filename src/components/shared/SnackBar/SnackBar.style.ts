@@ -1,6 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-
-import { Properties } from 'csstype';
 import PALETTE from '../../../constants/palette';
 
 const appearFromBottom = keyframes`
@@ -15,7 +13,7 @@ const appearFromBottom = keyframes`
   }
 `;
 
-const Container = styled.div<Properties>`
+const Container = styled.div<React.CSSProperties>`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,11 +1,9 @@
 import { useState, HTMLAttributes, useEffect } from 'react';
-import { Properties } from 'csstype';
-
 import { Container, Inner } from './Header.styles';
 
 interface HeaderProps
   extends Omit<HTMLAttributes<HTMLElement>, 'color' | 'translate'>,
-    Properties {}
+    React.CSSProperties {}
 
 const Header = ({ children, backgroundColor, color = 'white' }: HeaderProps) => {
   const [isAppear, setIsAppear] = useState(true);

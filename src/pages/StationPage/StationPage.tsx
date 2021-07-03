@@ -42,7 +42,6 @@ const StationPage = ({ setIsLoading }: PageProps) => {
     const response = await fetchStations();
 
     if (!response) {
-      console.error(stationRequestError);
       addSnackBar?.(stationRequestError.message);
       setStations([]);
     }
@@ -58,6 +57,29 @@ const StationPage = ({ setIsLoading }: PageProps) => {
   if (stations === STATION_BEFORE_FETCH) {
     return <></>;
   }
+
+  const createStation = async () => {
+    const response = await addStation({ name: stationInput });
+
+    if (!response) {
+      addSnackBar?.(stationRequestError.message);
+
+      if (stationRequestError.type === ERROR_TYPE.BAD_REQUEST) {
+        setStationInputErrorMessage(stationRequestError.message);
+      }
+
+      if (stationRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+        setIsLoggedIn?.(false);
+      }
+
+      await fetchData();
+      return;
+    }
+
+    await fetchData();
+    addSnackBar?.(SUCCESS_MESSAGE.ADD_STATION);
+    setStationInput('');
+  };
 
   const formValidator = () => {
     const isStationInputValid =
@@ -88,50 +110,29 @@ const StationPage = ({ setIsLoading }: PageProps) => {
       return;
     }
 
-    const response = await addStation({ name: stationInput });
-
-    if (response) {
-      await fetchData();
-      addSnackBar?.(SUCCESS_MESSAGE.ADD_STATION);
-      setStationInput('');
-      return;
-    }
-
-    console.error(stationRequestError);
-
-    if (stationRequestError.type === ERROR_TYPE.DUPLICATED) {
-      setStationInputErrorMessage(stationRequestError.message);
-      await fetchData();
-      return;
-    }
-
-    addSnackBar?.(stationRequestError.message);
-
-    if (stationRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
-      setIsLoggedIn?.(false);
-      return;
-    }
+    await createStation();
   };
 
   const onStationDelete = async (id: number, name: string) => {
-    if (!confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) return;
+    if (!confirm(CONFIRM_MESSAGE.DELETE_STATION(name))) {
+      return;
+    }
 
     const response = await deleteStation(id);
 
     if (!response) {
-      console.error(stationRequestError);
       addSnackBar?.(stationRequestError.message);
 
       if (stationRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
         setIsLoggedIn?.(false);
       }
 
+      await fetchData();
       return;
     }
 
     await fetchData();
     addSnackBar?.(SUCCESS_MESSAGE.DELETE_STATION);
-    return;
   };
 
   return (

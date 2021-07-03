@@ -1,9 +1,7 @@
 import styled, { css } from 'styled-components';
-import { Properties } from 'csstype';
-
 import PALETTE from '../../../constants/palette';
 
-interface ButtonProps extends Properties {
+interface ButtonProps extends React.CSSProperties {
   size: 's' | 'm' | 'l';
 }
 

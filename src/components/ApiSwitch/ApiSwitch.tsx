@@ -1,5 +1,5 @@
 import { Container } from './ApiSwitch.style';
-import { API_HOST, ApiHostList } from '../../request';
+import { API_HOST, ApiHostList } from '../../apis/request';
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 

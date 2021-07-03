@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from 'styled-components';
-import { Properties } from 'csstype';
 import Z_INDEX from '../../constants/zIndex';
 
 const slideIn = keyframes`
@@ -22,7 +21,7 @@ const slideOut = keyframes`
   }
 `;
 
-interface ContainerProps extends Properties {
+interface ContainerProps extends React.CSSProperties {
   isAppear: boolean;
 }
 

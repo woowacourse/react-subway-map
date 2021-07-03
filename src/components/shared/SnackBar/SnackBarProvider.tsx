@@ -49,11 +49,14 @@ const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
   return (
     <SnackBarContext.Provider value={{ pushMessage }}>
       {children}
-      {messages.map((message, index, arr) => (
-        <SnackBar key={message.id} order={arr.length - index}>
-          {message.text}
-        </SnackBar>
-      ))}
+      {messages.map(
+        (message, index, arr) =>
+          !!message.text && (
+            <SnackBar key={message.id} order={arr.length - index}>
+              {message.text}
+            </SnackBar>
+          )
+      )}
     </SnackBarContext.Provider>
   );
 };

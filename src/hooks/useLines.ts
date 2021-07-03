@@ -8,7 +8,10 @@ interface Error {
   message: string;
 }
 
-const defaultError = { type: ERROR_TYPE.DEFAULT, message: ERROR_MESSAGE.DEFAULT };
+const defaultError = {
+  type: ERROR_TYPE.DEFAULT,
+  message: ERROR_MESSAGE.DEFAULT,
+};
 
 const useLines = (
   initialLines: APIResponseDataLine[]
@@ -24,7 +27,7 @@ const useLines = (
   const [lines, setLines] = useState<APIResponseDataLine[]>(initialLines);
   const [error, setError] = useState(defaultError);
 
-  const fetchLines = async (): Promise<boolean> => {
+  const fetchLines = async () => {
     const response = await API.get();
 
     if (response.ok) {
@@ -32,11 +35,14 @@ const useLines = (
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE[response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
-  const fetchLine = async (lineId: number): Promise<boolean> => {
+  const fetchLine = async (lineId: number) => {
     const response = await API.getLine(lineId);
 
     if (response.ok) {
@@ -51,45 +57,38 @@ const useLines = (
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE[response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
-  const addLine = async (data: LineData): Promise<boolean> => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('no accessToken');
-      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
-      return false;
-    }
-
-    const response = await API.post(data, accessToken);
+  const addLine = async (data: LineData) => {
+    const response = await API.post(data);
 
     if (response.ok) {
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE[response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 
-  const deleteLine = async (lineId: number): Promise<boolean> => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('no accessToken');
-      setError({ type: ERROR_TYPE.NO_ACCESS_TOKEN, message: ERROR_MESSAGE.UNAUTHORIZED });
-      return false;
-    }
-
-    const response = await API.delete(lineId, accessToken);
+  const deleteLine = async (lineId: number) => {
+    const response = await API.delete(lineId);
 
     if (response.ok) {
       return true;
     }
 
-    setError(response.error || defaultError);
+    setError({
+      ...response.error,
+      message: ERROR_MESSAGE['LINE_DELETE_' + response.error.type] || ERROR_MESSAGE.DEFAULT,
+    });
     return false;
   };
 

@@ -133,8 +133,6 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     const responses = await Promise.all([fetchStations(), fetchLines()]);
 
     if (responses.some((response) => response === false)) {
-      console.error(lineRequestError, stationRequestError);
-
       addSnackBar?.(ERROR_MESSAGE.DEFAULT);
       setLines([]);
       setStations([]);
@@ -160,16 +158,7 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     setDownStationId(event.target.value);
   };
 
-  const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-
-    const color = formElement.current?.['color'].value;
-
-    if (!isFormCompleted || !color) {
-      addSnackBar?.(ERROR_MESSAGE.INCOMPLETE_FORM);
-      return;
-    }
-
+  const createLine = async (color: string) => {
     const newLine = {
       name: lineName,
       color,
@@ -180,21 +169,34 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
     const response = await addLine(newLine);
 
-    if (response) {
-      await fetchData();
+    if (!response) {
+      addSnackBar?.(lineRequestError.message);
 
-      addSnackBar?.(SUCCESS_MESSAGE.ADD_LINE);
-      reset();
-      setIsFormOpened(false);
+      if (lineRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+        setIsLoggedIn?.(false);
+      }
+
+      await fetchData();
       return;
     }
 
-    if (lineRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
-      setIsLoggedIn?.(false);
+    await fetchData();
+    addSnackBar?.(SUCCESS_MESSAGE.ADD_LINE);
+    reset();
+    setIsFormOpened(false);
+  };
+
+  const onLineSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    const color = formElement.current?.['color'].value;
+
+    if (!isFormCompleted || !color) {
+      addSnackBar?.(ERROR_MESSAGE.INCOMPLETE_FORM);
+      return;
     }
 
-    console.error(lineRequestError);
-    addSnackBar?.(lineRequestError.message);
+    await createLine(color);
   };
 
   const onLineDelete = async (id: number, name: string) => {
@@ -204,18 +206,19 @@ const LinePage = ({ setIsLoading }: PageProps) => {
 
     const response = await deleteLine(id);
 
-    if (response) {
+    if (!response) {
+      addSnackBar?.(lineRequestError.message);
+
+      if (lineRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
+        setIsLoggedIn?.(false);
+      }
+
       await fetchData();
-      addSnackBar?.(SUCCESS_MESSAGE.DELETE_LINE);
       return;
     }
 
-    if (lineRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
-      setIsLoggedIn?.(false);
-    }
-
-    console.error(lineRequestError);
-    addSnackBar?.(lineRequestError.message);
+    await fetchData();
+    addSnackBar?.(SUCCESS_MESSAGE.DELETE_LINE);
   };
 
   return (

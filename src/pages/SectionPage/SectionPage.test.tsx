@@ -5,8 +5,8 @@ import SectionPage from './SectionPage';
 import stationAPI from '../../apis/station';
 import lineAPI from '../../apis/line';
 import sectionAPI from '../../apis/section';
+import userAPI from '../../apis/user';
 
-import request from '../../request';
 import UserProvider from '../../contexts/UserContextProvider';
 import { mockAccessToken } from '../../mockData';
 
@@ -54,7 +54,7 @@ const VALID_LINE_NAME = '피터라인';
 
 describe('사용자는 지하철 구간 관리 기능을 이용할 수 있다.', () => {
   beforeEach(async () => {
-    request.getUserInfo = jest
+    userAPI.get = jest
       .fn()
       .mockResolvedValue({ ok: true, data: { id: 1, age: 9, email: 'tets@test.com' } });
     stationAPI.get = jest.fn().mockImplementation(() => {

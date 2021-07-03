@@ -1,7 +1,0 @@
-const STATUS_CODE = {
-  INTERNAL_SERVER_ERROR: '500',
-  UNAUTHORIZED: '401',
-  BAD_REQUEST: '400',
-};
-
-export default STATUS_CODE;

@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
-import apiRequest from '../../request';
+import userAPI from '../../apis/user';
 import SignupPage from './SignupPage';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/messages';
 
@@ -16,8 +16,8 @@ const INVALID_PASSWORD = '패스';
 
 describe('사용자는 회원가입을 할 수 있다.', () => {
   beforeEach(() => {
-    apiRequest.checkEmailDuplicated = jest.fn().mockReturnValue({ ok: true, data: false });
-    apiRequest.signup = jest.fn().mockReturnValue({ ok: true });
+    userAPI.checkEmailDuplicated = jest.fn().mockReturnValue({ ok: true, data: false });
+    userAPI.signup = jest.fn().mockReturnValue({ ok: true });
 
     render(
       <Router>
@@ -60,7 +60,7 @@ describe('사용자는 회원가입을 할 수 있다.', () => {
   });
 
   it('이미 가입된 이메일을 입력하면 에러메시지를 보여준다.', async () => {
-    apiRequest.checkEmailDuplicated = jest.fn().mockReturnValue({ ok: true, data: true });
+    userAPI.checkEmailDuplicated = jest.fn().mockReturnValue({ ok: true, data: true });
 
     const emailInput = screen.getByLabelText('이메일 입력');
     fireEvent.change(emailInput, { target: { value: EMAIL } });
