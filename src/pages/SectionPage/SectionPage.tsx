@@ -106,7 +106,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     const response = await fetchLine(lineId);
 
     if (!response) {
-      console.error(lineRequestError);
       addSnackBar?.(lineRequestError.message);
     }
 
