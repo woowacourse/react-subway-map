@@ -11,7 +11,7 @@ export const changeValue = (key: string, value: string) => ({
 
 export const resetForm = () => ({ type: RESET_FORM });
 
-type ActionType = ReturnType<typeof changeValue> | ReturnType<typeof resetForm>;
+export type ActionType = ReturnType<typeof changeValue> | ReturnType<typeof resetForm>;
 export interface FormState {
   [key: string]: {
     value: string;
