@@ -146,10 +146,6 @@ const LinePage = ({ setIsLoading }: PageProps) => {
     fetchData();
   }, []);
 
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
-    return <></>;
-  }
-
   const onUpStationIdChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     setUpStationId(event.target.value);
   };
@@ -311,12 +307,13 @@ const LinePage = ({ setIsLoading }: PageProps) => {
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE_100}>
         {lines.length === 0 ? (
-          <img src={noLine} alt="지하철 노선 없음 이미지" />
+          lines !== LINE_BEFORE_FETCH &&
+          stations !== STATION_BEFORE_FETCH && <img src={noLine} alt="지하철 노선 없음 이미지" />
         ) : (
           <List aria-label="노선 목록">
             {lines.map(({ id, name, color }) => (
               <li key={id}>
-                <ColorDot size="s" backgroundColor={color} />
+                <ColorDot size="s" backgroundColor={PALETTE[color]} />
                 <p>{name}</p>
                 {isLoggedIn && (
                   <Button

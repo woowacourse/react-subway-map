@@ -106,7 +106,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     const response = await fetchLine(lineId);
 
     if (!response) {
-      console.error(lineRequestError);
       addSnackBar?.(lineRequestError.message);
     }
 
@@ -134,10 +133,6 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  if (lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH) {
-    return <></>;
-  }
 
   const reset = () => {
     setUpStationId('');
@@ -169,7 +164,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
     if (!response) {
       addSnackBar?.(sectionRequestError.message);
 
-      if ((sectionRequestError.type = ERROR_TYPE.UNAUTHORIZED)) {
+      if (sectionRequestError.type === ERROR_TYPE.UNAUTHORIZED) {
         setIsLoggedIn?.(false);
       }
 
@@ -246,7 +241,7 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
           <p>추가 및 삭제 기능을 이용하시려면 로그인해주세요 🙂</p>
         )}
         <InputContainer labelText="노선 선택">
-          <ColorDot size="s" backgroundColor={currentLine?.color} />
+          <ColorDot size="s" backgroundColor={currentLine?.color && PALETTE[currentLine.color]} />
           <Select onChange={onLineSelect} aria-label="노선 선택">
             <option value="/" hidden>
               노선 선택
@@ -310,13 +305,16 @@ const SectionPage = ({ setIsLoading }: PageProps) => {
       </FormBox>
       <Box backgroundColor={PALETTE.WHITE_100}>
         {!currentLine ? (
-          <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
+          lines !== LINE_BEFORE_FETCH &&
+          stations !== STATION_BEFORE_FETCH && (
+            <img src={noSelectedLine} alt="노선 선택 안내 메시지" />
+          )
         ) : (
           <List position="relative" aria-label="구간 목록">
             {currentLine.stations.map(({ id, name, distance }) => {
               return (
                 <li key={id}>
-                  <ColorDot size="s" backgroundColor={currentLine.color} />
+                  <ColorDot size="s" backgroundColor={PALETTE[currentLine.color]} />
                   <p>{name}</p>
                   {distance && <Distance>{`거리 : ${distance}`}</Distance>}
                   {isLoggedIn && (
