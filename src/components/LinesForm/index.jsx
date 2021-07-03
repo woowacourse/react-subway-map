@@ -11,7 +11,7 @@ import Button from "../@shared/Button";
 import ColorSelect from "../ColorSelect";
 import ListSelect from "../ListSelect";
 
-const LinesForm = ({ closeModal }) => {
+const LinesForm = ({ onSubmit }) => {
   const dispatch = useDispatch();
   const stationsList = useSelector(selectStationsList);
 
@@ -23,6 +23,7 @@ const LinesForm = ({ closeModal }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       const result = await dispatch(
         addLine({
@@ -34,7 +35,7 @@ const LinesForm = ({ closeModal }) => {
         })
       );
       await unwrapResult(result);
-      closeModal();
+      onSubmit();
     } catch (error) {
       /* do nothing when error occured */
     }
@@ -100,7 +101,7 @@ const LinesForm = ({ closeModal }) => {
 };
 
 LinesForm.propTypes = {
-  closeModal: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default LinesForm;

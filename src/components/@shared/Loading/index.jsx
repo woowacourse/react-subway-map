@@ -6,7 +6,7 @@ import { PulseSpinner } from "react-spinners-kit";
 
 const Loading = ({ isLoading, color, size, sizeUnit }) =>
   isLoading && (
-    <div className="absolute z-9999 left-0 top-0 flex items-center justify-center w-full h-full max-h-screen">
+    <div className="fixed z-9999 left-0 top-0 flex items-center justify-center w-full h-full max-h-screen">
       <PulseSpinner loading {...{ color, size, sizeUnit }} />
     </div>
   );
