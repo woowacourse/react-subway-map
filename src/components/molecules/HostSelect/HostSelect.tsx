@@ -33,7 +33,7 @@ const HostSelect = () => {
   return (
     <Container>
       <span>서버 설정</span>
-      <Select options={hostOptions} onChange={onChange} selectValue={host} />
+      <Select options={hostOptions} onChange={onChange} value={host} />
     </Container>
   );
 };

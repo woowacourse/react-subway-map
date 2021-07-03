@@ -1,13 +1,14 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { BASE_URL, RESPONSE_MESSAGE } from '../../../constants';
-import { useChangeEvent, useModal, useServerAPI } from '../../../hooks';
+import { useChangeEvent, useLine, useModal, useSection, useStation } from '../../../hooks';
 import { RootState } from '../../../store';
 import { FullVerticalCenterBox, ScrollBox } from '../../../styles/shared';
-import { ILineRes, ISectionReq, IStationRes } from '../../../type';
-import { isValidUpDownStation } from '../../../utils';
+import { IStationRes } from '../../../type';
 import { Button, Header, Select } from '../../atoms';
 import { IOption } from '../../atoms/Select/Select';
+import { FormProvider } from '../../contexts/FormContext/FormContext';
 import { ListItem, Modal, SectionAddForm } from '../../molecules';
 import { SelectContainer } from './Section.styles';
 
@@ -18,76 +19,19 @@ const Section = () => {
     return { hostState: state.hostReducer };
   });
 
-  const { allData: stations, getAllData: getAllStations } = useServerAPI<IStationRes>(
-    BASE_URL.STATION(host),
-    RESPONSE_MESSAGE.SECTION,
-  );
-
-  const {
-    allData: lines,
-    getAllData: getAllLines,
-    deleteData: deleteSection,
-    deleteDataResponse: deleteSectionResponse,
-    postData: addSection,
-    postDataResponse: addSectionResponse,
-  } = useServerAPI<ILineRes>(BASE_URL.LINE(host), RESPONSE_MESSAGE.LINE);
-
+  const { stations, getAllStations } = useStation(host);
+  const { lines, getAllLines } = useLine(host);
+  const { addSection, addSectionResponse, deleteSection, deleteSectionResponse } = useSection(host);
   const { close: closeModal, open: openModal, isModalOpen, onClickClose } = useModal(false);
 
   const { value: lineId, onChange: onChangeLineId } = useChangeEvent('');
-  const {
-    value: distance,
-    onChange: onChangeDistance,
-    setValue: setDistance,
-  } = useChangeEvent('1');
-  const {
-    value: upStationId,
-    onChange: onChangeUpStationId,
-    setValue: setUpStationId,
-  } = useChangeEvent('');
-  const {
-    value: downStationId,
-    onChange: onChangeDownStationId,
-    setValue: setDownStationId,
-  } = useChangeEvent('');
 
-  const resetForm = () => {
-    setDistance('1');
-    setUpStationId('');
-    setDownStationId('');
-  };
+  const currentLineColor = lines?.find(line => line.id === Number(lineId))?.color;
 
   const lineOptions: IOption[] = lines?.map(({ id, name }) => ({ value: id, name })) || [];
 
-  const displayStations: IStationRes[] =
+  const stationsOfSelectedLine: IStationRes[] =
     lines?.find(({ id }) => id === Number(lineId))?.stations || [];
-
-  const onSubmitSectionInfo: React.FormEventHandler<HTMLFormElement> = event => {
-    event.preventDefault();
-
-    if (!isValidUpDownStation(upStationId, downStationId)) {
-      window.alert('상행선, 하행선을 선택해주세요');
-
-      return;
-    }
-
-    if (upStationId === downStationId) {
-      window.alert('상행선, 하행선은 달라야 합니다');
-
-      return;
-    }
-
-    const body: ISectionReq = {
-      upStationId: Number(upStationId),
-      downStationId: Number(downStationId),
-      distance: Number(distance),
-    };
-
-    addSection<ISectionReq>(body, `${lineId}/sections`);
-
-    resetForm();
-    closeModal();
-  };
 
   const onDeleteSection = (stationId: number) => {
     if (!confirm('해당 구간을 정말로 삭제하시겠습니까?')) return;
@@ -114,13 +58,16 @@ const Section = () => {
         <Select
           options={lineOptions}
           onChange={onChangeLineId}
-          selectValue={lineId}
           defaultName="노선을 선택해주세요"
+          value={lineId}
+          css={css`
+            border: 6px solid ${currentLineColor};
+          `}
         />
       </SelectContainer>
 
       <ScrollBox>
-        {displayStations.map(({ id: stationId, name }) => {
+        {stationsOfSelectedLine.map(({ id: stationId, name }) => {
           return (
             <ListItem
               key={stationId}
@@ -134,21 +81,17 @@ const Section = () => {
       {isModalOpen && (
         <Modal onClickClose={onClickClose}>
           <Header>
-            <h3>{'🔁 구간 추가'}</h3>
+            <h3>🔁 구간 추가</h3>
           </Header>
-          <SectionAddForm
-            stationList={stations || []}
-            lineList={lines || []}
-            lineId={Number(lineId)}
-            onChangeLine={onChangeLineId}
-            onChangeUpStation={onChangeUpStationId}
-            upStation={Number(upStationId)}
-            onChangeDownStation={onChangeDownStationId}
-            downStation={Number(downStationId)}
-            onChangeDistance={onChangeDistance}
-            distance={Number(distance)}
-            onSubmitSectionInfo={onSubmitSectionInfo}
-          />
+          <FormProvider submitFunc={addSection}>
+            <SectionAddForm
+              stationList={stations || []}
+              lineList={lines || []}
+              lineId={Number(lineId)}
+              onChangeLine={onChangeLineId}
+              closeModal={closeModal}
+            />
+          </FormProvider>
         </Modal>
       )}
     </FullVerticalCenterBox>
