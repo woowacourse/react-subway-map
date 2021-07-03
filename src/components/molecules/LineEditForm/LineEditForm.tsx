@@ -1,83 +1,61 @@
+/** @jsxImportSource @emotion/react */
 import ColorSelector from '../ColorSelector/ColorSelector';
-import { Container, Wrapper } from './LineEditForm.styles';
-import { Button, Input, Select } from '../../atoms';
-import { IOption } from '../../atoms/Select/Select';
-import { IStationRes } from '../../../type.d';
+import { StyledForm } from './LineEditForm.styles';
+import { Button, Input } from '../../atoms';
 import { COLOR } from '../../../constants';
-
-export interface LineAddFormProps {
-  stations: IStationRes[];
-  onChangeUpStationId: React.ChangeEventHandler<HTMLSelectElement>;
-  upStationId: string;
-  onChangeDownStationId: React.ChangeEventHandler<HTMLSelectElement>;
-  downStationId: string;
-  onChangeDistance: React.ChangeEventHandler<HTMLInputElement>;
-  distance: string;
-}
-
+import { useFormContext } from '../../contexts/FormContext/FormContext';
+import { css } from '@emotion/react';
+import { isValidLineName } from '../../../utils';
 export interface LineEditFormProps {
-  onChangeLineName: React.ChangeEventHandler<HTMLInputElement>;
-  lineName: string;
-  setColor: (color: string) => void;
-  onSubmitLineInfo: React.FormEventHandler<HTMLFormElement>;
-  addFormProps: LineAddFormProps | null;
+  closeModal: () => void;
+  selectedLineId: number | undefined;
 }
 
-const LineEditForm = ({
-  onChangeLineName,
-  lineName,
-  setColor,
-  onSubmitLineInfo,
-  addFormProps,
-}: LineEditFormProps) => {
-  const stationListOptions: IOption[] =
-    addFormProps?.stations.map(({ id, name }) => ({
-      value: id,
-      name,
-    })) || [];
+const LineEditForm = ({ closeModal, selectedLineId }: LineEditFormProps) => {
+  const { state, submitFunc } = useFormContext();
+  const currentColor = state?.color?.value;
+
+  const onEditLine = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!(state.lineName && state.color)) {
+      window.alert('모든 항목을 입력해주세요');
+      return;
+    }
+
+    const { lineName, color } = state;
+
+    if (!isValidLineName(lineName.value)) {
+      window.alert(
+        '역 이름은 공백이 포함되지 않은 2자 이상 20자 이하의 한글/숫자로 이루어진 문자열이어야 합니다.',
+      );
+      return;
+    }
+
+    const body = {
+      name: lineName.value,
+      color: color.value,
+    };
+
+    submitFunc(body, selectedLineId);
+    closeModal();
+  };
 
   return (
-    <Container onSubmit={onSubmitLineInfo}>
+    <StyledForm onSubmit={onEditLine}>
       <Input
-        name="line-name"
+        name="lineName"
         placeholder="노선 이름"
-        onChange={onChangeLineName}
-        value={lineName}
         minLength={2}
         maxLength={10}
+        required
+        css={css`
+          border: 4px solid ${currentColor};
+        `}
       />
-
-      {addFormProps && (
-        <>
-          <Wrapper>
-            <Select
-              defaultName="상행선"
-              options={stationListOptions}
-              onChange={addFormProps.onChangeUpStationId}
-              selectValue={addFormProps.upStationId}
-            />
-            <Select
-              defaultName="하행선"
-              options={stationListOptions}
-              onChange={addFormProps.onChangeDownStationId}
-              selectValue={addFormProps.downStationId}
-            />
-          </Wrapper>
-          <Input
-            name="line-distance"
-            type="number"
-            onChange={addFormProps.onChangeDistance}
-            value={addFormProps.distance}
-            placeholder="거리 (km)"
-            min={1}
-            max={100}
-          />
-        </>
-      )}
-
-      <ColorSelector colorList={Object.values(COLOR.LineColor)} setColor={setColor} />
+      <ColorSelector colorList={Object.values(COLOR.LineColor)} />
       <Button>확인</Button>
-    </Container>
+    </StyledForm>
   );
 };
 

@@ -11,8 +11,4 @@ const Template: Story<ColorSelectorProps> = args => <ColorSelector {...args} />;
 
 export const Basic = Template.bind({});
 
-Basic.args = {
-  setColor: color => {
-    console.log(color);
-  },
-};
+Basic.args = {};

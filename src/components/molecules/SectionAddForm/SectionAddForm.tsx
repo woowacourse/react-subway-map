@@ -56,7 +56,6 @@ const SectionAddForm = ({
         defaultName="구간을 추가할 노선을 선택해주세요"
         options={lineOptions}
         onChange={onChangeLine}
-        selectValue={lineId}
       />
       <Wrapper>
         <Select
@@ -64,14 +63,12 @@ const SectionAddForm = ({
           defaultName="출발역"
           options={stationOptionsWithSelectedLine}
           onChange={onChangeUpStation}
-          selectValue={upStation}
         />
         <Select
           name="downStation"
           defaultName="다음역"
           options={stationOptions}
           onChange={onChangeDownStation}
-          selectValue={downStation}
         />
       </Wrapper>
       <Input

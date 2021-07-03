@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useReducer } from 'react';
-import { changeValue, FormState, reducer, resetForm } from './reducer';
+import { ActionType, changeValue, FormState, reducer, resetForm } from './reducer';
 
 interface FormContextProps {
   state: FormState;
   onChange: React.ChangeEventHandler;
+  dispatch: React.Dispatch<ActionType>;
+  submitFunc: (...args: any[]) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
@@ -11,7 +14,7 @@ const FormContext = createContext<FormContextProps | null>(null);
 
 interface FormContextProviderProps {
   children: React.ReactNode;
-  submitFunc: <T>(data: T) => void;
+  submitFunc: (...args: any[]) => void;
 }
 
 export const FormProvider = ({ children, submitFunc }: FormContextProviderProps) => {
@@ -31,7 +34,9 @@ export const FormProvider = ({ children, submitFunc }: FormContextProviderProps)
   };
 
   return (
-    <FormContext.Provider value={{ state, onChange, onSubmit }}>{children}</FormContext.Provider>
+    <FormContext.Provider value={{ state, onChange, onSubmit, submitFunc, dispatch }}>
+      {children}
+    </FormContext.Provider>
   );
 };
 
