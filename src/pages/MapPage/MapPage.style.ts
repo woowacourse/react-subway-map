@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import PALETTE from '../../constants/palette';
 
 const Container = styled.div`
   width: 100%;
