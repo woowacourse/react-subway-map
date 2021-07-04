@@ -18,7 +18,7 @@ const useStations = (initialStations: Station[] = []) => {
   const [stationInputErrorMessage, setStationInputErrorMessage] = useState<string>('');
 
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
+  const logout = useContext(UserContext)?.logout;
 
   const fetchStations = async (): Promise<void> => {
     const { isSucceeded, message, result } = await api.station.get();
@@ -34,7 +34,7 @@ const useStations = (initialStations: Station[] = []) => {
     const { message, result } = await api.station.post(data);
 
     if (result && !result.auth) {
-      setIsLoggedIn?.(false);
+      logout?.();
 
       return;
     }
@@ -54,7 +54,7 @@ const useStations = (initialStations: Station[] = []) => {
     addMessage?.(message);
 
     if (result && !result.auth) {
-      setIsLoggedIn?.(false);
+      logout?.();
 
       return;
     }

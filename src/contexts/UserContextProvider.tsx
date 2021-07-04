@@ -1,13 +1,6 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import api from '../apis';
+import { STORAGE_KEY } from '../constants/storage';
 
 interface UserProviderProps {
   children: ReactNode;
@@ -15,24 +8,16 @@ interface UserProviderProps {
 
 interface User {
   isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  login: (accessToken: string) => void;
+  logout: () => void;
 }
 
 const UserContext = createContext<User | null>(null);
 
 const UserProvider = ({ children }: UserProviderProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const isMounted = useRef(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (!isMounted.current && isLoggedIn === false) {
-      localStorage.setItem('accessToken', '');
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    isMounted.current = false;
-
     (async () => {
       const { isSucceeded } = await api.user.getInfo();
 
@@ -42,8 +27,18 @@ const UserProvider = ({ children }: UserProviderProps) => {
     })();
   }, []);
 
+  const login = (accessToken: string) => {
+    setIsLoggedIn(true);
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, accessToken);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem('accessToken', '');
+  };
+
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ isLoggedIn, login, logout }}>{children}</UserContext.Provider>
   );
 };
 

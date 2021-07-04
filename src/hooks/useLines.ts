@@ -24,7 +24,7 @@ const useLines = (initialLines: Line[]) => {
   const [distance, onDistanceChange, setDistance] = useInput('');
 
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
+  const logout = useContext(UserContext)?.logout;
 
   const isLineNameValid =
     lineName.length >= LINE_VALUE.NAME_MIN_LENGTH &&
@@ -90,7 +90,7 @@ const useLines = (initialLines: Line[]) => {
     const { message, result } = await api.line.post(data);
 
     if (result && !result.auth) {
-      setIsLoggedIn?.(false);
+      logout?.();
 
       return;
     }
@@ -103,7 +103,7 @@ const useLines = (initialLines: Line[]) => {
     const { message, result } = await api.line.delete(lineId);
 
     if (result && !result.auth) {
-      setIsLoggedIn?.(false);
+      logout?.();
 
       return;
     }

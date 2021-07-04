@@ -28,7 +28,7 @@ const App = () => {
   const isLoading = useContext(LoadingContext)?.isLoading;
 
   const onLogout = async () => {
-    await userContext?.setIsLoggedIn(false);
+    userContext?.logout();
 
     addMessage?.(SUCCESS_MESSAGE.LOGOUT);
     history.push(PATH.LOGIN);

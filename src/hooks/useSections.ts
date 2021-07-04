@@ -26,7 +26,7 @@ const useSections = (initialStations: Station[], initialLines: Line[]) => {
   const currentLine = lines.find((line) => line.id === selectedLineId);
 
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
+  const logout = useContext(UserContext)?.logout;
   const callWithLoading = useContext(LoadingContext)?.callWithLoading;
 
   const isOnlyOneStationInCurrentLine = Boolean(
@@ -64,7 +64,7 @@ const useSections = (initialStations: Station[], initialLines: Line[]) => {
     const { message, result } = await api.section.post(lineId, data);
 
     if (result && !result.auth) {
-      setIsLoggedIn?.(false);
+      logout?.();
 
       return;
     }
@@ -76,7 +76,7 @@ const useSections = (initialStations: Station[], initialLines: Line[]) => {
     const { message, result } = await api.section.delete(lineId, stationId);
 
     if (result && !result.auth) {
-      setIsLoggedIn?.(false);
+      logout?.();
 
       return;
     }
