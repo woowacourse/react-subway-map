@@ -95,7 +95,11 @@ const stationsSlice = createSlice({
   name: "stations",
   initialState,
   reducers: {
-    reset: (state) => ({ ...state, status: STATUS.IDLE }),
+    reset: (state) => {
+      state.status = STATUS.IDLE;
+      state.error = null;
+      state.message = "";
+    },
   },
   extraReducers: {
     [addStation.pending]: (state) => {
