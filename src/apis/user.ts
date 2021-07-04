@@ -16,7 +16,7 @@ const userAPI = {
 
       const { data } = await axios.get('/members/me', {
         headers: {
-          'Content-Type': `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
