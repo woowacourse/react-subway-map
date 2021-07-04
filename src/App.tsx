@@ -65,10 +65,10 @@ const App = () => {
         <Switch>
           <Route exact path={PATH.LOGIN} render={() => <LoginPage />} />
           <Route exact path={PATH.SIGNUP} render={() => <SignupPage />} />
-          <Route exact path={[PATH.STATIONS, PATH.ROOT]} render={() => <StationPage />} />
+          <Route exact path={[PATH.MAP, PATH.ROOT]} render={() => <MapPage />} />
+          <Route exact path={PATH.STATIONS} render={() => <StationPage />} />
           <Route exact path={PATH.LINES} render={() => <LinePage />} />
           <Route exact path={PATH.SECTIONS} render={() => <SectionPage />} />
-          <Route exact path={PATH.MAP} render={() => <MapPage />} />
           <Redirect to={PATH.ROOT} />
         </Switch>
       </Main>
