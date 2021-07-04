@@ -1,9 +1,9 @@
 import React, { ChangeEventHandler, FormEventHandler, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useLines from '../../hooks/useLines';
 import { modifyLine } from '../../redux/lineSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
@@ -28,7 +28,7 @@ interface FormValue {
 }
 
 const LineModifyModal = ({ line, onClose }: Props): JSX.Element => {
-  const { lines } = useSelector((state: RootState) => state.line);
+  const { lines } = useLines();
   const dispatch = useAppDispatch();
 
   const [formInput, setFormInput] = useState<FormValue>({
@@ -118,7 +118,5 @@ const LineModifyModal = ({ line, onClose }: Props): JSX.Element => {
     </Modal>
   );
 };
-
-
 
 export default LineModifyModal;

@@ -1,11 +1,11 @@
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useStations from '../../hooks/useStations';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import Button from '../@common/Button/Button';
 import Input from '../@common/Input/Input';
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const SectionAddModal = ({ onClose, line }: Props): JSX.Element => {
-  const { stations } = useSelector((state: RootState) => state.station);
+  const { stations } = useStations();
   const dispatch = useAppDispatch();
 
   const [formInput, setFormInput] = useState({

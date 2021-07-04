@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestDeleteSection } from '../../api/lines';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -13,11 +13,12 @@ import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
 import { PAGE_INFO, SECTION } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
+import useLines from '../../hooks/useLines';
 import useModal from '../../hooks/useModal';
+import useStations from '../../hooks/useStations';
 import useThemeColor from '../../hooks/useThemeColor';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
-import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import { StationName } from '../Stations/Stations.styles';
@@ -26,12 +27,8 @@ import { LineInfoContainer, LineSelectBox } from './Section.styles';
 const Sections = (): JSX.Element => {
   const themeColor = useThemeColor();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { stations, isLoading: stationsIsLoading, errorMessage: stationErrorMessage } = useSelector(
-    (state: RootState) => state.station
-  );
-  const { lines, isLoading: linesIsLoading, errorMessage: lineErrorMessage } = useSelector(
-    (state: RootState) => state.line
-  );
+  const { isLoading: stationsIsLoading, errorMessage: stationErrorMessage } = useStations();
+  const { lines, isLoading: linesIsLoading, errorMessage: lineErrorMessage } = useLines();
   const dispatch = useAppDispatch();
 
   const sectionAddModal = useModal();
@@ -41,16 +38,6 @@ const Sections = (): JSX.Element => {
     const id = Number(targetLineId);
     return lines.find((line) => line.id === id);
   }, [targetLineId, lines]);
-
-  useEffect(() => {
-    if (lines.length === 0) {
-      dispatch(loadLines());
-    }
-
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
-  }, []);
 
   useUpdateEffect(() => {
     if (stationErrorMessage !== '') {

@@ -1,23 +1,16 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Dimmed from '../../components/@common/Dimmed/Dimmed';
 import Loading from '../../components/@common/Loading/Loading';
 import { PAGE_INFO } from '../../constants/appInfo';
+import useLines from '../../hooks/useLines';
 import useThemeColor from '../../hooks/useThemeColor';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
-import { loadLines } from '../../redux/lineSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
 import { SubwayMapContainer, SubwayMapList, SubwayMapListItem } from './SubwayMap.styles';
 
 const SubwayMap = (): JSX.Element => {
   const themeColor = useThemeColor();
-  const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(loadLines());
-  }, []);
+  const { lines, isLoading, errorMessage } = useLines();
 
   useUpdateEffect(() => {
     if (errorMessage === '') {

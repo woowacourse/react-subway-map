@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Dimmed from '../../components/@common/Dimmed/Dimmed';
@@ -11,24 +11,21 @@ import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineMod
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
+import useLines from '../../hooks/useLines';
 import useModal from '../../hooks/useModal';
 import useThemeColor from '../../hooks/useThemeColor';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
-import { deleteLine, loadLines } from '../../redux/lineSlice';
+import { deleteLine } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
 
 const Lines = (): JSX.Element => {
   const themeColor = useThemeColor();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
+  const { lines, isLoading, errorMessage } = useLines();
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
   const lineModifyModal = useModal();
-
-  useEffect(() => {
-    dispatch(loadLines());
-  }, []);
 
   useUpdateEffect(() => {
     if (errorMessage === '') {
