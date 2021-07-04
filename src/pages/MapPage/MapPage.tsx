@@ -27,7 +27,7 @@ const MapPage = () => {
         <Heading1>지하철 전체보기</Heading1>
         <Lines>
           {lines.map((line) => (
-            <div>
+            <div key={line.id}>
               <SectionGraph line={line} />
             </div>
           ))}
