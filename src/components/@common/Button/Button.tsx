@@ -1,9 +1,7 @@
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
-import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { API_INFO } from '../../../constants/api';
 import PALETTE, { Color } from '../../../constants/palette';
-import { RootState } from '../../../redux/store';
+import useThemeColor from '../../../hooks/useThemeColor/useThemeColor';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonShape?: 'square' | 'round';
@@ -67,13 +65,13 @@ export const Button = ({
   isColored = true,
   ...options
 }: PropsWithChildren<Props>): JSX.Element => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const themeColor = useThemeColor();
 
   return (
     <StyledButton
       buttonShape={buttonShape}
       isColored={isColored}
-      themeColor={API_INFO[apiOwner].themeColor as Color}
+      themeColor={themeColor as Color}
       {...options}
     >
       {children}

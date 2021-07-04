@@ -8,18 +8,18 @@ import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import ListItem from '../../components/@shared/ListItem/ListItem';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
+import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
 
 const Lines = (): JSX.Element => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const themeColor = useThemeColor();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
@@ -60,10 +60,7 @@ const Lines = (): JSX.Element => {
   };
 
   return (
-    <CardTemplate
-      titleText={PAGE_INFO.LINES.text}
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-    >
+    <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={themeColor[400]}>
       {isLoading && (
         <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
           <Loading />

@@ -1,16 +1,15 @@
 import React, { FormEventHandler, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestLogin } from '../../api/member';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
 import { login } from '../../redux/loginSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import {
   LoginButton,
   LoginContainer,
@@ -20,7 +19,7 @@ import {
 } from './Login.styles';
 
 const Login = (): JSX.Element => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const themeColor = useThemeColor();
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [errorMessage, setErrorMessage] = useState('');
@@ -46,10 +45,7 @@ const Login = (): JSX.Element => {
   };
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.LOGIN.text}
-    >
+    <CardTemplate templateColor={themeColor[400]} titleText={PAGE_INFO.LOGIN.text}>
       <LoginContainer>
         <LoginForm onSubmit={onLogin} role="form">
           <Input

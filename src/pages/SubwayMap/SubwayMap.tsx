@@ -3,15 +3,15 @@ import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Dimmed from '../../components/@common/Dimmed/Dimmed';
 import Loading from '../../components/@common/Loading/Loading';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
+import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { SubwayMapContainer, SubwayMapList, SubwayMapListItem } from './SubwayMap.styles';
 
 const SubwayMap = (): JSX.Element => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const themeColor = useThemeColor();
   const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
 
@@ -28,10 +28,7 @@ const SubwayMap = (): JSX.Element => {
   }, [errorMessage]);
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.SUBWAY_MAP.text}
-    >
+    <CardTemplate templateColor={themeColor[400]} titleText={PAGE_INFO.SUBWAY_MAP.text}>
       {isLoading && (
         <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
           <Loading />

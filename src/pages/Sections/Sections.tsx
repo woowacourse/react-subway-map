@@ -10,11 +10,11 @@ import Loading from '../../components/@common/Loading/Loading';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
 import ListItem from '../../components/@shared/ListItem/ListItem';
 import SectionAddModal from '../../components/SectionsModal/SectionAddModal';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SECTION } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
 import useModal from '../../hooks/useModal/useModal';
+import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
 import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
@@ -24,7 +24,7 @@ import { StationName } from '../Stations/Stations.styles';
 import { LineInfoContainer, LineSelectBox } from './Section.styles';
 
 const Sections = (): JSX.Element => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const themeColor = useThemeColor();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
   const { stations, isLoading: stationsIsLoading, errorMessage: stationErrorMessage } = useSelector(
     (state: RootState) => state.station
@@ -98,10 +98,7 @@ const Sections = (): JSX.Element => {
   };
 
   return (
-    <CardTemplate
-      titleText={PAGE_INFO.SECTIONS.text}
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-    >
+    <CardTemplate titleText={PAGE_INFO.SECTIONS.text} templateColor={themeColor[400]}>
       {stationsIsLoading && linesIsLoading && (
         <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
           <Loading />

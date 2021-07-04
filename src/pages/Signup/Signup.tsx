@@ -1,25 +1,24 @@
 import React, {
-  ChangeEventHandler, FocusEventHandler,
+  ChangeEventHandler,
+  FocusEventHandler,
   FormEventHandler,
   useEffect,
-  useState
+  useState,
 } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { requestEmailCheck, requestSignup } from '../../api/member';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import Email from '../../components/@common/Icon/Email';
 import Lock from '../../components/@common/Icon/Lock';
 import Person from '../../components/@common/Icon/Person';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, SIGN_UP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
-import { RootState } from '../../redux/store';
+import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 
 const Signup = (): JSX.Element => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+  const themeColor = useThemeColor();
   const [formInput, setFormInput] = useState({
     email: '',
     age: '',
@@ -172,10 +171,7 @@ const Signup = (): JSX.Element => {
   };
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.SIGN_UP.text}
-    >
+    <CardTemplate templateColor={themeColor[400]} titleText={PAGE_INFO.SIGN_UP.text}>
       <SignupForm onSubmit={onSignup} role="form">
         <SignupNotificationInput
           type="email"
