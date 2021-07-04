@@ -30,7 +30,7 @@ export const loginRequestAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        message: error?.response?.data?.message || '로그인에 실패하였습니다.',
+        message: error.response.data.message,
       });
     }
   },

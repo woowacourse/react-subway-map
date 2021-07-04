@@ -4,7 +4,6 @@ import Login from './Login/Login';
 import Station from './Station/Station';
 import Line from './Line/Line';
 import Section from './Section/Section';
-import SubwayMap from './SubwayMap/SubwayMap';
 import Logout from './Logout/Logout';
 
-export { Home, SignUp, Login, Logout, Station, Line, Section, SubwayMap };
+export { Home, SignUp, Login, Logout, Station, Line, Section };

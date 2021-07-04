@@ -32,7 +32,7 @@ export const getSignedUserAsync = createAsyncThunk(
 
       return thunkAPI.rejectWithValue({
         isError: true,
-        message: error?.response?.data?.message || '유저 조회에 실패하였습니다.',
+        message: error.response.data.message,
       });
     }
   },

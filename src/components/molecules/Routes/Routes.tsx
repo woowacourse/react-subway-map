@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ROUTE } from '../../../constants';
 import ConditionalRoute from '../../atoms/ConditionalRoute/ConditionalRoute';
-import { Home, Line, Login, Logout, Section, SignUp, Station, SubwayMap } from '../../pages';
+import { Home, Line, Login, Logout, Section, SignUp, Station } from '../../pages';
 
 const RouteInfoList = [
   {
@@ -18,11 +18,6 @@ const RouteInfoList = [
     isPrivate: true,
     component: Section,
     path: ROUTE.SECTION,
-  },
-  {
-    isPrivate: true,
-    component: SubwayMap,
-    path: ROUTE.MAP,
   },
   {
     isPrivate: true,

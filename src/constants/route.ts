@@ -5,7 +5,6 @@ const ROUTE = {
   SIGNUP: '/signup',
   STATION: '/station',
   LINE: '/line',
-  MAP: '/map',
   SECTION: '/section',
 };
 

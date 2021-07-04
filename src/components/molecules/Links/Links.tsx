@@ -16,10 +16,6 @@ const loginedMenu = [
     title: '🚇 구간 관리',
   },
   {
-    path: ROUTE.MAP,
-    title: '🚇 전체 보기',
-  },
-  {
     path: ROUTE.LOGOUT,
     title: '🔒 로그아웃',
   },
