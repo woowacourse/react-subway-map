@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { unwrapResult } from "@reduxjs/toolkit";
 import useBoolean from "../../hooks/useBoolean";
+import useFetchOnce from "../../hooks/useFetchOnce";
 import STATUS from "../../constants/status";
 import {
-  fetchLines,
+  fetchLines as fetch,
   reset,
   selectLinesMessage,
   selectLinesStatus,
@@ -19,17 +19,11 @@ const Lines = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectLinesStatus);
   const message = useSelector(selectLinesMessage);
-
   const [isModalOpen, openModal, closeModal] = useBoolean(false);
 
-  const resetStatus = () => dispatch(reset());
+  useFetchOnce({ fetch, reset });
 
-  useEffect(() => {
-    dispatch(fetchLines()).then(unwrapResult).then(resetStatus);
-
-    return resetStatus;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleAlertConfirm = () => dispatch(reset());
 
   const isAlertOpen = [
     status === STATUS.SUCCEED || status === STATUS.FAILED,
@@ -38,7 +32,7 @@ const Lines = () => {
 
   return (
     <>
-      <Alert isOpen={isAlertOpen} onConfirm={resetStatus}>
+      <Alert isOpen={isAlertOpen} onConfirm={handleAlertConfirm}>
         <p className="text-lg">{message}</p>
       </Alert>
       <Loading isLoading={status === STATUS.LOADING} />
