@@ -13,7 +13,7 @@ import Lock from '../../components/@common/Icon/Lock';
 import Person from '../../components/@common/Icon/Person';
 import { PAGE_INFO, SIGN_UP } from '../../constants/appInfo';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../../constants/message';
-import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
+import useThemeColor from '../../hooks/useThemeColor';
 import { isEmail, isEnglishAndNumber } from '../../util/validator';
 import { SignupButton, SignupForm, SignupNotificationInput } from './Signup.styles';
 

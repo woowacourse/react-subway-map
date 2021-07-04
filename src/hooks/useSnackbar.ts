@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import useUpdateEffect from '../useUpdateEffect/useUpdateEffect';
+import useUpdateEffect from './useUpdateEffect';
 
 const FADEOUT_TIME = 200;
 

@@ -7,7 +7,7 @@ import Lock from '../../components/@common/Icon/Lock';
 import Input from '../../components/@common/Input/Input';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
+import useThemeColor from '../../hooks/useThemeColor';
 import { login } from '../../redux/loginSlice';
 import { useAppDispatch } from '../../redux/store';
 import {

@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
 import PALETTE, { Color } from '../../../constants/palette';
-import useThemeColor from '../../../hooks/useThemeColor/useThemeColor';
+import useThemeColor from '../../../hooks/useThemeColor';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonShape?: 'square' | 'round';

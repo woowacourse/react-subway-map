@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PAGE_INFO } from '../../../constants/appInfo';
-import useThemeColor from '../../../hooks/useThemeColor/useThemeColor';
+import useThemeColor from '../../../hooks/useThemeColor';
 import { StyledHeader, TitleContainer } from './Header.styles';
 
 interface Props {

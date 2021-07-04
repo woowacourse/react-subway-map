@@ -1,13 +1,8 @@
-import React, {
-  ChangeEventHandler, FormEventHandler,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { addLine } from '../../redux/lineSlice';
 import { loadStations } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -17,7 +12,7 @@ import ColorRadio from '../@common/ColorRadio/ColorRadio';
 import Modal from '../@common/Modal/Modal';
 import NotificationInput from '../@common/NotificationInput/NotificationInput';
 import SectionSelectBox, {
-  OnChangeSectionSelectBoxHandler
+  OnChangeSectionSelectBoxHandler,
 } from '../@shared/SectionSelectBox/SectionSelectBox';
 import { LineColorContainer, LineForm, LineModalButtonContainer } from './LinesModal.styles';
 
@@ -211,6 +206,5 @@ const LineAddModal = ({ onClose }: Props): JSX.Element => {
     </Modal>
   );
 };
-
 
 export default LineAddModal;

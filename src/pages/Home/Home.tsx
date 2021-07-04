@@ -4,7 +4,7 @@ import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { API_INFO } from '../../constants/api';
-import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
+import useThemeColor from '../../hooks/useThemeColor';
 import { changeOwner } from '../../redux/apiOwnerSlice';
 import { logout } from '../../redux/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';

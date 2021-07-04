@@ -11,9 +11,9 @@ import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineMod
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
-import useModal from '../../hooks/useModal/useModal';
-import useThemeColor from '../../hooks/useThemeColor/useThemeColor';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useModal from '../../hooks/useModal';
+import useThemeColor from '../../hooks/useThemeColor';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { deleteLine, loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
@@ -24,7 +24,7 @@ const Lines = (): JSX.Element => {
   const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
-  const lineModifyModal = useModal(null);
+  const lineModifyModal = useModal();
 
   useEffect(() => {
     dispatch(loadLines());

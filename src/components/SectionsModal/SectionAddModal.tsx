@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
