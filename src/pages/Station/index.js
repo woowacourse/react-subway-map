@@ -1,73 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useSnackbar } from 'notistack';
-
-import { getStations, addStation, clearStationProgress, removeStation } from '../../redux/stationSlice';
-
-import { useAuthorization } from '../../hooks';
+import React, { useRef, useState } from 'react';
 
 import { ButtonSquare, IconSubway, Input, Section } from '../../components';
+import { useStation } from '../../hooks';
+import getInputStatus from '../../services/stationNameValidator';
 import { StationListItem } from './StationListItem';
-
-import { Form, List, InputWrapper, Message } from './style';
-import { STATION, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ROUTE } from '../../constants';
+import { Form, InputWrapper, List, Message } from './style';
 
 export const StationPage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const ref = useRef();
 
-  const { checkIsLogin } = useAuthorization();
+  const { stations, handleAddStation, handleDeleteStation } = useStation(ref);
+
   const [inputStatus, setInputStatus] = useState({ message: '', isValid: false });
-
-  const { stations, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.station);
-  const { enqueueSnackbar } = useSnackbar();
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (checkIsLogin) {
-      dispatch(getStations({}));
-    } else {
-      history.push(ROUTE.LOGIN);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAddSuccess) {
-      enqueueSnackbar(STATION.ADD_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      ref.current.focus();
-      ref.current.value = '';
-      inputStatus.isValid = false;
-    }
-    if (isAddFail) {
-      enqueueSnackbar(STATION.ADD_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-    if (isDeleteSuccess) {
-      enqueueSnackbar(STATION.DELETE_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-    if (isDeleteFail) {
-      enqueueSnackbar(STATION.DELETE_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-
-    dispatch(clearStationProgress());
-  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
-
   const handleStationNameInputChange = ({ target: { value } }) => setInputStatus(getInputStatus(value));
-
-  const handleAddStation = (e) => {
-    e.preventDefault();
-
-    dispatch(addStation({ name: e.target.name.value }));
-  };
-
-  const handleDeleteStation = (stationId) => dispatch(removeStation({ id: stationId }));
 
   return (
     <Section heading="지하철 역 관리">
       <Form onSubmit={handleAddStation}>
-        {/* eslint-disable jsx-a11y/no-autofocus */}
         <InputWrapper>
           <Input
             ref={ref}
@@ -76,6 +25,7 @@ export const StationPage = () => {
             icon={<IconSubway />}
             placeholder="지하철 역 이름을 입력해주세요."
             onChange={handleStationNameInputChange}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
           <Message data-testid="message">{inputStatus.message}</Message>
@@ -93,37 +43,3 @@ export const StationPage = () => {
     </Section>
   );
 };
-
-//TODO : Util 함수로 빼기, 정교한 Validation 구현하기, 한글 자음만 입력했을 때 입력되는 문제 삭제하기
-function getInputStatus(name) {
-  if (name.length > STATION.NAME_LENGTH_MAX) {
-    return {
-      message: STATION.NAME_IS_TOO_LONG,
-      isValid: false,
-    };
-  } else if (name.length < STATION.NAME_LENGTH_MIN) {
-    return {
-      message: STATION.NAME_IS_TOO_SHORT,
-      isValid: false,
-    };
-  } else if (name.includes(' ')) {
-    return {
-      message: STATION.NAME_CANNOT_INCLUDE_BLANK,
-      isValid: false,
-    };
-  } else if (name.match(/[a-zA-Z]/)) {
-    return {
-      message: STATION.NAME_CANNOT_INCLUDE_ENGLISH,
-      isValid: false,
-    };
-  } else if (name.match(/[!@#$%^&*(),.?":{}|<>]/)) {
-    return {
-      message: STATION.NAME_CANNOT_INCLUDE_SPECIAL_CHARACTER,
-      isValid: false,
-    };
-  }
-  return {
-    message: '',
-    isValid: true,
-  };
-}

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { Z_INDEX } from '../../../constants';
 
 export const ModalContainer = styled.section`

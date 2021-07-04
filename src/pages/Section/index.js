@@ -1,100 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
-import { useSnackbar } from 'notistack';
-
-import { getMap, addSection, removeSection, clearMapProgress } from '../../redux/mapSlice';
-import { getStations } from '../../redux/stationSlice';
-
-import { useAuthorization } from '../../hooks';
-
-import { ButtonSquare, IconPlus, Input, Modal, Section, Select, IconArrowLTR } from '../../components';
+import { ButtonSquare, IconArrowLTR, IconPlus, Input, Modal, Section, Select } from '../../components';
+import { COLOR } from '../../constants';
+import { useMap, useStation } from '../../hooks';
 import { SectionListItem } from './SectionListItem';
-import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, LineSelectBox, Message } from './style';
-import { COLOR, SECTION, MESSAGE_TYPE, SHOWING_MESSAGE_TIME, ROUTE } from '../../constants';
+import { AddButton, ButtonControl, CancelButton, Form, LineSelectBox, List, Message, StationSelect } from './style';
 
 export const SectionPage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const { stations } = useSelector((store) => store.station);
-  const { map, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.map);
-
-  const { checkIsLogin } = useAuthorization();
-  const [isSectionAddOpen, setIsSectionAddOpen] = useState(false);
-  const [selectedLine, setSelectedLine] = useState({
-    id: null,
-    name: null,
-    color: null,
-    distance: null,
-    sections: null,
-  });
-  const selectedLineSections = map.find((line) => line.id === selectedLine.id);
-
-  const lines = map.map((section) => ({ id: section.id, name: section.name, color: section.color }));
-  const { enqueueSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    if (checkIsLogin()) {
-      dispatch(getMap());
-      dispatch(getStations());
-    } else {
-      history.push(ROUTE.LOGIN);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (isAddSuccess) {
-      enqueueSnackbar(SECTION.ADD_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      dispatch(getMap());
-      handleCloseModal();
-    }
-    if (isAddFail) {
-      enqueueSnackbar(SECTION.ADD_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-    if (isDeleteSuccess) {
-      enqueueSnackbar(SECTION.DELETE_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      dispatch(getMap());
-    }
-    if (isDeleteFail) {
-      enqueueSnackbar(SECTION.DELETE_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-
-    dispatch(clearMapProgress());
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
-
-  const handleOpenModal = () => setIsSectionAddOpen(true);
-  const handleCloseModal = () => setIsSectionAddOpen(false);
-
-  const handleSelectLine = ({ target: { value } }) => {
-    const currentSelectedLine = map.find((line) => line.id === Number(value));
-
-    setSelectedLine({
-      id: currentSelectedLine.id,
-      name: currentSelectedLine.name,
-      color: currentSelectedLine.color,
-      distance: currentSelectedLine.distance,
-      sections: currentSelectedLine.sections,
-    });
-  };
-
-  const handleAddSection = (e) => {
-    e.preventDefault();
-
-    const lineId = e.target.line.value;
-    const upStationId = e.target.upStation.value;
-    const downStationId = e.target.downStation.value;
-    const distance = e.target.distance.value;
-
-    dispatch(addSection({ lineId, upStationId, downStationId, distance }));
-  };
-
-  const handleDeleteSection = (stationId) => dispatch(removeSection({ lineId: selectedLine.id, stationId }));
+  const { stations } = useStation();
+  const {
+    lines,
+    handleAddSection,
+    handleDeleteSection,
+    handleOpenSectionModal,
+    handleCloseSectionModal,
+    handleSelectLine,
+    isSectionModalOpen,
+    selectedLine,
+    selectedLineSections,
+  } = useMap();
 
   return (
     <Section heading="구간 관리">
@@ -106,7 +30,7 @@ export const SectionPage = () => {
         color={selectedLine.color}
         onChange={handleSelectLine}
       />
-      <AddButton onClick={handleOpenModal}>
+      <AddButton onClick={handleOpenSectionModal}>
         <IconPlus width={30} color={COLOR.TEXT.DEFAULT} />
       </AddButton>
 
@@ -122,7 +46,7 @@ export const SectionPage = () => {
         ))}
       </List>
 
-      {isSectionAddOpen && (
+      {isSectionModalOpen && (
         <Modal>
           <Section heading="구간 추가">
             <Form onSubmit={handleAddSection}>
@@ -138,7 +62,7 @@ export const SectionPage = () => {
               <Message></Message>
 
               <ButtonControl>
-                <CancelButton onClick={handleCloseModal}>취소</CancelButton>
+                <CancelButton onClick={handleCloseSectionModal}>취소</CancelButton>
                 <ButtonSquare>확인</ButtonSquare>
               </ButtonControl>
             </Form>

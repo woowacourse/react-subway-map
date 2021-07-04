@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 import { COLOR } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
@@ -20,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 
-  ul {
+  ul,ol {
     list-style-type: none;
     margin: 0;
     padding: 0;

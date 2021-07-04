@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import { Selector, Option } from './style';
+import { Option, Selector } from './style';
 
 export const Select = (props) => {
   const { id, name, optionHead, options, onChange, ...rest } = props;

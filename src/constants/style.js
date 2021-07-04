@@ -29,6 +29,12 @@ export const COLOR = {
     '9호선': '#CFC1A4',
     분당선: '#FFDF94',
   },
+
+  GRADIENT: {
+    RED: '#c81119',
+    YELLOW: '#f7f701',
+    BLUE: '#1b24d1',
+  },
 };
 
 export const LAYOUT = {

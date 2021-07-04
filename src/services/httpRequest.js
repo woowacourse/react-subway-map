@@ -1,46 +1,23 @@
+import axios from 'axios';
 import Cookies from 'js-cookie';
 
 import { ACCESS_TOKEN, SERVER_ID, SERVER_LIST } from '../constants';
 
 const getBaseUrl = () => SERVER_LIST[Cookies.get(SERVER_ID)].baseUrl;
+const getToken = () => Cookies.get(ACCESS_TOKEN);
 
-const getHeaders = () => ({
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN)}`,
-});
-
-const getHeadersWithoutAccessToken = () => ({
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-});
-
-export const requestGet = async (path) => {
-  return await fetch(`${getBaseUrl()}${path}`, {
-    method: 'GET',
-    headers: getHeaders(),
+const getHttpInstance = () => {
+  return axios.create({
+    timeout: 3000,
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
 };
 
-export const requestPost = async (path, data) => {
-  return await fetch(`${getBaseUrl()}${path}`, {
-    method: 'POST',
-    headers: getHeaders(),
-    body: JSON.stringify(data),
-  });
-};
-
-export const requestPostWithoutAccessToken = async (path, data) => {
-  return await fetch(`${getBaseUrl()}${path}`, {
-    method: 'POST',
-    headers: getHeadersWithoutAccessToken(),
-    body: JSON.stringify(data),
-  });
-};
-
-export const requestDelete = async (path) => {
-  return await fetch(`${getBaseUrl()}${path}`, {
-    method: 'DELETE',
-    headers: getHeaders(),
-  });
+export const request = {
+  get: async (path) => await getHttpInstance().get(`${getBaseUrl()}${path}`),
+  post: async (path, data) => await getHttpInstance().post(`${getBaseUrl()}${path}`, data),
+  postWithoutToken: async (path, data) => await axios.post(`${getBaseUrl()}${path}`, data),
+  delete: async (path) => await getHttpInstance().delete(`${getBaseUrl()}${path}`),
 };

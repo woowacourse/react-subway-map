@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { COLOR } from '../../constants';
 
 export const Form = styled.form`
@@ -16,4 +17,17 @@ export const Anchor = styled(Link)`
   &:hover {
     color: ${COLOR.THEME_STRONG};
   }
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Message = styled.p`
+  margin: -0.5rem 0 0;
+  padding: 0 0.5rem;
+
+  font-size: 0.8rem;
+  color: ${COLOR.ERROR};
 `;

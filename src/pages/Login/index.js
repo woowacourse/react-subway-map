@@ -1,53 +1,12 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
-import { useSnackbar } from 'notistack';
-import Cookies from 'js-cookie';
-
-import { login, clearLoginFail } from '../../redux/userSlice';
-
-import { Section, Input, IconMail, IconLock, ButtonSquare } from '../../components';
-import { Form, Anchor } from './style';
-import { LOGIN, ROUTE, SHOWING_MESSAGE_TIME, MESSAGE_TYPE, ACCESS_TOKEN } from '../../constants';
+import { ButtonSquare, IconLock, IconMail, Input, Section } from '../../components';
+import { ROUTE } from '../../constants';
+import { useLogin } from '../../hooks';
+import { Anchor, Form } from './style';
 
 export const LoginPage = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  const { isLogin, isLoginFail } = useSelector((store) => store.user);
-  const { enqueueSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    if (!Cookies.get(ACCESS_TOKEN)) {
-      history.push(ROUTE.LOGIN);
-      return;
-    }
-
-    if (isLogin) {
-      enqueueSnackbar(LOGIN.SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      history.push(ROUTE.STATION);
-    }
-
-    if (isLoginFail) {
-      enqueueSnackbar(LOGIN.FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-      Cookies.remove(ACCESS_TOKEN);
-      dispatch(clearLoginFail());
-    }
-
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, [isLogin, isLoginFail]);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    dispatch(
-      login({
-        email: e.target.email.value,
-        password: e.target.password.value,
-      }),
-    );
-  };
+  const { handleLogin } = useLogin();
 
   return (
     <Section heading="로그인">

@@ -1,32 +1,28 @@
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import Cookies from 'js-cookie';
-
-import { logout } from '../../redux/userSlice';
-import { clearStation, clearStationProgress } from '../../redux/stationSlice';
-import { clearLine, clearLineProgress } from '../../redux/lineSlice';
-import { clearMap, clearMapProgress } from '../../redux/mapSlice';
-
 import { ACCESS_TOKEN, ROUTE } from '../../constants';
+import { clearLine, clearLineState } from '../../redux/lineSlice';
+import { clearMap, clearMapState } from '../../redux/mapSlice';
+import { clearStations, clearStationState } from '../../redux/stationSlice';
+import { logout } from '../../redux/userSlice';
 
 export const LogoutPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const clearStore = () => {
-    dispatch(clearStation());
-    dispatch(clearStationProgress());
+    dispatch(clearStations());
+    dispatch(clearStationState());
     dispatch(clearLine());
-    dispatch(clearLineProgress());
+    dispatch(clearLineState());
     dispatch(clearMap());
-    dispatch(clearMapProgress());
+    dispatch(clearMapState());
   };
 
-  // TODO : 로그아웃이 안되는 경우(store의 state가 변하지 않는 경우도 우리가 예외처리를 해줘야하는걸까요?)
   useEffect(() => {
-    console.log('logout');
     dispatch(logout());
     clearStore();
     Cookies.remove(ACCESS_TOKEN);

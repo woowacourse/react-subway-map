@@ -1,5 +1,6 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
+
 import { ModalContainer, ModalInner } from './style';
 
 export const Modal = (props) => {

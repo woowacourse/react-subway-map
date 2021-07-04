@@ -1,4 +1,4 @@
+export { LINE, LOGIN, MESSAGE_TYPE, SECTION, SHOWING_MESSAGE_TIME, SIGN_UP, STATION } from './messages';
 export { ROUTE } from './route';
-export { SERVER_LIST, SERVER_ID, ACCESS_TOKEN } from './server';
+export { ACCESS_TOKEN, SERVER_ID, SERVER_LIST } from './server';
 export { COLOR, LAYOUT, Z_INDEX } from './style';
-export { LOGIN, SIGN_UP, STATION, LINE, SECTION, SHOWING_MESSAGE_TIME, MESSAGE_TYPE } from './messages';

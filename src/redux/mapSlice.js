@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { requestDelete, requestGet, requestPost } from '../services/httpRequest';
 
-const getMap = createAsyncThunk('map/getMap', async (_, thunkAPI) => {
+import { request } from '../services/httpRequest';
+
+const fetchMap = createAsyncThunk('map/fetchMap', async (_, thunkAPI) => {
   try {
-    const response = await requestGet('/lines/map');
-    const body = await response.json();
+    const response = await request.get('/lines/map');
 
     if (response.status === 200) {
-      return { map: body };
+      return { map: response.data };
     }
-
-    throw new Error(body.message);
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -21,35 +21,31 @@ const addSection = createAsyncThunk(
   'map/addSection',
   async ({ lineId, upStationId, downStationId, distance }, thunkAPI) => {
     try {
-      const response = await requestPost(`/lines/${lineId}/sections`, { upStationId, downStationId, distance });
+      const response = await request.post(`/lines/${lineId}/sections`, { upStationId, downStationId, distance });
 
       if (response.status === 201) {
         return;
       }
-
-      const { message } = await response.json();
-
-      throw new Error(message);
     } catch (e) {
-      console.error(e.response.data);
-      return thunkAPI.rejectWithValue(e.response.data);
+      const { error } = e.response.data;
+      console.error(error);
+
+      return thunkAPI.rejectWithValue(error);
     }
   },
 );
 
 const removeSection = createAsyncThunk('map/removeSection', async ({ lineId, stationId }, thunkAPI) => {
   try {
-    const response = await requestDelete(`/lines/${lineId}/sections?stationId=${stationId}`);
+    const response = await request.delete(`/lines/${lineId}/sections?stationId=${stationId}`);
     if (response.status === 204) {
       return;
     }
-
-    const { message } = await response.json();
-
-    throw new Error(message);
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -58,60 +54,50 @@ const mapSlice = createSlice({
   initialState: {
     map: [],
     isLoading: false,
-    isAddSuccess: false,
-    isAddFail: false,
-    isDeleteSuccess: false,
-    isDeleteFail: false,
+    error: '',
   },
   reducers: {
-    clearMapProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
-    },
     clearMap: (state) => {
       state.map = [];
     },
+    clearMapState: (state) => {
+      state.error = '';
+      state.isLoading = false;
+    },
   },
   extraReducers: {
-    [getMap.fulfilled]: (state, action) => {
+    [fetchMap.fulfilled]: (state, action) => {
       const { map } = action.payload;
 
       state.map = map;
     },
-    [getMap.pending]: (state) => {
+    [fetchMap.pending]: (state) => {
       state.isLoading = true;
     },
-    [getMap.rejected]: (state) => {
+    [fetchMap.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
 
-    [addSection.fulfilled]: (state) => {
-      state.isAddSuccess = true;
-    },
     [addSection.pending]: (state) => {
       state.isLoading = true;
     },
-    [addSection.rejected]: (state) => {
-      state.isAddFail = true;
+    [addSection.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
 
-    [removeSection.fulfilled]: (state) => {
-      state.isDeleteSuccess = true;
-    },
     [removeSection.pending]: (state) => {
       state.isLoading = true;
     },
-    [removeSection.rejected]: (state) => {
-      state.isDeleteFail = true;
+    [removeSection.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
   },
 });
 
-export { getMap, addSection, removeSection };
-export const { clearMapProgress, clearMap } = mapSlice.actions;
+export { addSection, fetchMap, removeSection };
+export const { clearMap, clearMapState } = mapSlice.actions;
 
 export default mapSlice.reducer;

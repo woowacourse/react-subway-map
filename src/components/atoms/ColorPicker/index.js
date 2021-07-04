@@ -1,7 +1,7 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import { Container, LabelText, List, Item, Label, RadioButton, CheckMark } from './style';
+import { CheckMark, Container, Item, Label, LabelText, List, RadioButton } from './style';
 
 export const ColorPicker = (props) => {
   const { label, colors, ...rest } = props;

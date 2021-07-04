@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+
 import { COLOR } from '../../../constants';
 
 const CONTAINER_SIZE = '1.5rem';
 const CHECK_MARK_SIZE = '100% - 0.5rem';
 
-export const Container = styled.span`
+export const RadioButtonWrapper = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +18,7 @@ export const Container = styled.span`
   border: 0.125rem solid ${COLOR.THEME};
 `;
 
-export const CheckMark = styled.span`
+export const RadioButtonSpan = styled.span`
   display: none;
   flex-direction: center;
   align-items: center;
@@ -28,23 +29,19 @@ export const CheckMark = styled.span`
   border-radius: 50%;
 `;
 
-export const RadioButton = styled.input`
+export const RadioButtonInput = styled.input`
   display: none;
 
-  &:hover ~ ${CheckMark} {
+  &:hover ~ ${RadioButtonSpan} {
     display: flex;
     background-color: ${COLOR.THEME_LIGHT};
   }
-  &:checked ~ ${CheckMark} {
+  &:checked ~ ${RadioButtonSpan} {
     display: flex;
     background-color: ${COLOR.THEME};
   }
-  &:active ~ ${CheckMark} {
+  &:active ~ ${RadioButtonSpan} {
     display: flex;
     background-color: ${COLOR.THEME_STRONG};
   }
-`;
-
-export const Content = styled.div`
-  width: 100%;
 `;

@@ -1,8 +1,9 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import userReducer from './userSlice';
-import stationReducer from './stationSlice';
+
 import lineReducer from './lineSlice';
 import mapReducer from './mapSlice';
+import stationReducer from './stationSlice';
+import userReducer from './userSlice';
 
 const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,

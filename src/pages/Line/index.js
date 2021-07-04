@@ -1,85 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
-import { useSnackbar } from 'notistack';
-
-import { getStations } from '../../redux/stationSlice';
-import { getLines, addLine, removeLine, clearLineProgress } from '../../redux/lineSlice';
-
-import { useAuthorization } from '../../hooks';
-
-import { ButtonSquare, IconPlus, Input, Modal, Section, Select, ColorPicker, IconArrowLTR } from '../../components';
+import { ButtonSquare, ColorPicker, IconArrowLTR, IconPlus, Input, Modal, Section, Select } from '../../components';
+import { COLOR } from '../../constants';
+import { useLine, useStation } from '../../hooks';
 import { LineListItem } from './LineListItem';
-
-import { Form, List, AddButton, CancelButton, StationSelect, ButtonControl, Message } from './style';
-import { COLOR, LINE, MESSAGE_TYPE, SHOWING_MESSAGE_TIME, ROUTE } from '../../constants';
+import { AddButton, ButtonControl, CancelButton, Form, List, Message, StationSelect } from './style';
 
 export const LinePage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const { stations } = useSelector((store) => store.station);
-  const { lines, isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail } = useSelector((store) => store.line);
-
-  const { checkIsLogin } = useAuthorization();
-  const [isLineAddOpen, setIsLineAddOpen] = useState(false);
-
-  const { enqueueSnackbar } = useSnackbar();
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (checkIsLogin()) {
-      dispatch(getLines());
-      dispatch(getStations());
-    } else {
-      history.push(ROUTE.LOGIN);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAddSuccess) {
-      enqueueSnackbar(LINE.ADD_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-      handleCloseModal();
-    }
-
-    if (isAddFail) {
-      enqueueSnackbar(LINE.ADD_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-
-    if (isDeleteSuccess) {
-      enqueueSnackbar(LINE.DELETE_SUCCEED, { autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-
-    if (isDeleteFail) {
-      enqueueSnackbar(LINE.DELETE_FAIL, { variant: MESSAGE_TYPE.ERROR, autoHideDuration: SHOWING_MESSAGE_TIME });
-    }
-
-    dispatch(clearLineProgress());
-  }, [isAddSuccess, isAddFail, isDeleteSuccess, isDeleteFail]);
-
-  const handleOpenModal = () => setIsLineAddOpen(true);
-  const handleCloseModal = () => setIsLineAddOpen(false);
-
-  const handleAddLine = (e) => {
-    e.preventDefault();
-
-    const name = e.target.name.value;
-    const upStationId = e.target.upStation.value;
-    const downStationId = e.target.downStation.value;
-    const distance = e.target.distance.value;
-    const color = e.target.color.value;
-
-    dispatch(addLine({ name, upStationId, downStationId, distance, color }));
-  };
-
-  const handleDeleteLine = (id) => {
-    dispatch(removeLine({ id }));
-  };
+  const { stations } = useStation();
+  const { lines, handleAddLine, handleDeleteLine, isLineModalOpen, handleLineModalOpen, handleLineCloseModal } =
+    useLine();
 
   return (
     <Section heading="노선 관리">
-      <AddButton onClick={handleOpenModal}>
+      <AddButton onClick={handleLineModalOpen}>
         <IconPlus width={30} color={COLOR.TEXT.DEFAULT} />
       </AddButton>
 
@@ -89,16 +23,16 @@ export const LinePage = () => {
         ))}
       </List>
 
-      {isLineAddOpen && (
+      {isLineModalOpen && (
         <Modal>
           <Section heading="노선 추가">
             <Form onSubmit={handleAddLine}>
-              {/* eslint-disable jsx-a11y/no-autofocus */}
               <Input
                 type="text"
                 name="name"
                 label="노선 이름"
                 placeholder="노선 이름을 입력해주세요."
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 required
               />
@@ -115,7 +49,7 @@ export const LinePage = () => {
               <Message></Message>
 
               <ButtonControl>
-                <CancelButton onClick={handleCloseModal}>취소</CancelButton>
+                <CancelButton onClick={handleLineCloseModal}>취소</CancelButton>
                 <ButtonSquare>확인</ButtonSquare>
               </ButtonControl>
             </Form>

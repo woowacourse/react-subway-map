@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { ButtonSquare } from '../..';
+
 import { LAYOUT, Z_INDEX } from '../../../constants';
+import { ButtonSquare } from '../..';
 
 export const ServerSelectButton = styled(ButtonSquare)`
   position: fixed;

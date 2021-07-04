@@ -1,10 +1,10 @@
-import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
-import { createStore } from 'redux';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-import userReducer from '../redux/userSlice';
 import stationReducer from '../redux/stationSlice';
+import userReducer from '../redux/userSlice';
 
 function render(
   ui,

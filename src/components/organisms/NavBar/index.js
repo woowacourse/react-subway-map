@@ -1,11 +1,11 @@
+import { PropTypes } from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 
-import { Button, IconLogo, IconPerson, IconSearch, IconSetting, IconWindow } from '../..';
-import { Nav, TitleButton, Title, SubTitle, MainTitle, Menu, MenuList, MenuItem } from './style';
 import { ROUTE } from '../../../constants';
+import { Button, IconLogo, IconPerson, IconSetting, IconWindow } from '../..';
+import { MainTitle, Menu, MenuItem, MenuList, Nav, SubTitle, Title, TitleButton } from './style';
 
 const FE_CONTRIBUTORS = '티케 하루의';
 
@@ -30,22 +30,6 @@ export const NavBar = (props) => {
       </TitleButton>
 
       <Menu>
-        {/* TODO: 전체보기 기능, 경로탐색 기능 2단계에서 추가 */}
-        <MenuList style={{ visibility: 'hidden' }}>
-          <MenuItem>
-            <NavLink to={ROUTE.MAP}>
-              <IconWindow />
-              전체보기
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={ROUTE.SEARCH}>
-              <IconSearch />
-              경로탐색
-            </NavLink>
-          </MenuItem>
-        </MenuList>
-
         {isLogin && (
           <MenuList>
             <MenuItem>
@@ -70,6 +54,12 @@ export const NavBar = (props) => {
         )}
 
         <MenuList>
+          <MenuItem>
+            <NavLink to={ROUTE.MAP}>
+              <IconWindow />
+              전체보기
+            </NavLink>
+          </MenuItem>
           <MenuItem>
             {isLogin ? (
               <Button onClick={handleLogout}>

@@ -1,52 +1,49 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { requestDelete, requestGet, requestPost } from '../services/httpRequest';
 
-const getStations = createAsyncThunk('/station/getStations', async (_, thunkAPI) => {
+import { request } from '../services/httpRequest';
+
+const fetchStations = createAsyncThunk('/station/fetchStations', async (_, thunkAPI) => {
   try {
-    const response = await requestGet('/stations');
-    const body = await response.json();
+    const response = await request.get('/stations');
 
     if (response.status === 200) {
-      return { stations: body };
+      return { stations: response.data };
     }
-
-    throw new Error(body.message);
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
 const addStation = createAsyncThunk('station/addStation', async ({ name }, thunkAPI) => {
   try {
-    const response = await requestPost('/stations', { name });
-    const body = await response.json();
+    const response = await request.post('/stations', { name });
 
     if (response.status === 201) {
-      return body;
+      return response.data;
     }
-
-    throw new Error(body.message);
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
 const removeStation = createAsyncThunk('station/removeStation', async ({ id }, thunkAPI) => {
   try {
-    const response = await requestDelete(`/stations/${id}`);
+    const response = await request.delete(`/stations/${id}`);
 
     if (response.status === 204) {
       return { id };
     }
-
-    const { message } = await response.json();
-
-    throw new Error(message);
   } catch (e) {
-    console.error(e);
-    return thunkAPI.rejectWithValue(e);
+    const { error } = e.response.data;
+    console.error(error);
+
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -54,67 +51,61 @@ const stationSlice = createSlice({
   name: 'station',
   initialState: {
     stations: [],
+    error: '',
     isLoading: false,
-    isAddSuccess: false,
-    isAddFail: false,
-    isDeleteSuccess: false,
-    isDeleteFail: false,
   },
   reducers: {
-    clearStation: (state) => {
+    clearStations: (state) => {
       state.stations = [];
     },
-    clearStationProgress: (state) => {
-      state.isAddSuccess = false;
-      state.isAddFail = false;
-      state.isDeleteSuccess = false;
-      state.isDeleteFail = false;
+    clearStationState: (state) => {
+      state.error = '';
+      state.isLoading = false;
     },
   },
   extraReducers: {
-    [getStations.fulfilled]: (state, action) => {
+    [fetchStations.fulfilled]: (state, action) => {
       const { stations } = action.payload;
 
       state.stations = stations;
     },
-    [getStations.pending]: (state) => {
+    [fetchStations.pending]: (state) => {
       state.isLoading = true;
     },
-    [getStations.rejected]: (state) => {
+    [fetchStations.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
 
     [addStation.fulfilled]: (state, action) => {
       const { id, name } = action.payload;
 
       state.stations = [{ id, name }, ...state.stations];
-      state.isAddSuccess = true;
     },
     [addStation.pending]: (state) => {
       state.isLoading = true;
     },
-    [addStation.rejected]: (state) => {
-      state.isAddFail = true;
+    [addStation.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.payload;
     },
 
     [removeStation.fulfilled]: (state, action) => {
       const { id } = action.payload;
 
       state.stations = state.stations.filter((station) => station.id !== id);
-      state.isDeleteSuccess = true;
     },
     [removeStation.pending]: (state) => {
       state.isLoading = true;
     },
-    [removeStation.rejected]: (state) => {
-      state.isDeleteFail = true;
+    [removeStation.rejected]: (state, action) => {
       state.isLoading = false;
+      state.error = action.error;
     },
   },
 });
 
-export { getStations, addStation, removeStation };
-export const { clearStationProgress, clearStation } = stationSlice.actions;
+export { addStation, fetchStations, removeStation };
+export const { clearStations, clearStationState } = stationSlice.actions;
 
 export default stationSlice.reducer;

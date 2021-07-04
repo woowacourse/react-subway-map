@@ -1,9 +1,9 @@
-import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
+import React from 'react';
 import { Provider } from 'react-redux';
 
-import userReducer from '../../redux/userSlice';
 import stationReducer from '../../redux/stationSlice';
+import userReducer from '../../redux/userSlice';
 
 export const makeStore = () => {
   return configureStore({

@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
-import { Container, Label, LabelText, InputField, Icon } from './style';
+import { Container, Icon, InputField, Label, LabelText } from './style';
 
 export const Input = forwardRef((props, ref) => {
   const { label, icon, ...rest } = props;

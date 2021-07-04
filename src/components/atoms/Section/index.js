@@ -1,7 +1,7 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import { TopLine, Container, Heading, Content } from './style';
+import { Container, Content, Heading, TopLine } from './style';
 
 export const Section = (props) => {
   const { children, heading, ...rest } = props;

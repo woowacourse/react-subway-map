@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { COLOR } from '../../constants';
 
 export const Form = styled.form`

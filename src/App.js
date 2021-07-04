@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { Page } from './components';
-import { LoginPage, LogoutPage, SignUpPage, StationPage, LinePage, SectionPage } from './pages';
 import { ROUTE } from './constants';
+import { LinePage, LoginPage, LogoutPage, MapPage, SectionPage, SignUpPage, StationPage } from './pages';
 
 const App = () => {
   return (
@@ -27,6 +26,9 @@ const App = () => {
         </Route>
         <Route exact path={ROUTE.SECTION}>
           <SectionPage />
+        </Route>
+        <Route exact path={ROUTE.MAP}>
+          <MapPage />
         </Route>
       </Switch>
     </Page>
