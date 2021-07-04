@@ -11,9 +11,12 @@ const SIZE_STYLE = {
 };
 
 const THEME_STYLE = {
-  primary: "p-3 bg-yellow-300 hover:bg-yellow-400",
-  secondary: "p-3 bg-gray-50 hover:bg-gray-100",
-  round: "p-3 bg-gray-50 hover:bg-gray-100 rounded-3xl",
+  primary:
+    "p-3 bg-yellow-300 hover:bg-yellow-400 focus:bg-yellow-400 focus:ring-yellow-500",
+  secondary:
+    "p-3 bg-gray-50 hover:bg-gray-100 focus:bg-gray-100 focus:ring-gray-200",
+  round:
+    "p-3 bg-gray-50 hover:bg-gray-100 focus:bg-gray-100 focus:ring-grayp200 rounded-3xl",
   icon: "bg-transparent hover:scale-110 transform focus:opacity-100 focus:text-black hover:text-black focus:outline-none hover:opacity-100  opacity-60",
 };
 
@@ -37,7 +40,7 @@ const Button = forwardRef((props, ref) => {
       disabled={disabled}
       name={name}
       className={twCascade(
-        "disabled:text-gray-400 text-gray-700 text-base font-medium disabled:bg-gray-200 rounded focus:outline-none focus:ring-2",
+        "disabled:text-gray-400 text-gray-700 text-base font-medium disabled:bg-gray-200 rounded focus:outline-none focus:ring-2 ",
         SIZE_STYLE[size],
         THEME_STYLE[theme],
         className
