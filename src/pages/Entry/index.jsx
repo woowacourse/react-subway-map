@@ -1,22 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchStations, reset as resetStations } from "../Stations/slice";
-import { fetchLines, reset as resetLines } from "../Lines/slice";
+import React from "react";
 import Main from "../../components/@shared/Main";
 import EntryCrewListItem from "../../components/EntryCrewListItem";
 
 const Entry = () => {
-  const dispatch = useDispatch();
-
-  useEffect(
-    () => () => {
-      Promise.all([dispatch(fetchStations()), dispatch(fetchLines())]).then(
-        () => Promise.all([dispatch(resetStations()), dispatch(resetLines())])
-      );
-    },
-    [dispatch]
-  );
-
   const crews = [
     { name: "검프", baseURL: "https://gump-subway.p-e.kr" },
     { name: "포츈", baseURL: "https://fortune-subway.p-e.kr" },
