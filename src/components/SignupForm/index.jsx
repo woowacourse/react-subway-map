@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import useFocus from "../../hooks/useFocus";
 import { useInput } from "../@shared/Input/hooks";
 import { useSignupAge, useSignupEmail, useSignupPassword } from "./hooks";
 import { signup } from "../../pages/Signup/slice";
@@ -13,6 +14,7 @@ const SignupForm = () => {
   const [password, handlePasswordChange, isPasswordValid] = useSignupPassword();
   const [passwordConfirm, handlePasswordConfirmChange, isPasswordConfirmValid] =
     useInput((value) => value === password);
+  const ref = useFocus([]);
 
   const isSubmitEnabled = [
     isEmailValid,
@@ -31,6 +33,7 @@ const SignupForm = () => {
       <Input
         id="email"
         type="email"
+        ref={ref}
         placeholder="✉️ 이메일을 입력해주세요"
         value={email}
         isValid={isEmailValid}

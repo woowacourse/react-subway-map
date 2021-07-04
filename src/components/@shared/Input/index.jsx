@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -10,17 +10,18 @@ const getRingColor = (isFocused, isValid) => {
   return "focus:ring-yellow-300 ring-gray-300";
 };
 
-const Input = ({
-  onFocus,
-  isValid,
-  label,
-  id,
-  type,
-  placeholder,
-  onChange,
-  value,
-  autoComplete,
-}) => {
+const Input = forwardRef((props, ref) => {
+  const {
+    onFocus,
+    isValid,
+    label,
+    id,
+    type,
+    placeholder,
+    onChange,
+    value,
+    autoComplete,
+  } = props;
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = (event) => {
@@ -36,6 +37,7 @@ const Input = ({
         </label>
       )}
       <input
+        ref={ref}
         className={cx(
           "px-4 py-2 w-full bg-transparent rounded outline-none ring-1 focus:ring-2",
           getRingColor(isFocused, isValid)
@@ -45,7 +47,7 @@ const Input = ({
       />
     </>
   );
-};
+});
 
 Input.propTypes = {
   type: PropTypes.oneOf(["number", "text", "email", "password"]).isRequired,

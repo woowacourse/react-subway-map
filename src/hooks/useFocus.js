@@ -8,9 +8,15 @@ const useFocus = (deps) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.focus();
-    }
+    if (!ref.current) return;
+
+    const { current } = ref;
+
+    current?.focus();
+
+    // eslint-disable-next-line consistent-return
+    return () => current?.blur();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 

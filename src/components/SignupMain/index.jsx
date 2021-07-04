@@ -1,6 +1,6 @@
 import React from "react";
-import SignupForm from "../SignupForm/index";
 import Main from "../@shared/Main";
+import SignupForm from "../SignupForm";
 
 const SignupMain = () => (
   <Main className="relative">
