@@ -15,6 +15,7 @@ import Login from './pages/Login/Login';
 import Sections from './pages/Sections/Sections';
 import Signup from './pages/Signup/Signup';
 import Stations from './pages/Stations/Stations';
+import SubwayMap from './pages/SubwayMap/SubwayMap';
 import { RootState } from './redux/store';
 import { getApiOwner, getBearerToken } from './storage/service';
 
@@ -57,6 +58,9 @@ const App = (): JSX.Element => {
           </Route>
           <Route path={PAGE_INFO.SECTIONS.path}>
             <Sections />
+          </Route>
+          <Route path={PAGE_INFO.SUBWAY_MAP.path}>
+            <SubwayMap />
           </Route>
         </Switch>
       </Main>
