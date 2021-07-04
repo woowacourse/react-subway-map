@@ -16,6 +16,6 @@ const API_HOST: ApiHost = (() => {
   return stored as ApiHost;
 })();
 
-const ACCESS_TOKEN = localStorage.getItem(KEY.ACCESS_TOKEN) ?? null;
+const getAccessToken = () => localStorage.getItem(KEY.ACCESS_TOKEN) ?? null;
 
-export { ApiHostList, API_HOST, ACCESS_TOKEN };
+export { ApiHostList, API_HOST, getAccessToken };

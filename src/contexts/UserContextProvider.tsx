@@ -33,19 +33,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
   useEffect(() => {
     isMounted.current = false;
 
-    const checkLoginStatus = async () => {
-      try {
-        const userInfo = await api.user.getInfo();
+    (async () => {
+      const { isSucceeded } = await api.user.getInfo();
 
-        if (userInfo) {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error(error);
+      if (isSucceeded) {
+        setIsLoggedIn(true);
       }
-    };
-
-    checkLoginStatus();
+    })();
   }, []);
 
   return (

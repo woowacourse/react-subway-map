@@ -36,6 +36,7 @@ const useLoginForm = () => {
       setIsLoggedIn?.(isSucceeded);
 
       if (isSucceeded) {
+        //TODO: api 안으로 옮기기, 상수 활용
         localStorage.setItem('accessToken', result);
         history.push(PATH.ROOT);
       }

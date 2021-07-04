@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../constants/messages';
 import STATUS_CODE from '../constants/statusCode';
-import { ACCESS_TOKEN } from '../constants/storage';
+import { getAccessToken } from '../constants/storage';
 import { unauthorizedDeleteResult, unauthorizedPostResult } from './sharedResults';
 import {
   APIReturnType,
@@ -38,14 +38,16 @@ const stationAPI = {
   },
 
   post: async (data: RequestTypeStation): Promise<APIReturnType<RestReturnTypePost | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
         return unauthorizedPostResult;
       }
 
       const { status } = await axios.post('/stations', data, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -83,19 +85,23 @@ const stationAPI = {
   },
 
   delete: async (stationId: number): Promise<APIReturnType<RestReturnTypeDelete | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
+        console.log('no accessToken');
         return unauthorizedDeleteResult;
       }
 
       const { status } = await axios.delete(`/stations/${stationId}`, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
       if (status !== STATUS_CODE.NO_CONTENT) {
         if (status === STATUS_CODE.UNAUTHORIZED) {
+          console.log('hey');
           return unauthorizedDeleteResult;
         }
 

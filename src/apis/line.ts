@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../constants/messages';
 import STATUS_CODE from '../constants/statusCode';
-import { ACCESS_TOKEN } from '../constants/storage';
+import { getAccessToken } from '../constants/storage';
 import { unauthorizedDeleteResult, unauthorizedPostResult } from './sharedResults';
 import {
   APIReturnType,
@@ -62,14 +62,16 @@ const lineAPI = {
   },
 
   post: async (data: RequestTypeLine): Promise<APIReturnType<RestReturnTypePost | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
         return unauthorizedPostResult;
       }
 
       const { status } = await axios.post('/lines', data, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -109,14 +111,16 @@ const lineAPI = {
   },
 
   delete: async (lineId: number): Promise<APIReturnType<RestReturnTypeDelete | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
         return unauthorizedDeleteResult;
       }
 
       const { status } = await axios.delete(`/lines/${lineId}`, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 

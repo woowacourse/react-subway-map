@@ -21,7 +21,7 @@ const useSignupFrom = () => {
   const [age, onAgeChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
   const [passwordConfirm, onPasswordConfirmChange] = useInput('');
-  const [isEmailDuplicated, setIsEmailDuplicated] = useState<boolean>(false);
+  const [isEmailDuplicated, setIsEmailDuplicated] = useState(false);
 
   const history = useHistory();
   const addMessage = useContext(SnackBarContext)?.addMessage;
@@ -34,11 +34,12 @@ const useSignupFrom = () => {
   const isPasswordValid = !password || REGEX.PASSWORD.test(password);
   const isPasswordMatched = !passwordConfirm || password === passwordConfirm;
   const isFormCompleted =
-    email === '' &&
-    age === '' &&
-    password === '' &&
-    passwordConfirm === '' &&
+    email !== '' &&
+    age !== '' &&
+    password !== '' &&
+    passwordConfirm !== '' &&
     isEmailFormatValid &&
+    !isEmailDuplicated &&
     isAgeValid &&
     isPasswordValid &&
     isPasswordMatched;
@@ -59,7 +60,7 @@ const useSignupFrom = () => {
   const requestCheckEmailDuplicated = useDebounce(async (value: string) => {
     const { isSucceeded, result } = await api.user.checkEmailDuplicated(value);
 
-    if (isSucceeded && result) {
+    if (isSucceeded && result !== null) {
       setIsEmailDuplicated(result);
     } else {
       addMessage?.(ERROR_MESSAGE.DEFAULT);
@@ -68,7 +69,10 @@ const useSignupFrom = () => {
 
   const onEmailChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setEmail(event.target.value);
-    requestCheckEmailDuplicated(event.target.value);
+
+    if (isEmailFormatValid) {
+      requestCheckEmailDuplicated(event.target.value);
+    }
   };
 
   const onSignup: FormEventHandler<HTMLFormElement> = async (event) => {
