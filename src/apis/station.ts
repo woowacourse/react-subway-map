@@ -15,11 +15,7 @@ import {
 const stationAPI = {
   get: async (): Promise<APIReturnType<ResponseTypeStation[] | null>> => {
     try {
-      const { status, data } = await axios.get('/stations');
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      const { data } = await axios.get('/stations');
 
       return {
         isSucceeded: true,
@@ -45,28 +41,11 @@ const stationAPI = {
         return unauthorizedPostResult;
       }
 
-      const { status } = await axios.post('/stations', data, {
+      await axios.post('/stations', data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.CREATED) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          return unauthorizedPostResult;
-        } else if (status === STATUS_CODE.BAD_REQUEST) {
-          return {
-            isSucceeded: false,
-            message: ERROR_MESSAGE.DUPLICATED_STATION_NAME,
-            result: {
-              auth: true,
-              duplicated: true,
-            },
-          };
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -75,6 +54,21 @@ const stationAPI = {
       };
     } catch (error) {
       console.error(error);
+
+      switch (error.response.status) {
+        case STATUS_CODE.UNAUTHORIZED:
+          return unauthorizedPostResult;
+
+        case STATUS_CODE.BAD_REQUEST:
+          return {
+            isSucceeded: false,
+            message: ERROR_MESSAGE.DUPLICATED_STATION_NAME,
+            result: {
+              auth: true,
+              duplicated: true,
+            },
+          };
+      }
 
       return {
         isSucceeded: false,
@@ -93,20 +87,11 @@ const stationAPI = {
         return unauthorizedDeleteResult;
       }
 
-      const { status } = await axios.delete(`/stations/${stationId}`, {
+      await axios.delete(`/stations/${stationId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.NO_CONTENT) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          console.log('hey');
-          return unauthorizedDeleteResult;
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -116,12 +101,16 @@ const stationAPI = {
     } catch (error) {
       console.error(error);
 
-      if (error.response.status === STATUS_CODE.BAD_REQUEST) {
-        return {
-          isSucceeded: false,
-          message: ERROR_MESSAGE.STATION_IN_SECTION,
-          result: null,
-        };
+      switch (error.response.status) {
+        case STATUS_CODE.BAD_REQUEST:
+          return {
+            isSucceeded: false,
+            message: ERROR_MESSAGE.STATION_IN_SECTION,
+            result: null,
+          };
+
+        case STATUS_CODE.UNAUTHORIZED:
+          return unauthorizedDeleteResult;
       }
 
       return {

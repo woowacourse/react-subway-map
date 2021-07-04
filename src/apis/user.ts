@@ -14,15 +14,11 @@ const userAPI = {
         throw new Error(ERROR_MESSAGE.NO_ACCESS_TOKEN);
       }
 
-      const { status, data } = await axios.get('/members/me', {
+      const { data } = await axios.get('/members/me', {
         headers: {
           'Content-Type': `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -42,11 +38,7 @@ const userAPI = {
 
   checkEmailDuplicated: async (email: string): Promise<APIReturnType<boolean | null>> => {
     try {
-      const { status, data } = await axios.get(`/members?email=${email}`);
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      const { data } = await axios.get(`/members?email=${email}`);
 
       return {
         isSucceeded: true,
@@ -66,11 +58,7 @@ const userAPI = {
 
   login: async (loginInfo: RequestTypeLogin): Promise<APIReturnType<string>> => {
     try {
-      const { status, data } = await axios.post('/login/token', loginInfo);
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      const { data } = await axios.post('/login/token', loginInfo);
 
       return {
         isSucceeded: true,
@@ -98,11 +86,7 @@ const userAPI = {
 
   signup: async (signUpInfo: RequestTypeSignUp): Promise<APIReturnType<null>> => {
     try {
-      const { status } = await axios.post('members', signUpInfo);
-
-      if (status !== STATUS_CODE.CREATED) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      await axios.post('members', signUpInfo);
 
       return {
         isSucceeded: true,

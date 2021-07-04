@@ -18,19 +18,11 @@ const sectionAPI = {
         return unauthorizedResult;
       }
 
-      const { status } = await axios.post(`/lines/${lineId}/sections`, data, {
+      await axios.post(`/lines/${lineId}/sections`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.CREATED) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          return unauthorizedResult;
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -39,6 +31,10 @@ const sectionAPI = {
       };
     } catch (error) {
       console.error(error);
+
+      if (error.response.status === STATUS_CODE.UNAUTHORIZED) {
+        return unauthorizedResult;
+      }
 
       return {
         isSucceeded: true,
