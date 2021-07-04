@@ -56,6 +56,8 @@ const loginSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.status = STATUS.IDLE;
+      state.message = "";
+      state.error = null;
     },
     logout: (state) => {
       state.accessToken = null;
