@@ -38,7 +38,7 @@ const App = () => {
     <>
       <Header backgroundColor={themeColor} color={PALETTE.WHITE}>
         <Link to={PATH.ROOT}>
-          <TextLogo height="2rem" />
+          <TextLogo height="32px" />
         </Link>
         <NavBar>
           <NavLink to={PATH.STATIONS}>역관리</NavLink>
