@@ -1,35 +1,35 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useStationsStatus } from "./hooks";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useFetchOnce from "../../hooks/useFetchOnce";
 import STATUS from "../../constants/status";
-import { selectStationsList, selectStationsMessage } from "./slice";
-import Main from "../../components/@shared/Main";
+import {
+  fetchStations,
+  reset,
+  selectStationsMessage,
+  selectStationsStatus,
+} from "./slice";
 import Loading from "../../components/@shared/Loading";
-import StationsForm from "../../components/StationsForm";
-import StationsList from "../../components/StationsList";
+import Alert from "../../components/@shared/Alert";
+import StationsMain from "../../components/StationsMain";
 
 const Stations = () => {
-  const status = useStationsStatus();
+  const dispatch = useDispatch();
+  const status = useSelector(selectStationsStatus);
   const message = useSelector(selectStationsMessage);
-  const list = useSelector(selectStationsList);
 
-  useEffect(() => {
-    if (status === STATUS.FAILED) {
-      alert(message);
-    }
-  }, [status, message]);
+  useFetchOnce({ fetch: fetchStations, reset });
+
+  const handleAlertConfirm = () => dispatch(reset());
 
   return (
-    <Main className="relative">
+    <>
+      <Alert isOpen={Boolean(message)} onConfirm={handleAlertConfirm}>
+        <p className="text-lg">{message}</p>
+      </Alert>
       <Loading isLoading={status === STATUS.LOADING} />
-      <section className="relative pb-8 w-144 border-t-8 border-yellow-300 rounded-sm shadow-md">
-        <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
-          지하철 역 관리
-        </h2>
-        <StationsForm />
-      </section>
-      <StationsList list={list} />
-    </Main>
+
+      <StationsMain />
+    </>
   );
 };
 
