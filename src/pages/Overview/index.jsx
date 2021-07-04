@@ -1,33 +1,35 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useOverviewStatus } from "./hooks";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useFetchOnce from "../../hooks/useFetchOnce";
 import STATUS from "../../constants/status";
-import { selectOverviewMessage, selectOverviewList } from "./slice";
-import Main from "../../components/@shared/Main";
+import {
+  selectOverviewMessage,
+  fetchOverview,
+  reset,
+  selectOverviewStatus,
+} from "./slice";
 import Loading from "../../components/@shared/Loading";
-import OverviewList from "../../components/OverviewList";
+import Alert from "../../components/@shared/Alert";
+import OverviewMain from "../../components/OverviewMain";
 
 const Overview = () => {
-  const status = useOverviewStatus();
+  const dispatch = useDispatch();
+  const status = useSelector(selectOverviewStatus);
   const message = useSelector(selectOverviewMessage);
-  const list = useSelector(selectOverviewList);
 
-  useEffect(() => {
-    if (status === STATUS.FAILED) {
-      alert(message);
-    }
-  }, [status, message]);
+  useFetchOnce({ fetch: fetchOverview, reset });
+
+  const handleAlertConfirm = () => dispatch(reset());
 
   return (
-    <Main className="relative">
+    <>
+      <Alert isOpen={Boolean(message)} onConfirm={handleAlertConfirm}>
+        <p className="text-lg">{message}</p>
+      </Alert>
       <Loading isLoading={status === STATUS.LOADING} />
-      <section className="pb-8 px-4 w-144 border-t-8 border-yellow-300 rounded-sm shadow-md">
-        <h2 className="mb-4 mt-6 p-4 text-center text-gray-700 text-2xl font-medium">
-          전체 보기
-        </h2>
-        <OverviewList list={list} />
-      </section>
-    </Main>
+
+      <OverviewMain />
+    </>
   );
 };
 
