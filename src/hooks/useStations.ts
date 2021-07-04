@@ -1,4 +1,4 @@
-import { FormEventHandler, useContext, useState } from 'react';
+import { FormEventHandler, useCallback, useContext, useState } from 'react';
 
 import { SnackBarContext } from '../contexts/SnackBarProvider';
 import { UserContext } from '../contexts/UserContextProvider';
@@ -20,7 +20,7 @@ const useStations = (initialStations: Station[] = []) => {
   const addMessage = useContext(SnackBarContext)?.addMessage;
   const logout = useContext(UserContext)?.logout;
 
-  const fetchStations = async (): Promise<void> => {
+  const fetchStations = useCallback(async (): Promise<void> => {
     const { isSucceeded, message, result } = await api.station.get();
 
     setStations(result ?? []);
@@ -28,7 +28,7 @@ const useStations = (initialStations: Station[] = []) => {
     if (!isSucceeded) {
       addMessage?.(message);
     }
-  };
+  }, [addMessage]);
 
   const addStation = async (data: RequestTypeStation): Promise<[boolean, string] | undefined> => {
     const { message, result } = await api.station.post(data);

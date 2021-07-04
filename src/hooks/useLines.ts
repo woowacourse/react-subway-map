@@ -1,11 +1,4 @@
-import {
-  ChangeEventHandler,
-  Dispatch,
-  FormEventHandler,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FormEventHandler, useCallback, useContext, useState } from 'react';
 import api from '../apis';
 import { RequestTypeLine } from '../apis/types';
 import { CONFIRM_MESSAGE, ERROR_MESSAGE } from '../constants/messages';
@@ -76,7 +69,7 @@ const useLines = (initialLines: Line[]) => {
     }
   };
 
-  const fetchLines = async (): Promise<void> => {
+  const fetchLines = useCallback(async (): Promise<void> => {
     const { isSucceeded, message, result } = await api.line.get();
 
     setLines(result ?? []);
@@ -84,7 +77,7 @@ const useLines = (initialLines: Line[]) => {
     if (!isSucceeded) {
       addMessage?.(message);
     }
-  };
+  }, [addMessage]);
 
   const addLine = async (data: RequestTypeLine): Promise<void> => {
     const { message, result } = await api.line.post(data);

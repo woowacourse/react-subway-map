@@ -1,4 +1,4 @@
-import { ReactNode, SelectHTMLAttributes } from 'react';
+import { SelectHTMLAttributes } from 'react';
 import { Container, SelectBody } from './Select.style';
 
 const Select = ({ children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) => (

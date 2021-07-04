@@ -74,7 +74,7 @@ const LinePage = () => {
 
   useEffect(() => {
     callWithLoading?.(Promise.all.bind(Promise), [fetchStations(), fetchLines()]);
-  }, []);
+  }, [callWithLoading, fetchLines, fetchStations]);
 
   return lines === LINE_BEFORE_FETCH || stations === STATION_BEFORE_FETCH ? (
     <></>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, FormEventHandler } from 'react';
+import { useContext, useEffect } from 'react';
 import { MdSubway, MdDelete } from 'react-icons/md';
 
 import { Box, Button, Input, InputContainer, Heading1, Icon, Chip } from '../../components/shared';
@@ -33,7 +33,7 @@ const StationPage = () => {
 
   useEffect(() => {
     callWithLoading?.(fetchStations);
-  }, []);
+  }, [callWithLoading, fetchStations]);
 
   return stations === STATION_BEFORE_FETCH ? (
     <></>

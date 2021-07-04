@@ -58,7 +58,7 @@ const useSections = (initialStations: Station[], initialLines: Line[]) => {
 
   useEffect(() => {
     callWithLoading?.(Promise.all.bind(Promise), [fetchStations(), fetchLines()]);
-  }, []);
+  }, [callWithLoading, fetchLines, fetchStations]);
 
   const addSection = async (lineId: number, data: RequestTypeSection): Promise<void> => {
     const { message, result } = await api.section.post(lineId, data);

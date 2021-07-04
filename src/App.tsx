@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Switch, Route, Link, NavLink, Redirect, useHistory } from 'react-router-dom';
 
 import Header from './components/Header/Header';
