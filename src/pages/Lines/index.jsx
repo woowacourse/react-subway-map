@@ -25,16 +25,10 @@ const Lines = () => {
 
   const handleAlertConfirm = () => dispatch(reset());
 
-  const isAlertOpen = [
-    status === STATUS.SUCCEED || status === STATUS.FAILED,
-    message,
-  ].every(Boolean);
-
   return (
     <>
-      <Alert isOpen={isAlertOpen} onConfirm={handleAlertConfirm}>
-        <p className="text-lg">{message}</p>
-      </Alert>
+      <Alert onConfirm={handleAlertConfirm} message={message} />
+
       <Loading isLoading={status === STATUS.LOADING} />
 
       <LinesMain onAdd={openModal} />

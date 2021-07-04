@@ -47,9 +47,8 @@ const Sections = () => {
 
   return (
     <>
-      <Alert isOpen={Boolean(message)} onConfirm={handleAlertConfirm}>
-        <p className="text-lg">{message}</p>
-      </Alert>
+      <Alert onConfirm={handleAlertConfirm} message={message} />
+
       <Loading isLoading={status === STATUS.LOADING} />
 
       <SectionsMain

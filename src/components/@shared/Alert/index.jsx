@@ -4,14 +4,14 @@ import cx from "classnames";
 import useFocus from "../../../hooks/useFocus";
 import Button from "../Button";
 
-const Alert = ({ isOpen, onConfirm, children, className }) => {
+const Alert = ({ message, onConfirm, isOpen, className }) => {
   const buttonRef = useFocus();
 
   return (
-    isOpen && (
+    (isOpen === true || (isOpen == null && Boolean(message))) && (
       <div className="fixed z-9999 left-0 top-0 flex items-center justify-center w-full h-full max-h-screen bg-black bg-opacity-10 isolate">
         <div className={cx("p-4 max-w-sm bg-white rounded-lg", className)}>
-          {children}
+          <p className="text-lg">{message}</p>
           <Button
             ref={buttonRef}
             type="button"
@@ -27,13 +27,14 @@ const Alert = ({ isOpen, onConfirm, children, className }) => {
 };
 
 Alert.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  isOpen: PropTypes.bool,
   className: PropTypes.string,
 };
 
 Alert.defaultProps = {
+  isOpen: null,
   className: null,
 };
 
