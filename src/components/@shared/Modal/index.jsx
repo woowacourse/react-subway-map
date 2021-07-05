@@ -4,7 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ModalPortal from "../../Portal/ModalPortal";
 
-const Modal = ({ isOpen, children, close }) => {
+const Modal = ({ isOpen, close, children }) => {
   const handleClick = (event) => {
     const isDimmedClicked = event.currentTarget === event.target;
 

@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 import { useInput } from "../@shared/Input/hooks";
+import { useDistanceInput, useLineNameInput } from "./hooks";
 import { addLine } from "../../pages/Lines/slice";
 import { selectStationsList } from "../../pages/Stations/slice";
 import FloatingLabelInput from "../@shared/FloatingLabelInput";
 import Button from "../@shared/Button";
 import ColorSelect from "../ColorSelect";
 import ListSelect from "../ListSelect";
-import { useDistanceInput, useLineNameInput } from "./hooks";
 
-const LinesForm = ({ closeModal }) => {
+const LinesForm = ({ onSubmit }) => {
   const dispatch = useDispatch();
   const stationsList = useSelector(selectStationsList);
 
@@ -23,6 +23,7 @@ const LinesForm = ({ closeModal }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       const result = await dispatch(
         addLine({
@@ -34,7 +35,7 @@ const LinesForm = ({ closeModal }) => {
         })
       );
       await unwrapResult(result);
-      closeModal();
+      onSubmit();
     } catch (error) {
       /* do nothing when error occured */
     }
@@ -100,7 +101,7 @@ const LinesForm = ({ closeModal }) => {
 };
 
 LinesForm.propTypes = {
-  closeModal: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default LinesForm;

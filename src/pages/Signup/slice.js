@@ -3,6 +3,9 @@ import STATUS from "../../constants/status";
 import { ENDPOINT, MESSAGE, RESPONSE_CODE } from "../../api/constants";
 import http from "../../api/http";
 
+export const selectSignupStatus = (state) => state.signup.status;
+export const selectSignupMessage = (state) => state.signup.message;
+
 export const signup = createAsyncThunk(
   "signup/signup",
   async ({ email, password, age }, { rejectWithValue }) => {

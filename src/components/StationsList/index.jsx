@@ -1,23 +1,22 @@
 import React from "react";
-import { PropTypes } from "prop-types";
+import { useSelector } from "react-redux";
+import { selectStationsList } from "../../pages/Stations/slice";
 import StationsListItem from "../StationsListItem";
 
-const StationsList = ({ list }) =>
-  list.length > 0 && (
-    <ul className="mt-8 pb-8 pl-8 pr-6 py-4 w-144 rounded-sm shadow-md space-y-6">
-      {[...list].reverse().map(({ id, name }) => (
-        <StationsListItem key={id} id={id} name={name} />
-      ))}
-    </ul>
-  );
+const StationsList = () => {
+  const list = useSelector(selectStationsList);
 
-StationsList.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  return (
+    list.length > 0 && (
+      <ul className="mt-8 pb-8 pl-8 pr-6 py-4 w-144 rounded-sm shadow-md space-y-6">
+        {Array.from(list)
+          .reverse()
+          .map(({ id, name }) => (
+            <StationsListItem key={id} id={id} name={name} />
+          ))}
+      </ul>
+    )
+  );
 };
 
 export default StationsList;
