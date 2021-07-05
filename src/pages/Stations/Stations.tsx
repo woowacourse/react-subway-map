@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
@@ -7,30 +7,25 @@ import HorizontalLine from '../../components/@common/HorizontalLine/HorizontalLi
 import Subway from '../../components/@common/Icon/Subway';
 import Loading from '../../components/@common/Loading/Loading';
 import ListItem from '../../components/@shared/ListItem/ListItem';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO, STATION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
-import { addStation, deleteStation, loadStations } from '../../redux/stationSlice';
+import useStations from '../../hooks/useStations';
+import useThemeColor from '../../hooks/useThemeColor';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
+import { addStation, deleteStation } from '../../redux/stationSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import { StationForm, StationList, StationName, StationNameInput } from './Stations.styles';
 
-const Stations: FC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+const Stations = (): JSX.Element => {
+  const themeColor = useThemeColor();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { stations, isLoading, errorMessage } = useSelector((state: RootState) => state.station);
+  const { stations, isLoading, errorMessage } = useStations();
   const dispatch = useAppDispatch();
 
   const [formInput, setFormInput] = useState('');
   const [validationErrorMessage, setValidationErrorMessage] = useState('');
   const isValidStationInput = formInput !== '' && validationErrorMessage === '';
-
-  useEffect(() => {
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
-  }, []);
 
   useUpdateEffect(() => {
     if (errorMessage === '') {
@@ -66,10 +61,7 @@ const Stations: FC = () => {
   };
 
   return (
-    <CardTemplate
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-      titleText={PAGE_INFO.STATIONS.text}
-    >
+    <CardTemplate templateColor={themeColor[400]} titleText={PAGE_INFO.STATIONS.text}>
       {isLoading && (
         <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
           <Loading />

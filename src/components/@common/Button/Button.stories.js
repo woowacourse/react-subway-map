@@ -11,23 +11,23 @@ const Template = (args) => <Button {...args}>버튼</Button>;
 
 export const ColoredSquare = Template.bind({});
 ColoredSquare.args = {
-  buttonType: 'square',
+  buttonShape: 'square',
 };
 
 export const ColoredRound = Template.bind({});
 ColoredRound.args = {
-  buttonType: 'round',
+  buttonShape: 'round',
 };
 
 export const TransparentSquare = Template.bind({});
 TransparentSquare.args = {
-  buttonType: 'square',
+  buttonShape: 'square',
   isColored: false,
 };
 
 export const TransparentRound = Template.bind({});
 TransparentRound.args = {
-  buttonType: 'round',
+  buttonShape: 'round',
   isColored: false,
 };
 

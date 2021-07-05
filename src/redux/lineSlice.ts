@@ -5,7 +5,7 @@ import {
   requestAddLine,
   requestDeleteLine,
   requestGetLines,
-  requestModifyLine,
+  requestModifyLine
 } from '../api/lines';
 import { Line } from '../types';
 import { ErrorMessageResponse } from './store';

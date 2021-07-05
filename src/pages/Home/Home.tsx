@@ -1,15 +1,17 @@
-import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/@common/Button/Button';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
 import ColorRadio from '../../components/@common/ColorRadio/ColorRadio';
 import { API_INFO } from '../../constants/api';
+import useThemeColor from '../../hooks/useThemeColor';
 import { changeOwner } from '../../redux/apiOwnerSlice';
 import { logout } from '../../redux/loginSlice';
 import { clearRootReducer, RootState, useAppDispatch } from '../../redux/store';
 import { APIForm, APIList } from './Home.styles';
 
-const Home: FC = () => {
+const Home = (): JSX.Element => {
+  const themeColor = useThemeColor();
   const apiOwner = useSelector((state: RootState) => state.api.owner);
   const dispatch = useAppDispatch();
   const [selectedAPI, setSelectedAPI] = useState(apiOwner);
@@ -29,7 +31,7 @@ const Home: FC = () => {
   };
 
   return (
-    <CardTemplate titleText="API 선택" templateColor={API_INFO[apiOwner].themeColor[400]}>
+    <CardTemplate titleText="API 선택" templateColor={themeColor[400]}>
       <APIForm onSubmit={onSubmitAPI}>
         <APIList>
           {Object.keys(API_INFO).map((apiInfoKey) => (

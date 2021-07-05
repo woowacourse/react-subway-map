@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { LoadingSpinner } from './Loading.styled';
 
-const Loading: FC = () => {
+const Loading = (): JSX.Element => {
   return (
     <LoadingSpinner>
       <div></div>

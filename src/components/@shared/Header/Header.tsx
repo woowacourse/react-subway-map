@@ -1,10 +1,7 @@
-import PropTypes from 'prop-types';
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { API_INFO } from '../../../constants/api';
 import { PAGE_INFO } from '../../../constants/appInfo';
-import { RootState } from '../../../redux/store';
+import useThemeColor from '../../../hooks/useThemeColor';
 import { StyledHeader, TitleContainer } from './Header.styles';
 
 interface Props {
@@ -13,11 +10,11 @@ interface Props {
   logo?: React.ReactNode;
 }
 
-const Header: FC<Props> = ({ children, title, logo }) => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+const Header = ({ children, title, logo }: Props): JSX.Element => {
+  const themeColor = useThemeColor();
 
   return (
-    <StyledHeader themeColor={API_INFO[apiOwner].themeColor}>
+    <StyledHeader themeColor={themeColor}>
       <Link to={PAGE_INFO.HOME.path}>
         <TitleContainer>
           {logo}
@@ -27,12 +24,6 @@ const Header: FC<Props> = ({ children, title, logo }) => {
       {children}
     </StyledHeader>
   );
-};
-
-Header.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string.isRequired,
-  logo: PropTypes.node,
 };
 
 export default Header;

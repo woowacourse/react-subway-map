@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React from 'react';
 import Input, { InputProps } from '../Input/Input';
 import { NotificationInputContainer, NotificationText } from './NotificationInput.styles';
 
@@ -13,7 +12,7 @@ interface Props extends InputProps {
   className?: string;
 }
 
-const NotificationInput: FC<Props> = ({ message, className, ...options }) => {
+const NotificationInput = ({ message, className, ...options }: Props): JSX.Element => {
   return (
     <NotificationInputContainer
       className={className}
@@ -26,14 +25,6 @@ const NotificationInput: FC<Props> = ({ message, className, ...options }) => {
       )}
     </NotificationInputContainer>
   );
-};
-
-NotificationInput.propTypes = {
-  message: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    isError: PropTypes.bool.isRequired,
-  }),
-  className: PropTypes.string,
 };
 
 export default NotificationInput;

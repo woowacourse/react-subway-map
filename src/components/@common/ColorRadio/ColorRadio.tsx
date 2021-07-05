@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React, { FC, InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import { ColorRadioInput, ColorRadioLabel, ColorRadioLabelText } from './ColorRadio.styles';
 
 interface LabelText {
@@ -13,13 +12,13 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   labelText?: LabelText;
 }
 
-const ColorRadio: FC<Props> = ({
+const ColorRadio = ({
   groupName,
   radioColor,
   labelText,
   checked = false,
   ...options
-}) => {
+}: Props): JSX.Element => {
   return (
     <ColorRadioLabel>
       <ColorRadioInput
@@ -34,14 +33,5 @@ const ColorRadio: FC<Props> = ({
   );
 };
 
-ColorRadio.propTypes = {
-  groupName: PropTypes.string.isRequired,
-  radioColor: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  labelText: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-  }),
-};
 
 export default ColorRadio;

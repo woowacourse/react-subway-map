@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent } from 'react';
 import { Station } from '../../../types';
 import Arrow from '../../@common/Icon/Arrow';
 import {
@@ -20,12 +19,12 @@ export interface Props {
   downStationOptions: Station[];
 }
 
-const SectionSelectBox: FC<Props> = ({
+const SectionSelectBox = ({
   onChange,
   errorMessage,
   upStationOptions,
   downStationOptions,
-}) => {
+}: Props): JSX.Element => {
   return (
     <SectionSelectBoxContainer direction="column">
       <StationsSelectContainer alignItems="center" justifyContent="space-between">
@@ -50,13 +49,6 @@ const SectionSelectBox: FC<Props> = ({
       {errorMessage && <SectionSelectErrorMessage>{errorMessage}</SectionSelectErrorMessage>}
     </SectionSelectBoxContainer>
   );
-};
-
-SectionSelectBox.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string,
-  upStationOptions: PropTypes.array.isRequired,
-  downStationOptions: PropTypes.array.isRequired,
 };
 
 export default SectionSelectBox;

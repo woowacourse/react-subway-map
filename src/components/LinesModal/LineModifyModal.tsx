@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC, FormEventHandler, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ChangeEventHandler, FormEventHandler, useMemo, useState } from 'react';
 import { LINE, LINE_COLORS } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
+import useLines from '../../hooks/useLines';
 import { modifyLine } from '../../redux/lineSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
@@ -28,8 +27,8 @@ interface FormValue {
   color: string;
 }
 
-const LineModifyModal: FC<Props> = ({ line, onClose }) => {
-  const { lines } = useSelector((state: RootState) => state.line);
+const LineModifyModal = ({ line, onClose }: Props): JSX.Element => {
+  const { lines } = useLines();
   const dispatch = useAppDispatch();
 
   const [formInput, setFormInput] = useState<FormValue>({
@@ -118,15 +117,6 @@ const LineModifyModal: FC<Props> = ({ line, onClose }) => {
       </LineForm>
     </Modal>
   );
-};
-
-LineModifyModal.propTypes = {
-  line: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default LineModifyModal;

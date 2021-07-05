@@ -1,19 +1,11 @@
-import PropTypes from 'prop-types';
-import React, {
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { useSelector } from 'react-redux';
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useMemo, useState } from 'react';
 import { LINE, LINE_COLORS, SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useLines from '../../hooks/useLines';
+import useStations from '../../hooks/useStations';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { addLine } from '../../redux/lineSlice';
-import { loadStations } from '../../redux/stationSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { isKoreanAndNumber } from '../../util/validator';
 import Button from '../@common/Button/Button';
 import ColorRadio from '../@common/ColorRadio/ColorRadio';
@@ -42,9 +34,9 @@ interface ErrorMessage {
   distance: string;
 }
 
-const LineAddModal: FC<Props> = ({ onClose }) => {
-  const { stations } = useSelector((state: RootState) => state.station);
-  const { lines, errorMessage } = useSelector((state: RootState) => state.line);
+const LineAddModal = ({ onClose }: Props): JSX.Element => {
+  const { stations } = useStations();
+  const { lines, errorMessage } = useLines();
   const usedLineColors = useMemo(() => lines.map((line) => line.color), [lines]);
   const dispatch = useAppDispatch();
 
@@ -54,7 +46,7 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     }
 
     alert(errorMessage);
-  });
+  }, [errorMessage]);
 
   const [formInput, setFormInput] = useState<FormInput>({
     name: '',
@@ -68,12 +60,6 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
     section: '',
     distance: '',
   });
-
-  useEffect(() => {
-    if (stations.length === 0) {
-      dispatch(loadStations());
-    }
-  }, []);
 
   useUpdateEffect(() => {
     if (formInput.upStationId === '' || formInput.downStationId === '') {
@@ -213,10 +199,6 @@ const LineAddModal: FC<Props> = ({ onClose }) => {
       </LineForm>
     </Modal>
   );
-};
-
-LineAddModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };
 
 export default LineAddModal;

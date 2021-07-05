@@ -1,13 +1,8 @@
-import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React from 'react';
 import PALETTE from '../../../constants/palette';
+import { IconProps } from '../../../types';
 
-interface Props {
-  width?: string;
-  color?: string;
-}
-
-const Add: FC<Props> = ({ width = '24px', color = PALETTE.GRAY[400] }) => {
+const Add = ({ width = '24px', color = PALETTE.GRAY[400] }: IconProps): JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,11 +15,6 @@ const Add: FC<Props> = ({ width = '24px', color = PALETTE.GRAY[400] }) => {
       <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
     </svg>
   );
-};
-
-Add.propTypes = {
-  width: PropTypes.string,
-  color: PropTypes.string,
 };
 
 export default Add;

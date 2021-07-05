@@ -1,34 +1,31 @@
-import React, { FC, MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useSelector } from 'react-redux';
 import CardTemplate from '../../components/@common/CardTemplate/CardTemplate';
+import Dimmed from '../../components/@common/Dimmed/Dimmed';
 import Add from '../../components/@common/Icon/Add';
-import ListItem from '../../components/@shared/ListItem/ListItem';
+import Loading from '../../components/@common/Loading/Loading';
 import ButtonOnLine from '../../components/@shared/ButtonOnLine/ButtonOnLine';
+import ListItem from '../../components/@shared/ListItem/ListItem';
 import LineAddModal from '../../components/LinesModal/LineAddModal';
 import LineModifyModal, { ModifyLine } from '../../components/LinesModal/LineModifyModal';
-import { API_INFO } from '../../constants/api';
 import { PAGE_INFO } from '../../constants/appInfo';
 import { CONFIRM_MESSAGE } from '../../constants/message';
 import PALETTE from '../../constants/palette';
-import useModal from '../../hooks/useModal/useModal';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
-import { deleteLine, loadLines } from '../../redux/lineSlice';
+import useLines from '../../hooks/useLines';
+import useModal from '../../hooks/useModal';
+import useThemeColor from '../../hooks/useThemeColor';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
+import { deleteLine } from '../../redux/lineSlice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { LineColorDot, LineList } from './Lines.styles';
-import Dimmed from '../../components/@common/Dimmed/Dimmed';
-import Loading from '../../components/@common/Loading/Loading';
 
-const Lines: FC = () => {
-  const apiOwner = useSelector((state: RootState) => state.api.owner);
+const Lines = (): JSX.Element => {
+  const themeColor = useThemeColor();
   const isLogin = useSelector((state: RootState) => state.login.isLogin);
-  const { lines, isLoading, errorMessage } = useSelector((state: RootState) => state.line);
+  const { lines, isLoading, errorMessage } = useLines();
   const dispatch = useAppDispatch();
   const lineAddModal = useModal();
-  const lineModifyModal = useModal(null);
-
-  useEffect(() => {
-    dispatch(loadLines());
-  }, []);
+  const lineModifyModal = useModal();
 
   useUpdateEffect(() => {
     if (errorMessage === '') {
@@ -60,10 +57,7 @@ const Lines: FC = () => {
   };
 
   return (
-    <CardTemplate
-      titleText={PAGE_INFO.LINES.text}
-      templateColor={API_INFO[apiOwner].themeColor[400]}
-    >
+    <CardTemplate titleText={PAGE_INFO.LINES.text} templateColor={themeColor[400]}>
       {isLoading && (
         <Dimmed backgroundColor="rgba(255, 255, 255, 0.2)">
           <Loading />

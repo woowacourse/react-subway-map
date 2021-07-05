@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
-import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { requestAddSection } from '../../api/lines';
 import { SECTION } from '../../constants/appInfo';
 import { ERROR_MESSAGE } from '../../constants/message';
-import useUpdateEffect from '../../hooks/useUpdateEffect/useUpdateEffect';
+import useStations from '../../hooks/useStations';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import { loadLines } from '../../redux/lineSlice';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { Line } from '../../types';
 import Button from '../@common/Button/Button';
 import Input from '../@common/Input/Input';
@@ -21,8 +20,8 @@ interface Props {
   line: Line;
 }
 
-const SectionAddModal: FC<Props> = ({ onClose, line }) => {
-  const { stations } = useSelector((state: RootState) => state.station);
+const SectionAddModal = ({ onClose, line }: Props): JSX.Element => {
+  const { stations } = useStations();
   const dispatch = useAppDispatch();
 
   const [formInput, setFormInput] = useState({
@@ -130,17 +129,6 @@ const SectionAddModal: FC<Props> = ({ onClose, line }) => {
       </SectionForm>
     </Modal>
   );
-};
-
-SectionAddModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  line: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-    stations: PropTypes.array.isRequired,
-    sections: PropTypes.array.isRequired,
-  }).isRequired,
 };
 
 export default SectionAddModal;

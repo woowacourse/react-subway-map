@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
-import React, { FC, MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import ReactDOM from 'react-dom';
 import Dimmed from '../Dimmed/Dimmed';
 import Close from '../Icon/Close';
-import { CloseButton, ModalContainer, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
+import { CloseButton, ModalContent, ModalInner, ModalTitle } from './Modal.styles';
 
 const $modalRoot = document.getElementById('modal-root');
 
@@ -13,7 +12,7 @@ export interface Props {
   onClose: () => void;
 }
 
-const Modal: FC<Props> = ({ children, titleText, onClose }) => {
+const Modal = ({ children, titleText, onClose }: Props): JSX.Element => {
   const onClickDimmed: MouseEventHandler<HTMLDivElement> = ({ target, currentTarget }) => {
     if (!onClose || target !== currentTarget) return;
 
@@ -23,7 +22,7 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
   return ReactDOM.createPortal(
     <Dimmed onMouseDown={onClickDimmed}>
       <ModalInner>
-        <CloseButton buttonType="round" isColored={false} onClick={onClose}>
+        <CloseButton buttonShape="round" isColored={false} onClick={onClose}>
           <Close width="90%" />
         </CloseButton>
         {titleText && <ModalTitle>{titleText}</ModalTitle>}
@@ -32,12 +31,6 @@ const Modal: FC<Props> = ({ children, titleText, onClose }) => {
     </Dimmed>,
     $modalRoot as HTMLDivElement
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  titleText: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;
