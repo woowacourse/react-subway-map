@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../constants/messages';
 import STATUS_CODE from '../constants/statusCode';
-import { ACCESS_TOKEN } from '../constants/storage';
+import { getAccessToken } from '../constants/storage';
 import { unauthorizedDeleteResult, unauthorizedPostResult } from './sharedResults';
 import {
   APIReturnType,
@@ -15,11 +15,7 @@ import {
 const stationAPI = {
   get: async (): Promise<APIReturnType<ResponseTypeStation[] | null>> => {
     try {
-      const { status, data } = await axios.get('/stations');
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      const { data } = await axios.get('/stations');
 
       return {
         isSucceeded: true,
@@ -38,33 +34,18 @@ const stationAPI = {
   },
 
   post: async (data: RequestTypeStation): Promise<APIReturnType<RestReturnTypePost | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
         return unauthorizedPostResult;
       }
 
-      const { status } = await axios.post('/stations', data, {
+      await axios.post('/stations', data, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.CREATED) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          return unauthorizedPostResult;
-        } else if (status === STATUS_CODE.BAD_REQUEST) {
-          return {
-            isSucceeded: false,
-            message: ERROR_MESSAGE.DUPLICATED_STATION_NAME,
-            result: {
-              auth: true,
-              duplicated: true,
-            },
-          };
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -73,6 +54,21 @@ const stationAPI = {
       };
     } catch (error) {
       console.error(error);
+
+      switch (error.response.status) {
+        case STATUS_CODE.UNAUTHORIZED:
+          return unauthorizedPostResult;
+
+        case STATUS_CODE.BAD_REQUEST:
+          return {
+            isSucceeded: false,
+            message: ERROR_MESSAGE.DUPLICATED_STATION_NAME,
+            result: {
+              auth: true,
+              duplicated: true,
+            },
+          };
+      }
 
       return {
         isSucceeded: false,
@@ -83,24 +79,19 @@ const stationAPI = {
   },
 
   delete: async (stationId: number): Promise<APIReturnType<RestReturnTypeDelete | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
+        console.log('no accessToken');
         return unauthorizedDeleteResult;
       }
 
-      const { status } = await axios.delete(`/stations/${stationId}`, {
+      await axios.delete(`/stations/${stationId}`, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.NO_CONTENT) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          return unauthorizedDeleteResult;
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -110,12 +101,16 @@ const stationAPI = {
     } catch (error) {
       console.error(error);
 
-      if (error.response.status === STATUS_CODE.BAD_REQUEST) {
-        return {
-          isSucceeded: false,
-          message: ERROR_MESSAGE.STATION_IN_SECTION,
-          result: null,
-        };
+      switch (error.response.status) {
+        case STATUS_CODE.BAD_REQUEST:
+          return {
+            isSucceeded: false,
+            message: ERROR_MESSAGE.STATION_IN_SECTION,
+            result: null,
+          };
+
+        case STATUS_CODE.UNAUTHORIZED:
+          return unauthorizedDeleteResult;
       }
 
       return {

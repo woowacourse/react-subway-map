@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import PALETTE from '../../constants/palette';
 
 const Container = styled.div`
   width: 100%;
@@ -14,4 +13,8 @@ const Container = styled.div`
   }
 `;
 
-export { Container };
+const Lines = styled.div`
+  overflow-x: auto;
+`;
+
+export { Container, Lines };

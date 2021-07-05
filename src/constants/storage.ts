@@ -1,13 +1,13 @@
 const ApiHostList = ['SOLONG', 'NABOM', 'OZ', 'KROPPLE'] as const;
 type ApiHost = typeof ApiHostList[number];
 
-const KEY = {
+const STORAGE_KEY = {
   HOST_NAME: 'hostName',
   ACCESS_TOKEN: 'accessToken',
 };
 
 const API_HOST: ApiHost = (() => {
-  const stored = localStorage.getItem(KEY.HOST_NAME);
+  const stored = localStorage.getItem(STORAGE_KEY.HOST_NAME);
 
   if (!ApiHostList.some((name) => name === stored)) {
     return 'SOLONG';
@@ -16,6 +16,6 @@ const API_HOST: ApiHost = (() => {
   return stored as ApiHost;
 })();
 
-const ACCESS_TOKEN = localStorage.getItem(KEY.ACCESS_TOKEN) ?? null;
+const getAccessToken = () => localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN) ?? null;
 
-export { ApiHostList, API_HOST, ACCESS_TOKEN };
+export { STORAGE_KEY, ApiHostList, API_HOST, getAccessToken };

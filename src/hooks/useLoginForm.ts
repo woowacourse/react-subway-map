@@ -16,7 +16,7 @@ const useLoginForm = () => {
   const history = useHistory();
 
   const addMessage = useContext(SnackBarContext)?.addMessage;
-  const setIsLoggedIn = useContext(UserContext)?.setIsLoggedIn;
+  const { login, logout } = useContext(UserContext) ?? {};
   const callWithLoading = useContext(LoadingContext)?.callWithLoading;
 
   const onLogin: FormEventHandler<HTMLFormElement> = async (event) => {
@@ -33,11 +33,13 @@ const useLoginForm = () => {
       const { isSucceeded, message, result } = await api.user.login({ email, password });
 
       addMessage?.(message);
-      setIsLoggedIn?.(isSucceeded);
 
       if (isSucceeded) {
-        localStorage.setItem('accessToken', result);
+        //TODO: api 안으로 옮기기, 상수 활용
+        login?.(result);
         history.push(PATH.ROOT);
+      } else {
+        logout?.();
       }
     });
   };

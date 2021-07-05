@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ERROR_MESSAGE, SUCCESS_MESSAGE } from '../constants/messages';
 import STATUS_CODE from '../constants/statusCode';
-import { ACCESS_TOKEN } from '../constants/storage';
+import { getAccessToken } from '../constants/storage';
 import { unauthorizedDeleteResult, unauthorizedPostResult } from './sharedResults';
 import {
   APIReturnType,
@@ -15,11 +15,7 @@ import {
 const lineAPI = {
   get: async (): Promise<APIReturnType<ResponseTypeLine[] | null>> => {
     try {
-      const { status, data } = await axios.get('/lines');
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      const { data } = await axios.get('/lines');
 
       return {
         isSucceeded: true,
@@ -39,11 +35,7 @@ const lineAPI = {
 
   getOne: async (lineId: number): Promise<APIReturnType<ResponseTypeLine | null>> => {
     try {
-      const { status, data } = await axios.get(`/lines/${lineId}`);
-
-      if (status !== STATUS_CODE.OK) {
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
+      const { data } = await axios.get(`/lines/${lineId}`);
 
       return {
         isSucceeded: true,
@@ -62,33 +54,18 @@ const lineAPI = {
   },
 
   post: async (data: RequestTypeLine): Promise<APIReturnType<RestReturnTypePost | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
         return unauthorizedPostResult;
       }
 
-      const { status } = await axios.post('/lines', data, {
+      await axios.post('/lines', data, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.CREATED) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          return unauthorizedPostResult;
-        } else if (status === STATUS_CODE.BAD_REQUEST) {
-          return {
-            isSucceeded: false,
-            message: ERROR_MESSAGE.DUPLICATED_LINE_NAME,
-            result: {
-              auth: true,
-              duplicated: true,
-            },
-          };
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -97,8 +74,21 @@ const lineAPI = {
       };
     } catch (error) {
       console.error(error);
-      console.dir(error.response);
-      console.dir(error.config.data);
+
+      switch (error.response.status) {
+        case STATUS_CODE.UNAUTHORIZED:
+          return unauthorizedPostResult;
+
+        case STATUS_CODE.BAD_REQUEST:
+          return {
+            isSucceeded: false,
+            message: ERROR_MESSAGE.DUPLICATED_LINE_NAME,
+            result: {
+              auth: true,
+              duplicated: true,
+            },
+          };
+      }
 
       return {
         isSucceeded: false,
@@ -109,24 +99,18 @@ const lineAPI = {
   },
 
   delete: async (lineId: number): Promise<APIReturnType<RestReturnTypeDelete | null>> => {
+    const accessToken = getAccessToken();
+
     try {
-      if (!ACCESS_TOKEN) {
+      if (!accessToken) {
         return unauthorizedDeleteResult;
       }
 
-      const { status } = await axios.delete(`/lines/${lineId}`, {
+      await axios.delete(`/lines/${lineId}`, {
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (status !== STATUS_CODE.NO_CONTENT) {
-        if (status === STATUS_CODE.UNAUTHORIZED) {
-          return unauthorizedDeleteResult;
-        }
-
-        throw new Error(ERROR_MESSAGE.API_CALL(status));
-      }
 
       return {
         isSucceeded: true,
@@ -135,6 +119,10 @@ const lineAPI = {
       };
     } catch (error) {
       console.error(error);
+
+      if (error.response.status === STATUS_CODE.UNAUTHORIZED) {
+        return unauthorizedDeleteResult;
+      }
 
       return {
         isSucceeded: false,

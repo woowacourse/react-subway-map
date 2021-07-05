@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Switch, Route, Link, NavLink, Redirect, useHistory } from 'react-router-dom';
 
 import Header from './components/Header/Header';
@@ -28,7 +28,7 @@ const App = () => {
   const isLoading = useContext(LoadingContext)?.isLoading;
 
   const onLogout = async () => {
-    await userContext?.setIsLoggedIn(false);
+    userContext?.logout();
 
     addMessage?.(SUCCESS_MESSAGE.LOGOUT);
     history.push(PATH.LOGIN);
@@ -38,13 +38,13 @@ const App = () => {
     <>
       <Header backgroundColor={themeColor} color={PALETTE.WHITE}>
         <Link to={PATH.ROOT}>
-          <TextLogo height="2rem" />
+          <TextLogo height="32px" />
         </Link>
         <NavBar>
+          <NavLink to={PATH.MAP}>전체보기</NavLink>
           <NavLink to={PATH.STATIONS}>역관리</NavLink>
           <NavLink to={PATH.LINES}>노선관리</NavLink>
           <NavLink to={PATH.SECTIONS}>구간관리</NavLink>
-          <NavLink to={PATH.MAP}>전체보기</NavLink>
           {userContext?.isLoggedIn ? (
             <button
               onClick={() => {
@@ -65,10 +65,10 @@ const App = () => {
         <Switch>
           <Route exact path={PATH.LOGIN} render={() => <LoginPage />} />
           <Route exact path={PATH.SIGNUP} render={() => <SignupPage />} />
-          <Route exact path={[PATH.STATIONS, PATH.ROOT]} render={() => <StationPage />} />
+          <Route exact path={[PATH.MAP, PATH.ROOT]} render={() => <MapPage />} />
+          <Route exact path={PATH.STATIONS} render={() => <StationPage />} />
           <Route exact path={PATH.LINES} render={() => <LinePage />} />
           <Route exact path={PATH.SECTIONS} render={() => <SectionPage />} />
-          <Route exact path={PATH.MAP} render={() => <MapPage />} />
           <Redirect to={PATH.ROOT} />
         </Switch>
       </Main>
